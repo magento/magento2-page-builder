@@ -6,9 +6,9 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
-import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Option from "../../content-type-menu/option";
@@ -66,12 +66,12 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
 
         this.parent.dataStore.subscribe(this.buildJarallax);
-        events.on("row:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        events.on("contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.contentType.parent.id === this.parent.id) {
                 this.buildJarallax();
             }

@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import "./binding/draggable";
 import Config from "./config";
@@ -43,7 +43,7 @@ export default class Panel implements PanelInterface {
      * Init listeners
      */
     public initListeners(): void {
-        events.on("stage:ready:" + this.id, () => {
+        events.on("stage:" + this.id + ":readyAfter", () => {
             this.populateContentTypes();
             this.isVisible(true);
         });
@@ -93,7 +93,7 @@ export default class Panel implements PanelInterface {
      * Traverse up to the WYSIWYG component and set as full screen
      */
     public fullScreen(): void {
-        events.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`);
+        events.trigger(`stage:${ this.parent.id }:toggleFullscreen`);
     }
 
     /**
@@ -145,7 +145,7 @@ export default class Panel implements PanelInterface {
                     });
                     showDropIndicators(block.config.name);
                     setDraggedContentTypeConfig(block.config);
-                    events.trigger("interaction:start", {stage: self.parent.stage});
+                    events.trigger("stage:interactionStart", {stage: self.parent.stage});
                 }
             },
             stop() {
@@ -156,7 +156,7 @@ export default class Panel implements PanelInterface {
                 });
                 hideDropIndicators();
                 setDraggedContentTypeConfig(null);
-                events.trigger("interaction:stop", {stage: self.parent.stage});
+                events.trigger("stage:interactionStop", {stage: self.parent.stage});
             },
         };
     }

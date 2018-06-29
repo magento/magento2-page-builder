@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeInterface from "../content-type.d";
 import {moveContentType} from "../drag-drop/move-content-type";
 import {moveArrayItem} from "../utils/array";
@@ -32,14 +32,14 @@ ko.bindingHandlers.sortableChildren = {
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 originalPosition = ui.item.index();
                 draggedContentType = instance.children()[originalPosition];
-                events.trigger("sortableChildren:sortstart", {
+                events.trigger("childContentType:sortStart", {
                     instance,
                     originalPosition,
                     ui,
                 });
             })
             .on("sortstop", (event: Event, ui: JQueryUI.SortableUIParams) => {
-                events.trigger("sortableChildren:sortstop", {
+                events.trigger("childContentType:sortStop", {
                     instance,
                     ui,
                 });
@@ -55,7 +55,7 @@ ko.bindingHandlers.sortableChildren = {
                         } else {
                             moveContentType(draggedContentType, index, targetParent);
                         }
-                        events.trigger("sortableChildren:sortupdate", {
+                        events.trigger("childContentType:sortUpdate", {
                             instance,
                             newPosition: index,
                             originalPosition,

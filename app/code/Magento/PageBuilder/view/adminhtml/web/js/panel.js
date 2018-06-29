@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -35,7 +35,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _uiEvents.on("stage:ready:" + this.id, function () {
+      _events.on("stage:" + this.id + ":readyAfter", function () {
         _this.populateContentTypes();
 
         _this.isVisible(true);
@@ -83,7 +83,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
 
 
     _proto.fullScreen = function fullScreen() {
-      _uiEvents.trigger("pagebuilder:toggleFullScreen:" + this.parent.id);
+      _events.trigger("stage:" + this.parent.id + ":toggleFullscreen");
     };
     /**
      * Collapse the panel into the side of the UI
@@ -140,7 +140,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
             (0, _dropIndicators.showDropIndicators)(block.config.name);
             (0, _registry.setDraggedContentTypeConfig)(block.config);
 
-            _uiEvents.trigger("interaction:start", {
+            _events.trigger("stage:interactionStart", {
               stage: self.parent.stage
             });
           }
@@ -154,7 +154,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
           (0, _dropIndicators.hideDropIndicators)();
           (0, _registry.setDraggedContentTypeConfig)(null);
 
-          _uiEvents.trigger("interaction:stop", {
+          _events.trigger("stage:interactionStop", {
             stage: self.parent.stage
           });
         }

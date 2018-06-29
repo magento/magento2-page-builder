@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
-import events from "uiEvents";
 import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
@@ -176,9 +176,9 @@ export default class Preview {
      * @deprecated
      */
     public afterChildrenRender(element: Element): void {
-        events.trigger("contentType:childrenRendered", {id: this.parent.id, contentType: this.parent, element});
+        events.trigger("contentType:childrenRenderAfter", {id: this.parent.id, contentType: this.parent, element});
         events.trigger(
-            this.parent.config.name + ":contentType:childrenRendered",
+            this.parent.config.name + ":childrenRenderAfter",
             {
                 contentType: this.parent,
                 element,
@@ -199,9 +199,9 @@ export default class Preview {
         if (elementNodes.length > 0) {
             const element = elementNodes[0];
             this.wrapperElement = element;
-            events.trigger("contentType:afterRender", {id: this.parent.id, contentType: this.parent, element});
+            events.trigger("contentType:renderAfter", {id: this.parent.id, contentType: this.parent, element});
             events.trigger(
-                this.parent.config.name + ":contentType:afterRender",
+                this.parent.config.name + ":renderAfter",
                 {
                     contentType: this.parent,
                     element,
@@ -278,8 +278,8 @@ export default class Preview {
                     parent: this.parent.parent,
                     stageId: this.parent.stageId,
                 };
-                events.trigger("contentType:removed", params);
-                events.trigger(this.parent.config.name + ":contentType:removed", params);
+                events.trigger("contentType:removeAfter", params);
+                events.trigger(this.parent.config.name + ":removeAfter", params);
             };
 
             if (this.wrapperElement) {
@@ -413,8 +413,8 @@ export default class Preview {
             index,
         };
 
-        events.trigger("contentType:duplicate", duplicateEventParams);
-        events.trigger(originalContentType.config.name + ":contentType:duplicate", duplicateEventParams);
+        events.trigger("contentType:duplicateAfter", duplicateEventParams);
+        events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
     }
 
     /**
@@ -549,6 +549,6 @@ export default class Preview {
             _.extend({}, this.parent.dataStore.get() as DataObject),
         );
         this.afterObservablesUpdated();
-        events.trigger("previewObservables:updated", {preview: this});
+        events.trigger("previewData:updateAfter", {preview: this});
     }
 }

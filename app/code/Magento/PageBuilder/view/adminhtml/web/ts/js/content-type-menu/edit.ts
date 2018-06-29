@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeInterface from "../content-type";
 import DataStore from "../data-store";
 
@@ -18,7 +18,7 @@ export default class Edit {
     constructor(instance: ContentTypeInterface, dataStore: DataStore) {
         this.instance = instance;
         this.dataStore = dataStore;
-        events.on("form:save:" + this.instance.id, (data: any) => {
+        events.on("form:" + this.instance.id + ":saveAfter", (data: any) => {
             this.dataStore.update(data);
         });
     }
@@ -35,7 +35,7 @@ export default class Edit {
             formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
         }
 
-        events.trigger("form:render", {
+        events.trigger("form:renderAfter", {
             data: contentTypeData,
             appearances: this.instance.config.appearances,
             defaultNamespace: this.instance.config.form,

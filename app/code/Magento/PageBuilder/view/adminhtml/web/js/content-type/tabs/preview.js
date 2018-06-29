@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _tabs, _uiEvents, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "tabs", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _tabs, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -46,20 +46,20 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         }
       }, 10);
 
-      _uiEvents.on("tabs:contentType:afterRender", function (args) {
+      _events.on("tabs:afterRender", function (args) {
         if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
       });
 
-      _uiEvents.on("tab-item:contentType:mount", function (args) {
+      _events.on("tab-item:mountAfter", function (args) {
         if (_this.element && args.contentType.parent.id === _this.parent.id) {
           _this.refreshTabs();
         }
       }); // Set the active tab to the new position of the sorted tab
 
 
-      _uiEvents.on("tab-item:contentType:removed", function (args) {
+      _events.on("tab-item:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
 
@@ -73,7 +73,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       }); // Refresh tab contents and set the focus to the new position of the sorted tab
 
 
-      _uiEvents.on("sortableChildren:sortupdate", function (args) {
+      _events.on("childContentType:sortUpdate", function (args) {
         if (args.instance.id === _this.parent.id) {
           _this.refreshTabs(args.newPosition, true);
           /**
@@ -195,11 +195,11 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       var interactionState = false;
 
-      _uiEvents.on("interaction:start", function () {
+      _events.on("stage:interactionStart", function () {
         interactionState = true;
       });
 
-      _uiEvents.on("interaction:stop", function () {
+      _events.on("stage:interactionStop", function () {
         interactionState = false;
       }); // Add a 200ms delay after a null set to allow for clicks to be captured
 
@@ -207,10 +207,10 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       _underscore.delay(function () {
         if (!_this2.disableInteracting && Preview.focusOperationTime === focusTime) {
           if (index !== null) {
-            _uiEvents.trigger("interaction:start");
+            _events.trigger("stage:interactionStart");
           } else {
             if (interactionState !== true) {
-              _uiEvents.trigger("interaction:stop");
+              _events.trigger("stage:interactionStop");
             }
           }
         }
@@ -238,13 +238,13 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       var _this3 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
-        _uiEvents.on("tab-item:contentType:mount", function (args) {
+        _events.on("tab-item:mountAfter", function (args) {
           if (args.id === tab.id) {
             _this3.setFocusedTab(_this3.parent.children().length - 1);
 
-            _uiEvents.off("tab-item:contentType:mount:" + tab.id);
+            _events.off("tab-item:" + tab.id + ":mountAfter");
           }
-        }, "tab-item:contentType:mount:" + tab.id);
+        }, "tab-item:" + tab.id + ":mountAfter");
 
         _this3.parent.addChild(tab, _this3.parent.children().length); // Update the default tab title when adding a new tab
 
@@ -343,7 +343,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
           ui.helper.css("width", "");
 
-          _uiEvents.trigger("interaction:start");
+          _events.trigger("stage:interactionStart");
 
           self.disableInteracting = true;
         },
@@ -357,7 +357,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         stop: function stop(event, ui) {
           (0, _jquery)(this).css("paddingLeft", "");
 
-          _uiEvents.trigger("interaction:stop");
+          _events.trigger("stage:interactionStop");
 
           self.disableInteracting = false;
         },
@@ -393,14 +393,14 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
-      _uiEvents.on("tabs:contentType:dropped:create", function (args) {
+      _events.on("tabs:dropAfter", function (args) {
         if (args.id === _this4.parent.id && _this4.parent.children().length === 0) {
           _this4.addTab();
         }
       }); // ContentType being removed from container
 
 
-      _uiEvents.on("tab-item:contentType:removed", function (args) {
+      _events.on("tab-item:removeAfter", function (args) {
         if (args.parent.id === _this4.parent.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
@@ -413,7 +413,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       var duplicatedTab;
       var duplicatedTabIndex;
 
-      _uiEvents.on("tab-item:contentType:duplicate", function (args) {
+      _events.on("tab-item:duplicateAfter", function (args) {
         if (_this4.parent.id === args.duplicateContentType.parent.id) {
           var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
@@ -424,7 +424,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         _this4.buildTabs(args.index);
       });
 
-      _uiEvents.on("tab-item:contentType:mount", function (args) {
+      _events.on("tab-item:mountAfter", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
           _this4.refreshTabs(duplicatedTabIndex, true);
 

@@ -6,9 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import alertDialog from "Magento_Ui/js/modal/alert";
-import events from "uiEvents";
-import _ from "underscore";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
@@ -60,14 +59,14 @@ export default class Preview extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
-        events.on("column:contentType:move", (args: ContentTypeMoveEventParamsInterface) => {
+        events.on("column:moveAfter", (args: ContentTypeMoveEventParamsInterface) => {
             if (args.contentType.id === this.parent.id) {
                 this.updateDisplayLabel();
             }
         });
 
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }
@@ -82,7 +81,7 @@ export default class Preview extends PreviewCollection {
      */
     public initColumn(element: Element) {
         this.element = $(element);
-        events.trigger("column:initElement", {
+        events.trigger("column:initializeAfter", {
             column: this.parent,
             element: $(element),
             parent: this.parent.parent,
@@ -119,7 +118,7 @@ export default class Preview extends PreviewCollection {
      * @param handle
      */
     public bindResizeHandle(handle: Element) {
-        events.trigger("column:bindResizeHandle", {
+        events.trigger("column:resizeHandleBindAfter", {
             column: this.parent,
             handle: $(handle),
             parent: this.parent.parent,
@@ -304,8 +303,8 @@ export default class Preview extends PreviewCollection {
      */
     private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
         contentTypes.forEach((contentType) => {
-            events.trigger("contentType:mount", {id: contentType.id, contentType});
-            events.trigger(contentType.config.name + ":contentType:mount", {id: contentType.id, contentType});
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
         });
     }
 }

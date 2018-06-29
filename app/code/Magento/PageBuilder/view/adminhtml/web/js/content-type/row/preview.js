@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _jarallax, _ResizeObserver, _uiEvents, _underscore, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _jarallax, _ResizeObserver, _underscore, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -48,13 +48,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _this.parent.dataStore.subscribe(_this.buildJarallax);
 
-      _uiEvents.on("row:contentType:ready", function (args) {
+      _events.on("row:mountAfter", function (args) {
         if (args.id === _this.parent.id) {
           _this.buildJarallax();
         }
       });
 
-      _uiEvents.on("contentType:mount", function (args) {
+      _events.on("contentType:mountAfter", function (args) {
         if (args.contentType.parent.id === _this.parent.id) {
           _this.buildJarallax();
         }

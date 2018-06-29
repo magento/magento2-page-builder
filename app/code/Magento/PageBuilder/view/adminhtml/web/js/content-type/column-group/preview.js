@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _config, _containerAnimation, _moveContentType, _registry, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _containerAnimation, _moveContentType, _registry, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -81,21 +81,21 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
         }
       }, "grid_size");
 
-      _uiEvents.on("contentType:removed", function (args) {
+      _events.on("contentType:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.spreadWidth(event, args);
         }
       }); // Listen for resizing events from child columns
 
 
-      _uiEvents.on("column:bindResizeHandle", function (args) {
+      _events.on("column:resizeHandleBindAfter", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.parent.id) {
           _this.registerResizeHandle(args.column, args.handle);
         }
       });
 
-      _uiEvents.on("column:initElement", function (args) {
+      _events.on("column:initializeAfter", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.parent.id) {
           _this.bindDraggable(args.column);
@@ -283,7 +283,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
         _this3.resizeLastPosition = null;
         _this3.resizeMouseDown = true;
 
-        _uiEvents.trigger("interaction:start", {
+        _events.trigger("stage:interactionStart", {
           stageId: _this3.parent.stageId
         });
       });
@@ -322,12 +322,12 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
           (0, _registry2.setDragColumn)(columnInstance.parent);
           _this4.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this4.parent);
 
-          _uiEvents.trigger("column:drag:start", {
+          _events.trigger("column:dragStart", {
             column: columnInstance,
             stageId: _this4.parent.stageId
           });
 
-          _uiEvents.trigger("interaction:start", {
+          _events.trigger("stage:interactionStart", {
             stageId: _this4.parent.stageId
           });
         },
@@ -350,12 +350,12 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
 
           _this4.movePlaceholder.removeClass("active");
 
-          _uiEvents.trigger("column:drag:stop", {
+          _events.trigger("column:dragStop", {
             column: draggedColumn,
             stageId: _this4.parent.stageId
           });
 
-          _uiEvents.trigger("interaction:stop", {
+          _events.trigger("stage:interactionStop", {
             stageId: _this4.parent.stageId
           });
         }
@@ -431,9 +431,9 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
       if (!this.gridSizeError()) {
         this.gridFormOpen(false);
 
-        _uiEvents.trigger("interaction:stop");
+        _events.trigger("stage:interactionStop");
 
-        _uiEvents.trigger("focusChild:stop");
+        _events.trigger("stage:childFocusStop");
 
         (0, _jquery)(document).off("click focusin", this.onDocumentClick);
       }
@@ -457,9 +457,9 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
 
         (0, _jquery)(document).on("click focusin", this.onDocumentClick);
 
-        _uiEvents.trigger("interaction:start");
+        _events.trigger("stage:interactionStart");
 
-        _uiEvents.trigger("focusChild:start");
+        _events.trigger("stage:childFocusStart");
       }
     };
     /**
@@ -509,7 +509,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
 
     _proto.endAllInteractions = function endAllInteractions() {
       if (this.resizing() === true) {
-        _uiEvents.trigger("interaction:stop", {
+        _events.trigger("stage:interactionStop", {
           stageId: this.parent.stageId
         });
       }
