@@ -48,9 +48,9 @@
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="WaitForPageLoaded"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waitForPageBuilderDisplay1" />
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waitForPageBuilderDisplay1" />
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>
     </test>
     <test name="ReadHtml">
@@ -95,8 +95,8 @@
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendArbitraryHtml.content}}" stepKey="assertHtmlContent"/>
     </test>
     <test name="ReadHtmlWithNonexistentDataRole">
@@ -141,8 +141,8 @@
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent2"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
     </test>
     <test name="ReadHtmlWithImage">
@@ -157,7 +157,7 @@
             <group value="pagebuilder-html"/>
             <group value="pagebuilder-wysiwygConversion"/>
             <group value="pagebuilder-customBeforeAfter"/>
-            <!--This test failed on mainline, see: MAGETWO-88779-->
+            <!-- MAGETWO-88779 -->
             <group value="skip"/>
         </annotations>
         <before>
@@ -190,8 +190,8 @@
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendWithImage.content}}" stepKey="assertHtmlContent"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnPageBuilderPage"/>
@@ -266,8 +266,8 @@
         <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
         <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <dontSeeElementInDOM selector="{{HtmlOnBackendMediaDirective.content}}" stepKey="assertHtmlContent"/>
     </test>
 </tests>

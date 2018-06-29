@@ -6,6 +6,7 @@
 import $t from "mage/translate";
 import _ from "underscore";
 import CreateValueForHref from "../../converter/attribute/link-href";
+import {DataObject} from "../../data-store";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
@@ -34,7 +35,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getSlideStyles(type: string): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         const style = _.clone(this.getStyle());
 
         let backgroundImage: any = "";
@@ -81,7 +82,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getOverlayAttributes(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         let overlayColorAttr: string = "transparent";
         if (data.show_overlay !== "never") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
@@ -99,7 +100,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getOverlayStyles(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         const { top = 0, right = 0, bottom = 0, left = 0 } = data.margins_and_padding.padding;
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
@@ -117,7 +118,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getOverlayColorStyle(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         let overlayColor: string = "transparent";
         if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
             overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
@@ -133,7 +134,7 @@ export default class Master extends BaseMaster {
      * @returns {string}
      */
     public getContentHtml(): string {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         if (data.content === "" || data.content === undefined) {
             return;
         } else {
@@ -147,7 +148,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getImage(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         if (data.background_image === "" || data.background_image === undefined) {
             return false;
         }
@@ -163,7 +164,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getMobileImage(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         if (data.mobile_image === "" || data.mobile_image === undefined) {
             return false;
         }
@@ -179,7 +180,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getLinkAttribute(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         const attribute: any = {};
         if (typeof data.link_url === "object") {
             attribute.href = this.createValueForHref.toDom("link_url", data);
@@ -195,7 +196,7 @@ export default class Master extends BaseMaster {
      * @returns {object}
      */
     public getButtonStyle(): {} {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         return {
             opacity: data.show_button === "always" ? "1" : "0",
             visibility: data.show_button === "always" ? "visible" : "hidden",

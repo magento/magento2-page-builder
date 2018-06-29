@@ -21,12 +21,12 @@ define([
         }
 
         $element.slick({
-            autoplay: $element.data('autoplay') === 1,
+            autoplay: $element.data('autoplay'),
             autoplaySpeed: $element.data('autoplay-speed') || 0,
-            fade: $element.data('fade') === 1,
-            infinite: $element.data('is-infinite') === 1,
-            arrows: $element.data('show-arrows') === 1,
-            dots: $element.data('show-dots') === 1
+            fade: $element.data('fade'),
+            infinite: $element.data('is-infinite'),
+            arrows: $element.data('show-arrows'),
+            dots: $element.data('show-dots')
         });
     };
 });

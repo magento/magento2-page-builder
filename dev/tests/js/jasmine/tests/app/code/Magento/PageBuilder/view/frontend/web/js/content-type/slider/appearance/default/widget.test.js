@@ -26,12 +26,12 @@ define([
 
             spyOn($.fn, 'slick');
 
-            el.setAttribute('data-autoplay', 1);
+            el.setAttribute('data-autoplay', 'true');
             el.setAttribute('data-autoplay-speed', 500);
-            el.setAttribute('data-fade', 1);
-            el.setAttribute('data-is-infinite', 1);
-            el.setAttribute('data-show-arrows', 1);
-            el.setAttribute('data-show-dots', 1);
+            el.setAttribute('data-fade', 'true');
+            el.setAttribute('data-is-infinite', 'true');
+            el.setAttribute('data-show-arrows', 'true');
+            el.setAttribute('data-show-dots', 'true');
 
             sliderWidgetInitializer(undefined, el);
 

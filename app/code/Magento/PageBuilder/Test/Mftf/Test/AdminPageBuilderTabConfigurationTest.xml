@@ -10,17 +10,15 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="EditTabNameByClickingOnHeaderInStage">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Ability to edit Tab Name inline on the stage by clicking on tab header"/>
+            <title value="Tab Configuration: Ability to edit Tab Name inline on the stage by clicking on tab header"/>
             <description value="Ability to edit Tab Name inline on the stage by clicking on tab header"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90360"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -34,13 +32,15 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <comment userInput="Add tabs without customizing tab" stepKey="AC1"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEdit"/>
 
         <comment userInput="Edit tab name inline on stage" stepKey="AC2"/>
         <click selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" stepKey="clickTabTitle"/>
@@ -48,8 +48,8 @@
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin"/>
 
         <comment userInput="Check new tab name saved in form" stepKey="AC3"/>
-        <actionGroup ref="openTabOptionsByIndex" stepKey="openTabOptionsByIndex">
-            <argument name="index" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCustomTabNameOnForm">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -61,24 +61,21 @@
 
         <comment userInput="User sees Tab 1 with custom tab name on Storefront" stepKey="AC4"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
     </test>
     <test name="AddTabsWithBackgroundColorAndMinHeight">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add new tabs from the stage with customized background color and min height then view on admin and storefront"/>
+            <title value="Tab Configuration: Add new tabs from the stage with customized background color and min height"/>
             <description value="Customize Tab background color and min height and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -92,16 +89,17 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
-        <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="User configures custom tab name, min height, color for first tab" stepKey="AC2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -132,10 +130,10 @@
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('2')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab2ContentVisible"/>
 
         <comment userInput="Update name, color, and min height for second tab" stepKey="AC6"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex('2')}}" stepKey="waitForTabOptionsPanel"/>
-        <seeElement selector="{{TabOnStage.tabOptionsByIndex('2')}}" stepKey="seeTabOptionsPanel2"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit2"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
@@ -161,7 +159,8 @@
         <seeElement selector="{{TabOnStage.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTabMinHeightAdmin2"/>
 
         <comment userInput="Switch tabs and other tab becomes hidden" stepKey="AC10"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -176,7 +175,6 @@
         <comment userInput="User navigates to the storefront and sees changes applied" stepKey="AC13"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
 
         <comment userInput="Tab 1 is focused and Tab 2 is hidden" stepKey="focus"/>
@@ -192,7 +190,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -204,17 +203,15 @@
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background jpg, position top, size cover, attachment scroll and fixed, no background repeat"/>
             <description value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -228,14 +225,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -288,7 +287,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -303,7 +303,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -313,7 +312,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -327,18 +327,16 @@
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedYesBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background jpg, position top, size cover, attachment scroll and fixed, yes background repeat"/>
             <description value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabconfiguration"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -352,14 +350,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -405,7 +405,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -419,7 +420,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -428,7 +428,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -441,17 +442,15 @@
     </test>
     <test name="AddTabsWithBackgroundJpgCenterCoverScrollFixedYesBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background jpg, position center, size cover, attachment scroll and fixed, yes background repeat"/>
             <description value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -465,14 +464,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -524,7 +525,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -538,7 +540,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -547,7 +548,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -560,17 +562,15 @@
     </test>
     <test name="AddTabsWithBackgroundJpgCenterAutoContainScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background jpg, position center, size auto and contain, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background jpg, position center, size auto and contain, attachment scroll and fixed, no background repeat"/>
             <description value="Add tabs with background jpg, position center, size auto and contain, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -584,14 +584,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -650,7 +652,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -665,7 +668,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -675,7 +677,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -689,17 +692,15 @@
     </test>
     <test name="AddTabsWithBackgroundJpgCenterCoverScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background jpg, position center, size cover, attachment scroll and fixed, no background repeat"/>
             <description value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -713,14 +714,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -772,7 +775,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -792,7 +796,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdminAfterSave">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdminAfterSave">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -806,7 +811,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -815,7 +819,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -828,17 +833,15 @@
     </test>
     <test name="AddTabsWithBackgroundJpgBottomCoverScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background jpg, position bottom, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background jpg, position bottom, size cover, attachment scroll and fixed, no background repeat"/>
             <description value="Add tabs with background jpg, position bottom, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -852,14 +855,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -911,7 +916,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -925,7 +931,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -934,7 +939,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -948,17 +954,15 @@
     </test>
     <test name="AddTabsWithBackgroundGifBottomAutoContainScrollFixedYesBackgroundRepeatAfterSave">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background gif, position bottom, size auto and contain, attachment scroll and fixed, yes repeat, view on admin before and after save, view storefront"/>
+            <title value="Tab Configuration: Add tabs with background gif, position bottom, size auto and contain, attachment scroll and fixed, yes repeat, view on admin before and after save"/>
             <description value="Add tabs with background gif, position bottom, size auto and contain, attachment scroll and fixed, yes repeat, view on admin before and after save, view storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -972,14 +976,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -1042,7 +1048,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -1063,7 +1070,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdminAfterSave">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdminAfterSave">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1077,7 +1085,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -1088,7 +1095,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1102,17 +1110,15 @@
     </test>
     <test name="AddTabsWithBackgroundGifCenterAutoContainFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background gif, position center, size auto and contain, attachment fixed, no background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background gif, position center, size auto and contain, attachment fixed, no background repeat"/>
             <description value="Add tabs with background gif, position center, size auto and contain, attachment fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1126,14 +1132,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -1191,7 +1199,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin2">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin2">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -1206,7 +1215,6 @@
 
         <comment userInput="Verify tabs on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -1215,7 +1223,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTab1BackgroundSize"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeat"/>
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront2">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront2">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1226,21 +1235,17 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTab2BackgroundSize"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeat"/>
     </test>
-
-
     <test name="AddTabsWithBackgroundPngBottomAutoContainScrollNoBackgroundRepeatAfterSave">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background png, position bottom, size auto and contain, scroll, no repeat, view on admin before and after save, view storefront"/>
+            <title value="Tab Configuration: Add tabs with background png, position bottom, size auto and contain, scroll, no repeat, view on admin before and after save"/>
             <description value="Add tabs with background png, position bottom, size auto and contain, scroll, no repeat, view on admin before and after save, view storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1262,14 +1267,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -1328,7 +1335,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -1349,7 +1357,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdminAfterSave">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdminAfterSave">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1364,7 +1373,6 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <openNewTab stepKey="openNewTab"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -1374,7 +1382,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1388,17 +1397,15 @@
     </test>
     <test name="AddTabsWithBackgroundPngTopAutoContainScrollFixedYesBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
-            <title value="Add tabs with background png, position top, size auto and contain, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
+            <title value="Tab Configuration: Add tabs with background png, position top, size auto and contain, attachment scroll and fixed, yes background repeat"/>
             <description value="Add tabs with background png, position top, size auto and contain, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1412,14 +1419,16 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -1478,7 +1487,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeat"/>
 
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -1493,7 +1503,6 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -1503,7 +1512,8 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeat"/>
 
-        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+        <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
+            <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1518,8 +1528,8 @@
     </test>
     <test name="TabCustomizedAdvancedSettingsApplyInAdminPreviewAndStorefront">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
             <title value="Tabs - Customized Tabs Advanced Settings apply to admin preview storefront"/>
             <description value="Configure Tab advanced settings and apply to admin preview and storefront"/>
@@ -1527,8 +1537,6 @@
             <testCaseId value="MAGETWO-89997"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1542,16 +1550,18 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <!-- Open Tabs Panel -->
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-        <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft1">
@@ -1618,7 +1628,8 @@
         <comment userInput="Verify tab 1 on stage" stepKey="AC3"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <waitForElementVisible selector="{{TabOnStage.tab1ContentAdvancedStyles}}" stepKey="seeTab1ContentAdvancedStylesInAdminPreview"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
@@ -1628,7 +1639,6 @@
 
         <!-- Verify in Storefront -->
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
 

@@ -7,6 +7,7 @@ import loadModule from "Magento_PageBuilder/js/loader";
 import events from "uiEvents";
 import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import ContentTypeMountEventParamsInterface from "./content-type/content-type-mount-event-params.d";
@@ -26,11 +27,11 @@ import FieldDefaultsInterface from "./field-defaults.d";
  */
 export default function createContentType(
     config: ContentTypeConfigInterface,
-    parent: ContentTypeInterface,
-    stageId,
-    data?: object = {},
+    parent: ContentTypeCollectionInterface,
+    stageId: string,
+    data: object = {},
     childrenLength: number = 0,
-): Promise<ContentTypeInterface> {
+): Promise<ContentTypeInterface & ContentTypeCollectionInterface> {
     return new Promise((resolve: (contentTypeComponent: any) => void) => {
         loadModule([config.component], (ContentTypeComponent: any) => {
             const contentType = new ContentTypeComponent(

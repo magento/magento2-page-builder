@@ -27,16 +27,16 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="waitForFullScreenButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen"/>
-        <click selector="{{PageBuilderActionsSection.openFullScreen}}" stepKey="clickFullScreenButton"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
-        <click selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="clickExitFullScreen"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage2"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen"/>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="clickExitFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage2"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
     <test name="ShowPanelGroups">
         <annotations>
@@ -57,7 +57,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <seeElement selector='{{PageBuilderActionsSection.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
+        <seeElement selector='{{PageBuilderPanel.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypes"/>
     </test>
     <test name="SearchOneCharInPanel">
@@ -79,10 +79,10 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="b" stepKey="fillSearch"/>
-        <see userInput="Buttons" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateContentTypeButtons"/>
-        <see userInput="Banner" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateContentTypeBanner"/>
-        <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateContentTypeStaticBlock"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="b" stepKey="fillSearch"/>
+        <see userInput="Buttons" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeButtons"/>
+        <see userInput="Banner" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeBanner"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateContentTypeStaticBlock"/>
     </test>
     <test name="SearchRemovedContentType">
         <annotations>
@@ -103,10 +103,10 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Search" stepKey="fillSearch"/>
-        <dontSee userInput="Search" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchButtons"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Code" stepKey="fillCode"/>
-        <dontSee userInput="Code" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateCodeButtons"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Search" stepKey="fillSearch"/>
+        <dontSee userInput="Search" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchButtons"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Code" stepKey="fillCode"/>
+        <dontSee userInput="Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtons"/>
     </test>
     <test name="SearchThreeCharInPanel">
         <annotations>
@@ -127,8 +127,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
-        <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateStaticBlock"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateStaticBlock"/>
     </test>
     <test name="SearchNoMatchesInPanel">
         <annotations>
@@ -149,8 +149,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
-        <see userInput="Nothing found" selector="{{PageBuilderActionsSection.nothingFound}}" stepKey="validateNothingFound"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
+        <see userInput="Nothing found" selector="{{PageBuilderPanel.nothingFound}}" stepKey="validateNothingFound"/>
     </test>
     <test name="ClearSearchInPanel">
         <annotations>
@@ -173,21 +173,21 @@
         </after>
         <comment userInput="Verify Clear Search button is not shown before typing" stepKey="commentClearSearchButton"/>
         <dontSeeElement selector='//*[@id="pagebuilder-panel"]/div[1]/a' stepKey="dontSeeClearSearch"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="i" stepKey="fillSearchFieldi"/>
-        <seeElement selector='{{PageBuilderActionsSection.searchField}}' stepKey="seeClearSearch"/>
-        <see userInput="Image" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateImageAppears"/>
-        <dontSee userInput="Row" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateRowDoesNotAppear"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="i" stepKey="fillSearchFieldi"/>
+        <seeElement selector='{{PageBuilderPanel.searchField}}' stepKey="seeClearSearch"/>
+        <see userInput="Image" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateImageAppears"/>
+        <dontSee userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowDoesNotAppear"/>
         <comment userInput="Use Clear Search button to show all content types on Pagebuilder panel" stepKey="commentClearSearch"/>
-        <click selector="{{PageBuilderActionsSection.clearSearch}}" stepKey="clickClearSearch"/>
-        <dontSee userInput="i" selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
+        <click selector="{{PageBuilderPanel.clearSearch}}" stepKey="clickClearSearch"/>
+        <dontSee userInput="i" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClickClear"/>
         <actionGroup ref="closePageBuilderPanelGroups" stepKey="closePageBuilderPanelGroups"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
-        <see userInput="Row" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateRowAppears"/>
-        <dontSee userInput="Column" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateColumnDoesNotAppear"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
+        <see userInput="Row" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateRowAppears"/>
+        <dontSee userInput="Column" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateColumnDoesNotAppear"/>
         <comment userInput="Clear input field using backspace to show all content types on Pagebuilder panel" stepKey="commentDeleteSearch"/>
-        <pressKey selector="{{PageBuilderActionsSection.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
-        <dontSee userInput="r" selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
+        <pressKey selector="{{PageBuilderPanel.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
+        <dontSee userInput="r" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClearField"/>
     </test>
     <test name="SearchContentTypeAndAddToStage">
@@ -211,14 +211,14 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Search Map in Panel and drag to stage" stepKey="commentSearchMap"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Map" stepKey="fillSearchField"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Map" stepKey="fillSearchField"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <comment userInput="Clear search Map and drag Column to stage" stepKey="commentClearSearch"/>
-        <waitForElementVisible selector='{{PageBuilderActionsSection.searchField}}' stepKey="seeClearSearch"/>
-        <click selector='{{PageBuilderActionsSection.searchField}}' stepKey="clickClearSearch"/>
+        <waitForElementVisible selector='{{PageBuilderPanel.searchField}}' stepKey="seeClearSearch"/>
+        <click selector='{{PageBuilderPanel.searchField}}' stepKey="clickClearSearch"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -248,19 +248,19 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <comment userInput="Collapse and Expand panel then drag Tabs to Column" stepKey="commentDragTabs"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapseButton"/>
-        <click selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="clickCollapseButton"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.expandPanel}}" stepKey="waitForExpandButton"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelCollapsed}}" stepKey="waitForPanelCollapsed"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapsePanelButtonNotVisible"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="waitForSearchFieldNotVisible"/>
-        <click selector="{{PageBuilderActionsSection.expandPanel}}" stepKey="clickExpandButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.panelCollapsed}}" stepKey="waitForPanelCollapsedNotVisible"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.expandPanel}}" stepKey="waitForExpandButtonNotVisible"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapseButtonVisible"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="waitForSearchField"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="ta" stepKey="fillSearchFieldTa"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapseButton"/>
+        <click selector="{{PageBuilderPanel.collapsePanel}}" stepKey="clickCollapseButton"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.expandPanel}}" stepKey="waitForExpandButton"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.panelCollapsed}}" stepKey="waitForPanelCollapsed"/>
+        <waitForElementNotVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapsePanelButtonNotVisible"/>
+        <waitForElementNotVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchFieldNotVisible"/>
+        <click selector="{{PageBuilderPanel.expandPanel}}" stepKey="clickExpandButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderPanel.panelCollapsed}}" stepKey="waitForPanelCollapsedNotVisible"/>
+        <waitForElementNotVisible selector="{{PageBuilderPanel.expandPanel}}" stepKey="waitForExpandButtonNotVisible"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapseButtonVisible"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchField"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="ta" stepKey="fillSearchFieldTa"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>

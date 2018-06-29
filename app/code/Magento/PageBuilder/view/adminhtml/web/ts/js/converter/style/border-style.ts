@@ -28,7 +28,7 @@ export default class BorderStyleDefault implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        if (data[name]) {
+        if (data[name] && data[name] !== "_default") {
             return data[name].toString();
         }
     }

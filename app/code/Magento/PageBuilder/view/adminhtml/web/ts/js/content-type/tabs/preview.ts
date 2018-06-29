@@ -19,8 +19,9 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
+import {DataObject} from "../../data-store";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -177,13 +178,28 @@ export default class Preview extends PreviewCollection {
         const focusTime = new Date().getTime();
         Preview.focusOperationTime = focusTime;
 
+        /**
+         * Keep a reference of the state of the interaction state on the stage to check if the interaction has
+         * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
+         * an interaction during the delay period.
+         */
+        let interactionState: boolean = false;
+        events.on("interaction:start", () => {
+            interactionState = true;
+        });
+        events.on("interaction:stop", () => {
+            interactionState = false;
+        });
+
         // Add a 200ms delay after a null set to allow for clicks to be captured
         _.delay(() => {
             if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
                 if (index !== null) {
                     events.trigger("interaction:start");
                 } else {
-                    events.trigger("interaction:stop");
+                    if (interactionState !== true) {
+                        events.trigger("interaction:stop");
+                    }
                 }
             }
         }, ((index === null) ? 200 : 0));
@@ -337,10 +353,10 @@ export default class Preview extends PreviewCollection {
                 /**
                  * Provide custom placeholder element
                  *
-                 * @param {JQuery<Element>} item
-                 * @returns {JQuery<Element>}
+                 * @param {JQuery} item
+                 * @returns {JQuery}
                  */
-                element(item: JQuery<Element>) {
+                element(item: JQuery) {
                     const placeholder = item
                         .clone()
                         .show()
@@ -367,7 +383,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // ContentType being mounted onto container
 
-        events.on("tabs:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
@@ -383,9 +399,9 @@ export default class Preview extends PreviewCollection {
         // Capture when a content type is duplicated within the container
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
-        events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParams) => {
+        events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.parent.id === args.duplicateContentType.parent.id) {
-                const tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
+                const tabData = args.duplicateContentType.dataStore.get();
                 args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
                     "tab_name",
@@ -415,7 +431,7 @@ export default class Preview extends PreviewCollection {
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptionsInterface[] = [];
         this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
-            const tabData = tab.dataStore.get();
+            const tabData = tab.dataStore.get() as DataObject;
             activeOptions.push({
                 label: tabData.tab_name.toString(),
                 labeltitle: tabData.tab_name.toString(),

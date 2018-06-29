@@ -17,6 +17,7 @@
             <title value="Admin are able to see PageBuilder on Dynamic Block after enable PageBuilder from Configuration"/>
             <description value="Admin are able to see PageBuilder on Dynamic Block after enable PageBuilder from Configuration"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2397"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-ee"/>
         </annotations>
@@ -39,6 +40,7 @@
             <title value="Admin should not be able to see PageBuilder on Dynamic Block Page after disable PageBuilder and disable WYSIWYG from Configuration"/>
             <description value="Admin should not be able to see PageBuilder on Dynamic Block Page after disable PageBuilder and disable WYSIWYG from Configuration"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2405"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-ee"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -65,8 +67,8 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Dynamic Block from PageBuilder" stepKey="addTextToEditor"/>
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
         <see userInput="Hello Dynamic Block from PageBuilder" stepKey="seeTypedTextOnStorefront"/>
         <click selector="{{AdminBannerBasicActionSection.Save}}" stepKey="clickSaveBanner" />
         <!--Enable WYSIWYG-->

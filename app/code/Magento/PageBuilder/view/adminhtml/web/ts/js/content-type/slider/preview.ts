@@ -18,11 +18,13 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import {DataObject} from "../../data-store";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -305,7 +307,7 @@ export default class Preview extends PreviewCollection {
         });
 
         // ContentType being mounted onto container
-        events.on("slider:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slider:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
@@ -348,14 +350,14 @@ export default class Preview extends PreviewCollection {
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         return {
-            arrows: data.show_arrows === "1",
-            autoplay: data.autoplay === "1",
+            arrows: data.show_arrows === "true",
+            autoplay: data.autoplay === "true",
             autoplaySpeed: data.autoplay_speed,
             dots: false, // We have our own dots implemented
-            fade: data.fade === "1",
-            infinite: data.is_infinite === "1",
+            fade: data.fade === "true",
+            infinite: data.is_infinite === "true",
             waitForAnimate: false,
         };
     }

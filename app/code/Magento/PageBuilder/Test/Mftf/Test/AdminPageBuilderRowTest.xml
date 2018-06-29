@@ -79,9 +79,9 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
-        <waitForElement selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
-        <waitForElement selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
-        <waitForElement selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
     <test name="RowAddAdditionalRowAboveInitialRow">
         <annotations>
@@ -133,9 +133,9 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
-        <waitForElement selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
-        <waitForElement selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
-        <waitForElement selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
     <test name="RowRemoveRowFromStage">
         <annotations>
@@ -144,6 +144,7 @@
             <title value="Can remove a row"/>
             <description value="A user should be able to remove a row from the stage"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2393"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
@@ -193,9 +194,9 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage('row')}}" stepKey="onMouseOverContentTypeStage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeDeleteDisabled}}" stepKey="seeDisabledRemoveContentTypeButton" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage('row')}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveDisabled}}" stepKey="seeDisabledRemoveContentTypeButton" />
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow1"/>
     </test>
     <test name="RowPlaceholderAndDisplayLabelInAdminPreview">
@@ -328,13 +329,13 @@
         <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialSliderHeightMatchesExpected">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="index" value="1"/>
-            <argument name="containerDefaultHeight" value="PageBuilderEmptySliderContainerHeightProperty"/>
+            <argument name="containerDefaultHeight" value="PageBuilderEmptySliderContainerHeight"/>
             <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
             <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
         <comment userInput="Validate Row Height adjusts to Slider Height on Stage" stepKey="commentValidateRowHeightAdjustToSlider"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
         <executeJS function="return Math.round({$actualStageInitialSliderHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
         <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToSliderHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndSlider</expectedResult>
@@ -376,7 +377,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -384,7 +385,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
@@ -429,7 +430,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
         <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -437,7 +438,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
         <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
