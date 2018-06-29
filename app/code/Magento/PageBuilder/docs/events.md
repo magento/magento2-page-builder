@@ -73,8 +73,8 @@ This document contains reference information for events dispatched in Page Build
 * [stage:{{id}}:readyAfter](#stageidreadyafter)
 * [stage:{{id}}:masterFormatRenderAfter](#stageidmasterformatrenderafter)
 * [stage:updateAfter](#stageupdateafter)
-* [focusChild:start](#focuschildstart)
-* [focusChild:stop](#focuschildstop)
+* [stage:focusChildStart](#stagefocuschildstart)
+* [stage:focusChildStop](#stagefocuschildstop)
 * [state](#state)
 * [{{config.name}}:{{id}}:updateAfter](#confignameidupdateafter)
 * [googleMaps:authFailure](#googlemapsauthFailure)
@@ -493,11 +493,11 @@ Error
 
 [Back to top]
 
-### `focusChild:start`
+### `stage:focusChildStart`
 
 [Back to top]
 
-### `focusChild:stop`
+### `stage:focusChildStop`
 
 [Back to top]
 
