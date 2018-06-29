@@ -44,19 +44,27 @@
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanelSmallByIndex">
         <arguments>
-            <argument name="contentType" defaultValue=""/>
-            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="section"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickEditButton"/>
+        <waitForElementVisible time="20" selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentType"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible selector="{{section.optionsMenuButton(targetIndex, 'edit')}}" stepKey="waitForEditButton"/>
+        <click selector="{{section.optionsMenuButton(targetIndex, 'edit')}}" stepKey="clickEditButton"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad2"/>
         <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <see userInput="Edit {{contentType.name}}" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderOptionsMenuSmallByIndex">
+        <arguments>
+            <argument name="section"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentType"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
     </actionGroup>
     <actionGroup name="duplicateContentType">
         <arguments>
@@ -73,17 +81,22 @@
     </actionGroup>
     <actionGroup name="duplicateSmallContentType">
         <arguments>
-            <argument name="contentType" defaultValue=""/>
+            <argument name="section"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
-            <argument name="expectedIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
-        <click selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="clickContentTypeStage"/>
+        <waitForElement selector="{{section.all}}" stepKey="waitForAllContentTypes"/>
+        <executeJS function="return document.querySelectorAll('{{section.all}}').length+1" stepKey="expectedContentTypeCount"/>
+        <waitForElementVisible selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentTypeVisible"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="clickDuplicateContentType"/>
+        <waitForElementVisible selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{section.optionsMenuButton(targetIndex, 'duplicate')}}" stepKey="clickDuplicate"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, expectedIndex)}}" stepKey="waitForDuplicateContentType"/>
+        <executeJS function="return document.querySelectorAll('{{section.all}}').length" stepKey="resultingContentTypeCount"/>
+        <assertEquals stepKey="assertContentTypeCount">
+            <actualResult type="variable">$resultingContentTypeCount</actualResult>
+            <expectedResult type="variable">$expectedContentTypeCount</expectedResult>
+        </assertEquals>
     </actionGroup>
     <actionGroup name="removeEmptyContentTypeFromStage">
         <!-- Remove a content type which is in it's default state -->
@@ -138,15 +151,15 @@
     </actionGroup>
     <actionGroup name="removeContentTypeFromStageSmallByIndex">
         <arguments>
-            <argument name="contentType" defaultValue=""/>
-            <argument name="contentTypeIndex" defaultValue="2" type="string"/>
+            <argument name="section"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
+        <waitForElementVisible time="20" selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="waitForContentType"/>
+        <click selector="{{section.openOptionsMenu(targetIndex)}}" stepKey="clickContentType"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForRemoveButton"/>
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickRemoveContentType"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenu(targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{section.optionsMenuButton(targetIndex, 'remove')}}" stepKey="waitForRemoveButton"/>
+        <click selector="{{section.optionsMenuButton(targetIndex, 'remove')}}" stepKey="clickRemoveButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="confirmRemovalModal">

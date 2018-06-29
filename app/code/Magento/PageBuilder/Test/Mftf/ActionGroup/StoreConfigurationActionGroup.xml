@@ -19,12 +19,17 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="saveStoreConfigurationAndValidateFieldError">
+        <arguments>
+            <argument name="inputFieldError" type="string"/>
+            <argument name="errorMessageSelector" type="string"/>
+            <argument name="errorMessage" type="string"/>
+        </arguments>
         <comment userInput="saveStoreConfigurationAndValidateFieldError" stepKey="comment"/>
         <waitForElementVisible selector="{{StoreConfigSection.Save}}" stepKey="waitForSaveButton"/>
         <click selector="{{StoreConfigSection.Save}}" stepKey="clickSaveButton"/>
-        <waitForElement selector="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}" stepKey="waitForErrorField"/>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}" stepKey="waitForErrorMessage"/>
-        <see selector="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}" userInput="{{googleMapsStyle.errorMessage}}" stepKey="seeErrorMessage"/>
+        <waitForElement selector="{{inputFieldError}}" stepKey="waitForErrorField"/>
+        <waitForElementVisible selector="{{errorMessageSelector}}" stepKey="waitForErrorMessage"/>
+        <see selector="{{errorMessageSelector}}" userInput="{{errorMessage}}" stepKey="seeErrorMessage"/>
     </actionGroup>
     <actionGroup name="enablePageBuilderSetting">
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
@@ -100,5 +105,19 @@
         <comment userInput="inputGoogleMapsStyle" stepKey="comment"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" stepKey="waitForGoogleMapsStyleInputField"/>
         <fillField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{style}}" stepKey="inputStyle"/>
+    </actionGroup>
+    <actionGroup name="updateDefaultGridSizeConfig">
+        <arguments>
+            <argument name="gridSize" defaultValue="12" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" stepKey="waitForDefaultGridSizeInputFieldVisible"/>
+        <fillField selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" userInput="{{gridSize}}" stepKey="enterDefaultGridSize"/>
+    </actionGroup>
+    <actionGroup name="updateMaxGridSizeConfig">
+        <arguments>
+            <argument name="gridSize" defaultValue="16" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridMaxInputField}}" stepKey="waitForMaxGridSizeInputFieldVisible"/>
+        <fillField selector="{{ContentManagementSection.ColumnGridMaxInputField}}" userInput="{{gridSize}}" stepKey="enterMaxGridSize"/>
     </actionGroup>
 </actionGroups>

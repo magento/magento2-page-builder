@@ -10,32 +10,41 @@ define(["jquery"], function (_jquery) {
     function DataStore() {
       this.state = {};
       this.events = (0, _jquery)({});
+      this.previousState = {};
     }
 
     var _proto = DataStore.prototype;
 
     /**
      * Retrieve data from the state for an editable area
+     *
+     * @param {string} key
+     * @returns {DataObject | string | number | boolean | any[] | null | undefined}
      */
-    _proto.get = function get() {
+    _proto.get = function get(key) {
+      if (key) {
+        return this.state[key];
+      }
+
       return this.state;
     };
     /**
-     * Update the state for an individual editable area
+     * Update the state for the content type
      *
-     * @param data
-     * @param key
+     * @param {DataObject | string | number | boolean | any[] | null | undefined} data
+     * @param {string | number} key
      */
 
 
     _proto.update = function update(data, key) {
-      var storeState = key ? this.state : data;
+      this.previousState = Object.assign({}, this.state);
 
       if (key) {
-        storeState[key] = data;
+        this.state[key] = data;
+      } else {
+        this.state = data;
       }
 
-      this.state = storeState;
       this.emitState();
     };
     /**
@@ -51,15 +60,26 @@ define(["jquery"], function (_jquery) {
       this.update(storeState);
     };
     /**
-     * Subscribe to data changes on an editable area
+     * Subscribe to data changes within the data store of a content type
      *
      * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string | number} key
      */
 
 
-    _proto.subscribe = function subscribe(handler) {
+    _proto.subscribe = function subscribe(handler, key) {
+      var _this = this;
+
       this.events.on("state", function (event, data) {
-        handler(data.state, event);
+        if (key) {
+          if (_this.previousState[key] !== data.state[key]) {
+            handler(data.state, event);
+          }
+        } else {
+          if (_this.previousState !== data.state) {
+            handler(data.state, event);
+          }
+        }
       });
     };
     /**

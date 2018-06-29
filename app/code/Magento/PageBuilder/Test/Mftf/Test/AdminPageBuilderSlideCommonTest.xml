@@ -207,7 +207,7 @@
         <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderSliderFadeYesProperty.value)}}" stepKey="seeSliderFadeSetting"/>
         <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
-        <seeElement selector="{{SliderOnFrontend.ShowDots(PageBuilderSliderShowDotsNoProperty.value)}}" stepKey="seeSliderShowDotsOffOnFrontendSetting"/>
+        <seeElement selector="{{SliderOnFrontend.ShowDots(PageBuilderSliderShowDotsYesProperty.value)}}" stepKey="seeSliderShowDotsOffOnFrontendSetting"/>
         <seeElement selector="{{SliderOnFrontend.sliderBorder(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnStorefront"/>
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
@@ -373,14 +373,14 @@
 
         <comment userInput="Slide is focused, its option panel is displayed on top of the slider dot." stepKey="AC3"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
-        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsPanel"/>
 
         <comment userInput="User sees Slide 1 default name in the Slide Option Panel." stepKey="AC4"/>
-        <see userInput="Slide 1" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
+        <see userInput="Slide 1" selector="{{SlideOnBackend.optionsMenuTitle('1')}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
 
         <comment userInput="User updates settings of first slide and saves configuration." stepKey="AC5"/>
-        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
-            <argument name="index" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText1">
             <argument name="property" value="PageBuilderSlideItemName1"/>
@@ -388,7 +388,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
         <comment userInput="Slide option panel is displayed" stepKey="AC6"/>
-        <waitForElementVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
+        <waitForElementVisible time="5" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
@@ -396,16 +396,16 @@
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
 
-        <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentTypeOptionsMenu"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
+        <moveMouseOver selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
 
         <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
-        <waitForElementNotVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="waitForSlideOptionsPanelNotVisible" />
-        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanelStillHidden"/>
+        <waitForElementNotVisible time="5" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForSlideOptionsPanelNotVisible" />
+        <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsPanelStillHidden"/>
 
         <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
-        <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddNewSlideChild"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.addNewSlide}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideName"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="seeAddNewSlideChild"/>
+        <assertElementContainsAttribute selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideName"/>
 
         <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
         <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
@@ -419,15 +419,15 @@
         <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC12"/>
         <waitForElementVisible selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="assertSecondDotAdded"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('2')}}" attribute="class" expectedValue="active" stepKey="assertSecondDotActive"/>
-        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel2"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsPanel2"/>
 
         <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC13"/>
-        <see userInput="Slide 2" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
+        <see userInput="Slide 2" selector="{{SlideOnBackend.optionsMenuTitle('2')}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
         <click stepKey="focusOutsideStage" selector="{{PageBuilderPanel.searchPanel}}"/>
-
         <comment userInput="User updates settings of second slide and saves configuration." stepKey="AC14"/>
-        <actionGroup ref="openSlideOptionsByIndex" stepKey="openSecondSlideOptions">
-            <argument name="index" value="2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
             <argument name="property" value="PageBuilderSlideItemName2"/>
@@ -509,11 +509,11 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
         <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickNavigationDot"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
-        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentTypeOptionsMenu"/>
-        <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentType"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeContentTypeOptionsMenu"/>
+        <click selector="{{SlideOnBackend.optionsMenuButton('1', 'remove')}}" stepKey="clickRemoveContentType"/>
         <comment userInput="Verify cannot remove last slide" stepKey="cantRemoveLastSlide"/>
 
-        <seeElement selector="{{SliderInAdmin.slideOptionsRemoveDisabled}}" stepKey="seeContentTypeRemoveOptionDisabled"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenuButtonDisabled('1', 'remove')}}" stepKey="seeContentTypeRemoveOptionDisabled"/>
         <comment userInput="Add a second slide without custom content" stepKey="addSlideNoContent"/>
 
         <actionGroup ref="addSlide" stepKey="add0Slide"/>
@@ -521,7 +521,9 @@
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validateNumberOfSlides2"/>
         <comment userInput="Remove slide without custom content has no confirmation modal" stepKey="removeSlideNoContent"/>
 
-        <actionGroup ref="removeSlide" stepKey="removeSlide0"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeFromStage1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides1"/>
         <comment userInput="Add a slide with custom content" stepKey="addSlideCustomContent"/>
 
@@ -535,8 +537,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validate2SlidesAgain"/>
         <comment userInput="Remove slide with custom content has confirmation modal" stepKey="removeSlideWithContent"/>
-
-        <actionGroup ref="removeSlide" stepKey="removeSlide1"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeFromStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <waitForElementVisible selector="{{PageBuilderStage.modal}}" time="10" stepKey="waitForModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides0"/>
@@ -732,7 +736,9 @@
         <!-- Change button type value to secondary -->
         <comment userInput="Change Button Type to Secondary in admin" stepKey="secondary"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStageSecondary"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderSlideButtonTypeSecondaryProperty"/>
         </actionGroup>
@@ -756,7 +762,9 @@
         <!-- Change button type value to link -->
         <comment userInput="Change Button Type to Link in admin" stepKey="link"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStageLink"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeLinkProperty">
             <argument name="property" value="PageBuilderSlideButtonTypeLinkProperty"/>
         </actionGroup>
@@ -1294,8 +1302,8 @@
         <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
-        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
-            <argument name="index" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
             <argument name="property" value="PageBuilderSliderBackgroundImageProperty"/>
@@ -1350,8 +1358,8 @@
             <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Center-->
-        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions2">
-            <argument name="index" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty2">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
@@ -1364,8 +1372,8 @@
             <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Right-->
-        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions3">
-            <argument name="index" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty3">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
@@ -1468,9 +1476,12 @@
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="duplicateSlide" stepKey="duplicateSlide" />
-        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
-            <argument name="index" value="2"/>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutSlideTwoColour">
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
