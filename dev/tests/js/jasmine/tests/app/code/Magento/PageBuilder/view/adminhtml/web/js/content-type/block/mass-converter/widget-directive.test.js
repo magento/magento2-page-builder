@@ -68,7 +68,8 @@ define([
                         html_variable: 'myhtml'
                     },
                     attributes = {
-                        myhtml: '{{widget template="foobar" block_id="123" type_name="CMS Static Block" type="Magento\\Cms\\Block\\Widget\\Block"}}'
+                        myhtml: '{{widget template="foobar" block_id="123" type_name="CMS Static Block" ' +
+                            'type="Magento\\Cms\\Block\\Widget\\Block"}}'
                     },
                     result = model.fromDom(attributes, config);
 
