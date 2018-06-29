@@ -12,6 +12,9 @@ use Magento\Framework\Controller\ResultFactory;
 
 class Metadata extends \Magento\Backend\App\AbstractAction
 {
+    /**
+     * {@inheritdoc}
+     */
     const ADMIN_RESOURCE = 'Magento_Cms::block';
 
     /**
