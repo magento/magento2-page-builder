@@ -17,7 +17,6 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
-      _this.displayPlaceholder = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.placeholderText = void 0;
       _this.lastBlockId = void 0;
@@ -68,17 +67,14 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
           this.displayPreview(true);
-          this.displayPlaceholder(false);
         }
       } else {
         this.displayPreview(false);
-        this.displayPlaceholder(true);
         this.placeholderText("");
       }
 
       if (!data.block_id || data.template.length === 0) {
         this.displayPreview(false);
-        this.displayPlaceholder(true);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
@@ -103,8 +99,6 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         if (_typeof(response.data) !== "object") {
           _this3.displayPreview(false);
 
-          _this3.displayPlaceholder(true);
-
           _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
 
           return;
@@ -116,13 +110,9 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         if (response.data.content) {
           _this3.displayPreview(true);
 
-          _this3.displayPlaceholder(false);
-
           _this3.data.main.html(response.data.content);
         } else if (response.data.error) {
           _this3.displayPreview(false);
-
-          _this3.displayPlaceholder(true);
 
           _this3.placeholderText(response.data.error);
         }
@@ -132,8 +122,6 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         _this3.lastRenderedHtml = response.data.content;
       }).fail(function () {
         _this3.displayPreview(false);
-
-        _this3.displayPlaceholder(true);
 
         _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
       }).always(function () {
