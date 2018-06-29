@@ -3,9 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-/**
- * @api
- */
 import Column from "../column/preview";
 
 let dragColumn: Column;
