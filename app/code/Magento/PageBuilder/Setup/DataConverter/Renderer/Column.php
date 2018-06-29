@@ -15,10 +15,16 @@ use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
  */
 class Column implements RendererInterface
 {
-    // Defined column mapping to supported widths
+    // We have to map as we are unable to calculate the new column width effectively for all sizes
     const COLUMN_WIDTH_MAPPING = [
-        '0.250' => '0.167',
-        '0.750' => '0.833'
+        '0.167' => '16.6667',
+        '0.250' => '25',
+        '0.333' => '33.3333',
+        '0.500' => '50',
+        '0.666' => '66.6666',
+        '0.750' => '75',
+        '0.825' => '82.5000',
+        '1.000' => '100',
     ];
 
     /**
@@ -76,13 +82,10 @@ class Column implements RendererInterface
      */
     private function calculateColumnWidth($oldWidth) : string
     {
-        // Map column sizes to suitable sizes for columns we don't yet support
-        if (isset(self::COLUMN_WIDTH_MAPPING[$oldWidth])) {
-            $oldWidth = self::COLUMN_WIDTH_MAPPING[$oldWidth];
+        if (!isset(self::COLUMN_WIDTH_MAPPING[number_format($oldWidth, 3)])) {
+            throw new \InvalidArgumentException('Width ' . $oldWidth .' has no valid mapping.');
         }
 
-        // Resolve issues with old system storing non exact percentages (e.g. 0.167 != 16.6667%)
-        $percentage = 100 / round(100 / ($oldWidth * 100), 1);
-        return floatval(number_format($percentage, 4, '.', '')) . '%';
+        return self::COLUMN_WIDTH_MAPPING[number_format($oldWidth, 3)] . '%';
     }
 }

@@ -8,10 +8,10 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
   /**
    * Create a column and add it to it's parent
    *
-   * @param {ColumnGroup} parent
+   * @param {ContentTypeCollectionInterface} parent
    * @param {number} width
    * @param {number} index
-   * @returns {Promise<Column>}
+   * @returns {Promise<ContentTypeCollectionInterface>}
    * @api
    */
   function createColumn(parent, width, index) {

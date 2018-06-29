@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
-import OptionInterface from "./content-type-toolbar/option.d";
-import ValueInterface from "./content-type-toolbar/value.d";
+import {OptionInterface} from "./content-type-toolbar/option";
+import {ValueInterface} from "./content-type-toolbar/value";
 import Preview from "./content-type/preview";
 
 /**
@@ -46,7 +46,7 @@ export default class Toolbar {
      */
     public onOptionClick(option: OptionInterface, value: ValueInterface) {
         const defaultValue: string = this.preview.config.fields[option.key].default;
-        const currentValue: string = this.preview.parent.dataStore.get()[option.key];
+        const currentValue: string = this.preview.parent.dataStore.get(option.key) as string;
         this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
     }
 

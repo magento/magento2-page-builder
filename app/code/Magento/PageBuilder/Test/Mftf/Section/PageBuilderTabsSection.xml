@@ -28,6 +28,7 @@
         <element name="tabsAlignment" type="text" selector="//div[@class='tabs-content'and contains(@style,'text-align: {{arg1}}')]" parameterized="true"/>
     </section>
     <section name="TabOnStage">
+        <element name="all" type="button" selector=".pagebuilder-tab-item"/>
         <element name="tabHeader" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderEditableTitle" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]//span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="tabHeaderItemDefault" type="button" selector="//ul[contains(@class, 'tabs-navigation')]/li[contains(@style, 'border-radius: {{arg1}}px;') and contains(@style, 'border-width: 1px;')]" parameterized="true"/>
@@ -36,11 +37,10 @@
         <element name="tab1ContentAdvancedStyles" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//div[contains(@class,'ui-tabs-panel')])[1]//div[contains(@class, 'pagebuilder-tab-item') and contains(@style, 'text-align: center;') and contains(@style, 'border-style: solid;') and contains(@style, 'border-color: rgb(0, 0, 0);') and contains(@style, 'border-width: 10px;') and contains(@style, 'border-radius: 12px;') and contains(@style, 'margin: 5px;') and contains(@style, 'padding: 5px;')]"/>
         <element name="tab2ContentAdvancedStyles" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//div[contains(@class,'ui-tabs-panel')])[2]//div[contains(@class, 'pagebuilder-tab-item') and contains(@style, 'text-align: right;') and contains(@style, 'border-style: dotted;') and contains(@style, 'border-color: rgb(255, 0, 0);') and contains(@style, 'border-width: 500px;') and contains(@style, 'border-radius: 500px;') and contains(@style, 'margin: 1px 2px 3px 4px;') and contains(@style, 'padding: 1px 2px 3px 4px;')]"/>
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-tabs')]//div[contains(@class, 'pagebuilder-tab-item') and contains(@class, 'empty-container')])"/>
-        <element name="tabOptionsByIndex" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//div[contains(@class, 'pagebuilder-options-wrapper')])[{{arg1}}]" parameterized="true"/>
-        <element name="tabOptionsDuplicate" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'duplicate-structural')]"/>
-        <element name="tabOptionsEdit" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'edit-content-type')]"/>
-        <element name="tabOptionsRemove" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'remove-structural')]"/>
-        <element name="tabOptionsRemoveDisabled" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'disabled')]"/>
+        <element name="openOptionsMenu" type="button" selector="(//ul[contains(@class,'tabs-navigation')]//a[contains(@class,'tab-title')])[{{arg1}}]" parameterized="true"/>
+        <element name="optionsMenu" type="button" selector="(//ul[contains(@class,'tabs-navigation')]//div[contains(@class,'pagebuilder-options-wrapper')])[{{arg1}}]" parameterized="true"/>
+        <element name="optionsMenuButton" type="button" selector="(//ul[contains(@class,'tabs-navigation')]//div[contains(@class,'pagebuilder-options-wrapper')])[{{arg1}}]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="optionsMenuButtonDisabled" type="button" selector="(//ul[contains(@class,'tabs-navigation')]//div[contains(@class,'pagebuilder-options-wrapper')])[{{arg1}}]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')]//div[@role='tabpanel'])[{{arg1}}][not(contains(@style,'border:'))]" parameterized="true"/>
         <element name="tabTitle" type="button" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
         <element name="tabPanel" type="button" selector="//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
@@ -62,6 +62,7 @@
     <section name="TabOnStorefront">
         <element name="tabHeader" type="button" selector="(//li[contains(@role, 'tab')])[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderItemActive" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'])/li[{{arg1}}][contains(@class, 'ui-state-active')]" parameterized="true"/>
+        <element name="tabPanel" type="button" selector="(//div[@class='tabs-content']//div[@role='tabpanel'])[{{arg1}}]" parameterized="true"/>
         <element name="tabContent" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}]" parameterized="true"/>
         <element name="tabContentAdvancedStyles" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][@style='border-radius: 0px 12px 12px; border: 10px solid rgb(0, 0, 0);']" parameterized="true"/>
         <element name="tabContentMinimumHeight" type="button" selector="(//div[@class='tabs-content']//div[@data-role='tab-item'])[{{arg1}}][contains(@style, 'min-height: {{arg2}}px')]" parameterized="true"/>

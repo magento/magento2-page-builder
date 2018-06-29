@@ -39,43 +39,46 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const xpathResult = document.evaluate(
-                        elementConfig.path,
-                        element,
-                        null,
-                        XPathResult.FIRST_ORDERED_NODE_TYPE,
-                        null,
-                    );
-                    const currentElement = xpathResult.singleNodeValue;
-                    if (currentElement === null || currentElement === undefined) {
-                        continue;
-                    }
-                    if (elementConfig.style.length) {
-                        data = this.readStyle(
-                            elementConfig.style,
-                            currentElement,
-                            data,
-                            propertyReaderPool,
-                            converterPool,
+                    // Do not read if path is optional
+                    if (elementConfig.path !== "") {
+                        const xpathResult = document.evaluate(
+                            elementConfig.path,
+                            element,
+                            null,
+                            XPathResult.FIRST_ORDERED_NODE_TYPE,
+                            null,
                         );
-                    }
-                    if (elementConfig.attributes.length) {
-                        data = this.readAttributes(
-                            elementConfig.attributes,
-                            currentElement,
-                            data,
-                            propertyReaderPool,
-                            converterPool,
-                        );
-                    }
-                    if (undefined !== elementConfig.html.var) {
-                        data = this.readHtml(elementConfig, currentElement, data, converterPool);
-                    }
-                    if (undefined !== elementConfig.tag.var) {
-                        data = this.readHtmlTag(elementConfig, currentElement, data);
-                    }
-                    if (undefined !== elementConfig.css.var) {
-                        data = this.readCss(elementConfig, currentElement, data);
+                        const currentElement = xpathResult.singleNodeValue;
+                        if (currentElement === null || currentElement === undefined) {
+                            continue;
+                        }
+                        if (elementConfig.style.length) {
+                            data = this.readStyle(
+                                elementConfig.style,
+                                currentElement,
+                                data,
+                                propertyReaderPool,
+                                converterPool,
+                            );
+                        }
+                        if (elementConfig.attributes.length) {
+                            data = this.readAttributes(
+                                elementConfig.attributes,
+                                currentElement,
+                                data,
+                                propertyReaderPool,
+                                converterPool,
+                            );
+                        }
+                        if (undefined !== elementConfig.html.var) {
+                            data = this.readHtml(elementConfig, currentElement, data, converterPool);
+                        }
+                        if (undefined !== elementConfig.tag.var) {
+                            data = this.readHtmlTag(elementConfig, currentElement, data);
+                        }
+                        if (undefined !== elementConfig.css.var) {
+                            data = this.readCss(elementConfig, currentElement, data);
+                        }
                     }
                 }
                 data = this.convertData(config, data, massConverterPool);

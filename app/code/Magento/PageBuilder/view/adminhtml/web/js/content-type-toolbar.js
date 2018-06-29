@@ -40,7 +40,7 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
      */
     _proto.onOptionClick = function onOptionClick(option, value) {
       var defaultValue = this.preview.config.fields[option.key].default;
-      var currentValue = this.preview.parent.dataStore.get()[option.key];
+      var currentValue = this.preview.parent.dataStore.get(option.key);
       this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
     };
     /**

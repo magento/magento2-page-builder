@@ -349,4 +349,15 @@
         <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property4.value)}}" stepKey="seeFourthSelection"/>
     </actionGroup>
+    <actionGroup name="validateVerticalAlignmentVisualSelects">
+        <arguments>
+            <argument name="property1" defaultValue=""/>
+            <argument name="property2" defaultValue=""/>
+            <argument name="property3" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property1.section, property1.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{VisualSelectComponent.firstSelection(property1.value)}}" stepKey="seeFirstSelection"/>
+        <seeElement selector="{{VisualSelectComponent.firstSelection(property2.value)}}" stepKey="seeSecondSelection"/>
+        <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>
+    </actionGroup>
 </actionGroups>

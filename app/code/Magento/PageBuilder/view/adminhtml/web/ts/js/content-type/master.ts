@@ -161,7 +161,7 @@ export default class Master {
      * @deprecated
      */
     public getHtml(element: string) {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         const config = appearanceConfig(this.parent.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (undefined !== config.html.var) {

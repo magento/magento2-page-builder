@@ -357,13 +357,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     _proto.buildSlickConfig = function buildSlickConfig() {
       var data = this.parent.dataStore.get();
       return {
-        arrows: data.show_arrows === "1",
-        autoplay: data.autoplay === "1",
+        arrows: data.show_arrows === "true",
+        autoplay: data.autoplay === "true",
         autoplaySpeed: data.autoplay_speed,
         dots: false,
         // We have our own dots implemented
-        fade: data.fade === "1",
-        infinite: data.is_infinite === "1",
+        fade: data.fade === "true",
+        infinite: data.is_infinite === "true",
         waitForAnimate: false
       };
     };

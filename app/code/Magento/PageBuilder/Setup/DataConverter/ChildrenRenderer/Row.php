@@ -104,11 +104,6 @@ class Row implements ChildrenRendererInterface
             return 0;
         }
 
-        $width = $column['formData']['width'];
-        if (isset(Column::COLUMN_WIDTH_MAPPING[$width])) {
-            $width = Column::COLUMN_WIDTH_MAPPING[$width];
-        }
-
-        return $width;
+        return $column['formData']['width'];
     }
 }
