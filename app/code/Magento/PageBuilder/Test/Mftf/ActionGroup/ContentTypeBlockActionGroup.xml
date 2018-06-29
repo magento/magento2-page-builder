@@ -14,7 +14,8 @@
         </arguments>
         <click selector="{{BlockOnStage.selectBlockBtn}}" stepKey="clickSelectBlockBtn"/>
         <waitForElementVisible selector="{{BlockOnGrid.searchBox}}" stepKey="waitForBlockGrid" />
-        <pressKey selector="{{BlockOnGrid.searchBox}}" userInput="{{block.title}}" stepKey="enterBlockTitle"/>
+        <pressKey selector="{{BlockOnGrid.searchBox}}" userInput="{{block.identifier}}" stepKey="enterBlockTitle"/>
+        <waitForElementVisible selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="waitForSearchResult"/>
         <click selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="clickSelectBtn"/>
         <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
     </actionGroup>
