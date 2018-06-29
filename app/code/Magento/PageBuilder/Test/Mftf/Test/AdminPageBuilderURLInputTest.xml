@@ -31,10 +31,10 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
@@ -54,10 +54,9 @@
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
-            <expectedResult type="string">{{PageBuilderButtonItemLink_Secure._value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderButtonItemLink_NotSecure.value}}</expectedResult>
             <actualResult type="variable">grabFromCurrentUrl1</actualResult>
         </assertEquals>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
 
         <!--Go to admin to edit Secure External Link-->
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
@@ -82,7 +81,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
-            <expectedResult type="string">{{PageBuilderButtonItemLink_Secure._value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderButtonItemLink_Secure.value}}</expectedResult>
             <actualResult type="variable">grabFromCurrentUrl2</actualResult>
         </assertEquals>
     </test>
@@ -119,16 +118,16 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStageForButtonItem">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
 
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption" />
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
         <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
@@ -223,16 +222,16 @@
         </actionGroup>
 
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStageForButtonItem">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
 
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Product" stepKey="selectOption" />
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Product" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
         <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
@@ -321,16 +320,16 @@
         </actionGroup>
 
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStageForButtonItem">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
 
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Page" stepKey="selectOption" />
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Page" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
         <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />

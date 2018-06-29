@@ -48,7 +48,7 @@
         <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
         <dontSeeElement selector="//li[@name='advanced content']" stepKey="advancedContentAppearanceNotPresent"/>
         <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
         <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
             <actualResult type="variable">grabNameDefaultValue</actualResult>
         </assertEmpty>
@@ -88,24 +88,24 @@
         </actionGroup>
         <!-- Verify default and available values on background section of Add Slide form -->
         <comment userInput="Background Color: input defaults to empty" stepKey="AC0" />
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" stepKey="grabColorDefaultValue"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" stepKey="grabColorDefaultValue"/>
         <assertEmpty stepKey="assertEmptyBackgroundColor" message="Background Color has text: $grabColorDefaultValue">
             <actualResult type="variable">grabColorDefaultValue</actualResult>
         </assertEmpty>
         <comment userInput="Background Image: mediaUpload defaults to empty" stepKey="AC1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
         <comment userInput="Background Position: dropdown defaults to Top Aligned" stepKey="AC2"/>
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="{{PageBuilderBackgroundPositionDefault.value}}" stepKey="seeTopAlignedPositionDefault"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="{{PageBuilderBackgroundPositionDefault.value}}" stepKey="seeTopAlignedPositionDefault"/>
         <comment userInput="Background Position: available values Top Aligned, Centered, Bottom Aligned" stepKey="AC3"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
             <expectedResult type="array">[Top Aligned, Centered, Bottom Aligned]</expectedResult>
             <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
         </assertEquals>
         <comment userInput="Background Size: dropdown defaults to Cover" stepKey="AC4"/>
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="{{PageBuilderSlideBackgroundSizeDefault.value}}" stepKey="seeBackgroundSizeDefault"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="{{PageBuilderSlideBackgroundSizeDefault.value}}" stepKey="seeBackgroundSizeDefault"/>
         <comment userInput="Background Size: available values Auto, Cover, Contain" stepKey="AC5"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeDropdownValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeDropdownValues"/>
         <assertEquals stepKey="assertBackgroundSizeDropdown" message="Background sizes in dropdown">
             <expectedResult type="array">[Auto, Cover, Contain]</expectedResult>
             <actualResult type="variable">grabBackgroundSizeDropdownValues</actualResult>
@@ -115,9 +115,9 @@
             <argument name="property" value="PageBuilderBackgroundRepeatOff"/>
         </actionGroup>
         <comment userInput="Background Attachment: dropdown defaults to Scroll" stepKey="AC7"/>
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="Scroll" stepKey="seeBackgroundAttachmentDefault"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="Scroll" stepKey="seeBackgroundAttachmentDefault"/>
         <comment userInput="Background Attachment: available values Scroll, Fixed" stepKey="AC8"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentDropdownValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentDropdownValues"/>
         <assertEquals stepKey="assertBackgroundAttachmentDropdown" message="Background sizes in dropdown">
             <expectedResult type="array">[Scroll, Fixed]</expectedResult>
             <actualResult type="variable">grabBackgroundAttachmentDropdownValues</actualResult>
@@ -156,15 +156,15 @@
         <comment userInput="Slide Content: WYSIWYG defaults to empty" stepKey="AC0" />
         <!-- unable to get content of WYSIWYG out to variable MQE-818 -->
         <comment userInput="Show Button: dropdown defaults to Never Show " stepKey="AC1"/>
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="Never Show" stepKey="seeShowButtonDefault"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="Never Show" stepKey="seeShowButtonDefault"/>
         <comment userInput="Show Button: available values Always, On Hover, Never Show" stepKey="AC2"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowButtonDropdownValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowButtonDropdownValues"/>
         <assertEquals stepKey="assertShowButtonDropdown" message="Verify Button Types dropdown options">
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowButtonDropdownValues</actualResult>
         </assertEquals>
         <comment userInput="Button Text: input defaults to empty." stepKey="AC3"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemButtonTextDefault.section, PageBuilderSlideItemButtonTextDefault.fieldName)}}" stepKey="grabButtonTextValue"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemButtonTextDefault.section, PageBuilderSlideItemButtonTextDefault.fieldName)}}" stepKey="grabButtonTextValue"/>
         <assertEmpty stepKey="assertEmptyButtonText" message="Button text has text: $grabButtonTextValue">
             <actualResult type="variable">grabButtonTextValue</actualResult>
         </assertEmpty>
@@ -173,9 +173,9 @@
             <argument name="property" value="PageBuilderSlideButtonTextDefaultProperty"/>
         </actionGroup>
         <comment userInput="Button Type: dropdown defaults to Primary" stepKey="AC5"/>
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTypeDefaultProperty.value}}" stepKey="seeButtonTypeDefault"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTypeDefaultProperty.value}}" stepKey="seeButtonTypeDefault"/>
         <comment userInput="Button Type: available values Primary, Secondary, Link. " stepKey="AC6"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabButtonTypeDropdownValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabButtonTypeDropdownValues"/>
         <assertEquals stepKey="assertButtonTypeDropdown" message="Verify Button Types dropdown options">
             <expectedResult type="array">[Primary, Secondary, Link]</expectedResult>
             <actualResult type="variable">grabButtonTypeDropdownValues</actualResult>
@@ -185,15 +185,15 @@
             <argument name="property" value="PageBuilderSlideButtonTypeDefaultProperty"/>
         </actionGroup>
         <comment userInput="Show Overlay: dropdown defaults to Never Show " stepKey="AC8"/>
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideShowOverlayDefaultProperty.value}}" stepKey="seeShowOverlayDefault"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideShowOverlayDefaultProperty.value}}" stepKey="seeShowOverlayDefault"/>
         <comment userInput="Show Overlay: available values Always, On hover, Never show" stepKey="AC9"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowOverlayDropdownValues"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowOverlayDropdownValues"/>
         <assertEquals stepKey="assertShowOverlayDropdown" message="Show Overlay in dropdown">
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
         </assertEquals>
         <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideOverlayColorDefaultProperty.section, PageBuilderSlideOverlayColorDefaultProperty.fieldName)}}" stepKey="grabOverlayColorValue"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideOverlayColorDefaultProperty.section, PageBuilderSlideOverlayColorDefaultProperty.fieldName)}}" stepKey="grabOverlayColorValue"/>
         <assertEquals stepKey="assertOverlayColorValue" message="Overlay Color has text: $grabOverlayColorValue">
             <expectedResult type="string">#FFFFFF</expectedResult>
             <actualResult type="variable">grabOverlayColorValue</actualResult>
@@ -210,6 +210,7 @@
             <title value="Check poster button never show state works"/>
             <description value="Check poster button never show state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89525"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -280,10 +281,12 @@
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeButtonTextBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.poster}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextBackend"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <dontSeeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
+        <dontSeeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm2">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlPropertyValidate"/>
         </actionGroup>
@@ -326,6 +329,7 @@
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88745"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -434,6 +438,7 @@
             <title value="Check poster overlay never show state works"/>
             <description value="Check poster overlay never show state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89524"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -519,6 +524,7 @@
             <title value="Check poster overlay on hover state works"/>
             <description value="Check poster overlay on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89523"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -615,6 +621,7 @@
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89526"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -766,7 +773,9 @@
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
         <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm1">

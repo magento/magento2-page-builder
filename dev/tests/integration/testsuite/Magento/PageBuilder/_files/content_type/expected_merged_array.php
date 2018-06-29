@@ -7,16 +7,22 @@ return [
     'groups' => [
         'group1' => [
             'label' => 'Group 1',
-            'sortOrder' => '1'
+            'sortOrder' => '1',
+            'name' => 'group1',
+            'translate' => 'label'
         ],
         'group2' => [
             'label' => 'Group 2 Label',
-            'sortOrder' => '3'
+            'sortOrder' => '3',
+            'name' => 'group2',
+            'translate' => 'label'
         ],
         'group3' => [
             'label' => 'Group 3 Label',
-            'sortOrder' => '2'
-        ],
+            'sortOrder' => '2',
+            'name' => 'group3',
+            'translate' => 'label'
+        ]
     ],
     'types' => [
         'type1' => [
@@ -35,9 +41,7 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [
-                            0 => 'Path/to/reader'
-                    ],
+                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -81,7 +85,8 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => 'true'
+                    'default' => 'true',
+                    'reader' => 'Path/to/reader'
                 ]
             ],
             'additional_data' => [
@@ -209,6 +214,8 @@ return [
                         . 'ContentType\\AdditionalData\\Provider\\TestData',
                 ],
             ],
+            'name' => 'type1',
+            'translate' => 'label'
         ],
         'type2' => [
             'sortOrder' => '2',
@@ -232,11 +239,7 @@ return [
                     'data3' => 'value3',
                     'preview_template' => 'Path/to/preview/custom/template',
                     'render_template' => 'Path/to/render/custom/template',
-                    'readers' => [
-                        0 => 'Path/to/custom/reader1',
-                        1 => 'Path/to/reader2',
-                        2 => 'Path/to/custom/reader3',
-                    ],
+                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'first_element' => [
@@ -513,14 +516,13 @@ return [
                         ]
                     ],
                     'default' => 'true',
-                    'form' => 'Path/to/custom/form'
+                    'form' => 'Path/to/custom/form',
+                    'reader' => 'Path/to/custom/reader'
                 ],
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [
-                        0 => 'Path/to/reader'
-                    ],
+                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -565,28 +567,27 @@ return [
                         'converters' => []
                     ],
                     'default' => 'false',
-                    'form' => 'Path/to/form'
+                    'form' => 'Path/to/form',
+                    'reader' => 'Path/to/reader'
                 ],
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [
-                        0 => 'Path/to/reader'
-                    ],
-                    'default' => 'false'
+                    'readers' => [],
+                    'default' => 'false',
+                    'reader' => 'Path/to/reader'
                 ],
                 'appearance3' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
                     'readers' => [],
-                    'default' => 'false'
+                    'default' => 'false',
+                    'reader' => null
                 ],
                 'appearance4' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [
-                        0 => 'Path/to/reader'
-                    ],
+                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -631,9 +632,12 @@ return [
                         'converters' => []
                     ],
                     'default' => null,
-                    'form' => 'Path/to/custom/form'
+                    'form' => 'Path/to/custom/form',
+                    'reader' => 'Path/to/reader'
                 ]
-            ]
+            ],
+            'name' => 'type2',
+            'translate' => 'label'
         ],
         'type3' => [
             'sortOrder' => '3',
@@ -649,9 +653,7 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [
-                        0 => 'Path/to/reader'
-                    ],
+                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -695,9 +697,12 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => 'true'
+                    'default' => 'true',
+                    'reader' => 'Path/to/reader'
                 ]
-            ]
+            ],
+            'name' => 'type3',
+            'translate' => 'label'
         ]
     ]
 ];

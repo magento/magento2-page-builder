@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateContentTypeHeightOnStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="containerDefaultHeight" defaultValue="1"/>
+            <argument name="expectedPaddingTop" defaultValue="1"/>
+            <argument name="expectedPaddingBottom" defaultValue="1"/>
+        </arguments>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentTypeHeightWithPadding"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
+            <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateContentTypeHeightOnStageWithoutPadding">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="containerDefaultHeight" defaultValue="1"/>
+        </arguments>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}})" stepKey="expectedContentTypeHeightWithPadding"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
+            <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateContentTypeInsideContainerStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
+    </actionGroup>
+</actionGroups>

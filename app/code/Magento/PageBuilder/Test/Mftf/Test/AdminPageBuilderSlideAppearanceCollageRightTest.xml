@@ -130,7 +130,9 @@
         <seeElement selector="{{SlideOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
@@ -231,6 +233,7 @@
             <title value="Check value of a collage right mobile Slide with mobile image"/>
             <description value="Check value of a collage right mobile Slide with mobile image"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89502"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -312,6 +315,7 @@
             <title value="Check value of a collage right mobile Slide without mobile image"/>
             <description value="Check value of a collage right mobile Slide without mobile image"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89499"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -390,6 +394,7 @@
             <title value="Slide right collage is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89503"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -484,6 +489,7 @@
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89515"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -557,10 +563,12 @@
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <dontSeeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
+        <dontSeeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm2">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlPropertyValidate"/>
         </actionGroup>
@@ -603,6 +611,7 @@
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89512"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -714,6 +723,7 @@
             <title value="Check collage right overlay never show state works"/>
             <description value="Check collage right overlay never show state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89514"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -802,6 +812,7 @@
             <title value="Check collage right overlay on hover state works"/>
             <description value="Check collage right overlay on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89513"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -901,6 +912,7 @@
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89516"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
@@ -1055,7 +1067,9 @@
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
         <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">

@@ -15,10 +15,11 @@
             <title value="Verify Disclaimer Message and Warning Message when disable PageBuilder"/>
             <description value="Verify Disclaimer Message and Warning Message when disable PageBuilder"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2386"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
             <group value="pagebuilder-customBeforeAfter"/>
-            <!-- Skipped; see MAGETWO-88218 -->
+            <!-- MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
         <before>
@@ -31,31 +32,31 @@
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="Advanced Content Tools" stepKey="seeAdvancedContentToolTab"/>
-        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilderVisible" />
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
         <grabTextFrom selector="//tr[@id='row_cms_pagebuilder_enabled']/td[@class='value']//span" stepKey="grabTextFromDisclaimerMsg"/>
         <assertEquals stepKey="assertEquals2" expected="Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.\n\nFor Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content." expectedType="string" actual="grabTextFromDisclaimerMsg" actualType="variable" message="pass"/>
 
         <!--Disable PageBuilder-->
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO1"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}"  stepKey="waitForPopUpMsg1" />
-        <seeElement selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="seePopUp1" />
-        <click selector="{{PageBuilderCollapsibleSection.CancelBtn}}" stepKey="selectCancel" />
-        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose1"/>
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="seeYesIsSelected" />
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO2"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
-        <click selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="selectTurnOff" />
-        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose2"/>
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="seeNoIsSelected" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO1"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}"  stepKey="waitForPopUpMsg1" />
+        <seeElement selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="seePopUp1" />
+        <click selector="{{ContentManagementSection.CancelBtn}}" stepKey="selectCancel" />
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose1"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="seeYesIsSelected" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose2"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="seeNoIsSelected" />
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
 
         <!-- I switch between NO -> YES - > NO without saving the Config, Then: Warning message will not appear on page-->
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO3"/>
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="selectYes"/>
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO4"/>
-        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="dontSeePopUp"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO3"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectYes"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO4"/>
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="dontSeePopUp"/>
     </test>
     <test name="VerifyPageBuilderVisibleOnCatalog">
         <annotations>
@@ -64,6 +65,7 @@
             <title value="Admin are able to see PageBuilder on Catalog page after enable PageBuilder from Configuration"/>
             <description value="Admin are able to see PageBuilder on Catalog page after enable PageBuilder from Configuration"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2408"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -84,12 +86,12 @@
         <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
 
-        <waitForElementVisible selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="waitForPageBuilderBtn" />
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
-        <click selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="clickOnPageBuilderBtn" />
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <!--See PageBuilder fullsize-->
-        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -98,11 +100,11 @@
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="waitForExitFullScreen" />
-        <click selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
@@ -116,6 +118,7 @@
             <title value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
             <description value="Admin should be able to see PageBuilder on CMS Page after enable PageBuilder and WYSIWYG from Configuration"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2407"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -135,7 +138,7 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waitForPageBuilderDisplay" />
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waitForPageBuilderDisplay" />
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -160,6 +163,7 @@
             <title value="Admin should be able to see PageBuilder on CMS Block Page after enable PageBuilder and disable WYSIWYG from Configuration"/>
             <description value="Admin should be able to see PageBuilder on CMS Block Page after enable PageBuilder and disable WYSIWYG from Configuration"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MC-2406"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
             <group value="pagebuilder-customBeforeAfter"/>

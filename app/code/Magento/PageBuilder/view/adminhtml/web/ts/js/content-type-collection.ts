@@ -20,7 +20,7 @@ export default class ContentTypeCollection extends ContentType implements Conten
      * @param {string} stageId
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         stageId: string,
     ) {

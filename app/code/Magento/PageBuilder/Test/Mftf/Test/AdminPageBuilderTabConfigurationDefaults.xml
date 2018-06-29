@@ -10,8 +10,8 @@
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="DefaultTabStateOnAddingNewTab">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
             <title value="Empty Tabs Default State on Admin Preview and Storefront"/>
             <description value="As a Content Manager I want to see empty tab preview on the stage so that I see its position and can access settings"/>
@@ -19,8 +19,6 @@
             <testCaseId value="MAGETWO-90008"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
-            <!--Skipped due to MAGETWO-92406-->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -34,15 +32,17 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <comment userInput="User adds tabs and sees 1st default tab item created by default" stepKey="AC1"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="Tab option panel displayed on top of the new tab after adding it." stepKey="AC2"/>
-        <waitForElement selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEditVisible"/>
+        <waitForElement selector="{{TabOnStage.optionsMenu('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEditVisible"/>
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC3"/>
         <see selector="{{TabOnStage.empty}}" userInput="Drag content types or columns here" stepKey="seeTabPlaceholder"/>
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
@@ -61,7 +61,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentDefault.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -83,8 +84,9 @@
         <seeElement selector="{{TabOnStage.tabContentPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeTab1Padding"/>
 
         <!-- Validate Default Values on Edit Tab for initial tab -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
 
         <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC11"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
@@ -94,7 +96,7 @@
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
         <comment userInput="Tab has default value empty for Background Mobile image - This feature is not yet available" stepKey="AC13"/>
         <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
 
         <comment userInput="Tab has default value Top Aligned for Background Position" stepKey="commentDefaultBackgroundPosition"/>
@@ -102,7 +104,7 @@
             <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
         </actionGroup>
         <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
         <assertEquals expected="{{PageBuilderTabBackgroundPositionDefault.optionsList}}" expectedType="array" actual="grabBackgroundPositionOptions" actualType="variable" message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions"/>
 
         <comment userInput="Tab has default value Cover for Background Size" stepKey="commentDefaultBackgroundSize"/>
@@ -110,7 +112,7 @@
             <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
         </actionGroup>
         <comment userInput="Background Size has expected dropdown values" stepKey="commentDefaultBackgroundSizeValues"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
         <assertEquals expected="{{PageBuilderTabBackgroundSizeDefault.optionsList}}" expectedType="array" actual="grabBackgroundSizeOptions" actualType="variable" message="Verify Background Size dropdown options" stepKey="assertBackgroundSizeOptions"/>
 
         <comment userInput="Tab has default value No for Background Repeat" stepKey="commentDefaultBackgroundRepeat"/>
@@ -122,7 +124,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
             <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
         </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
         <assertEquals expected="{{PageBuilderTabBackgroundAttachmentDefault.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
 
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
@@ -150,7 +152,6 @@
         <!-- Verify Default Values for Tabs on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
@@ -161,8 +162,8 @@
     </test>
     <test name="TabAdvancedSectionDefaults">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
             <title value="Tab advanced configuration has default properties"/>
             <description value="New tab has default values on Advanced section"/>
@@ -183,15 +184,15 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!--Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editTab"/>
-        <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Text Alignment -->
         <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0" />
@@ -222,11 +223,11 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <comment userInput="Border: available values None, Default, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset" stepKey="AC2"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
         <assertEquals expected="{{PageBuilderAdvancedBorderDefaultSlideProperty.optionsList}}" expectedType="array" actual="grabBorderOptions" actualType="variable" message="Verify Border dropdown options" stepKey="assertBorderOptions2"/>
         <!-- Border Color -->
         <comment userInput="Border Color: input defaults to empty." stepKey="AC3"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
         <assertEmpty stepKey="assertBorderColorEmpty" message="Border Color has text: getTextFromBorderColorAttribute">
             <actualResult type="variable">getTextFromBorderColorAttribute</actualResult>
         </assertEmpty>
@@ -277,7 +278,7 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateCSSClassesAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
         <assertEmpty stepKey="assertGetTextFromCSSClassesAttribute" message="CSS Classes field was not empty. Had text: $getTextFromCSSClassesAttribute">
             <actualResult type="variable">getTextFromCSSClassesAttribute</actualResult>
         </assertEmpty>

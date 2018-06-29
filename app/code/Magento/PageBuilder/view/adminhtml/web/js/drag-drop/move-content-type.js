@@ -8,9 +8,9 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
   /**
    * Move a content type to a new index, with the option to move to a new container
    *
-   * @param {ContentType} contentType
+   * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
    * @param {number} targetIndex
-   * @param {ContentTypeCollection} targetParent
+   * @param {ContentTypeCollectionInterface} targetParent
    */
   function moveContentType(contentType, targetIndex, targetParent) {
     if (targetParent === void 0) {
@@ -22,6 +22,14 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
     var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
 
     _uiEvents.trigger("contentType:beforeMove", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
+    _uiEvents.trigger(contentType.config.name + ":contentType:beforeMove", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
@@ -59,6 +67,14 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
 
 
     _uiEvents.trigger("contentType:move", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
+    _uiEvents.trigger(contentType.config.name + ":contentType:move", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
