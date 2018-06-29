@@ -10,12 +10,12 @@ import ContentTypeCollectionInterface from "../content-type-collection";
 /**
  * Move a content type to a new index, with the option to move to a new container
  *
- * @param {ContentType} contentType
+ * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
  * @param {number} targetIndex
- * @param {ContentTypeCollection} targetParent
+ * @param {ContentTypeCollectionInterface} targetParent
  */
 export function moveContentType(
-    contentType: ContentTypeInterface,
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface,
     targetIndex: number,
     targetParent: ContentTypeCollectionInterface = null,
 ) {
@@ -27,6 +27,13 @@ export function moveContentType(
 
     // Trigger our block move event
     events.trigger("contentType:moveBefore", {
+        contentType,
+        sourceParent,
+        targetParent,
+        targetIndex,
+        stageId: contentType.stageId,
+    });
+    events.trigger(`${contentType.config.name}:moveBefore`, {
         contentType,
         sourceParent,
         targetParent,
@@ -65,6 +72,13 @@ export function moveContentType(
 
     // Trigger our content type move event
     events.trigger("contentType:moveAfter", {
+        contentType,
+        sourceParent,
+        targetParent,
+        targetIndex,
+        stageId: contentType.stageId,
+    });
+    events.trigger(`${contentType.config.name}:moveAfter`, {
         contentType,
         sourceParent,
         targetParent,

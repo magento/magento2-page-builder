@@ -186,14 +186,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
       var focusTime = new Date().getTime();
-      Preview.focusOperationTime = focusTime; // Add a 200ms delay after a null set to allow for clicks to be captured
+      Preview.focusOperationTime = focusTime;
+      /**
+       * Keep a reference of the state of the interaction state on the stage to check if the interaction has
+       * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
+       * an interaction during the delay period.
+       */
+
+      var interactionState = false;
+
+      _events.on("stage:interactionStart", function () {
+        interactionState = true;
+      });
+
+      _events.on("stage:interactionStop", function () {
+        interactionState = false;
+      }); // Add a 200ms delay after a null set to allow for clicks to be captured
+
 
       _underscore.delay(function () {
         if (!_this2.disableInteracting && Preview.focusOperationTime === focusTime) {
           if (index !== null) {
             _events.trigger("stage:interactionStart");
           } else {
-            _events.trigger("stage:interactionStop");
+            if (interactionState !== true) {
+              _events.trigger("stage:interactionStop");
+            }
           }
         }
       }, index === null ? 200 : 0);
@@ -347,8 +365,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           /**
            * Provide custom placeholder element
            *
-           * @param {JQuery<Element>} item
-           * @returns {JQuery<Element>}
+           * @param {JQuery} item
+           * @returns {JQuery}
            */
           element: function element(item) {
             var placeholder = item.clone().show().css({
@@ -397,7 +415,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("tab-item:duplicateAfter", function (args) {
         if (_this4.parent.id === args.duplicateContentType.parent.id) {
-          var tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
+          var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;

@@ -8,9 +8,9 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
   /**
    * Move a content type to a new index, with the option to move to a new container
    *
-   * @param {ContentType} contentType
+   * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
    * @param {number} targetIndex
-   * @param {ContentTypeCollection} targetParent
+   * @param {ContentTypeCollectionInterface} targetParent
    */
   function moveContentType(contentType, targetIndex, targetParent) {
     if (targetParent === void 0) {
@@ -22,6 +22,14 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
     var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
 
     _events.trigger("contentType:moveBefore", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
+    _events.trigger(contentType.config.name + ":moveBefore", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
@@ -59,6 +67,14 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
 
 
     _events.trigger("contentType:moveAfter", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
+    _events.trigger(contentType.config.name + ":moveAfter", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

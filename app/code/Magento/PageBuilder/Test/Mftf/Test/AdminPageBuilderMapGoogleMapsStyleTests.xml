@@ -144,19 +144,31 @@
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle1">
             <argument name="style" value="{{googleMapsStyle.invalidOneCharacter}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError1"/>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError1">
+            <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
+            <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
+        </actionGroup>
         <!-- Invalid: Missing Braces -->
         <comment userInput="Invalid: Missing Braces" stepKey="commentInvalid2"/>
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle2">
             <argument name="style" value="{{googleMapsStyle.invalidMissingBraces}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError2"/>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError2">
+            <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
+            <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
+        </actionGroup>
         <!-- Invalid: Missing Comma -->
         <comment userInput="Invalid: Missing Comma" stepKey="commentInvalid3"/>
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle3">
             <argument name="style" value="{{googleMapsStyle.invalidMMissingComma}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError3"/>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError3">
+            <argument name="inputFieldError" value="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}"/>
+            <argument name="errorMessage" value="{{googleMapsStyle.errorMessage}}"/>
+        </actionGroup>
         <!-- Verify Can Save Valid -->
         <comment userInput="Verify Can Save Valid" stepKey="commentValid"/>
         <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle4">

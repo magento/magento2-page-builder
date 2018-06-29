@@ -12,7 +12,7 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
-import ContentTypeCollectionInterface from "../content-type-collection";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -31,7 +31,7 @@ import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
 
 export default class Preview {
-    public parent: ContentTypeInterface;
+    public parent: ContentTypeCollectionInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
@@ -93,7 +93,7 @@ export default class Preview {
      * @param {string} value
      */
     public updateData(key: string, value: string) {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
 
         data[key] = value;
         this.parent.dataStore.update(data);
@@ -237,15 +237,18 @@ export default class Preview {
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeInterface> | void}
      */
-    public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
-        const contentTypeData = contentType.dataStore.get();
-        const index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
+    public clone(
+        contentType: ContentTypeInterface | ContentTypeCollectionInterface,
+        autoAppend: boolean = true,
+    ): Promise<ContentTypeInterface> | void {
+        const contentTypeData = contentType.dataStore.get() as DataObject;
+        const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             createContentType(
                 contentType.config,
                 contentType.parent,
@@ -506,7 +509,7 @@ export default class Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
@@ -543,7 +546,7 @@ export default class Preview {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({}, this.parent.dataStore.get()),
+            _.extend({}, this.parent.dataStore.get() as DataObject),
         );
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});

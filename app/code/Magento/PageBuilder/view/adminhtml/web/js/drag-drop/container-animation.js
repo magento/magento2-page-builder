@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _underscore) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore"], function (_jquery, _events, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
   /**
    * Lock the containers min height to it's current height, not allowing the height to change when the content does
    *
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    * @returns {boolean}
    */
 
@@ -34,7 +34,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
    *
    * @param {boolean} containerLocked
    * @param {ContentType} block
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    */
 
 
@@ -61,7 +61,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
    * Animate the container height to the new value
    *
    * @param {boolean} containerLocked
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    */
 
 
@@ -77,6 +77,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
             minHeight: "",
             transition: ""
           });
+          cleanupClones();
         }, animationTime + 150);
       });
     } else if (element[0] && element[0].style.transition !== "") {
@@ -84,12 +85,13 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
         minHeight: "",
         transition: ""
       });
+      cleanupClones();
     }
   }
   /**
    * Make a clone of the container and remove the forced min height to determine it's actual height
    *
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    * @returns {number}
    */
 
@@ -99,11 +101,21 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       minHeight: "",
       position: "absolute",
       left: "-99999px"
-    });
+    }).addClass("container-height-clone");
     element.parent().append(clone);
     var height = clone.height();
     clone.remove();
     return height;
+  }
+  /**
+   * Clean up any left over clone elements
+   */
+
+
+  function cleanupClones() {
+    if ((0, _jquery)(".container-height-clone").length) {
+      (0, _jquery)(".container-height-clone").remove();
+    }
   }
 
   return {

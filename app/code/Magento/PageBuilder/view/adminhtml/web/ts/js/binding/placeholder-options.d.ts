@@ -4,6 +4,6 @@
  */
 
 export interface PlaceholderOptionsInterface {
-    element: (clone: JQuery<Element>) => JQuery<Element>;
+    element: (clone: JQuery) => JQuery;
     update: () => boolean;
 }

@@ -12,6 +12,7 @@ import Options from "../../content-type-menu";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import {DataObject} from "../../data-store";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import {fromHex} from "../../utils/color-converter";
 import {percentToDecimal} from "../../utils/number-converter";
@@ -392,7 +393,7 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
-            const dataStore = this.parent.dataStore.get();
+            const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });

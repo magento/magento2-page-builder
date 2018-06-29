@@ -34,6 +34,7 @@ export default class Stage {
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
     public userSelect: KnockoutObservable<boolean> = ko.observable(true);
+    public focusChild: KnockoutObservable<boolean> = ko.observable(false);
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public dataStore: DataStore = new DataStore();
     private template: string = "Magento_PageBuilder/content-type/preview";
@@ -169,6 +170,9 @@ export default class Stage {
 
         events.on("stage:interactionStart", () => this.interacting(true));
         events.on("stage:interactionStop", () => this.interacting(false));
+
+        events.on("focusChild:start", () => this.focusChild(true));
+        events.on("focusChild:stop", () => this.focusChild(false));
     }
 
     /**

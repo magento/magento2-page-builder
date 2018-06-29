@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _resizing, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -10,6 +10,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -17,18 +24,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
+
       _this.resizing = _knockout.observable(false);
+      _this.element = void 0;
+      _this.fieldsToIgnoreOnRemove = ["width"];
 
-      _this.previewData.width.subscribe(function (newWidth) {
-        var maxColumns = (0, _resizing.getMaxColumns)();
-        newWidth = parseFloat(newWidth);
-        newWidth = Math.round(newWidth / (100 / maxColumns));
-        var newLabel = newWidth + "/" + maxColumns;
-        var column = (0, _translate)("Column");
+      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
-        _this.displayLabel(column + " " + newLabel);
-      });
+      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "grid_size");
 
       return _this;
     }
@@ -43,6 +47,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this2 = this;
 
       _PreviewCollection.prototype.bindEvents.call(this);
+
+      _events.on("column:moveAfter", function (args) {
+        if (args.contentType.id === _this2.parent.id) {
+          _this2.updateDisplayLabel();
+        }
+      });
 
       if (_config.getContentTypeConfig("column-group")) {
         _events.on("column:dropAfter", function (args) {
@@ -60,7 +70,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.initColumn = function initColumn(element) {
-      this.parent.element = (0, _jquery)(element);
+      this.element = (0, _jquery)(element);
 
       _events.trigger("column:initializeAfter", {
         column: this.parent,
@@ -101,7 +111,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Wrap the current column in a group if it not in a column-group
      *
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface>}
      */
 
 
@@ -113,11 +123,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
 
-        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId).then(function (columnGroup) {
+        var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
+        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId, {
+          grid_size: defaultGridSize
+        }).then(function (columnGroup) {
+          var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
           return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
-            width: "50%"
+            width: col1Width + "%"
           }), (0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
-            width: "50%"
+            width: 100 - parseFloat(col1Width) + "%"
           })]).then(function (columns) {
             columnGroup.addChild(columns[0], 0);
             columnGroup.addChild(columns[1], 1);
@@ -134,56 +148,56 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Duplicate a child of the current instance
      *
-     * @param {Column} child
+     * @param {ContentTypeCollectionInterface<Preview>} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>|void}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
 
 
-    _proto.clone = function clone(child, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend) {
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      // Are we duplicating from a parent?
-      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && (0, _resizing.getColumnsWidth)(this.parent.parent) < 100) {
-        return _PreviewCollection.prototype.clone.call(this, child, autoAppend);
+      var resizeUtils = this.parent.parent.preview.getResizeUtils(); // Are we duplicating from a parent?
+
+      if (contentType.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
+        return _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
       } // Attempt to split the current column into parts
 
 
-      var splitTimes = Math.round((0, _resizing.getColumnWidth)(child) / (0, _resizing.getSmallestColumnWidth)());
+      var splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
 
       if (splitTimes > 1) {
-        _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateContentType) {
-          var originalWidth = 0;
-          var duplicateWidth = 0;
+        var splitClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
 
-          for (var i = 0; i <= splitTimes; i++) {
-            if (splitTimes > 0) {
-              originalWidth += (0, _resizing.getSmallestColumnWidth)();
-              --splitTimes;
-            }
-
-            if (splitTimes > 0) {
-              duplicateWidth += (0, _resizing.getSmallestColumnWidth)();
-              --splitTimes;
-            }
-          }
-
-          (0, _resizing.updateColumnWidth)(child, (0, _resizing.getAcceptedColumnWidth)(originalWidth.toString()));
-          (0, _resizing.updateColumnWidth)(duplicateContentType, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
-          return duplicateContentType;
-        });
-      } else {
-        // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = (0, _resizing.findShrinkableColumn)(child);
-
-        if (shrinkableColumn) {
-          _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateContentType) {
-            (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(shrinkableColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()));
-            (0, _resizing.updateColumnWidth)(duplicateContentType, (0, _resizing.getSmallestColumnWidth)());
+        if (splitClone) {
+          splitClone.then(function (duplicateContentType) {
+            /**
+             * Distribute the width across the original & duplicated columns, if the we have an odd number of
+             * split times apply it to the original.
+             */
+            var originalWidth = (Math.floor(splitTimes / 2) + splitTimes % 2) * resizeUtils.getSmallestColumnWidth();
+            var duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();
+            (0, _resize.updateColumnWidth)(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));
+            (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
             return duplicateContentType;
           });
+        }
+      } else {
+        // Conduct an outward search on the children to locate a suitable shrinkable column
+        var shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
+
+        if (shrinkableColumn) {
+          var shrinkableClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
+
+          if (shrinkableClone) {
+            shrinkableClone.then(function (duplicateContentType) {
+              (0, _resize.updateColumnWidth)(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
+              (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getSmallestColumnWidth());
+              return duplicateContentType;
+            });
+          }
         } else {
           // If we aren't able to duplicate inform the user why
           (0, _alert)({
@@ -191,6 +205,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             title: (0, _translate)("Unable to duplicate column")
           });
         }
+      }
+    };
+    /**
+     * Update the display label for the column
+     */
+
+
+    _proto.updateDisplayLabel = function updateDisplayLabel() {
+      if (this.parent.parent.preview instanceof _preview) {
+        var newWidth = parseFloat(this.parent.dataStore.get("width").toString());
+        var gridSize = this.parent.parent.preview.gridSize();
+        var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
+        this.displayLabel((0, _translate)("Column") + " " + newLabel);
       }
     };
     /**

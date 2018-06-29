@@ -6,6 +6,7 @@
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import Master from "./content-type/master";
@@ -14,12 +15,12 @@ import DataStore from "./data-store";
 
 export default class ContentType implements ContentTypeInterface {
     public id: string = mageUtils.uniqueid();
-    public parent: ContentTypeInterface;
+    public parent: ContentTypeCollectionInterface;
     public stageId: string;
     public config: ContentTypeConfigInterface;
     public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
-    public element: JQuery<HTMLElement>;
+    public element: JQuery;
     public dataStore: DataStore = new DataStore();
     public preview: Preview;
     public content: Master;
@@ -30,7 +31,7 @@ export default class ContentType implements ContentTypeInterface {
      * @param {string} stageId
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         stageId: string,
     ) {

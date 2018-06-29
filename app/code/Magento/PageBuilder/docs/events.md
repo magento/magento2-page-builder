@@ -73,6 +73,8 @@ This document contains reference information for events dispatched in Page Build
 * [stage:{{id}}:readyAfter](#stageidreadyafter)
 * [stage:{{id}}:masterFormatRenderAfter](#stageidmasterformatrenderafter)
 * [stage:updateAfter](#stageupdateafter)
+* [focusChild:start](#focuschildstart)
+* [focusChild:stop](#focuschildstop)
 * [state](#state)
 * [{{config.name}}:{{id}}:updateAfter](#confignameidupdateafter)
 * [googleMaps:authFailure](#googlemapsauthFailure)
@@ -488,6 +490,14 @@ Error
     stageId: number
 }
 ```
+
+[Back to top]
+
+### `focusChild:start`
+
+[Back to top]
+
+### `focusChild:stop`
 
 [Back to top]
 

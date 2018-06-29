@@ -20,10 +20,10 @@ export default class Config {
     /**
      * Retrieve the init config
      *
-     * @param key
-     * @returns {any}
+     * @param {string} key
+     * @returns {T}
      */
-    public static getConfig(key?: string): any {
+    public static getConfig<T = any>(key?: string): T {
         if (key) {
             if (typeof Config.config[key] !== "undefined") {
                 return Config.config[key];
