@@ -86,11 +86,12 @@
     </test>
     <test name="SearchRemovedContentType">
         <annotations>
-            <features value="Pagebuilder: Panel"/>
-            <stories value="MAGETWO-66517: Bluefoot Search ContentTypes removal"/>
+            <features value="Pagebuilder"/>
+            <stories value="Panel"/>
             <title value="Search for removed content type on PageBuilder Panel"/>
             <description value="When typing Search/Code into the panel search box, I shouldn't see Code/Search Content Types displays"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66517"/>
             <testCaseId value="MAGETWO-88637"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-panel"/>
@@ -106,7 +107,7 @@
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Search" stepKey="fillSearch"/>
         <dontSee userInput="Search" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchButtons"/>
         <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="Code" stepKey="fillCode"/>
-        <dontSee userInput="Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtons"/>
+        <see userInput="HTML Code" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateCodeButtons"/>
     </test>
     <test name="SearchThreeCharInPanel">
         <annotations>
