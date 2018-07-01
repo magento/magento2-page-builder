@@ -82,6 +82,15 @@
         <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelTextArea">
+        <!-- This action group does not assert against the section changed icon since this doesn't exist for General sections -->
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <fillField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
         <arguments>
             <argument name="property"/>
@@ -205,6 +214,14 @@
         <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.editPanelValue}}" stepKey="seeInFieldProperty"/>
+    </actionGroup>
+    <actionGroup name="seeInFieldWithoutLabelSlideOutProperty">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <dontSeeElement selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="dontSeePropertyLabel"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutIsZeroProperty">
         <!-- must have this instead of using seeInFieldSlideOutProperty w/ argument of 0 because of MFTF bug -->
