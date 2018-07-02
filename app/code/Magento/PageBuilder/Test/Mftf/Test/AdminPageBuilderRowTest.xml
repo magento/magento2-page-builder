@@ -342,6 +342,111 @@
             <actualResult type="variable">actualStageRowHeightWithSlider</actualResult>
         </assertGreaterThanOrEqual>
     </test>
+    <test name="RowContentIsVerticallyAligned">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Row"/>
+            <title value="Row Content Can Be Vertically Aligned"/>
+            <description value="A user can vertically align row contents"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-914"/>
+            <testCaseId value="MC-2388"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Add two rows to stage -->
+        <comment userInput="Add two rows to the stage" stepKey="commentAddTwoRows"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSecondRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Configure First Row - Vertical Align Top -->
+        <comment userInput="Configure vertical align top" stepKey="commentConfigureVerticalAlignTop"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstRow"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToFirstRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading1">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Configure Second Row - Vertical Align Center -->
+        <comment userInput="Configure vertical align center" stepKey="commentConfigureVerticalAlignCenter"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenCenterProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsSecondRow"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToSecondRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Configure Third Row - Vertical Align Bottom -->
+        <comment userInput="Configure vertical align bottom" stepKey="commentConfigureVerticalAlignBottom"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentBottomProperty">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToThirdRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify Vertical Alignment On Stage - Before Save -->
+        <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeFirstRowVerticalAlignmentTop"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeSecondRowVerticalAlignmentCenter"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeThirdRowVerticalAlignmentBottom"/>
+        <!-- Verify Vertical Alignment On Stage - After Save -->
+        <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeFirstRowVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeSecondRowVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeThirdRowVerticalAlignmentBottomAfterSave"/>
+        <!-- Verify Vertical Alignment In Storefront -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeRow2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeRow3VerticalAlignmentBottomApplied"/>
+    </test>
     <test name="RowValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Row"/>
