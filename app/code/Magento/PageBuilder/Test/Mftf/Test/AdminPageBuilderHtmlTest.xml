@@ -10,9 +10,9 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="HtmlAddToCMSPage">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Update General Values"/>
+            <title value="Update General Values"/>
             <description value="Validate that updating every attribute in the General form for Html will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1408"/>
@@ -72,9 +72,9 @@
     </test>
     <test name="HtmlDelete">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Delete Html"/>
+            <title value="Delete Html"/>
             <description value="A user should be able to delete a Html content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1408"/>
@@ -103,9 +103,9 @@
     </test>
     <test name="HtmlValidateGeneralDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Validate General Default Values"/>
+            <title value="Validate General Default Values"/>
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Html."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-483"/>
@@ -169,9 +169,9 @@
     </test>
     <test name="HtmlValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Validate Advanced Configuration Default Values"/>
+            <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Html."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-522"/>
@@ -294,9 +294,9 @@
     </test>
     <test name="HtmlUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Update Advanced Configuration Values"/>
+            <title value="Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Html will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-483"/>
@@ -324,11 +324,11 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <!-- Update Values -->
         <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -466,9 +466,9 @@
     </test>
     <test name="HtmlDuplicate">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Duplicate"/>
+            <title value="Duplicate"/>
             <description value="Admin are able to duplicate HTML Content Type"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1408"/>
@@ -655,9 +655,9 @@
     </test>
     <test name="HtmlVerifyUpdatingDuplicateDoesNotAffectInitial">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Html - Verify Updating Duplicate Does Not Affect Initially Duplicated Content"/>
+            <title value="Verify Updating Duplicate Does Not Affect Initially Duplicated Content"/>
             <description value="Updating duplicate content types should not affect the initial content. This test is only needed for one content type."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1408"/>
@@ -732,9 +732,9 @@
     </test>
     <test name="HtmlNoRequiredAttributes">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="HTML - Required Attributes"/>
+            <title value="Validate Required Attributes"/>
             <description value="Add HTML and validate save without required fields causes error"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-1408"/>
