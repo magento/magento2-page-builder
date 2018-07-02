@@ -73,9 +73,6 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-
-
-
         <seeElement selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
@@ -93,10 +90,8 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStage"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
     </test>
     <test name="BlockDelete">
         <annotations>
