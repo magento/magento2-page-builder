@@ -153,12 +153,12 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <comment userInput="Validate Column Height On Stage With Custom Min Height Matches Expected" stepKey="commentValidateColumnHeight"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageContentTypeHeight"/>
-        <executeJS function="return Math.round({{PageBuilderAppearanceMinHeightProperty_200.value}} + {{PageBuilderPaddingProperty10.paddingTop}} + {{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedColumnHeight"/>
+        <executeJS function="return Math.round({{PageBuilderMinHeightProperty_200.value}} + {{PageBuilderPaddingProperty10.paddingTop}} + {{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedColumnHeight"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
             <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
             <actualResult type="variable">expectedColumnHeight</actualResult>
