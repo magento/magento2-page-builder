@@ -20,6 +20,7 @@ import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
@@ -67,7 +68,7 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+        events.on("tabs:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
