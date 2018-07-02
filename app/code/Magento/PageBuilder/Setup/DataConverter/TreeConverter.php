@@ -92,7 +92,7 @@ class TreeConverter
      * @return string
      * @throws UnableMigrateWithOutParentException
      */
-    private function convertTreeItem($itemData, $additionalData = [], $children = []) : string
+    private function convertTreeItem($itemData, $additionalData = [], $children = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRenderer($contentType);
