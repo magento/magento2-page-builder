@@ -51,7 +51,6 @@
             <testCaseId value="MC-2279"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
-
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -74,12 +73,15 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStage.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+
+
+
+        <seeElement selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <seeElement selector="{{BlockOnStage.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
