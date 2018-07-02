@@ -82,6 +82,7 @@ class Column implements RendererInterface
      */
     private function calculateColumnWidth($oldWidth) : string
     {
+        $oldWidth = floatval($oldWidth);
         if (!isset(self::COLUMN_WIDTH_MAPPING[number_format($oldWidth, 3)])) {
             throw new \InvalidArgumentException('Width ' . $oldWidth .' has no valid mapping.');
         }
