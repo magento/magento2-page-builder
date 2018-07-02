@@ -734,8 +734,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="HTML Code"/>
-            <title value="Validate Required Attributes"/>
-            <description value="Add HTML and validate save without required fields causes error"/>
+            <title value="Validate No Required Attributes"/>
+            <description value="Add HTML and validate save without entering any fields on edit form is successful"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-1408"/>
             <testCaseId value="MAGETWO-91142"/>
@@ -759,11 +759,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <!-- Validate Cannot Save -->
-        <comment userInput="Validate Cannot Save" stepKey="commentValidateCannotSave"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton"/>
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <!-- Validate Can Save Without Entering Fields -->
+        <comment userInput="Validate Can Save Without Entering Fields" stepKey="commentValidateSave"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlBaseStage1"/>
     </test>
 </tests>
