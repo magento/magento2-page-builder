@@ -15,6 +15,7 @@ import observableUpdaterFactory from "./observable-updater-factory";
  * @param {ContentTypeInterface} contentType
  * @param {ContentTypeConfigInterface} config
  * @returns {Promise<ContentTypeInterface>}
+ * @api
  */
 export default function create(
     contentType: ContentTypeInterface,

@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Stage\Config;
 
 use Magento\Framework\Config\DataInterfaceFactory;
@@ -33,7 +35,7 @@ class UiComponentConfig
      *
      * @return array
      */
-    public function getFields($componentName)
+    public function getFields($componentName) : array
     {
         $componentConfig = $this->configFactory->create(
             ['componentName' => $componentName]
@@ -66,7 +68,7 @@ class UiComponentConfig
      *
      * @return array
      */
-    public function getButtons($componentName)
+    public function getButtons($componentName) : array
     {
         $componentConfig = $this->configFactory->create(
             ['componentName' => $componentName]
@@ -89,7 +91,7 @@ class UiComponentConfig
      *
      * @return array
      */
-    private function iterateComponents($config, $callback, $key = false)
+    private function iterateComponents($config, $callback, $key = false) : array
     {
         $values = $callback($config, $key) ?: [];
         if (isset($config[Converter::DATA_COMPONENTS_KEY])

@@ -10,6 +10,7 @@ define([], function () {
    *
    * @param {string} value
    * @returns {string}
+   * @api
    */
   function percentToDecimal(value) {
     return (parseInt(value, 10) / 100).toString();

@@ -38,7 +38,7 @@ class Video implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(array $itemData, array $additionalData = [])
+    public function render(array $itemData, array $additionalData = []) : string
     {
         if (!isset($itemData['entityId'])) {
             throw new \InvalidArgumentException('entityId is missing.');

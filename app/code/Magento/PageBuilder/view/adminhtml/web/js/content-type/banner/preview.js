@@ -2,6 +2,9 @@
 define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _events, _preview, _uploader) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
   function (_BasePreview) {

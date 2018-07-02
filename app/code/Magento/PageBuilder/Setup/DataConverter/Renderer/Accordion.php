@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
@@ -50,7 +52,7 @@ class Accordion implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(array $itemData, array $additionalData = [])
+    public function render(array $itemData, array $additionalData = []) : string
     {
         if (!isset($itemData['entityId'])) {
             throw new \InvalidArgumentException('entityId is missing.');
@@ -87,7 +89,7 @@ class Accordion implements RendererInterface
      * @param array $itemData
      * @return string
      */
-    private function getMageInitValue(array $itemData)
+    private function getMageInitValue(array $itemData) : string
     {
         $children = isset($itemData['children']['accordion_items']) ? $itemData['children']['accordion_items'] : null;
         return htmlentities(
@@ -109,7 +111,7 @@ class Accordion implements RendererInterface
      * @param array $children
      * @return array
      */
-    private function getActiveItem(array $children)
+    private function getActiveItem(array $children) : array
     {
         $active = [];
         foreach ($children as $index => $child) {

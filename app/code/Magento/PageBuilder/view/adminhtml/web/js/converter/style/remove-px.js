@@ -4,6 +4,10 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var RemovePx =
   /*#__PURE__*/
   function () {

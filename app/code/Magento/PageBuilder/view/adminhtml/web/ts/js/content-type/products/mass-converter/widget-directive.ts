@@ -5,6 +5,9 @@
 
 import BaseWidgetDirective from "../../../mass-converter/widget-directive-abstract";
 
+/**
+ * @api
+ */
 export default class WidgetDirective extends BaseWidgetDirective {
     /**
      * Convert value to internal format

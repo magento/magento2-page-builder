@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @api
+ */
 import $ from "jquery";
 import _ from "underscore";
 import BasePreview from "../preview";

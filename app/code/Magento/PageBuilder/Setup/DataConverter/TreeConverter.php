@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
@@ -66,8 +68,9 @@ class TreeConverter
      * @param $string
      *
      * @return string
+     * @throws UnableMigrateWithOutParentException
      */
-    public function convert($string)
+    public function convert(string $string) : string
     {
         $jsonTree = $this->serializer->unserialize($string);
         $html = '';
@@ -151,7 +154,7 @@ class TreeConverter
      * @return string
      * @throws UnableMigrateWithOutParentException
      */
-    private function processItemRendering($renderer, array $itemData, array $itemAdditionalData = [])
+    private function processItemRendering($renderer, array $itemData, array $itemAdditionalData = []) : string
     {
         $defaultRenderer = $this->rendererPool->getRenderer('default');
 
@@ -193,8 +196,12 @@ class TreeConverter
      * @return string
      * @throws UnableMigrateWithOutParentException
      */
-    private function handleRenderException($exception, $defaultRenderer, $itemData, $itemAdditionalData)
-    {
+    private function handleRenderException(
+        \Exception $exception,
+        RendererInterface $defaultRenderer,
+        array $itemData,
+        array $itemAdditionalData
+    ): string {
         if ($this->isUnseparatableContentType($itemData)) {
             throw new UnableMigrateWithOutParentException(
                 __('Content type can not be migrated with out parent.'),

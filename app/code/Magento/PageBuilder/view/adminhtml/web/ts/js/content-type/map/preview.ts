@@ -8,6 +8,9 @@ import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
 
     private element: Element;

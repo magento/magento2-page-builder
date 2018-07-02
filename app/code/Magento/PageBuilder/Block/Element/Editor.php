@@ -3,8 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Block\Element;
 
+/**
+ * Class Editor add logic to render PB instead of wysiwyg editor
+ *
+ * @api
+ */
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {
     /**
@@ -35,7 +42,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
      *
      * @return bool
      */
-    protected function isStageEnabled()
+    protected function isStageEnabled() : bool
     {
         return true;
     }
@@ -57,7 +64,7 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
      *
      * @return bool
      */
-    private function isPageBuilderUsed()
+    private function isPageBuilderUsed() : bool
     {
         $config = $this->getConfig();
         return $config->getData('activeEditorPath') === 'Magento_PageBuilder/pageBuilderAdapter'

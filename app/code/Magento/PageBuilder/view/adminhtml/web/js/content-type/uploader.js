@@ -4,6 +4,10 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Uploader =
   /*#__PURE__*/
   function () {

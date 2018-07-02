@@ -5,6 +5,9 @@
 
 import ConverterInterface from "./converter-interface";
 
+/**
+ * @api
+ */
 class DataConverterPool {
     private converters: object = {};
 

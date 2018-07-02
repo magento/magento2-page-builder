@@ -5,6 +5,9 @@
 import _ from "underscore";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class CreateValueForHref implements ConverterInterface {
     /**
      * @type object

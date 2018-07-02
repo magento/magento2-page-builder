@@ -10,6 +10,11 @@ namespace Magento\PageBuilder\Model\Stage;
 
 use Magento\Framework\UrlInterface;
 
+/**
+ * Class Config
+ *
+ * @api
+ */
 class Config
 {
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';
@@ -19,7 +24,7 @@ class Config
     const XML_PATH_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\ConfigInterface
+     * @var \Magento\PageBuilder\Model\ConfigInterface
      */
     private $config;
 
@@ -55,7 +60,7 @@ class Config
 
     /**
      * Config constructor.
-     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $config
+     * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
      * @param \Magento\Framework\Url $frontendUrlBuilder
@@ -64,7 +69,7 @@ class Config
      * @param array $data
      */
     public function __construct(
-        \Magento\PageBuilder\Model\Config\ConfigInterface $config,
+        \Magento\PageBuilder\Model\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Url $frontendUrlBuilder,

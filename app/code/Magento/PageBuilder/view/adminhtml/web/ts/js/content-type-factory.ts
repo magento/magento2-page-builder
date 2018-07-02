@@ -24,6 +24,7 @@ import FieldDefaultsInterface from "./field-defaults.d";
  * @param {object} data
  * @param {number} childrenLength
  * @returns {Promise<ContentTypeInterface>}
+ * @api
  */
 export default function createContentType(
     config: ContentTypeConfigInterface,

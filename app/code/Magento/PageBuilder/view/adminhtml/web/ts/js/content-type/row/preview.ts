@@ -19,6 +19,9 @@ import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-pa
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);

@@ -15,6 +15,7 @@ import ColumnPreview from "../column/preview";
  * @param {number} width
  * @param {number} index
  * @returns {Promise<ContentTypeCollectionInterface>}
+ * @api
  */
 export function createColumn(
     parent: ContentTypeCollectionInterface,

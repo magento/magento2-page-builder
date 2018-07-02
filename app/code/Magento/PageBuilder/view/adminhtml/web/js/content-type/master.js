@@ -4,6 +4,9 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+  /**
+   * @api
+   */
   var Master =
   /*#__PURE__*/
   function () {

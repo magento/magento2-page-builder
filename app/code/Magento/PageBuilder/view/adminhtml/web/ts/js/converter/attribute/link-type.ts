@@ -5,6 +5,9 @@
 
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class CreateValueForLinkType implements ConverterInterface {
 
     /**

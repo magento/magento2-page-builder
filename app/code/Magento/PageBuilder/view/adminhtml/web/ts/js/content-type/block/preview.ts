@@ -7,6 +7,9 @@ import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     /**
      * Bind events
