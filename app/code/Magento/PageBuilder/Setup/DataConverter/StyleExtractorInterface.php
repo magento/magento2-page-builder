@@ -3,10 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 /**
  * Extract styles from an object of form data to be used in the new mark up
+ *
+ * @api
  */
 interface StyleExtractorInterface
 {
@@ -20,5 +24,5 @@ interface StyleExtractorInterface
      * @param array $stylesToExtract
      * @return string
      */
-    public function extractStyle(array $formData, array $stylesToExtract = []);
+    public function extractStyle(array $formData, array $stylesToExtract = []) : string;
 }

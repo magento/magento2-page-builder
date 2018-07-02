@@ -9,6 +9,9 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
 
     /**

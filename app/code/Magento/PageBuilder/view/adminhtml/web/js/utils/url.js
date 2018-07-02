@@ -33,6 +33,7 @@ define([], function () {
    * @param {string} url
    * @param {string} otherUrl
    * @returns {string}
+   * @api
    */
 
 

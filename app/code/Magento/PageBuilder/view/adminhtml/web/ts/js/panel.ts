@@ -18,6 +18,9 @@ import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {ContentType as GroupContentType} from "./panel/group/content-type";
 
+/**
+ * @api
+ */
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);

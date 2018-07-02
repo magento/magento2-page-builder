@@ -6,6 +6,9 @@
 import {convertMediaDirectivesToUrls, removeQuotesInMediaDirectives} from "../../utils/directives";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class Directives implements ConverterInterface {
     /**
      * Convert value to internal format

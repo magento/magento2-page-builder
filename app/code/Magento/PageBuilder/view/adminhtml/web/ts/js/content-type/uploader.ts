@@ -7,6 +7,9 @@ import events from "uiEvents";
 import layout from "uiLayout";
 import registry from "uiRegistry";
 
+/**
+ * @api
+ */
 export default class Uploader {
     /**
      * Id of uploader instance

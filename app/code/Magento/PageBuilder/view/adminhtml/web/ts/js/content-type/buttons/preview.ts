@@ -15,6 +15,9 @@ import ButtonItem from "../button-item/preview";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
 

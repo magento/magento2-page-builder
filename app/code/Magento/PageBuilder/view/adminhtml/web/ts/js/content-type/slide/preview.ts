@@ -20,6 +20,9 @@ import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);

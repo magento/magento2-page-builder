@@ -11,6 +11,7 @@ import Config from "../config";
  * @param {string} contentType
  * @param {string} appearance
  * @returns {Object}
+ * @api
  */
 export default function getAppearanceConfig(contentType: string, appearance: string): object {
     const contentTypeConfig = Config.getContentTypeConfig(contentType);

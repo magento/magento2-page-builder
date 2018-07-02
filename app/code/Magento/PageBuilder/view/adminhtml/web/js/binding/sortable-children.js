@@ -12,6 +12,10 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/drag-drop/move
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var draggedContentType; // Create a new sortable Knockout binding
 
   _knockout.default.bindingHandlers.sortableChildren = {

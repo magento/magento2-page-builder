@@ -58,6 +58,7 @@ define([], function () {
    * @param {number} start
    * @param {(item: any, index: number) => boolean} callback
    * @returns {any}
+   * @api
    */
 
 

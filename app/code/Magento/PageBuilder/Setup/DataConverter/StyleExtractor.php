@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
@@ -36,7 +38,7 @@ class StyleExtractor implements StyleExtractorInterface
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function extractStyle(array $formData, array $stylesToExtract = [])
+    public function extractStyle(array $formData, array $stylesToExtract = []) : string
     {
         $styleAttributes = [
             'text-align' => isset($formData['align']) ? $formData['align'] : '',
@@ -81,7 +83,7 @@ class StyleExtractor implements StyleExtractorInterface
      * @param string $value
      * @return string
      */
-    private function normalizeSizeDimension($value)
+    private function normalizeSizeDimension($value) : string
     {
         if (strpos($value, 'px') !== false || strpos($value, '%') !== false) {
             return $value;
@@ -95,7 +97,7 @@ class StyleExtractor implements StyleExtractorInterface
      * @param string $attributeData
      * @return string
      */
-    private function extractMarginPadding(string $attributeData)
+    private function extractMarginPadding(string $attributeData) : string
     {
         $valuesArray = explode(' ', $attributeData);
         $convertedValuesArray = array_map(function ($value) {

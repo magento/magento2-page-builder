@@ -6,6 +6,10 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var BackgroundImage =
   /*#__PURE__*/
   function () {

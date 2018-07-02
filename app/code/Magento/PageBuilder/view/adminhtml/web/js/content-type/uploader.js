@@ -4,6 +4,10 @@ define(["uiEvents", "uiLayout", "uiRegistry"], function (_uiEvents, _uiLayout, _
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Uploader =
   /*#__PURE__*/
   function () {

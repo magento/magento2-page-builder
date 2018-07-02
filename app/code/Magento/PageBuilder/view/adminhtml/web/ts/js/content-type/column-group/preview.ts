@@ -33,6 +33,9 @@ import {createColumn} from "./factory";
 import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {

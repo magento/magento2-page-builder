@@ -31,6 +31,9 @@ import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
 import {default as SliderPreview} from "../slider/preview";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);

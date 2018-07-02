@@ -4,6 +4,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
   function (_PreviewCollection) {

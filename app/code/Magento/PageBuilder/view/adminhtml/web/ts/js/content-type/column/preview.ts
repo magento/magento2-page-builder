@@ -25,6 +25,9 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {updateColumnWidth} from "./resize";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public element: JQuery;

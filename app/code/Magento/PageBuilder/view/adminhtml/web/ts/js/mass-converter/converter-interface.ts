@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @api
+ */
 export interface ConverterInterface {
     /**
      * Process data after it's read and converted by element converters

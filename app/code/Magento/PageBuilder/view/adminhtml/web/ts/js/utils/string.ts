@@ -8,6 +8,7 @@
  *
  * @param {string} string
  * @returns {string}
+ * @api
  */
 export function fromSnakeToCamelCase(currentString: string): string {
     const parts: string[] = currentString.split(/[_-]/);

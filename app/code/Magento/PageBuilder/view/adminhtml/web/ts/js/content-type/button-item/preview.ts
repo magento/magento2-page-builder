@@ -8,6 +8,9 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 

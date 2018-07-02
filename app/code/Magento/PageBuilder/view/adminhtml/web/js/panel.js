@@ -4,6 +4,10 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Panel =
   /*#__PURE__*/
   function () {

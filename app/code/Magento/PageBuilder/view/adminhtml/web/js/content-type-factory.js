@@ -14,6 +14,7 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
    * @param {object} data
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}
+   * @api
    */
   function createContentType(config, parent, stageId, data, childrenLength) {
     if (data === void 0) {

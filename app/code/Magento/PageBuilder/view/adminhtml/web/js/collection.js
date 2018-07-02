@@ -4,6 +4,10 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Collection =
   /*#__PURE__*/
   function () {

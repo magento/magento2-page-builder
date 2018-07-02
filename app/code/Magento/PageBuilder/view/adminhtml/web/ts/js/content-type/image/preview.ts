@@ -8,6 +8,9 @@ import {DataObject} from "../../data-store";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     /**
      * Uploader instance
