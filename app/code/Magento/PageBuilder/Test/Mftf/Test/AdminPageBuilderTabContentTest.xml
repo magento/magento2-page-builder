@@ -883,7 +883,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -892,7 +892,7 @@
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForHtmlStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForHtmlStorefront"/>
     </test>
     <test name="CannotAddTabsToTab">
         <annotations>

@@ -21,7 +21,9 @@ export default function filterHtml(element: JQuery): JQuery {
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find("*").each(
         (index, value) => {
-            if (value.tagName !== "IFRAME") {
+            const isIframe = value.tagName === "IFRAME";
+            const isBeingBypassedByThisFilter = !!$(value).closest(".bypass-html-filter").length;
+            if (!isIframe && !isBeingBypassedByThisFilter) {
                 $(value).contents().filter(isWhiteSpaceOrComment).remove();
             }
         },
@@ -29,6 +31,9 @@ export default function filterHtml(element: JQuery): JQuery {
     element.find("[data-wrapper]").each((index, value) => {
         $(value).parent().append($(value).children());
         $(value).remove();
+    });
+    element.find(".bypass-html-filter").each((index, value) => {
+        $(value).removeClass("bypass-html-filter").filter('[class=""]').removeAttr("class");
     });
     return element;
 }
