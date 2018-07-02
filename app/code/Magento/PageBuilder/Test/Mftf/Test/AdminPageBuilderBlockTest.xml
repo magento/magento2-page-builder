@@ -95,12 +95,12 @@
     </test>
     <test name="BlockDelete">
         <annotations>
-            <features value="Pagebuilder: Block"/>
+            <features value="Pagebuilder"/>
             <stories value="MAGETWO-83941: Static Block"/>
             <title value="Block - Delete Block"/>
             <description value="A user should be able to delete an Block content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-89885"/>
+            <testCaseId value="MC-2848"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -130,6 +130,53 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+    </test>
+    <test name="DisplayingDeletedBlockOnStage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Static Block"/>
+            <title value="Block - Displaying deleted block on Stage"/>
+            <description value="A user should be able to see that block is deleted on Stage."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1420"/>
+            <testCaseId value="MC-2420"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-customBeforeAfter"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$createPreReqBlock$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive2">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStage.deleted('$createPreReqBlock.id$')}}" stepKey="seeDeletedBlockPlaceHolder"/>
     </test>
     <test name="BlockValidateAdvancedConfigurationDefaultValues">
         <annotations>
