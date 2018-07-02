@@ -9,6 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BlockOnStage">
+        <element name="html" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}]{{arg2}}" parameterized="true"/>
         <element name="status" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//span[contains(@class,'placeholder') and text()='{{arg}}'])" parameterized="true"/>
         <element name="deleted" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//span[contains(@class,'placeholder') and contains(text(),'Block with ID: {{arg}} doesn')])" parameterized="true"/>
         <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[1]//div[contains(@class,'pagebuilder-options-wrapper')]//div[contains(@class,'option-title') and text()='{{arg}}']" parameterized="true"/>
@@ -32,6 +33,7 @@
     </section>
     <section name="BlockOnGrid">
         <element name="searchBox" type="text" selector="//input[contains(@class,'data-grid-search-control')]"/>
+        <element name="searchBtn" type="text" selector=".action-submit"/>
         <element name="selectBtn" type="text" selector="//div[text()='{{arg}}']/parent::td//preceding-sibling::td//button[text()='Select']" parameterized="true"/>
         <element name="addSelectedBtn" type="text" selector="//button/span[text()='Add Selected']"/>
     </section>
@@ -39,6 +41,7 @@
         <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[contains(@class,'block-title') and text()='{{arg1}}'])" parameterized="true"/>
     </section>
     <section name="BlockOnStorefront">
+        <element name="html" type="text" selector="(//div[@data-role='block'])[{{arg1}}]{{arg2}}" parameterized="true"/>
         <element name="base" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}]" parameterized="true"/>
         <element name="hr" type="button" selector="(//div[@data-role='row']/div)[{{arg1}}]/hr" parameterized="true"/>
         <!-- Advanced Configuration -->
