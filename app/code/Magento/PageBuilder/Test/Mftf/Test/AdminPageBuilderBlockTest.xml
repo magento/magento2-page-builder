@@ -78,16 +78,23 @@
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <!--<seeElement selector="{{BlockOnStage.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitle"/>-->
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <seeElement selector="{{BlockOnStage.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible selector="{{BlockOnStage.hr('1')}}" stepKey="waitForHrElementVisible" />
-        <waitForElementVisible selector="{{BlockOnStage.identifier('1', PageBuilderBlockIdentifierProperty.value)}}" stepKey="waitForIdentifier" />
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStageAfterSave">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStorefront.hr('1')}}" stepKey="seeBlockContentFrontend"/>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStage"/>
     </test>
     <test name="BlockDelete">
         <annotations>

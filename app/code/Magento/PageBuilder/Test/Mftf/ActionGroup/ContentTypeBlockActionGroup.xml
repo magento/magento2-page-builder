@@ -19,4 +19,13 @@
         <click selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="clickSelectBtn"/>
         <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
     </actionGroup>
+    <actionGroup name="verifyBlockOnStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="block"/>
+        </arguments>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{block.title}}" stepKey="seeOptionMenuTitle"/>
+        <see userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
+    </actionGroup>
 </actionGroups>
