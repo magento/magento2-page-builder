@@ -10,6 +10,7 @@ define([], function () {
    *
    * @param {string} string
    * @returns {string}
+   * @api
    */
   function fromSnakeToCamelCase(currentString) {
     var parts = currentString.split(/[_-]/);

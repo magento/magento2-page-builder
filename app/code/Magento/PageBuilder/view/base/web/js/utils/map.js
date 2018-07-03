@@ -3,10 +3,13 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @api
+ */
 define([
     'underscore',
     'module',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'mage/translate',
     'googleMaps'
 ], function (_, module, events, $t) {

@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeInterface from "../content-type";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type/content-type-after-render-event-params";
@@ -48,7 +48,7 @@ export function bindAfterRenderForAnimation(
     if (containerLocked) {
         // Wait for mount then animate the container
         const ns = block.id + ".afterRender.container.animate";
-        events.on("contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+        events.on("contentType:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
             if (args.contentType.parent === block.parent) {
                 animateContainerHeight(true, element);
                 events.off(ns);

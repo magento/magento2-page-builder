@@ -10,6 +10,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param value
    * @returns {Object}
+   * @api
    */
   function decodeUrl(value) {
     var result = "";

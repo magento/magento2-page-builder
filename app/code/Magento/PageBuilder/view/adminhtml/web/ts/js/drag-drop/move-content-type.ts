@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 import ko from "knockout";
-import events from "uiEvents";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
-import ContentTypeInterface from "../content-type.d";
+import events from "Magento_PageBuilder/js/events";
+import ContentTypeInterface from "../content-type";
+import ContentTypeCollectionInterface from "../content-type-collection";
 
 /**
  * Move a content type to a new index, with the option to move to a new container
@@ -26,14 +26,14 @@ export function moveContentType(
     const sourceParentChildren = sourceParent.getChildren();
 
     // Trigger our block move event
-    events.trigger("contentType:beforeMove", {
+    events.trigger("contentType:moveBefore", {
         contentType,
         sourceParent,
         targetParent,
         targetIndex,
         stageId: contentType.stageId,
     });
-    events.trigger(`${contentType.config.name}:contentType:beforeMove`, {
+    events.trigger(`${contentType.config.name}:moveBefore`, {
         contentType,
         sourceParent,
         targetParent,
@@ -71,14 +71,14 @@ export function moveContentType(
     }
 
     // Trigger our content type move event
-    events.trigger("contentType:move", {
+    events.trigger("contentType:moveAfter", {
         contentType,
         sourceParent,
         targetParent,
         targetIndex,
         stageId: contentType.stageId,
     });
-    events.trigger(`${contentType.config.name}:contentType:move`, {
+    events.trigger(`${contentType.config.name}:moveAfter`, {
         contentType,
         sourceParent,
         targetParent,

@@ -49,62 +49,43 @@ This document contains reference information for events dispatched in Page Build
 
 ## Events list
 
-* [contentType:create](#contenttypecreate)
-* [contentType:ready](#contenttypeready)
-* [contentType:dropped:create](#contenttypedroppedcreate)
-* [contentType:mount](#contenttypemount)
-* [contentType:afterRender](#contenttypeafterrender)
-* [contentType:removed](#contenttyperemoved)
-* [contentType:duplicate](#contenttypeduplicate)
-* [contentType:beforeMove](#contenttypebeforemove)
-* [contentType:move](#contenttypemove)
-* [column:drag:start](#columdragstart)
-* [column:drag:stop](#columndragstop)
-* [column:initElement](#columninitelement)
-* [image:assigned:{{id}}](#imageassignedid)
-* [image:contentType:ready](#imagecontenttypeready)
-* [image:uploaded](#imageuploaded)
-* [interaction:start](#interactionstart)
-* [interaction:stop](#interactionstop)
-* [pagebuilder:toggleFullScreen:{{id}}](#pagebuildertogglefullscreenid)
-* [previewObservables:updated](#previewobservablesupdated)
+* [contentType:createAfter](#contenttypecreateafter)
+* [contentType:dropAfter](#contenttypedropafter)
+* [contentType:mountAfter](#contenttypemountafter)
+* [contentType:renderAfter](#contenttyperenderafter)
+* [contentType:removeAfter](#contenttyperemoveafter)
+* [contentType:duplicateAfter](#contenttypeduplicateafter)
+* [contentType:moveBefore](#contenttypemovebefore)
+* [contentType:moveAfter](#contenttypemoveafter)
+* [column:dragStart](#columdragstart)
+* [column:dragStop](#columndragstop)
+* [column:initializeAfter](#columninitializeafter)
+* [image:{{id}}:assignAfter](#imageidassignafter)
+* [image:mountAfter](#imagemountafter)
+* [image:uploadAfter](#imageuploadafter)
+* [stage:interactionStart](#stageinteractionstart)
+* [stage:interactionStop](#stageinteractionstop)
+* [stage:{{id}}:toggleFullscreen](#stageidtogglefullscreen)
+* [previewData:updateAfter](#previewdataupdateafter)
 * [previewSortable:sortstart](#previewsortablesortstart)
 * [previewSortable:sortupdate](#previewsortablesortupdate)
 * [stage:error](#stageerror)
-* [stage:ready:{{id}}](#stagereadyid)
-* [stage:renderTree:{{id}}](#stagerendertreeid)
-* [stage:updated](#stageupdated)
-* [focusChild:start](#focuschildstart)
-* [focusChild:stop](#focuschildstop)
+* [stage:{{id}}:readyAfter](#stageidreadyafter)
+* [stage:{{id}}:masterFormatRenderAfter](#stageidmasterformatrenderafter)
+* [stage:updateAfter](#stageupdateafter)
+* [stage:childFocusStart](#stagechildfocusstart)
+* [stage:childFocusStop](#stagechildfocusstop)
 * [state](#state)
-* [{{id}}:updated](#idupdated)
+* [{{config.name}}:{{id}}:updateAfter](#confignameidupdateafter)
 * [googleMaps:authFailure](#googlemapsauthFailure)
 
 ## `contentType:*` events
-All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:contentType:{{event}}`) like the following:
-* `text:contentType:create`
-* `row:contentType:ready`
-* `tab-item:contentType:mount`
+All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
+* `text:createAfter`
+* `row:mountAfter`
+* `tab-item:mountAfter`
 
-### `contentType:create`
-
-**Triggers**
-
-* `createContentType`
-
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
-```
-
-[Back to top]
-
-### `contentType:ready`
+### `contentType:createAfter`
 
 **Triggers**
 
@@ -122,7 +103,25 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:dropped:create`
+### `contentType:mountAfter`
+
+**Triggers**
+
+* `createContentType`
+
+
+**Params**
+
+``` js
+{
+    id: string;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+}
+```
+
+[Back to top]
+
+### `contentType:dropAfter`
 
 **Triggers**
 
@@ -140,7 +139,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:mount`
+### `contentType:mountAfter`
 
 **Triggers**
 
@@ -158,7 +157,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:afterRender`
+### `contentType:renderAfter`
 
 **Triggers**
 
@@ -176,7 +175,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:removed`
+### `contentType:removeAfter`
 
 **Triggers**
 
@@ -195,7 +194,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:duplicate`
+### `contentType:duplicateAfter`
 
 **Triggers**
 
@@ -213,7 +212,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:beforeMove`
+### `contentType:moveBefore`
 
 **Triggers**
 
@@ -233,7 +232,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:move`
+### `contentType:moveAfter`
 
 **Triggers**
 
@@ -253,7 +252,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:drag:start`
+### `column:dragStart`
 
 **Triggers**
 
@@ -270,7 +269,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:drag:stop`
+### `column:dragStop`
 
 **Triggers**
 
@@ -287,7 +286,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:initElement`
+### `column:initializeAfter`
 
 **Triggers**
 
@@ -305,7 +304,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `image:assigned:{{id}}`
+### `image:{{id}}:assignAfter`
 
 **Triggers**
 
@@ -315,7 +314,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 object
 
-### `image:contentType:ready`
+### `image:mountAfter`
 
 **Triggers**
 
@@ -327,7 +326,7 @@ Function
 
 [Back to top]
 
-### `image:uploaded`
+### `image:uploadAfter`
 
 **Triggers**
 
@@ -339,7 +338,7 @@ Function
 
 [Back to top]
 
-### `interaction:start`
+### `stage:interactionStart`
 
 **Triggers**
 
@@ -356,7 +355,7 @@ Function
 
 [Back to top]
 
-### `interaction:stop`
+### `stage:interactionStop`
 
 **Triggers**
 
@@ -374,7 +373,7 @@ Function
 
 [Back to top]
 
-### `pagebuilder:toggleFullScreen:{{id}}`
+### `stage:{{id}}:toggleFullscreen`
 
 **Triggers**
 
@@ -388,7 +387,7 @@ Function
 
 [Back to top]
 
-### `previewObservables:updated`
+### `previewData:updateAfter`
 
 **Triggers**
 
@@ -454,14 +453,14 @@ Error
 
 [Back to top]
 
-### `stage:ready:{{id}}`
+### `stage:{{id}}:readyAfter`
 
 **Triggers**
 
 * `Stage::ready`
 * `stage instance`
 
-### `stage:renderTree:{{id}}`
+### `stage:{{id}}:masterFormatRenderAfter`
 
 **Triggers**
 
@@ -477,7 +476,7 @@ Error
 
 [Back to top]
 
-### `stage:updated`
+### `stage:updateAfter`
 
 **Triggers**
 
@@ -494,11 +493,11 @@ Error
 
 [Back to top]
 
-### `focusChild:start`
+### `stage:childFocusStart`
 
 [Back to top]
 
-### `focusChild:stop`
+### `stage:childFocusStop`
 
 [Back to top]
 
@@ -518,7 +517,7 @@ Error
 
 [Back to top]
 
-### `{{id}}:updated`
+### `{{config.name}}:{{id}}:updateAfter`
 
 **Triggers**
 

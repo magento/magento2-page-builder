@@ -4,7 +4,9 @@
  */
 
 import ko from "knockout";
-
+/**
+ * @api
+ */
 ko.bindingHandlers.hasFocusNoScroll = {
     init: ko.bindingHandlers.hasFocus.init,
     update: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) => {

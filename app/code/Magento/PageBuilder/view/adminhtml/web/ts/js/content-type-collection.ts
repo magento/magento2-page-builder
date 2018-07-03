@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Collection from "./collection";
 import ContentType from "./content-type";
@@ -27,7 +27,7 @@ export default class ContentTypeCollection extends ContentType implements Conten
         super(parent, config, stageId);
         this.collection.getChildren()
             .subscribe(
-                () => events.trigger("stage:updated", {stageId: this.stageId}),
+                () => events.trigger("stage:updateAfter", {stageId: this.stageId}),
             );
     }
 
@@ -52,8 +52,8 @@ export default class ContentTypeCollection extends ContentType implements Conten
 
         // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
         _.defer(() => {
-            events.trigger("contentType:mount", {id: child.id, contentType: child});
-            events.trigger(child.config.name + ":contentType:mount", {id: child.id, contentType: child});
+            events.trigger("contentType:mountAfter", {id: child.id, contentType: child});
+            events.trigger(child.config.name + ":mountAfter", {id: child.id, contentType: child});
         });
     }
 

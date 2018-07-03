@@ -5,11 +5,14 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import {OptionInterface} from "./content-type-toolbar/option";
 import {ValueInterface} from "./content-type-toolbar/value";
 import Preview from "./content-type/preview";
 
+/**
+ * @api
+ */
 export default class Toolbar {
     public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
     private preview: Preview;
@@ -56,7 +59,7 @@ export default class Toolbar {
     public onFocusIn(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
-        events.trigger("interaction:start");
+        events.trigger("stage:interactionStart");
     }
 
     /**
@@ -68,6 +71,6 @@ export default class Toolbar {
     public onFocusOut(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
-        events.trigger("interaction:stop");
+        events.trigger("stage:interactionStop");
     }
 }

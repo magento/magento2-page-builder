@@ -1,7 +1,10 @@
 /*eslint-disable */
-define(["uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_uiEvents, _config, _preview) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_events, _config, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
   function (_BasePreview) {
@@ -21,7 +24,7 @@ define(["uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/con
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _uiEvents.on("previewObservables:updated", function (args) {
+      _events.on("previewData:updateAfter", function (args) {
         if (args.preview.parent.id === _this.parent.id) {
           var attributes = _this.data.main.attributes();
 

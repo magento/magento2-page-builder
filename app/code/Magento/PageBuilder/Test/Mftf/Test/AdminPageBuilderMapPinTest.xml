@@ -10,9 +10,9 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="MapAddPinToMapByClickingOnMap">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Add Pin To Map By Clicking On Map"/>
+            <title value="Pin Tests - Add Pin To Map By Clicking On Map"/>
             <description value="A user should be able to add a pin to a map on the Edit Panel by clicking the map and see the pin on Edit Panel, Stage, and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
@@ -140,9 +140,9 @@
     </test>
     <test name="MapAddPinToMapByInputtingCoordinates">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Add Pin To Map By Inputting Coordinates"/>
+            <title value="Pin Tests - Add Pin To Map By Inputting Coordinates"/>
             <description value="A user should be able to add a pin to a map on the Edit Panel by inputting coordinates and see the pin on Edit Panel, Stage, and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
@@ -246,9 +246,9 @@
     </test>
     <test name="MapCannotAddPinToMapOnStageOrStoreFront">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Cannot Add Pin To Map In Stage Or Store Front"/>
+            <title value="Pin Tests - Cannot Add Pin To Map In Stage Or Store Front"/>
             <description value="A user should not be able to add a pin to a map from the Stage nor the store front."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
@@ -303,9 +303,9 @@
     </test>
     <test name="MapMoveMapPinByClickingOnMap">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Move Map Pin By Clicking On Map"/>
+            <title value="Pin Tests - Move Map Pin By Clicking On Map"/>
             <description value="A user should be able to move a map pin by clicking on the map on the Edit Panel"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
@@ -441,13 +441,13 @@
     </test>
     <test name="MapMoveMapPinByChangingCoordinates">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Move Map Pin By Changing Coordinates"/>
+            <title value="Pin Tests - Move Map Pin By Changing Coordinates"/>
             <description value="A user should be able to move a map pin by changing the coordinates on the Edit Panel"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91485"/>
             <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91485"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
@@ -565,13 +565,13 @@
     </test>
     <test name="MapMoveMapPinByDraggingAndDroppingPin">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Move Map Pin By Dragging And Dropping Pin"/>
+            <title value="Pin Tests - Move Map Pin By Dragging And Dropping Pin"/>
             <description value="A user should be able to move a map pin by dragging and dropping the pin on the Edit Panel"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91573"/>
             <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91573"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
@@ -687,13 +687,13 @@
     </test>
     <test name="MapMoveMapPinByDraggingAndDroppingPinOffOfMap">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Move Map Pin By Dragging And Dropping Pin Off Of Map"/>
+            <title value="Pin Tests - Move Map Pin By Dragging And Dropping Pin Off Of Map"/>
             <description value="A user should be able to move a map pin by dragging and dropping the pin off of the map on the Edit Panel"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91574"/>
             <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91574"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
@@ -809,9 +809,9 @@
     </test>
     <test name="MapAddPinThenRemoveThenAdd">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Add Pin Then Remove Then Add and Verify"/>
+            <title value="Pin Tests - Add Pin Then Remove Then Add and Verify"/>
             <description value="Make sure the user can add a map after adding a map and then removing it."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-66519"/>
@@ -876,9 +876,9 @@
     </test>
     <test name="MapPinTooltipWindowFunctionality">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Open and Close Map Pin Tooltip"/>
+            <title value="Pin Tests - Open and Close Map Pin Tooltip"/>
             <description value="Verify that the user can open and close the map pin tooltip window and that the tooltip window stays open as a user moves the map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -886,6 +886,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
+            <!-- MC-2430 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -963,9 +965,9 @@
     </test>
     <test name="MapPinTooltipAllLocationData">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - Pin Tooltip All Location Data"/>
+            <title value="Pin Tests - Pin Tooltip All Location Data"/>
             <description value="Verify tooltip with all location data appears on Stage and Storefront but not Edit Panel."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
@@ -1079,9 +1081,9 @@
     </test>
     <test name="Map2Locations">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - 2 Locations"/>
+            <title value="Pin Tests - 2 Locations"/>
             <description value="Verify that the user can add locations to a map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -1301,9 +1303,9 @@
     </test>
     <test name="Map10Locations">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - 10 Locations"/>
+            <title value="Pin Tests - 10 Locations"/>
             <description value="Verify that the user can add 10 locations to a map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -1495,9 +1497,9 @@
     </test>
     <test name="Map2LocationsWithSameCoordinates">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - 2 Locations With Same Coordinates"/>
+            <title value="Pin Tests - 2 Locations With Same Coordinates"/>
             <description value="Verify that the user can add 2 locations to a map with the same coordinates."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -1585,9 +1587,9 @@
     </test>
     <test name="Map2LocationsOppositeSidesOfWorld">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Map"/>
-            <title value="Map - 2 Locations On Opposite Sides Of The World"/>
+            <title value="Pin Tests - 2 Locations On Opposite Sides Of The World"/>
             <description value="Verify that the user can add 2 locations to a map that are on opposite sides of the world."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>

@@ -10,11 +10,12 @@
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="BannerCanAddBanner">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-83928: Driver"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="User can add and edit banner"/>
             <description value="A user should be able to add and edit banner"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MAGETWO-89573"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -47,11 +48,12 @@
     </test>
     <test name="BannerEmptyBannerPreviewValidation">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-83928: Driver"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Validate empty banner on preview"/>
             <description value="Validate contents and layout of empty banner on preview page."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MAGETWO-88320"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -190,11 +192,12 @@
     </test>
     <test name="BannerCanPreviewAdmin">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-81599: PageBuilder Banner (ex Driver) Basic Configuration"/>
-            <title value="Banner is previewable in admin"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner can be previewed in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MAGETWO-89574"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -281,11 +284,12 @@
     </test>
     <test name="BannerCanRenderFrontend">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-83928: Driver"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Add Banner in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to see content rendered correctly on frontend for banner"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MAGETWO-84673"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -391,11 +395,12 @@
     </test>
     <test name="BannerRemoveBannerFromStage">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-83928: Driver"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Remove banner content type from stage"/>
             <description value="A user should be able to remove banner content type from a row."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -422,11 +427,12 @@
     </test>
     <test name="BannerHasNoRequired">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-83928: Driver"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner has  no required fields in edit form"/>
             <description value="Check there is no required fields in banner edit form"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83928"/>
             <testCaseId value="MAGETWO-89576"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -456,11 +462,12 @@
     </test>
     <test name="BannerCheckInvalidInputs">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-81599: PageBuilder Banner (ex Driver) Basic Configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner errors if invalid input is saved in the edit form"/>
             <description value="Banner errors if invalid input is saved in the edit form"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MAGETWO-89577"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -531,11 +538,12 @@
     </test>
     <test name="BannerHasExpectedFieldsAndDefaults">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-81599: PageBuilder Banner (ex Driver) Basic Configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner has the correct fields and default values in edit form"/>
             <description value="A user should see the correct fields and default values when edit button is clicked for banner"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MAGETWO-89572"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -667,13 +675,132 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
         </actionGroup>
     </test>
+    <test name="BannerValidateBackgroundSectionDefaultValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Background Section Default Values"/>
+            <description value="Validate the default values for every attribute in the Background section for Banner. Validate Stage and Storefront as well."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MAGETWO-92589"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateColorSwatch">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBackgroundColorPlaceholderText">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage2">
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage2">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <!-- Fill URL field so it will show on storefront -->
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+        </actionGroup>
+    </test>
     <test name="BannerValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
-            <title value="Banner - Validate Advanced Configuration Default Values"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Banner."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MAGETWO-89435"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -728,11 +855,12 @@
     </test>
     <test name="BannerHasButtonStyled">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-81599: PageBuilder Banner (ex Driver) Basic Configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for banner"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MAGETWO-89578"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -856,11 +984,12 @@
     </test>
     <test name="BannerCanOpenInNewTab">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-81599: PageBuilder Banner (ex Driver) Basic Configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MAGETWO-89575"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -920,11 +1049,12 @@
     </test>
     <test name="BannerDoesNotNavigate">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
-            <stories value="MAGETWO-81599: PageBuilder Banner (ex Driver) Basic Configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner does not navigate on click"/>
             <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-81599"/>
             <testCaseId value="MAGETWO-89583"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -982,11 +1112,12 @@
     </test>
     <test name="BannerCanAddImageToBanner">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Add an image content type into banner"/>
             <description value="A user should be able to add an image into a banner."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86533"/>
             <testCaseId value="MAGETWO-89582"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
@@ -1062,7 +1193,7 @@
     </test>
     <test name="AddImageToBannerStage">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Banner"/>
             <title value="Add image into Banner from the Stage"/>
             <description value="A user should be able to add image to Banner stage."/>
@@ -1132,7 +1263,7 @@
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Banner"/>
             <title value="Add image into Banner from the Stage For Different Appearances"/>
             <description value="A user should be able to add image to Banner stage when switching between appearance type"/>

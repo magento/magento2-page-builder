@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config\Form\Field;
 
+/**
+ * @api
+ */
 class GoogleMapsApiKey extends \Magento\Config\Block\System\Config\Form\Field
 {
     /**

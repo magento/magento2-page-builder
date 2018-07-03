@@ -7,6 +7,9 @@ import _ from "underscore";
 import {DataObject} from "../../data-store";
 import ReadInterface from "../read-interface";
 
+/**
+ * @api
+ */
 export default class Accordion implements ReadInterface {
 
     /**

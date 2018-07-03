@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
-import events from "uiEvents";
 import _ from "underscore";
 import "../../binding/focus";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
@@ -31,6 +31,9 @@ import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
 import {default as SliderPreview} from "../slider/preview";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
@@ -108,9 +111,9 @@ export default class Preview extends PreviewCollection {
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
             if (value !== null) {
-                events.trigger("interaction:start");
+                events.trigger("stage:interactionStart");
             } else {
-                events.trigger("interaction:stop");
+                events.trigger("stage:interactionStop");
             }
         });
     }
@@ -222,15 +225,15 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((slide) => {
-            events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.delay(() => {
                         this.navigateToSlide(this.parent.children().length - 1);
                         slide.preview.onOptionEdit();
                     }, 500 );
-                    events.off(`slide:contentType:mount:${slide.id}`);
+                    events.off(`slide:${slide.id}:mountAfter`);
                 }
-            }, `slide:contentType:mount:${slide.id}`);
+            }, `slide:${slide.id}:mountAfter`);
             this.parent.addChild(slide, this.parent.children().length);
         });
     }
@@ -251,14 +254,14 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        events.on("slider:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slider:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 sliderReady = true;
             }
         });
 
         // Set the active slide to the new position of the sorted slide
-        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
@@ -268,7 +271,7 @@ export default class Preview extends PreviewCollection {
         // When a slide content type is removed
         // we need to force update the content of the slider due to KO rendering issues
         let newItemIndex: number;
-        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("slide:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.contentType.parent.id === this.parent.id) {
                 // Mark the previous slide as active
                 newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
@@ -280,7 +283,7 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        events.on("slide:contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+        events.on("slide:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
             const itemIndex = (args.contentType.parent as ContentTypeCollectionInterface)
                 .getChildren()().indexOf(args.contentType);
             if ((args.contentType.parent.id === this.parent.id) &&
@@ -300,14 +303,14 @@ export default class Preview extends PreviewCollection {
         });
 
         // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
-        events.on("slide:contentType:create", (args: ContentTypeCreateEventParamsInterface) => {
+        events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
             if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });
 
         // ContentType being mounted onto container
-        events.on("slider:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("slider:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
@@ -316,13 +319,13 @@ export default class Preview extends PreviewCollection {
         // Capture when a content type is duplicated within the container
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
-        events.on("slide:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
+        events.on("slide:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (args.duplicateContentType.parent.id === this.parent.id) {
                 duplicatedSlide = (args.duplicateContentType as Slide);
                 duplicatedSlideIndex = args.index;
             }
         });
-        events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 _.defer(() => {
                     // Mark the new duplicate slide as active

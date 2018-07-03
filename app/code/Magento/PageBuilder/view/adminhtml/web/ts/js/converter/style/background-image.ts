@@ -9,6 +9,9 @@ import {decodeUrl} from "../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class BackgroundImage implements ConverterInterface {
     /**
      * Convert value to internal format
