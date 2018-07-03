@@ -28,7 +28,7 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
@@ -39,17 +39,21 @@
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
+                                    <attribute name="element" source="data-element"/>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
                                 </attributes>
                                 <css name="css_classes"/>
                             </element>
-                            <element name="line" path=".//hr">
+                            <element name="line">
                                 <style_properties>
                                     <property name="line_width" source="width"/>
                                     <property name="line_thickness" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="line_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                 </style_properties>
+                                <attributes>
+                                    <attribute name="element" source="data-element"/>
+                                </attributes>
                             </element>
                         </elements>
                     </data_mapping>

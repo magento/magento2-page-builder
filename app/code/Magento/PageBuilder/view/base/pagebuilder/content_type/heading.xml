@@ -29,7 +29,7 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
@@ -40,6 +40,7 @@
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
+                                    <attribute name="element" source="data-element"/>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
                                 </attributes>

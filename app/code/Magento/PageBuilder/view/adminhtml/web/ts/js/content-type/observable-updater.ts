@@ -112,6 +112,10 @@ export default class ObservableUpdater {
             ) {
                 continue;
             }
+            if (attributeConfig.var === "element") {
+                result[attributeConfig.name] = config.element;
+                continue;
+            }
             let value = data[attributeConfig.var];
             const converter = this.converterResolver(attributeConfig);
             if (this.converterPool.get(converter)) {

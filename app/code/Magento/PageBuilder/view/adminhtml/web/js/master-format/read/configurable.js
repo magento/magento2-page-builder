@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string) {
+define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string", "jquery"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string, _jquery) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   /**
@@ -35,35 +35,39 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
           for (var _i = 0; _i < _arr.length; _i++) {
             var elementName = _arr[_i];
-            var elementConfig = config.elements[elementName]; // Do not read if path is optional
+            var elementConfig = config.elements[elementName];
+            var currentElement = (0, _jquery)(element).find("[data-element='" + elementName + "']").addBack("[data-element='" + elementName + "']")[0];
+            debugger; // const xpathResult = document.evaluate(
+            //     elementConfig.path,
+            //     element,
+            //     null,
+            //     XPathResult.FIRST_ORDERED_NODE_TYPE,
+            //     null,
+            // );
+            // const currentElement = xpathResult.singleNodeValue;
 
-            if (elementConfig.path !== "") {
-              var xpathResult = document.evaluate(elementConfig.path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-              var currentElement = xpathResult.singleNodeValue;
+            if (currentElement === null || currentElement === undefined) {
+              continue;
+            }
 
-              if (currentElement === null || currentElement === undefined) {
-                continue;
-              }
+            if (elementConfig.style.length) {
+              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
+            }
 
-              if (elementConfig.style.length) {
-                data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
-              }
+            if (elementConfig.attributes.length) {
+              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
+            }
 
-              if (elementConfig.attributes.length) {
-                data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
-              }
+            if (undefined !== elementConfig.html.var) {
+              data = _this.readHtml(elementConfig, currentElement, data, converterPool);
+            }
 
-              if (undefined !== elementConfig.html.var) {
-                data = _this.readHtml(elementConfig, currentElement, data, converterPool);
-              }
+            if (undefined !== elementConfig.tag.var) {
+              data = _this.readHtmlTag(elementConfig, currentElement, data);
+            }
 
-              if (undefined !== elementConfig.tag.var) {
-                data = _this.readHtmlTag(elementConfig, currentElement, data);
-              }
-
-              if (undefined !== elementConfig.css.var) {
-                data = _this.readCss(elementConfig, currentElement, data);
-              }
+            if (undefined !== elementConfig.css.var) {
+              data = _this.readCss(elementConfig, currentElement, data);
             }
           }
 

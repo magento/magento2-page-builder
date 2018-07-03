@@ -12,6 +12,7 @@ export default class AttributeMapper {
     // Attribute name mapping
     private attributeNameMapping: AttributeNameMapping = {
         appearance: "data-appearance",
+        element: "data-element",
         autoplay: "data-autoplay",
         autoplay_speed: "data-autoplay-speed",
         border: "data-border",

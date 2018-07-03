@@ -33,7 +33,7 @@ define(["jquery"], function (_jquery) {
       (0, _jquery)(value).remove();
     });
     element.find(".bypass-html-filter").each(function (index, value) {
-      (0, _jquery)(value).removeClass("bypass-html-filter").filter('[class=""]').removeAttr('class');
+      (0, _jquery)(value).removeClass("bypass-html-filter").filter('[class=""]').removeAttr("class");
     });
     return element;
   }

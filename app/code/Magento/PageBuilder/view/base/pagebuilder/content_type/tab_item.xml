@@ -28,7 +28,7 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -46,6 +46,7 @@
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
+                                    <attribute name="element" source="data-element"/>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
                                     <attribute name="tab_name" source="data-tab-name"/>
