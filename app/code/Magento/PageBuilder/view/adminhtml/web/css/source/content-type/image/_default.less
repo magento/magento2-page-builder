@@ -11,6 +11,45 @@
     border: 1px solid transparent;
     width: 100%;
 
+    .column-width-40 &,
+    .column-width-30 &,
+    .column-width-20 &,
+    .column-width-10 & {
+        .file-uploader-area > span {
+            display: none;
+        }
+        .file-uploader-button {
+            margin-left: 0;
+            margin-right: 0;
+
+            ~ .file-uploader-button {
+                margin-left: 15px;
+            }
+        }
+    }
+    .column-width-20 &,
+    .column-width-10 & {
+        .file-uploader-button {
+            width: auto;
+        }
+    }
+    .column-width-30 &,
+    .column-width-20 &,
+    .column-width-10 & {
+        .file-uploader-button ~ .file-uploader-button {
+            margin-left: 0;
+            margin-top: 15px;
+        }
+    }
+    .column-width-10 & {
+        .file-uploader-button {
+            padding: .6rem 0;
+        }
+        .image-upload-requirements {
+            display: none;
+        }
+    }
+
     figure {
         box-sizing: border-box;
         margin: 0;
