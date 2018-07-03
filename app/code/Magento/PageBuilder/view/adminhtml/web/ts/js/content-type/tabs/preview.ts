@@ -67,12 +67,6 @@ export default class Preview extends PreviewCollection {
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
-
-        events.on("tabs:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            if (args.id === this.parent.id && this.element) {
-                this.buildTabs();
-            }
-        });
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (this.element && args.contentType.parent.id === this.parent.id) {
                 this.refreshTabs();

@@ -49,12 +49,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       }, 10);
 
-      _events.on("tabs:renderAfter", function (args) {
-        if (args.id === _this.parent.id && _this.element) {
-          _this.buildTabs();
-        }
-      });
-
       _events.on("tab-item:mountAfter", function (args) {
         if (_this.element && args.contentType.parent.id === _this.parent.id) {
           _this.refreshTabs();
