@@ -53,6 +53,7 @@ class Tabs implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'tabs',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
@@ -69,14 +70,14 @@ class Tabs implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><ul role="tablist" class="tabs-navigation">';
+        $rootElementHtml .= '><ul data-element="navigation" role="tablist" class="tabs-navigation">';
         if (isset($itemData['children']['tabs_items']) && count($itemData['children']['tabs_items']) > 0) {
             $rootElementHtml .= $this->renderTabHeaders(
                 $additionalData['childIndex'],
                 $itemData['children']['tabs_items']
             );
         }
-        $rootElementHtml .= '</ul><div class="tabs-content">'
+        $rootElementHtml .= '</ul><div data-element="content" class="tabs-content">'
             . (isset($additionalData['children']) ? $additionalData['children'] : '')
             . '</div></div>';
         return $rootElementHtml;
@@ -96,7 +97,7 @@ class Tabs implements RendererInterface
         foreach ($tabItems as $tabIndex => $tabItem) {
             $tabItemEavData = $this->tabItemEavAttributeLoader->load($tabItem['entityId']);
             $tabId = 'tab' . $childIndex . '-' . $tabIndex;
-            $tabHeaderElementHtml .= '<li role="tab" class="tab-header">'
+            $tabHeaderElementHtml .= '<li data-element="header" role="tab" class="tab-header">'
                 . '<a href="#' . $tabId . '" class="tab-title" title="' . $tabItemEavData['title'] . '">'
                 . '<span class="tab-title">' . $tabItemEavData['title'] . '</span>'
                 . '</a>'

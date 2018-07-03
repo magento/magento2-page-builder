@@ -53,6 +53,7 @@ class Driver implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'banner',
             'data-appearance' => 'poster',
             'data-show-button' => 'never',
@@ -81,11 +82,13 @@ class Driver implements RendererInterface
         $rootElementAttributes['style'] .= $margin;
 
         $linkAttributes = [
+            'data-element' => 'link',
             'href' => $eavData['link_url'] ?? '',
             'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
 
         $imageAttributes = [
+            'data-element' => 'desktop_image',
             'style' => 'background-image: url('
                 . "'{{media url=wysiwyg"
                 . $eavData['image']
@@ -97,6 +100,7 @@ class Driver implements RendererInterface
         ];
 
         $mobileImageAttributes = [
+            'data-element' => 'mobile_image',
             'style' => 'background-image: url('
                 . "'{{media url=wysiwyg"
                 . (isset($eavData['image']) ? $eavData['image'] : $eavData['mobile_image'])
@@ -112,13 +116,13 @@ class Driver implements RendererInterface
 
         $imageElementHtml = '<div' . $this->printAttributes($imageAttributes) . '>';
 
-        $overlayElementHtml = '<div class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
+        $overlayElementHtml = '<div data-element="overlay" class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
             'style="background-color: transparent; min-height: 300px;' . $padding . '">';
 
         $buttonHtml = '';
         if (isset($eavData['link_text']) && $eavData['link_text'] !== '') {
             $rootElementAttributes['data-show-button'] = 'always';
-            $buttonHtml = '<button class="pagebuilder-banner-button pagebuilder-button-primary" '
+            $buttonHtml = '<button data-element="button" class="pagebuilder-banner-button pagebuilder-button-primary" '
                 . 'style="visibility: visible; opacity: 1;">'
                 . $eavData['link_text']
                 . '</button>';

@@ -45,6 +45,7 @@ class Html implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'html',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''

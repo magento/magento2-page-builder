@@ -47,6 +47,7 @@ class ButtonItem implements RendererInterface
         $cssClasses = $eavData['css_classes'] ?? '';
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'button-item',
             'data-appearance' => 'default',
             'style' => 'display: inline-block;',
@@ -66,7 +67,7 @@ class ButtonItem implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= '><a href="'
+        $rootElementHtml .= '><a data-element="link" href="'
             . ($eavData['link_url'] ?? '') . '"'
             . $buttonStyleAttribute
             . ' class="pagebuilder-button-primary"><span>'
