@@ -9,7 +9,7 @@
 define([
     'underscore',
     'module',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'mage/translate',
     'googleMaps'
 ], function (_, module, events, $t) {

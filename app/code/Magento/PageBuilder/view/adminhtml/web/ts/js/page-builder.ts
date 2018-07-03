@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
-import events from "uiEvents";
 import _ from "underscore";
 import Config from "./config";
 import PageBuilderInterface from "./page-builder.d";
@@ -37,7 +37,7 @@ export default class PageBuilder implements PageBuilderInterface {
      * Init listeners.
      */
     public initListeners() {
-        events.on(`pagebuilder:toggleFullScreen:${ this.id }`, () => this.toggleFullScreen());
+        events.on(`stage:${ this.id }:toggleFullscreen`, () => this.toggleFullScreen());
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -63,7 +63,7 @@ export default class PageBuilder implements PageBuilderInterface {
             });
         }
 
-        events.trigger(`pagebuilder:fullScreen:${ this.id }`, {
+        events.trigger(`stage:${ this.id }:fullScreenModeChangeAfter`, {
             fullScreen: this.isFullScreen(),
         });
     }

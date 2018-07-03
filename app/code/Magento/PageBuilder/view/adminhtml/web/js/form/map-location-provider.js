@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/form/provider',
-    'uiEvents'
+    'Magento_PageBuilder/js/events'
 ], function (Provider, events) {
     'use strict';
 
@@ -17,7 +17,7 @@ define([
 
         /** @inheritdoc **/
         save: function () {
-            events.trigger('location:save', this.get('data'));
+            events.trigger('mapLocation:saveAfter', this.get('data'));
 
             return this;
         }

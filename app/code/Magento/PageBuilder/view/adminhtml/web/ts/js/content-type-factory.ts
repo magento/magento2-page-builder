@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import events from "Magento_PageBuilder/js/events";
 import loadModule from "Magento_PageBuilder/js/loader";
-import events from "uiEvents";
 import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
@@ -56,8 +56,8 @@ export default function createContentType(
             });
         });
     }).then((contentType: ContentTypeInterface) => {
-        events.trigger("contentType:create", {id: contentType.id, contentType});
-        events.trigger(config.name + ":contentType:create", {id: contentType.id, contentType});
+        events.trigger("contentType:createAfter", {id: contentType.id, contentType});
+        events.trigger(config.name + ":createAfter", {id: contentType.id, contentType});
         fireContentTypeReadyEvent(contentType, childrenLength);
         return contentType;
     }).catch((error) => {
@@ -90,23 +90,23 @@ function prepareData(config, data: {}) {
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        events.trigger("contentType:ready", {id: contentType.id, contentType});
-        events.trigger(contentType.config.name + ":contentType:ready", {id: contentType.id, contentType});
+        events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+        events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
     };
 
     if (childrenLength === 0) {
         fire();
     } else {
         let mountCounter = 0;
-        events.on("contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.contentType.parent.id === contentType.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off(`contentType:mount:${contentType.id}`);
+                    events.off(`contentType:${contentType.id}:mountAfter`);
                 }
             }
-        }, `contentType:mount:${contentType.id}` );
+        }, `contentType:${contentType.id}:mountAfter` );
     }
 }

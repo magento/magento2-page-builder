@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -51,14 +51,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
-      _uiEvents.on("column:contentType:move", function (args) {
+      _events.on("column:moveAfter", function (args) {
         if (args.contentType.id === _this2.parent.id) {
           _this2.updateDisplayLabel();
         }
       });
 
       if (_config.getContentTypeConfig("column-group")) {
-        _uiEvents.on("column:contentType:mount", function (args) {
+        _events.on("column:dropAfter", function (args) {
           if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
@@ -75,7 +75,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
 
-      _uiEvents.trigger("column:initElement", {
+      _events.trigger("column:initializeAfter", {
         column: this.parent,
         element: (0, _jquery)(element),
         parent: this.parent.parent
@@ -105,7 +105,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _uiEvents.trigger("column:bindResizeHandle", {
+      _events.trigger("column:resizeHandleBindAfter", {
         column: this.parent,
         handle: (0, _jquery)(handle),
         parent: this.parent.parent
@@ -269,12 +269,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       }
 
       contentTypes.forEach(function (contentType) {
-        _uiEvents.trigger("contentType:mount", {
+        _events.trigger("contentType:mountAfter", {
           id: contentType.id,
           contentType: contentType
         });
 
-        _uiEvents.trigger(contentType.config.name + ":contentType:mount", {
+        _events.trigger(contentType.config.name + ":mountAfter", {
           id: contentType.id,
           contentType: contentType
         });

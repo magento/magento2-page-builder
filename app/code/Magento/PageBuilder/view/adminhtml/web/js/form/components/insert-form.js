@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/form/components/insert-form',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'jquery'
 ], function (Insert, events, $) {
     'use strict';
@@ -26,7 +26,7 @@ define([
         initialize: function () {
             this._super();
 
-            events.on('form:render', function (params) {
+            events.on('form:renderAfter', function (params) {
                 this.render(params);
             }.bind(this));
 
