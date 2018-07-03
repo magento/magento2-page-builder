@@ -4,10 +4,12 @@
  */
 
 import $ from "jquery";
-import events from "uiEvents";
 import Config from "../../config";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     /**
      * @inheritdoc

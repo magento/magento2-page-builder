@@ -13,6 +13,9 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator;
 
+/**
+ * @api
+ */
 class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Container
 {
     const GOOGLE_MAPS_API_KEY_PATH = 'cms/pagebuilder/google_maps_api_key';

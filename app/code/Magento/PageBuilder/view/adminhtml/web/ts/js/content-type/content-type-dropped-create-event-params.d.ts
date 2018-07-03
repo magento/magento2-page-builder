@@ -6,6 +6,9 @@
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeInterface from "../content-type.d";
 
+/**
+ * @api
+ */
 export default interface ContentTypeDroppedCreateEventParamsInterface {
     id: string;
     contentType: ContentTypeInterface & ContentTypeCollectionInterface;

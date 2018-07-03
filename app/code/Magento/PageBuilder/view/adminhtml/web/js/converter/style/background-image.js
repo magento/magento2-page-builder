@@ -4,6 +4,10 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var BackgroundImage =
   /*#__PURE__*/
   function () {

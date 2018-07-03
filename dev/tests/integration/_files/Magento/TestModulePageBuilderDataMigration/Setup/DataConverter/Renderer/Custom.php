@@ -15,7 +15,7 @@ class Custom implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(array $itemData, array $additionalData = [])
+    public function render(array $itemData, array $additionalData = []) : string
     {
         return '<div data-role="custom" data-appearance="default"></div>';
     }

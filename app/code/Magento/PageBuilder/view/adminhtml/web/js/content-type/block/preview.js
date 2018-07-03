@@ -4,6 +4,9 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
   function (_BasePreview) {
@@ -42,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       _BasePreview.prototype.bindEvents.call(this); // When a block type is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("block:contentType:dropped:create", function (args) {
+      _uiEvents.on("block:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();

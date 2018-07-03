@@ -7,6 +7,9 @@ import ko from "knockout";
 import OptionInterface from "./content-type-menu/option.d";
 import Preview from "./content-type/preview";
 
+/**
+ * @api
+ */
 export default class ContentTypeMenu {
     private parent: Preview;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);

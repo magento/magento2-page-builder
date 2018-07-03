@@ -21,13 +21,19 @@ define(["jquery"], function (_jquery) {
     });
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find("*").each(function (index, value) {
-      if (value.tagName !== "IFRAME") {
+      var isIframe = value.tagName === "IFRAME";
+      var isBeingBypassedByThisFilter = !!(0, _jquery)(value).closest(".bypass-html-filter").length;
+
+      if (!isIframe && !isBeingBypassedByThisFilter) {
         (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
       }
     });
     element.find("[data-wrapper]").each(function (index, value) {
       (0, _jquery)(value).parent().append((0, _jquery)(value).children());
       (0, _jquery)(value).remove();
+    });
+    element.find(".bypass-html-filter").each(function (index, value) {
+      (0, _jquery)(value).removeClass("bypass-html-filter").filter('[class=""]').removeAttr("class");
     });
     return element;
   }

@@ -6,6 +6,9 @@
 import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class RemovePx implements ConverterInterface {
     /**
      * Convert value to internal format

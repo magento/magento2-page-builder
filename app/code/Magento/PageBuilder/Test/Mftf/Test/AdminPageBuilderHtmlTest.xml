@@ -10,11 +10,12 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="HtmlAddToCMSPage">
         <annotations>
-            <features value="Pagebuilder: HTML"/>
-            <stories value="MAGETWO-83924: HTML"/>
-            <title value="Html - Update General Values"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Update General Values"/>
             <description value="Validate that updating every attribute in the General form for Html will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-1408"/>
             <testCaseId value="MAGETWO-84270"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -39,7 +40,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -58,7 +59,7 @@
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHtmlEditPanel">
+        <actionGroup ref="seeInFieldWithoutLabelSlideOutProperty" stepKey="validateHtmlEditPanel">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -67,15 +68,16 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForHtmlStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForHtmlStorefront"/>
     </test>
     <test name="HtmlDelete">
         <annotations>
-            <features value="Pagebuilder: HTML"/>
-            <stories value="MAGETWO-83924: HTML"/>
-            <title value="Html - Delete Html"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Delete Html"/>
             <description value="A user should be able to delete a Html content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-1408"/>
             <testCaseId value="MAGETWO-89784"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -101,11 +103,12 @@
     </test>
     <test name="HtmlValidateGeneralDefaultValues">
         <annotations>
-            <features value="Pagebuilder: HTML"/>
-            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
-            <title value="Html - Validate General Default Values"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Validate General Default Values"/>
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Html."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-483"/>
             <testCaseId value="MAGETWO-89786"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -132,26 +135,29 @@
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHtmlEditPanel">
+        <actionGroup ref="seeInFieldWithoutLabelSlideOutProperty" stepKey="validateHtmlEditPanel">
+            <argument name="property" value="PageBuilderHtmlPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateHtmlEditPanelPlaceholderText">
             <argument name="property" value="PageBuilderHtmlPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlStage"/>
-        <see selector="{{HtmlOnStage.base('1')}}" userInput="{{PageBuilderHtmlPropertyDefault.value}}" stepKey="seeHtmlTextStage"/>
+        <waitForElementVisible selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlStage"/>
+        <see selector="{{HtmlOnStage.empty('1')}}" userInput="{{PageBuilderHtmlPropertyDefault.placeholderText}}" stepKey="seeHtmlTextStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlStage2"/>
-        <see selector="{{HtmlOnStage.base('1')}}" userInput="{{PageBuilderHtmlPropertyDefault.value}}" stepKey="seeHtmlTextStage2"/>
+        <waitForElementVisible selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlStage2"/>
+        <see selector="{{HtmlOnStage.empty('1')}}" userInput="{{PageBuilderHtmlPropertyDefault.placeholderText}}" stepKey="seeHtmlTextStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHtmlEditPanel2">
+        <actionGroup ref="seeInFieldWithoutLabelSlideOutProperty" stepKey="validateHtmlEditPanel2">
             <argument name="property" value="PageBuilderHtmlPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -159,16 +165,16 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlStorefront"/>
-        <see selector="{{HtmlOnStorefront.base('1')}}" userInput="{{PageBuilderHtmlPropertyDefault.value}}" stepKey="seeHtmlTextStorefront"/>
+        <seeElementInDOM selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlStorefront"/>
     </test>
     <test name="HtmlValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder: HTML"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
-            <title value="Html - Validate Advanced Configuration Default Values"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Html."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-522"/>
             <testCaseId value="MAGETWO-89465"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -276,7 +282,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignmentNotVisible" stepKey="validateStorefront">
             <argument name="page" value="HtmlOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -288,11 +294,12 @@
     </test>
     <test name="HtmlUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder: HTML"/>
-            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
-            <title value="Html - Update Advanced Configuration Values"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Html will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-483"/>
             <testCaseId value="MAGETWO-89787"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -316,6 +323,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
+            <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -456,11 +466,12 @@
     </test>
     <test name="HtmlDuplicate">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="HTML"/>
-            <title value="Html - Duplicate"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Duplicate"/>
             <description value="Admin are able to duplicate HTML Content Type"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-1408"/>
             <testCaseId value="MAGETWO-91085"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -487,7 +498,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
@@ -541,7 +552,7 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHTML">
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="validateHTML">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -594,7 +605,7 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHTML2">
+        <actionGroup ref="seeInFieldWithoutLabelSlideOutProperty" stepKey="validateHTML2">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
@@ -628,7 +639,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('2')}}" stepKey="waitForDuplicatedHtmlBaseStorefront"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.html('2', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForDuplicatedHtmlStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.html('2', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForDuplicatedHtmlStorefront"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront2">
             <argument name="page" value="HtmlOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -644,11 +655,12 @@
     </test>
     <test name="HtmlVerifyUpdatingDuplicateDoesNotAffectInitial">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="HTML"/>
-            <title value="Html - Verify Updating Duplicate Does Not Affect Initially Duplicated Content"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Verify Updating Duplicate Does Not Affect Initially Duplicated Content"/>
             <description value="Updating duplicate content types should not affect the initial content. This test is only needed for one content type."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-1408"/>
             <testCaseId value="MAGETWO-91224"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -675,7 +687,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -690,7 +702,7 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterUpdatedHtmlContent">
+        <actionGroup ref="fillSlideOutPanelTextArea" stepKey="enterUpdatedHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButtonDuplicate"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
@@ -714,17 +726,18 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForHtmlStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForHtmlStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('2')}}" stepKey="waitForDuplicatedHtmlBaseStorefront"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.html('2', PageBuilderHtmlPropertyButtonDuplicate.selector)}}" stepKey="waitForDuplicatedHtmlStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.html('2', PageBuilderHtmlPropertyButtonDuplicate.selectorOnFrontend)}}" stepKey="waitForDuplicatedHtmlStorefront"/>
     </test>
     <test name="HtmlNoRequiredAttributes">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Html"/>
-            <title value="HTML - Required Attributes"/>
-            <description value="Add HTML and validate save without required fields causes error"/>
+            <features value="PageBuilder"/>
+            <stories value="HTML Code"/>
+            <title value="Validate No Required Attributes"/>
+            <description value="Add HTML and validate save without entering any fields on edit form is successful"/>
             <severity value="MAJOR"/>
+            <useCaseId value="MC-1408"/>
             <testCaseId value="MAGETWO-91142"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
@@ -746,18 +759,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="clearHTMLField">
-            <argument name="property" value="PageBuilderHtmlProperty_Empty"/>
-        </actionGroup>
-        <!-- Validate Error Message -->
-        <comment userInput="Validate Error Message" stepKey="commentValidateError"/>
-        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldError}}" stepKey="waitForFieldError"/>
-        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldErrorMessage(PageBuilderHtmlProperty_Empty.errorMessage)}}" stepKey="waitForErrorMessage"/>
-        <!-- Validate Cannot Save -->
-        <comment userInput="Validate Cannot Save" stepKey="commentValidateCannotSave"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton"/>
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Can Save Without Entering Fields -->
+        <comment userInput="Validate Can Save Without Entering Fields" stepKey="commentValidateSave"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HtmlOnStage.empty('1')}}" stepKey="waitForHtmlBaseStage1"/>
     </test>
 </tests>

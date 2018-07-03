@@ -14,6 +14,9 @@ import ContentTypeDroppedCreateEventParamsInterface from "../content-type-droppe
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(false);
@@ -43,9 +46,8 @@ export default class Preview extends BasePreview {
      */
     protected bindEvents() {
         super.bindEvents();
-
         // When a block type is dropped for the first time open the edit panel
-        events.on("block:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("block:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();

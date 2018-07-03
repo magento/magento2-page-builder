@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config";
@@ -14,6 +15,9 @@ import ContentTypeDroppedCreateEventParamsInterface from "../content-type-droppe
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
@@ -42,7 +46,7 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a products type is dropped for the first time open the edit panel
-        events.on("products:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("products:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();

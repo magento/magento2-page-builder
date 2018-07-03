@@ -10,6 +10,10 @@ namespace Magento\PageBuilder\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
 
+/**
+ * Preview controller to render blocks preview on Stage
+ * @api
+ */
 class Preview extends \Magento\Framework\App\Action\Action
 {
     /**

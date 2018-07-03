@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
@@ -33,6 +33,9 @@ import {createColumn} from "./factory";
 import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
@@ -100,20 +103,20 @@ export default class Preview extends PreviewCollection {
             }
         }, "grid_size");
 
-        events.on("contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
             }
         });
 
         // Listen for resizing events from child columns
-        events.on("column:bindResizeHandle", (args: BindResizeHandleEventParamsInterface) => {
+        events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        events.on("column:initElement", (args: InitElementEventParamsInterface) => {
+        events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).bindDraggable(args.column);
@@ -313,7 +316,7 @@ export default class Preview extends PreviewCollection {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
-            events.trigger("interaction:start", {stageId: this.parent.stageId});
+            events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
         });
     }
 
@@ -348,11 +351,11 @@ export default class Preview extends PreviewCollection {
                     this.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
                 );
 
-                events.trigger("column:drag:start", {
+                events.trigger("column:dragStart", {
                     column: columnInstance,
                     stageId: this.parent.stageId,
                 });
-                events.trigger("interaction:start", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
             },
             stop: () => {
                 const draggedColumn = getDragColumn();
@@ -370,11 +373,11 @@ export default class Preview extends PreviewCollection {
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
 
-                events.trigger("column:drag:stop", {
+                events.trigger("column:dragStop", {
                     column: draggedColumn,
                     stageId: this.parent.stageId,
                 });
-                events.trigger("interaction:stop", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
             },
         });
     }
@@ -443,8 +446,8 @@ export default class Preview extends PreviewCollection {
         this.updateGridSize();
         if (!this.gridSizeError()) {
             this.gridFormOpen(false);
-            events.trigger("interaction:stop");
-            events.trigger("focusChild:stop");
+            events.trigger("stage:interactionStop");
+            events.trigger("stage:childFocusStop");
             $(document).off("click focusin", this.onDocumentClick);
         }
     }
@@ -463,8 +466,8 @@ export default class Preview extends PreviewCollection {
                 $(this.wrapperElement).find(".grid-panel-item-wrapper input").focus().select();
             }, 200);
             $(document).on("click focusin", this.onDocumentClick);
-            events.trigger("interaction:start");
-            events.trigger("focusChild:start");
+            events.trigger("stage:interactionStart");
+            events.trigger("stage:childFocusStart");
         }
     }
 
@@ -509,7 +512,7 @@ export default class Preview extends PreviewCollection {
      */
     private endAllInteractions(): void {
         if (this.resizing() === true) {
-            events.trigger("interaction:stop", {stageId: this.parent.stageId});
+            events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
         }
 
         this.resizing(false);

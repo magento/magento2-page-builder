@@ -66,6 +66,7 @@ export function removeArrayItem(
  * @param {number} start
  * @param {(item: any, index: number) => boolean} callback
  * @returns {any}
+ * @api
  */
 export function outwardSearch(
     items: any[],

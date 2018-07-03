@@ -5,9 +5,9 @@
 import _ from "underscore";
 import Config from "../config";
 import ContentTypeConfigInterface from "../content-type-config";
-import {AllowedParents} from "./allowed-parents.d";
+import {AllowedParentsInterface} from "./allowed-parents.d";
 
-const allowedParents: AllowedParents = {};
+const allowedParents: AllowedParentsInterface = {};
 
 /**
  * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents

@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Toolbar from "../../content-type-toolbar";
@@ -13,7 +13,9 @@ import ContentTypeInterface from "../../content-type.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
-
+/**
+ * @api
+ */
 export default class Heading extends BasePreview {
     public toolbar: Toolbar;
     private element: Element;
@@ -48,7 +50,7 @@ export default class Heading extends BasePreview {
         super.bindEvents();
 
         // When a heading is dropped for the first time show heading toolbar
-        events.on("heading:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("heading:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 _.delay(() => {
                     $(this.element).focus();

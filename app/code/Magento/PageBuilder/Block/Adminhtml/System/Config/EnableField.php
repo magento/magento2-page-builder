@@ -3,11 +3,17 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
+/**
+ * Class EnableField renders modal window if disable PB in System Configuration
+ *
+ * @api
+ */
 class EnableField extends \Magento\Config\Block\System\Config\Form\Field
 {
     /**
@@ -51,9 +57,9 @@ class EnableField extends \Magento\Config\Block\System\Config\Form\Field
     /**
      * Get text for the modal title heading when user switches to disable
      *
-     * @return string
+     * @return \Magento\Framework\Phrase
      */
-    private function getModalTitleText()
+    private function getModalTitleText() : \Magento\Framework\Phrase
     {
         return __('Are You Sure You Want to Turn Off Page Builder?');
     }

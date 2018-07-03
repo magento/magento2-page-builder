@@ -6,6 +6,9 @@
 import ko from "knockout";
 import { moveArrayItemIntoArray, removeArrayItem } from "./utils/array";
 
+/**
+ * @api
+ */
 export default class Collection {
     public children: KnockoutObservableArray<any>;
 

@@ -1,9 +1,16 @@
 /*eslint-disable */
+<<<<<<< HEAD
 define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _uiEvents, _config, _preview) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+=======
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _events, _config, _preview) {
+>>>>>>> develop
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
   function (_BasePreview) {
@@ -39,7 +46,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("products:contentType:dropped:create", function (args) {
+      _events.on("products:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();
@@ -51,6 +58,13 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
      * @inheritdoc
      */
 
+<<<<<<< HEAD
+=======
+      _events.on("previewData:updateAfter", function (event, params) {
+        if (event.preview.parent.id !== _this2.parent.id) {
+          return;
+        }
+>>>>>>> develop
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this3 = this;

@@ -2,7 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
+/**
+ * @api
+ */
 import MasterCollection from "../master-collection";
 
 interface AccordionDataObject {

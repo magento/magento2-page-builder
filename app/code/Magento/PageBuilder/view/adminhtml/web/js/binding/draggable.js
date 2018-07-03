@@ -11,6 +11,10 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   // Create a new sortable Knockout binding
   _knockout.default.bindingHandlers.draggable = {
     init: function init(element, valueAccessor) {

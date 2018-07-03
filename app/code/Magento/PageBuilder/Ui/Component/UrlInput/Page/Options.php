@@ -13,7 +13,7 @@ use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Cms\Api\Data\PageInterface;
 
 /** Returns options for cms pages link tye of Url input ui component */
-class Options implements \Magento\Framework\Option\ArrayInterface
+class Options implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**
      * @var array

@@ -4,6 +4,10 @@ define(["Magento_PageBuilder/js/utils/directives"], function (_directives) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Directives =
   /*#__PURE__*/
   function () {

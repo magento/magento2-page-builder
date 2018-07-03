@@ -10,6 +10,10 @@ define(["knockout"], function (_knockout) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   _knockout.default.bindingHandlers.hasFocusNoScroll = {
     init: _knockout.default.bindingHandlers.hasFocus.init,
     update: function update(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {

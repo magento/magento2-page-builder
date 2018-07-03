@@ -8,20 +8,21 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="HtmlOnStage">
-        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}]" parameterized="true"/>
-        <element name="html" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}]{{arg2}}" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
+        <element name="empty" type="text" selector="(//div[contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
+        <element name="html" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html')])[{{arg1}}]{{arg2}}" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][not(@class)]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'html: data.main.html')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or @class='placeholder-html-empty'])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="HtmlOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='html'])[{{arg1}}]" parameterized="true"/>
@@ -44,7 +45,7 @@
         <element name="htmlFieldErrorMessage" type="text" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='general']//..//../label[.='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="HtmlOnBackendArbitraryHtml">
-        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[@class='my-div']"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[contains(text(), '&lt;div class=&quot;my-div&quot;&gt;&lt;/div&gt;')]"/>
     </section>
     <section name="HtmlOnBackendWithImage">
         <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]/img[not(contains(@src, '{{media'))]"/>
@@ -56,6 +57,6 @@
         <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]/img[contains(@src, '{{media')]"/>
     </section>
     <section name="HtmlOnBackendNonexistentDataRole">
-        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[@data-role='row']/div[@data-role='non-existent-content-type']"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[contains(text(), '&lt;div data-role=&quot;row&quot;&gt;&lt;div data-role=&quot;non-existent-content-type&quot;&gt;&lt;/div&gt;&lt;/div&gt;')]"/>
     </section>
 </sections>

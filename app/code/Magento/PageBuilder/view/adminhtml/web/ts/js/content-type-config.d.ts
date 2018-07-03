@@ -5,6 +5,9 @@
 
 import ConfigFieldInterface from "./config-field.d";
 
+/**
+ * @api
+ */
 export default interface ContentTypeConfigInterface {
     name: string;
     label: string;

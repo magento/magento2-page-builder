@@ -10,6 +10,11 @@ namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Cancel button on edit panel for Content Type
+ *
+ * @api
+ */
 class CancelButton implements ButtonProviderInterface
 {
     /**

@@ -10,16 +10,18 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AdminPageBuilderProductsDoesNotAppearOnFrontendWhenNotConfigured">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - No products appear on the storefront when dialog is closed (not saved) without being configured."/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="No products appear on the storefront when dialog is closed (not saved) without being configured."/>
             <description value="Validate that when Products dialog is closed without configuring settings that no products show up on the storefront."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-91579"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -61,16 +63,18 @@
     </test>
     <test name="AdminPageBuilderProductsCanSaveConditionTest">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - Save with condition"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Save with condition"/>
             <description value="Validate that adding a condition in the General form for Products will update the Stage and Storefront correctly with the correct products."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-91579"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -127,16 +131,18 @@
     </test>
     <test name="AdminPageBuilderProductsWithCount">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - Save with products count"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Save with products count"/>
             <description value="Validate that adding a products count update the Stage and Storefront correctly with the correct number of products."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-91579"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -201,16 +207,18 @@
     </test>
     <test name="AdminPageBuilderProductsConfigurationIsPersistent">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - Main configuration settings are properly saved"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Main configuration settings are properly saved"/>
             <description value="Validate that main settings are saved and loaded correctly on the stage in memory and after page reload."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-91579"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -271,16 +279,18 @@
     </test>
     <test name="AdminPageBuilderProductsAllProductsShowWhenSavedWithoutConditions">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - All products show when conditions are saved blank"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="All products show when conditions are saved blank"/>
             <description value="Validate that when Products dialog is saved without configuring settings that all products show up without filtering."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-91579"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -327,17 +337,18 @@
     </test>
     <test name="ProductsDelete">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - Delete Product List"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Delete Product List"/>
             <description value="A user should be able to delete an Product List content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-89887"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -358,18 +369,18 @@
     </test>
     <test name="ProductsValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Product List - Validate Advanced Configuration Default Values"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Product List."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-89472"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -491,18 +502,18 @@
     </test>
     <test name="ProductsUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Products configuration with Magento Condition Tree"/>
-            <title value="Products - Update Advanced Configuration Values"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Product List will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-90015"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="_defaultProduct" stepKey="createPreReqProduct">
                 <requiredEntity createDataKey="createPreReqCategory"/>
@@ -668,18 +679,18 @@
     </test>
     <test name="ShowOutOfStockProduct">
         <annotations>
-            <features value="Pagebuilder: Products"/>
-            <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
-            <title value="Products - Show out of stock"/>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Show out of stock"/>
             <description value="Products display and respect global configuration settings Show Out Of Stock products"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71425"/>
             <testCaseId value="MAGETWO-91579"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="displayOutOfStockProduct" stepKey="displayOutOfStockProduct"/>
             <createData entity="_defaultCmsPage" stepKey="createdCMSPage" />
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>

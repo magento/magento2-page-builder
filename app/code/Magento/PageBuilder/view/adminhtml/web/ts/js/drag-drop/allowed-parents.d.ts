@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-export interface AllowedParents {
+/**
+ * @api
+ */
+export interface AllowedParentsInterface {
     [key: string]: string[];
 }
