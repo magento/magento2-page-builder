@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template overridden to support full width layout of category description
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if ($_description = $block->getCurrentCategory()->getDescription()): ?>
+    <div class="category-description pagebuilder-full-width">
+        <?= /* @escapeNotVerified */ $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($block->getCurrentCategory(), $_description, 'description') ?>
+    </div>
+<?php endif; ?>
