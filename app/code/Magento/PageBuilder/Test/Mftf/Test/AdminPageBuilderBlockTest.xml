@@ -181,7 +181,6 @@
             <testCaseId value="MC-2288" />
             <group value="pagebuilder" />
             <group value="pagebuilder-block" />
-            <group value="VerifyBlockDisabled" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
@@ -206,6 +205,9 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <seeElement selector="{{BlockOnStage.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
