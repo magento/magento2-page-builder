@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import BasePreview from "../preview";
 
@@ -16,7 +16,7 @@ export default class Preview extends BasePreview {
      */
     protected bindEvents() {
         super.bindEvents();
-        events.on("previewObservables:updated", (args) => {
+        events.on("previewData:updateAfter", (args) => {
             if (args.preview.parent.id === this.parent.id) {
                 const attributes = this.data.main.attributes();
                 if (attributes["data-identifier"] === "") {

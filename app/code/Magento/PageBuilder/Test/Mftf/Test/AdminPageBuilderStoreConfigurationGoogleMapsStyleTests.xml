@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="GoogleMapsStyleFieldAppearance">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps Style"/>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
             <title value="Validate Google Maps Style Field Appearance"/>
             <description value="Tests the following for Google Maps Style field: 1) Global config key, 2) Helper text, 3) Correct Create Map Style link."/>
             <severity value="MAJOR"/>
@@ -47,8 +47,8 @@
     </test>
     <test name="GoogleMapsCanSaveEmptyStyle">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps Style"/>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
             <title value="Validate Can Save Empty Google Maps Style"/>
             <description value="Tests that a user can save empty Google Maps Style."/>
             <severity value="CRITICAL"/>
@@ -78,8 +78,8 @@
     </test>
     <test name="GoogleMapsCanSaveValidStyle">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps Style"/>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
             <title value="Validate Can Save Valid Google Maps Style"/>
             <description value="Tests that a user can save a valid Google Maps Style."/>
             <severity value="CRITICAL"/>
@@ -118,8 +118,8 @@
     </test>
     <test name="GoogleMapsCannotSaveInvalidStyle">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps Style"/>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Google Maps Style"/>
             <title value="Validate Cannot Save Invalid Google Maps Style"/>
             <description value="Tests that a user cannot save invalid Google Maps Style."/>
             <severity value="CRITICAL"/>
@@ -177,163 +177,5 @@
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validLong}}" stepKey="seeStyle"/>
-    </test>
-    <test name="MapDoesNotRenderNewGoogleMapsStyleOnStorefrontUntilPageSaveOrCacheRefresh">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps Style"/>
-            <title value="Map Does Not Render New Google Maps Style On Storefront Until Page Save Or Cache Refresh"/>
-            <description value="A change to the Google Maps Style should not take affect on the storefront until a page save or a cache refresh"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92776"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-map"/>
-            <group value="pagebuilder-googleMapsStyle"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <!-- Add Location -->
-        <comment userInput="Add Location" stepKey="commentAddLocation"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
-            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
-        </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront1">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-         <!--Set Google Maps Style -->
-        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
-            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <!-- Storefront: Validate Map Style Unchanged -->
-        <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate1"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle1"/>
-        <assertEquals stepKey="assertMapStyle1">
-            <actualResult type="variable">$mapStyle1</actualResult>
-            <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
-        </assertEquals>
-        <!-- Save Page -->
-        <comment userInput="Save Page" stepKey="commentSavePage"/>
-        <switchToPreviousTab stepKey="switchToPreviousTab"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <!-- Storefront: Validate Map Style Changed -->
-        <comment userInput="Storefront: Validate Map Style Changed" stepKey="commentValidate2"/>
-        <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
-        <assertEquals stepKey="assertMapStyle2">
-            <actualResult type="variable">$mapStyle2</actualResult>
-            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
-        </assertEquals>
-        <!-- Set Google Maps Style -->
-        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle2"/>
-        <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-        <!-- Storefront: Validate Map Style Unchanged -->
-        <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate3"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
-        <assertEquals stepKey="assertMapStyle3">
-            <actualResult type="variable">$mapStyle3</actualResult>
-            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
-        </assertEquals>
-        <!-- Clean Cache -->
-        <comment userInput="Clean Cache" stepKey="commentCleanCache"/>
-        <magentoCLI command="cache:clean" stepKey="cleanCache"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront5">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle4"/>
-        <assertEquals stepKey="assertMapStyle4">
-            <actualResult type="variable">$mapStyle4</actualResult>
-            <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
-        </assertEquals>
-    </test>
-    <test name="MapRendersNewGoogleMapsStyleOnStageImmediately">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps Style"/>
-            <title value="Map Renders New Google Maps Style On Stage Without Cache Refresh"/>
-            <description value="A change to the Google Maps Style should immediately take affect on the stage without a cache refresh"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92778"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-map"/>
-            <group value="pagebuilder-googleMapsStyle"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!--Set Google Maps Style -->
-        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
-        <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
-            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <!-- Stage: Validate Map Style Changed -->
-        <comment userInput="Stage: Validate Map Style Changed" stepKey="commentValidate1"/>
-        <switchToPreviousTab stepKey="switchToPreviousTab"/>
-        <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle1"/>
-        <assertEquals stepKey="assertMapStyle1">
-            <actualResult type="variable">$mapStyle1</actualResult>
-            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
-        </assertEquals>
     </test>
 </tests>

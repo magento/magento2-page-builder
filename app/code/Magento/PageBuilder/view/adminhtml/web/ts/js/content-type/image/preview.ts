@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import {DataObject} from "../../data-store";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
@@ -32,13 +32,13 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.parent.id}:updated`, () => {
+        events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
-            events.trigger(`image:assigned:${this.parent.id}`, imageObject);
+            events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
-        events.on(`${this.config.name}:contentType:ready`, () => {
+        events.on(`${this.config.name}:mountAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 

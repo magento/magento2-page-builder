@@ -1,10 +1,10 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/utils/array"], function (_jquery, _knockout, _uiEvents, _moveContentType, _array) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/utils/array"], function (_jquery, _knockout, _events, _moveContentType, _array) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
-  _uiEvents = _interopRequireDefault(_uiEvents);
+  _events = _interopRequireDefault(_events);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,13 +38,13 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/drag-drop/move
         originalPosition = ui.item.index();
         draggedContentType = instance.children()[originalPosition];
 
-        _uiEvents.default.trigger("sortableChildren:sortstart", {
+        _events.default.trigger("childContentType:sortStart", {
           instance: instance,
           originalPosition: originalPosition,
           ui: ui
         });
       }).on("sortstop", function (event, ui) {
-        _uiEvents.default.trigger("sortableChildren:sortstop", {
+        _events.default.trigger("childContentType:sortStop", {
           instance: instance,
           ui: ui
         });
@@ -63,7 +63,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/drag-drop/move
               (0, _moveContentType.moveContentType)(draggedContentType, index, targetParent);
             }
 
-            _uiEvents.default.trigger("sortableChildren:sortupdate", {
+            _events.default.trigger("childContentType:sortUpdate", {
               instance: instance,
               newPosition: index,
               originalPosition: originalPosition,

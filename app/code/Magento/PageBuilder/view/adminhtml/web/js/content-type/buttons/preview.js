@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _uiEvents, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _config, _contentTypeFactory, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -27,7 +27,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
-      _uiEvents.on("buttons:contentType:dropped:create", function (args) {
+      _events.on("buttons:dropAfter", function (args) {
         if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
           _this2.addButton();
         }

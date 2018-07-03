@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Options from "../../content-type-menu";
@@ -395,14 +395,14 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.parent.id}:updated`, () => {
+        events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
-            events.trigger(`image:assigned:${this.parent.id}`, imageObject);
+            events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
-        events.on(`${this.config.name}:contentType:ready`, () => {
-            const dataStore = this.parent.dataStore.get() as DataObject;
+        events.on(`${this.config.name}:mountAfter`, () => {
+            const dataStore = this.parent.dataStore.get();
             const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
             // Create uploader
