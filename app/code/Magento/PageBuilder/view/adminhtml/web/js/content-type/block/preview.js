@@ -71,6 +71,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           this.data.main.html(this.lastRenderedHtml);
           this.displayPreview(true);
         }
+
+        app / code / Magento / PageBuilder / Test / Mftf / Test / AdminPageBuilderBlockTest.xml;
       } else {
         this.displayPreview(false);
         this.placeholderText("");

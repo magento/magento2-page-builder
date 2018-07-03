@@ -19,6 +19,7 @@
     1. [Visual select]
     1. [Reuse product conditions in content types]
     1. **Store component master format as widget directive**
+    1. [Render a backend content type preview]
     1. [Custom Toolbar]
 5. [Roadmap and known issues]
 
@@ -39,6 +40,7 @@
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
+[Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Roadmap and known issues]: roadmap.md
 

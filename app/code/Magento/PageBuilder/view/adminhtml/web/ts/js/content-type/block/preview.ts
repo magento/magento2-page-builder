@@ -70,7 +70,7 @@ export default class Preview extends BasePreview {
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
                 this.displayPreview(true);
-            }
+            }app/code/Magento/PageBuilder/Test/Mftf/Test/AdminPageBuilderBlockTest.xml
         } else {
             this.displayPreview(false);
             this.placeholderText("");

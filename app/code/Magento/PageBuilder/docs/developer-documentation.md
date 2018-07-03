@@ -19,6 +19,7 @@
     1. [Visual select]
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
+    1. [Render a backend content type preview]
     1. [Custom Toolbar] 
 5. [Roadmap and known issues]
 
@@ -48,6 +49,8 @@
 
 **[Store component master format as widget directive]** - Documentation on storing a component's master format as a `widget-directive`.
 
+**[Render a backend content type preview]** - Documentation on using the `RenderPool` on the stage to render a content type preview.
+
 **[Custom Toolbar]** - Documentation on adding a custom toolbar.
 
 [Introduction]: README.md
@@ -66,5 +69,6 @@
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
+[Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Roadmap and known issues]: roadmap.md
