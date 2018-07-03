@@ -14,21 +14,20 @@
         <element name="deleted" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//span[contains(@class,'placeholder') and contains(text(),'Block with ID: {{arg}} doesn')])" parameterized="true"/>
         <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[1]//div[contains(@class,'pagebuilder-options-wrapper')]//div[contains(@class,'option-title') and text()='{{arg}}']" parameterized="true"/>
         <element name="selectBlockBtn" type="button" selector="(//div[contains(@class,'pagebuilder-block')]//button/span[text()='Select Block'])"/>
-        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}]" parameterized="true"/>
-        <element name="identifier" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][@data-identifier='{{arg2}}']" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]" parameterized="true"/>
         <element name="hr" type="button" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}]//hr" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][not(@class)]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <element name="selectBlockBtn" type="button" selector="(//div[contains(@class,'pagebuilder-block')]//button/span[text()='Select Block'])"/>
     </section>
     <section name="BlockOnGrid">
@@ -53,7 +52,7 @@
         <element name="borderWidth" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="borderRadius" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
         <element name="cssClasses" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}][@class='']" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-role='row']/div)[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
