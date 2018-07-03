@@ -39,7 +39,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <comment userInput="Validate Initial Column Height On Stage Matches Expected" stepKey="commentValidateColumnHeight"/>
         <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialColumnHeightMatchesExpected">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -80,17 +80,17 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup" />
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup" />
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
-        <dontSeeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="dontSeeColumnGroup"/>
+        <dontSeeElement selector="{{ColumnOnBackend.column}}" stepKey="dontSeeColumn"/>
+        <dontSeeElement selector="{{ColumnOnBackend.columnGroup}}" stepKey="dontSeeColumnGroup"/>
         <comment userInput="Validate Row Height shrinks with removal of columns" stepKey="commentValidateRowHeight"/>
         <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -228,23 +228,23 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
     </test>
     <test name="ColumnContentIsVerticallyAlignedWithAppearanceAndDifferentMinimumHeights">
         <annotations>
@@ -349,24 +349,24 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
         <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
     </test>
     <test name="ColumnPlaceholderInAdminPreview">
         <annotations>
@@ -394,8 +394,8 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible time="5" selector="{{PageBuilderColumnSection.empty('1')}}" stepKey="waitForEmptyColumn"/>
-        <seeElementInDOM selector="{{PageBuilderColumnSection.empty('1')}}" stepKey="seeEmptyColumn"/>
+        <waitForElementVisible time="5" selector="{{ColumnOnBackend.empty('1')}}" stepKey="waitForEmptyColumn"/>
+        <seeElementInDOM selector="{{ColumnOnBackend.empty('1')}}" stepKey="seeEmptyColumn"/>
     </test>
     <test name="ColumnLabelsUpdate">
         <annotations>
@@ -423,17 +423,17 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','5/12')}}" stepKey="findAfterLabelColumn2"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('3','6/12')}}" stepKey="findAfterLabelColumn3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/12')}}" stepKey="findAfterLabelColumn2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="findAfterLabelColumn3"/>
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
@@ -458,7 +458,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -521,14 +521,14 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgImage)}}" stepKey="seeFirstColumnBgImage"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgPosition)}}" stepKey="seeFirstColumnBgPosition"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgSize)}}" stepKey="seeFirstColumnBgSize"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgColor)}}" stepKey="seeFirstColumnBgColor"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgImage)}}" stepKey="seeFirstColumnBgImage"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgPosition)}}" stepKey="seeFirstColumnBgPosition"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgSize)}}" stepKey="seeFirstColumnBgSize"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
     </test>
     <test name="ColumnSettingsAppearOnFrontend">
         <annotations>
@@ -594,19 +594,19 @@
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundSize}}" stepKey="seeColumn1BackgroundSizeApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundRepeatApplied}}" stepKey="seeColumn1BackgroundRepeatApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundAttachment}}" stepKey="seeColumn1BackgroundAttachmentFixedApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundImage}}" stepKey="seeColumn1BackgroundImageApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundWidth}}" stepKey="seeColumn1WidthApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceBottomApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundSize}}" stepKey="seeColumn2BackgroundSizeAutoApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundRepeatNotApplied}}" stepKey="seeColumn2BackgroundRepeatNotApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundAttachment}}" stepKey="seeColumn2BackgroundAttachmentScrollApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundSize}}" stepKey="seeColumn1BackgroundSizeApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundRepeatApplied}}" stepKey="seeColumn1BackgroundRepeatApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundAttachment}}" stepKey="seeColumn1BackgroundAttachmentFixedApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundImage}}" stepKey="seeColumn1BackgroundImageApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundWidth}}" stepKey="seeColumn1WidthApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceBottomApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundSize}}" stepKey="seeColumn2BackgroundSizeAutoApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundRepeatNotApplied}}" stepKey="seeColumn2BackgroundRepeatNotApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundAttachment}}" stepKey="seeColumn2BackgroundAttachmentScrollApplied"/>
     </test>
     <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
@@ -676,12 +676,12 @@
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.alignmentCenter)}}" stepKey="seeColumn2AlignmentApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.alignmentFull)}}" stepKey="seeColumn3AppearanceApplied"/>
     </test>
     <test name="ColumnChangesPreserved">
         <annotations>
@@ -835,7 +835,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path,PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeBackgroundImageInDom"/>
+        <seeElementInDOM selector="{{ColumnOnFrontend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path,PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeBackgroundImageInDom"/>
         <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
     </test>
     <test name="ColumnBackgroundColorPreserved">
@@ -919,15 +919,15 @@
         <openNewTab stepKey="openNewTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront1"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
@@ -948,15 +948,15 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
-        <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Height300}}" stepKey="seeColumn2MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2Appearance}}"  stepKey="seeColumn2AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column2BackgroundColorSalmon}}"  stepKey="seeColumn2BackgroundColorApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
+        <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
     </test>
     <test name="ColumnValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -1090,13 +1090,13 @@
         <!-- Validate the correct styles have been applied to the front-end -->
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <waitForElementVisible time="2" selector="{{ColumnsOnFrontend.columnDisplay}}" stepKey="waitForFrontEndColumn"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnTextAlign}}" stepKey="seeColumnTextAlignStyle"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnBorder}}" stepKey="seeColumnBorderStyle"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnBorderRadius}}" stepKey="seeColumnBorderRadiusStyle"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnMargin}}" stepKey="seeColumnMarginStyle"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
-        <seeElement selector="{{ColumnsOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnFrontend.columnDisplay}}" stepKey="waitForFrontEndColumn"/>
+        <seeElement selector="{{ColumnOnFrontend.columnTextAlign}}" stepKey="seeColumnTextAlignStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnBorder}}" stepKey="seeColumnBorderStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnBorderRadius}}" stepKey="seeColumnBorderRadiusStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnMargin}}" stepKey="seeColumnMarginStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
     </test>
     <test name="RemovingColumnDistributesWidth">
         <annotations>
@@ -1130,14 +1130,14 @@
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
+        <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeSecondColumnWidthDistributed"/>
     </test>
     <test name="ColumnFullHeightShowsOnFrontend">
         <annotations>
@@ -1202,8 +1202,8 @@
         <seeNumberOfElements selector="{{HeadingOnStage.allHeadingsInContainer(PageBuilderColumnContentType.role, '1')}}" userInput="3" stepKey="see3HeadingsInFirstColumn"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
-        <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
     </test>
     <test name="CanAddImageToColumn">
         <annotations>
@@ -1338,7 +1338,7 @@
             <argument name="offsetYCoordinate" value="5" />
         </actionGroup>
         <!-- We validate for 6 columns as each group automatically creates 2 columns -->
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="6" stepKey="validateColumnsAdded"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="6" stepKey="validateColumnsAdded"/>
     </test>
     <test name="CanAddVideoToColumn">
         <annotations>
@@ -1431,22 +1431,22 @@
         <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
         <!-- Resize first column to 4/12 -->
         <comment userInput="Grab grid guide width for 4/12" stepKey="commentRetrieveGuideWidth"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
         <comment userInput="Resize first column to 4/12" stepKey="commentResizeFirstColumn"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
         <!-- Resize second column to 4/12 -->
         <comment userInput="Grab grid guide width for 4/12 for second column" stepKey="commentRetrieveGuideWidthForSecond"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
         <comment userInput="Resize second column to 4/12" stepKey="commentResizeSecondColumn"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
         <!-- Check all columns have the same width -->
         <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
         <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
         <assertEquals stepKey="assertRatioIsCorrect">
             <expectedResult type="int">1</expectedResult>
@@ -1466,8 +1466,8 @@
         </actionGroup>
         <!-- Assert original 1st and 3rd column are unaffected -->
         <comment userInput="Assert duplication was successful" stepKey="commentAssertDuplicateSuccess"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthAfterDuplicate"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('4')}}').clientWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('4')}}').clientWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
         <assertEquals stepKey="assertColumnOneWidthUnaffected">
             <expectedResult type="variable">columnOneWidth</expectedResult>
             <actualResult type="variable">columnOneWidthAfterDuplicate</actualResult>
@@ -1478,8 +1478,8 @@
         </assertEquals>
         <!-- Assert source and duplicated column are the same width -->
         <comment userInput="Assert source and duplicate column as same width" stepKey="commentAssertDuplicateAndSourceWidth"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoAfterDuplicate"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('3')}}').clientWidth" stepKey="columnThreeAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('3')}}').clientWidth" stepKey="columnThreeAfterDuplicate"/>
         <executeJS function="return Math.round({$columnTwoAfterDuplicate}/{$columnThreeAfterDuplicate})" stepKey="columnAfterDuplicateRatio"/>
         <assertEquals stepKey="assertDuplicatedRatioIsCorrect">
             <expectedResult type="int">1</expectedResult>
