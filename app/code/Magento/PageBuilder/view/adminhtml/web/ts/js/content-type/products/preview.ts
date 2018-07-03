@@ -6,7 +6,6 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
