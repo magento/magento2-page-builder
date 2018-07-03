@@ -15,30 +15,26 @@
     .column-width-30 &,
     .column-width-20 &,
     .column-width-10 & {
-        .file-uploader-area > span {
-            display: none;
-        }
-        .file-uploader-button {
-            margin-left: 0;
-            margin-right: 0;
+        .file-uploader-area {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
 
-            ~ .file-uploader-button {
-                margin-left: 15px;
+            > span {
+                display: none;
             }
         }
-    }
-    .column-width-20 &,
-    .column-width-10 & {
-        .file-uploader-button {
-            width: auto;
+        .image-upload-instructions {
+            margin-bottom: 5px;
         }
-    }
-    .column-width-30 &,
-    .column-width-20 &,
-    .column-width-10 & {
-        .file-uploader-button ~ .file-uploader-button {
+        .file-uploader-button {
+            display: block;
             margin-left: 0;
+            margin-right: 0;
             margin-top: 15px;
+            max-width: 150px;
+            width: 100%;
         }
     }
     .column-width-10 & {
