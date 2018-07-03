@@ -93,6 +93,66 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
     </test>
+    <test name="VerifyBlockDisabled">
+        <annotations>
+            <features value="Pagebuilder: Block"/>
+            <stories value="MC-1420: Static Block"/>
+            <title value="Block - Verify disabled block does not show on the stage or on storefront" />
+            <description value="Verify that disabled block instance is not rendered on the stage or on the storefront" />
+            <severity value="CRITICAL" />
+            <testCaseId value="MC-2288" />
+            <group value="pagebuilder" />
+            <group value="pagebuilder-block" />
+            <group value="VerifyBlockDisabled" />
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStage.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- Disable block -->
+        <comment userInput="Disable block" stepKey="commentDisableBlock" />
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+        </actionGroup>
+        <executeJS function="jQuery(document.evaluate(`{{BlockNewPageBasicFieldsSection.isActive('1')}}`, document.body).iterateNext()).click()" stepKey="disableBlock" />
+        <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="saveBlock" />
+
+        <!-- Go back to CMS page and assert it shows as disabled on stage -->
+        <comment userInput="Go back to CMS page and assert it shows as disabled on stage" stepKey="commentAssertBlockDisabledOnStage" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPageAfterDisablingBlock">
+            <argument name="CMSPage" value="$$createCMSPage$$" />
+        </actionGroup>
+        <seeElement selector="{{BlockOnStage.status('Block disabled')}}" stepKey="seeDisabledBlockPlaceholder" />
+
+        <!-- Go to CMS page on storefront and assert disabled block does not exist on page -->
+        <comment userInput="Go to CMS page on storefront and assert disabled block does not exist on page" stepKey="commentAssertDisabledBlockMissingOnStorefront" />
+        <amOnPage url="{{_defaultCmsPage.identifier}}" stepKey="amOnStorefrontCMSPage" />
+        <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="doNotSeeBlockElementOnStorefront" />
+    </test>
     <test name="BlockDelete">
         <annotations>
             <features value="Pagebuilder"/>
