@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string", "jquery"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string, _jquery) {
+define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_jquery, _mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   /**
@@ -37,14 +37,6 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
             var elementName = _arr[_i];
             var elementConfig = config.elements[elementName];
             var currentElement = (0, _jquery)(element).find("[data-element='" + elementName + "']").addBack("[data-element='" + elementName + "']")[0];
-            debugger; // const xpathResult = document.evaluate(
-            //     elementConfig.path,
-            //     element,
-            //     null,
-            //     XPathResult.FIRST_ORDERED_NODE_TYPE,
-            //     null,
-            // );
-            // const currentElement = xpathResult.singleNodeValue;
 
             if (currentElement === null || currentElement === undefined) {
               continue;

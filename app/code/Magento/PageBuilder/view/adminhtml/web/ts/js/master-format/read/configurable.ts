@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import mageUtils from "mageUtils";
 import appearanceConfig from "../../content-type/appearance-config";
 import PropertyReaderPool from "../../converter/converter-pool";
@@ -13,7 +14,6 @@ import massConverterPoolFactory from "../../mass-converter/converter-pool-factor
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {fromSnakeToCamelCase} from "../../utils/string";
 import ReadInterface from "../read-interface";
-import $ from 'jquery';
 
 /**
  * @api
@@ -40,16 +40,9 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const currentElement = $(element).find("[data-element='" + elementName + "']").addBack("[data-element='" + elementName + "']")[0];
-debugger;
-                    // const xpathResult = document.evaluate(
-                    //     elementConfig.path,
-                    //     element,
-                    //     null,
-                    //     XPathResult.FIRST_ORDERED_NODE_TYPE,
-                    //     null,
-                    // );
-                    // const currentElement = xpathResult.singleNodeValue;
+                    const currentElement = $(element)
+                        .find("[data-element='" + elementName + "']")
+                        .addBack("[data-element='" + elementName + "']")[0];
 
                     if (currentElement === null || currentElement === undefined) {
                         continue;
