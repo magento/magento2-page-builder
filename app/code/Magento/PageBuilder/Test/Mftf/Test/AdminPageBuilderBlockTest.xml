@@ -314,7 +314,7 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive2">
             <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStage.deleted('$createPreReqBlock.id$')}}" stepKey="seeDeletedBlockPlaceHolder"/>
+        <!--<seeElement selector="{{BlockOnStage.deleted('$createPreReqBlock.id$')}}" stepKey="seeDeletedBlockPlaceHolder"/>-->
     </test>
     <test name="BlockValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -332,7 +332,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -353,8 +353,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
-            <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
