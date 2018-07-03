@@ -17,6 +17,12 @@
               icon="icon-pagebuilder-row"
               sortOrder="1"
               translate="label">
+            <parents default_policy="deny">
+                <parent name="stage" policy="allow"/>
+            </parents>
+            <children default_policy="allow">
+                <child name="row" policy="deny"/>
+            </children>
             <allowed_parents>
                 <parent name="stage"/>
             </allowed_parents>

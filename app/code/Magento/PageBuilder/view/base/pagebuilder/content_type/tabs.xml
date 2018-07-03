@@ -17,6 +17,13 @@
               icon="icon-pagebuilder-tabs"
               sortOrder="1"
               translate="label">
+            <parents default_policy="deny">
+                <parent name="row" policy="allow"/>
+                <parent name="column" policy="allow"/>
+            </parents>
+            <children default_policy="deny">
+                <child name="tab-item" policy="allow"/>
+            </children>
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
