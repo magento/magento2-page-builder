@@ -137,23 +137,23 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeFirstRowVerticalAlignmentTop"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeSecondRowVerticalAlignmentCenter"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeThirdRowVerticalAlignmentBottom"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstRowVerticalAlignmentTop"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeSecondRowVerticalAlignmentCenter"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeThirdRowVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeFirstRowVerticalAlignmentTopAfterSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeSecondRowVerticalAlignmentCenterAfterSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeThirdRowVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstRowVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeSecondRowVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeThirdRowVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
-        <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeRow2VerticalAlignmentCenterApplied"/>
-        <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeRow3VerticalAlignmentBottomApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeRow2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeRow3VerticalAlignmentBottomApplied"/>
     </test>
     <test name="RowContentIsVerticallyAlignedWithDifferentMinimumHeights">
         <annotations>
@@ -259,9 +259,9 @@
         <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeight"/>
         <seeElement selector="{{RowOnStage.minHeight('2', PageBuilderMinHeightProperty_300.value)}}" stepKey="seeSecondRowMinHeight"/>
         <seeElement selector="{{RowOnStage.minHeight('3', PageBuilderMinHeightProperty_200.value)}}" stepKey="seeThirdRowMinHeight"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeFirstRowVerticalAlignmentTop"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeSecondRowVerticalAlignmentCenter"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeThirdRowVerticalAlignmentBottom"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstRowVerticalAlignmentTop"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeSecondRowVerticalAlignmentCenter"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeThirdRowVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -269,9 +269,9 @@
         <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeightAfterSave"/>
         <seeElement selector="{{RowOnStage.minHeight('2', PageBuilderMinHeightProperty_300.value)}}" stepKey="seeSecondRowMinHeightAfterSave"/>
         <seeElement selector="{{RowOnStage.minHeight('3', PageBuilderMinHeightProperty_200.value)}}" stepKey="seeThirdRowMinHeightAfterSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeFirstRowVerticalAlignmentTopAfterSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeSecondRowVerticalAlignmentCenterAfterSave"/>
-        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeThirdRowVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstRowVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeSecondRowVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{RowOnStage.rowChildrenStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeThirdRowVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Min Height and Vertical Alignment In Storefront -->
         <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -280,8 +280,8 @@
         <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}" stepKey="seeRow1MinHeightApplied"/>
         <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderMinHeightProperty_300.style)}}" stepKey="seeRow2MinHeightApplied"/>
         <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderMinHeightProperty_200.style)}}" stepKey="seeRow3MinHeightApplied"/>
-        <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderCommonStyles.verticalAlignmentTop)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
-        <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderCommonStyles.verticalAlignmentCenter)}}" stepKey="seeRow2VerticalAlignmentCenterApplied"/>
-        <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderCommonStyles.verticalAlignmentBottom)}}" stepKey="seeRow3VerticalAlignmentBottomApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeRow1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeRow2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{RowOnStorefront.rowStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeRow3VerticalAlignmentBottomApplied"/>
     </test>
 </tests>
