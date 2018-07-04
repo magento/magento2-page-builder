@@ -68,7 +68,7 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         $wrapperDivElementAttributes = [
-            'data-element' = > 'mobile_image',
+            'data-element' => 'mobile_image',
             'class' => 'pagebuilder-slide-wrapper pagebuilder-mobile-only'
         ];
         $style = $this->styleExtractor->extractStyle($formData);
