@@ -7,6 +7,9 @@
 -->
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
     <update handle="2columns-left" />
+    
+    <!-- Ensure the 2columns left page layout class is present in the DOM -->
+    <referenceContainer name="page.wrapper" htmlClass="page-wrapper page-layout-2columns-left"/>
 
     <container name="columns.top.wrapper" htmlTag="div" htmlClass="page-main"/>
     <move element="columns.top" destination="columns.top.wrapper"/>
