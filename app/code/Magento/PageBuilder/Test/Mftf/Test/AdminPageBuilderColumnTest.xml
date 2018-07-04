@@ -102,7 +102,7 @@
     </test>
     <test name="ColumnNoBackgroundRequired">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Column"/>
             <title value="Ensure column has no required background fields"/>
             <description value="Slide out panel with should has no required background fields"/>
@@ -169,6 +169,8 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundAttachmentNotRequired">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.base('1')}}" stepKey="waitForColumnOnStage" />
     </test>
     <test name="ColumnConfigurationHasVerticalAlignment">
         <annotations>
