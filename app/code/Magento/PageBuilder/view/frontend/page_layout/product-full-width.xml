@@ -12,14 +12,17 @@
     <referenceContainer name="page.wrapper" htmlClass="page-wrapper page-layout-1column"/>
 
     <referenceContainer name="page.wrapper">
+        <!-- Create new product details wrapper under main.content for tabs section -->
         <container name="product.info.details.wrapper" after="main.content" htmlTag="div" htmlClass="page-main page-main-details">
             <container name="product.info.details.wrapper.columns" htmlTag="div" htmlClass="columns">
                 <container name="product.info.details.wrapper.main" label="Product Details Main Content Container" htmlTag="div" htmlClass="column main"/>
             </container>
         </container>
+        <!-- Create wrapper for description without page-main class which adds gutters -->
         <container name="product.info.description.wrapper" after="main.content" before="product.info.details.wrapper" htmlTag="div" htmlClass="page-main-description"/>
     </referenceContainer>
 
+    <!-- Move details & description into their new wrappers -->
     <move element="product.info.details" destination="product.info.details.wrapper.main"/>
     <move element="product.info.description" destination="product.info.description.wrapper"/>
 </layout>
