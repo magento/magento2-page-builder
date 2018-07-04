@@ -41,6 +41,9 @@ class Page
         if ($subject->getConfig()->getPageLayout() == 'product-full-width') {
             $subject->getConfig()->addBodyClass('page-layout-1column');
         }
+        if ($subject->getConfig()->getPageLayout() == 'category-full-width') {
+            $subject->getConfig()->addBodyClass('page-layout-2columns-left');
+        }
 
         return [$response];
     }
