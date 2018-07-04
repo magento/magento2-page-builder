@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+    <update handle="1column" />
+
+    <!-- Ensure the 1column page layout class is present in the DOM -->
+    <referenceContainer name="page.wrapper" htmlClass="page-wrapper page-layout-1column"/>
+
+    <referenceContainer name="page.wrapper">
+        <container name="product.info.details.wrapper" after="main.content" htmlTag="div" htmlClass="page-main page-main-details">
+            <container name="product.info.details.wrapper.columns" htmlTag="div" htmlClass="columns">
+                <container name="product.info.details.wrapper.main" label="Product Details Main Content Container" htmlTag="div" htmlClass="column main"/>
+            </container>
+        </container>
+        <container name="product.info.description.wrapper" after="main.content" before="product.info.details.wrapper" htmlTag="div" htmlClass="page-main-description"/>
+    </referenceContainer>
+
+    <move element="product.info.details" destination="product.info.details.wrapper.main"/>
+    <move element="product.info.description" destination="product.info.description.wrapper"/>
+</layout>
