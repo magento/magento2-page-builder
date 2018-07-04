@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/dynamic-rows/dynamic-rows',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'underscore',
     'jquery'
 ], function (dynamicRows, Events, _, $) {
@@ -40,7 +40,7 @@ define([
         /** @inheritdoc */
         initLinks: function () {
             this._super();
-            Events.on('location:save', function (data) {
+            Events.on('mapLocation:saveAfter', function (data) {
                 this.modal().closeModal();
                 this.reInitData(data);
             }.bind(this), this.name);

@@ -9,6 +9,7 @@
  * @param hexValue
  * @param alphaValue optional
  * @returns {string}
+ * @api
  */
 export function fromHex(hexValue: string, alphaValue: string) {
     const shorthandHexRegEx = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -33,6 +34,7 @@ export function fromHex(hexValue: string, alphaValue: string) {
  * Adds 0 if HEX value is string character
  *
  * @returns string
+ * @api
  */
 function padZero(value: string) {
     if (value.length === 1) {
@@ -46,6 +48,7 @@ function padZero(value: string) {
  *
  * @param value "rgba(255,85,51,0.2)"
  * @returns {string}
+ * @api
  */
 export function toHex(value: string) {
     const values = value.replace("#", "").match(/\d+/g);

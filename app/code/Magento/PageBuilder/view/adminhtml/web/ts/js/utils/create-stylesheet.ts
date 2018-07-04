@@ -10,6 +10,7 @@ import {StyleBlock, StyleBlocks} from "./style-blocks";
  *
  * @param {StyleBlocks} blocks
  * @returns {HTMLStyleElement}
+ * @api
  */
 export function createStyleSheet(blocks: StyleBlocks) {
     const style = document.createElement("style");

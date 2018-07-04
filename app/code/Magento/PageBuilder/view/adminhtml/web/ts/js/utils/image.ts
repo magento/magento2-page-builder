@@ -10,6 +10,7 @@ import Config from "../config";
  *
  * @param value
  * @returns {Object}
+ * @api
  */
 export function decodeUrl(value: string): string | [object] {
     let result: any = "";

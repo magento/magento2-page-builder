@@ -4,7 +4,9 @@
  */
 
 import {PlaceholderOptionsInterface} from "./placeholder-options";
-
+/**
+ * @api
+ */
 export interface SortableOptionsInterface extends JQueryUI.SortableOptions {
     placeholder?: any | string | PlaceholderOptionsInterface;
 }

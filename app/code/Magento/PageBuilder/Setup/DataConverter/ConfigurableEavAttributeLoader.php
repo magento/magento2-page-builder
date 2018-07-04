@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 use Magento\PageBuilder\Model\EntityFactory;
@@ -48,7 +50,7 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
     /**
      * @inheritdoc
      */
-    public function load($entityId)
+    public function load($entityId) : array
     {
         $eavData = [];
         $entity = $this->entityFactory->create();

@@ -16,6 +16,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} url
    * @returns {boolean}
+   * @api
    */
 
   function isDirectiveDataUrl(url) {
@@ -26,6 +27,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} directive
    * @returns {string}
+   * @api
    */
 
 
@@ -37,6 +39,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} url
    * @returns {string}
+   * @api
    */
 
 
@@ -52,6 +55,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} str
    * @returns {string}
+   * @api
    */
 
 
@@ -65,6 +69,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {Array} image
    * @returns {string}
+   * @api
    */
 
 
@@ -78,6 +83,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} html
    * @returns {string}
+   * @api
    */
 
 
@@ -104,6 +110,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    *
    * @param {string} html
    * @returns {string}
+   * @api
    */
 
 

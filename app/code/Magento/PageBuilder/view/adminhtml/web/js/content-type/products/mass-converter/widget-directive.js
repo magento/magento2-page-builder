@@ -2,6 +2,9 @@
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], function (_widgetDirectiveAbstract) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * @api
+   */
   var WidgetDirective =
   /*#__PURE__*/
   function (_BaseWidgetDirective) {

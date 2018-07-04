@@ -3,10 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter;
 
 /**
  * Pool of children renderers for content types
+ * @api
  */
 class ChildrenRendererPool
 {
@@ -32,7 +35,7 @@ class ChildrenRendererPool
      * @param string $contentType
      * @return ChildrenRendererInterface
      */
-    public function getChildrenRenderer($contentType)
+    public function getChildrenRenderer(string $contentType) : ChildrenRendererInterface
     {
         if (isset($this->renderers[$contentType])) {
             return $this->renderers[$contentType];

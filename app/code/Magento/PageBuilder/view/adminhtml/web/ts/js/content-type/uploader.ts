@@ -3,10 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import layout from "uiLayout";
 import registry from "uiRegistry";
 
+/**
+ * @api
+ */
 export default class Uploader {
     /**
      * Id of uploader instance
@@ -53,7 +56,7 @@ export default class Uploader {
      * @param {Function} callback - callback function containing array of file objects as argument
      */
     public onUploaded(callback: (files: object[]) => any) {
-        events.on("image:uploaded:" + this.id, callback);
+        events.on("image:" + this.id + ":uploadAfter", callback);
     }
 
     /**

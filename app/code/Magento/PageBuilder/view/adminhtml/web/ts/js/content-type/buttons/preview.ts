@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
@@ -15,13 +15,16 @@ import ButtonItem from "../button-item/preview";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
 
     public bindEvents() {
         super.bindEvents();
 
-        events.on("buttons:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("buttons:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
             }

@@ -2,7 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
+/**
+ * @api
+ */
 import $ from "jquery";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";

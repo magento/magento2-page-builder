@@ -5,6 +5,9 @@
 import ContentTypeInterface from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection";
 
+/**
+ * @api
+ */
 export interface ContentTypeMoveParamsInterface {
     contentType: ContentTypeInterface;
     sourceParent: ContentTypeCollectionInterface;
