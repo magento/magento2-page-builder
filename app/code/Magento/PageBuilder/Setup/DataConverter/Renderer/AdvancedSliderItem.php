@@ -96,7 +96,8 @@ class AdvancedSliderItem implements RendererInterface
         $buttonElementHtml = '';
         // Advanced slider item only requires link text, slider item requires both
         if (isset($eavData['link_text']) || (isset($eavData['link_url']) && isset($eavData['title_tag']))) {
-            $buttonElementHtml =  '<button data-element="button" type="button" class="pagebuilder-slide-button pagebuilder-button-primary" ';
+            $buttonElementHtml = '<button data-element="button" ';
+            $buttonElementHtml .= 'type="button" class="pagebuilder-slide-button pagebuilder-button-primary" ';
             $buttonElementHtml .= 'style="opacity: 1; visibility: visible;">';
             $buttonElementHtml .= ($eavData['link_text'] ??  $eavData['title_tag'] ?? '');
             $buttonElementHtml .= '</button>';
@@ -105,7 +106,9 @@ class AdvancedSliderItem implements RendererInterface
         // mobile wrapper div
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
         $rootElementHtml .= '><a';
-        $rootElementHtml .= isset($eavData['link_url']) ? ' data-element="link" href="' . $eavData['link_url'] . '">' : ' data-element="link">';
+        $rootElementHtml .= isset($eavData['link_url']) ?
+            ' data-element="link" href="' . $eavData['link_url'] . '">' :
+            ' data-element="link">';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
             . '><div'
