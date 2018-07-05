@@ -71,7 +71,7 @@ To add configuration for a new content type, create a file under the following l
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style"/>
@@ -82,6 +82,7 @@ To add configuration for a new content type, create a file under the following l
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
+                                    <attribute name="element" source="data-element"/>
                                     <attribute name="name" source="data-role"/>
                                 </attributes>
                                 <css name="css_classes"/>
@@ -276,7 +277,7 @@ Now, let's add content type that can contain other content types. Create configu
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style"/>
@@ -287,6 +288,7 @@ Now, let's add content type that can contain other content types. Create configu
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
+                                    <attribute name="element" source="data-element"/>
                                     <attribute name="name" source="data-role"/>
                                 </attributes>
                                 <css name="css_classes"/>
