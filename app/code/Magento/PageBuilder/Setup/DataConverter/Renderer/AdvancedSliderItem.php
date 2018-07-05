@@ -79,7 +79,6 @@ class AdvancedSliderItem implements RendererInterface
         $overlayDivElementAttributes['data-element'] = 'overlay';
         $overlayDivElementAttributes['class'] = 'pagebuilder-overlay pagebuilder-poster-overlay';
         $style = $this->styleExtractor->extractStyle($formData, ['padding']);
-
         $overlayColor = 'transparent';
         if (isset($eavData['has_overlay']) && $eavData['has_overlay'] == 1) {
             $overlayColor = 'rgba(0,0,0,0.5)';
@@ -104,11 +103,9 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         // mobile wrapper div
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
-        $rootElementHtml .= '><a';
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '><a';
         $rootElementHtml .= isset($eavData['link_url']) ?
-            ' data-element="link" href="' . $eavData['link_url'] . '">' :
-            ' data-element="link">';
+            ' data-element="link" href="' . $eavData['link_url'] . '">' : ' data-element="link">';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
             . '><div'
