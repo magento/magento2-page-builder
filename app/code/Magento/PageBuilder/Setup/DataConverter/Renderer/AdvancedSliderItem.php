@@ -105,20 +105,22 @@ class AdvancedSliderItem implements RendererInterface
         // mobile wrapper div
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
         $rootElementHtml .= '><a';
-        $rootElementHtml .= isset($eavData['link_url']) ? ' data-element="link" href="' . $eavData['link_url'] . '">' : '>';
+        $rootElementHtml .= isset($eavData['link_url']) ? ' data-element="link" href="' . $eavData['link_url'] . '">' : ' data-element="link">';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
             . '><div'
             . $this->printAttributes($overlayDivElementAttributes)
             . '><div class="pagebuilder-poster-content">'
+            . '<div data-element="content">'
             . '<h3>'
             . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3>'
-            . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
+            . '<div>' . ($eavData['textarea'] ?? '') . '</div></div>'
             . $buttonElementHtml
             . '</div></div></div>';
 
         // non-mobile wrapper div
+        $wrapperDivElementAttributes['data-element'] = 'desktop_image';
         $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper ' .
             'pagebuilder-mobile-hidden';
         $rootElementHtml .= '<div'

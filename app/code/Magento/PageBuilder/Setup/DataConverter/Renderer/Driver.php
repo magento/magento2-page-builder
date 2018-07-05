@@ -135,12 +135,12 @@ class Driver implements RendererInterface
             . '>'
             . $imageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div>'
+            . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
             . '</div></div></div>'
             . $mobileImageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div>'
+            . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
             . '</div></div></div></a></div>';
     }
