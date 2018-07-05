@@ -15,11 +15,14 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select]
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
-    1. [Custom Toolbar] 
+    1. [Custom Toolbar]
+    1. [Add image uploader to content type]
+    1. [Full width page layouts]
 5. [Roadmap and known issues]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
@@ -40,6 +43,8 @@
 
 **[Events]** - Reference documentation for PageBuilder events.
 
+**[Bindings]** - Documentation outlining new bindings provided within Page Builder.
+
 **[Master format]** - Describes the master format for PageBuilder content types.
 
 **[Visual select]** - Documentation on customizing the visual select field.
@@ -50,9 +55,12 @@
 
 **[Custom Toolbar]** - Documentation on adding a custom toolbar.
 
+**[Full width page layouts]** - Documentation regarding full width page layouts supplied as part of Page Builder.
+
 [Introduction]: README.md
+[Installation Guide]: install.md
 [Contribution guide]: CONTRIBUTING.md
-[Installation guide]: install.md
+[Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
 [Third-party content type migration]: new-content-type-example.md
@@ -62,9 +70,12 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Roadmap and known issues]: roadmap.md
+[Full width page layouts]: full-width-page-layouts.md
+[Add image uploader to content type]: image-uploader.md
+[Roadmap and Known Issues]: roadmap.md

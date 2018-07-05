@@ -23,6 +23,8 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
     1. [Custom Toolbar]
+    1. [Add image uploader to content type]
+    1. [Full Width Page Layouts]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -44,4 +46,6 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
+[Full Width Page Layouts]: full-width-page-layouts.md
+[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
