@@ -119,7 +119,7 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
 ```
 
 ## How to reuse vertical alignment between different content types {#vertical-alignment}
-To apply vertical alignment to a content type using the Visual Select component, use the virtualType `Magento\PageBuilder\Model\Source\VerticalAlignment` with options in yourmodule's `di.xml` configuration file.
+To apply vertical alignment to a content type using the Visual Select component, use the virtualType `Magento\PageBuilder\Model\Source\VerticalAlignment` with options in your module's `di.xml` configuration file.
 
 ```xml
 <virtualType name="Magento\PageBuilder\Model\Source\VerticalAlignment" type="Magento\PageBuilder\Model\Source\VisualSelect">
