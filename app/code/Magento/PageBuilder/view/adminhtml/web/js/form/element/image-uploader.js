@@ -8,15 +8,17 @@ define([
     'underscore',
     'uiRegistry',
     'Magento_Ui/js/form/element/image-uploader',
+    'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min',
     'Magento_PageBuilder/js/events',
     'mage/translate'
-], function ($, _, uiRegistry, Uploader, events, $t) {
+], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
     'use strict';
 
     var initializedOnce = false;
 
     return Uploader.extend({
         defaults: {
+            $uploadArea: null,
             isShowImageUploadInstructions: true,
             isShowImageUploadOptions: false,
             classes: {
@@ -57,6 +59,16 @@ define([
 
                 initializedOnce = true;
             }
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        initUploader: function (fileInput) {
+            this._super(fileInput);
+            this.$uploadArea = this.$fileInput.closest('.pagebuilder-image-empty-preview');
+            new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea);
+            this.$uploadArea = $(this.$uploadArea);
         },
 
         /**
@@ -138,6 +150,23 @@ define([
          */
         onAssignedFile: function (file) {
             this.value([file]);
+        },
+
+        /**
+         * Adds the appropriate ui state class to the upload control area based on the current rendered size
+         */
+        updateResponsiveClasses: function () {
+            if (!this.$uploadArea.is(':visible')) {
+                return;
+            }
+
+            this.$uploadArea.removeClass('_micro-ui _compact-ui');
+
+            if (this.$uploadArea.width() < 130) {
+                this.$uploadArea.addClass('_micro-ui');
+            } else if (this.$uploadArea.width() < 440) {
+                this.$uploadArea.addClass('_compact-ui');
+            }
         }
     });
 });
