@@ -17,9 +17,10 @@
         <fillField selector="{{BlockOnGrid.searchBox}}" userInput="{{block.identifier}}" stepKey="enterBlockTitle"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <click selector="{{BlockOnGrid.searchBtn}}" stepKey="clickSearchBtn"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
         <waitForElementVisible selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="waitForSearchResult"/>
         <click selector="{{BlockOnGrid.selectBtn(block.identifier)}}" stepKey="clickSelectBtn"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
         <waitForElementVisible selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="waitForAddSelected"/>
         <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
     </actionGroup>
