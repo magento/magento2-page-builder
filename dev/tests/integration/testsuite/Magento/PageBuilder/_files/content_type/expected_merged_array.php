@@ -45,7 +45,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_converter',
@@ -66,6 +65,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -243,7 +250,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'first_element' => [
-                                'path' => '.',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -327,6 +333,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -334,7 +348,7 @@ return [
                                         'persist' => null,
                                         'preview_converter' => null
                                     ],
-                                    1 => [
+                                    2 => [
                                         'var' => 'attribute_change',
                                         'name' => 'data-custom',
                                         'virtual' => 'false',
@@ -342,7 +356,7 @@ return [
                                         'persist' => 'true',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
-                                    2 => [
+                                    3 => [
                                         'var' => 'attribute_add',
                                         'name' => 'attribute_add',
                                         'virtual' => 'false',
@@ -350,7 +364,7 @@ return [
                                         'persist' => 'true',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
-                                    3 => [
+                                    4 => [
                                         'var' => 'new_attribute',
                                         'name' => 'data-new',
                                         'virtual' => 'true',
@@ -358,22 +372,22 @@ return [
                                         'persist' => 'false',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
-                                    4 => [
+                                    5 => [
                                         'name' => 'original_static',
                                         'value' => 'original_value',
                                         'static' => true
                                     ],
-                                    5 => [
+                                    6 => [
                                         'name' => 'static_attribute_change',
                                         'value' => 'custom_value',
                                         'static' => true
                                     ],
-                                    6 => [
+                                    7 => [
                                         'name' => 'new_static',
                                         'value' => 'new-value',
                                         'static' => true
                                     ],
-                                    7 => [
+                                    8 => [
                                         'var' => 'original_complex',
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
@@ -382,7 +396,7 @@ return [
                                         'complex' => true,
                                         'persist' => null
                                     ],
-                                    8 => [
+                                    9 => [
                                         'var' => 'complex_style_attributes_change',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
@@ -391,7 +405,7 @@ return [
                                         'complex' => true,
                                         'persist' => null
                                     ],
-                                    9 => [
+                                    10 => [
                                         'var' => 'complex_style_attributes_add',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
@@ -400,7 +414,7 @@ return [
                                         'complex' => true,
                                         'persist' => null
                                     ],
-                                    10 => [
+                                    11 => [
                                         'var' => 'new_complex',
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
@@ -429,7 +443,6 @@ return [
                                 ]
                             ],
                             'second_element' => [
-                                'path' => '//a',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -442,6 +455,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -459,7 +480,6 @@ return [
                                 ]
                             ],
                             'third_element' => [
-                                'path' => '//div',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -472,6 +492,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -526,7 +554,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -547,6 +574,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -591,7 +626,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -612,6 +646,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -657,7 +699,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -678,6 +719,14 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
+                                        'var' => 'element',
+                                        'name' => 'data-element',
+                                        'virtual' => null,
+                                        'converter' => null,
+                                        'persist' => null,
+                                        'preview_converter' => null
+                                    ],
+                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
