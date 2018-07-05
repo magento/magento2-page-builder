@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_jquery, _mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string) {
+define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   /**
@@ -36,7 +36,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
           for (var _i = 0; _i < _arr.length; _i++) {
             var elementName = _arr[_i];
             var elementConfig = config.elements[elementName];
-            var currentElement = (0, _jquery)(element).find("[data-element='" + elementName + "']").addBack("[data-element='" + elementName + "']")[0];
+            var currentElement = element.getAttribute("data-element") === elementName ? element : element.querySelector("[data-element = '" + elementName + "']");
 
             if (currentElement === null || currentElement === undefined) {
               continue;

@@ -40,9 +40,8 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const currentElement = $(element)
-                        .find("[data-element='" + elementName + "']")
-                        .addBack("[data-element='" + elementName + "']")[0];
+                    const currentElement = element.getAttribute("data-element") === elementName ?
+                        element : element.querySelector("[data-element = '" + elementName + "']");
 
                     if (currentElement === null || currentElement === undefined) {
                         continue;
