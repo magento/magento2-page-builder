@@ -72,7 +72,9 @@ class TabsItem implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><div data-element="main" data-role="text" data-appearance="default">' . $eavData['textarea'] . '</div></div>';
+        $rootElementHtml .= '><div data-element="main" data-role="text" data-appearance="default">'
+            . $eavData['textarea']
+            . '</div></div>';
 
         return $rootElementHtml;
     }

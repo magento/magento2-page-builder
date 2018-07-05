@@ -116,8 +116,9 @@ class Driver implements RendererInterface
 
         $imageElementHtml = '<div' . $this->printAttributes($imageAttributes) . '>';
 
-        $overlayElementHtml = '<div data-element="overlay" class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
-            'style="background-color: transparent; min-height: 300px;' . $padding . '">';
+        $overlayElementHtml = '<div '
+            . 'data-element="overlay" class="pagebuilder-poster-overlay" data-overlay-color="transparent" '
+            . 'style="background-color: transparent; min-height: 300px;' . $padding . '">';
 
         $buttonHtml = '';
         if (isset($eavData['link_text']) && $eavData['link_text'] !== '') {
