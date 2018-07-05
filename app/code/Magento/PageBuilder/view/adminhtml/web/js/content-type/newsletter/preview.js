@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_events, _config, _preview) {
+define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _config, _preview) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,34 +19,35 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
     var _proto = Preview.prototype;
 
     /**
-     * Bind events
+     * @inheritdoc
      */
-    _proto.bindEvents = function bindEvents() {
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this = this;
 
-      _BasePreview.prototype.bindEvents.call(this);
+      _BasePreview.prototype.afterObservablesUpdated.call(this);
 
-      _events.on("previewData:updateAfter", function (args) {
-        if (args.preview.parent.id === _this.parent.id) {
-          var attributes = _this.data.main.attributes();
+      var attributes = this.data.main.attributes();
 
-          if (attributes["data-title"] === "") {
-            return;
-          }
+      if (attributes["data-title"] === "") {
+        return;
+      }
 
-          var url = _config.getConfig("preview_url");
+      var url = _config.getConfig("preview_url");
 
-          var requestData = {
-            button_text: attributes["data-button-text"],
-            label_text: attributes["data-label-text"],
-            placeholder: attributes["data-placeholder"],
-            role: _this.config.name,
-            title: attributes["data-title"]
-          };
-          jQuery.post(url, requestData, function (response) {
-            _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
-          });
+      var requestData = {
+        button_text: attributes["data-button-text"],
+        label_text: attributes["data-label-text"],
+        placeholder: attributes["data-placeholder"],
+        role: this.config.name,
+        title: attributes["data-title"]
+      };
+
+      _jquery.post(url, requestData, function (response) {
+        if (_typeof(response.data) !== "object" || typeof response.data.content === "undefined") {
+          return;
         }
+
+        _this.data.main.html(response.data.content.trim());
       });
     };
 

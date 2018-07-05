@@ -1,0 +1,36 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="admin__field">
+    <label class="admin__field-label">
+        <span translate="'Block'"></span>
+    </label>
+    <div class="admin__field-control">
+        <div class="pagebuilder-block-chooser">
+            <div if="$data.errorMessage" text="$data.errorMessage"></div>
+            <div if="$data.meta().title" text="$data.meta().title" class="block-title"></div>
+            <div ifnot="$data.meta().title || $data.errorMessage()" class="block-title" translate="'Not Selected'"></div>
+
+            <div ko-scope="getButton()" class="chooser-button">
+                <render/>
+            </div>
+
+            <table class="block-info" data-role="grid" if="$data.displayMetadata() && $data.meta().title && !$data.errorMessage()">
+                <tbody>
+                    <tr class="data-row _odd-row">
+                        <td>
+                            <div class="data-grid-cell-content"><strong translate="'Status'"></strong></div>
+                        </td>
+                        <td>
+                            <div class="data-grid-cell-content" text="getStatusLabel()"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
@@ -15,96 +17,40 @@ use Magento\Framework\Controller\ResultFactory;
 class Preview extends \Magento\Framework\App\Action\Action
 {
     /**
-     * @var \Magento\PageBuilder\Model\Config
+     * @var \Magento\PageBuilder\Model\Stage\RendererPool
      */
-    private $config;
-
-    /**
-     * @var \Magento\Framework\View\Element\BlockFactory
-     */
-    private $blockFactory;
-
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
-     * @var \Magento\Widget\Model\Template\Filter
-     */
-    private $directiveFilter;
+    private $rendererPool;
 
     /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\PageBuilder\Model\Config $config
-     * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Widget\Model\Template\Filter $directiveFilter
+     * @param \Magento\PageBuilder\Model\Stage\RendererPool $rendererPool
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\PageBuilder\Model\Config $config,
-        \Magento\Framework\View\Element\BlockFactory $blockFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Widget\Model\Template\Filter $directiveFilter
+        \Magento\PageBuilder\Model\Stage\RendererPool $rendererPool
     ) {
         parent::__construct($context);
 
-        $this->config = $config;
-        $this->blockFactory = $blockFactory;
-        $this->storeManager = $storeManager;
-        $this->directiveFilter = $directiveFilter;
+        $this->rendererPool = $rendererPool;
     }
 
     /**
-     * Allow users to upload images to the folder structure
+     * Generates an HTML preview for the stage
      *
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-        try {
-            $params = $this->getRequest()->getParams();
-            $contentTypes = $this->config->getContentTypes();
-            $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
-                ? $contentTypes[$params['role']]['backend_block'] : false;
-            $backendBlockTemplate = isset($contentTypes[$params['role']]['backend_template'])
-                ? $contentTypes[$params['role']]['backend_template'] : false;
-            if ($backendBlockTemplate) {
-                $params['template'] = $backendBlockTemplate;
-            }
-            if ($backendBlockClassName) {
-                $backendBlockInstance = $this->blockFactory->createBlock(
-                    $backendBlockClassName,
-                    ['data' => $params]
-                );
-                $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-                $pageResult->getLayout()->addBlock($backendBlockInstance);
-                $result = [
-                    'content' => $backendBlockInstance->toHtml()
-                ];
-            } else {
-                $result = ['content' => ''];
-            }
+        $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        // Some template filters and directive processors expect this to be called in order to function.
+        $pageResult->initLayout();
 
-            // If passed, this needs to be rendered as a directive
-            if (!empty($params['directive'])) {
-                $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-                $pageResult->initLayout();
-                $storeId = $this->storeManager->getStore()->getId();
-                $content = $this->directiveFilter
-                    ->setStoreId($storeId)
-                    ->filter($params['directive']);
-                $result = ['content' => $content];
-            }
-        } catch (\Exception $e) {
-            $result = [
-                'error' => $e->getMessage(),
-                'errorcode' => $e->getCode()
-            ];
-        }
+        $params = $this->getRequest()->getParams();
+        $renderer = $this->rendererPool->getRenderer($params['role']);
+        $result = ['data' => $renderer->render($params)];
+
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 }
