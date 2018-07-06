@@ -79,8 +79,7 @@ class Block implements RendererInterface
             'data-element' => 'main',
             'data-role' => 'block',
             'data-appearance' => 'default',
-            'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-identifier' => $blockIdentifier
+            'class' => $itemData['formData']['css_classes'] ?? ''
         ];
 
         if (isset($itemData['formData'])) {
@@ -95,7 +94,12 @@ class Block implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= '></div>';
+        $widgetDirective = '{{widget type="Magento\Cms\Block\Widget\Block" '
+            . 'template="widget/static_block/default.phtml" '
+            . 'block_id="' . $blockIdentifier . '" '
+            . 'type_name="CMS Static Block"}}';
+
+        $rootElementHtml .= '>' . $widgetDirective . '</div>';
 
         return $rootElementHtml;
     }

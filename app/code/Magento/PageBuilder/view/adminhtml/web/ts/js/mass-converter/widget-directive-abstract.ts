@@ -21,7 +21,7 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
             attributes = this.parseAttributesString(attributeString);
         }).bind(this));
 
-        return _.extend(data, attributes);
+        return attributes;
     }
 
     /**
