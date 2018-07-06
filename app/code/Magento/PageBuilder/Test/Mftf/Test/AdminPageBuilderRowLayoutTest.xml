@@ -142,12 +142,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstRow"/>
         <!-- Verify Valid Height After Invalid - Before Save -->
         <comment userInput="Verify valid height after invalid on stage before save" stepKey="commentVerifyValidHeightAfterInvalidBeforeSave"/>
-        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeight"/>
+        <waitForElementVisible selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeight"/>
         <!-- Verify Valid Height After Invalid - After Save -->
         <comment userInput="Verify valid height after invalid on stage after save" stepKey="commentVerifyHeightAfterInvalidOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeightAfterSave"/>
+        <waitForElementVisible selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeightAfterSave"/>
     </test>
     <test name="RowContentIsVerticallyAligned">
         <annotations>
