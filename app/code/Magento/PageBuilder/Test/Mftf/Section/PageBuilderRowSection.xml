@@ -44,6 +44,7 @@
         <element name="parallaxBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@data-jarallax-original-styles,'background-image: url(') and contains(@data-jarallax-original-styles,'{{arg2}}') and contains(@data-jarallax-original-styles,'{{arg3}}&quot;);')]" parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[contains(@class, 'pagebuilder-row')])[{{arg1}}]//div[contains(@class, 'element-children') and contains(@class, 'row-container')][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -75,6 +76,9 @@
         <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
         <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <!-- Layout Configuration -->
+        <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
