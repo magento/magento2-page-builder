@@ -23,7 +23,9 @@ class Page
         ResponseInterface $response
     ) : array {
         // Apply the updated layout handles classes to the body when using our full width variants
-        if ($subject->getConfig()->getPageLayout() == 'product-full-width') {
+        if ($subject->getConfig()->getPageLayout() == 'product-full-width'
+            || $subject->getConfig()->getPageLayout() == 'cms-full-width'
+        ) {
             $subject->getConfig()->addBodyClass('page-layout-1column');
         }
         if ($subject->getConfig()->getPageLayout() == 'category-full-width') {
