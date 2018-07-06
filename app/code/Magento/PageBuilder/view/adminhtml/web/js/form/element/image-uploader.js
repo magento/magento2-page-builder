@@ -66,9 +66,8 @@ define([
          */
         initUploader: function (fileInput) {
             this._super(fileInput);
-            this.$uploadArea = this.$fileInput.closest('.pagebuilder-image-empty-preview');
-            new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea);
-            this.$uploadArea = $(this.$uploadArea);
+            this.$uploadArea = $(this.$fileInput).closest('.pagebuilder-image-empty-preview');
+            new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea.get(0));
         },
 
         /**
