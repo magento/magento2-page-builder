@@ -8,36 +8,32 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
-        <!-- PageBuilder is enabled so check default is full width -->
-        <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeCategoryFullWidth" before="seeNoLayoutUpdatesSelected" />
-        <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected" />
-    </test>
-    <test name="AdminCreateCategoryWithPageBuilderDescriptionTest">
+    <test name="AdminCreateProductWithPageBuilderDescriptionTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Full Width Page Layout"/>
-            <title value="Category description should display in full width"/>
-            <description value="Category description should display in full width"/>
+            <title value="Product description should display in full width"/>
+            <description value="Product description should display in full width"/>
             <severity value="MAJOR"/>
-            <testCaseId value="MC-3075"/>
+            <testCaseId value="MC-3090"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-fullwidth"/>
         </annotations>
         <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
             <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
         </after>
-        <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
-        <click selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="clickOnAddSubCategory"/>
-        <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
-        <click selector="{{AdminCategorySEOSection.SectionHeader}}" stepKey="openSEO"/>
-        <fillField selector="{{AdminCategorySEOSection.UrlKeyInput}}" userInput="{{SimpleSubCategory.name_lwr}}" stepKey="enterURLKey"/>
+        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+            <argument name="category" value="$$createPreReqCategory$$"/>
+            <argument name="simpleProduct" value="_defaultProduct"/>
+        </actionGroup>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
-        <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
@@ -59,12 +55,10 @@
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <seeElement selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
-        <!-- Literal URL below, need to refactor line + StorefrontCategoryPage when support for variable URL is implemented-->
-        <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
-        <seeInTitle userInput="{{SimpleSubCategory.name}}" stepKey="assertTitle"/>
-        <see selector="{{StorefrontCategoryMainSection.CategoryTitle}}" userInput="{{SimpleSubCategory.name_lwr}}" stepKey="assertInfo1"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <seeElement selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <amOnPage url="{{_defaultProduct.urlKey}}.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <!-- Check that description is full width -->
         <comment userInput="Check that description is full width" stepKey="commentSeeDescriptionFullWidth"/>
         <executeJS function="return document.querySelector('[data-role=row]').clientWidth" stepKey="rowWidth"/>
