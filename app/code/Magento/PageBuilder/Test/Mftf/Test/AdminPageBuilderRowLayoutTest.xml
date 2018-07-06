@@ -95,7 +95,7 @@
             <features value="PageBuilder"/>
             <stories value="Row"/>
             <title value="Row Min Height Invalid Inputs"/>
-            <description value="A user cannot submit a non-numeric min height"/>
+            <description value="A user cannot submit an invalid min height value"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-914"/>
             <testCaseId value="MC-2391"/>
@@ -111,6 +111,9 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -123,6 +126,28 @@
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorNonNumeric">
             <argument name="property" value="PageBuilderMinHeightProperty_NonNumeric"/>
         </actionGroup>
+        <!-- Enter Height: Negative -->
+        <comment userInput="Enter Height: Negative" stepKey="commentEnterHeightNegative"/>
+        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset" stepKey="enterMinHeightPropertyFirstRowNegative">
+            <argument name="property" value="PageBuilderMinHeightProperty_Negative1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorNegative">
+            <argument name="property" value="PageBuilderMinHeightProperty_Negative1"/>
+        </actionGroup>
+        <!-- Enter Height: Valid After Invalid -->
+        <comment userInput="Enter Height: Valid After Invalid" stepKey="commentEnterHeightValidAfterInvalid"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightPropertyFirstRow">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstRow"/>
+        <!-- Verify Valid Height After Invalid - Before Save -->
+        <comment userInput="Verify valid height after invalid on stage before save" stepKey="commentVerifyValidHeightAfterInvalidBeforeSave"/>
+        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeight"/>
+        <!-- Verify Valid Height After Invalid - After Save -->
+        <comment userInput="Verify valid height after invalid on stage after save" stepKey="commentVerifyHeightAfterInvalidOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{RowOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeFirstRowMinHeightAfterSave"/>
     </test>
     <test name="RowContentIsVerticallyAligned">
         <annotations>
