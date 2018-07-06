@@ -49,17 +49,19 @@
 [Roadmap and Known Issues]: roadmap.md
 
 ## What's in this topic
-This topic describes the new page layouts that are added within Page Builder, along with instructions on how they can be utilised within custom themes.
+This topic describes the new full-width page layouts in Page Builder, along with instructions on how you can use them in custom themes.
 
-**Note:** these layouts were created with Luma in mind, they may not work as expected in your custom themes.
+**Note:** These layouts use the Luma theme page structures. They may not work as expected in your custom themes.
 
 ## New Page Layout defaults
-By default Page Builder will set the defaults to the new respected layouts supplied by our Page Builder module. This results in any new pages being created with full width capabilities.
+Page Builder sets the default layouts to the new full-width layouts supplied by our Page Builder module. So unless you change the page layout, new pages are full width by default.
 
 ![Page Layout Defaults](images/default-full-width.png)
 
 ## CMS Full Width
-We've added a new full width template for CMS pages, this simply takes the CMS pages content and removes the left and right gutters from the front-end. This is implemented within `cms-full-width.xml`. This extends from the `1column` page layout.
+This template simply removes the left and right gutters from a CMS page's content. It is implemented with `cms-full-width.xml` and extends from the `1column` page layout.
+
+As this template extends from the `1column` page layout we restore the `page-layout-1column` class within the `Magento\PageBuilder\Plugin\Result\Page` plugin.
 
 We do this by referencing the `main.content` container and replacing the `page-main` with our new `page-main-full-width`. 
 
@@ -70,9 +72,11 @@ We do this by referencing the `main.content` container and replacing the `page-m
 ![CMS Full Width Layout](images/cms-full-width.png)
 
 ## Category Full Width
-The category full width template takes the columns top section of the page and moves it out of the `main.content` section. This allows us to break out of the gutter to provide full width on just the description. This extends the `2columns-left` page layout. 
+This template takes the `columns.top` section of the page and moves it out of the `main.content` section, allowing us to break out of the gutter to provide full width on just the description. It is implemented with `category-full-width.xml` and extends the `2columns-left` page layout.
 
-We do this by creating new wrapping containers in the root and then moving the image, description and CMS blocks out of the original columns top. We move description into a dedicated container to enable the full width capabilities.
+As this template extends from the `2columns-left` page layout we restore the `page-layout-2columns-left` class within the `Magento\PageBuilder\Plugin\Result\Page` plugin.
+
+We do this within `category-full-width.xml` by creating new wrapping containers in the root and then moving the image, description and CMS blocks out of the original columns top. We move description into a dedicated container to enable the full width capabilities.
 ```xml
 <container name="columns.top.wrapper" htmlTag="div" htmlClass="page-main"/>
 <move element="columns.top" destination="columns.top.wrapper"/>
@@ -95,9 +99,11 @@ We do this by creating new wrapping containers in the root and then moving the i
 ![Category Full Width Layout](images/category-full-width.png)
 
 ## Product Full Width
-The product full width template takes the description out of the tabs section and moves it just above the reviews tab. This extends the `1column` page layout.
+This template takes the description out of the tabs section and moves it just above the reviews tab. It is implemented with `product-full-width.xml` and extends the `1column` page layout.
 
-We create a new wrapper for product details & descriptions. Product details wrapper is added after `main.content` but contains the necessary `page-main` class to have the gutters on the tabs. We then create a new wrapper for the description section without the gutter. Finally we move the original description and details blocks into these new wrappers.
+As this template extends from the `1column` page layout we restore the `page-layout-1column` class within the `Magento\PageBuilder\Plugin\Result\Page` plugin.
+
+In `product-full-width.xml`, we create a new wrapper for product details & descriptions. The product details wrapper is added after `main.content` but contains the necessary `page-main` class to have the gutters on the tabs. We then create a new wrapper for the description section without the gutter. Finally we move the original description and details blocks into these new wrappers.
 ```xml
 <referenceContainer name="page.wrapper">
     <!-- Create new product details wrapper under main.content for tabs section -->
@@ -118,6 +124,6 @@ We create a new wrapper for product details & descriptions. Product details wrap
 ![Product Full Width Layout](images/product-full-width.png)
 
 ## Custom Theme Full Width
-We cannot guarantee these full width layouts will work as expected with your custom themes as your pages structure may differ from Luma's.
+We cannot guarantee these full-width layouts will work as expected with your custom themes as your page's structure may differ from Luma's.
 
-To enable full width within your custom themes you'll need to ensure the appropriate block is not within your pages main wrapper with the gutters. This implementation will differ on a case by case basis but the above implementations for Luma should give you a good indication on how to approach these.
+To enable full width within your custom themes, you must ensure the appropriate block is not within your page's main wrapper. This implementation will differ on a case-by-case basis but the above implementations for Luma should give you a good indication on how to approach these.
