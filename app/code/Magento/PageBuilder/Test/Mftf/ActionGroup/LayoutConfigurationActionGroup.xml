@@ -11,10 +11,10 @@
     <!-- Validate All Layout Styles -->
     <actionGroup name="validateLayoutStylesWithAllUpdated">
         <arguments>
-            <argument name="page" defaultValue=""/>
+            <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="minHeight" defaultValue=""/>
-            <argument name="verticalAlignContainer" defaultValue=""/>
+            <argument name="minHeight" defaultValue="PageBuilderMinHeightProperty_Empty"/>
+            <argument name="verticalAlignContainer" defaultValue="PageBuilderVerticalAlignmentPropertyCenter"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForRow"/>
         <waitForElementVisible selector="{{page.minHeight(index, minHeight.value)}}" stepKey="waitForMinHeight"/>
