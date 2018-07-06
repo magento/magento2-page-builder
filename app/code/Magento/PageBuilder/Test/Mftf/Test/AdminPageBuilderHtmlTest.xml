@@ -785,13 +785,10 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
         <actionGroup ref="cannotDragContentTypeToStage" stepKey="dragHTMLIntoStage">
-            <argument name="contentType" value="PageBuilderHTMLContentType"/>
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
         </actionGroup>
-        <dontSeeElement selector="{{HTMLOnStage.base('1')}}" stepKey="dontSeeHTML"/>
+        <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHTML"/>
     </test>
 </tests>
