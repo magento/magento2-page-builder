@@ -775,4 +775,34 @@
             <argument name="property" value="PageBuilderAnchorIdentifier_Empty"/>
         </actionGroup>
     </test>
+    <test name="AnchorCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Anchor"/>
+            <title value="Cannot add Anchor to Stage"/>
+            <description value="If user drags Anchor to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3031"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-anchor"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToStage" stepKey="dragAnchorIntoStage">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElement selector="{{AnchorOnStage.base('1')}}" stepKey="dontSeeAnchor"/>
+    </test>
 </tests>
