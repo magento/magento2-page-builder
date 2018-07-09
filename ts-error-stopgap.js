@@ -78,8 +78,8 @@ process.stdin.on('end', () => {
     }
 
     console.log(
-        chalk.red(`${newErrors.length} new TypeScript errors were introduced to the code base with your changes. \n`) +
-        chalk.white.bgRed('You' , chalk.white.bgRed('must') , 'resolve all new TypeScript errors before merging a PR.')
+        chalk.red(`${newErrors.length} new TypeScript error(s) were introduced to the code base with your changes. \n`) +
+        chalk.white.bgRed('You must resolve all new TypeScript errors before merging a PR.')
     );
 
     newErrors.forEach(err => {
@@ -91,7 +91,7 @@ process.stdin.on('end', () => {
 
     console.log(
         "\n" +
-        chalk.red(`${newErrors.length} new TypeScript errors were introduced to the code base with your changes. \n`) +
-        chalk.white.bgRed('You' , chalk.white.bgRed('must') , 'resolve all new TypeScript errors before merging a PR.')
+        chalk.red(`${newErrors.length} new TypeScript error(s) were introduced to the code base with your changes. \n`) +
+        chalk.white.bgRed('You must resolve all new TypeScript errors before merging a PR.')
     );
 });

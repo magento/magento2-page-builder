@@ -38,7 +38,7 @@ gulp.task('default', ['build', 'watch']);
 /**
  * Check for any new errors introduced since last build
  */
-gulp.task('errors', shell.task("npm run-script ts:errors"));
+gulp.task('errors', shell.task("node_modules/typescript/bin/tsc --noEmit | node ts-error-stopgap.js"));
 
 /**
  * Build the TypeScript files into production JS
