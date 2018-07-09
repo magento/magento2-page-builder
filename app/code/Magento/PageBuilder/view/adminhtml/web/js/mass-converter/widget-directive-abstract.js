@@ -25,7 +25,7 @@ define(["underscore"], function (_underscore) {
       data[config.html_variable].replace(/\{\{widget(.*?)\}\}/i, function (match, attributeString) {
         attributes = _this.parseAttributesString(attributeString);
       }.bind(this));
-      return _underscore.extend(data, attributes);
+      return attributes;
     };
     /**
      * Convert value to knockout format
