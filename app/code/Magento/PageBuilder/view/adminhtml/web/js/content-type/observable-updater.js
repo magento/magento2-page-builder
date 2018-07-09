@@ -6,8 +6,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
   /*#__PURE__*/
   function () {
     /**
-     * @param {ConverterPool} converterPool
-     * @param {MassConverterPool} massConverterPool
+     * @param {typeof ConverterPool} converterPool
+     * @param {typeof MassConverterPool} massConverterPool
      * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
@@ -22,7 +22,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * Update preview observables after data changed in data store
      *
      * @param {object} viewModel
-     * @param {object} data
+     * @param {DataObject} data
      */
 
 
