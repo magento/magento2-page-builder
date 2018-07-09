@@ -9,6 +9,15 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AdminCreateCmsPageTest">
+        <annotations>
+            <features value="Cms"/>
+            <stories value="Create a CMS Page via the Admin"/>
+            <title value="Admin should be able to create a CMS Page"/>
+            <description value="Admin should be able to create a CMS Page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-25580"/>
+            <group value="Cms"/>
+        </annotations>
         <before>
             <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="loginGetFromGeneralFile" />
         </before>
@@ -17,6 +26,15 @@
         </after>
     </test>
     <test name="AdminConfigDefaultCMSPageLayoutFromConfigurationSettingTest">
+        <annotations>
+            <features value="Cms"/>
+            <stories value="Default layout configuration MAGETWO-88793"/>
+            <title value="Admin should be able to configure the default layout for CMS Page from System Configuration"/>
+            <description value="Admin should be able to configure the default layout for CMS Page from System Configuration"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89025"/>
+            <group value="Cms"/>
+        </annotations>
         <!-- PageBuilder is enabled so check default is full width -->
         <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeFullWidth" />
         <seeOptionIsSelected selector="{{DefaultLayoutsSection.pageLayout}}" userInput="{{PageBuilderFullWidthLayout.cms}}" stepKey="seeOneColumnSelected" />
@@ -26,7 +44,7 @@
     <test name="AdminCreateCMSPageFullWidthLayout">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Full Width Page Layout"/>
+            <stories value="Page Layout"/>
             <title value="Create CMS Page with full page layout"/>
             <description value="Create CMS Page with full page layout"/>
             <severity value="MAJOR"/>
@@ -46,6 +64,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
+        <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -57,23 +76,23 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
+        <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
-        <click selector="{{CmsDesignSection.DesignTab}}" stepKey="clickOnDesignTab"/>
-        <waitForElementVisible selector="{{CmsDesignSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
-        <selectOption selector="{{CmsDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.cms}}" stepKey="selectPageFullWidthLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="CmsDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Check that description is full width on storefront -->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <executeJS function="return document.querySelector('[data-role=row]').clientWidth" stepKey="rowWidth"/>
-        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
-        <assertEquals expected="pageWidth" expectedType="variable" actual="rowWidth" actualType="variable" stepKey="assertRowWidth100Percent" />
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
     </test>
 </tests>

@@ -11,7 +11,7 @@
     <test name="AdminCreateProductWithPageBuilderDescriptionTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Full Width Page Layout"/>
+            <stories value="Page Layout"/>
             <title value="Product description should display in full width"/>
             <description value="Product description should display in full width"/>
             <severity value="MAJOR"/>
@@ -22,24 +22,27 @@
         </annotations>
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+                <argument name="category" value="$$createPreReqCategory$$"/>
+                <argument name="simpleProduct" value="_defaultProduct"/>
+            </actionGroup>
         </before>
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
         </after>
-        <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
-            <argument name="category" value="$$createPreReqCategory$$"/>
-            <argument name="simpleProduct" value="_defaultProduct"/>
-        </actionGroup>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
         <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
         <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -51,24 +54,26 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
+        <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout"/>
-        <click selector="{{ProductDesignSection.DesignTab}}" stepKey="clickOnDesignTab"/>
-        <waitForElementVisible selector="{{ProductDesignSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
-        <selectOption selector="{{ProductDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="selectProductFullWidthLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="ProductDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        </actionGroup>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
-        <seeElement selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
-        <amOnPage url="{{_defaultProduct.urlKey}}.html" stepKey="navigateToProductPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
         <!-- Check that description is full width -->
         <comment userInput="Check that description is full width" stepKey="commentSeeDescriptionFullWidth"/>
-        <executeJS function="return document.querySelector('[data-role=row]').clientWidth" stepKey="rowWidth"/>
-        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
-        <assertEquals expected="pageWidth" expectedType="variable" actual="rowWidth" actualType="variable" stepKey="assertRowWidth100Percent" />
+        <amOnPage url="{{_defaultProduct.urlKey}}.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadProductPage"/>
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
     </test>
 </tests>

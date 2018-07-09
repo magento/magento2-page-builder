@@ -9,6 +9,15 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AdminConfigDefaultCategoryLayoutFromConfigurationSettingTest">
+        <annotations>
+            <features value="Catalog"/>
+            <stories value="Default layout configuration MAGETWO-88793"/>
+            <title value="Admin should be able to configure the default layout for Category Page from System Configuration"/>
+            <description value="Admin should be able to configure the default layout for Category Page from System Configuration"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89024"/>
+            <group value="category"/>
+        </annotations>
         <!-- PageBuilder is enabled so check default is full width -->
         <comment userInput="PageBuilder is enabled so check default is full width" stepKey="commentSeeCategoryFullWidth" before="seeNoLayoutUpdatesSelected" />
         <seeOptionIsSelected selector="{{DefaultLayoutsSection.categoryLayout}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="seeNoLayoutUpdatesSelected" />
@@ -16,7 +25,7 @@
     <test name="AdminCreateCategoryWithPageBuilderDescriptionTest">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Full Width Page Layout"/>
+            <stories value="Page Layout"/>
             <title value="Category description should display in full width"/>
             <description value="Category description should display in full width"/>
             <severity value="MAJOR"/>
@@ -27,24 +36,24 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
+            <waitForPageLoad stepKey="waitForPageLoadCategoryPage"/>
+            <actionGroup ref="CreateCategory" stepKey="createCategory"/>
         </before>
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
-        <waitForElementVisible selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="waitForSubCategoryBtn"/>
-        <click selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="clickOnAddSubCategory"/>
-        <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
-        <click selector="{{AdminCategorySEOSection.SectionHeader}}" stepKey="openSEO"/>
-        <fillField selector="{{AdminCategorySEOSection.UrlKeyInput}}" userInput="{{SimpleSubCategory.name_lwr}}" stepKey="enterURLKey"/>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
         <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
         <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -56,26 +65,25 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
+        <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
         <!-- Use Full Width layout -->
         <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
-        <click selector="{{CategoryDesignSection.DesignTab}}" stepKey="clickOnDesignTab"/>
-        <waitForElementVisible selector="{{CategoryDesignSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
-        <selectOption selector="{{CategoryDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="selectCategoryFullWidthLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.category"/>
+        </actionGroup>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
-        <seeElement selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
-        <!-- Literal URL below, need to refactor line + StorefrontCategoryPage when support for variable URL is implemented-->
-        <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
-        <seeInTitle userInput="{{SimpleSubCategory.name}}" stepKey="assertTitle"/>
-        <see selector="{{StorefrontCategoryMainSection.CategoryTitle}}" userInput="{{SimpleSubCategory.name_lwr}}" stepKey="assertInfo1"/>
-        <!-- Check that description is full width -->
-        <comment userInput="Check that description is full width" stepKey="commentSeeDescriptionFullWidth"/>
-        <executeJS function="return document.querySelector('[data-role=row]').clientWidth" stepKey="rowWidth"/>
-        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
-        <assertEquals expected="pageWidth" expectedType="variable" actual="rowWidth" actualType="variable" stepKey="assertRowWidth100Percent" />
+        <waitForPageLoad stepKey="waitForPageLoadSaveCategory"/>
+        <waitForElementVisible selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
+        <!-- Check that description is full width on storefront-->
+        <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
+        <actionGroup ref="CheckCategoryOnStorefront" stepKey="checkCategoryOnStorefront"/>
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
     </test>
 </tests>
