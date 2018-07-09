@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "Magento_PageBuilder/js/events";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
+import events from "uiEvents";
 import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";

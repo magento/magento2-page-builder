@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "Magento_PageBuilder/js/events";
+import events from "uiEvents";
 import {DataObject} from "../../data-store";
 import BasePreview from "../preview";
 import Uploader from "../uploader";

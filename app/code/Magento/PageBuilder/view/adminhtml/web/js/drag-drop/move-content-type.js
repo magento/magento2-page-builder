@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _events) {
+define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -21,7 +21,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
     var sourceIndex = contentType.parent.children().indexOf(contentType);
     var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
 
-    _events.trigger("contentType:moveBefore", {
+    _uiEvents.trigger("contentType:moveBefore", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
@@ -29,7 +29,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
       stageId: contentType.stageId
     });
 
-    _events.trigger(contentType.config.name + ":moveBefore", {
+    _uiEvents.trigger(contentType.config.name + ":moveBefore", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
@@ -66,7 +66,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
     } // Trigger our content type move event
 
 
-    _events.trigger("contentType:moveAfter", {
+    _uiEvents.trigger("contentType:moveAfter", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
@@ -74,7 +74,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
       stageId: contentType.stageId
     });
 
-    _events.trigger(contentType.config.name + ":moveAfter", {
+    _uiEvents.trigger(contentType.config.name + ":moveAfter", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

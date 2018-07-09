@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
-import events from "Magento_PageBuilder/js/events";
 import mageUtils from "mageUtils";
+import events from "uiEvents";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";

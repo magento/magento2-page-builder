@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _events, _jqueryUiTouchPunch, _alert, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _jqueryUiTouchPunch, _alert, _uiEvents, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -52,7 +52,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
 
     _proto.ready = function ready() {
-      _events.trigger("stage:" + this.id + ":readyAfter", {
+      _uiEvents.trigger("stage:" + this.id + ":readyAfter", {
         stage: this
       });
 
@@ -137,12 +137,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       var _this = this;
 
       this.collection.getChildren().subscribe(function () {
-        return _events.trigger("stage:updateAfter", {
+        return _uiEvents.trigger("stage:updateAfter", {
           stageId: _this.id
         });
       }); // ContentType being removed from container
 
-      _events.on("contentType:removeAfter", function (args) {
+      _uiEvents.on("contentType:removeAfter", function (args) {
         if (args.stageId === _this.id) {
           _this.onContentTypeRemoved(args);
         }
@@ -150,17 +150,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
 
       this.dataStore.subscribe(function () {
-        return _events.trigger("stage:updateAfter", {
+        return _uiEvents.trigger("stage:updateAfter", {
           stageId: _this.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _events.on("stage:updateAfter", function (args) {
+      _uiEvents.on("stage:updateAfter", function (args) {
         if (args.stageId === _this.id) {
           _underscore.debounce(function () {
             _this.render.applyBindings(_this.children).then(function (renderedOutput) {
-              return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
+              return _uiEvents.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
                 value: renderedOutput
               });
             });
@@ -168,19 +168,19 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
         }
       });
 
-      _events.on("stage:interactionStart", function () {
+      _uiEvents.on("stage:interactionStart", function () {
         return _this.interacting(true);
       });
 
-      _events.on("stage:interactionStop", function () {
+      _uiEvents.on("stage:interactionStop", function () {
         return _this.interacting(false);
       });
 
-      _events.on("stage:childFocusStart", function () {
+      _uiEvents.on("stage:childFocusStart", function () {
         return _this.focusChild(true);
       });
 
-      _events.on("stage:childFocusStop", function () {
+      _uiEvents.on("stage:childFocusStop", function () {
         return _this.focusChild(false);
       });
     };

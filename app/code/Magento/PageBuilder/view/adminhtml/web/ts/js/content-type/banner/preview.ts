@@ -4,7 +4,7 @@
  */
 
 import $t from "mage/translate";
-import events from "Magento_PageBuilder/js/events";
+import events from "uiEvents";
 import {DataObject} from "../../data-store";
 import BasePreview from "../preview";
 import Uploader from "../uploader";

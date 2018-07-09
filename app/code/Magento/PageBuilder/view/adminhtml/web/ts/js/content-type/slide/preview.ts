@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "Magento_PageBuilder/js/events";
+import events from "uiEvents";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Options from "../../content-type-menu";

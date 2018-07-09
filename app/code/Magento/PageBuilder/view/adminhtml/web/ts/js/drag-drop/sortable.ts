@@ -4,7 +4,7 @@
  */
 import $ from "jquery";
 import ko from "knockout";
-import events from "Magento_PageBuilder/js/events";
+import events from "uiEvents";
 import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection";
 import createContentType from "../content-type-factory";

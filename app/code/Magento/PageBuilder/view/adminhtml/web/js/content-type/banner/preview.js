@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _events, _preview, _uploader) {
+define(["mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _uiEvents, _preview, _uploader) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -81,15 +81,15 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
+      _uiEvents.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this2.parent.dataStore.get();
 
         var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
+        _uiEvents.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
       });
 
-      _events.on(this.config.name + ":mountAfter", function () {
+      _uiEvents.on(this.config.name + ":mountAfter", function () {
         var dataStore = _this2.parent.dataStore.get();
 
         var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "Magento_PageBuilder/js/events";
+import events from "uiEvents";
 import ContentTypeInterface from "../content-type";
 import DataStore from "../data-store";
 

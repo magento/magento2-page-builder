@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _contentTypeToolbar, _preview) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _contentTypeToolbar, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -43,7 +43,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       _BasePreview.prototype.bindEvents.call(this); // When a heading is dropped for the first time show heading toolbar
 
 
-      _events.on("heading:dropAfter", function (args) {
+      _uiEvents.on("heading:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           _underscore.delay(function () {
             (0, _jquery)(_this2.element).focus();

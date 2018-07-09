@@ -7,12 +7,12 @@
  */
 import $ from "jquery";
 import ko from "knockout";
-import events from "Magento_PageBuilder/js/events";
-import ContentTypeInterface from "../content-type.d";
+import events from "uiEvents";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import {moveContentType} from "../drag-drop/move-content-type";
 import {moveArrayItem} from "../utils/array";
 
-let draggedContentType: ContentTypeInterface;
+let draggedContentType: ContentTypeCollectionInterface;
 
 // Create a new sortable Knockout binding
 ko.bindingHandlers.sortableChildren = {
@@ -27,7 +27,7 @@ ko.bindingHandlers.sortableChildren = {
      * @param context
      */
     init(element, valueAccessor, allBindingsAccessor, data, context: KnockoutBindingContext) {
-        const instance: ContentTypeInterface = context.$data.parent;
+        const instance: ContentTypeCollectionInterface = context.$data.parent;
         const options: JQueryUI.SortableOptions = ko.unwrap(valueAccessor());
         let originalPosition: number;
         $(element).sortable(options)
@@ -70,7 +70,7 @@ ko.bindingHandlers.sortableChildren = {
 };
 
 export interface PreviewSortableSortUpdateEventParams {
-    instance: ContentTypeInterface;
+    instance: ContentTypeCollectionInterface;
     newPosition: number;
     originalPosition: number;
     ui: JQueryUI.SortableUIParams;

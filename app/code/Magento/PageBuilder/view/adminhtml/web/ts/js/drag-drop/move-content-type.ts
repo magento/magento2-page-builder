@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 import ko from "knockout";
-import events from "Magento_PageBuilder/js/events";
-import ContentTypeInterface from "../content-type";
-import ContentTypeCollectionInterface from "../content-type-collection";
+import events from "uiEvents";
+import ContentTypeInterface from "../content-type.d";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 
 /**
  * Move a content type to a new index, with the option to move to a new container
@@ -15,7 +15,7 @@ import ContentTypeCollectionInterface from "../content-type-collection";
  * @param {ContentTypeCollectionInterface} targetParent
  */
 export function moveContentType(
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface,
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface,
     targetIndex: number,
     targetParent: ContentTypeCollectionInterface = null,
 ) {

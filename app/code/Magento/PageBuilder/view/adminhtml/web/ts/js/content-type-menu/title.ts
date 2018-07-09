@@ -4,7 +4,7 @@
  */
 
 import Preview from "../content-type/preview";
-import {OptionInterface} from "./option.d";
+import OptionInterface from "./option.d";
 
 export default class TitleOption implements OptionInterface {
     public parent: Preview;

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/content-type/preview"], function (_events, _map, _preview) {
+define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], function (_map, _uiEvents, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -31,14 +31,14 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
       _BasePreview.prototype.bindEvents.call(this); // When the map api key fails, empties out the content type and adds the placeholder
 
 
-      _events.on("googleMaps:authFailure", function () {
+      _uiEvents.on("googleMaps:authFailure", function () {
         if (_this2.element) {
           _this2.mapElement.usePlaceholder(_this2.element);
         }
       }); // When a map is dropped for the first time open the edit panel
 
 
-      _events.on("map:dropAfter", function (args) {
+      _uiEvents.on("map:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();

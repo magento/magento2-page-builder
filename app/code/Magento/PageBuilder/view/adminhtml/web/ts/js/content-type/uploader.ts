@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "Magento_PageBuilder/js/events";
+import events from "uiEvents";
 import layout from "uiLayout";
 import registry from "uiRegistry";
 

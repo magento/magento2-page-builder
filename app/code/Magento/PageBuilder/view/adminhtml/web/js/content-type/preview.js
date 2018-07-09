@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _containerAnimation, _sortable2, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _containerAnimation, _sortable2, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -155,13 +155,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _events.trigger("contentType:childrenRenderAfter", {
+      _uiEvents.trigger("contentType:childrenRenderAfter", {
         id: this.parent.id,
         contentType: this.parent,
         element: element
       });
 
-      _events.trigger(this.parent.config.name + ":childrenRenderAfter", {
+      _uiEvents.trigger(this.parent.config.name + ":childrenRenderAfter", {
         contentType: this.parent,
         element: element,
         id: this.parent.id
@@ -183,13 +183,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var element = elementNodes[0];
         this.wrapperElement = element;
 
-        _events.trigger("contentType:renderAfter", {
+        _uiEvents.trigger("contentType:renderAfter", {
           id: this.parent.id,
           contentType: this.parent,
           element: element
         });
 
-        _events.trigger(this.parent.config.name + ":renderAfter", {
+        _uiEvents.trigger(this.parent.config.name + ":renderAfter", {
           contentType: this.parent,
           element: element,
           id: this.parent.id
@@ -269,9 +269,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             stageId: _this3.parent.stageId
           };
 
-          _events.trigger("contentType:removeAfter", params);
+          _uiEvents.trigger("contentType:removeAfter", params);
 
-          _events.trigger(_this3.parent.config.name + ":removeAfter", params);
+          _uiEvents.trigger(_this3.parent.config.name + ":removeAfter", params);
         };
 
         if (_this3.wrapperElement) {
@@ -366,9 +366,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         index: index
       };
 
-      _events.trigger("contentType:duplicateAfter", duplicateEventParams);
+      _uiEvents.trigger("contentType:duplicateAfter", duplicateEventParams);
 
-      _events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
+      _uiEvents.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
     };
     /**
      * Bind events
@@ -508,7 +508,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.get()));
       this.afterObservablesUpdated();
 
-      _events.trigger("previewData:updateAfter", {
+      _uiEvents.trigger("previewData:updateAfter", {
         preview: this
       });
     };

@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
-import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
+import events from "uiEvents";
 import _ from "underscore";
 import Config from "./config";
 import PageBuilderInterface from "./page-builder.d";
