@@ -57,7 +57,7 @@ export default class Toolbar {
      * @param {Event} event
      */
     public onFocusIn(context: Preview, event: Event): void {
-        const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+        const currentContentTypeTarget = $(event.currentTarget).closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStart");
     }
@@ -69,7 +69,7 @@ export default class Toolbar {
      * @param {Event} event
      */
     public onFocusOut(context: Preview, event: Event): void {
-        const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+        const currentContentTypeTarget = $(event.currentTarget).closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
     }

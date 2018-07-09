@@ -52,7 +52,7 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
 
 
     _proto.onFocusIn = function onFocusIn(context, event) {
-      var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+      var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
       _uiEvents.trigger("stage:interactionStart");
@@ -66,7 +66,7 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
 
 
     _proto.onFocusOut = function onFocusOut(context, event) {
-      var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+      var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
 
       _uiEvents.trigger("stage:interactionStop");

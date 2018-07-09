@@ -21,8 +21,75 @@ export default interface ContentTypeConfigInterface {
     preview_component: string;
     master_component: string;
     component: string;
-    appearances: string[];
+    appearances: {
+        [key: string]: ContentTypeConfigAppearanceInterface;
+    };
     readers: string[];
     allowed_parents: string[];
     is_visible: boolean;
+}
+
+export interface ContentTypeConfigAppearanceInterface {
+    readers: string[];
+    data_mapping: DataMappingInterface;
+    preview_template: string;
+    render_template: string;
+    render: string;
+    default: string;
+    form: string;
+}
+
+export interface DataMappingInterface {
+    path: string;
+    elements: {
+        [key: string]: {
+            style: DataMappingStyleInterface[];
+            attributes: DataMappingAttributesInterface[];
+            html: DataMappingHtmlInterface;
+            css: DataMappingCssInterface[];
+            tag: DataMappingTagInterface[];
+        };
+    };
+}
+
+export interface DataMappingStyleInterface {
+    var?: string;
+    name: string;
+    value?: string;
+    converter?: string;
+    preview_converter?: string;
+    virtual?: string;
+    persist?: string;
+    complex?: boolean;
+    static?: boolean;
+}
+
+export interface DataMappingAttributesInterface {
+    var?: string;
+    name: string;
+    reader?: string;
+    value?: string;
+    converter?: string;
+    preview_converter?: string;
+    virtual?: string;
+    persist?: string;
+    complex?: boolean;
+    static?: boolean;
+}
+
+export interface DataMappingHtmlInterface {
+    var: string;
+    converter: string;
+    preview_converter: string;
+}
+
+export interface DataMappingCssInterface {
+    var: string;
+    converter: string;
+    filter: string[];
+}
+
+export interface DataMappingTagInterface {
+    var: string;
+    converter: string;
 }

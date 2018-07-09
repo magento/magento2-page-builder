@@ -8,6 +8,7 @@ import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import * as _ from "underscore";
 import Config from "./config";
+import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
@@ -34,11 +35,11 @@ function buildFromContent(stage: Stage, value: string) {
  * Build an element and it's children into the stage
  *
  * @param {Element} element
- * @param {ContentTypeInterface} parent
+ * @param {ContentTypeCollectionInterface} parent
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: ContentTypeInterface, stage: Stage): Promise<any> {
+function buildElementIntoStage(element: Element, parent: ContentTypeCollectionInterface, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
@@ -55,7 +56,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeInterface, s
 
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
-            return Promise.all(childrenPromises.map((child: ContentType, index) => {
+            return Promise.all(childrenPromises.map((child: ContentTypeCollectionInterface, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
             }));
@@ -151,21 +152,22 @@ function buildEmpty(stage: Stage, initialValue: string) {
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, stage, stage.id, {}).then((row: ContentType) => {
-            stage.addChild(row);
-            if (htmlDisplayContentTypeConfig && initialValue) {
-                return createContentType(
-                    htmlDisplayContentTypeConfig,
-                    stage,
-                    stage.id,
-                    {
-                        html: initialValue,
-                    },
-                ).then((text: ContentType) => {
-                    row.addChild(text);
-                });
-            }
-        });
+        return createContentType(rootContentTypeConfig, stage, stage.id, {})
+            .then((row: ContentTypeCollectionInterface) => {
+                stage.addChild(row);
+                if (htmlDisplayContentTypeConfig && initialValue) {
+                    return createContentType(
+                        htmlDisplayContentTypeConfig,
+                        stage,
+                        stage.id,
+                        {
+                            html: initialValue,
+                        },
+                    ).then((text: ContentTypeInterface) => {
+                        row.addChild(text);
+                    });
+                }
+            });
     }
 
     return Promise.resolve();
@@ -174,7 +176,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
 /**
  * Build a stage with the provided parent, content observable and initial value
  *
- * @param {StageInterface} stage
+ * @param {Stage} stage
  * @param {string} content
  * @returns {Promise}
  */

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _masterFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/utils/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _masterFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
