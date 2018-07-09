@@ -10,6 +10,7 @@ import events from "uiEvents";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config";
+import {DataObject} from "../../data-store";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
@@ -62,7 +63,7 @@ export default class Preview extends BasePreview {
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
 
         // Only load if something changed
         if (this.lastBlockId === data.block_id && this.lastTemplate === data.template) {
@@ -119,8 +120,8 @@ export default class Preview extends BasePreview {
                     this.placeholderText(response.data.error);
                 }
 
-                this.lastBlockId = data.block_id;
-                this.lastTemplate = data.template;
+                this.lastBlockId = parseInt(data.block_id.toString(), 10);
+                this.lastTemplate = data.template.toString();
                 this.lastRenderedHtml = response.data.content;
             })
             .fail(() => {
