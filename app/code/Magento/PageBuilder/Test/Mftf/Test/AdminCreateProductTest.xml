@@ -15,6 +15,7 @@
             <title value="Product description should display in full width"/>
             <description value="Product description should display in full width"/>
             <severity value="MAJOR"/>
+            <useCaseId value="MC-936"/>
             <testCaseId value="MC-3090"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-fullwidth"/>
@@ -23,7 +24,7 @@
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
-            <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
         </after>
         <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
