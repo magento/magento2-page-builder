@@ -72,7 +72,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       createButtonItemPromise.then(function (button) {
         _this3.parent.addChild(button);
 
-        _this3.isLiveEditing(_this3.parent.children().indexOf(button));
+        _this3.isLiveEditing(!!_this3.parent.children().indexOf(button));
 
         return button;
       }).catch(function (error) {

@@ -55,7 +55,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOptionInterface[]}
+     * @returns {OptionInterface[]}
      */
 
 

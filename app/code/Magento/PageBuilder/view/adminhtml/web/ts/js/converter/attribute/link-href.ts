@@ -87,7 +87,8 @@ export default class CreateValueForHref implements ConverterInterface {
     private convertToWidget(href: string, widgetAttributes: object): string {
         const attributesString = _.map(
             widgetAttributes,
-            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`).join(" ");
+            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`,
+        ).join(" ");
 
         return `{{widget ${attributesString} }}`;
     }

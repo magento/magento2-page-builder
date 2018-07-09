@@ -5,6 +5,7 @@
 
 import ConverterInterface from "../../../../converter/converter-interface";
 import {toHex} from "../../../../utils/color-converter";
+import {DataObject} from "../../../../data-store";
 
 export default class OverlayColor implements ConverterInterface {
     /**
@@ -20,11 +21,11 @@ export default class OverlayColor implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        return data[name];
+    public toDom(name: string, data: DataObject): string | object {
+        return data[name].toString();
     }
 }
