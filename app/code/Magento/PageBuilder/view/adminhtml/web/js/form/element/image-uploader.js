@@ -26,6 +26,11 @@ define([
                 draggingInside: 'dragging-inside',
                 draggingOutside: 'dragging-outside'
             },
+            // listed in ascending order
+            elementWidthModifierClasses: {
+                '_micro-ui': 130,
+                '_compact-ui': 440
+            },
             translations: {
                 allowedFileTypes: $t('Allowed file types'),
                 dragImageHere: $t('Drag image here'),
@@ -155,16 +160,18 @@ define([
          * Adds the appropriate ui state class to the upload control area based on the current rendered size
          */
         updateResponsiveClasses: function () {
+            var modifierClass;
+
             if (!this.$uploadArea.is(':visible')) {
                 return;
             }
 
-            this.$uploadArea.removeClass('_micro-ui _compact-ui');
+            this.$uploadArea.removeClass(Object.keys(this.elementWidthModifierClasses).join(' '));
 
-            if (this.$uploadArea.width() < 130) {
-                this.$uploadArea.addClass('_micro-ui');
-            } else if (this.$uploadArea.width() < 440) {
-                this.$uploadArea.addClass('_compact-ui');
+            for (modifierClass in this.elementWidthModifierClasses) {
+                if (this.$uploadArea.width() < this.elementWidthModifierClasses[modifierClass]) {
+                    this.$uploadArea.addClass(modifierClass);
+                }
             }
         }
     });
