@@ -46,7 +46,8 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
     {
         $data = [];
         $ignoreFiles = [
-            'pagebuilder_modal_form.xml'
+            'pagebuilder_modal_form.xml',
+            'pagebuilder_block_select_grid.xml',
         ];
         $overrideFiles = [
             'pagebuilder_base_form.xml' => '',
