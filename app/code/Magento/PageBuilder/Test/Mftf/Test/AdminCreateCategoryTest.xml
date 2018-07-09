@@ -31,6 +31,7 @@
             <amOnPage url="admin/admin/auth/logout/" stepKey="amOnLogoutPage"/>
         </after>
         <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
+        <waitForElementVisible selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="waitForSubCategoryBtn"/>
         <click selector="{{AdminCategorySidebarActionSection.AddSubcategoryButton}}" stepKey="clickOnAddSubCategory"/>
         <fillField selector="{{AdminCategoryBasicFieldSection.CategoryNameInput}}" userInput="{{SimpleSubCategory.name}}" stepKey="enterCategoryName"/>
         <click selector="{{AdminCategorySEOSection.SectionHeader}}" stepKey="openSEO"/>
@@ -59,6 +60,11 @@
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <!-- Use Full Width layout -->
+        <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
+        <click selector="{{CategoryDesignSection.DesignTab}}" stepKey="clickOnDesignTab"/>
+        <waitForElementVisible selector="{{CategoryDesignSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
+        <selectOption selector="{{CategoryDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.category}}" stepKey="selectCategoryFullWidthLayout"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <seeElement selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
         <!-- Literal URL below, need to refactor line + StorefrontCategoryPage when support for variable URL is implemented-->

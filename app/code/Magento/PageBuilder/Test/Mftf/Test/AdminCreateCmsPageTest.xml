@@ -31,7 +31,7 @@
             <description value="Create CMS Page with full page layout"/>
             <severity value="MAJOR"/>
             <testCaseId value="MC-3092"/>
-            <group value="run"/>
+            <group value="pagebuilder"/>
             <group value="pagebuilder-fullwidth"/>
         </annotations>
         <before>
@@ -60,6 +60,11 @@
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
+        <!-- Use Full Width layout -->
+        <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout"/>
+        <click selector="{{CmsDesignSection.DesignTab}}" stepKey="clickOnDesignTab"/>
+        <waitForElementVisible selector="{{CmsDesignSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
+        <selectOption selector="{{CmsDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.cms}}" stepKey="selectPageFullWidthLayout"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Check that description is full width on storefront -->
         <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
@@ -69,6 +74,5 @@
         <executeJS function="return document.querySelector('[data-role=row]').clientWidth" stepKey="rowWidth"/>
         <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
         <assertEquals expected="pageWidth" expectedType="variable" actual="rowWidth" actualType="variable" stepKey="assertRowWidth100Percent" />
-
     </test>
 </tests>

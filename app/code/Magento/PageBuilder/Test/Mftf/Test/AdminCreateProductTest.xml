@@ -55,6 +55,11 @@
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <!-- Use Full Width layout -->
+        <comment userInput="Set Layout to Product - Full Width" stepKey="commentSetLayout"/>
+        <click selector="{{ProductDesignSection.DesignTab}}" stepKey="clickOnDesignTab"/>
+        <waitForElementVisible selector="{{ProductDesignSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
+        <selectOption selector="{{ProductDesignSection.LayoutDropdown}}" userInput="{{PageBuilderFullWidthLayout.product}}" stepKey="selectProductFullWidthLayout"/>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
         <seeElement selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
         <amOnPage url="{{_defaultProduct.urlKey}}.html" stepKey="navigateToProductPage"/>
