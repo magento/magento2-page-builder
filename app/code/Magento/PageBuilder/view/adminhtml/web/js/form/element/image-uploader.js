@@ -28,8 +28,13 @@ define([
             },
             // listed in ascending order
             elementWidthModifierClasses: {
-                '_micro-ui': 130,
-                '_compact-ui': 440
+                '_micro-ui': {
+                    maxWidth: 130
+                },
+                '_compact-ui': {
+                    minWidth: 131,
+                    maxWidth: 440
+                }
             },
             translations: {
                 allowedFileTypes: $t('Allowed file types'),
@@ -160,7 +165,10 @@ define([
          * Adds the appropriate ui state class to the upload control area based on the current rendered size
          */
         updateResponsiveClasses: function () {
-            var modifierClass;
+            var classesToAdd = [],
+                classConfig,
+                elementWidth = this.$uploadArea.width(),
+                modifierClass;
 
             if (!this.$uploadArea.is(':visible')) {
                 return;
@@ -169,10 +177,23 @@ define([
             this.$uploadArea.removeClass(Object.keys(this.elementWidthModifierClasses).join(' '));
 
             for (modifierClass in this.elementWidthModifierClasses) {
-                if (this.$uploadArea.width() < this.elementWidthModifierClasses[modifierClass]) {
-                    this.$uploadArea.addClass(modifierClass);
-                    break;
+                if (!this.elementWidthModifierClasses.hasOwnProperty(modifierClass)) {
+                    continue;
                 }
+
+                classConfig = this.elementWidthModifierClasses[modifierClass];
+
+                if (classConfig.minWidth && classConfig.maxWidth &&
+                    (classConfig.minWidth <= elementWidth && elementWidth <= classConfig.maxWidth) ||
+                    classConfig.minWidth && !classConfig.maxWidth && classConfig.minWidth <= elementWidth ||
+                    classConfig.maxWidth && !classConfig.minWidth && elementWidth <= classConfig.maxWidth
+                ) {
+                    classesToAdd.push(modifierClass);
+                }
+            }
+
+            if (classesToAdd.length) {
+                this.$uploadArea.addClass(classesToAdd.join(' '));
             }
         }
     });
