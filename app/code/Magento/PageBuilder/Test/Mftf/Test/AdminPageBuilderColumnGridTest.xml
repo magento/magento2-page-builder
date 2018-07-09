@@ -103,8 +103,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
     </test>
     <test name="ColumnValidateColumnGridTooltipMessage">
         <annotations>
@@ -135,8 +135,8 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
-        <click selector="{{PageBuilderColumnSection.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
+        <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
     </test>
     <test name="SetDefaultGridSize14">
         <annotations>
