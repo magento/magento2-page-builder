@@ -41,6 +41,7 @@ export interface ContentTypeConfigAppearanceInterface {
 
 export interface DataMappingInterface {
     path: string;
+    converters: ConverterInterface[];
     elements: {
         [key: string]: {
             style: DataMappingStyleInterface[];
@@ -49,6 +50,14 @@ export interface DataMappingInterface {
             css: DataMappingCssInterface[];
             tag: DataMappingTagInterface[];
         };
+    };
+}
+
+export interface ConverterInterface {
+    name: string;
+    component: string;
+    config: {
+        [key: string]: string;
     };
 }
 
