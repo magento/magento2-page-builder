@@ -37,7 +37,9 @@ export default class Paddings implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
-        const result = {};
+        const result: {
+            [key: string]: string;
+        } = {};
         let value = data[name];
         if (value && typeof value === "string") {
             value = JSON.parse(value);
