@@ -171,6 +171,7 @@ define([
             for (modifierClass in this.elementWidthModifierClasses) {
                 if (this.$uploadArea.width() < this.elementWidthModifierClasses[modifierClass]) {
                     this.$uploadArea.addClass(modifierClass);
+                    break;
                 }
             }
         }
