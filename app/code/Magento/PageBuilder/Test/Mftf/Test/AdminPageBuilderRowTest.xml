@@ -1136,6 +1136,12 @@
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOnlyOneElementRow"/>
+        <!-- Validate Stage -->
+        <comment userInput="User dont sees Row displayed in column on Stage" stepKey="confirmNoRowInColumn"/>
+        <actionGroup ref="validateContentTypeNotInsideContainerStage" stepKey="checkContentTypeNotInContainerStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
     </test>
 </tests>

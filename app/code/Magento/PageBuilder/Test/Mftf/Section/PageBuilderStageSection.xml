@@ -27,6 +27,7 @@
         <element name="contentTypeInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentTypeContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentTypeInsideContainerStage" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-content-type-wrapper")][{{arg3}}]//div[contains(@class,"pagebuilder-{{arg4}}")][{{arg5}}]' parameterized="true"/>
+        <element name="contentTypeNotInsideContainerStage" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}][not(.//div[contains(@class, "pagebuilder-{{arg3}}")])]' parameterized="true"/>
         <element name="contentTypePreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type" parameterized="true"/>
         <element name="computedHeightOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).height)" parameterized="true"/>
         <element name="computedWidthOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).width)" parameterized="true"/>
