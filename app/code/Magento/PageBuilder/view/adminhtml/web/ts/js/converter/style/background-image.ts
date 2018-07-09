@@ -4,6 +4,7 @@
  */
 
 import Config from "../../config";
+import {DataObject} from "../../data-store";
 import {toDataUrl} from "../../utils/directives";
 import {decodeUrl} from "../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
@@ -33,7 +34,7 @@ export default class BackgroundImage implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
+    public toDom(name: string, data: DataObject): string {
         const value = data[name];
         if (value[0] === undefined || value[0].url === undefined) {
             return "";

@@ -8,7 +8,7 @@ import {DataObject} from "../data-store";
 /**
  * @api
  */
-export interface ConverterInterface {
+export default interface ConverterInterface {
     /**
      * Convert value to internal format
      *

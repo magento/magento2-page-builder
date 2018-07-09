@@ -3,7 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "../converter-interface";
+import {DataObject} from "../../data-store";
+import ConverterInterface from "../converter-interface";
 
 /**
  * @api
@@ -31,11 +32,11 @@ export default class Margins implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
+    public toDom(name: string, data: DataObject): string | object {
         const result = {};
         let value = data[name];
         if (value && typeof value === "string") {

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "./converter-interface";
+import ConverterInterface from "./converter-interface";
 
 /**
  * @api
