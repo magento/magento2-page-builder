@@ -6,7 +6,7 @@
 /**
  * @api
  */
-export default interface ConverterInterface {
+interface ConverterInterface {
     /**
      * Process data after it's read and converted by element converters
      *
@@ -25,6 +25,8 @@ export default interface ConverterInterface {
      */
     toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object;
 }
+
+export default ConverterInterface;
 
 export interface ConverterDataInterface {
     [key: string]: any;

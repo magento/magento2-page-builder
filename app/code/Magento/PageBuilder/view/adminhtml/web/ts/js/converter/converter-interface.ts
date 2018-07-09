@@ -8,7 +8,7 @@ import {DataObject} from "../data-store";
 /**
  * @api
  */
-export default interface ConverterInterface {
+interface ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -26,3 +26,5 @@ export default interface ConverterInterface {
      */
     toDom(name: string, data: DataObject): string | object;
 }
+
+export default ConverterInterface;
