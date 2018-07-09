@@ -56,9 +56,11 @@ process.stdin.on('end', () => {
     }
 
     const newErrors = [];
+    const resolvedErrors = [];
     // Walk each file to do an error comparison
     for (const [file, errors] of Object.entries(compilerErrors)) {
         let newErrs = errors;
+        let resolved = [];
         // Walk each file to do an error comparison
         const oldFileErrors = priorStats[file];
         if (oldFileErrors && oldFileErrors.length > 0) {
@@ -68,30 +70,42 @@ process.stdin.on('end', () => {
                 // error from the states file on disk
                 return !oldFileErrors.some(err => err.message === e.message);
             });
+            resolved = oldFileErrors.filter(e => {
+                return !errors.some(err => err.message === e.message);
+            });
         }
         // Collect any newly-reported errors
         newErrors.push(...newErrs);
+        resolvedErrors.push(...resolved);
+    }
+
+    if (newErrors.length > 0) {
+        console.log(
+            chalk.red(`${newErrors.length} new TypeScript error(s) were introduced to the code base with your changes. \n`) +
+            chalk.black.bgRed('You must resolve all new TypeScript errors before merging a PR.')
+        );
+
+        newErrors.forEach(err => {
+            console.log(chalk.red(err.rawError + "\n"));
+            err.rawSnippet.split("\n").forEach(raw => {
+                console.log("        " + raw);
+            });
+        });
+
+        console.log(
+            "\n" +
+            chalk.red(`${newErrors.length} new TypeScript error(s) were introduced to the code base with your changes. \n`) +
+            chalk.black.bgRed('You must resolve all new TypeScript errors before merging a PR.')
+        );
+    }
+
+    if (resolvedErrors.length > 0) {
+        console.log(
+            chalk.black.bgGreen(`Looks like you've fixed ~${resolvedErrors.length} of our existing error(s)! Here's a cookie to celebrate 🍪`)
+        );
     }
 
     if (!newErrors.length) {
         process.exit(0);
     }
-
-    console.log(
-        chalk.red(`${newErrors.length} new TypeScript error(s) were introduced to the code base with your changes. \n`) +
-        chalk.white.bgRed('You must resolve all new TypeScript errors before merging a PR.')
-    );
-
-    newErrors.forEach(err => {
-        console.log(chalk.red(err.rawError + "\n"));
-        err.rawSnippet.split("\n").forEach(raw => {
-            console.log("        " + raw);
-        });
-    });
-
-    console.log(
-        "\n" +
-        chalk.red(`${newErrors.length} new TypeScript error(s) were introduced to the code base with your changes. \n`) +
-        chalk.white.bgRed('You must resolve all new TypeScript errors before merging a PR.')
-    );
 });
