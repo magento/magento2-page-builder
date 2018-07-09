@@ -222,7 +222,9 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragMapOntoColumnAndExpectEditPanel">
             <argument name="contentType" value="PageBuilderMapContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -252,6 +254,7 @@
             <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
         <comment userInput="View Map inside column on storefront" stepKey="viewMapOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>

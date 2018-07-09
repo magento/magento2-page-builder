@@ -1102,4 +1102,40 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOnlyOneElementRow"/>
     </test>
+    <test name="RowCannotAddToColumns">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Cannot drag a row into a column"/>
+            <description value="If user drags Row into a column, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3031"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-addToColumn"/>
+            <group value="pagebuilder-rowGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <waitForElementVisible selector="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" stepKey="waitForRowToBeVisible"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add row to Column -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoColumn">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOnlyOneElementRow"/>
+    </test>
 </tests>
