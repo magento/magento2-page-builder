@@ -3,7 +3,8 @@ const gulp = require('gulp'),
     fs = require('fs'),
     plugins = require('gulp-load-plugins')(),
     header = require('gulp-header'),
-    newer = require('gulp-newer');
+    newer = require('gulp-newer'),
+    shell = require('gulp-shell');
 
 const config = {
     basePath: 'app/code/Magento/PageBuilder',
@@ -14,7 +15,7 @@ const config = {
 };
 
 const buildTask = function(inputStream, done) {
-    return inputStream
+    const stream = inputStream
         .pipe(plugins.if(config.sourceMaps, plugins.sourcemaps.init()))
         .pipe(plugins.babel()).on("error", function(error) {
             done(error);
@@ -24,13 +25,20 @@ const buildTask = function(inputStream, done) {
             includeContent: false,
             sourceRoot: './ts'
         })))
-        .pipe(gulp.dest(path.join(config.basePath, config.buildPath)))
+        .pipe(gulp.dest(path.join(config.basePath, config.buildPath)));
+    gulp.start('errors');
+    return stream;
 };
 
 /**
  * Run an initial build than watch for changes
  */
 gulp.task('default', ['build', 'watch']);
+
+/**
+ * Check for any new errors introduced since last build
+ */
+gulp.task('errors', shell.task("npm run-script ts:errors"));
 
 /**
  * Build the TypeScript files into production JS

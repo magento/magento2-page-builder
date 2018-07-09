@@ -5,8 +5,9 @@
   "scripts": {
     "gulp": "gulp",
     "gulpDebug": "node $NODE_DEBUG_OPTION ./node_modules/.bin/gulp",
-    "test:static": "tslint --project tsconfig.json",
-    "test:static:log": "npm run test:static -- -o ./static-error-log.xml -t junit"
+    "test:static": "npm run ts:errors && tslint --project tsconfig.json",
+    "test:static:log": "npm run test:static -- -o ./static-error-log.xml -t junit",
+    "ts:errors": "tsc --noEmit | node ts-error-stopgap.js"
   },
   "devDependencies": {
     "@types/jquery": "1.10.27",
@@ -22,6 +23,7 @@
     "babel-plugin-transform-typescript": "^7.0.0-beta.3",
     "babel-preset-env": "^7.0.0-beta.3",
     "babel-preset-es6-to-magento-amd": "https://github.com/magento/babel-preset-es6-to-magento-amd.git",
+    "chalk": "^2.4.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-changed": "^3.1.0",
@@ -29,6 +31,7 @@
     "gulp-if": "^2.0.2",
     "gulp-load-plugins": "^1.5.0",
     "gulp-newer": "^1.4.0",
+    "gulp-shell": "^0.6.5",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-util": "^3.0.8",
     "jquery": "^3.2.1",
@@ -36,6 +39,7 @@
     "knockout": "^3.3.0",
     "mutationobserver-shim": "^0.3.2",
     "requirejs": "^2.3.5",
+    "strip-ansi": "^4.0.0",
     "stylelint": "^8.4.0",
     "stylelint-config-recommended": "^2.0.1",
     "stylelint-order": "^0.8.0",
