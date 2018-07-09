@@ -41,7 +41,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       _uiEvents.on("map:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
-            _this2.edit.open();
+            _this2.openEdit();
           }, 300);
         }
       });

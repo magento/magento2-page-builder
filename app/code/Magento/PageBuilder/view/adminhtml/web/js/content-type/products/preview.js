@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       _uiEvents.on("products:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
-            _this2.edit.open();
+            _this2.openEdit();
           }, 300);
         }
       });

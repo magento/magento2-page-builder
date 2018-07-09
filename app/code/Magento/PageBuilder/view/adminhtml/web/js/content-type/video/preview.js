@@ -38,7 +38,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], 
       _uiEvents.on("video:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
-            _this2.edit.open();
+            _this2.openEdit();
           }, 300);
         }
       });

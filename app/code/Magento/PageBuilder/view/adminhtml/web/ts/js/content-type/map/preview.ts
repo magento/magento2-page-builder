@@ -33,7 +33,7 @@ export default class Preview extends BasePreview {
         events.on("map:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
-                    this.edit.open();
+                    this.openEdit();
                 }, 300);
             }
         });

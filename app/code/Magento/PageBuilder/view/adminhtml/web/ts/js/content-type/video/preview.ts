@@ -26,7 +26,7 @@ export default class Preview extends BasePreview {
         events.on("video:dropAfter", (args: {[key: string]: any}) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
-                    this.edit.open();
+                    this.openEdit();
                 }, 300);
             }
         });

@@ -26,6 +26,8 @@ define([], function () {
 
   var _default = new PropertyReaderPool();
 
-  return _default;
+  return Object.assign(_default, {
+    PropertyReaderPool: PropertyReaderPool
+  });
 });
 //# sourceMappingURL=property-reader-pool.js.map

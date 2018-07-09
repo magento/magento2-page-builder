@@ -61,11 +61,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     var _proto = Preview.prototype;
 
     /**
+     * Open the edit form for this content type
+     */
+    _proto.openEdit = function openEdit() {
+      return this.edit.open();
+    };
+    /**
      * Update data store
      *
      * @param {string} key
      * @param {string} value
      */
+
+
     _proto.updateData = function updateData(key, value) {
       var data = this.parent.dataStore.get();
       data[key] = value;
@@ -212,7 +220,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.onOptionEdit = function onOptionEdit() {
-      this.edit.open();
+      this.openEdit();
     };
     /**
      * Handle duplicate of items

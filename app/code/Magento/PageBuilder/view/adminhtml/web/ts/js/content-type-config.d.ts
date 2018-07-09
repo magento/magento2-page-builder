@@ -55,6 +55,7 @@ export interface DataMappingInterface {
 export interface DataMappingStyleInterface {
     var?: string;
     name: string;
+    reader?: string;
     value?: string;
     converter?: string;
     preview_converter?: string;

@@ -6,7 +6,7 @@
 /**
  * @api
  */
-export interface PropertyReaderInterface {
+export default interface PropertyReaderInterface {
     /**
      * Read element data
      *
