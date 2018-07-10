@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Toolbar from "../../content-type-toolbar";

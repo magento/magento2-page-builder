@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"], function (_knockout, _mageUtils, _uiEvents, _dataStore) {
+define(["knockout", "mageUtils", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/data-store"], function (_knockout, _mageUtils, _events, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -40,10 +40,10 @@ define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"
       var paramObj = {};
       paramObj[this.id] = this;
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger(eventName, paramObj);
+        return _events.trigger(eventName, paramObj);
       });
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger("stage:updateAfter", {
+        return _events.trigger("stage:updateAfter", {
           stageId: _this.stageId
         });
       });

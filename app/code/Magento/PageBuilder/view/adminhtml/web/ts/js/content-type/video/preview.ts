@@ -4,7 +4,7 @@
  */
 
 import ko from "knockout";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import BasePreview from "../preview";
 
 /**

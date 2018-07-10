@@ -5,7 +5,7 @@
 
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import * as _ from "underscore";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";

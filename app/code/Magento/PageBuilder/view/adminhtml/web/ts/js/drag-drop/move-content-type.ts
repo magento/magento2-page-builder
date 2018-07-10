@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 import ko from "knockout";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeInterface from "../content-type.d";
 

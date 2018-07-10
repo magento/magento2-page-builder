@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeInterface from "../content-type";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type/content-type-after-render-event-params";

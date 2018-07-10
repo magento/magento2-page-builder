@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import "./binding/draggable";
 import Config from "./config";

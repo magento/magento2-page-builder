@@ -4,7 +4,7 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/utils/loader";
-import events from "uiEvents";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
