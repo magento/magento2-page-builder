@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../../data-store";
 import ConverterInterface from "../../converter-interface";
 
 /**
@@ -26,7 +27,7 @@ export default class BackgroundImage implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
+    public toDom(name: string, data: DataObject): string {
         const value = data[name];
         if (value && typeof value[0] === "object") {
             return "url(" + value[0].url + ")";

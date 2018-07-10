@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "../../../../../converter/converter-interface";
+import ConverterInterface from "../../../../../converter/converter-interface";
 import {DataObject} from "../../../../../data-store";
 
 export default class Display implements ConverterInterface {

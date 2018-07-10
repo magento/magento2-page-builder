@@ -16,8 +16,8 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/content-t
   function create(contentType, config) {
     return new Promise(function (resolve) {
       (0, _observableUpdaterFactory)(config, _previewConverterResolver).then(function (observableUpdater) {
-        (0, _loader)([config.preview_component], function (PreviewComponent) {
-          resolve(new PreviewComponent(contentType, config, observableUpdater));
+        (0, _loader)([config.preview_component], function (previewComponent) {
+          resolve(new previewComponent(contentType, config, observableUpdater));
         });
       }).catch(function (error) {
         console.error(error);

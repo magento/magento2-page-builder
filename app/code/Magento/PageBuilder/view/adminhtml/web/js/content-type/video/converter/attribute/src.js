@@ -30,7 +30,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      var value = data[name];
+      var value = data[name].toString();
 
       if (value === undefined) {
         return "";

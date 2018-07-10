@@ -89,7 +89,10 @@ export default class Master extends BaseMaster {
         let overlayColorAttr: string = "transparent";
         if (data.show_overlay !== "never") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-                overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+                overlayColorAttr = fromHex(
+                    data.overlay_color.toString(),
+                    percentToDecimal(data.overlay_transparency.toString()),
+                );
             }
         }
         return {
@@ -124,7 +127,10 @@ export default class Master extends BaseMaster {
         const data = this.parent.dataStore.get() as DataObject;
         let overlayColor: string = "transparent";
         if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+            overlayColor = fromHex(
+                data.overlay_color.toString(),
+                percentToDecimal(data.overlay_transparency.toString()),
+            );
         }
         return {
             backgroundColor: overlayColor,
@@ -141,7 +147,7 @@ export default class Master extends BaseMaster {
         if (data.content === "" || data.content === undefined) {
             return;
         } else {
-            return $t(data.content);
+            return $t(data.content.toString());
         }
     }
 
