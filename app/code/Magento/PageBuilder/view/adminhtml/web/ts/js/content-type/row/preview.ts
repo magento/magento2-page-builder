@@ -6,9 +6,9 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
-import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Option from "../../content-type-menu/option";

@@ -4,8 +4,8 @@
  */
 
 import $t from "mage/translate";
-import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "Magento_PageBuilder/js/events";
+import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
