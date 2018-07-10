@@ -78,7 +78,7 @@ export default class Preview extends PreviewCollection {
 
         createButtonItemPromise.then((button: ContentTypeInterface) => {
             this.parent.addChild(button);
-            this.isLiveEditing(!!this.parent.children().indexOf(button));
+            this.isLiveEditing(this.parent.children().indexOf(button) !== -1);
             return button;
         }).catch((error: Error) => {
             console.error(error);
