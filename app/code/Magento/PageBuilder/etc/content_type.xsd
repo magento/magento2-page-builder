@@ -23,7 +23,6 @@
                                         <xs:element type="xs:string" name="backend_template" minOccurs="0"/>
                                         <xs:element type="parents" name="parents" minOccurs="0" maxOccurs="1"/>
                                         <xs:element type="children" name="children" minOccurs="0" maxOccurs="1"/>
-                                        <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
                                         <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                             <xs:complexType>
                                                 <xs:sequence>
@@ -84,11 +83,6 @@
             <xs:element type="child" name="child" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="default_policy" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="allowed_parents">
-        <xs:sequence>
-            <xs:element type="parent" name="parent" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
     </xs:complexType>
     <xs:complexType name="parent">
         <xs:attribute type="xs:string" name="name" use="required"/>
