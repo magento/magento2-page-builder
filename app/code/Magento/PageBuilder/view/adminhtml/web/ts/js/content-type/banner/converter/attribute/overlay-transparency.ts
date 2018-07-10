@@ -4,8 +4,8 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
-import extractAlphaFromRgba from "../../../../utils/extract-alpha-from-rgba";
 import {DataObject} from "../../../../data-store";
+import extractAlphaFromRgba from "../../../../utils/extract-alpha-from-rgba";
 
 export default class OverlayTransparency implements ConverterInterface {
     /**

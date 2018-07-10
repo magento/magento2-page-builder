@@ -4,8 +4,8 @@
  */
 import ko from "knockout";
 import events from "uiEvents";
-import ContentTypeInterface from "../content-type.d";
 import ContentTypeCollectionInterface from "../content-type-collection.d";
+import ContentTypeInterface from "../content-type.d";
 
 /**
  * Move a content type to a new index, with the option to move to a new container

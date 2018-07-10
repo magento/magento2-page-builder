@@ -4,8 +4,8 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
-import {toHex} from "../../../../utils/color-converter";
 import {DataObject} from "../../../../data-store";
+import {toHex} from "../../../../utils/color-converter";
 
 export default class OverlayColor implements ConverterInterface {
     /**
