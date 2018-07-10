@@ -63,6 +63,8 @@ Page Builder sets the default layouts to the new full-width layouts supplied by 
 
 ![Page Layout Defaults](images/default-full-width.png)
 
+**Note:** The full-width layouts are specific to Product, Category, and CMS Page. Using one of these layouts outside of its intended scope could yield unpredictable results.
+
 ## CMS Full Width
 This template simply removes the left and right gutters from a CMS page's content. It is implemented with `cms-full-width.xml` and extends from the `1column` page layout.
 
