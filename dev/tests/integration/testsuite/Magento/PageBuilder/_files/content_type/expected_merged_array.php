@@ -66,14 +66,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -335,14 +327,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -350,7 +334,7 @@ return [
                                         'persist' => null,
                                         'preview_converter' => null
                                     ],
-                                    2 => [
+                                    1 => [
                                         'var' => 'attribute_change',
                                         'name' => 'data-custom',
                                         'virtual' => 'false',
@@ -358,7 +342,7 @@ return [
                                         'persist' => 'true',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
-                                    3 => [
+                                    2 => [
                                         'var' => 'attribute_add',
                                         'name' => 'attribute_add',
                                         'virtual' => 'false',
@@ -366,7 +350,7 @@ return [
                                         'persist' => 'true',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
-                                    4 => [
+                                    3 => [
                                         'var' => 'new_attribute',
                                         'name' => 'data-new',
                                         'virtual' => 'true',
@@ -374,22 +358,22 @@ return [
                                         'persist' => 'false',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
-                                    5 => [
+                                    4 => [
                                         'name' => 'original_static',
                                         'value' => 'original_value',
                                         'static' => true
                                     ],
-                                    6 => [
+                                    5 => [
                                         'name' => 'static_attribute_change',
                                         'value' => 'custom_value',
                                         'static' => true
                                     ],
-                                    7 => [
+                                    6 => [
                                         'name' => 'new_static',
                                         'value' => 'new-value',
                                         'static' => true
                                     ],
-                                    8 => [
+                                    7 => [
                                         'var' => 'original_complex',
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
@@ -398,7 +382,7 @@ return [
                                         'complex' => true,
                                         'persist' => null
                                     ],
-                                    9 => [
+                                    8 => [
                                         'var' => 'complex_style_attributes_change',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
@@ -407,7 +391,7 @@ return [
                                         'complex' => true,
                                         'persist' => null
                                     ],
-                                    10 => [
+                                    9 => [
                                         'var' => 'complex_style_attributes_add',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
@@ -416,7 +400,7 @@ return [
                                         'complex' => true,
                                         'persist' => null
                                     ],
-                                    11 => [
+                                    10 => [
                                         'var' => 'new_complex',
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
@@ -458,14 +442,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -496,14 +472,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -579,14 +547,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -652,14 +612,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
@@ -726,14 +678,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,

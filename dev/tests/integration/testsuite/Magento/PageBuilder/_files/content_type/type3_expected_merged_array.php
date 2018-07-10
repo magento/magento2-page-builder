@@ -47,14 +47,6 @@ return [
                                 ],
                                 'attributes' => [
                                     0 => [
-                                        'var' => 'element',
-                                        'name' => 'data-element',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null
-                                    ],
-                                    1 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'virtual' => null,
