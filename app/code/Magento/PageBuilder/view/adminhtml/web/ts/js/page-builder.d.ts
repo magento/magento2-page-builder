@@ -4,5 +4,6 @@
  */
 
 export default interface PageBuilderInterface  {
-
+    id: string;
+    initialValue: string;
 }

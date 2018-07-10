@@ -22,7 +22,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
    * Build an element and it's children into the stage
    *
    * @param {Element} element
-   * @param {ContentTypeInterface} parent
+   * @param {ContentTypeCollectionInterface} parent
    * @param {stage} stage
    * @returns {Promise<void>}
    */
@@ -154,7 +154,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
   /**
    * Build a stage with the provided parent, content observable and initial value
    *
-   * @param {StageInterface} stage
+   * @param {Stage} stage
    * @param {string} content
    * @returns {Promise}
    */

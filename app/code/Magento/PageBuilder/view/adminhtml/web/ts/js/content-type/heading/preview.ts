@@ -8,7 +8,7 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Toolbar from "../../content-type-toolbar";
-import ToolbarOptionInterface from "../../content-type-toolbar/option.d";
+import {OptionInterface} from "../../content-type-toolbar/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
@@ -62,9 +62,9 @@ export default class Heading extends BasePreview {
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOptionInterface[]}
+     * @returns {OptionInterface[]}
      */
-    private getToolbarOptions(): ToolbarOptionInterface[] {
+    private getToolbarOptions(): OptionInterface[] {
         return [
             {
                 key: "heading_type",

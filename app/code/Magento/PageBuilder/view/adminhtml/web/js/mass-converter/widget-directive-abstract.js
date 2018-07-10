@@ -14,8 +14,8 @@ define(["underscore"], function (_underscore) {
     /**
      * Convert value to internal format
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
@@ -25,13 +25,13 @@ define(["underscore"], function (_underscore) {
       data[config.html_variable].replace(/\{\{widget(.*?)\}\}/i, function (match, attributeString) {
         attributes = _this.parseAttributesString(attributeString);
       }.bind(this));
-      return _underscore.extend(data, attributes);
+      return attributes;
     };
     /**
      * Convert value to knockout format
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
 

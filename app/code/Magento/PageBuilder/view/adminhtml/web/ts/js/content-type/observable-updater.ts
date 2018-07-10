@@ -12,18 +12,18 @@ import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
 
 export default class ObservableUpdater {
-    private converterPool: ConverterPool;
-    private massConverterPool: MassConverterPool;
+    private converterPool: typeof ConverterPool;
+    private massConverterPool: typeof MassConverterPool;
     private converterResolver: (config: object) => string;
 
     /**
-     * @param {ConverterPool} converterPool
-     * @param {MassConverterPool} massConverterPool
+     * @param {typeof ConverterPool} converterPool
+     * @param {typeof MassConverterPool} massConverterPool
      * @param {(config: object) => string} converterResolver
      */
     constructor(
-        converterPool: ConverterPool,
-        massConverterPool: MassConverterPool,
+        converterPool: typeof ConverterPool,
+        massConverterPool: typeof MassConverterPool,
         converterResolver: (config: object) => string,
     ) {
         this.converterPool = converterPool;
@@ -35,9 +35,9 @@ export default class ObservableUpdater {
      * Update preview observables after data changed in data store
      *
      * @param {object} viewModel
-     * @param {object} data
+     * @param {DataObject} data
      */
-    public update(viewModel: object, data: object) {
+    public update(viewModel: object, data: DataObject) {
         const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
         const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
         if (undefined === appearanceConfiguration

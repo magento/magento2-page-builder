@@ -3,12 +3,14 @@
  * See COPYING.txt for license details.
  */
 
+import {DataMappingStyleInterface} from "../content-type-config";
+
 /**
  * Resolve converter
  *
- * @param {object} config
+ * @param {DataMappingStyleInterface} config
  * @return string
  */
-export default function resolve(config): string {
+export default function resolve(config: DataMappingStyleInterface): string {
     return config.preview_converter ? config.preview_converter : config.converter;
 }
