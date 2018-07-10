@@ -1275,4 +1275,73 @@
         </assertRegExp>
         <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
     </test>
+    <test name="AdminPageBuilderProductDirectivesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Always Render Magento directives on Magento Storefront"/>
+            <title value="Always Render Magento directives on Magento Storefront for Product"/>
+            <description value="Admin are able to add CMS Page link and image into PageBuilder content and see it Product Page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1364"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_newDefaultProduct" stepKey="createPreReqProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_newDefaultCmsPage" stepKey="createCMSPageA" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+            <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct" />
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!--Go to Product Page-->
+        <amOnPage url="{{AdminProductEditPage.url($$createPreReqProduct.id$$)}}" stepKey="goToEditPage"/>
+        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
+        <!--See PageBuilder fullsize-->
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!--Choose cms page link type-->
+        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
+            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
+        <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
+        <!--Go to storefront to verify Product Link-->
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <scrollTo selector="{{StorefrontProductInfoDetailsSection.detailsTab}}" stepKey="scrollToDetailsTab"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
+            <argument name="identifier" value="$$createCMSPageA.identifier$$"/>
+        </actionGroup>
+        <see userInput="$$createCMSPageA.title$$" stepKey="seePageName" />
+    </test>
 </tests>

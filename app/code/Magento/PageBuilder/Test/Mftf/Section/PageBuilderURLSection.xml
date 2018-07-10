@@ -11,12 +11,12 @@
     <section name="PageBuilderSection">
         <element name="LinkSelect" type="select" selector="//select[@name='{{var1}}']" parameterized="true"/>
         <element name="LinkInput" type="input" selector="//select[@name='{{var1}}']/following-sibling::div/input" parameterized="true"/>
-        <element name="LinkDropdown" type="select" selector=".action-select.admin__action-multiselect"/>
-        <element name="LinkSearch" type="input" selector=".admin__action-multiselect-search"/>
+        <element name="LinkDropdown" type="select" selector="//div[@class='url-input-element-linked-element']/div"/>
+        <element name="LinkSearch" type="input" selector="//div[@class='url-input-element-linked-element']//input"/>
         <element name="SearchResultBox" type="select" selector=".action-menu._active"/>
         <element name="LinkItemSelected" type="text" selector="//span[text()='{{var1}}']/parent::label/parent::div[contains(@class,'_selected')]" parameterized="true"/>
         <element name="SearchResult" type="text" selector="//span[text()='{{var1}}']" parameterized="true"/>
-        <element name="DropdownInput" type="input" selector=".admin__action-multiselect-text"/>
+        <element name="DropdownInput" type="input" selector="//div[@class='url-input-element-linked-element']//div[@data-role='selected-option']"/>
         <element name="RemoveBtn" type="button" selector="button[data-action='remove-selected-item']"/>
     </section>
     <section name="PageBuilderURLOnStoreFrontSection">

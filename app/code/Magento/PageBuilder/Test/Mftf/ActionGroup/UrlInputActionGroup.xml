@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="fillOutUrlInput">
+        <arguments>
+            <argument name="fieldName" defaultValue="button_link"/>
+            <argument name="linkName" defaultValue="ExternalLink.page"/>
+            <argument name="searchString" defaultValue="ExternalLinkSearch.page"/>
+            <argument name="searchResult"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('fieldName')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('fieldName')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="{{linkName}}" stepKey="selectOption" />
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <see userInput="$$createCMSPageA.title$$" stepKey="seeCMSPageA"/>
+        <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderSection.LinkSearch}}" stepKey="focusOnField"/>
+        <fillField selector="{{PageBuilderSection.LinkSearch}}" userInput="{{searchString}}" stepKey="fill2FirstLetters"/>
+        <waitForElementVisible selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="waitForSearchResult" />
+        <seeElement selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="seeCMSPageAOnSearchResult"/>
+        <click selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="clickCMSPageAXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{searchResult}}</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="verifyCmsPageLinkOnFrontend">
+        <arguments>
+            <argument name="identifier"/>
+        </arguments>
+        <scrollTo selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(identifier)}}" stepKey="seePageLinkOnStoreFront" />
+        <click selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(identifier)}}" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+</actionGroups>
