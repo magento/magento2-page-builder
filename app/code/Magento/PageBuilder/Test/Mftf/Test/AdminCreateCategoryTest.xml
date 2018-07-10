@@ -12,6 +12,7 @@
         <annotations>
             <description value="Admin should be able to configure the default layout for Category Page from System Configuration, verify the default is updated to the Page Builder's default layout"/>
             <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3105"/>
             <group value="pagebuilder"/>
         </annotations>
         <!-- PageBuilder is enabled so check default is full width -->
@@ -41,7 +42,7 @@
         </after>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
-        <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{PageBuilderCatalog.openPageBuilder}}" visible="false" stepKey="openContentSection"/>
         <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>

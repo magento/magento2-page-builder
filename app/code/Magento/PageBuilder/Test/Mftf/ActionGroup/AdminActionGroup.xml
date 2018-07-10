@@ -77,7 +77,7 @@
             <argument name="layoutOption"/>
         </arguments>
         <waitForElementVisible selector="{{designSection.DesignTab}}" stepKey="waitForDesignTabVisible"/>
-        <conditionalClick selector="{{designSection.DesignTab}}" dependentSelector="{{designSection.DesignTab}}/parent::strong/parent::*[@data-state-collapsible='closed']" visible="true" stepKey="clickOnDesignTab"/>
+        <conditionalClick selector="{{designSection.DesignTab}}" dependentSelector="{{designSection.LayoutDropdown}}" visible="false" stepKey="clickOnDesignTab"/>
         <waitForPageLoad stepKey="waitForPageLoadDesignTab"/>
         <waitForElementVisible selector="{{designSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
         <selectOption selector="{{designSection.LayoutDropdown}}" userInput="{{layoutOption}}" stepKey="selectLayout"/>
