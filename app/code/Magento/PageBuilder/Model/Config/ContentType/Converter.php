@@ -602,7 +602,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Remove data from arra
+     * Remove data from array
      * 
      * @param $searchValue
      * @param $data
