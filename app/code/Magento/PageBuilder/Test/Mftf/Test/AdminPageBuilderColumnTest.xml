@@ -127,7 +127,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -148,7 +148,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeColumnMinHeightNotRequired">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeBackgroundColorNotRequired">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -169,7 +169,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeMinHeightNotRequired">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="seeVerticalAlignmentNotRequired">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
@@ -253,7 +253,7 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
@@ -305,23 +305,23 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
     </test>
     <test name="ColumnContentIsVerticallyAlignedWithAppearanceAndDifferentMinimumHeights">
         <annotations>
@@ -362,7 +362,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Top"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty500">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentTopProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
@@ -387,7 +387,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty300">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenCenterProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -412,7 +412,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty200">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty_200"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmenBottomProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
@@ -426,24 +426,24 @@
         </actionGroup>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify vertical alignment on stage before save" stepKey="commentVerifyVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTop"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenter"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottom"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify vertical alignment on stage after save" stepKey="commentVerifyVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
-        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeFirstColumnVerticalAlignmentTopAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeFirstColumnVerticalAlignmentCenterAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnChildrenStyle('1', '3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeFirstColumnVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Vertical Alignment In Storefront -->
         <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('1', PageBuilderVerticalAlignmentPropertyTop.style)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('2', PageBuilderVerticalAlignmentPropertyCenter.style)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
+        <seeElement selector="{{ColumnOnFrontend.columnStyle('3', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
     </test>
     <test name="ColumnPlaceholderInAdminPreview">
         <annotations>
@@ -576,7 +576,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -637,7 +637,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -666,7 +666,7 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
@@ -730,7 +730,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
@@ -741,7 +741,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
@@ -749,7 +749,7 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
@@ -798,7 +798,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
@@ -825,8 +825,8 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderLayoutMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderMinHeightProperty_500">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
@@ -872,7 +872,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -908,7 +908,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -963,7 +963,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
@@ -977,7 +977,7 @@
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
@@ -988,7 +988,7 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty_200"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment"/>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
@@ -1020,8 +1020,8 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceProperty">
             <argument name="property" value="PageBuilderColumnAppearanceProperty_Center"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderLayoutMinHeightProperty">
-            <argument name="property" value="PageBuilderLayoutMinHeightProperty_300"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderMinHeightProperty_500">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>

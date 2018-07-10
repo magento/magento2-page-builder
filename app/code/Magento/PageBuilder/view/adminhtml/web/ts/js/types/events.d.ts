@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-export default interface PageBuilderInterface  {
-    id: string;
-    initialValue: string;
+declare module "Magento_PageBuilder/js/events" {
+    export = uiEvents;
 }

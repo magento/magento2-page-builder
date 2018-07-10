@@ -7,6 +7,8 @@ import loadModule from "Magento_PageBuilder/js/utils/loader";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import ContentTypeInterface from "../content-type.d";
 import converterResolver from "./converter-resolver";
+import Master from "./master";
+import MasterCollection from "./master-collection";
 import observableUpdaterFactory from "./observable-updater-factory";
 
 /**
@@ -20,12 +22,12 @@ import observableUpdaterFactory from "./observable-updater-factory";
 export default function create(
     contentType: ContentTypeInterface,
     config: ContentTypeConfigInterface,
-): Promise<ContentTypeInterface> {
+): Promise<typeof Master | typeof MasterCollection> {
     return new Promise((resolve: (masterComponent: any) => void) => {
         observableUpdaterFactory(config, converterResolver).then((observableUpdater) => {
-            loadModule([config.master_component], (ContentComponent) => {
+            loadModule([config.master_component], (contentComponent: typeof Master | typeof MasterCollection) => {
                 resolve(
-                    new ContentComponent(
+                    new contentComponent(
                         contentType,
                         observableUpdater,
                     ),

@@ -5,7 +5,7 @@
 /**
  * @api
  */
-export interface ValueInterface {
+export default interface ValueInterface {
     value: string;
     label: string;
     icon: string;

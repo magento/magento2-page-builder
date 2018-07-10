@@ -14,7 +14,7 @@ define([], function () {
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {object} data
+     * @param {ConverterDataInterface} data
      * @param {object} config
      * @returns {object}
      */
@@ -31,7 +31,7 @@ define([], function () {
     /**
      * Process data before it's converted by element converters
      *
-     * @param {object} data
+     * @param {ConverterDataInterface} data
      * @param {object} config
      * @returns {object}
      */

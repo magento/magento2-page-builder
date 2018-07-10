@@ -48,7 +48,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("block:dropAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
-            _this2.edit.open();
+            _this2.openEdit();
           }, 300);
         }
       });
@@ -120,8 +120,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this3.placeholderText(response.data.error);
         }
 
-        _this3.lastBlockId = data.block_id;
-        _this3.lastTemplate = data.template;
+        _this3.lastBlockId = parseInt(data.block_id.toString(), 10);
+        _this3.lastTemplate = data.template.toString();
         _this3.lastRenderedHtml = response.data.content;
       }).fail(function () {
         _this3.displayPreview(false);

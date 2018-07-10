@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -27,7 +28,7 @@ export default class CreateValueForLinkType implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
+    public toDom(name: string, data: DataObject): string {
 
         return data[name] ? data[name].type : "";
     }
