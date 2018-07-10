@@ -76,12 +76,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             'defaultPolicy' => $this->getAttributeValue($childNode, 'default_policy'),
                             'types' => $this->convertParentChildData($childNode, 'child')
                         ];
-                    } elseif ('allowed_parents' === $childNode->nodeName) {
-                        $parents = [];
-                        foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
-                            $parents[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
-                        }
-                        $typesData[$name][$childNode->nodeName] = $parents;
                     } else {
                         $typesData[$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
@@ -475,7 +469,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         // convert children
         $allowedParents = $this->convertChildrenToAllowedParents($typesData, $types);
         foreach ($typesData as $key => &$typeData) {
-            $typeData['allowed_parents_new'] = $allowedParents[$key];
+            $typeData['allowed_parents'] = $allowedParents[$key];
         }
 
         // convert parents
@@ -555,7 +549,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     }
                 }
             }
-            $typesData[$key]['allowed_parents_new'] = $allowedParents;
+            $typesData[$key]['allowed_parents'] = $allowedParents;
         }
 
         return $typesData;
