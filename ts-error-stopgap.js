@@ -6,7 +6,7 @@
  *
  * A snapshot (in `ts-errors.json`) has been taken of all compiler errors
  * (and their respective metadata) to be checked against prior to any new
- * merges.
+ * merges. This snapshot can only be updated by architects.
  *
  * Whenever this whole project passes a run of `tsc` without errors,
  * this script should be removed, and the CI process for PageBuilder
