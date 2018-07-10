@@ -796,6 +796,9 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderAnchorContentType"/>
+        </actionGroup>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragAnchorIntoStage">
             <argument name="contentType" value="PageBuilderAnchorContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
@@ -831,6 +834,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Anchor to Stage -->
+        <comment userInput="Add Anchor to Stage" stepKey="addAnchorToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
             <argument name="group" value="PageBuilderAnchorContentType"/>
         </actionGroup>
@@ -848,6 +852,15 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="User sees Anchor displayed in column on Stage" stepKey="confirmAnchorOnStage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="View Anchor inside column on storefront" stepKey="viewAnchorOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">

@@ -431,6 +431,9 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
@@ -466,6 +469,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add Block to Stage -->
+        <comment userInput="Add Block to Stage" stepKey="addBlockToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
             <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -483,6 +487,15 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="User sees Block displayed in column on Stage" stepKey="confirmBlockOnStage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="View Block inside column on storefront" stepKey="viewBlockOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">

@@ -1434,6 +1434,7 @@
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Add Column to Stage -->
+        <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -1577,6 +1578,9 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
@@ -1607,6 +1611,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <waitForElementVisible selector="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" stepKey="waitForRowToBeVisible"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
