@@ -88,6 +88,10 @@ Inline styles
 11. border-radius
 12. margin
 13. padding
+14. height
+15. justify-content
+16. display
+17. flex-direction
 
 ## Column group
 

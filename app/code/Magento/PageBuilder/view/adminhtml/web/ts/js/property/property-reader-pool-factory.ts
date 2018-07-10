@@ -11,13 +11,15 @@ import PropertyReaderPool from "./property-reader-pool";
  * Create a new instance of property reader pool
  * @api
  */
-export default function create(contentType: string): Promise<> {
+export default function create(contentType: string): Promise<typeof PropertyReaderPool> {
     const config = Config.getContentTypeConfig(contentType);
-    const propertyReaders = [];
-    for (const appearanceName: string of Object.keys(config.appearances)) {
+    const propertyReaders: string[] = [];
+    let appearanceName: string;
+    for (appearanceName of Object.keys(config.appearances)) {
         const dataMapping = config.appearances[appearanceName].data_mapping;
         if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-            for (const elementName: string of Object.keys(dataMapping.elements)) {
+            let elementName: string;
+            for (elementName of Object.keys(dataMapping.elements)) {
                 const element = dataMapping.elements[elementName];
                 if (element.style !== undefined) {
                     for (const propertyConfig of element.style) {
@@ -46,7 +48,7 @@ export default function create(contentType: string): Promise<> {
         }
     }
 
-    return new Promise((resolve: (PropertyReaderPool: object) => void) => {
+    return new Promise((resolve: (propertyReaderPool: typeof PropertyReaderPool) => void) => {
         loadModule(propertyReaders, (...loadedPropertyReaders: any[]) => {
             for (let i = 0; i < propertyReaders.length; i++) {
                 PropertyReaderPool.register(propertyReaders[i], new loadedPropertyReaders[i]());

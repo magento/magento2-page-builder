@@ -4,20 +4,20 @@
  */
 
 import _ from "underscore";
-import ConverterInterface from "./converter-interface";
+import ConverterInterface, {ConverterConfigInterface, ConverterDataInterface} from "./converter-interface";
 
 export default class WidgetDirectiveAbstract implements ConverterInterface {
     /**
      * Convert value to internal format
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-    public fromDom(data: object, config: object): object {
+    public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
         let attributes: object = {};
 
-        data[config.html_variable].replace(/\{\{widget(.*?)\}\}/i, ((match, attributeString) => {
+        data[config.html_variable].replace(/\{\{widget(.*?)\}\}/i, ((match: string, attributeString: string) => {
             attributes = this.parseAttributesString(attributeString);
         }).bind(this));
 
@@ -27,11 +27,11 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-    public toDom(data: object, config: object): object {
+    public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
         data[config.html_variable] = this.buildDirective(data);
         return data;
     }
@@ -51,11 +51,13 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
      * @return {Object}
      */
     protected parseAttributesString(attributes: string): object {
-        const result = {};
+        const result: {
+            [key: string]: string;
+        } = {};
 
         attributes.replace(
             /(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g,
-            (match, key, value) => {
+            (match: string, key: string, value: string) => {
                 result[key] = value.replace(/&quote;/g, "\"");
             },
         );

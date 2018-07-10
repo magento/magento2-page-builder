@@ -13,18 +13,21 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
     var config = _config.getContentTypeConfig(contentType);
 
     var propertyReaders = [];
+    var appearanceName;
 
     var _arr = Object.keys(config.appearances);
 
     for (var _i = 0; _i < _arr.length; _i++) {
-      var appearanceName = _arr[_i];
+      appearanceName = _arr[_i];
       var dataMapping = config.appearances[appearanceName].data_mapping;
 
       if (dataMapping !== undefined && dataMapping.elements !== undefined) {
+        var elementName = void 0;
+
         var _arr2 = Object.keys(dataMapping.elements);
 
         for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-          var elementName = _arr2[_i2];
+          elementName = _arr2[_i2];
           var element = dataMapping.elements[elementName];
 
           if (element.style !== undefined) {

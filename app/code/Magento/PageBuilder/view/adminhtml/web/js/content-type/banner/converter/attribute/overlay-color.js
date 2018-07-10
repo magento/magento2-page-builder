@@ -23,14 +23,14 @@ define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConvert
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name];
+      return data[name].toString();
     };
 
     return OverlayColor;
