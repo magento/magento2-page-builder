@@ -110,7 +110,6 @@ The following is an example of a content type configuration in `view/adminhtml/p
                                 <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                             </style_properties>
                             <attributes>
-                                <attribute name="element" source="data-element"/>
                                 <attribute name="name" source="data-role"/>
                                 <attribute name="appearance" source="data-appearance"/>
                                 <attribute name="show_button" source="data-show-button"/>
@@ -120,7 +119,6 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         </element>
                         <element name="link">
                             <attributes>
-                                <attribute name="element" source="data-element"/>
                                 <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
                                 <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
                                 <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
@@ -134,7 +132,6 @@ The following is an example of a content type configuration in `view/adminhtml/p
                                 <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                             </style_properties>
                             <attributes>
-                                <attribute name="element" source="data-element"/>
                                 <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
                                 <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
                                 <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
@@ -150,9 +147,6 @@ The following is an example of a content type configuration in `view/adminhtml/p
                                 <property name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
                                 <property name="background_attachment" source="background_attachment"/>
                             </style_properties>
-                            <attributes>
-                                <attribute name="element" source="data-element"/>
-                            </attributes>
                         </element>
                         <element name="mobile_image">
                             <style_properties>
@@ -164,24 +158,15 @@ The following is an example of a content type configuration in `view/adminhtml/p
                                 <property name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
                                 <property name="background_attachment" source="background_attachment"/>
                             </style_properties>
-                            <attributes>
-                                <attribute name="element" source="data-element"/>
-                            </attributes>
                         </element>
                         <element name="content">
-                            <attributes>
-                                <attribute name="element" source="data-element"/>
-                            </attributes>
-                            <html name="message"/>
+                                                        <html name="message"/>
                         </element>
                         <element name="button">
                             <style_properties>
                                 <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
                                 <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
                             </style_properties>
-                            <attributes>
-                                <attribute name="element" source="data-element"/>
-                            </attributes>
                             <html name="button_text"/>
                             <css name="button_type">
                                 <filter>
@@ -321,14 +306,12 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
             <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
         </style_properties>
         <attributes>
-            <attribute name="element" source="data-element"/>
             <attribute name="name" source="data-role"/>
         </attributes>
         <css name="css_classes"/>
     </element>
     <element name="link">
         <attributes>
-            <attribute name="element" source="data-element"/>
             <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
             <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
             <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
@@ -337,7 +320,6 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="overlay">
         <attributes>
-            <attribute name="element" source="data-element"/>
             <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
             <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
             <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
@@ -347,22 +329,13 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         <style_properties>
             <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
-        <attributes>
-            <attribute name="element" source="data-element"/>
-        </attributes>
     </element>
     <element name="mobile_image">
         <style_properties>
             <property name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
-        <attributes>
-            <attribute name="element" source="data-element"/>
-        </attributes>
     </element>
     <element name="content">
-        <attributes>
-            <attribute name="element" source="data-element"/>
-        </attributes>
         <html name="message"/>
     </element>
     <element name="button">
@@ -370,9 +343,6 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
             <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
             <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
         </style_properties>
-        <attributes>
-            <attribute name="element" source="data-element"/>
-        </attributes>
         <html name="button_text"/>
         <css name="button_type">
             <filter>
@@ -389,12 +359,6 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         </config>
     </converter>
 </converters>
-```
-
-### Requirement for every `element`
-Every element must have an `element` attribute sourced to `data-element` in order for the reader to read correctly from master format.
-``` xml
-<attribute name="element" source="data-element"/>
 ```
 
 ### Attributes for `property` and `attribute`
@@ -428,9 +392,6 @@ Every element must have an `element` attribute sourced to `data-element` in orde
         <static_property source="max-width" value="100%"/>
         <static_property source="height" value="auto"/>
     </style_properties>
-    <attributes>
-        <attribute name="element" source="data-element"/>
-    </attributes>
 </element>
 ```
 

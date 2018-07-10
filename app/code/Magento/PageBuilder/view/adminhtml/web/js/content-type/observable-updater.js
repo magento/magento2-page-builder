@@ -131,11 +131,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           continue;
         }
 
-        if (_attributeConfig.var === "element") {
-          result[_attributeConfig.name] = config.element;
-          continue;
-        }
-
         var value = data[_attributeConfig.var];
         var converter = this.converterResolver(_attributeConfig);
 
@@ -146,6 +141,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         result[_attributeConfig.name] = value;
       }
 
+      result["data-element"] = config.element;
       return result;
     };
     /**

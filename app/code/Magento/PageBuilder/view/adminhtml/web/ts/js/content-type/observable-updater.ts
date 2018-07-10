@@ -104,16 +104,12 @@ export default class ObservableUpdater {
      * @deprecated
      */
     public convertAttributes(config: any, data: DataObject) {
-        const result = {};
+        const result: any = {};
         for (const attributeConfig of config.attributes) {
             if (undefined !== attributeConfig.persist
                 && null !== attributeConfig.persist
                 && "false" === attributeConfig.persist
             ) {
-                continue;
-            }
-            if (attributeConfig.var === "element") {
-                result[attributeConfig.name] = config.element;
                 continue;
             }
             let value = data[attributeConfig.var];
@@ -123,6 +119,8 @@ export default class ObservableUpdater {
             }
             result[attributeConfig.name] = value;
         }
+        result["data-element"] = config.element;
+
         return result;
     }
 
