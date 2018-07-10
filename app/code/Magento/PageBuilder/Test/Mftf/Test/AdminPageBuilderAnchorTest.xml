@@ -783,7 +783,7 @@
             <description value="If user drags Anchor to Stage, it should have no effect"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
-            <testCaseId value="MC-3031"/>
+            <testCaseId value="MC-3113"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-anchor"/>
             <group value="pagebuilder-cannotAddToStage"/>
@@ -813,7 +813,7 @@
             <description value="As a Content Manager I want column to be a container so that I can add Anchor inside"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
-            <testCaseId value="MC-3031"/>
+            <testCaseId value="MC-3114"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-anchor"/>
@@ -852,9 +852,9 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="User sees Anchor displayed in column on Stage" stepKey="confirmAnchorOnStage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateAnchorOnStage"/>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderAnchorContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>

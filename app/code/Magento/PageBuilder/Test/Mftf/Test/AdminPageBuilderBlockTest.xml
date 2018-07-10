@@ -418,7 +418,7 @@
             <description value="If user drags Block to Stage, it should have no effect"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
-            <testCaseId value="MC-3031"/>
+            <testCaseId value="MC-3117"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-cannotAddToStage"/>
@@ -448,7 +448,7 @@
             <description value="As a Content Manager I want column to be a container so that I can add Block inside"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
-            <testCaseId value="MC-3031"/>
+            <testCaseId value="MC-3118"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-block"/>
@@ -487,9 +487,9 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="User sees Block displayed in column on Stage" stepKey="confirmBlockOnStage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateBlockOnStage"/>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>

@@ -442,7 +442,7 @@
             <description value="If user drags Newsletter to Stage, it should have no effect"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
-            <testCaseId value="MC-3031"/>
+            <testCaseId value="MC-3127"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-newsletter"/>
             <group value="pagebuilder-cannotAddToStage"/>
@@ -469,7 +469,7 @@
             <description value="As a Content Manager I want column to be a container so that I can add Newsletter inside"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
-            <testCaseId value="MC-3031"/>
+            <testCaseId value="MC-3128"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-newsletter"/>
@@ -508,9 +508,9 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="User sees Newsletter displayed in column on Stage" stepKey="confirmNewsletterOnStage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateNewsletterOnStage"/>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>

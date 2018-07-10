@@ -49,9 +49,12 @@
     <actionGroup name="validateContentTypeNotInsideContainerStage">
         <arguments>
             <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
             <argument name="containerTargetType"/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeNotInsideContainerStage(containerTargetType.role, containerTargetIndex, contentType.role)}}" stepKey="waitForContentTypeStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(containerTargetType.role, containerTargetIndex)}}" stepKey="waitForContentTypeStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer"/>
     </actionGroup>
 </actionGroups>
