@@ -33,12 +33,17 @@ const buildTask = function(inputStream, done) {
 /**
  * Run an initial build than watch for changes
  */
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build', 'watch', 'lint']);
 
 /**
  * Check for any new errors introduced since last build
  */
 gulp.task('errors', shell.task("node_modules/typescript/bin/tsc --noEmit | node ts-error-stopgap.js"));
+
+/**
+ * Fix all TypeScript linting issues
+ */
+gulp.task('lint', shell.task("node_modules/tslint/bin/tslint --fix --project ."));
 
 /**
  * Build the TypeScript files into production JS
