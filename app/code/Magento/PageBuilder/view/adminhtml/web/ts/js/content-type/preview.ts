@@ -90,6 +90,13 @@ export default class Preview {
     }
 
     /**
+     * Open the edit form for this content type
+     */
+    public openEdit(): void {
+        return this.edit.open();
+    }
+
+    /**
      * Update data store
      *
      * @param {string} key
@@ -227,7 +234,7 @@ export default class Preview {
      * Handle user editing an instance
      */
     public onOptionEdit(): void {
-        this.edit.open();
+        this.openEdit();
     }
 
     /**

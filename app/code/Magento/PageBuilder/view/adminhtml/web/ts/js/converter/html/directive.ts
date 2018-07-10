@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import {DataObject} from "../../data-store";
 import {convertMediaDirectivesToUrls, removeQuotesInMediaDirectives} from "../../utils/directives";
 import ConverterInterface from "../converter-interface";
 
@@ -27,7 +28,7 @@ export default class Directives implements ConverterInterface {
      * @param {Object} data
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
+    public toDom(name: string, data: DataObject): string {
         return convertMediaDirectivesToUrls(removeQuotesInMediaDirectives(data[name]));
     }
 }

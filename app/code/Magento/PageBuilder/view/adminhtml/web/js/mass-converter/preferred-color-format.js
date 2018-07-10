@@ -14,13 +14,13 @@ define(["tinycolor"], function (_tinycolor) {
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
       if (data.background_color !== "") {
-        data.background_color = (0, _tinycolor)(data.background_color).toString(data.background_color_format);
+        data.background_color = tinycolor(data.background_color).toString(data.background_color_format);
       }
 
       return data;
@@ -28,14 +28,14 @@ define(["tinycolor"], function (_tinycolor) {
     /**
      * Process data before it's converted by element converters
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
 
 
     _proto.toDom = function toDom(data, config) {
-      data.background_color_format = (0, _tinycolor)(data.background_color).getFormat();
+      data.background_color_format = tinycolor(data.background_color).getFormat();
       return data;
     };
 

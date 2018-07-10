@@ -8,14 +8,14 @@ import {DataObject} from "../data-store";
 /**
  * @api
  */
-export interface ConverterInterface {
+interface ConverterInterface {
     /**
      * Convert value to internal format
      *
      * @param value string
      * @returns {string | object}
      */
-    fromDom(value: string): string | object;
+    fromDom(value: string): string | object | void;
 
     /**
      * Convert value to knockout format
@@ -26,3 +26,5 @@ export interface ConverterInterface {
      */
     toDom(name: string, data: DataObject): string | object;
 }
+
+export default ConverterInterface;

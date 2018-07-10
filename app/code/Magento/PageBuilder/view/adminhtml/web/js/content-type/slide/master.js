@@ -99,7 +99,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
 
       if (data.show_overlay !== "never") {
         if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color.toString(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency.toString()));
         }
       }
 
@@ -146,7 +146,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
       var overlayColor = "transparent";
 
       if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color.toString(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency.toString()));
       }
 
       return {
@@ -166,7 +166,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
       if (data.content === "" || data.content === undefined) {
         return;
       } else {
-        return (0, _translate)(data.content);
+        return (0, _translate)(data.content.toString());
       }
     };
     /**

@@ -3,7 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "../../../../converter/converter-interface";
+import ConverterInterface from "../../../../converter/converter-interface";
+import {DataObject} from "../../../../data-store";
 
 export default class Margins implements ConverterInterface {
     /**
@@ -21,8 +22,10 @@ export default class Margins implements ConverterInterface {
      * @param data Object
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        const result = {};
+    public toDom(name: string, data: DataObject): string | object {
+        const result: {
+            [key: string]: string;
+        } = {};
         let value = data[name];
 
         if (value && typeof value === "string") {

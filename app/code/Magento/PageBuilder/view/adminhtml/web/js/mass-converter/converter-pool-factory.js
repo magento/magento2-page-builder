@@ -13,11 +13,12 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
     var config = _config.getContentTypeConfig(contentType);
 
     var converters = [];
+    var appearanceName;
 
     var _arr = Object.keys(config.appearances);
 
     for (var _i = 0; _i < _arr.length; _i++) {
-      var appearanceName = _arr[_i];
+      appearanceName = _arr[_i];
       var dataMapping = config.appearances[appearanceName].data_mapping;
 
       if (undefined !== dataMapping && undefined !== dataMapping.converters) {
