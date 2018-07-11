@@ -83,4 +83,84 @@
         <actionGroup ref="CheckCategoryOnStorefront" stepKey="checkCategoryOnStorefront"/>
         <actionGroup ref="verifyFullWidthLayout" stepKey="verifyFullWidthLayout"/>
     </test>
+    <test name="AdminCreateCategoryWithPageBuilderDescriptionAndInvalidPageLayoutTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Page Layout"/>
+            <title value="Category description should display in full width"/>
+            <description value="Category description should display in full width"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-936"/>
+            <testCaseId value="MC-3107"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullwidth"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <amOnPage url="{{AdminCategoryPage.url}}" stepKey="navigateToCategoryPage"/>
+            <waitForPageLoad stepKey="waitForPageLoadCategoryPage"/>
+            <actionGroup ref="CreateCategory" stepKey="createCategory"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add PageBuilder description -->
+        <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
+        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{PageBuilderCatalog.openPageBuilder}}" visible="false" stepKey="openContentSection"/>
+        <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <!-- Set background color of row -->
+        <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Add heading to stage -->
+        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <!-- Set Layout to Page - Full Width -->
+        <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
+        </actionGroup>
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveCategory"/>
+        <waitForElementVisible selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess"/>
+        <!-- Check that description is full width on storefront-->
+        <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth"/>
+        <actionGroup ref="CheckCategoryOnStorefront" stepKey="checkCategoryOnStorefront"/>
+        <!-- Go back to edit category in admin panel -->
+        <comment userInput="Go back to edit category in admin panel" stepKey="commentEditCategory"/>
+        <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+            <argument name="Category" value="_defaultCategory"/>
+        </actionGroup>
+        <!-- Set Layout to Product - Full Width -->
+        <comment userInput="Set Layout to Category - Full Width" stepKey="commentSetLayout2"/>
+        <actionGroup ref="setLayout" stepKey="setFullWidthLayout2">
+            <argument name="designSection" value="CategoryDesignSection"/>
+            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        </actionGroup>
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory2"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveCategory2"/>
+        <waitForElementVisible selector="{{AdminCategoryMessagesSection.SuccessMessage}}" stepKey="assertSuccess2"/>
+        <!-- Check that description is full width on storefront-->
+        <comment userInput="Check that description is full width on storefront" stepKey="commentSeeDescriptionFullWidth2"/>
+        <actionGroup ref="CheckCategoryOnStorefront" stepKey="checkCategoryOnStorefront2"/>
+    </test>
 </tests>
