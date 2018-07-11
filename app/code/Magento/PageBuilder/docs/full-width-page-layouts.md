@@ -134,3 +134,6 @@ In `product-full-width.xml`, we create a new wrapper for product details & descr
 We cannot guarantee these full-width layouts will work as expected with your custom themes as your page's structure may differ from Luma's.
 
 To enable full width within your custom themes, you must ensure the appropriate block is not within your page's main wrapper. This implementation will differ on a case-by-case basis but the above implementations for Luma should give you a good indication on how to approach these.
+
+## Disabling Page Builder
+If you apply one of our custom layouts to an entity and then disable or remove the Page Builder module you'll be required to manually update those entities with new page layouts. This is due to disabling Page Builder will make the new full width layouts unavailable thus causing entities to render incorrectly.
