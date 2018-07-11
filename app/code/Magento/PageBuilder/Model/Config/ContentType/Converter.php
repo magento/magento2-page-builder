@@ -204,7 +204,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         foreach ($childNode->getElementsByTagName('element') as $elementNode) {
             $elementName = $elementNode->attributes->getNamedItem('name')->nodeValue;
             $elementData[$elementName] = [
-                'element' => $elementName,
+                'name' => $elementName,
                 'style' => $this->convertProperties($elementNode),
                 'attributes' => $this->convertAttributes($elementNode),
                 'html' => $this->convertHtml($elementNode),

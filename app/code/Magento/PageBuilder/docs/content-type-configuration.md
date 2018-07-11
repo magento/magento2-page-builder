@@ -160,7 +160,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             </style_properties>
                         </element>
                         <element name="content">
-                                                        <html name="message"/>
+                            <html name="message"/>
                         </element>
                         <element name="button">
                             <style_properties>

@@ -141,7 +141,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         result[_attributeConfig.name] = value;
       }
 
-      result["data-element"] = config.element;
+      result["data-element"] = config.name;
       return result;
     };
     /**

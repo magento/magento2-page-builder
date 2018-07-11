@@ -119,7 +119,7 @@ export default class ObservableUpdater {
             }
             result[attributeConfig.name] = value;
         }
-        result["data-element"] = config.element;
+        result["data-element"] = config.name;
 
         return result;
     }
