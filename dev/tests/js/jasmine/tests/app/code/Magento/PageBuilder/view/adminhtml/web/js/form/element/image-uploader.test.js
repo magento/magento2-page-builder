@@ -66,11 +66,14 @@ define([
         ];
 
     beforeEach(function () {
+        /**
+         * A stub constructor to bypass the original
+         * @constructor
+         */
         var MockUploader = function () {};
 
-        // Bypass the original constructor
         MockUploader.prototype = Object.create(ImageUploader.prototype);
-        MockUploader.prototype.constructor = function () {};
+        MockUploader.prototype.constructor = MockUploader;
         uploader = new MockUploader();
         uploader.$uploadArea = $('<div/>');
     });
