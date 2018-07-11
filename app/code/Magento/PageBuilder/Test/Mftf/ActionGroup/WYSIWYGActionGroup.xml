@@ -133,14 +133,14 @@
     </actionGroup>
     <actionGroup name="insertLinkInWYSIWYG">
         <arguments>
-            <argument name="section" defaultValue="EditPanelForm"/>
+            <argument name="section" defaultValue="TinyMCESection"/>
             <argument name="url" type="string"/>
             <argument name="textToDisplay" type="string"/>
             <argument name="title" type="string" defaultValue=""/>
         </arguments>
         <comment userInput="insertLinkInWYSIWYG" stepKey="comment"/>
-        <waitForElementVisible selector="{{section.wysiwygInsertLinkButton}}" stepKey="waitForInsertLinkButton"/>
-        <click selector="{{section.wysiwygInsertLinkButton}}" stepKey="clickInsertLinkButton"/>
+        <waitForElementVisible selector="{{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>
