@@ -41,7 +41,7 @@
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -84,7 +84,7 @@
             <description value="Create product with unsupported Page Builder full width layout"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-936"/>
-            <testCaseId value="MC-309"/>
+            <testCaseId value="MC-3172"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-fullwidth"/>
         </annotations>
@@ -97,6 +97,7 @@
             </actionGroup>
         </before>
         <after>
+            <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
         </after>
@@ -109,7 +110,7 @@
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -119,11 +120,11 @@
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <!-- Add heading to stage -->
+        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <!-- Add heading to stage -->
-        <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
@@ -138,22 +139,15 @@
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
-        <!-- Check that content is displayed on storefront -->
-        <comment userInput="Check that content is displayed on storefront" stepKey="commentSeeContent"/>
+        <!-- Check that content is displayed on storefront with category full width layout -->
+        <comment userInput="Check that content is displayed on storefront with category full width layout" stepKey="commentSeeContent"/>
+        <openNewTab stepKey="openNewTab"/>
         <amOnPage url="{{_defaultProduct.urlKey}}.html" stepKey="navigateToProductPage"/>
         <waitForPageLoad stepKey="waitForPageLoadProductPage"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText"/>
-        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeStorefrontHeadingText"/>
-        <!-- Edit product in admin panel -->
-        <comment userInput="Edit product in admin panel" stepKey="commentEditProduct"/>
-        <actionGroup ref="SearchForProductOnBackendActionGroup" stepKey="searchForProduct">
-            <argument name="product" value="$$createSimpleProduct$$"/>
-        </actionGroup>
-        <actionGroup ref="OpenEditProductOnBackendActionGroup" stepKey="openEditProduct">
-            <argument name="product" value="_defaultProduct"/>
-        </actionGroup>
         <!-- Set Layout to Page - Full Width -->
         <comment userInput="Set Layout to Page - Full Width" stepKey="commentSetLayout2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
         <actionGroup ref="setLayout" stepKey="setPageFullWidthLayout">
             <argument name="designSection" value="ProductDesignSection"/>
             <argument name="layoutOption" value="PageBuilderFullWidthLayout.cms"/>
@@ -161,11 +155,11 @@
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct2"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct2"/>
         <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess2"/>
-        <!-- Check that content is displayed on storefront -->
+        <!-- Check that content is displayed on storefront with Page full width layout -->
         <comment userInput="Check that content is displayed on storefront" stepKey="commentSeeContent2"/>
-        <amOnPage url="{{_defaultProduct.urlKey}}.html" stepKey="navigateToProductPage2"/>
-        <waitForPageLoad stepKey="waitForPageLoadProductPage2"/>
+        <switchToNextTab stepKey="switchToNextTab1"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageReload"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText2"/>
-        <seeElement selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeStorefrontHeadingText2"/>
     </test>
 </tests>
