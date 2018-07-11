@@ -122,8 +122,28 @@
     </xs:complexType>
     <xs:complexType name="element">
         <xs:sequence>
-            <xs:element type="style_properties" name="style_properties" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="attributes" name="attributes" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="style_properties" name="style_properties" minOccurs="0" maxOccurs="1">
+                <xs:unique name="uniquePropertyName">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Property and Complex Property name must be unique
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:selector xpath="property|complex_property"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element type="attributes" name="attributes" minOccurs="0" maxOccurs="1">
+                <xs:unique name="uniqueAttributeName">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Attribute and Complex Attribute name must be unique
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:selector xpath="attribute|complex_attribute"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
             <xs:element type="tag" name="tag" minOccurs="0" maxOccurs="1"/>
             <xs:element type="html" name="html" minOccurs="0" maxOccurs="1"/>
             <xs:element type="css" name="css" minOccurs="0" maxOccurs="1"/>
@@ -150,6 +170,7 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:string" name="persist" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="complex_property">
         <xs:attribute type="xs:string" name="name" use="required"/>
@@ -157,6 +178,7 @@
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_property">
         <xs:attribute type="xs:string" name="source" use="required"/>
@@ -177,6 +199,7 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:boolean" name="persist" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="complex_attribute">
         <xs:attribute type="xs:string" name="name" use="required"/>
@@ -185,6 +208,7 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:boolean" name="persist" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_attribute">
         <xs:attribute type="xs:string" name="source" use="required"/>

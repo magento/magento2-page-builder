@@ -46,9 +46,9 @@
                             <element name="link" path=".//a">
                                 <attributes>
                                     <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                    <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                    <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                    <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+                                    <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                    <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                    <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
@@ -58,7 +58,7 @@
                                 <attributes>
                                     <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color"/>
                                     <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency"/>
-                                    <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
+                                    <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
@@ -71,8 +71,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -85,8 +85,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -140,9 +140,9 @@
                             <element name="link" path=".//a">
                                 <attributes>
                                     <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                    <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                    <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                    <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+                                    <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                    <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                    <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
@@ -152,7 +152,7 @@
                                 <attributes>
                                     <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color"/>
                                     <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency"/>
-                                    <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
+                                    <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
@@ -165,8 +165,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -179,8 +179,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -234,9 +234,9 @@
                             <element name="link" path=".//a">
                                 <attributes>
                                     <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                    <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                    <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                    <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+                                    <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                    <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                    <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
@@ -246,7 +246,7 @@
                                 <attributes>
                                     <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color"/>
                                     <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency"/>
-                                    <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
+                                    <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
@@ -259,8 +259,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -273,8 +273,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -329,9 +329,9 @@
                             <element name="link" path=".//a">
                                 <attributes>
                                     <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                    <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                    <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                    <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+                                    <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                    <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                    <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
@@ -342,7 +342,7 @@
                                 <attributes>
                                     <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color"/>
                                     <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency"/>
-                                    <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
+                                    <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
@@ -355,8 +355,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                   </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -369,8 +369,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
