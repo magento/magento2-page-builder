@@ -45,7 +45,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name];
+      return data[name].toString();
     };
     /**
      * Convert from int to hex

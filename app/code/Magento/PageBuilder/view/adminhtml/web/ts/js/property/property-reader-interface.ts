@@ -6,7 +6,7 @@
 /**
  * @api
  */
-export interface PropertyReaderInterface {
+interface PropertyReaderInterface {
     /**
      * Read element data
      *
@@ -15,3 +15,5 @@ export interface PropertyReaderInterface {
      */
     read(element: HTMLElement): string | object;
 }
+
+export default PropertyReaderInterface;

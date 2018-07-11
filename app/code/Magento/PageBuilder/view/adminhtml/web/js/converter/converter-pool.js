@@ -17,9 +17,22 @@ define([], function () {
 
     var _proto = ConverterPool.prototype;
 
+    /**
+     * Retrieve a converter from the pool
+     *
+     * @param {string} name
+     * @returns {ConverterInterface}
+     */
     _proto.get = function get(name) {
-      return this.converters[name] !== undefined ? this.converters[name] : false;
+      return this.converters[name] !== undefined ? this.converters[name] : null;
     };
+    /**
+     * Register a new converter into the pool
+     *
+     * @param {string} name
+     * @param {ConverterInterface} converter
+     */
+
 
     _proto.register = function register(name, converter) {
       this.converters[name] = converter;

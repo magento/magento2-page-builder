@@ -8,10 +8,10 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
+import ContentTypeInterface from "../../content-type";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
-import ButtonItem from "../button-item/preview";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import PreviewCollection from "../preview-collection";
 
@@ -69,16 +69,16 @@ export default class Preview extends PreviewCollection {
      * Add button-item to buttons children array
      */
     public addButton() {
-        const createButtonItemPromise: Promise<ButtonItem> = createContentType(
+        const createButtonItemPromise: Promise<ContentTypeInterface> = createContentType(
             Config.getContentTypeConfig("button-item"),
             this.parent.parent,
             this.parent.stageId,
             {},
         );
 
-        createButtonItemPromise.then((button: ButtonItem) => {
+        createButtonItemPromise.then((button: ContentTypeInterface) => {
             this.parent.addChild(button);
-            this.isLiveEditing(this.parent.children().indexOf(button));
+            this.isLiveEditing(this.parent.children().indexOf(button) !== -1);
             return button;
         }).catch((error: Error) => {
             console.error(error);

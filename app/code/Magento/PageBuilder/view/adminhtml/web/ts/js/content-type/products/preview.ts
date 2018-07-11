@@ -10,6 +10,7 @@ import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config";
+import {DataObject} from "../../data-store";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
@@ -48,7 +49,7 @@ export default class Preview extends BasePreview {
         events.on("products:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
-                    this.edit.open();
+                    this.openEdit();
                 }, 300);
             }
         });
@@ -61,7 +62,7 @@ export default class Preview extends BasePreview {
         super.afterObservablesUpdated();
         this.displayPreview(false);
 
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
 
         if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
             this.placeholderText(this.messages.EMPTY);

@@ -33,7 +33,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
       var overlayColor = "transparent";
 
       if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color.toString(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency.toString()));
       }
 
       return overlayColor;

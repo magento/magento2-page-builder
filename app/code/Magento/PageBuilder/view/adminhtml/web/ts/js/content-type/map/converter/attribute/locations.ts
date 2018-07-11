@@ -3,7 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "../../../../converter/converter-interface";
+import ConverterInterface from "../../../../converter/converter-interface";
+import {DataObject} from "../../../../data-store";
 
 export default class Locations implements ConverterInterface {
 
@@ -27,7 +28,7 @@ export default class Locations implements ConverterInterface {
      * @param data Object
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
+    public toDom(name: string, data: DataObject): string | object {
         let content = data[name];
         if (typeof content === "string" && content !== "") {
             content = JSON.parse(content);
