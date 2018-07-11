@@ -16,12 +16,12 @@
             <description value="Verify that Static Block is refactor and new Block preview is applied."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-2278"/>
+            <useCaseId value="MC-1420"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -41,10 +41,11 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
-        <seeElement selector="{{BlockOnStage.status('Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder"/>
+        <waitForElementVisible selector="{{BlockOnStage.status('Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <dontSeeElement selector="{{BlockOnStorefront.blockContent}}" stepKey="seeBlockContentOnCmsStage"/>
     </test>
     <test name="AddBlockToCmsPage">
@@ -61,7 +62,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
         </before>
@@ -79,24 +79,22 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <waitForElementVisible selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStageAfterSave">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
     </test>
     <test name="BlockGetUpdated">
@@ -113,7 +111,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
@@ -121,6 +118,7 @@
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCmsPage1">
@@ -132,23 +130,22 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <waitForElementVisible selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
+        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Validate Stage -->
         <comment userInput="Validate stage" stepKey="validateStage1" />
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate storefront" stepKey="validateStorefront1" />
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCmsBlock">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
@@ -173,6 +170,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate storefront after updating block" stepKey="validateStorefront2" />
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForHtmlBaseStorefront"/>
         <waitForElementVisible selector="{{BlockOnStorefront.html('1')}}" stepKey="waitForHtmlStorefront"/>
     </test>
@@ -209,11 +207,10 @@
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <waitForElementVisible selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
@@ -230,18 +227,19 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPageAfterDisablingBlock">
             <argument name="CMSPage" value="$$createCMSPage$$" />
         </actionGroup>
-        <seeElement selector="{{BlockOnStage.status('Block disabled')}}" stepKey="seeDisabledBlockPlaceholder" />
+        <waitForElementVisible selector="{{BlockOnStage.status('Block disabled')}}" stepKey="seeDisabledBlockPlaceholder" />
 
         <!-- Go to CMS page on storefront and assert disabled block does not exist on page -->
         <comment userInput="Go to CMS page on storefront and assert disabled block does not exist on page" stepKey="commentAssertDisabledBlockMissingOnStorefront" />
         <amOnPage url="{{_defaultCmsPage.identifier}}" stepKey="amOnStorefrontCMSPage" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="doNotSeeBlockElementOnStorefront" />
     </test>
     <test name="BlockDelete">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Block - Delete Block"/>
+            <title value="Delete Block"/>
             <description value="A user should be able to delete an Block content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-2848"/>
@@ -280,23 +278,19 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Block - Displaying deleted block on Stage"/>
+            <title value="Displaying deleted block on Stage"/>
             <description value="A user should be able to see that block is deleted on Stage."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1420"/>
             <testCaseId value="MC-2420"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -322,7 +316,7 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive2">
             <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStage.deleted('$createPreReqBlock.id$')}}" stepKey="seeDeletedBlockPlaceHolder"/>
+        <waitForElementVisible selector="{{BlockOnStage.deleted('$createPreReqBlock.id$')}}" stepKey="seeDeletedBlockPlaceHolder"/>
     </test>
     <test name="BlockValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -358,14 +352,9 @@
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
@@ -496,14 +485,9 @@
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
