@@ -546,6 +546,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 foreach ($parent['types'] as $type) {
                     if ($type['policy'] === 'deny') {
                         $allowedParents = $this->removeDataInArray($type['name'], $allowedParents);
+                    } else {
+                        $allowedParents = array_merge(
+                            $allowedParents,
+                            $this->getContentTypesByPolicy($parent['types'], 'allow')
+                        );
                     }
                 }
             }
@@ -614,6 +619,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if ($removeKey !== false) {
             unset($data[$removeKey]);
         }
-        return $data;
+        return array_values($data);
     }
 }
