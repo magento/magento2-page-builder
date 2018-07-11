@@ -1786,12 +1786,12 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
         </actionGroup>
-        <dontSeeElement selector="{{SliderInAdmin.sliderContainer}}" stepKey="dontSeeSlider"/>
+        <dontSeeElementInDOM selector="{{SliderInAdmin.sliderContainer}}" stepKey="dontSeeSlider"/>
     </test>
     <test name="SliderAddToColumn">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Column"/>
+            <stories value="Slider"/>
             <title value="Add Slider to Column container and view on Admin and Storefront"/>
             <description value="As a Content Manager I want column to be a container so that I can add Slider inside"/>
             <severity value="CRITICAL"/>
@@ -1816,8 +1816,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Add Tabs to Stage -->
-        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <!-- Add Slider to Stage -->
+        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>

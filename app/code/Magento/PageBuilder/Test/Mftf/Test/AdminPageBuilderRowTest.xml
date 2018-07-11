@@ -1100,7 +1100,14 @@
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderRowContentType.role, '1')}}" stepKey="dropRowIntoRow"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOnlyOneElementRow"/>
+        <!-- Validate Stage -->
+        <comment userInput="User dont sees Row displayed in row on Stage" stepKey="confirmNoRowInRow"/>
+        <actionGroup ref="validateContentTypeNotInsideContainerStage" stepKey="checkContentTypeNotInContainerStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
     </test>
     <test name="RowCannotAddToColumns">
         <annotations>
@@ -1125,11 +1132,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <waitForElementVisible selector="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" stepKey="waitForRowToBeVisible"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Add row to Column -->
+        <comment userInput="Add row to column" stepKey="addRowToColumn"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoColumn">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
