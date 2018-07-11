@@ -18,6 +18,16 @@ return [
             'allowed_parents' => [
                 0 => 'stage'
             ],
+            'parents' => [
+                'defaultPolicy' => 'deny',
+                'types' => [
+                    ['name' => 'stage', 'policy' => 'allow']
+                ]
+            ],
+            'children' => [
+                'defaultPolicy' => 'allow',
+                'types' => []
+            ],
             'appearances' => [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',

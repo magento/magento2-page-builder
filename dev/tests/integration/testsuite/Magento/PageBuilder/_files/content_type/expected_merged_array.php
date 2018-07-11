@@ -35,7 +35,7 @@ return [
             'preview_component' => 'Path/to/preview/component',
             'master_component' => 'Path/to/master/component',
             'allowed_parents' => [
-                0 => 'stage'
+                0 => 'type3'
             ],
             'appearances' => [
                 'default' => [
@@ -229,8 +229,20 @@ return [
             'form' => 'pagebuilder_type2_custom_form',
             'group' => 'group2',
             'allowed_parents' => [
-                0 => 'stage',
-                1 => 'type1'
+                0 => 'type1'
+            ],
+            'parents' => [
+                'defaultPolicy' => 'deny',
+                'types' => [
+                    ['name' => 'stage', 'policy' => 'deny'],
+                    ['name' => 'type1', 'policy' => 'allow']
+                ]
+            ],
+            'children' => [
+                'defaultPolicy' => 'deny',
+                'types' => [
+                    ['name' => 'type3', 'policy' => 'allow'],
+                ]
             ],
             'appearances' => [
                 'default' => [
@@ -648,6 +660,16 @@ return [
             'group' => 'group1',
             'allowed_parents' => [
                 0 => 'stage'
+            ],
+            'parents' => [
+                'defaultPolicy' => 'deny',
+                'types' => [
+                    ['name' => 'stage', 'policy' => 'allow'],
+                ]
+            ],
+            'children' => [
+                'defaultPolicy' => 'allow',
+                'types' => []
             ],
             'appearances' => [
                 'default' => [

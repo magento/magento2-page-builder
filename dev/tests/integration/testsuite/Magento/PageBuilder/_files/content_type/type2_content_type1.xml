@@ -11,9 +11,10 @@
             <backend_block>Path/to/backend/block</backend_block>
             <backend_template>Path/to/backend/template</backend_template>
             <is_visible>true</is_visible>
-            <allowed_parents>
-                <parent name="stage"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="stage" policy="allow"/>
+            </parents>
+            <children default_policy="allow"/>
             <appearances>
                 <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
                     <data name="data1">value1</data>
