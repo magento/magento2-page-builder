@@ -341,6 +341,15 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateProductsInTabsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
         <!-- Verify Video in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>

@@ -1776,6 +1776,15 @@
             <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="User sees map displayed in column on Stage" stepKey="confirmMapOnStage2"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="View Map inside column on storefront" stepKey="viewMapOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">

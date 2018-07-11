@@ -1095,11 +1095,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderRowContentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderRowContentType.role, '1')}}" stepKey="dropRowIntoRow"/>
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <!-- Validate Stage -->
         <comment userInput="User dont sees Row displayed in row on Stage" stepKey="confirmNoRowInRow"/>
         <actionGroup ref="validateContentTypeNotInsideContainerStage" stepKey="checkContentTypeNotInContainerStage">
@@ -1108,6 +1108,7 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoElementRows"/>
     </test>
     <test name="RowCannotAddToColumns">
         <annotations>
@@ -1142,7 +1143,6 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <!-- Validate Stage -->
         <comment userInput="User dont sees Row displayed in column on Stage" stepKey="confirmNoRowInColumn"/>
         <actionGroup ref="validateContentTypeNotInsideContainerStage" stepKey="checkContentTypeNotInContainerStage">
@@ -1151,5 +1151,6 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoElementRows"/>
     </test>
 </tests>
