@@ -608,7 +608,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
 
     /**
      * Remove data from array
-     * 
+     *
      * @param $searchValue
      * @param $data
      * @return array
