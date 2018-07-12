@@ -1551,12 +1551,20 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Add row to Column -->
+        <!-- Drag column into a column -->
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="2" stepKey="seeOnlyTwoElementColumns"/>
+        <!-- Validate Stage -->
+        <comment userInput="User dont see column displayed in column on Stage" stepKey="confirmNoColumnInColumn"/>
+        <actionGroup ref="validateContentTypeNotInsideContainerStage" stepKey="checkContentTypeNotInContainerStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seesThreeElementColumns"/>
     </test>
 </tests>
