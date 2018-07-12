@@ -232,6 +232,7 @@ Any modifications you might want to make to content type configuration forms use
 ### `parents` configuration reference
 
 The `parents` element specifies which content types can accept this type as a child.
+Parent policies will overwrite any child policies that are set.
   
 **Example:**
 ``` xml

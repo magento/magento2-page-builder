@@ -264,10 +264,6 @@ Now, let's add content type that can contain other content types. Create configu
               icon="icon-vendorname-complex"
               sortOrder="35"
               translate="label">
-            <parents default_policy="deny">
-                <parent name="row" policy="allow"/>
-                <parent name="column" policy="allow"/>
-            </parents>
             <children default_policy="deny">
                 <child name="heading" policy="allow"/>
             </children>
