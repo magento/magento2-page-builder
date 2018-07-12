@@ -60,9 +60,9 @@ To add configuration for a new content type, create a file under the following l
               icon="icon-modulename-simple"
               sortOrder="35"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="row" policy="allow"/>
+            </parents>
             <appearances>
                 <appearance default="true"
                             name="default"
@@ -264,10 +264,13 @@ Now, let's add content type that can contain other content types. Create configu
               icon="icon-vendorname-complex"
               sortOrder="35"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="row" policy="allow"/>
+                <parent name="column" policy="allow"/>
+            </parents>
+            <children default_policy="deny">
+                <child name="heading" policy="allow"/>
+            </children>
             <appearances>
                 <appearance default="true"
                             name="default"
@@ -295,22 +298,6 @@ Now, let's add content type that can contain other content types. Create configu
                     </data_mapping>
                 </appearance>
             </appearances>
-        </type>
-    </content_types>
-</config>
-```
-
-Now we need to specify which content types can be inserted into our new content type. To allow default content type Heading be inserted into our Complex content type, add the following configuration.
-
-`Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\heading.xml`
-
-``` XML
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="heading">
-            <allowed_parents>
-                <parent name="complex"/>
-            </allowed_parents>
         </type>
     </content_types>
 </config>
