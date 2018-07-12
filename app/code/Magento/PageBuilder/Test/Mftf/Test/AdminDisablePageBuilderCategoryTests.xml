@@ -7,7 +7,15 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AdminAddWidgetToWYSIWYGWithCMSStaticBlockTypeTest">
+    <test name="AdminAddImageToWYSIWYGCatalogTest">
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="VerifyTinyMCEv4IsNativeWYSIWYGOnCatalogTest">
         <before>
             <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
         </before>
