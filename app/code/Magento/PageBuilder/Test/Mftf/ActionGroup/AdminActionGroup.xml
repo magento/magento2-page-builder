@@ -71,4 +71,27 @@
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
         <dontSee selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
+    <actionGroup name="setLayout">
+        <arguments>
+            <argument name="designSection"/>
+            <argument name="layoutOption"/>
+        </arguments>
+        <waitForElementVisible selector="{{designSection.DesignTab}}" stepKey="waitForDesignTabVisible"/>
+        <conditionalClick selector="{{designSection.DesignTab}}" dependentSelector="{{designSection.LayoutDropdown}}" visible="false" stepKey="clickOnDesignTab"/>
+        <waitForPageLoad stepKey="waitForPageLoadDesignTab"/>
+        <waitForElementVisible selector="{{designSection.LayoutDropdown}}" stepKey="waitForLayoutDropDown" />
+        <selectOption selector="{{designSection.LayoutDropdown}}" userInput="{{layoutOption}}" stepKey="selectLayout"/>
+    </actionGroup>
+    <actionGroup name="verifyFullWidthLayout">
+        <executeJS function="return document.querySelector('[data-role=row]').clientWidth" stepKey="rowWidth"/>
+        <executeJS function="return document.querySelector('[class=page-wrapper]').clientWidth" stepKey="pageWidth"/>
+        <assertEquals stepKey="assertRowWidth100Percent">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
 </actionGroups>
