@@ -302,13 +302,44 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
         if (currentShrinkable === parseFloat(shrinkableSize.toString()) || parseFloat(shrinkableSize.toString()) < this.getSmallestColumnWidth()) {
           allowedToShrink = false;
         } else {
-          updateColumnWidth(shrinkableColumn, shrinkableSize);
+          // Ensure we're not creating more columns width than the grid can support
+          if (this.gridSupportsResize(column, width, shrinkableColumn, shrinkableSize)) {
+            updateColumnWidth(shrinkableColumn, shrinkableSize);
+          } else {
+            allowedToShrink = false;
+          }
         }
       }
 
       if (allowedToShrink) {
         updateColumnWidth(column, width);
       }
+    };
+    /**
+     * Determine if the grid supports the new proposed grid size
+     *
+     * @param {ContentTypeCollectionInterface<Preview>} column
+     * @param {number} newWidth
+     * @param {ContentTypeCollectionInterface<Preview>} shrinkableColumn
+     * @param {number} shrinkableColumnNewWidth
+     * @returns {boolean}
+     */
+
+
+    _proto.gridSupportsResize = function gridSupportsResize(column, newWidth, shrinkableColumn, shrinkableColumnNewWidth) {
+      var _this4 = this;
+
+      // Determine the total width of all other columns in the grid, excluding the ones we plan to resize
+      var otherColumnsWidth = column.parent.getChildren()().filter(function (gridColumn) {
+        return gridColumn !== column && shrinkableColumn && gridColumn !== shrinkableColumn;
+      }).map(function (otherColumn) {
+        return _this4.getColumnWidth(otherColumn);
+      }).reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      console.log(otherColumnsWidth + newWidth + (shrinkableColumnNewWidth ? shrinkableColumnNewWidth : 0)); // Determine if the new total grid size will be 100%, with 1 for margin of error with rounding
+
+      return comparator(otherColumnsWidth + newWidth + (shrinkableColumnNewWidth ? shrinkableColumnNewWidth : 0), 100, 0.1);
     };
 
     return Resize;

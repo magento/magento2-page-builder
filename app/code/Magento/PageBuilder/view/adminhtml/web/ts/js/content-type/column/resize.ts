@@ -313,18 +313,57 @@ export default class Resize {
             const shrinkableSize = this.getAcceptedColumnWidth((currentShrinkable + -difference).toString());
 
             // Ensure the column we're crushing is not becoming the same size, and it's not less than the smallest width
-            if (currentShrinkable === parseFloat(shrinkableSize.toString())
-                || parseFloat(shrinkableSize.toString()) < this.getSmallestColumnWidth()
+            if ((currentShrinkable === parseFloat(shrinkableSize.toString())
+                || parseFloat(shrinkableSize.toString()) < this.getSmallestColumnWidth())
             ) {
                 allowedToShrink = false;
             } else {
-                updateColumnWidth(shrinkableColumn, shrinkableSize);
+                // Ensure we're not creating more columns width than the grid can support
+                if (this.gridSupportsResize(column, width, shrinkableColumn, shrinkableSize)) {
+                    updateColumnWidth(shrinkableColumn, shrinkableSize);
+                } else {
+                    allowedToShrink = false;
+                }
             }
         }
 
         if (allowedToShrink) {
             updateColumnWidth(column, width);
         }
+    }
+
+    /**
+     * Determine if the grid supports the new proposed grid size
+     *
+     * @param {ContentTypeCollectionInterface<Preview>} column
+     * @param {number} newWidth
+     * @param {ContentTypeCollectionInterface<Preview>} shrinkableColumn
+     * @param {number} shrinkableColumnNewWidth
+     * @returns {boolean}
+     */
+    private gridSupportsResize(
+        column: ContentTypeCollectionInterface<ColumnPreview>,
+        newWidth: number,
+        shrinkableColumn?: ContentTypeCollectionInterface<ColumnPreview>,
+        shrinkableColumnNewWidth?: number,
+    ) {
+        // Determine the total width of all other columns in the grid, excluding the ones we plan to resize
+        const otherColumnsWidth = column.parent.getChildren()().filter((gridColumn) => {
+            return gridColumn !== column && (shrinkableColumn && gridColumn !== shrinkableColumn);
+        }).map((otherColumn: ContentTypeCollectionInterface<ColumnPreview>) => {
+            return this.getColumnWidth(otherColumn);
+        }).reduce((a: number, b: number) => {
+            return a + b;
+        }, 0);
+
+        console.log(otherColumnsWidth + newWidth + (shrinkableColumnNewWidth ? shrinkableColumnNewWidth : 0));
+
+        // Determine if the new total grid size will be 100%, with 1 for margin of error with rounding
+        return comparator(
+            otherColumnsWidth + newWidth + (shrinkableColumnNewWidth ? shrinkableColumnNewWidth : 0),
+            100,
+            0.1,
+        );
     }
 }
 
