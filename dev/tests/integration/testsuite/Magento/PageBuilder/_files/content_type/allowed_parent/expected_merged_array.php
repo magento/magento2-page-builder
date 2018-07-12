@@ -29,66 +29,6 @@ return [
                 8 => 'parents_deny_with_parent',
                 9 => 'children_allow_with_child',
                 10 => 'children_deny_with_child'
-            ],
-            'parents' => [
-                'defaultPolicy' => 'allow',
-                'types' => []
-            ],
-            'children' => [
-                'defaultPolicy' => 'allow',
-                'types' => []
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'parents_and_children_deny' => [
@@ -100,67 +40,7 @@ return [
             'group' => 'group',
             'sortOrder' => '2',
             'translate' => 'label',
-            'allowed_parents' => [],
-            'parents' => [
-                'defaultPolicy' => 'deny',
-                'types' => []
-            ],
-            'children' => [
-                'defaultPolicy' => 'deny',
-                'types' => []
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
-            ]
+            'allowed_parents' => []
         ],
         'parents_allow' => [
             'name' => 'parents_allow',
@@ -183,62 +63,6 @@ return [
                 8 => 'parents_deny_with_parent',
                 9 => 'children_allow_with_child',
                 10 => 'children_deny_with_child'
-            ],
-            'parents' => [
-                'defaultPolicy' => 'allow',
-                'types' => []
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'parents_deny' => [
@@ -251,62 +75,6 @@ return [
             'sortOrder' => '4',
             'translate' => 'label',
             'allowed_parents' => [],
-            'parents' => [
-                'defaultPolicy' => 'deny',
-                'types' => []
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
-            ]
         ],
         'children_allow' => [
             'name' => 'children_allow',
@@ -321,62 +89,6 @@ return [
                 0 => 'parents_and_children_allow',
                 1 => 'children_allow',
                 2 => 'children_allow_with_child'
-            ],
-            'children' => [
-                'defaultPolicy' => 'allow',
-                'types' => []
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'children_deny' => [
@@ -392,62 +104,6 @@ return [
                 0 => 'parents_and_children_allow',
                 1 => 'children_allow',
                 2 => 'children_allow_with_child'
-            ],
-            'children' => [
-                'defaultPolicy' => 'deny',
-                'types' => []
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'no_parents_and_children' => [
@@ -463,58 +119,6 @@ return [
                 0 => 'parents_and_children_allow',
                 1 => 'children_allow',
                 2 => 'children_deny_with_child'
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'parents_allow_with_parent' => [
@@ -538,65 +142,6 @@ return [
                 8 => 'children_allow_with_child',
                 9 => 'children_deny_with_child',
                 10 => 'stage'
-            ],
-            'parents' => [
-                'defaultPolicy' => 'allow',
-                'types' => [
-                    ['name' => 'stage', 'policy' => 'allow'],
-                    ['name' => 'parents_allow_with_parent', 'policy' => 'deny']
-                ]
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'parents_deny_with_parent' => [
@@ -610,65 +155,6 @@ return [
             'translate' => 'label',
             'allowed_parents' => [
                 0 => 'stage'
-            ],
-            'parents' => [
-                'defaultPolicy' => 'deny',
-                'types' => [
-                    ['name' => 'stage', 'policy' => 'allow'],
-                    ['name' => 'parents_deny_with_parent', 'policy' => 'deny']
-                ]
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'children_allow_with_child' => [
@@ -684,66 +170,6 @@ return [
                 0 => 'parents_and_children_allow',
                 1 => 'children_allow',
                 2 => 'children_allow_with_child'
-            ],
-            'children' => [
-                'defaultPolicy' => 'allow',
-                'types' => [
-                    ['name' => 'parents_allow', 'policy' => 'deny'],
-                    ['name' => 'children_deny', 'policy' => 'allow'],
-                    ['name' => 'no_parents_and_children', 'policy' => 'deny']
-                ]
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ],
         'children_deny_with_child' => [
@@ -759,66 +185,6 @@ return [
                 0 => 'parents_and_children_allow',
                 1 => 'children_allow',
                 2 => 'children_allow_with_child'
-            ],
-            'children' => [
-                'defaultPolicy' => 'deny',
-                'types' => [
-                    ['name' => 'parents_deny', 'policy' => 'allow'],
-                    ['name' => 'children_allow', 'policy' => 'deny'],
-                    ['name' => 'no_parents_and_children', 'policy' => 'allow']
-                ]
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'path' => '.',
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
             ]
         ]
     ]

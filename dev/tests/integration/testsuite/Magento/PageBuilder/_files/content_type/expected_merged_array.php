@@ -231,19 +231,6 @@ return [
             'allowed_parents' => [
                 0 => 'type1'
             ],
-            'parents' => [
-                'defaultPolicy' => 'deny',
-                'types' => [
-                    ['name' => 'stage', 'policy' => 'deny'],
-                    ['name' => 'type1', 'policy' => 'allow']
-                ]
-            ],
-            'children' => [
-                'defaultPolicy' => 'deny',
-                'types' => [
-                    ['name' => 'type3', 'policy' => 'allow'],
-                ]
-            ],
             'appearances' => [
                 'default' => [
                     'data1' => 'custom_value',
@@ -660,16 +647,6 @@ return [
             'group' => 'group1',
             'allowed_parents' => [
                 0 => 'stage'
-            ],
-            'parents' => [
-                'defaultPolicy' => 'deny',
-                'types' => [
-                    ['name' => 'stage', 'policy' => 'allow'],
-                ]
-            ],
-            'children' => [
-                'defaultPolicy' => 'allow',
-                'types' => []
             ],
             'appearances' => [
                 'default' => [
