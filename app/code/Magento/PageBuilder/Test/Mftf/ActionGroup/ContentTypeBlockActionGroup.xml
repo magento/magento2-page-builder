@@ -23,14 +23,16 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
         <waitForElementVisible selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="waitForAddSelected"/>
         <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelected"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear4"/>
     </actionGroup>
     <actionGroup name="verifyBlockOnStage">
         <arguments>
+            <argument name="contentType"/>
             <argument name="block"/>
+            <argument name="index"/>
         </arguments>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="onMouseOverContentTypeStage"/>
-        <waitForElementVisible selector="{{BlockOnStage.title(block.title)}}" stepKey="wait"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <waitForElementVisible selector="{{BlockOnStage.title('1', block.title)}}" stepKey="wait"/>
+        <seeElement selector="{{BlockOnStage.title('1',block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
 </actionGroups>
