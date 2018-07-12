@@ -356,8 +356,6 @@ export default class Resize {
             return a + b;
         }, 0);
 
-        console.log(otherColumnsWidth + newWidth + (shrinkableColumnNewWidth ? shrinkableColumnNewWidth : 0));
-
         // Determine if the new total grid size will be 100%, with 1 for margin of error with rounding
         return comparator(
             otherColumnsWidth + newWidth + (shrinkableColumnNewWidth ? shrinkableColumnNewWidth : 0),
