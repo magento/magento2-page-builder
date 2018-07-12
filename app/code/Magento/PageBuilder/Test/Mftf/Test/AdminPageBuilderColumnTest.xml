@@ -1523,12 +1523,12 @@
         <dontSeeElementInDOM selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElementInDOM selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="dontSeeColumnGroup"/>
     </test>
-    <test name="ColumnCannotAddToColumns">
+    <test name="ColumnCannotAddInsideColumn">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Cannot drag a column into a column"/>
-            <description value="If user drags column into a column, it should have no effect"/>
+            <title value="Cannot add a column inside another column"/>
+            <description value="If user drags column into a column, it should add to the column group but not add a column inside the targeted column"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-515"/>
             <testCaseId value="MC-3143"/>
