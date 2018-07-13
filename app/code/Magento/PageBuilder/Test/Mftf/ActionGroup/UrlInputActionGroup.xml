@@ -10,9 +10,9 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="fillOutUrlInput">
         <arguments>
-            <argument name="fieldName" defaultValue=""/>
-            <argument name="linkName" defaultValue=""/>
-            <argument name="searchString" defaultValue=""/>
+            <argument name="fieldName"/>
+            <argument name="linkName"/>
+            <argument name="searchString"/>
             <argument name="searchResult"/>
         </arguments>
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('fieldName')}}" stepKey="waitForButtonLinkSelect"/>
@@ -37,12 +37,14 @@
     </actionGroup>
     <actionGroup name="verifyCmsPageLinkOnFrontend">
         <arguments>
-            <argument name="identifier"/>
+            <argument name="CMSPage"/>
             <argument name="index"/>
+            <argument name="section"/>
         </arguments>
-        <scrollTo selector="{{ButtonItemOnStorefront.base('index')}}" stepKey="waitForButtonElementStorefront"/>
-        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(identifier)}}" stepKey="seePageLinkOnStoreFront" />
-        <click selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(identifier)}}" stepKey="clickButton"/>
+        <scrollTo selector="{{section.base('index')}}" stepKey="waitForButtonElementStorefront"/>
+        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(CMSPage.identifier)}}" stepKey="seePageLinkOnStoreFront" />
+        <click selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(CMSPage.identifier)}}" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="{{CMSPage.title}}" stepKey="seePageName" />
     </actionGroup>
 </actionGroups>

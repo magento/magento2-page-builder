@@ -1299,6 +1299,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
             <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct" />
             <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
@@ -1312,8 +1313,9 @@
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <!--Click enable PageBuilder button-->
         <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
-        <actionGroup ref="enablePageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button into PageBuilder-->
         <comment userInput="Add button into PageBuilder" stepKey="addButtonIntoPageBuilder"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
@@ -1375,10 +1377,10 @@
         <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
         <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
         <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
-            <argument name="identifier" value="$$createCMSPageA.identifier$$"/>
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
             <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <see userInput="$$createCMSPageA.title$$" stepKey="seePageName" />
     </test>
     <test name="AdminPageBuilderCategoryDirectivesTest">
         <annotations>
@@ -1387,7 +1389,7 @@
             <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Category"/>
             <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Category Page"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MMC-3173"/>
+            <testCaseId value="MC-3173"/>
             <useCaseId value="MC-1364"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -1401,6 +1403,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
             <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
@@ -1413,8 +1416,9 @@
         <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="clickContentTab"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <!--Click enable PageBuilder button-->
         <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
-        <actionGroup ref="enablePageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
+        <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button to PageBuilder-->
         <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
@@ -1476,8 +1480,9 @@
         <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
         <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
         <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
-            <argument name="identifier" value="$$createCMSPageA.identifier$$"/>
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
             <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
         </actionGroup>
         <see userInput="$$createCMSPageA.title$$" stepKey="seePageName" />
     </test>
