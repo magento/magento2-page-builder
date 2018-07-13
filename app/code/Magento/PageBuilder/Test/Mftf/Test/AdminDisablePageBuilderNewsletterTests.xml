@@ -7,6 +7,14 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AdminAddImageToWYSIWYGNewsletterTest">
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="enableWYSIWYG"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
     <test name="AdminAddVariableToWYSIWYGNewsletterTest">
         <before>
             <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
@@ -14,5 +22,14 @@
         <after>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
         </after>
+    </test>
+    <test name="AddWidgetToNewsletter">
+        <annotations>
+            <!-- Skipped; see MC-1373 -->
+            <title value="AddWidgetToNewsletter"/>
+            <description value="AddWidgetToNewsletter"/>
+            <stories value="AddWidgetToNewsletter"/>
+            <group value="skip"/>
+        </annotations>
     </test>
 </tests>
