@@ -808,7 +808,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Resize the first column via the second columns resize handle to the smallest possible column size"/>
+            <title value="Resize Column: the first column via the second columns resize handle to the smallest possible column size"/>
             <description value="Resize the first column via the second columns resize handle to the smallest possible column size"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-831"/>
@@ -834,12 +834,14 @@
             <argument name="targetIndex" value="1"/>
             <argument name="expectedIndex" value="2"/>
         </actionGroup>
+        <!-- Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left -->
+        <comment userInput="Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left" stepKey="commentInitialResize"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForPageLoad" />
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','5/12')}}" stepKey="validateFirstColumnWidth"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="validateThirdColumnWidth"/>
-        <waitForPageLoad stepKey="waitForPageLoad" />
         <!-- Resize left column to 4/12 via second column -->
         <comment userInput="Resize left column to 4/12 via second column" stepKey="commentFourTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn1"/>
