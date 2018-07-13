@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="RowCanAddAdditionalRowOnProduct">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Add additional row in Product"/>
+            <description value="A user should be able to add additional rows into Page Builder when used on a product."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3101"/>
+            <testCaseId value="MC-3220"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+                <argument name="category" value="$$createPreReqCategory$$"/>
+                <argument name="simpleProduct" value="_defaultProduct"/>
+            </actionGroup>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+        </after>
+        <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderButton"/>
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderButton" />
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <!-- Drag a new row to the stage -->
+        <comment userInput="Drag a new row to the stage" stepKey="commentDragRow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Verify an additional row has been added to the stage -->
+        <comment userInput="Verify an additional row has been added to the stage" stepKey="commentVerifyRow"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeNumberOfRows2"/>
+        <!-- Save product and verify second row is persisted -->
+        <comment userInput="Save product and verify second row is persisted" stepKey="commentSaveProduct"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <!-- Re-open Page Builder after save -->
+        <comment userInput="Re-open Page Builder after save" stepKey="commentReopenPageBuilder"/>
+        <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection2"/>
+        <waitForPageLoad stepKey="waitForPageLoadContentSection2"/>
+        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderButton2"/>
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderButton2" />
+        <waitForPageLoad stepKey="waitForPageLoadPageBuilder2"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeSavedNumberOfRows2"/>
+    </test>
+</tests>
