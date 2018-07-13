@@ -1312,6 +1312,7 @@
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
         <actionGroup ref="enablePageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button into PageBuilder-->
         <comment userInput="Add button into PageBuilder" stepKey="addButtonIntoPageBuilder"/>
@@ -1323,6 +1324,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <!--Choose cms page link type-->
+        <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
         <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
             <argument name="fieldName" value="button_link"/>
             <argument name="linkName" value="ExternalLink.page"/>
@@ -1363,9 +1365,9 @@
         <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <!--Go to storefront to verify Product Link-->
         <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
         <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
-        <!--Go to storefront to verify Product Link-->
         <comment userInput="Verify directive link on Storefront" stepKey="verifyDirectiveLinkOnStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <scrollTo selector="{{StorefrontProductInfoDetailsSection.detailsTab}}" stepKey="scrollToDetailsTab"/>
@@ -1411,6 +1413,7 @@
         <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="clickContentTab"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
         <actionGroup ref="enablePageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button to PageBuilder-->
         <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
