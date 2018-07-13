@@ -50,6 +50,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertTypes(\DOMDocument $source): array
     {
         $typesData = [];
+        $parentChildData = [];
         /** @var \DOMNodeList $contentTypes */
         $contentTypes = $source->getElementsByTagName('type');
         /** @var \DOMNode $contentType */
@@ -66,12 +67,16 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                         $typesData[$name][$childNode->nodeName] = $this->convertAppearancesData($childNode);
                     } elseif ('additional_data' === $childNode->nodeName) {
                         $typesData[$name][$childNode->nodeName] = $this->convertAdditionalData($childNode);
-                    } elseif ('allowed_parents' === $childNode->nodeName) {
-                        $parents = [];
-                        foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
-                            $parents[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
-                        }
-                        $typesData[$name][$childNode->nodeName] = $parents;
+                    } elseif ('parents' === $childNode->nodeName) {
+                        $parentChildData[$name][$childNode->nodeName] = [
+                            'defaultPolicy' => $this->getAttributeValue($childNode, 'default_policy'),
+                            'types' => $this->convertParentChildData($childNode, 'parent')
+                        ];
+                    } elseif ('children' === $childNode->nodeName) {
+                        $parentChildData[$name][$childNode->nodeName] = [
+                            'defaultPolicy' => $this->getAttributeValue($childNode, 'default_policy'),
+                            'types' => $this->convertParentChildData($childNode, 'child')
+                        ];
                     } else {
                         $typesData[$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
@@ -83,7 +88,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
         });
 
-        return $typesData;
+        $allowedParents = $this->convertParentChildDataToAllowedParents(array_keys($typesData), $parentChildData);
+
+        return array_merge_recursive($typesData, $allowedParents);
     }
 
     /**
@@ -429,6 +436,120 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
+     * Convert parent and child data to correct format
+     *
+     * @param \DOMElement $elementNode
+     * @param string $tagName
+     * @return array
+     */
+    private function convertParentChildData(\DOMElement $elementNode, string $tagName): array
+    {
+        $data = [];
+        foreach ($elementNode->getElementsByTagName($tagName) as $node) {
+            $name = $node->attributes->getNamedItem('name')->nodeValue;
+            $data[$node->attributes->getNamedItem('policy')->nodeValue][] = $name;
+        }
+        return $data;
+    }
+
+    /**
+     * Convert parent and child data to allowed parents
+     *
+     * @param array $types
+     * @param array $parentChildData
+     * @return array
+     */
+    private function convertParentChildDataToAllowedParents(array $types, array $parentChildData): array
+    {
+        $allowedParentsData = [];
+
+        // convert children
+        $allowedParents = $this->convertChildrenToAllowedParents($parentChildData, $types);
+        foreach ($types as $type) {
+            $allowedParentsData[$type]['allowed_parents'] = $allowedParents[$type];
+        }
+
+        // convert parents
+        $allowedParentsData = $this->convertParentsToAllowedParents($parentChildData, $types, $allowedParentsData);
+
+        return $allowedParentsData;
+    }
+
+    /**
+     * Convert children data to allow parents
+     *
+     * @param array $parentChildData
+     * @param array $types
+     * @return array
+     */
+    private function convertChildrenToAllowedParents(array $parentChildData, array $types): array
+    {
+        $allowedParents = [];
+
+        // setup allowed parents array
+        foreach ($types as $type) {
+            $allowedParents[$type] = [];
+        }
+
+        foreach ($parentChildData as $key => $value) {
+            $children = $value['children'] ?? [];
+
+            if (empty($children)) {
+                continue;
+            }
+
+            foreach ($allowedParents as $type => $parents) {
+                $typeAllowed = in_array($type, $children['types']['allow'] ?? []);
+                $typeDenied = in_array($type, $children['types']['deny'] ?? []);
+                if (($children['defaultPolicy'] === 'deny' && !$typeAllowed) || $typeDenied) {
+                    $allowedParents[$type] = $this->removeDataInArray($key, $parents);
+                } else {
+                    $allowedParents[$type][] = $key;
+                }
+            }
+        }
+
+        return $allowedParents;
+    }
+
+    /**
+     * Convert parents data to allowed parents
+     *
+     * @param array $parentChildData
+     * @param array $types
+     * @param array $allowedParentsData
+     * @return array
+     */
+    private function convertParentsToAllowedParents(
+        array $parentChildData,
+        array $types,
+        array $allowedParentsData
+    ): array {
+        foreach ($parentChildData as $key => $value) {
+            $parent = $value['parents'] ?? [];
+
+            if (empty($parent)) {
+                continue;
+            }
+
+            $allowedTypes = $parent['types']['allow'] ?? [];
+            $deniedTypes = $parent['types']['deny'] ?? [];
+
+            if ($parent['defaultPolicy'] === 'deny') {
+                $allowedParents = $allowedTypes;
+            } else {
+                $allowedParents = array_merge($types, $allowedTypes);
+                foreach ($deniedTypes as $type) {
+                    $allowedParents = $this->removeDataInArray($type, $allowedParents);
+                }
+            }
+            $allowedParentsData[$key]['allowed_parents'] = $allowedParents;
+        }
+
+        return $allowedParentsData;
+    }
+
+    /**
      * Check if node is configuration node
      *
      * @param \DOMNode $node
@@ -466,5 +587,21 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     {
         return $this->getAttributeValue($node, 'storage_key')
             ?: $this->getAttributeValue($node, 'name');
+    }
+
+    /**
+     * Remove data from array
+     *
+     * @param $searchValue
+     * @param $data
+     * @return array
+     */
+    private function removeDataInArray(string $searchValue, array $data): array
+    {
+        $removeKey = array_search($searchValue, $data);
+        if ($removeKey !== false) {
+            unset($data[$removeKey]);
+        }
+        return array_values($data);
     }
 }

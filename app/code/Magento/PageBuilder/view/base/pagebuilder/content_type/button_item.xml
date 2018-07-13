@@ -16,9 +16,10 @@
               group="general"
               icon="icon-pagebuilder-button"
               translate="label">
-            <allowed_parents>
-                <parent name="buttons"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="buttons" policy="allow"/>
+            </parents>
+            <children default_policy="deny"/>
             <is_visible>false</is_visible>
             <appearances>
                 <appearance default="true"

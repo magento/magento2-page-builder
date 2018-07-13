@@ -17,11 +17,15 @@
               icon="icon-pagebuilder-column"
               sortOrder="15"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column-group"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="row" policy="allow"/>
+                <parent name="column-group" policy="allow"/>
+                <parent name="tab-item" policy="allow"/>
+            </parents>
+            <children default_policy="allow">
+                <child name="row" policy="deny"/>
+                <child name="column" policy="deny"/>
+            </children>
             <appearances>
                 <appearance default="true"
                             name="full-height"

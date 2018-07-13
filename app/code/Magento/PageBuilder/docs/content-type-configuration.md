@@ -92,10 +92,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
           icon="icon-pagebuilder-image"
           sortOrder="1"
           translate="label">
-        <allowed_parents>
-            <parent name="row"/>
-            <parent name="column"/>
-        </allowed_parents>
+        <children default_policy="deny"/>
         <appearances>
             <appearance default="true"
                         name="poster"
@@ -215,7 +212,8 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | Element             | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
-| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |
+| `parents`           | List of parent content types that can accept this type as a child.                                                                          |
+| `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
 | `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
 | `additional_data`   | Allows to specify additional data for component, see [custom configuration for content type](custom-configuration.md) for more information. |
@@ -242,17 +240,45 @@ The `form` element specifies the name of the UiComponent form used to configure 
 
 Any modifications you might want to make to content type configuration forms use standard UiComponent functionality. Please see [UiComponent Documentation](http://devdocs.magento.com/guides/v2.3/ui_comp_guide/bk-ui_comps.html) for additional information.
 
-### `allowed_parents` configuration reference
+### `parents` configuration reference
 
-The `allowed_parents` element specifies which content types can accept this type as a child.
+The `parents` element specifies which content types can accept this type as a child.
+Parent policies will overwrite any child policies that are set.
   
 **Example:**
 ``` xml
-<allowed_parents>
-    <parent name="row"/>
-    <parent name="column"/>
-</allowed_parents>
+<parents default_policy="deny">
+    <parent name="row" policy="allow"/>
+    <parent name="column" policy="allow"/>
+</parents>
 ``` 
+| Element             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `parent`            | The name of the parent content type that is allowed or denied.                         |
+
+| Attribute           | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `default_policy`    | Allows or denies all content types to be parents unless specified as a parent element. |
+
+### `children` configuration reference
+
+The `children` element specifies which content types can accept this type as a parent.
+  
+**Example:**
+``` xml
+<children default_policy="allow">
+    <child name="row" policy="deny"/>
+    <child name="column" policy="deny"/>
+</children>
+``` 
+| Element             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `child`             | The name of the child content type that is allowed or denied                           |
+
+| Attribute           | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `default_policy`    | Allows or denies all content types to be children unless specified as a child element. |
+
 ### `appearances` configuration reference
 
 The `appearances` element specifies how the content type renders in the admin preview and the master format.

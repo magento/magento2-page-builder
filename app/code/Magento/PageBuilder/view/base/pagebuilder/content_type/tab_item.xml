@@ -17,9 +17,13 @@
               icon="icon-pagebuilder-tabs"
               sortOrder="30"
               translate="label">
-            <allowed_parents>
-                <parent name="tabs"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="tabs" policy="allow"/>
+            </parents>
+            <children default_policy="allow">
+                <child name="row" policy="deny"/>
+                <child name="tabs" policy="deny"/>
+            </children>
             <appearances>
                 <appearance name="default"
                             default="true"

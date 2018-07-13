@@ -35,7 +35,7 @@ return [
             'preview_component' => 'Path/to/preview/component',
             'master_component' => 'Path/to/master/component',
             'allowed_parents' => [
-                0 => 'stage'
+                0 => 'type3'
             ],
             'appearances' => [
                 'default' => [
@@ -228,8 +228,7 @@ return [
             'form' => 'pagebuilder_type2_custom_form',
             'group' => 'group2',
             'allowed_parents' => [
-                0 => 'stage',
-                1 => 'type1'
+                0 => 'type1'
             ],
             'appearances' => [
                 'default' => [

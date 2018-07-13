@@ -16,9 +16,10 @@
               group="media"
               icon="icon-pagebuilder-slider"
               translate="label">
-            <allowed_parents>
-                <parent name="slider"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="slider" policy="allow"/>
+            </parents>
+            <children default_policy="deny"/>
             <appearances>
                 <appearance name="collage-left"
                             preview_template="Magento_PageBuilder/content-type/slide/collage-left/preview"
