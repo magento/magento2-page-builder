@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentType;
+namespace Magento\PageBuilder\Model\Config;
 
 use Magento\TestFramework\Helper\Bootstrap;
 
@@ -38,7 +38,7 @@ class AllowedParentTest extends \PHPUnit\Framework\TestCase
 
     public function testParentsAndChildrenConvertToAllowedParents()
     {
-        $filePath = '/../../../_files/content_type/allowed_parent/';
+        $filePath = '/../../_files/allowed_parent/';
         $fileList = [
             file_get_contents(__DIR__ . $filePath . 'parents_and_children_allow.xml'),
             file_get_contents(__DIR__ . $filePath . 'parents_and_children_deny.xml'),
@@ -56,7 +56,7 @@ class AllowedParentTest extends \PHPUnit\Framework\TestCase
             ->method('get')
             ->with('content_type/*.xml', 'global')
             ->willReturn($fileList);
-        $expected = include __DIR__ . '/../../../_files/content_type/allowed_parent/expected_merged_array.php';
+        $expected = include __DIR__ . '/../../_files/allowed_parent/expected_merged_array.php';
         $this->assertEquals($expected, $this->model->read('global'));
     }
 }
