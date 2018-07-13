@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import ValueInterface from "./value.d";
+
 /**
  * @api
  */
-import ValueInterface from "./value.d";
-
 export interface OptionInterface {
     key: string;
     type: string;

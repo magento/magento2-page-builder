@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 import _ from "underscore";
+import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -12,7 +13,15 @@ export default class CreateValueForHref implements ConverterInterface {
     /**
      * @type object
      */
-    private widgetParamsByLinkType: object = {
+    private widgetParamsByLinkType: {
+        [key: string]: {
+            type: string;
+            page_id?: string;
+            id_path?: string;
+            template: string;
+            type_name: string;
+        };
+    } = {
         category: {
             type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
             id_path: `category/:href`,
@@ -50,7 +59,7 @@ export default class CreateValueForHref implements ConverterInterface {
      * @param data Object
      * @returns {string}
      */
-    public toDom(name: string, data: object): string {
+    public toDom(name: string, data: DataObject): string {
 
         const link = data[name];
         let href = "";
@@ -78,7 +87,8 @@ export default class CreateValueForHref implements ConverterInterface {
     private convertToWidget(href: string, widgetAttributes: object): string {
         const attributesString = _.map(
             widgetAttributes,
-            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`).join(" ");
+            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`,
+        ).join(" ");
 
         return `{{widget ${attributesString} }}`;
     }

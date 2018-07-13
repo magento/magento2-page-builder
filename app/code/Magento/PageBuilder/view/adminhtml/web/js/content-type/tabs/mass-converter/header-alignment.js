@@ -14,8 +14,8 @@ define([], function () {
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
@@ -24,8 +24,8 @@ define([], function () {
     /**
      * Add our tab alignment class into the data for the tabs
      *
-     * @param {object} data
-     * @param {object} config
+     * @param {ConverterDataInterface} data
+     * @param {ConverterConfigInterface} config
      * @returns {object}
      */
 

@@ -3,14 +3,16 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "../property-reader-interface";
+import PropertyReaderInterface from "./property-reader-interface";
 
 /**
  * @api
  */
 export default class Link implements PropertyReaderInterface {
 
-    private regexpByLinkType: object = {
+    private regexpByLinkType: {
+        [key: string]: RegExp;
+    } = {
         category: new RegExp(/id_path=['"]category\/(\d+)/),
         product: new RegExp(/id_path=['"]product\/(\d+)/ ),
         page: new RegExp(/page_id=['"](\d+)/),

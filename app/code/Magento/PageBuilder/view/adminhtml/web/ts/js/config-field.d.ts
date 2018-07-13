@@ -5,7 +5,7 @@
 /**
  * @api
  */
-export interface ConfigFieldInterface {
+export default interface ConfigFieldInterface {
     [key: string]: {
         default: null | string | number;
     };

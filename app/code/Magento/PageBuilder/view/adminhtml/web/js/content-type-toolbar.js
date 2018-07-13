@@ -52,7 +52,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
 
 
     _proto.onFocusIn = function onFocusIn(context, event) {
-      var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+      var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStart");
@@ -66,7 +66,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
 
 
     _proto.onFocusOut = function onFocusOut(context, event) {
-      var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+      var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");

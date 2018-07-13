@@ -55,7 +55,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOptionInterface[]}
+     * @returns {OptionInterface[]}
      */
 
 
