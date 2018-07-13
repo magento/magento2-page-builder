@@ -29,7 +29,7 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="justify_content"/>
                                 </style_properties>
@@ -39,7 +39,7 @@
                                 </attributes>
                                 <css name="css_classes"/>
                             </element>
-                            <element name="wrapper" path=".//div[contains(@class,'pagebuilder-video-wrapper')]">
+                            <element name="wrapper">
                                 <style_properties>
                                     <property name="max_width" source="max_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
@@ -50,7 +50,7 @@
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                             </element>
-                            <element name="video" path=".//iframe">
+                            <element name="video">
                                 <attributes>
                                     <attribute name="video_source" source="src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src" preview_converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
                                 </attributes>

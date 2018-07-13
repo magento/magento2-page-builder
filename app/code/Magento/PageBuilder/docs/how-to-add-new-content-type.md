@@ -82,7 +82,7 @@ To add configuration for a new content type, create a file under the following l
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style"/>
@@ -287,7 +287,7 @@ Now, let's add content type that can contain other content types. Create configu
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style"/>

@@ -29,7 +29,7 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
@@ -45,7 +45,7 @@
                                 </attributes>
                                 <css name="css_classes"/>
                             </element>
-                            <element name="desktop_image" path=".//img[1]">
+                            <element name="desktop_image">
                                 <style_properties>
                                     <static_property source="max-width" value="100%"/>
                                     <static_property source="height" value="auto"/>
@@ -56,7 +56,7 @@
                                     <attribute name="title_attribute" source="title"/>
                                 </attributes>
                             </element>
-                            <element name="mobile_image" path=".//img[2]">
+                            <element name="mobile_image">
                                 <style_properties>
                                     <static_property source="max-width" value="100%"/>
                                     <static_property source="height" value="auto"/>
@@ -67,7 +67,7 @@
                                     <attribute name="title_attribute" source="title"/>
                                 </attributes>
                             </element>
-                            <element name="link" path=".//a">
+                            <element name="link">
                                 <attributes>
                                     <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
                                     <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
@@ -76,7 +76,7 @@
                                     <attribute name="title_attribute" source="title"/>
                                 </attributes>
                             </element>
-                            <element name="caption" path=".//figcaption">
+                            <element name="caption">
                                 <html name="image_caption"/>
                             </element>
                         </elements>

@@ -51,6 +51,7 @@ class AdvancedSlider implements RendererInterface
         $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'slider',
             'data-appearance' => 'default',
             'data-autoplay' => isset($eavData['autoplay']) ? $eavData['autoplay'] : '',

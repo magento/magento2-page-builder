@@ -14,6 +14,7 @@ define([], function () {
     function AttributeMapper() {
       this.attributeNameMapping = {
         appearance: "data-appearance",
+        element: "data-element",
         autoplay: "data-autoplay",
         autoplay_speed: "data-autoplay-speed",
         border: "data-border",

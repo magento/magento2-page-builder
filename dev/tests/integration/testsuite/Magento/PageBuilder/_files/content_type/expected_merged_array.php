@@ -45,7 +45,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_converter',
@@ -243,7 +242,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'first_element' => [
-                                'path' => '.',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -429,7 +427,6 @@ return [
                                 ]
                             ],
                             'second_element' => [
-                                'path' => '//a',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -459,7 +456,6 @@ return [
                                 ]
                             ],
                             'third_element' => [
-                                'path' => '//div',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -526,7 +522,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -591,7 +586,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -657,7 +651,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
