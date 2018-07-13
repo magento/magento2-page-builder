@@ -46,8 +46,8 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElement selector="{{BlockOnStorefront.empty}}" stepKey="waitForSeeElement"/>
-        <seeElementInDOM selector="{{BlockOnStorefront.empty}}" stepKey="seeBlockContentOnCmsStage"/>
+        <waitForElement selector="{{BlockOnStorefront.empty('1')}}" stepKey="waitForSeeElement"/>
+        <seeElementInDOM selector="{{BlockOnStorefront.empty('1')}}" stepKey="seeBlockContentOnCmsStage"/>
     </test>
     <test name="AddBlockToCmsPage">
         <annotations>
@@ -277,7 +277,7 @@
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="DisplayingDeletedBlockOnStage">
         <annotations>

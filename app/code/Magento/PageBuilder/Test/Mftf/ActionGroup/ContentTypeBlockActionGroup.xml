@@ -27,12 +27,12 @@
     <actionGroup name="verifyBlockOnStage">
         <arguments>
             <argument name="block"/>
-            <argument name="index"/>
+            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{BlockOnStage.title('1', block.title)}}" stepKey="wait"/>
-        <seeElement selector="{{BlockOnStage.title('1',block.title)}}" stepKey="seeOptionMenuTitle"/>
-        <see userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
+        <waitForElementVisible selector="{{BlockOnStage.title(index, block.title)}}" stepKey="wait"/>
+        <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
+        <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
 </actionGroups>
