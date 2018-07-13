@@ -46,7 +46,8 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeElement selector="{{BlockOnStorefront.empty}}" stepKey="seeBlockContentOnCmsStage"/>
+        <waitForElement selector="{{BlockOnStorefront.empty}}" stepKey="waitForSeeElement"/>
+        <seeElementInDOM selector="{{BlockOnStorefront.empty}}" stepKey="seeBlockContentOnCmsStage"/>
     </test>
     <test name="AddBlockToCmsPage">
         <annotations>
@@ -83,6 +84,7 @@
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
         <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
