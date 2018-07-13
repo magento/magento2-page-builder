@@ -70,7 +70,6 @@ class MigrateToPageBuilder implements DataPatchInterface
                 \Magento\Framework\App\Area::AREA_ADMINHTML,
                 [$convertBlueFootToPageBuilder, 'convert']
             );
-            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $this->moduleDataSetup])->convert();
             $this->moveImages->move();
         }
     }
