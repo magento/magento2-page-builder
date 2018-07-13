@@ -33,6 +33,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.element = void 0;
       _this.fieldsToIgnoreOnRemove = ["width"];
 
+      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_this), "width");
+
       _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
       _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "grid_size");
@@ -74,6 +76,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
+      this.updateColumnWidthClass();
 
       _events.trigger("column:initializeAfter", {
         column: this.parent,
@@ -222,6 +225,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         this.displayLabel((0, _translate)("Column") + " " + newLabel);
       }
+    };
+    /**
+     * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
+     */
+
+
+    _proto.updateColumnWidthClass = function updateColumnWidthClass() {
+      // Only update once instantiated
+      if (!this.element) {
+        return;
+      }
+
+      var currentClass = this.element.attr("class").match(/(?:^|\s)(column-width-\d{1,3})(?:$|\s)/);
+
+      if (currentClass !== null) {
+        this.element.removeClass(currentClass[1]);
+      }
+
+      var roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
+      this.element.addClass("column-width-" + roundedWidth);
     };
     /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
