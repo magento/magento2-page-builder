@@ -88,14 +88,12 @@
         <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStageAfterSave">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -145,7 +143,6 @@
         <!-- Validate Stage -->
         <comment userInput="Validate stage" stepKey="validateStage1" />
         <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
             <argument name="block" value="$$createPreReqBlock$$"/>
             <argument name="index" value="1"/>
         </actionGroup>

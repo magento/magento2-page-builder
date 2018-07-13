@@ -26,11 +26,10 @@
     </actionGroup>
     <actionGroup name="verifyBlockOnStage">
         <arguments>
-            <argument name="contentType"/>
             <argument name="block"/>
             <argument name="index"/>
         </arguments>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{BlockOnStage.title('1', block.title)}}" stepKey="wait"/>
         <seeElement selector="{{BlockOnStage.title('1',block.title)}}" stepKey="seeOptionMenuTitle"/>
