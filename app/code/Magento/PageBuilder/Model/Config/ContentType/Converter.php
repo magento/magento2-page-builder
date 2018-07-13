@@ -523,8 +523,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param array $allowedParentsData
      * @return array
      */
-    private function convertParentsToAllowedParents(array $parentChildData, array $types, array $allowedParentsData): array
-    {
+    private function convertParentsToAllowedParents(
+        array $parentChildData,
+        array $types,
+        array $allowedParentsData
+    ): array {
         foreach ($parentChildData as $key => $value) {
             $parent = $value['parents'] ?? [];
 
