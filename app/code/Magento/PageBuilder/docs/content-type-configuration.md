@@ -361,6 +361,8 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 </converters>
 ```
 
+Name attribute in the element tags gets converted to ```data-element``` attribute in the master format in order for readers to access the desired element.
+
 ### Attributes for `property` and `attribute`
 
 | Attribute           | Description                                                                                                            |
