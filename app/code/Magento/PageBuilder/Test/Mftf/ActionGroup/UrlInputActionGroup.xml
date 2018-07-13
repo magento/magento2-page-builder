@@ -10,9 +10,9 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="fillOutUrlInput">
         <arguments>
-            <argument name="fieldName" defaultValue="button_link"/>
-            <argument name="linkName" defaultValue="ExternalLink.page"/>
-            <argument name="searchString" defaultValue="ExternalLinkSearch.page"/>
+            <argument name="fieldName" defaultValue=""/>
+            <argument name="linkName" defaultValue=""/>
+            <argument name="searchString" defaultValue=""/>
             <argument name="searchResult"/>
         </arguments>
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('fieldName')}}" stepKey="waitForButtonLinkSelect"/>
@@ -22,13 +22,12 @@
         <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
         <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
         <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
-        <see userInput="$$createCMSPageA.title$$" stepKey="seeCMSPageA"/>
         <!--Type 2 first letters into Search box-->
         <click selector="{{PageBuilderSection.LinkSearch}}" stepKey="focusOnField"/>
         <fillField selector="{{PageBuilderSection.LinkSearch}}" userInput="{{searchString}}" stepKey="fill2FirstLetters"/>
         <waitForElementVisible selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="waitForSearchResult" />
         <seeElement selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="seeCMSPageAOnSearchResult"/>
-        <click selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="clickCMSPageAXOnSearchResult"/>
+        <click selector="{{PageBuilderSection.SearchResult(searchResult)}}" stepKey="selectResult"/>
         <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
         <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
@@ -39,8 +38,9 @@
     <actionGroup name="verifyCmsPageLinkOnFrontend">
         <arguments>
             <argument name="identifier"/>
+            <argument name="index"/>
         </arguments>
-        <scrollTo selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <scrollTo selector="{{ButtonItemOnStorefront.base('index')}}" stepKey="waitForButtonElementStorefront"/>
         <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(identifier)}}" stepKey="seePageLinkOnStoreFront" />
         <click selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink(identifier)}}" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
