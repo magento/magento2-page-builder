@@ -123,9 +123,9 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         <element name="link">
                             <attributes>
                                 <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
-                                <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
-                                <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
+                                <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                             </attributes>
                         </element>
                         <element name="overlay">
@@ -137,7 +137,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             <attributes>
                                 <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
                                 <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-                                <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
+                                <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
                             </attributes>
                         </element>
                         <element name="desktop_image">
@@ -316,16 +316,16 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     <element name="link">
         <attributes>
             <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-            <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
-            <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
-            <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
+            <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+            <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+            <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
         </attributes>
     </element>
     <element name="overlay">
         <attributes>
             <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
             <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-            <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
+            <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
         </attributes>
     </element>
     <element name="desktop_image">
@@ -370,7 +370,8 @@ Name attribute in the element tags gets converted to ```data-element``` attribut
 
 | Attribute           | Description                                                                                                            |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `name`              | The variable name for value in the data storage. Must be unique for the content type.                                  |
+| `name`              | Unique name used for configuration merging, and the default value for storage_key if none is provided.                 |
+| `storage_key`       | Optional variable name for value in the data storage. If no value is provided, name will be used.                      |
 | `source`            | The name of the property in the DOM. Must be in snake case.                                                            |
 | `converter`         | Converts the value after reading or before saving to the DOM.                                                          |
 | `preview_converter` | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
@@ -383,7 +384,7 @@ Name attribute in the element tags gets converted to ```data-element``` attribut
 
 ``` xml
 <style_properties>
-    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 </style_properties>
 ```
 
