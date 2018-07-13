@@ -59,7 +59,9 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         }
 
         if (config[elementName].attributes !== undefined) {
-          viewModel.data[elementName].attributes(this.convertAttributes(config[elementName], data));
+          var attributeData = this.convertAttributes(config[elementName], data);
+          attributeData["data-element"] = elementName;
+          viewModel.data[elementName].attributes(attributeData);
         }
 
         if (config[elementName].html !== undefined) {
@@ -141,7 +143,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         result[_attributeConfig.name] = value;
       }
 
-      result["data-element"] = config.name;
       return result;
     };
     /**
