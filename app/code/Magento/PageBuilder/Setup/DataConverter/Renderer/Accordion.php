@@ -60,6 +60,7 @@ class Accordion implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'accordion',
             'data-appearance' => 'default',
             'data-mage-init' => $this->getMageInitValue($itemData),

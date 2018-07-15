@@ -131,4 +131,23 @@
         <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
+    <actionGroup name="insertLinkInWYSIWYG">
+        <arguments>
+            <argument name="section" defaultValue="TinyMCESection"/>
+            <argument name="url" type="string"/>
+            <argument name="textToDisplay" type="string"/>
+            <argument name="title" type="string" defaultValue=""/>
+        </arguments>
+        <comment userInput="insertLinkInWYSIWYG" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.textToDisplayInput}}" userInput="{{textToDisplay}}" stepKey="insertTextToDisplay"/>
+        <fillField selector="{{WYSIWYGInsertLinkModal.titleInput}}" userInput="{{title}}" stepKey="insertTitle"/>
+        <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickOkButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
+    </actionGroup>
 </actionGroups>

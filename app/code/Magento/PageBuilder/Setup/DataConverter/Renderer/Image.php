@@ -48,6 +48,7 @@ class Image implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-appearance' => 'full-width',
             'data-role' => 'image',
             'class' => $eavData['css_classes'] ?? ''
@@ -63,11 +64,13 @@ class Image implements RendererInterface
         $rootElementHtml = '<figure' . $this->printAttributes($rootElementAttributes);
 
         $linkAttributes = [
+            'data-element' => 'link',
             'href' => '{{media url=wysiwyg' . $eavData['image'] . '}}',
             'title' => $eavData['title_tag'] ?? ''
         ];
 
         $imageAttributes = [
+            'data-element' => 'desktop_image',
             'src' => '{{media url=wysiwyg' . $eavData['image'] . '}}',
             'alt' => $eavData['alt_tag'] ?? '',
             'title' => $eavData['title_tag'] ?? '',
@@ -77,6 +80,7 @@ class Image implements RendererInterface
         $mobileImageHtml = '';
         if (isset($eavData['mobile_image'])) {
             $mobileImageAttributes = [
+                'data-element' => 'mobile_image',
                 'src' => '{{media url=wysiwyg' . $eavData['mobile_image'] . '}}',
                 'alt' => $eavData['alt_tag'] ?? '',
                 'title' => $eavData['title_tag'] ?? '',
@@ -95,7 +99,7 @@ class Image implements RendererInterface
 
         $captionHtml = '';
         if (isset($eavData['show_caption']) && $eavData['show_caption'] == 1) {
-            $captionHtml .= '<figcaption>' . $eavData['title_tag'] . '</figcaption>';
+            $captionHtml .= '<figcaption data-element="caption">' . $eavData['title_tag'] . '</figcaption>';
         }
 
         $rootElementHtml .= '><a'

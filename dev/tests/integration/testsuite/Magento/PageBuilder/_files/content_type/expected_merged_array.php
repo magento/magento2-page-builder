@@ -35,7 +35,7 @@ return [
             'preview_component' => 'Path/to/preview/component',
             'master_component' => 'Path/to/master/component',
             'allowed_parents' => [
-                0 => 'stage'
+                0 => 'type3'
             ],
             'appearances' => [
                 'default' => [
@@ -45,7 +45,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_converter',
@@ -229,8 +228,7 @@ return [
             'form' => 'pagebuilder_type2_custom_form',
             'group' => 'group2',
             'allowed_parents' => [
-                0 => 'stage',
-                1 => 'type1'
+                0 => 'type1'
             ],
             'appearances' => [
                 'default' => [
@@ -243,7 +241,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'first_element' => [
-                                'path' => '.',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -429,7 +426,6 @@ return [
                                 ]
                             ],
                             'second_element' => [
-                                'path' => '//a',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -459,7 +455,6 @@ return [
                                 ]
                             ],
                             'third_element' => [
-                                'path' => '//div',
                                 'style' => [
                                     0 => [
                                         'var' => 'style_no_converter',
@@ -526,7 +521,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -591,7 +585,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',
@@ -657,7 +650,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',

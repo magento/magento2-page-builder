@@ -133,6 +133,7 @@ class Product implements RendererInterface
             "products_count=\"$productsCount\" conditions_encoded=\"$conditionsEncoded\"}}";
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'product',
             'data-appearance' => 'grid',
             'class' => $eavData['css_classes'] ?? '',

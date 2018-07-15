@@ -24,4 +24,13 @@
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
+    <actionGroup name="validateContentTypeInsideContainerStorefrontInDOM">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
+    </actionGroup>
 </actionGroups>
