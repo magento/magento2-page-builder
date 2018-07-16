@@ -21,6 +21,7 @@ class ColumnGroup implements RendererInterface
     public function render(array $itemData, array $additionalData = []) : string
     {
         $rootElementAttributes = [
+            'data-element' => 'main',
             'class' => 'pagebuilder-column-group',
             'style' => 'display: flex;',
             'data-role' => 'column-group',

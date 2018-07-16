@@ -16,11 +16,7 @@
               icon="icon-pagebuilder-image"
               sortOrder="1"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
+            <children default_policy="deny"/>
             <appearances>
                 <appearance default="true"
                             name="full-width"
@@ -29,15 +25,15 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -45,7 +41,7 @@
                                 </attributes>
                                 <css name="css_classes"/>
                             </element>
-                            <element name="desktop_image" path=".//img[1]">
+                            <element name="desktop_image">
                                 <style_properties>
                                     <static_property source="max-width" value="100%"/>
                                     <static_property source="height" value="auto"/>
@@ -56,7 +52,7 @@
                                     <attribute name="title_attribute" source="title"/>
                                 </attributes>
                             </element>
-                            <element name="mobile_image" path=".//img[2]">
+                            <element name="mobile_image">
                                 <style_properties>
                                     <static_property source="max-width" value="100%"/>
                                     <static_property source="height" value="auto"/>
@@ -67,16 +63,16 @@
                                     <attribute name="title_attribute" source="title"/>
                                 </attributes>
                             </element>
-                            <element name="link" path=".//a">
+                            <element name="link">
                                 <attributes>
                                     <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                    <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                    <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                    <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+                                    <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                    <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                    <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                                     <attribute name="title_attribute" source="title"/>
                                 </attributes>
                             </element>
-                            <element name="caption" path=".//figcaption">
+                            <element name="caption">
                                 <html name="image_caption"/>
                             </element>
                         </elements>

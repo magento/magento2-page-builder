@@ -10,13 +10,13 @@
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. [Iconography]
-    2. [Add image uploader to content type]
+    1. [Add image uploader to content type]
     1. [Module integration]
     1. [Additional data configuration]
     1. [Content type configuration]
     1. **How to add a new content type**
-    1. [Bindings]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
     1. [Reuse product conditions in content types]
@@ -24,6 +24,7 @@
     1. [Use the block chooser UI component]
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
+    1. [Full width page layouts]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -39,8 +40,8 @@
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
-[Bindings]: bindings.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
@@ -48,7 +49,9 @@
 [Render a backend content type preview]: content-type-preview.md
 [Use the block chooser UI component]: block-chooser-component.md
 [Custom Toolbar]: toolbar.md
-[Roadmap and known issues]: roadmap.md
+[Full width page layouts]: full-width-page-layouts.md
+[Add image uploader to content type]: image-uploader.md
+[Roadmap and Known Issues]: roadmap.md
 
 
 
@@ -68,9 +71,9 @@ To add configuration for a new content type, create a file under the following l
               icon="icon-modulename-simple"
               sortOrder="35"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="row" policy="allow"/>
+            </parents>
             <appearances>
                 <appearance default="true"
                             name="default"
@@ -79,15 +82,15 @@ To add configuration for a new content type, create a file under the following l
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style"/>
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -272,10 +275,9 @@ Now, let's add content type that can contain other content types. Create configu
               icon="icon-vendorname-complex"
               sortOrder="35"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-            </allowed_parents>
+            <children default_policy="deny">
+                <child name="heading" policy="allow"/>
+            </children>
             <appearances>
                 <appearance default="true"
                             name="default"
@@ -284,15 +286,15 @@ Now, let's add content type that can contain other content types. Create configu
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <style_properties>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style"/>
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -303,22 +305,6 @@ Now, let's add content type that can contain other content types. Create configu
                     </data_mapping>
                 </appearance>
             </appearances>
-        </type>
-    </content_types>
-</config>
-```
-
-Now we need to specify which content types can be inserted into our new content type. To allow default content type Heading be inserted into our Complex content type, add the following configuration.
-
-`Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\heading.xml`
-
-``` XML
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="heading">
-            <allowed_parents>
-                <parent name="complex"/>
-            </allowed_parents>
         </type>
     </content_types>
 </config>

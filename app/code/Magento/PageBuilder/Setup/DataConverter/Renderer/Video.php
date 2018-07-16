@@ -85,6 +85,7 @@ class Video implements RendererInterface
     private function getRootElementAttributes(array $eavData, array $formData): array
     {
         $attributes = [
+            'data-element' => 'main',
             'data-role' => 'video',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
@@ -114,6 +115,7 @@ class Video implements RendererInterface
     private function getWrapperElementAttributes(array $eavData, array $formData): array
     {
         $attributes = [
+            'data-element' => 'wrapper',
             'class' => 'pagebuilder-video-wrapper'
         ];
 
@@ -139,6 +141,7 @@ class Video implements RendererInterface
     private function getIframeAttributes(array $eavData): array
     {
         $attributes = [
+            'data-element' => 'video',
             'src' => $eavData['video_url'],
             'frameborder' => '0',
             'allowfullscreen' => null

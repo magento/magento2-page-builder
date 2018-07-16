@@ -65,7 +65,10 @@ export default class ObservableUpdater {
                 viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
             }
             if (config[elementName].attributes !== undefined) {
-                viewModel.data[elementName].attributes(this.convertAttributes(config[elementName], data));
+                const attributeData = this.convertAttributes(config[elementName], data);
+
+                attributeData["data-element"] = elementName;
+                viewModel.data[elementName].attributes(attributeData);
             }
             if (config[elementName].html !== undefined) {
                 viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
@@ -104,7 +107,7 @@ export default class ObservableUpdater {
      * @deprecated
      */
     public convertAttributes(config: any, data: DataObject) {
-        const result = {};
+        const result: any = {};
         for (const attributeConfig of config.attributes) {
             if (undefined !== attributeConfig.persist
                 && null !== attributeConfig.persist
@@ -119,6 +122,7 @@ export default class ObservableUpdater {
             }
             result[attributeConfig.name] = value;
         }
+
         return result;
     }
 

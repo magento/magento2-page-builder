@@ -8,7 +8,8 @@
 
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
-    <section name="PageBuilderColumnSection">
+    <section name="ColumnOnBackend">
+        <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-column')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; background-size: {{arg7}}; background-repeat: {{arg8}}; background-attachment: {{arg9}}; align-self: {{arg10}};']" parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
@@ -20,6 +21,7 @@
         <element name="columnResizeGridLine" type="block" selector=".resize-grid .grid-line:nth-child({{arg}})" parameterized="true"/>
         <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="columnChildrenStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][{{arg2}}]//div[contains(@class, 'element-children')][contains(@style, '{{arg3}}')]" parameterized="true"/>
+        <element name="columnByIndexAndWidthClass" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-column')])[{{arg1}}][contains(@class,'column-width-{{arg2}}')]" parameterized="true"/>
         <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[{{arg1}}]/descendant::div[contains(@class, "pagebuilder-display-label")][contains(text(), "{{arg2}}")]' parameterized="true"/>
         <element name="columnMoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[{{arg1}}]//div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-column"]' parameterized="true"/>
         <element name="displayLabelGridSize" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class, "pagebuilder-display-label")][1][contains(text(), "/{{arg2}}")]' parameterized="true"/>
@@ -28,8 +30,18 @@
         <element name="gridSizeTooltip" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-tooltip')][1]" parameterized="true"/>
         <element name="gridSizeTooltipWithMax" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-tooltip')][1]//span//p//span[text()='{{arg2}}']" parameterized="true"/>
         <element name="gridSizeError" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'admin__field-error') and contains(text(), '{{arg2}}')]" parameterized="true"/>
+        <!-- Background Configuration -->
+        <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
     </section>
-    <section name="ColumnsOnFrontend">
+    <section name="ColumnOnFrontend">
+        <element name="base" type="block" selector="(//div[@data-role='column'])[{{arg1}}]" parameterized="true"/>
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>
         <element name="allColumns" type="block" selector="(//div[@data-role='column'])"/>
         <element name="columnX" type="block" selector="[data-role=column]:nth-child({{arg1}})" parameterized="true"/>
@@ -68,5 +80,15 @@
         <element name="columnMargin" type="button" selector="[data-role='column']:first-child[style*='margin: 5px;']"/>
         <element name="columnPadding" type="button" selector="[data-role='column']:first-child[style*='padding: 5px;']"/>
         <element name="columnClass" type="button" selector="[data-role='column']:first-child.first-class.second-class.third-class"/>
+        <!-- Background Configuration -->
+        <element name="backgroundPosition" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-role='column'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-role='column'])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundMobileImage" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
     </section>
 </sections>

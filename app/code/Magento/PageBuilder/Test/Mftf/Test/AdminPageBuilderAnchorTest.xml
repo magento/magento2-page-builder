@@ -775,4 +775,102 @@
             <argument name="property" value="PageBuilderAnchorIdentifier_Empty"/>
         </actionGroup>
     </test>
+    <test name="AnchorCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Anchor"/>
+            <title value="Cannot add Anchor to Stage"/>
+            <description value="If user drags Anchor to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3113"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-anchor"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderAnchorContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragAnchorIntoStage">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{AnchorOnStage.base('1')}}" stepKey="dontSeeAnchor"/>
+    </test>
+    <test name="AnchorCanAddToColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Anchor"/>
+            <title value="Add Anchor to Column container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want column to be a container so that I can add Anchor inside"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3114"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-anchor"/>
+            <group value="pagebuilder-addToColumn"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Anchor to Stage -->
+        <comment userInput="Add Anchor to Stage" stepKey="addAnchorToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderAnchorContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragAnchorOntoColumn">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="User sees Anchor displayed in column on Stage" stepKey="confirmAnchorOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateAnchorOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="View Anchor inside column on storefront" stepKey="viewAnchorOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+    </test>
 </tests>

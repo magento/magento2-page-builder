@@ -52,6 +52,7 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
 
         // Update the width label for the column
+        this.parent.dataStore.subscribe(this.updateColumnWidthClass.bind(this), "width");
         this.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
         this.parent.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
     }
@@ -84,6 +85,7 @@ export default class Preview extends PreviewCollection {
      */
     public initColumn(element: Element) {
         this.element = $(element);
+        this.updateColumnWidthClass();
         events.trigger("column:initializeAfter", {
             column: this.parent,
             element: $(element),
@@ -264,6 +266,26 @@ export default class Preview extends PreviewCollection {
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
             this.displayLabel(`${$t("Column")} ${newLabel}`);
         }
+    }
+
+    /**
+     * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
+     */
+    public updateColumnWidthClass() {
+        // Only update once instantiated
+        if (!this.element) {
+            return;
+        }
+
+        const currentClass = this.element.attr("class").match(/(?:^|\s)(column-width-\d{1,3})(?:$|\s)/);
+
+        if (currentClass !== null) {
+            this.element.removeClass(currentClass[1]);
+        }
+
+        const roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
+
+        this.element.addClass("column-width-" + roundedWidth);
     }
 
     /**

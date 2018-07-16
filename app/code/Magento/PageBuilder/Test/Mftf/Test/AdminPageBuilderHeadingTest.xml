@@ -1079,4 +1079,34 @@
         <!-- Verify Not In Storefront -->
         <dontSeeElementInDOM selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
+    <test name="HeadingCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Heading"/>
+            <title value="Cannot add Heading to Stage"/>
+            <description value="If user drags Heading to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3144"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{HeadingOnStage.all}}" stepKey="dontSeeHeading"/>
+    </test>
 </tests>
