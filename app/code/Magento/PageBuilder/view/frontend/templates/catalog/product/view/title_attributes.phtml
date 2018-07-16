@@ -5,7 +5,7 @@
  */
 
 /**
- * Product additional attributes template
+ * Custom product Page Builder attributes template
  *
  * @var $block \Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes
  */
@@ -17,11 +17,13 @@
 <?php if ($_additional = $block->getAdditionalData()): ?>
     <div class="pagebuilder-attributes-wrapper">
         <?php foreach ($_additional as $_data): ?>
-            <div class="page-main">
-                <h2 class="product-section-title"><?= $block->escapeHtml(__($_data['label'])) ?></h2>
-            </div>
-            <div class="pagebuilder-attribute-wrapper">
-                <?= /* @escapeNotVerified */ $helper->productAttribute($product, $_data['value'], $_data['code']) ?>
+            <div class="product-full-width-section">
+                <div class="page-main">
+                    <h2 class="product-section-title"><?= $block->escapeHtml(__($_data['label'])) ?></h2>
+                </div>
+                <div class="pagebuilder-attribute-wrapper">
+                    <?= /* @escapeNotVerified */ $helper->productAttribute($product, $_data['value'], $_data['code']) ?>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
