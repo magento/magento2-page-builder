@@ -11,12 +11,12 @@
  */
 ?>
 <?php
-    $helper = $this->helper('Magento\Catalog\Helper\Output');
+    $helper = $this->helper(Magento\Catalog\Helper\Output::class);
     $product = $block->getProduct();
 ?>
-<?php if ($_additional = $block->getAdditionalData()): ?>
+<?php if ($_additional = $block->getAdditionalData()) : ?>
     <div class="pagebuilder-attributes-wrapper">
-        <?php foreach ($_additional as $_data): ?>
+        <?php foreach ($_additional as $_data) : ?>
             <div class="product-full-width-section">
                 <div class="page-main">
                     <h2 class="product-section-title"><?= $block->escapeHtml(__($_data['label'])) ?></h2>
