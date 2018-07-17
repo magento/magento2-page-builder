@@ -21,7 +21,8 @@
                                         <xs:element type="xs:string" name="render_template" minOccurs="0"/>
                                         <xs:element type="xs:string" name="backend_block" minOccurs="0"/>
                                         <xs:element type="xs:string" name="backend_template" minOccurs="0"/>
-                                        <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
+                                        <xs:element type="parents" name="parents" minOccurs="0" maxOccurs="1"/>
+                                        <xs:element type="children" name="children" minOccurs="0" maxOccurs="1"/>
                                         <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                             <xs:complexType>
                                                 <xs:sequence>
@@ -71,13 +72,25 @@
         <xs:attribute type="xs:string" name="render_template" use="optional"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
-    <xs:complexType name="allowed_parents">
+    <xs:complexType name="parents">
         <xs:sequence>
-            <xs:element type="parent" name="parent" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element type="parent" name="parent" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+        <xs:attribute type="xs:string" name="default_policy" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="children">
+        <xs:sequence>
+            <xs:element type="child" name="child" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="default_policy" use="optional"/>
     </xs:complexType>
     <xs:complexType name="parent">
         <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="policy" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="child">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="policy" use="optional"/>
     </xs:complexType>
     <xs:complexType name="readers">
         <xs:sequence>
@@ -122,14 +135,33 @@
     </xs:complexType>
     <xs:complexType name="element">
         <xs:sequence>
-            <xs:element type="style_properties" name="style_properties" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="attributes" name="attributes" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="style_properties" name="style_properties" minOccurs="0" maxOccurs="1">
+                <xs:unique name="uniquePropertyName">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Property and Complex Property name must be unique
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:selector xpath="property|complex_property"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element type="attributes" name="attributes" minOccurs="0" maxOccurs="1">
+                <xs:unique name="uniqueAttributeName">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Attribute and Complex Attribute name must be unique
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:selector xpath="attribute|complex_attribute"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
             <xs:element type="tag" name="tag" minOccurs="0" maxOccurs="1"/>
             <xs:element type="html" name="html" minOccurs="0" maxOccurs="1"/>
             <xs:element type="css" name="css" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="path" use="optional"/>
     </xs:complexType>
     <xs:complexType name="style_properties">
         <xs:choice maxOccurs="unbounded">
@@ -150,6 +182,7 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:string" name="persist" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="complex_property">
         <xs:attribute type="xs:string" name="name" use="required"/>
@@ -157,6 +190,7 @@
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_property">
         <xs:attribute type="xs:string" name="source" use="required"/>
@@ -176,6 +210,7 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:boolean" name="persist" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="complex_attribute">
         <xs:attribute type="xs:string" name="name" use="required"/>
@@ -184,6 +219,7 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:boolean" name="persist" use="optional"/>
+        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_attribute">
         <xs:attribute type="xs:string" name="source" use="required"/>

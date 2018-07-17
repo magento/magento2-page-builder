@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AdminAddImageToWYSIWYGProductTest">
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="AdminEditTextEditorProductAttributeTest">
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
+    </test>
+    <test name="VerifyDefaultWYSIWYGToolbarOnProductTest">
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
+        <remove keyForRemoval="assertInfo2" />
+    </test>
+    <test name="Verifydefaultcontrolsonproductshortdescription">
+        <remove keyForRemoval="assertInfo16" />
+    </test>
+    <test name="VerifyTinyMCEv4IsNativeWYSIWYGOnProductTest">
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+        </after>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="assertProductShortDescription"/>
+    </test>
+</tests>

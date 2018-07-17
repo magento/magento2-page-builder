@@ -17,10 +17,13 @@
               icon="icon-pagebuilder-column"
               sortOrder="10"
               translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
+            <parents default_policy="deny">
+                <parent name="row" policy="allow"/>
+                <parent name="tab-item" policy="allow"/>
+            </parents>
+            <children default_policy="deny">
+                <child name="column" policy="allow"/>
+            </children>
             <is_visible>false</is_visible>
             <appearances>
                 <appearance default="true"
@@ -30,7 +33,7 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
-                            <element name="main" path=".">
+                            <element name="main">
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>

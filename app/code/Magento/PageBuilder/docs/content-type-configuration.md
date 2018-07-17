@@ -92,10 +92,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
           icon="icon-pagebuilder-image"
           sortOrder="1"
           translate="label">
-        <allowed_parents>
-            <parent name="row"/>
-            <parent name="column"/>
-        </allowed_parents>
+        <children default_policy="deny"/>
         <appearances>
             <appearance default="true"
                         name="poster"
@@ -104,7 +101,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <data_mapping>
                     <elements>
-                        <element name="main" path=".">
+                        <element name="main">
                             <style_properties>
                                 <property name="border" source="border_style"/>
                                 <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -120,15 +117,15 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             </attributes>
                             <css name="css_classes"/>
                         </element>
-                        <element name="link" path=".//a">
+                        <element name="link">
                             <attributes>
                                 <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
-                                <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
-                                <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
+                                <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+                                <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+                                <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
                             </attributes>
                         </element>
-                        <element name="overlay" path=".//a/div[2]/div">
+                        <element name="overlay">
                             <style_properties>
                                 <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 <property name="background_color" source="background_color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color"/>
@@ -137,10 +134,10 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             <attributes>
                                 <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
                                 <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-                                <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
+                                <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
                             </attributes>
                         </element>
-                        <element name="desktop_image" path=".//a/div[1]">
+                        <element name="desktop_image">
                             <style_properties>
                                 <property name="text_align" source="text_align"/>
                                 <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -151,7 +148,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                                 <property name="background_attachment" source="background_attachment"/>
                             </style_properties>
                         </element>
-                        <element name="mobile_image" path=".//a/div[2]">
+                        <element name="mobile_image">
                             <style_properties>
                                 <property name="text_align" source="text_align"/>
                                 <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -162,10 +159,10 @@ The following is an example of a content type configuration in `view/adminhtml/p
                                 <property name="background_attachment" source="background_attachment"/>
                             </style_properties>
                         </element>
-                        <element name="content" path=".//a/div[2]/div/div/div[1]">
+                        <element name="content">
                             <html name="message"/>
                         </element>
-                        <element name="button" path=".//a/div[2]/div/div/button">
+                        <element name="button">
                             <style_properties>
                                 <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
                                 <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
@@ -215,7 +212,8 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | Element             | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
-| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |
+| `parents`           | List of parent content types that can accept this type as a child.                                                                          |
+| `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
 | `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
 | `additional_data`   | Allows to specify additional data for component, see [custom configuration for content type](custom-configuration.md) for more information. |
@@ -242,17 +240,45 @@ The `form` element specifies the name of the UiComponent form used to configure 
 
 Any modifications you might want to make to content type configuration forms use standard UiComponent functionality. Please see [UiComponent Documentation](http://devdocs.magento.com/guides/v2.3/ui_comp_guide/bk-ui_comps.html) for additional information.
 
-### `allowed_parents` configuration reference
+### `parents` configuration reference
 
-The `allowed_parents` element specifies which content types can accept this type as a child.
+The `parents` element specifies which content types can accept this type as a child.
+Parent policies will overwrite any child policies that are set.
   
 **Example:**
 ``` xml
-<allowed_parents>
-    <parent name="row"/>
-    <parent name="column"/>
-</allowed_parents>
+<parents default_policy="deny">
+    <parent name="row" policy="allow"/>
+    <parent name="column" policy="allow"/>
+</parents>
 ``` 
+| Element             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `parent`            | The name of the parent content type that is allowed or denied.                         |
+
+| Attribute           | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `default_policy`    | Allows or denies all content types to be parents unless specified as a parent element. |
+
+### `children` configuration reference
+
+The `children` element specifies which content types can accept this type as a parent.
+  
+**Example:**
+``` xml
+<children default_policy="allow">
+    <child name="row" policy="deny"/>
+    <child name="column" policy="deny"/>
+</children>
+``` 
+| Element             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `child`             | The name of the child content type that is allowed or denied                           |
+
+| Attribute           | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `default_policy`    | Allows or denies all content types to be children unless specified as a child element. |
+
 ### `appearances` configuration reference
 
 The `appearances` element specifies how the content type renders in the admin preview and the master format.
@@ -302,7 +328,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 **Example:**
 ``` xml
 <elements>
-    <element name="main" path=".">
+    <element name="main">
         <style_properties>
             <property name="border" source="border_style"/>
             <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -313,35 +339,35 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         </attributes>
         <css name="css_classes"/>
     </element>
-    <element name="link" path=".//a">
+    <element name="link">
         <attributes>
             <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-            <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
-            <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
-            <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
+            <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
+            <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
+            <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
         </attributes>
     </element>
-    <element name="overlay" path=".//a/div[2]/div">
+    <element name="overlay">
         <attributes>
             <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
             <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-            <attribute name="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
+            <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
         </attributes>
     </element>
-    <element name="desktop_image" path=".//a/div[1]">
+    <element name="desktop_image">
         <style_properties>
             <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
     </element>
-    <element name="mobile_image" path=".//a/div[2]">
+    <element name="mobile_image">
         <style_properties>
             <property name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
     </element>
-    <element name="content" path=".//a/div[2]/div/div/div[1]">
+    <element name="content">
         <html name="message"/>
     </element>
-    <element name="button" path=".//a/div[2]/div/div/button">
+    <element name="button">
         <style_properties>
             <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
             <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
@@ -364,11 +390,14 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 </converters>
 ```
 
+Name attribute in the element tags gets converted to ```data-element``` attribute in the master format in order for readers to access the desired element.
+
 ### Attributes for `property` and `attribute`
 
 | Attribute           | Description                                                                                                            |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `name`              | The variable name for value in the data storage. Must be unique for the content type.                                  |
+| `name`              | Unique name used for configuration merging, and the default value for storage_key if none is provided.                 |
+| `storage_key`       | Optional variable name for value in the data storage. If no value is provided, name will be used.                      |
 | `source`            | The name of the property in the DOM. Must be in snake case.                                                            |
 | `converter`         | Converts the value after reading or before saving to the DOM.                                                          |
 | `preview_converter` | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
@@ -381,7 +410,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 
 ``` xml
 <style_properties>
-    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 </style_properties>
 ```
 
@@ -390,7 +419,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 `static_property` and `static_attribute` do not contain `converter` and `preview_converter` elements.
 
 ``` xml
-<element name="desktop_image" path=".//img[1]">
+<element name="desktop_image">
     <style_properties>
         <static_property source="max-width" value="100%"/>
         <static_property source="height" value="auto"/>
