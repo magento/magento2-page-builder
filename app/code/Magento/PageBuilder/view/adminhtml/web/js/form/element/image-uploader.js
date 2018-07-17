@@ -10,8 +10,9 @@ define([
     'Magento_Ui/js/form/element/image-uploader',
     'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min',
     'Magento_PageBuilder/js/events',
-    'mage/translate'
-], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
+    'mage/translate',
+    'ko'
+], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t, ko) {
     'use strict';
 
     var initializedOnce = false;
@@ -78,6 +79,19 @@ define([
             this._super(fileInput);
             this.$uploadArea = $(this.$fileInput).closest('.pagebuilder-image-empty-preview');
             new ResizeObserver(this.updateResponsiveClasses.bind(this)).observe(this.$uploadArea.get(0));
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        initObservable: function () {
+            this._super();
+
+            this.computedHasData = ko.computed(function () {
+                return !!this.value().length;
+            }.bind(this));
+
+            return this;
         },
 
         /**
@@ -153,6 +167,32 @@ define([
         },
 
         /**
+         * Trigger image:deleteFileAfter event to be handled by PageBuilder image component
+         * {@inheritDoc}
+         */
+        deleteFile: function () {
+            events.trigger('image:' + this.id + ':deleteFileAfter', []);
+
+            return this;
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        addFileFromMediaGallery: function (imageUploader, e) {
+            var $buttonEl = $(e.target);
+
+            // File was added or changed
+            if ($buttonEl.val()) {
+                this._super();
+            } else {
+                this.deleteFile();
+            }
+
+            return this;
+        },
+
+        /**
          * Propagate file changes through all image uploaders sharing the same id
          *
          * @param {Object} file
@@ -195,6 +235,23 @@ define([
             if (classesToAdd.length) {
                 this.$uploadArea.addClass(classesToAdd.join(' '));
             }
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        hasData: function() {
+            // Some of the components automatically add an empty object if the value is unset.
+            return this._super() && !$.isEmptyObject(this.value()[0]);
+        },
+
+        /**
+         * Gets the ID of the file used if set
+         *
+         * @return {string|null} ID
+         */
+        getFileId: function() {
+            return this.hasData() ? this.value()[0].id : null
         }
     });
 });

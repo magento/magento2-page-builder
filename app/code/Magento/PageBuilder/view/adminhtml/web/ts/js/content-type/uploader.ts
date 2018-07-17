@@ -60,6 +60,15 @@ export default class Uploader {
     }
 
     /**
+     * Register callback when file is deleted through this instance
+     *
+     * @param {Function} callback - callback function
+     */
+    public onDeleted(callback: () => any) {
+        events.on("image:" + this.id + ":deleteFileAfter", callback);
+    }
+
+    /**
      * Instantiate uploader through layout UI component renderer
      */
     private render() {

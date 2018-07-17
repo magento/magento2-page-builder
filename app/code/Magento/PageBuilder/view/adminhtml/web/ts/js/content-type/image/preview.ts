@@ -34,7 +34,8 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const files: object[] = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[]);
+            const imageObject: object = files ? (files[0] as object) : {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
@@ -53,6 +54,8 @@ export default class Preview extends BasePreview {
 
             // Register listener when image gets uploaded from uploader UI component
             this.uploader.onUploaded(this.onImageUploaded.bind(this));
+            // Register listener when image gets deleted from uploader UI component
+            this.uploader.onDeleted(this.onImageDeleted.bind(this));
         });
     }
 
@@ -64,6 +67,16 @@ export default class Preview extends BasePreview {
     private onImageUploaded(data: object[]) {
         this.parent.dataStore.update(
             data,
+            this.config.additional_data.uploaderConfig.dataScope,
+        );
+    }
+
+    /**
+     * Remove image data
+     */
+    private onImageDeleted() {
+        this.parent.dataStore.update(
+            "",
             this.config.additional_data.uploaderConfig.dataScope,
         );
     }

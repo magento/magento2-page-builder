@@ -87,13 +87,15 @@ export function getImageUrl(image: any[]) {
  */
 export function removeQuotesInMediaDirectives(html: string): string {
     const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
-    const urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
+    const urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*(?:id\s*=(.*?))?\s*\}\}/;
     const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
     if (mediaDirectiveMatches) {
         mediaDirectiveMatches.forEach((mediaDirective: string) => {
             const urlMatches = mediaDirective.match(urlRegExp);
             if (urlMatches && urlMatches[1] !== undefined) {
-                const directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") + "}}";
+                const directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") +
+                    (urlMatches[2] ? " id=" + urlMatches[2].replace(/("|&quot;|\s)/g, "") : "") +
+                    "}}";
                 html = html.replace(mediaDirective, directiveWithOutQuotes);
             }
         });

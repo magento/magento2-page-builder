@@ -43,7 +43,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this2.parent.dataStore.get();
 
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var files = dataStore[_this2.config.additional_data.uploaderConfig.dataScope];
+        var imageObject = files ? files[0] : {};
 
         _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
       });
@@ -57,7 +58,10 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
           value: initialImageValue
         })); // Register listener when image gets uploaded from uploader UI component
 
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2)); // Register listener when image gets deleted from uploader UI component
+
+
+        _this2.uploader.onDeleted(_this2.onImageDeleted.bind(_this2));
       });
     };
     /**
@@ -69,6 +73,14 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
 
     _proto.onImageUploaded = function onImageUploaded(data) {
       this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
+    };
+    /**
+     * Remove image data
+     */
+
+
+    _proto.onImageDeleted = function onImageDeleted() {
+      this.parent.dataStore.update("", this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

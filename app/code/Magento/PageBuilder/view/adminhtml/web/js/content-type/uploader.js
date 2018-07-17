@@ -61,6 +61,16 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
       _events.on("image:" + this.id + ":uploadAfter", callback);
     };
     /**
+     * Register callback when file is deleted through this instance
+     *
+     * @param {Function} callback - callback function
+     */
+
+
+    _proto.onDeleted = function onDeleted(callback) {
+      _events.on("image:" + this.id + ":deleteFileAfter", callback);
+    };
+    /**
      * Instantiate uploader through layout UI component renderer
      */
 
