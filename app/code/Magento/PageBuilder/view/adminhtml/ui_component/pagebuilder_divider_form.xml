@@ -74,7 +74,7 @@
         <settings>
             <label/>
         </settings>
-        <field name="line_color" sortOrder="10" formElement="input">
+        <field name="line_color" sortOrder="10" formElement="colorPicker">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">#CECECE</item>
@@ -82,9 +82,25 @@
             </argument>
             <settings>
                 <label translate="true">Line Color</label>
-                <addAfter translate="true">hex code</addAfter>
+                <componentType>colorPicker</componentType>
+                <placeholder translate="true">No Color</placeholder>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
                 <notice translate="true">Example: #FF5733</notice>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
             </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>hex</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
         </field>
         <field name="line_thickness" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
