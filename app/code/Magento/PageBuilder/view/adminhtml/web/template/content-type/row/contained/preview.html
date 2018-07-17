@@ -6,10 +6,18 @@
 -->
 
 <div class="row-contained">
-    <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1}), event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false, afterRender: function (element) { setTimeout(function () { initParallax.call($data, element); }, 0) }">
+    <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
+         attr="data.main.attributes"
+         ko-style="data.main.style"
+         css="Object.assign(data.main.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1})"
+         event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
+         afterRender="function (element) { setTimeout(function () { initParallax.call($data, element); }, 0) }">
         <render args="getOptions().template"/>
         <render args="previewChildTemplate"/>
-        <div class="pagebuilder-display-label" data-bind="text: function () { return displayLabel().toUpperCase(); }()"></div>
-        <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: parent.children().length == 0}, i18n: 'Drag content types or columns here'"></div>
+        <div class="pagebuilder-display-label"
+             text="function () { return displayLabel().toUpperCase(); }()"></div>
+        <div class="pagebuilder-empty-container empty-placeholder"
+             css="{visible: parent.children().length == 0}"
+             translate="'Drag content types or columns here'"></div>
     </div>
 </div>
