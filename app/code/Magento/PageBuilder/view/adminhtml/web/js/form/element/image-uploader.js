@@ -10,9 +10,8 @@ define([
     'Magento_Ui/js/form/element/image-uploader',
     'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min',
     'Magento_PageBuilder/js/events',
-    'mage/translate',
-    'ko'
-], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t, ko) {
+    'mage/translate'
+], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {
     'use strict';
 
     var initializedOnce = false;
@@ -158,8 +157,12 @@ define([
          * Trigger image:deleteFileAfter event to be handled by PageBuilder image component
          * {@inheritDoc}
          */
-        onDeleteFile: function () {
-            events.trigger('image:' + this.id + ':deleteFileAfter', []);
+        onDeleteFile: function (e, data) {
+            var fileId = this.getFileId();
+
+            if (fileId && $.inArray(fileId, data.ids) > -1) {
+                events.trigger('image:' + this.id + ':deleteFileAfter', []);
+            }
 
             return this;
         },
