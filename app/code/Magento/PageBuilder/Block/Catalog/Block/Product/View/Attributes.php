@@ -11,6 +11,7 @@ class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
 {
     /**
      * @inheritdoc
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function getAdditionalData(array $excludeAttr = [])
     {
