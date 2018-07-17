@@ -426,7 +426,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
           value: initialImageValue
         })); // Register listener when image gets uploaded from uploader UI component
 
-        _this3.uploader.onUploaded(_this3.onImageUploaded.bind(_this3));
+        _this3.uploader.onUploaded(_this3.onImageUploaded.bind(_this3)); // Register listener when image gets deleted from uploader UI component
+
+
+        _this3.uploader.onDeleted(_this3.onImageDeleted.bind(_this3));
       });
     };
 
@@ -454,6 +457,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
     _proto.onImageUploaded = function onImageUploaded(data) {
       this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
+    };
+    /**
+     * Remove image data
+     */
+
+
+    _proto.onImageDeleted = function onImageDeleted() {
+      this.parent.dataStore.update("", this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

@@ -106,6 +106,8 @@ export default class Preview extends BasePreview {
 
             // Register listener when image gets uploaded from uploader UI component
             this.uploader.onUploaded(this.onImageUploaded.bind(this));
+            // Register listener when image gets deleted from uploader UI component
+            this.uploader.onDeleted(this.onImageDeleted.bind(this));
         });
     }
 
@@ -117,6 +119,16 @@ export default class Preview extends BasePreview {
     private onImageUploaded(data: object[]) {
         this.parent.dataStore.update(
             data,
+            this.config.additional_data.uploaderConfig.dataScope,
+        );
+    }
+
+    /**
+     * Remove image data
+     */
+    private onImageDeleted() {
+        this.parent.dataStore.update(
+            "",
             this.config.additional_data.uploaderConfig.dataScope,
         );
     }

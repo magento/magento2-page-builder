@@ -83,19 +83,6 @@ define([
         },
 
         /**
-         * {@inheritDoc}
-         */
-        initObservable: function () {
-            this._super();
-
-            this.computedHasData = ko.computed(function () {
-                return !!this.value().length;
-            }.bind(this));
-
-            return this;
-        },
-
-        /**
          * Remove draggable classes from dropzones
          * {@inheritDoc}
          */
