@@ -44,6 +44,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("stage:" + this.id + ":readyAfter", function () {
         _this.populateContentTypes();
 
+        _this.sticky();
+
         _this.isVisible(true);
       });
     };
@@ -107,6 +109,48 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
+    };
+    /**
+     * Toggle stickiness of panel based on browser scroll position and height of panel
+     * Only stick when panel height is smaller than stage height
+     * Stick panel to top when scroll reaches top position of stage
+     * Stick panel to bottom when scroll reaches bottom position of stage
+     */
+
+
+    _proto.sticky = function sticky() {
+      var self = this;
+      (0, _jquery)(window).scroll(function () {
+        var pageActionsHeight = (0, _jquery)(".page-actions._fixed").outerHeight() + 15;
+        var panel = (0, _jquery)(".pagebuilder-panel-wrapper");
+        var stage = (0, _jquery)(".pagebuilder-stage");
+        var panelHeight = panel.outerHeight();
+        var stageHeight = stage.outerHeight();
+        var currentStageBottom = Math.round(stage.offset().top + stage.outerHeight(true) - (0, _jquery)(this).scrollTop());
+        var currentPanelBottom = Math.round(panel.offset().top + panel.outerHeight(true) - (0, _jquery)(this).scrollTop());
+        var currentStageTop = Math.round(stage.offset().top - (0, _jquery)(this).scrollTop());
+        var currentPanelTop = Math.round(panel.offset().top - (0, _jquery)(this).scrollTop()); // When panel height is less than stage, begin stickiness
+
+        if (panelHeight <= stageHeight && (0, _jquery)(".page-actions").hasClass("_fixed")) {
+          // When scroll reaches top of stage, stick panel to top
+          if (currentStageTop <= pageActionsHeight) {
+            // When panel reaches bottom of stage, stick panel to bottom of stage
+            if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
+              self.isStickyBottom(true);
+              self.isStickyTop(false);
+            } else {
+              self.isStickyBottom(false);
+              self.isStickyTop(true);
+            }
+          } else {
+            self.isStickyBottom(false);
+            self.isStickyTop(false);
+          }
+        } else {
+          self.isStickyBottom(false);
+          self.isStickyTop(false);
+        }
+      });
     };
     /**
      * Retrieve the draggable options for the panel items

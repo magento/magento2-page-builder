@@ -50,6 +50,7 @@ export default class Panel implements PanelInterface {
     public initListeners(): void {
         events.on("stage:" + this.id + ":readyAfter", () => {
             this.populateContentTypes();
+            this.sticky();
             this.isVisible(true);
         });
     }
@@ -114,6 +115,47 @@ export default class Panel implements PanelInterface {
     public clearSearch(): void {
         this.searchValue("");
         this.searching(false);
+    }
+
+    /**
+     * Toggle stickiness of panel based on browser scroll position and height of panel
+     * Only stick when panel height is smaller than stage height
+     * Stick panel to top when scroll reaches top position of stage
+     * Stick panel to bottom when scroll reaches bottom position of stage
+     */
+    public sticky(): void {
+        const self = this;
+        $(window).scroll(function() {
+            const pageActionsHeight = $(".page-actions._fixed").outerHeight() + 15;
+            const panel = $(".pagebuilder-panel-wrapper");
+            const stage = $(".pagebuilder-stage");
+            const panelHeight = panel.outerHeight();
+            const stageHeight = stage.outerHeight();
+            const currentStageBottom = Math.round(stage.offset().top + stage.outerHeight(true) - $(this).scrollTop());
+            const currentPanelBottom = Math.round(panel.offset().top + panel.outerHeight(true) - $(this).scrollTop());
+            const currentStageTop = Math.round(stage.offset().top - $(this).scrollTop());
+            const currentPanelTop = Math.round(panel.offset().top - $(this).scrollTop());
+            // When panel height is less than stage, begin stickiness
+            if (panelHeight <= stageHeight && $(".page-actions").hasClass("_fixed")) {
+                // When scroll reaches top of stage, stick panel to top
+                if (currentStageTop <= pageActionsHeight) {
+                    // When panel reaches bottom of stage, stick panel to bottom of stage
+                    if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
+                        self.isStickyBottom(true);
+                        self.isStickyTop(false);
+                    } else {
+                        self.isStickyBottom(false);
+                        self.isStickyTop(true);
+                    }
+                } else {
+                    self.isStickyBottom(false);
+                    self.isStickyTop(false);
+                }
+            } else {
+                self.isStickyBottom(false);
+                self.isStickyTop(false);
+            }
+        });
     }
 
     /**
