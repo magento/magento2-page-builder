@@ -68,8 +68,7 @@ export interface DataMappingStyleInterface {
     value?: string;
     converter?: string;
     preview_converter?: string;
-    virtual?: string;
-    persist?: string;
+    persistence_mode?: string;
     complex?: boolean;
     static?: boolean;
 }
@@ -81,8 +80,7 @@ export interface DataMappingAttributesInterface {
     value?: string;
     converter?: string;
     preview_converter?: string;
-    virtual?: string;
-    persist?: string;
+    persistence_mode?: string;
     complex?: boolean;
     static?: boolean;
 }

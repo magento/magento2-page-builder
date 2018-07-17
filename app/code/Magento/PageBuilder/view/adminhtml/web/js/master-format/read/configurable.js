@@ -99,7 +99,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var _attributeConfig = _ref;
 
-        if (true === !!_attributeConfig.virtual) {
+        if ("write" === _attributeConfig.persistence_mode) {
           continue;
         }
 
@@ -147,7 +147,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var _propertyConfig = _ref2;
 
-        if (true === !!_propertyConfig.virtual) {
+        if ("write" === _propertyConfig.persistence_mode) {
           continue;
         }
 

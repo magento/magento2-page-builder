@@ -273,8 +273,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'name' => $this->getAttributeValue($propertyNode, 'source'),
                 'converter' => $this->getAttributeValue($propertyNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
-                'persist' => $this->getAttributeValue($propertyNode, 'persist'),
+                'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode'),
             ];
         }
         foreach ($elementNode->getElementsByTagName('complex_property') as $propertyNode) {
@@ -283,7 +282,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'reader' => $this->getAttributeValue($propertyNode, 'reader'),
                 'converter' => $this->getAttributeValue($propertyNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
+                'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode'),
                 'complex' => true
             ];
         }
@@ -313,8 +312,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'name' => $this->getAttributeValue($attributeNode, 'source'),
                 'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                'persist' => $this->getAttributeValue($attributeNode, 'persist'),
+                'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode'),
             ];
         }
         foreach ($elementNode->getElementsByTagName('static_attribute') as $attributeNode) {
@@ -330,9 +328,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'reader' => $this->getAttributeValue($attributeNode, 'reader'),
                 'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
+                'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode'),
                 'complex' => true,
-                'persist' => $this->getAttributeValue($attributeNode, 'persist'),
             ];
         }
 

@@ -129,7 +129,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
         var _attributeConfig = _ref;
 
-        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && "false" === _attributeConfig.persist) {
+        if ("read" === _attributeConfig.persistence_mode) {
           continue;
         }
 
@@ -173,7 +173,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
           var _propertyConfig = _ref2;
 
-          if (undefined !== _propertyConfig.persist && null !== _propertyConfig.persist && "false" === _propertyConfig.persist) {
+          if ("read" === _propertyConfig.persistence_mode) {
             continue;
           }
 

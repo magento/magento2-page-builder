@@ -109,10 +109,7 @@ export default class ObservableUpdater {
     public convertAttributes(config: any, data: DataObject) {
         const result: any = {};
         for (const attributeConfig of config.attributes) {
-            if (undefined !== attributeConfig.persist
-                && null !== attributeConfig.persist
-                && "false" === attributeConfig.persist
-            ) {
+            if ("read" === attributeConfig.persistence_mode) {
                 continue;
             }
             let value = data[attributeConfig.var];
@@ -138,10 +135,7 @@ export default class ObservableUpdater {
         const result = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
-                if (undefined !== propertyConfig.persist
-                    && null !== propertyConfig.persist
-                    && "false" === propertyConfig.persist
-                ) {
+                if ("read" === propertyConfig.persistence_mode) {
                     continue;
                 }
                 let value = "";

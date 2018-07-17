@@ -102,7 +102,7 @@ export default class Configurable implements ReadInterface {
     ) {
         const result = {};
         for (const attributeConfig of config) {
-            if (true === !!attributeConfig.virtual) {
+            if ("write" === attributeConfig.persistence_mode) {
                 continue;
             }
             let value = !!attributeConfig.complex
@@ -138,7 +138,7 @@ export default class Configurable implements ReadInterface {
     ) {
         const result: object = _.extend({}, data);
         for (const propertyConfig of config) {
-            if (true === !!propertyConfig.virtual) {
+            if ("write" === propertyConfig.persistence_mode) {
                 continue;
             }
             let value = !!propertyConfig.complex
