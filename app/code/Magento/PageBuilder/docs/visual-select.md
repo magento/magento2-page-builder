@@ -183,38 +183,32 @@ To apply vertical alignment to a content type using the Visual Select component,
 ```html
 <elements>
     <element name="main" path=".">
-        <style_properties>
-            <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-            <property name="background_position" source="background_position"/>
-            <property name="background_size" source="background_size"/>
-            <property name="background_repeat" source="background_repeat"/>
-            <property name="background_attachment" source="background_attachment"/>
-            <property name="text_align" source="text_align"/>
-            <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-            <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <property name="justify_content" source="justify_content" persist="false"/>
-            <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-        </style_properties>
-        <attributes>
-            <attribute name="name" source="data-role"/>
-            <attribute name="appearance" source="data-appearance"/>
-            <attribute name="enable_parallax" source="data-enable-parallax"/>
-            <attribute name="parallax_speed" source="data-parallax-speed"/>
-            <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
-        </attributes>
+        <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+        <property name="background_position" source="background_position"/>
+        <property name="background_size" source="background_size"/>
+        <property name="background_repeat" source="background_repeat"/>
+        <property name="background_attachment" source="background_attachment"/>
+        <property name="text_align" source="text_align"/>
+        <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <property name="justify_content" source="justify_content" persist="false"/>
+        <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+        <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+        <attribute name="name" source="data-role"/>
+        <attribute name="appearance" source="data-appearance"/>
+        <attribute name="enable_parallax" source="data-enable-parallax"/>
+        <attribute name="parallax_speed" source="data-parallax-speed"/>
+        <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
         <css name="css_classes"/>
     </element>
     <element name="container">
-        <style_properties>
-            <property name="justify_content" source="justify_content"/>
-            <static_property source="display" value="flex"/>
-            <static_property source="flex_direction" value="column"/>
-        </style_properties>
+        <property name="justify_content" source="justify_content"/>
+        <static_property source="display" value="flex"/>
+        <static_property source="flex_direction" value="column"/>
     </element>
 </elements>
 ```
