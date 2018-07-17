@@ -162,4 +162,141 @@
         <waitForPageLoad stepKey="waitForPageReload"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.headingText(PageBuilderHeadingTypeProperty_H2.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="waitForStorefrontHeadingText2"/>
     </test>
+    <test name="AdminCreateProductWithFullWidthPageBuilderAttribute">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Page Layout"/>
+            <title value="Create product with custom Page Builder attribute with full width layout"/>
+            <description value="Create product with custom Page Builder attribute with full width layout"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3103"/>
+            <testCaseId value="MC-3278"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-fullwidth"/>
+        </annotations>
+        <before>
+            <createData stepKey="createWysiwygAttribute" entity="productAttributeWysiwyg"/>
+            <createData stepKey="createWysiwygAttributeAttributeGroup" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="createWysiwygAttribute"/>
+            </createData>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createWysiwygAttribute" stepKey="deletePreReqProductAttribute"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Update created attribute to enable Page Builder -->
+        <comment userInput="Update created attribute to enable Page Builder" stepKey="commentUpdateAttribute"/>
+        <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
+            <argument name="ProductAttribute" value="$$createWysiwygAttribute$$"/>
+        </actionGroup>
+        <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder" />
+        <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute" />
+        <waitForPageLoad stepKey="waitForAttributeSave" />
+        <!-- Create a new product -->
+        <comment userInput="Create a new product" stepKey="commentCreateNewProduct"/>
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForProductPage"/>
+        <!-- Set background colour of row for description -->
+        <comment userInput="Set background colour of row for description" stepKey="commentSetDescriptionRowBackgroundColor"/>
+        <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <waitForElementVisible selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="seeDescriptionPageBuilderButton"/>
+        <click selector="{{PageBuilderProductAttribute.PageBuilderBtn('description')}}" stepKey="enableDescriptionPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForDescriptionPageBuilderVisible" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openDescriptionEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDescriptionRowBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveDescriptionEditPanelSettings"/>
+        <waitForPageLoad stepKey="waitForDescriptionSavePanelClose"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitDescriptionPageBuilderFullScreen" />
+        <waitForPageLoad stepKey="waitForDescriptionPageLoadExitFullScreen"/>
+        <!-- Set background colour of row for custom attribute -->
+        <comment userInput="Set background colour of row for custom attribute" stepKey="commentSetBackgroundColor"/>
+        <waitForElementVisible selector="{{PageBuilderProductAttribute.PageBuilderBtn($$createWysiwygAttribute.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
+        <click selector="{{PageBuilderProductAttribute.PageBuilderBtn($$createWysiwygAttribute.attribute_code$$)}}" stepKey="enablePageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <waitForPageLoad stepKey="waitForSavePanelClose"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <!-- Fill the remaining product fields accordingly -->
+        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
+        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <!-- Save product -->
+        <comment userInput="Save product" stepKey="commentSaveProduct"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <amOnPage url="{{SimpleProduct.name}}.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadProductPage"/>
+        <!-- Verify custom product attribute has it's own heading  -->
+        <comment userInput="Verify custom product attribute has it's own heading" stepKey="commentValidateAttributeHasHeading"/>
+        <waitForElementVisible selector="{{PageBuilderProductStorefront.attributeSectionHeading($$createWysiwygAttribute.default_frontend_label$$)}}" stepKey="attributeHeadingVisible"/>
+        <!-- Check that custom attribute and description are full  -->
+        <comment userInput="Check that custom attribute and description are full width" stepKey="commentSeeFullWidthFrontend"/>
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyDescriptionFullWidthLayout">
+            <argument name="index" value="0"/>
+        </actionGroup>
+        <actionGroup ref="verifyFullWidthLayout" stepKey="verifyAttributeFullWidthLayout">
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="AdminCreateProductWithNormalAttributeValidateInTableFullWidth">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Page Layout"/>
+            <title value="Custom attribute text field displays as expected with full width"/>
+            <description value="Create product attribute of type text field, populate on full width product, verify display of attribute on front-end in more information section"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3103"/>
+            <testCaseId value="MC-3279"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullwidth"/>
+        </annotations>
+        <before>
+            <createData stepKey="createTextAttribute" entity="productAttributeText"/>
+            <createData stepKey="assignTextAttributeGroup" entity="AddToDefaultSet">
+                <requiredEntity createDataKey="createTextAttribute"/>
+            </createData>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createTextAttribute" stepKey="deletePreReqProductAttribute"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Create a new product -->
+        <comment userInput="Create a new product" stepKey="commentCreateNewProduct"/>
+        <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
+        <waitForPageLoad stepKey="waitForProductPage"/>
+        <!-- Add a value to our attribute -->
+        <comment userInput="Add a value to our attribute" stepKey="commentAddAttributeValue"/>
+        <fillField selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" userInput="Normal Text Attribute Value" stepKey="fillCustomAttribute"/>
+        <!-- Fill the remaining product fields accordingly -->
+        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
+        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <!-- Save product -->
+        <comment userInput="Save product" stepKey="commentSaveProduct"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccess"/>
+        <!-- Verify text field attribute is displayed correctly in table -->
+        <comment userInput="Verify text field attribute is displayed correctly in table" stepKey="commentVerifyAttributeInTable"/>
+        <amOnPage url="{{SimpleProduct.name}}.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadProductPage"/>
+        <waitForElementVisible selector="{{PageBuilderProductStorefront.attributeTableValue($$createTextAttribute.default_frontend_label$$, 'Normal Text Attribute Value')}}" stepKey="seeAttributeValueInTable"/>
+    </test>
 </tests>
