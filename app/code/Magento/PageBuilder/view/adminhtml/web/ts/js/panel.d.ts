@@ -10,4 +10,6 @@ export default interface PanelInterface  {
     groups: KnockoutObservableArray<any>;
     isVisible?: KnockoutObservable<boolean>;
     isCollapsed?: KnockoutObservable<boolean>;
+    isStickyBottom?: KnockoutObservable<boolean>;
+    isStickyTop?: KnockoutObservable<boolean>;
 }

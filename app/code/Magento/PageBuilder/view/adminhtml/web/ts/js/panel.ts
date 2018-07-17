@@ -26,6 +26,8 @@ export default class Panel implements PanelInterface {
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isCollapsed: KnockoutObservable<boolean> = ko.observable(false);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
+    public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
+    public isStickyTop: KnockoutObservable<boolean> = ko.observable(false);
     public searching: KnockoutObservable<boolean> = ko.observable(false);
     public searchValue: KnockoutObservable<string> = ko.observable("");
     public searchPlaceholder: string = $t("Find items");

@@ -16,6 +16,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchResults = _knockout.observableArray([]);
       this.isCollapsed = _knockout.observable(false);
       this.isVisible = _knockout.observable(false);
+      this.isStickyBottom = _knockout.observable(false);
+      this.isStickyTop = _knockout.observable(false);
       this.searching = _knockout.observable(false);
       this.searchValue = _knockout.observable("");
       this.searchPlaceholder = (0, _translate)("Find items");
