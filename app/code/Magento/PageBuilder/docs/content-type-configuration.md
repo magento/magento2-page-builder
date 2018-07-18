@@ -114,18 +114,18 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             <css name="css_classes"/>
                         </element>
                         <element name="link">
-                            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                            <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                            <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                            <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+                            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+                            <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
+                            <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
+                            <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                         </element>
                         <element name="overlay">
                             <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                            <property name="background_color" source="background_color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color"/>
+                            <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" persistence_mode="write"/>
                             <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                            <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
-                            <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-                            <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
+                            <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
+                            <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
+                            <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
                         </element>
                         <element name="desktop_image">
                             <property name="text_align" source="text_align"/>
@@ -149,8 +149,8 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             <html name="message"/>
                         </element>
                         <element name="button">
-                            <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
-                            <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
+                            <property name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
+                            <property name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
                             <html name="button_text"/>
                             <css name="button_type">
                                 <filter>
@@ -322,15 +322,15 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         <css name="css_classes"/>
     </element>
     <element name="link">
-        <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-        <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-        <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-        <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
+        <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
+        <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
+        <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
     </element>
     <element name="overlay">
-        <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
-        <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
+        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
+        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
+        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
     </element>
     <element name="desktop_image">
         <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
@@ -342,8 +342,8 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         <html name="message"/>
     </element>
     <element name="button">
-        <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
-        <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
+        <property name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
+        <property name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
         <html name="button_text"/>
         <css name="button_type">
             <filter>
@@ -366,15 +366,14 @@ Name attribute in the element tags gets converted to ```data-element``` attribut
 
 ### Attributes for `property` and `attribute`
 
-| Attribute           | Description                                                                                                            |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `name`              | Unique name used for configuration merging, and the default value for storage_key if none is provided.                 |
-| `storage_key`       | Optional variable name for value in the data storage. If no value is provided, name will be used.                      |
-| `source`            | The name of the property in the DOM. Must be in snake case.                                                            |
-| `converter`         | Converts the value after reading or before saving to the DOM.                                                          |
-| `preview_converter` | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
-| `virtual`           | Used for properties that need to be saved but not viewed. For example, a value that is computed using multiple values. |
-| `persist`           | Used for read-only properties.                                                                                         |
+| Attribute             | Description                                                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `name`                | Unique name used for configuration merging, and the default value for storage_key if none is provided.                 |
+| `storage_key`         | Optional variable name for value in the data storage. If no value is provided, name will be used.                      |
+| `source`              | The name of the property in the DOM. Must be in snake case.                                                            |
+| `converter`           | Converts the value after reading or before saving to the DOM.                                                          |
+| `preview_converter`   | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
+| `persistence_mode`    | Used for read/write properties.                                                                                        |
 
 `complex_property` and `complex_attribute` allows you to specify the custom reader component used for reading data for an element.
 
