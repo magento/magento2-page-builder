@@ -45,9 +45,10 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
       }
 
       var imageUrl = value[0].url;
+      var imageId = value[0].id;
       var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getConfig("media_url"), imageUrl);
       var mediaPath = imageUrl.split(mediaUrl);
-      var directive = "{{media url=" + mediaPath[1] + "}}";
+      var directive = "{{media url=" + mediaPath[1] + (imageId ? " id=" + imageId : "") + "}}";
       return "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";
     };
 
