@@ -153,7 +153,7 @@
         <xs:attribute type="xs:string" name="value" use="required"/>
     </xs:complexType>
     <xs:complexType name="element">
-        <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
             <xs:choice maxOccurs="unbounded">
                 <xs:element type="property" name="property" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element type="complex_property" name="complex_property" minOccurs="0" maxOccurs="unbounded"/>
@@ -167,7 +167,7 @@
             <xs:element type="tag" name="tag" minOccurs="0" maxOccurs="1"/>
             <xs:element type="html" name="html" minOccurs="0" maxOccurs="1"/>
             <xs:element type="css" name="css" minOccurs="0" maxOccurs="1"/>
-        </xs:sequence>
+        </xs:choice>
         <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
     <xs:complexType name="additional_data">
