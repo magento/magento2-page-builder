@@ -267,36 +267,34 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertProperties(\DOMElement $elementNode): array
     {
         $propertiesData = [];
-        $propertiesNode = $elementNode->getElementsByTagName('style_properties')->item(0);
-        if ($propertiesNode) {
-            foreach ($propertiesNode->getElementsByTagName('property') as $propertyNode) {
-                $propertiesData[] = [
-                    'var' => $this->extractVariableName($propertyNode),
-                    'name' => $this->getAttributeValue($propertyNode, 'source'),
-                    'converter' => $this->getAttributeValue($propertyNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
-                    'persist' => $this->getAttributeValue($propertyNode, 'persist'),
-                ];
-            }
-            foreach ($propertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
-                $propertiesData[] = [
-                    'var' => $this->extractVariableName($propertyNode),
-                    'reader' => $this->getAttributeValue($propertyNode, 'reader'),
-                    'converter' => $this->getAttributeValue($propertyNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
-                    'complex' => true
-                ];
-            }
-            foreach ($propertiesNode->getElementsByTagName('static_property') as $propertyNode) {
-                $propertiesData[] = [
-                    'name' => $this->getAttributeValue($propertyNode, 'source'),
-                    'value' => $this->getAttributeValue($propertyNode, 'value'),
-                    'static' => true
-                ];
-            }
+        foreach ($elementNode->getElementsByTagName('property') as $propertyNode) {
+            $propertiesData[] = [
+                'var' => $this->extractVariableName($propertyNode),
+                'name' => $this->getAttributeValue($propertyNode, 'source'),
+                'converter' => $this->getAttributeValue($propertyNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
+                'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
+                'persist' => $this->getAttributeValue($propertyNode, 'persist'),
+            ];
         }
+        foreach ($elementNode->getElementsByTagName('complex_property') as $propertyNode) {
+            $propertiesData[] = [
+                'var' => $this->extractVariableName($propertyNode),
+                'reader' => $this->getAttributeValue($propertyNode, 'reader'),
+                'converter' => $this->getAttributeValue($propertyNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
+                'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
+                'complex' => true
+            ];
+        }
+        foreach ($elementNode->getElementsByTagName('static_property') as $propertyNode) {
+            $propertiesData[] = [
+                'name' => $this->getAttributeValue($propertyNode, 'source'),
+                'value' => $this->getAttributeValue($propertyNode, 'value'),
+                'static' => true
+            ];
+        }
+
         return $propertiesData;
     }
 
@@ -309,37 +307,35 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertAttributes(\DOMElement $elementNode): array
     {
         $attributesData = [];
-        $attributesNode = $elementNode->getElementsByTagName('attributes')->item(0);
-        if ($attributesNode) {
-            foreach ($attributesNode->getElementsByTagName('attribute') as $attributeNode) {
-                $attributesData[] = [
-                    'var' => $this->extractVariableName($attributeNode),
-                    'name' => $this->getAttributeValue($attributeNode, 'source'),
-                    'converter' => $this->getAttributeValue($attributeNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
-                ];
-            }
-            foreach ($attributesNode->getElementsByTagName('static_attribute') as $attributeNode) {
-                $attributesData[] = [
-                    'name' => $this->getAttributeValue($attributeNode, 'source'),
-                    'value' => $this->getAttributeValue($attributeNode, 'value'),
-                    'static' => true
-                ];
-            }
-            foreach ($attributesNode->getElementsByTagName('complex_attribute') as $attributeNode) {
-                $attributesData[] = [
-                    'var' => $this->extractVariableName($attributeNode),
-                    'reader' => $this->getAttributeValue($attributeNode, 'reader'),
-                    'converter' => $this->getAttributeValue($attributeNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                    'complex' => true,
-                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
-                ];
-            }
+        foreach ($elementNode->getElementsByTagName('attribute') as $attributeNode) {
+            $attributesData[] = [
+                'var' => $this->extractVariableName($attributeNode),
+                'name' => $this->getAttributeValue($attributeNode, 'source'),
+                'converter' => $this->getAttributeValue($attributeNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
+                'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
+                'persist' => $this->getAttributeValue($attributeNode, 'persist'),
+            ];
         }
+        foreach ($elementNode->getElementsByTagName('static_attribute') as $attributeNode) {
+            $attributesData[] = [
+                'name' => $this->getAttributeValue($attributeNode, 'source'),
+                'value' => $this->getAttributeValue($attributeNode, 'value'),
+                'static' => true
+            ];
+        }
+        foreach ($elementNode->getElementsByTagName('complex_attribute') as $attributeNode) {
+            $attributesData[] = [
+                'var' => $this->extractVariableName($attributeNode),
+                'reader' => $this->getAttributeValue($attributeNode, 'reader'),
+                'converter' => $this->getAttributeValue($attributeNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
+                'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
+                'complex' => true,
+                'persist' => $this->getAttributeValue($attributeNode, 'persist'),
+            ];
+        }
+
         return $attributesData;
     }
 
