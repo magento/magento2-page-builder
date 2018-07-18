@@ -73,7 +73,7 @@ define([
 
     beforeEach(function (done) {
         injector.mock(mocks);
-        injector.require(['Magento_PageBuilder/js/form/element/image-uploader'], function(ImageUploader) {
+        injector.require(['Magento_PageBuilder/js/form/element/image-uploader'], function (ImageUploader) {
             /**
              * A stub constructor to bypass the original
              * @constructor
