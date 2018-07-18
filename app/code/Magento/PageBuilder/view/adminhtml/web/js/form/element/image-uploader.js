@@ -155,13 +155,17 @@ define([
 
         /**
          * Trigger image:deleteFileAfter event to be handled by PageBuilder image component
-         * {@inheritDoc}
+         *
+         * @param {jQuery.event} e
+         * @param {Object} data
+         * @returns {Object} Chainable
          */
         onDeleteFile: function (e, data) {
-            var fileId = this.getFileId();
+            var fileId = this.getFileId(),
+                deletedFileIds = data.ids;
 
-            if (fileId && $.inArray(fileId, data.ids) > -1) {
-                events.trigger('image:' + this.id + ':deleteFileAfter', []);
+            if (fileId && $.inArray(fileId, deletedFileIds) > -1) {
+                events.trigger('image:' + this.id + ':deleteFileAfter');
             }
 
             return this;
@@ -226,7 +230,7 @@ define([
          * @return {string|null} ID
          */
         getFileId: function() {
-            return this.hasData() ? this.value()[0].id : null
+            return this.hasData() ? this.value()[0].id : null;
         }
     });
 });

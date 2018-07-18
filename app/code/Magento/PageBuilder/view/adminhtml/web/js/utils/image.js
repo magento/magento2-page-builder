@@ -15,24 +15,19 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
   function decodeUrl(value) {
     var result = "";
     value = decodeURIComponent(value.replace(window.location.href, ""));
-    var regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?.*?}}/;
+    var regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/;
 
     if (regexp.test(value)) {
       var _regexp$exec = regexp.exec(value),
           url = _regexp$exec[1],
-          type = _regexp$exec[2],
-          image = {
-            name: url.split("/").pop(),
-            size: 0,
-            type: "image/" + type,
-            url: _config.getConfig("media_url") + url
-          },
-          imageIdMatch = value.match(/{{.*\s*id\s*="?([a-zA-Z0-9-]*)"?\s*}}/);
+          type = _regexp$exec[2];
 
-      if (imageIdMatch) {
-        image.id = imageIdMatch[1];
-      }
-
+      var image = {
+        name: url.split("/").pop(),
+        size: 0,
+        type: "image/" + type,
+        url: _config.getConfig("media_url") + url
+      };
       result = [image];
     }
 

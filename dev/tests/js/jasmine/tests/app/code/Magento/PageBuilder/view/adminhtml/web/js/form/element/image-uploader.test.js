@@ -6,9 +6,9 @@
 
 /* eslint-disable max-nested-callbacks */
 define([
-    'Magento_PageBuilder/js/form/element/image-uploader',
-    'jquery'
-], function (ImageUploader, $) {
+    'jquery',
+    'squire',
+], function ($, Squire) {
     'use strict';
 
     var uploader,
@@ -63,19 +63,29 @@ define([
                 elementWidth: 50,
                 expectedClasses: 'bash'
             }
-        ];
+        ],
+        injector = new Squire(),
+        mocks = {
+            'Magento_PageBuilder/js/events': {
+                trigger: jasmine.createSpy()
+            }
+        };
 
-    beforeEach(function () {
-        /**
-         * A stub constructor to bypass the original
-         * @constructor
-         */
-        var MockUploader = function () {};
+    beforeEach(function (done) {
+        injector.mock(mocks);
+        injector.require(['Magento_PageBuilder/js/form/element/image-uploader'], function(ImageUploader) {
+            /**
+             * A stub constructor to bypass the original
+             * @constructor
+             */
+            var MockUploader = function () {};
 
-        MockUploader.prototype = Object.create(ImageUploader.prototype);
-        MockUploader.prototype.constructor = MockUploader;
-        uploader = new MockUploader();
-        uploader.$uploadArea = $('<div/>');
+            MockUploader.prototype = Object.create(ImageUploader.prototype);
+            MockUploader.prototype.constructor = MockUploader;
+            uploader = new MockUploader();
+            uploader.$uploadArea = $('<div/>');
+            done();
+        });
     });
 
     describe('Magento_PageBuilder/js/form/element/image-uploader', function () {
@@ -115,6 +125,29 @@ define([
 
                     expect(uploader.$uploadArea.addClass).toHaveBeenCalledWith(scenario.expectedClasses);
                 });
+            });
+        });
+
+        describe('onDeleteFile', function () {
+            it('Should do nothing when uploader is not associated to the deleted image', function () {
+                spyOn(uploader, 'getFileId').and.returnValue('foo');
+                uploader.onDeleteFile({}, {
+                    ids: ['bar']
+                });
+
+                expect(mocks['Magento_PageBuilder/js/events'].trigger).not.toHaveBeenCalled();
+
+            });
+            it('Should trigger an event when uploader is associated to the deleted image', function () {
+                uploader.id = 'abc123';
+                spyOn(uploader, 'getFileId').and.returnValue('foo');
+
+                uploader.onDeleteFile({}, {
+                    ids: ['foo']
+                });
+
+                expect(mocks['Magento_PageBuilder/js/events'].trigger)
+                    .toHaveBeenCalledWith('image:abc123:deleteFileAfter');
             });
         });
     });
