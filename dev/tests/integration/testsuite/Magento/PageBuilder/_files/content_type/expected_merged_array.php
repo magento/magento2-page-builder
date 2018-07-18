@@ -51,25 +51,22 @@ return [
                                         'name' => 'converter',
                                         'converter' => 'Path/to/converter',
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     1 => [
                                         'var' => 'style_no_converter',
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null
                                     ]
                                 ],
@@ -247,39 +244,35 @@ return [
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     1 => [
                                         'var' => 'style_attributes_change',
                                         'name' => 'custom_name',
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persist' => 'true',
-                                        'virtual' => 'false'
+                                        'persistence_mode' => 'write',
                                     ],
                                     2 => [
                                         'var' => 'style_attributes_add',
                                         'name' => 'attributes_add',
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persist' => 'false',
-                                        'virtual' => 'true'
+                                        'persistence_mode' => 'write',
                                     ],
                                     3 => [
                                         'var' => 'new_style',
                                         'name' => 'new-style',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     4 => [
                                         'var' => 'original_complex',
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'virtual' => null,
+                                        'persistence_mode' => null,
                                         'complex' => true
                                     ],
                                     5 => [
@@ -287,7 +280,7 @@ return [
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'virtual' => 'false',
+                                        'persistence_mode' => 'write',
                                         'complex' => true
                                     ],
                                     6 => [
@@ -295,7 +288,7 @@ return [
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'virtual' => 'true',
+                                        'persistence_mode' => 'write',
                                         'complex' => true
                                     ],
                                     7 => [
@@ -303,7 +296,7 @@ return [
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'virtual' => null,
+                                        'persistence_mode' => null,
                                         'complex' => true
                                     ],
                                     8 => [
@@ -326,33 +319,29 @@ return [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null
                                     ],
                                     1 => [
                                         'var' => 'attribute_change',
                                         'name' => 'data-custom',
-                                        'virtual' => 'false',
                                         'converter' => 'Path/to/custom/converter',
-                                        'persist' => 'true',
+                                        'persistence_mode' => 'write',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
                                     2 => [
                                         'var' => 'attribute_add',
                                         'name' => 'attribute_add',
-                                        'virtual' => 'false',
                                         'converter' => 'Path/to/custom/converter',
-                                        'persist' => 'true',
+                                        'persistence_mode' => 'write',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
                                     3 => [
                                         'var' => 'new_attribute',
                                         'name' => 'data-new',
-                                        'virtual' => 'true',
                                         'converter' => 'Path/to/custom/converter',
-                                        'persist' => 'false',
+                                        'persistence_mode' => 'write',
                                         'preview_converter' => 'Path/to/preview/custom/converter'
                                     ],
                                     4 => [
@@ -375,36 +364,32 @@ return [
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'virtual' => null,
                                         'complex' => true,
-                                        'persist' => null
+                                        'persistence_mode' => null
                                     ],
                                     8 => [
                                         'var' => 'complex_style_attributes_change',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'virtual' => 'false',
                                         'complex' => true,
-                                        'persist' => null
+                                        'persistence_mode' => 'write'
                                     ],
                                     9 => [
                                         'var' => 'complex_style_attributes_add',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'virtual' => 'true',
                                         'complex' => true,
-                                        'persist' => null
+                                        'persistence_mode' => 'write'
                                     ],
                                     10 => [
                                         'var' => 'new_complex',
                                         'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'virtual' => null,
                                         'complex' => true,
-                                        'persist' => null
+                                        'persistence_mode' => null
                                     ]
                                 ],
                                 'tag' => [
@@ -432,17 +417,15 @@ return [
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null
                                     ]
                                 ],
@@ -461,17 +444,15 @@ return [
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null
                                     ]
                                 ],
@@ -527,25 +508,22 @@ return [
                                         'name' => 'converter',
                                         'converter' => 'Path/to/converter',
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     1 => [
                                         'var' => 'style_no_converter',
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null,
                                     ]
                                 ],
@@ -591,25 +569,22 @@ return [
                                         'name' => 'converter',
                                         'converter' => 'Path/to/converter',
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     1 => [
                                         'var' => 'style_no_converter',
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null,
                                     ]
                                 ],
@@ -656,25 +631,22 @@ return [
                                         'name' => 'converter',
                                         'converter' => 'Path/to/converter',
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     1 => [
                                         'var' => 'style_no_converter',
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null,
                                     ]
                                 ],

@@ -32,25 +32,22 @@ return [
                                         'name' => 'converter',
                                         'converter' => 'Path/to/converter',
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ],
                                     1 => [
                                         'var' => 'style_no_converter',
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
+                                        'persistence_mode' => null,
                                     ]
                                 ],
                                 'attributes' => [
                                     0 => [
                                         'var' => 'name',
                                         'name' => 'data-role',
-                                        'virtual' => null,
                                         'converter' => null,
-                                        'persist' => null,
+                                        'persistence_mode' => null,
                                         'preview_converter' => null,
                                     ]
                                 ],
