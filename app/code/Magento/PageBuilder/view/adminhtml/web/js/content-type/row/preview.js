@@ -107,12 +107,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.element = element;
       this.buildJarallax(); // Observe for resizes of the element and force jarallax to display correctly
 
-      if ((0, _jquery)(this.element).hasClass("jarallax")) {
-        new _ResizeObserver(function () {
+      new _ResizeObserver(function () {
+        if ((0, _jquery)(_this2.element).hasClass("jarallax")) {
           jarallax(_this2.element, "onResize");
           jarallax(_this2.element, "onScroll");
-        }).observe(this.element);
-      }
+        }
+      }).observe(this.element);
     };
 
     return Preview;

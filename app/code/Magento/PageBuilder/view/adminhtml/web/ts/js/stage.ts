@@ -9,6 +9,7 @@ import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
+import "./binding/sortable";
 import Collection from "./collection";
 import ContentTypeConfigInterface from "./content-type-config";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
