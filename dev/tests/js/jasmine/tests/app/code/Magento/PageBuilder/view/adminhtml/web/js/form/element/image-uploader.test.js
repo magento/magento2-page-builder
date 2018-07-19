@@ -7,7 +7,7 @@
 /* eslint-disable max-nested-callbacks */
 define([
     'jquery',
-    'squire',
+    'squire'
 ], function ($, Squire) {
     'use strict';
 
