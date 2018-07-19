@@ -113,19 +113,19 @@
                 <xs:unique name="uniquePropertyName">
                     <xs:annotation>
                         <xs:documentation>
-                            Property and Complex Property name must be unique
+                            Property name must be unique
                         </xs:documentation>
                     </xs:annotation>
-                    <xs:selector xpath="property|complex_property"/>
+                    <xs:selector xpath="property"/>
                     <xs:field xpath="@name"/>
                 </xs:unique>
                 <xs:unique name="uniqueAttributeName">
                     <xs:annotation>
                         <xs:documentation>
-                            Attribute and Complex Attribute name must be unique
+                            Attribute name must be unique
                         </xs:documentation>
                     </xs:annotation>
-                    <xs:selector xpath="attribute|complex_attribute"/>
+                    <xs:selector xpath="attribute"/>
                     <xs:field xpath="@name"/>
                 </xs:unique>
             </xs:element>
@@ -156,12 +156,10 @@
         <xs:choice maxOccurs="unbounded">
             <xs:choice maxOccurs="unbounded">
                 <xs:element type="property" name="property" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element type="complex_property" name="complex_property" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element type="static_property" name="static_property" minOccurs="0" maxOccurs="unbounded"/>
             </xs:choice>
             <xs:choice maxOccurs="unbounded">
                 <xs:element type="attribute" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element type="complex_attribute" name="complex_attribute" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element type="static_attribute" name="static_attribute" minOccurs="0" maxOccurs="unbounded"/>
             </xs:choice>
             <xs:element type="tag" name="tag" minOccurs="0" maxOccurs="1"/>
@@ -177,19 +175,12 @@
     </xs:complexType>
     <xs:complexType name="property">
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="source" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>
         <xs:attribute type="xs:string" name="storage_key" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="complex_property">
-        <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="reader" use="required"/>
-        <xs:attribute type="xs:string" name="converter" use="optional"/>
-        <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
-        <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>
-        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
+        <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_property">
         <xs:attribute type="xs:string" name="source" use="required"/>
@@ -198,19 +189,12 @@
     </xs:complexType>
     <xs:complexType name="attribute">
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="source" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>
         <xs:attribute type="xs:string" name="storage_key" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="complex_attribute">
-        <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="reader" use="required"/>
-        <xs:attribute type="xs:string" name="converter" use="optional"/>
-        <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
-        <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>
-        <xs:attribute type="xs:string" name="storage_key" use="optional"/>
+        <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_attribute">
         <xs:attribute type="xs:string" name="source" use="required"/>

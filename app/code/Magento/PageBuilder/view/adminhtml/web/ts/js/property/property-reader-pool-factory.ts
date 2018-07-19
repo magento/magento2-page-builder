@@ -23,8 +23,7 @@ export default function create(contentType: string): Promise<typeof PropertyRead
                 const element = dataMapping.elements[elementName];
                 if (element.style !== undefined) {
                     for (const propertyConfig of element.style) {
-                        if (!!propertyConfig.complex
-                            && propertyConfig.reader
+                        if (propertyConfig.reader
                             && propertyReaders.indexOf(propertyConfig.reader) === -1
                             && !PropertyReaderPool.get(propertyConfig.reader)
                         ) {
@@ -35,8 +34,7 @@ export default function create(contentType: string): Promise<typeof PropertyRead
 
                 if (element.attributes !== undefined) {
                     for (const attributeConfig of element.attributes) {
-                        if (!!attributeConfig.complex
-                            && attributeConfig.reader
+                        if (attributeConfig.reader
                             && propertyReaders.indexOf(attributeConfig.reader) === -1
                             && !PropertyReaderPool.get(attributeConfig.reader)
                         ) {

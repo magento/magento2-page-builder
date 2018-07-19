@@ -106,7 +106,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                             <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                             <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                            <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                             <attribute name="name" source="data-role"/>
                             <attribute name="appearance" source="data-appearance"/>
                             <attribute name="show_button" source="data-show-button"/>
@@ -114,7 +114,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                             <css name="css_classes"/>
                         </element>
                         <element name="link">
-                            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+                            <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
                             <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
                             <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                             <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
@@ -122,7 +122,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         <element name="overlay">
                             <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                             <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" persistence_mode="write"/>
-                            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                            <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                             <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
                             <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
                             <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
@@ -303,13 +303,11 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 | ------------------ | ----------------------------------------------------------------------------------------------------- |
 | `elements`         | The container for all the elements of the content type.                                               |
 | `element`          | The name of the element that contains data for the master format and the render and preview template. |
-| `property`         | Specifies style property for the element in the master format                                      |
-| `complex_property` | Specifies complex style property for the element in the master format                                      |
-| `attribute`        | Specifies attribute for the element in master format  
-| `complex_attribute`| Specifies complex attribute for the element in master format                                                 |
+| `property`         | Specifies style property for the element in the master format                                         |
+| `attribute`        | Specifies attribute for the element in master format                                                  |
 | `css`              | Specifies whether element has classes and in which variable they should be read                       |
 | `html`             | Specifies whether element has html content and in which variable they should be read                  |
-| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                 |
+| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                  |
 
 **Example:**
 ``` xml
@@ -317,12 +315,12 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     <element name="main">
         <property name="border" source="border_style"/>
         <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-        <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+        <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
         <attribute name="name" source="data-role"/>
         <css name="css_classes"/>
     </element>
     <element name="link">
-        <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+        <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
         <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
         <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
@@ -366,21 +364,22 @@ Name attribute in the element tags gets converted to ```data-element``` attribut
 
 ### Attributes for `property` and `attribute`
 
-| Attribute             | Description                                                                                                            |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `name`                | Unique name used for configuration merging, and the default value for storage_key if none is provided.                 |
-| `storage_key`         | Optional variable name for value in the data storage. If no value is provided, name will be used.                      |
-| `source`              | The name of the property in the DOM. Must be in snake case.                                                            |
-| `converter`           | Converts the value after reading or before saving to the DOM.                                                          |
-| `preview_converter`   | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
-| `persistence_mode`    | Used for read/write properties.                                                                                        |
+| Attribute             | Description                                                                                                           |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------|
+| `name`                | Unique name used for configuration merging, and the default value for storage_key if none is provided.                |
+| `storage_key`         | Optional variable name for value in the data storage. If no value is provided, name will be used.                     |
+| `source`              | The name of the property or attribute in the DOM. Must be in snake case.                                              |
+| `converter`           | Converts the value after reading or before saving to the DOM.                                                         |
+| `preview_converter`   | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.     |
+| `persistence_mode`    | Used for read/write properties.                                                                                       |
+| `reader`              | Reader used for parsing attributes and properties out of the DOM. Should not be used with read-only persistence_mode. |
 
-`complex_property` and `complex_attribute` allows you to specify the custom reader component used for reading data for an element.
+You may optionally set a `reader` value in configuration, otherwise `Magento_PageBuilder/js/property/style-property-reader` will be used for properties, and `Magento_PageBuilder/js/property/element-attribute-reader` will be used for attributes. Both default readers accept `source` as a parameter, and will return that value.
 
-`complex_property` and `complex_attribute` can contain `converter` and `preview_converter`.
+`property` and `attribute` can contain `converter` and `preview_converter`.
 
 ``` xml
-<complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+<property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 ```
 
 `static_property` and `static_attribute` allows you to add specific style properites or attributes to an element.

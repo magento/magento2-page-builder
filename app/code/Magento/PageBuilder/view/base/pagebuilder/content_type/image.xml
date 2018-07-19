@@ -31,8 +31,8 @@
                                 <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                 <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                 <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                                <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 <attribute name="name" source="data-role"/>
                                 <attribute name="appearance" source="data-appearance"/>
                                 <css name="css_classes"/>
@@ -52,7 +52,7 @@
                                 <attribute name="title_attribute" source="title"/>
                             </element>
                             <element name="link">
-                                <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+                                <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
                                 <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
                                 <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                                 <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>

@@ -45,7 +45,7 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
 
               var _propertyConfig = _ref;
 
-              if (!!_propertyConfig.complex && _propertyConfig.reader && propertyReaders.indexOf(_propertyConfig.reader) === -1 && !_propertyReaderPool.get(_propertyConfig.reader)) {
+              if (_propertyConfig.reader && propertyReaders.indexOf(_propertyConfig.reader) === -1 && !_propertyReaderPool.get(_propertyConfig.reader)) {
                 propertyReaders.push(_propertyConfig.reader);
               }
             }
@@ -66,7 +66,7 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
 
               var _attributeConfig = _ref2;
 
-              if (!!_attributeConfig.complex && _attributeConfig.reader && propertyReaders.indexOf(_attributeConfig.reader) === -1 && !_propertyReaderPool.get(_attributeConfig.reader)) {
+              if (_attributeConfig.reader && propertyReaders.indexOf(_attributeConfig.reader) === -1 && !_propertyReaderPool.get(_attributeConfig.reader)) {
                 propertyReaders.push(_attributeConfig.reader);
               }
             }

@@ -12,6 +12,9 @@ use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
+    const DEFAULT_ATTRIBUTE_READER = 'Magento_PageBuilder/js/property/element-attribute-reader';
+    const DEFAULT_PROPERTY_READER = 'Magento_PageBuilder/js/property/style-property-reader';
+
     /**
      * @var ArgumentParser
      */
@@ -274,16 +277,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'converter' => $this->getAttributeValue($propertyNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
                 'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode'),
-            ];
-        }
-        foreach ($elementNode->getElementsByTagName('complex_property') as $propertyNode) {
-            $propertiesData[] = [
-                'var' => $this->extractVariableName($propertyNode),
-                'reader' => $this->getAttributeValue($propertyNode, 'reader'),
-                'converter' => $this->getAttributeValue($propertyNode, 'converter'),
-                'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode'),
-                'complex' => true
+                'reader' => $this->getAttributeValue($propertyNode, 'reader')
+                    ?? self::DEFAULT_PROPERTY_READER,
             ];
         }
         foreach ($elementNode->getElementsByTagName('static_property') as $propertyNode) {
@@ -313,6 +308,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
                 'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode'),
+                'reader' => $this->getAttributeValue($attributeNode, 'reader')
+                    ?? self::DEFAULT_ATTRIBUTE_READER,
             ];
         }
         foreach ($elementNode->getElementsByTagName('static_attribute') as $attributeNode) {
@@ -320,16 +317,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'name' => $this->getAttributeValue($attributeNode, 'source'),
                 'value' => $this->getAttributeValue($attributeNode, 'value'),
                 'static' => true
-            ];
-        }
-        foreach ($elementNode->getElementsByTagName('complex_attribute') as $attributeNode) {
-            $attributesData[] = [
-                'var' => $this->extractVariableName($attributeNode),
-                'reader' => $this->getAttributeValue($attributeNode, 'reader'),
-                'converter' => $this->getAttributeValue($attributeNode, 'converter'),
-                'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode'),
-                'complex' => true,
             ];
         }
 

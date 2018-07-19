@@ -13,7 +13,7 @@ import MassConverterPool from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {fromSnakeToCamelCase} from "../../utils/string";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
 /**
  * @api
@@ -105,9 +105,7 @@ export default class Configurable implements ReadInterface {
             if ("write" === attributeConfig.persistence_mode) {
                 continue;
             }
-            let value = !!attributeConfig.complex
-                ? propertyReaderPool.get(attributeConfig.reader).read(element)
-                : element.getAttribute(attributeConfig.name);
+            let value = propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
             if (converterPool.get(attributeConfig.converter)) {
                 value = converterPool.get(attributeConfig.converter).fromDom(value);
             }
@@ -141,9 +139,7 @@ export default class Configurable implements ReadInterface {
             if ("write" === propertyConfig.persistence_mode) {
                 continue;
             }
-            let value = !!propertyConfig.complex
-                ? propertyReaderPool.get(propertyConfig.reader).read(element)
-                : element.style[fromSnakeToCamelCase(propertyConfig.name)];
+            let value = propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
             if (converterPool.get(propertyConfig.converter)) {
                 value = converterPool.get(propertyConfig.converter).fromDom(value);
             }

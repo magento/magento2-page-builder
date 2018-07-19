@@ -196,8 +196,8 @@ To apply vertical alignment to a content type using the Visual Select component,
         <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
         <property name="justify_content" source="justify_content" persistence_mode="read"/>
         <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-        <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-        <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+        <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+        <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
         <attribute name="name" source="data-role"/>
         <attribute name="appearance" source="data-appearance"/>
         <attribute name="enable_parallax" source="data-enable-parallax"/>
