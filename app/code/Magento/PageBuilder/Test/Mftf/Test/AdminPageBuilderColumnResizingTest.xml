@@ -854,24 +854,28 @@
         <!-- Resize left column to 4/12 via second column -->
         <comment userInput="Resize left column to 4/12 via second column" stepKey="commentFourTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn1"/>
+        <waitForPageLoad stepKey="waitForResize1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','4/12')}}" stepKey="validateFirstColumnWidth1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','7/12')}}" stepKey="validateThirdColumnWidth1"/>
         <!-- Resize left column to 3/12 via second column -->
         <comment userInput="Resize left column to 3/12 via second column" stepKey="commentThreeTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn2"/>
+        <waitForPageLoad stepKey="waitForResize2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateFirstColumnWidth2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','8/12')}}" stepKey="validateThirdColumnWidth2"/>
         <!-- Resize left column to 2/12 via second column -->
         <comment userInput="Resize left column to 2/12 via second column" stepKey="commentTwoTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn3"/>
+        <waitForPageLoad stepKey="waitForResize3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateFirstColumnWidth3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','9/12')}}" stepKey="validateThirdColumnWidth3"/>
         <!-- Resize left column to 1/12 via second column -->
         <comment userInput="Resize left column to 1/12 via second column" stepKey="commentOneTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn4"/>
+        <waitForPageLoad stepKey="waitForResize4"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth4"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth4"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','10/12')}}" stepKey="validateThirdColumnWidth4"/>
