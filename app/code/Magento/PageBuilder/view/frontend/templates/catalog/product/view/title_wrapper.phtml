@@ -9,9 +9,12 @@
  *
  * @var \Magento\Framework\View\Element\Template $block
  */
+$childHtml = $block->getChildHtml();
 ?>
 
-<div class="product-full-width-section">
-    <h2 class="product-section-title"><?= $block->escapeHtml($block->getTitle()); ?></h2>
-    <?= $block->getChildHtml(); ?>
-</div>
+<?php if (trim($childHtml) !== ""): ?>
+    <div class="product-full-width-section">
+        <h2 class="product-section-title"><?= $block->escapeHtml($block->getTitle()); ?></h2>
+        <?= $block->getChildHtml(); ?>
+    </div>
+<?php endif; ?>
