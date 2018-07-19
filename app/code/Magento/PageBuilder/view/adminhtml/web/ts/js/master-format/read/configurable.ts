@@ -105,7 +105,9 @@ export default class Configurable implements ReadInterface {
             if ("write" === attributeConfig.persistence_mode) {
                 continue;
             }
-            let value = propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
+            let value = !!attributeConfig.static
+                ? attributeConfig.value
+                : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
             if (converterPool.get(attributeConfig.converter)) {
                 value = converterPool.get(attributeConfig.converter).fromDom(value);
             }
@@ -139,7 +141,9 @@ export default class Configurable implements ReadInterface {
             if ("write" === propertyConfig.persistence_mode) {
                 continue;
             }
-            let value = propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
+            let value = !!propertyConfig.static
+                ? propertyConfig.value
+                : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
             if (converterPool.get(propertyConfig.converter)) {
                 value = converterPool.get(propertyConfig.converter).fromDom(value);
             }

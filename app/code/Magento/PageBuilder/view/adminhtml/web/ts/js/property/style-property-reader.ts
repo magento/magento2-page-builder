@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "./property-reader-interface";
 import {fromSnakeToCamelCase} from "../utils/string";
+import PropertyReaderInterface from "./property-reader-interface";
 
 /**
  * @api
@@ -18,6 +18,6 @@ export default class StylePropertyReader implements PropertyReaderInterface {
      */
     public read(element: HTMLElement, source: string): string | object {
         const camelCasedSource = fromSnakeToCamelCase(source);
-        return element.style[<keyof CSSStyleDeclaration>camelCasedSource];
+        return element.style[camelCasedSource as keyof CSSStyleDeclaration];
     }
 }

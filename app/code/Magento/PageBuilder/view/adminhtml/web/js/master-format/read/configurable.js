@@ -103,7 +103,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           continue;
         }
 
-        var value = propertyReaderPool.get(_attributeConfig.reader).read(element, _attributeConfig.name);
+        var value = !!_attributeConfig.static ? _attributeConfig.value : propertyReaderPool.get(_attributeConfig.reader).read(element, _attributeConfig.name);
 
         if (converterPool.get(_attributeConfig.converter)) {
           value = converterPool.get(_attributeConfig.converter).fromDom(value);
@@ -151,7 +151,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           continue;
         }
 
-        var value = propertyReaderPool.get(_propertyConfig.reader).read(element, _propertyConfig.name);
+        var value = !!_propertyConfig.static ? _propertyConfig.value : propertyReaderPool.get(_propertyConfig.reader).read(element, _propertyConfig.name);
 
         if (converterPool.get(_propertyConfig.converter)) {
           value = converterPool.get(_propertyConfig.converter).fromDom(value);
