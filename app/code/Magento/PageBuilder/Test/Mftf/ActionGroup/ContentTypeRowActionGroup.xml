@@ -59,4 +59,114 @@
         <waitForElementVisible selector="{{page.parallaxState(index, parallaxStateValue.value)}}" stepKey="waitForParallaxBackgroundState"/>
         <waitForElementVisible selector="{{page.parallaxSpeed(index, parallaxSpeedValue.value)}}" stepKey="waitForParallaxBackgroundSpeed"/>
     </actionGroup>
+    <!-- Validate Contained Row Appearance on stage -->
+    <actionGroup name="validateContainedRowAppearanceOnStage">
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
+        <executeJS function="return {{RowOnStage.rowWidthJS('contained')}}" stepKey="rowWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertLessThan stepKey="assertRowWidthLessThanStage">
+            <expectedResult type="variable">stageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertLessThan>
+    </actionGroup>
+    <!-- Validate Full Width Row Appearance on stage -->
+    <actionGroup name="validateFullWidthRowAppearanceOnStage">
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
+        <executeJS function="return {{RowOnStage.rowWidthJS('full-width')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-width')}} + 20)" stepKey="rowElementWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertRowWidthEqualsStage">
+            <expectedResult type="variable">stageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanContents">
+            <expectedResult type="variable">rowElementWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+    <!-- Validate Full Bleed Row Appearance on stage -->
+    <actionGroup name="validateFullBleedRowAppearanceOnStage">
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
+        <executeJS function="return {{RowOnStage.rowWidthJS('full-bleed')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-bleed')}} + 20)" stepKey="rowElementWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertRowWidthEqualsStage">
+            <expectedResult type="variable">stageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertRowWidthEqualsContentsPlusPadding">
+            <expectedResult type="variable">rowElementWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <!-- Validate Contained Row Appearance on Storefront -->
+    <actionGroup name="validateContainedRowAppearanceOnStorefront">
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('contained')}}" stepKey="rowWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertLessThan stepKey="assertRowWidthLessThanPage">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertLessThan>
+    </actionGroup>
+    <!-- Validate Full Width Row Appearance on Storefront -->
+    <actionGroup name="validateFullWidthRowAppearanceOnStorefront">
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-width')}} + 20)" stepKey="rowElementWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertRowWidthEqualsPage">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanContents">
+            <expectedResult type="variable">rowElementWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+    <!-- Validate Full Bleed Row Appearance on Storefront -->
+    <actionGroup name="validateFullBleedRowAppearanceOnStorefront">
+        <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
+        <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
+        <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-bleed')}} + 20)" stepKey="rowElementWidth"/>
+        <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertRowWidthEqualsPage">
+            <expectedResult type="variable">pageWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertRowWidthEqualsContentsPlusPadding">
+            <expectedResult type="variable">rowElementWidth</expectedResult>
+            <actualResult type="variable">rowWidth</actualResult>
+        </assertEquals>
+    </actionGroup>
 </actionGroups>
