@@ -26,7 +26,6 @@ return [
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
-                                'path' => '.',
                                 'style' => [
                                     0 =>[
                                         'var' => 'style_converter',

@@ -8,6 +8,63 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="BannerPosterAddWYSIWYGLink">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Poster - Verify User Can Add Link To WYSIWYG"/>
+            <description value="Verify that a user can add a link to the WYSIWYG for Banner"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-405"/>
+            <testCaseId value="MC-3104"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Add Link To WYSIWYG -->
+        <comment userInput="Add Link To WYSIWYG" stepKey="commentAddLink"/>
+        <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInWYSIWYG">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.linkUrl(ExternalLink.googleUrl)}}" stepKey="waitForBannerStage"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Page Save -->
+        <comment userInput="Validate Stage After Page Save" stepKey="commentValidateStage2"/>
+        <waitForElementVisible selector="{{BannerOnBackend.linkUrl(ExternalLink.googleUrl)}}" stepKey="waitForBannerStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BannerOnFrontend.linkUrl(ExternalLink.googleUrl)}}" stepKey="waitForBannerStorefront"/>
+    </test>
     <test name="BannerPosterButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
@@ -134,7 +191,6 @@
         <seeElement selector="{{BannerOnFrontend.poster}}" stepKey="verifyPosterInFrontend2"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterMobileWithMobileImage}}" stepKey="dontSeePosterInFrontendMobileWithMobileImage2"/>
     </test>
-
     <test name="BannerPosterButtonOnHover">
         <annotations>
             <features value="PageBuilder"/>
