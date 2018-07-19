@@ -301,9 +301,6 @@ export default class Preview extends PreviewCollection {
             );
             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
 
-            // Set a flag of the columns which are currently being resized
-            this.setColumnsAsResizing(column, getAdjacentColumn(column, "+1"));
-
             // Force the cursor to resizing
             $("body").css("cursor", "col-resize");
 
@@ -734,6 +731,9 @@ export default class Preview extends PreviewCollection {
                         this.resizeLastPosition = newColumnWidth.position;
 
                         this.resizeLastColumnInPair = modifyColumnInPair;
+
+                        // Ensure the adjusted column is marked as resizing to animate correctly
+                        this.setColumnsAsResizing(mainColumn, adjustedColumn);
 
                         this.onColumnResize(
                             mainColumn,
