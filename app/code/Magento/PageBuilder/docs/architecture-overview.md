@@ -26,6 +26,7 @@
     1. [Custom Toolbar]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
+6. [Creating Custom Content Block]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -52,6 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
+[Creating Custom Content Block]: creating-custom-content-block.md
 
 ## What is PageBuilder?
 

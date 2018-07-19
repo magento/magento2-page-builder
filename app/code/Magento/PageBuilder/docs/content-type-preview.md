@@ -22,6 +22,7 @@
     1. **Render a backend content type preview**
     1. [Custom Toolbar]
 5. [Roadmap and known issues]
+6. [Creating Custom Content Block]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -43,7 +44,8 @@
 [Store component master format as widget directive]: widget-directive.md
 [Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
-[Roadmap and known issues]: roadmap.md
+[Roadmap and Known Issues]: roadmap.md
+[Creating Custom Content Block]: creating-custom-content-block.md
 
 
 ## What's in this topic

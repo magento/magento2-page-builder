@@ -11,6 +11,7 @@
     1. [Code of Conduct](#code-of-conduct)
 4. [Developer documentation]
 5. [Roadmap and known issues]
+6. [Creating Custom Content Block]
 
 [Introduction]: README.md
 [Installation Guide]: install.md
