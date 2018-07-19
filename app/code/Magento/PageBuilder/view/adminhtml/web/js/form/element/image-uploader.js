@@ -58,7 +58,6 @@ define([
             this._super();
 
             events.on('image:' + this.id +':assignAfter', this.onAssignedFile.bind(this));
-            $(window).on('fileDeleted.mediabrowser', this.onDeleteFile.bind(this));
 
             // bind dropzone highlighting using event delegation only once
             if (!initializedOnce) {
@@ -155,18 +154,12 @@ define([
 
         /**
          * Trigger image:deleteFileAfter event to be handled by PageBuilder image component
-         *
-         * @param {jQuery.event} e
-         * @param {Object} data
-         * @returns {Object} Chainable
+         * {inheritDoc}
          */
-        onDeleteFile: function (e, data) {
-            var fileId = this.getFileId(),
-                deletedFileIds = data.ids;
+        clear: function () {
+            this._super();
 
-            if (fileId && $.inArray(fileId, deletedFileIds) > -1) {
-                events.trigger('image:' + this.id + ':deleteFileAfter');
-            }
+            events.trigger('image:' + this.id + ':deleteFileAfter');
 
             return this;
         },
@@ -222,15 +215,6 @@ define([
         hasData: function() {
             // Some of the components automatically add an empty object if the value is unset.
             return this._super() && !$.isEmptyObject(this.value()[0]);
-        },
-
-        /**
-         * Gets the ID of the file used if set
-         *
-         * @return {string|null} ID
-         */
-        getFileId: function() {
-            return this.hasData() ? this.value()[0].id : null;
         }
     });
 });
