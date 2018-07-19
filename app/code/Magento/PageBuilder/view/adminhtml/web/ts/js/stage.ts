@@ -19,6 +19,8 @@ import {getSortableOptions} from "./drag-drop/sortable";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";
+import deferred from "./utils/promise-deferred";
+import DeferredInterface from "./utils/promise-deferred.d";
 
 export default class Stage {
     public parent: PageBuilderInterface;
@@ -37,6 +39,7 @@ export default class Stage {
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public dataStore: DataStore = new DataStore();
+    public afterRenderDeferred: DeferredInterface = deferred();
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render = new Render();
     private collection: Collection = new Collection();
@@ -48,7 +51,10 @@ export default class Stage {
         this.parent = parent;
         this.id = parent.id;
         this.initListeners();
-        buildStage(this, parent.initialValue).then(this.ready.bind(this));
+        Promise.all([
+            buildStage(this, parent.initialValue),
+            this.afterRenderDeferred.promise,
+        ]).then(this.ready.bind(this));
         generateAllowedParents();
     }
 
