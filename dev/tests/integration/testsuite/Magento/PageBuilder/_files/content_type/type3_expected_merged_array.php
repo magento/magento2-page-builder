@@ -32,7 +32,7 @@ return [
                                         'name' => 'converter',
                                         'converter' => 'Path/to/converter',
                                         'preview_converter' => null,
-                                        'persistence_mode' => null,
+                                        'persistence_mode' => 'readwrite',
                                         'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
                                     ],
                                     1 => [
@@ -40,7 +40,7 @@ return [
                                         'name' => 'no_converter',
                                         'converter' => null,
                                         'preview_converter' => null,
-                                        'persistence_mode' => null,
+                                        'persistence_mode' => 'readwrite',
                                         'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
                                     ]
                                 ],
@@ -49,7 +49,7 @@ return [
                                         'var' => 'name',
                                         'name' => 'data-role',
                                         'converter' => null,
-                                        'persistence_mode' => null,
+                                        'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
                                         'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
                                     ]

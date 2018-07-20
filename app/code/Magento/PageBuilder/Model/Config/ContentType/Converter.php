@@ -276,7 +276,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'name' => $this->getAttributeValue($propertyNode, 'source'),
                 'converter' => $this->getAttributeValue($propertyNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode'),
+                'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode')
+                    ?? 'readwrite',
                 'reader' => $this->getAttributeValue($propertyNode, 'reader')
                     ?? self::DEFAULT_PROPERTY_READER,
             ];
@@ -307,7 +308,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 'name' => $this->getAttributeValue($attributeNode, 'source'),
                 'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                 'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode'),
+                'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode')
+                    ?? 'readwrite',
                 'reader' => $this->getAttributeValue($attributeNode, 'reader')
                     ?? self::DEFAULT_ATTRIBUTE_READER,
             ];
