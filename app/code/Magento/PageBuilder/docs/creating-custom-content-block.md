@@ -150,6 +150,11 @@ The following is an example of a custom container children content type configur
             <parents default_policy="deny">
                 <parent name="homepage-grid" policy="allow"/>
             </parents>
+            <children default_policy="deny"> 
+                <child name="heading" policy="allow"/> 
+                <child name="buttons" policy="allow"/> 
+                <child name="text" policy="allow"/> 
+            </children>
             <is_visible>false</is_visible>
             <appearances>
                 <appearance default="true"
@@ -197,56 +202,8 @@ The following is an example of a custom container children content type configur
                 </appearance>
             </appearances>
         </type>
-        <type name="heading">
-            <parents default_policy="allow">
-                <parent name="homepage-grid-item" policy="allow"/>
-            </parents>
-        </type>
-        <type name="buttons">
-            <parents default_policy="allow">
-                <parent name="homepage-grid-item" policy="allow"/>
-            </parents>
-        </type>
-        <type name="text">
-            <parents default_policy="allow">
-                <parent name="homepage-grid-item" policy="allow"/>
-            </parents>
-        </type>
-        <type name="column">
-            <parents default_policy="allow">
-                <parent name="homepage-grid-item" policy="allow"/>
-            </parents>
-        </type>
     </content_types>
 ```
-
-Do take notice of the following code snippet from above:
-``` xml
-<type name="heading">
-    <parents default_policy="allow">
-        <parent name="homepage-grid-item" policy="allow"/>
-    </parents>
-</type>
-<type name="buttons">
-    <parents default_policy="allow">
-        <parent name="homepage-grid-item" policy="allow"/>
-    </parents>
-</type>
-<type name="text">
-    <parents default_policy="allow">
-        <parent name="homepage-grid-item" policy="allow"/>
-    </parents>
-</type>
-<type name="column">
-    <parents default_policy="allow">
-        <parent name="homepage-grid-item" policy="allow"/>
-    </parents>
-</type>
-
-```
-
-This allows the configuration to further interact with existing content types.
-Remember, parent policies overrules children policies.
 
 ### Preview template & block system
 
