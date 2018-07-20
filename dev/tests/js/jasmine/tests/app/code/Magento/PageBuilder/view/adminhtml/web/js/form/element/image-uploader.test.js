@@ -140,6 +140,7 @@ define([
             });
             it('Should trigger an event when uploader is associated to the deleted image', function () {
                 uploader.id = 'abc123';
+                uploader.value = jasmine.createSpy();
                 spyOn(uploader, 'getFileId').and.returnValue('foo');
 
                 uploader.onDeleteFile({}, {
@@ -148,6 +149,8 @@ define([
 
                 expect(mocks['Magento_PageBuilder/js/events'].trigger)
                     .toHaveBeenCalledWith('image:abc123:deleteFileAfter');
+                // Assert the instance was reset
+                expect(uploader.value).toHaveBeenCalledWith([]);
             });
         });
     });
