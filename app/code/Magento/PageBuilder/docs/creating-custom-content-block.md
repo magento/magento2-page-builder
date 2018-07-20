@@ -28,7 +28,8 @@
     1. [Add image uploader to content type]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
-6. [Creating Custom Content Block]
+6. [Creating custom content block]
+7. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Installation Guide]: install.md
@@ -57,6 +58,7 @@
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 [Creating Custom Content Block]: creating-custom-content-block.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
 
 ## Configuration for Page Builder blocks
 

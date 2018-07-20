@@ -22,7 +22,8 @@
     1. **Render a backend content type preview**
     1. [Custom Toolbar]
 5. [Roadmap and known issues]
-6. [Creating Custom Content Block]
+6. [Creating custom content block]
+7. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -46,7 +47,7 @@
 [Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.md
 [Creating Custom Content Block]: creating-custom-content-block.md
-
+[How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
 
 ## What's in this topic
 This topic describes how to use the `RenderPool` on the stage to render a backend [content type] preview. 

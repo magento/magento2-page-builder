@@ -11,7 +11,8 @@
     1. [Code of Conduct](#code-of-conduct)
 4. [Developer documentation]
 5. [Roadmap and known issues]
-6. [Creating Custom Content Block]
+6. [Creating custom content block]
+7. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Installation Guide]: install.md
