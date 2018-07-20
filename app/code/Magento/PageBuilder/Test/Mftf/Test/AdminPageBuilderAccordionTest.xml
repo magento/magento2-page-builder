@@ -31,7 +31,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderPanel.layoutGroup}}" stepKey="clickLayoutGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionOntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
@@ -96,7 +96,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderPanel.layoutGroup}}" stepKey="clickLayoutGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionOntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
@@ -158,9 +158,6 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderAccordionContentType"/>
-        </actionGroup>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragAccordionIntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
