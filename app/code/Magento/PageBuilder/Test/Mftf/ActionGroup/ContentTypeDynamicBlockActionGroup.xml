@@ -29,4 +29,12 @@
         <fillField selector="{{AdminBannerBasicActionSection.Name}}" userInput="{{Banner.Name}}" stepKey="fillBannerName"/>
         <conditionalClick selector="{{AdminBannerBasicActionSection.ContentTab}}" dependentSelector="{{BannerContentSection.checkIfContentTabOpen}}" stepKey="clickIfContentTabCloses" visible="true"/>
     </actionGroup>
+    <actionGroup name="addImageToBannerStage">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <comment userInput="Attach image A to Banner stage" stepKey="commentAttach"/>
+        <attachFile userInput="{{property.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
+    </actionGroup>
 </actionGroups>
