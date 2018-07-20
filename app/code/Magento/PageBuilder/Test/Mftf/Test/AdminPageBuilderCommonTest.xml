@@ -32,11 +32,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add all content types to stage-->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionIntoStage">
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.elementsGroup}}" stepKey="clickElementsGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -44,52 +51,44 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionIntoStage">
-            <argument name="contentType" value="PageBuilderAccordionContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragNewsletterIntoStage">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.magentoGroup}}" stepKey="clickMagentoGroup"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAnchorIntoStage">
             <argument name="contentType" value="PageBuilderAnchorContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.addContentGroup}}" stepKey="clickAddContentGroup"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- See row and column system border on default - Depends on MQE-818 -->
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('outline')" stepKey="getDefaultRowOutlineStyle"/>

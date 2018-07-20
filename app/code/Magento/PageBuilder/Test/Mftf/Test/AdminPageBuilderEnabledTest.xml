@@ -92,7 +92,7 @@
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <!--See PageBuilder fullsize-->
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -141,7 +141,7 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waitForPageBuilderDisplay" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waitForPageBuilderDisplay" />
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
