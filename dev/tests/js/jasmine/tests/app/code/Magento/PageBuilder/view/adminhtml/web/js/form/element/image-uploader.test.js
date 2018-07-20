@@ -140,7 +140,12 @@ define([
             });
             it('Should trigger an event when uploader is associated to the deleted image', function () {
                 uploader.id = 'abc123';
-                uploader.value = jasmine.createSpy();
+
+                /**
+                 * A stub function to spy on.
+                 */
+                uploader.value = function () {};
+                spyOn(uploader, 'value');
                 spyOn(uploader, 'getFileId').and.returnValue('foo');
 
                 uploader.onDeleteFile({}, {
