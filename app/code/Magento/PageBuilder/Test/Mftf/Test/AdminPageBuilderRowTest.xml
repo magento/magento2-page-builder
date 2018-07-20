@@ -376,9 +376,6 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance">
-            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
-        </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -505,9 +502,6 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
-            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
-        </actionGroup>
         <comment userInput="I fill out Border Color using Color Picker" stepKey="comment"/>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
             <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -551,9 +545,6 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance">
-            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
-        </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -595,16 +586,12 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('1', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance2">
-            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
-        </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -637,7 +624,6 @@
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="RowOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-            <argument name="appearance" value="PageBuilderRowAppearance_FullWidth"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -1171,7 +1157,6 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow1">
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
         </actionGroup>
-        <waitForElementNotVisible selector="{{RowOnStage.appearanceWarningMessage('hidden')}}" stepKey="warningMessageHidden"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow1"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1183,6 +1168,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Add 2nd row and set appearance to Full Width -->
+        <comment userInput="Add 2nd row and set appearance to Full Width" stepKey="commentAdd2ndRow"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow2IntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
@@ -1200,8 +1186,6 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow2">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <waitForElementVisible selector="{{RowOnStage.appearanceWarningMessage('visible')}}" stepKey="warningMessageVisible"/>
-        <see userInput="{{PageBuilderRowAppearance_FullWidth.warningMessage}}" stepKey="seeFullWidthWarningMessage"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow2"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeaderToRow2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1217,6 +1201,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Add 3rd row and set appearance to Full Bleed -->
+        <comment userInput="Add 3rd row and set appearance to Full Bleed" stepKey="commentAdd3rdRow"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow3IntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
@@ -1234,8 +1219,6 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow3">
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
-        <waitForElementVisible selector="{{RowOnStage.appearanceWarningMessage('visible')}}" stepKey="warningMessageVisible2"/>
-        <see userInput="{{PageBuilderRowAppearance_FullBleed.warningMessage}}" stepKey="seeFullBleedWarningMessage"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow3"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeaderToRow3">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1255,6 +1238,9 @@
         <waitForElementVisible selector="{{RowOnStage.appearance(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1"/>
         <waitForElementVisible selector="{{RowOnStage.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
         <waitForElementVisible selector="{{RowOnStage.appearance(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3"/>
+        <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage"/>
+        <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage"/>
+        <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage"/>
         <!-- Validate Stage after save -->
         <comment userInput="Validate Stage after save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1262,15 +1248,9 @@
         <waitForElementVisible selector="{{RowOnStage.appearance(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1AfterSave"/>
         <waitForElementVisible selector="{{RowOnStage.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2AfterSave"/>
         <waitForElementVisible selector="{{RowOnStage.appearance(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3AfterSave"/>
-        <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage">
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage">
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage">
-            <argument name="index" value="3"/>
-        </actionGroup>
+        <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage2"/>
+        <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage2"/>
+        <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -1279,23 +1259,16 @@
         <waitForElementVisible selector="{{RowOnStorefront.appearance(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisibleStorefront1"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisibleStorefront2"/>
         <waitForElementVisible selector="{{RowOnStorefront.appearance(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisibleStorefront3"/>
-        <actionGroup ref="validateContainedRowAppearanceOnStorefront" stepKey="validateContainedRowAppearanceOnStorefront">
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <actionGroup ref="validateFullWidthRowAppearanceOnStorefront" stepKey="validateFullWidthRowAppearanceOnStorefront">
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <actionGroup ref="validateFullBleedRowAppearanceOnStorefront" stepKey="validateFullBleedRowAppearanceOnStorefront">
-            <argument name="index" value="3"/>
-        </actionGroup>
+        <actionGroup ref="validateContainedRowAppearanceOnStorefront" stepKey="validateContainedRowAppearanceOnStorefront"/>
+        <actionGroup ref="validateFullWidthRowAppearanceOnStorefront" stepKey="validateFullWidthRowAppearanceOnStorefront"/>
+        <actionGroup ref="validateFullBleedRowAppearanceOnStorefront" stepKey="validateFullBleedRowAppearanceOnStorefront"/>
     </test>
     <test name="RowFullWidthAppearanceWithInvalidLayoutTest">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Can add row with different appearances and invalid layout"/>
-            <description
-                    value="Verify that full width row appearances can be selected with an incompatible layout and the contents will display contained."/>
+            <title value="Can add row with Full Width appearance and invalid layout"/>
+            <description value="Verify that full width row appearances can be selected with an incompatible layout and the contents will display contained."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MC-930"/>
             <testCaseId value="MC-3281"/>
@@ -1339,7 +1312,7 @@
         <comment userInput="Set Layout to 1 column" stepKey="commentSetLayout"/>
         <actionGroup ref="setLayout" stepKey="setLayout">
             <argument name="designSection" value="CmsDesignSection"/>
-            <argument name="layoutOption" value="PageBuilderFullWidthLayout.1column"/>
+            <argument name="layoutOption" value="Layout.1column"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -1351,7 +1324,7 @@
         <comment userInput="Increase window size" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width')}}" stepKey="rowWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width', '0')}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -1365,12 +1338,12 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Can add row with different appearances and invalid layout"/>
+            <title value="Can add row with Full Bleed appearance and invalid layout"/>
             <description value="Verify that full bleed row appearance can be selected with an incompatible layout and the contents will display contained."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MC-930"/>
             <testCaseId value="MC-3282"/>
-            <group value="run"/>
+            <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowAppearances"/>
         </annotations>
@@ -1410,7 +1383,7 @@
         <comment userInput="Set Layout to 1 column" stepKey="commentSetLayout"/>
         <actionGroup ref="setLayout" stepKey="setLayout">
             <argument name="designSection" value="CmsDesignSection"/>
-            <argument name="layoutOption" value="PageBuilderFullWidthLayout.1column"/>
+            <argument name="layoutOption" value="Layout.1column"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
@@ -1422,7 +1395,7 @@
         <comment userInput="Increase window size" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed')}}" stepKey="rowWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed', '0')}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -1431,6 +1404,53 @@
             <expectedResult type="variable">pageWidth</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
         </assertLessThan>
+    </test>
+    <test name="RowAppearancesWarningMessageTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Warning message displays for Full Width and Full Bleed appearances."/>
+            <description value="Warning message displays for Full Width and Full Bleed appearances."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-930"/>
+            <testCaseId value="MC-3346"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowAppearances"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage('hidden')}}" stepKey="warningMessageHidden"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectFullWidthAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{RowOnBackend.appearanceWarningMessage('visible')}}" stepKey="warningMessageVisibleFullWidth"/>
+        <see userInput="{{PageBuilderRowAppearance_FullWidth.warningMessage}}" stepKey="seeFullWidthWarningMessage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectContainedAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage('hidden')}}" stepKey="warningMessageHidden2"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectFullBleedAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{RowOnBackend.appearanceWarningMessage('visible')}}" stepKey="warningMessageVisibleFullBleed"/>
+        <see userInput="{{PageBuilderRowAppearance_FullBleed.warningMessage}}" stepKey="seeFullBleedWarningMessage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectContainedAppearance2">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{RowOnBackend.appearanceWarningMessage('hidden')}}" stepKey="warningMessageHidden3"/>
     </test>
     <test name="RowCannotAddToRow">
         <annotations>

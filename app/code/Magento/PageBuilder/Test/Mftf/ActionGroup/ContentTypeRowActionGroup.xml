@@ -64,7 +64,7 @@
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
-        <executeJS function="return {{RowOnStage.rowWidthJS('contained')}}" stepKey="rowWidth"/>
+        <executeJS function="return {{RowOnStage.rowWidthJS('contained', '0')}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -79,8 +79,8 @@
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
-        <executeJS function="return {{RowOnStage.rowWidthJS('full-width')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-width')}} + 20)" stepKey="rowElementWidth"/>
+        <executeJS function="return {{RowOnStage.rowWidthJS('full-width', '0')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-width', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -99,8 +99,8 @@
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
-        <executeJS function="return {{RowOnStage.rowWidthJS('full-bleed')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-bleed')}} + 20)" stepKey="rowElementWidth"/>
+        <executeJS function="return {{RowOnStage.rowWidthJS('full-bleed', '0')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-bleed', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -119,7 +119,7 @@
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('contained')}}" stepKey="rowWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('contained', '0')}}" stepKey="rowWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -134,8 +134,8 @@
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-width')}} + 20)" stepKey="rowElementWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width', '0')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-width', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -154,8 +154,8 @@
         <comment userInput="Increase window size to see varying widths for rows" stepKey="commentResizeWindow"/>
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
-        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-bleed')}} + 20)" stepKey="rowElementWidth"/>
+        <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed', '0')}}" stepKey="rowWidth"/>
+        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-bleed', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
