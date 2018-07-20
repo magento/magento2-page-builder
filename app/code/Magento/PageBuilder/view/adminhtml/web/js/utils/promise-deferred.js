@@ -14,9 +14,9 @@ define([], function () {
   function deferred() {
     var resolve;
     var reject;
-    var promise = new Promise(function (res, rej) {
-      resolve = res;
-      reject = rej;
+    var promise = new Promise(function (promiseResolve, promiseReject) {
+      resolve = promiseResolve;
+      reject = promiseReject;
     });
     return {
       resolve: resolve,
