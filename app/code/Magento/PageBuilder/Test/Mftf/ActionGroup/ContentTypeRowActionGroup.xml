@@ -80,7 +80,7 @@
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
         <executeJS function="return {{RowOnStage.rowWidthJS('full-width', '0')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-width', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
+        <executeJS function="return parseInt({{RowOnStage.rowH2ChildWidthJS('full-width', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -100,7 +100,7 @@
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStage.stageWidthJS}}" stepKey="stageWidth"/>
         <executeJS function="return {{RowOnStage.rowWidthJS('full-bleed', '0')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStage.rowChildWidthJS('full-bleed', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
+        <executeJS function="return parseInt({{RowOnStage.rowH2ChildWidthJS('full-bleed', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -135,7 +135,7 @@
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
         <executeJS function="return {{RowOnStorefront.rowWidthJS('full-width', '0')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-width', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
+        <executeJS function="return parseInt({{RowOnStorefront.rowH2ChildWidthJS('full-width', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
@@ -155,7 +155,7 @@
         <resizeWindow width="1920" height="1024" stepKey="resizeWindow"/>
         <executeJS function="return {{PageBuilderStoreFront.pageWidthJS}}" stepKey="pageWidth"/>
         <executeJS function="return {{RowOnStorefront.rowWidthJS('full-bleed', '0')}}" stepKey="rowWidth"/>
-        <executeJS function="return parseInt({{RowOnStorefront.rowChildWidthJS('full-bleed', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
+        <executeJS function="return parseInt({{RowOnStorefront.rowH2ChildWidthJS('full-bleed', '0')}} + {{PageBuilderPaddingPropertyRowDefault.paddingLeft}} + {{PageBuilderPaddingPropertyRowDefault.paddingRight}})" stepKey="rowElementWidth"/>
         <assertGreaterThan stepKey="assertRowWidthGreaterThanZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
