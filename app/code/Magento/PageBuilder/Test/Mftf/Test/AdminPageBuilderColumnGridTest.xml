@@ -261,6 +261,9 @@
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','3/6')}}" stepKey="validateRightColumnWidth"/>
         <!-- Drag divider into first column to clear history -->
         <comment userInput="Drag divider into first column to clear history" stepKey="commentAddDividerToColumn" />
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -444,6 +447,9 @@
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>

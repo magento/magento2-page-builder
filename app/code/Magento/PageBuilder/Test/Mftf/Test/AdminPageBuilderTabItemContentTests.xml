@@ -827,6 +827,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Divider to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerOntoTab">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
