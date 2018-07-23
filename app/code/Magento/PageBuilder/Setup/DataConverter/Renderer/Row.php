@@ -33,11 +33,15 @@ class Row implements RendererInterface
         $rootElementAttributes = [
             'data-element' => 'main',
             'data-role' => 'row',
-            'data-appearance' => 'default',
+            'data-appearance' => 'contained',
             'class' => $itemData['formData']['css_classes'] ?? '',
         ];
 
         $formData = $itemData['formData'] ?? [];
+
+        if (isset($formData['template']) && $formData['template'] === 'full-width.phtml') {
+            $rootElementAttributes['data-appearance'] = 'full-width';
+        }
 
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
