@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
@@ -17,6 +18,8 @@ export default class Preview extends BasePreview {
      * Wysiwyg adapter instance
      */
     private wysiwygAdapter: WysiwygSetup;
+
+    public isWysiwygFocused: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * @inheritDoc
@@ -44,7 +47,29 @@ export default class Preview extends BasePreview {
                 "tinymceChange",
                 this.saveContentFromWysiwygToDataStore.bind(this),
             );
+
+            this.wysiwygAdapter.eventBus.attachEventHandler(
+                "tinymceFocus",
+                this.hidePlaceholder.bind(this),
+            );
+
+            this.wysiwygAdapter.eventBus.attachEventHandler(
+                "tinymceBlur",
+                this.showPlaceholderIfContentIsEmpty.bind(this),
+            );
         });
+    }
+
+    private hidePlaceholder()
+    {
+        console.log("hidePlaceholder");
+        this.isWysiwygFocused(true);
+    }
+
+    private showPlaceholderIfContentIsEmpty()
+    {
+        console.log("showPlaceholderIfContentIsEmpty");
+        this.isWysiwygFocused(false);
     }
 
     private saveContentFromWysiwygToDataStore() {

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_setup, _events, _config, _preview) {
+define(["knockout", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _setup, _events, _config, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,7 +17,7 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events"
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwygAdapter = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwygAdapter = void 0, _this.isWysiwygFocused = _knockout.observable(false), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -48,7 +48,21 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events"
 
 
         _this2.wysiwygAdapter.eventBus.attachEventHandler("tinymceChange", _this2.saveContentFromWysiwygToDataStore.bind(_this2));
+
+        _this2.wysiwygAdapter.eventBus.attachEventHandler("tinymceFocus", _this2.hidePlaceholder.bind(_this2));
+
+        _this2.wysiwygAdapter.eventBus.attachEventHandler("tinymceBlur", _this2.showPlaceholderIfContentIsEmpty.bind(_this2));
       });
+    };
+
+    _proto.hidePlaceholder = function hidePlaceholder() {
+      console.log("hidePlaceholder");
+      this.isWysiwygFocused(true);
+    };
+
+    _proto.showPlaceholderIfContentIsEmpty = function showPlaceholderIfContentIsEmpty() {
+      console.log("showPlaceholderIfContentIsEmpty");
+      this.isWysiwygFocused(false);
     };
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
