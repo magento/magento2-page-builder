@@ -374,7 +374,7 @@ Name attribute in the element tags gets converted to ```data-element``` attribut
 | `persistence_mode`    | Used for read/write properties.                                                                                       |
 | `reader`              | Reader used for parsing attributes and properties out of the DOM. Should not be used with read-only persistence_mode. |
 
-You may optionally set a `reader` value in configuration, otherwise `Magento_PageBuilder/js/property/style-property-reader` will be used for properties, and `Magento_PageBuilder/js/property/element-attribute-reader` will be used for attributes. Both default readers accept `source` as a parameter, and will return that value.
+You may optionally set a `reader` value in configuration, otherwise `Magento_PageBuilder/js/property/style-property-reader` will be used for properties, and `Magento_PageBuilder/js/property/attribute-reader` will be used for attributes. Both default readers accept `source` as a parameter, and will return that value.
 
 `property` and `attribute` can contain `converter` and `preview_converter`.
 

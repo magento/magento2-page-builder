@@ -19,6 +19,7 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
      * Read style property from element
      *
      * @param {HTMLElement} element
+     * @param {string} source
      * @returns {string | object}
      */
     _proto.read = function read(element, source) {

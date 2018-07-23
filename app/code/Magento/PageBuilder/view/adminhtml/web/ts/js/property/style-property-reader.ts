@@ -14,6 +14,7 @@ export default class StylePropertyReader implements PropertyReaderInterface {
      * Read style property from element
      *
      * @param {HTMLElement} element
+     * @param {string} source
      * @returns {string | object}
      */
     public read(element: HTMLElement, source: string): string | object {

@@ -8,26 +8,27 @@ define([], function () {
   /**
    * @api
    */
-  var ElementAttributeReader =
+  var AttributeReader =
   /*#__PURE__*/
   function () {
-    function ElementAttributeReader() {}
+    function AttributeReader() {}
 
-    var _proto = ElementAttributeReader.prototype;
+    var _proto = AttributeReader.prototype;
 
     /**
      * Read attribute from element
      *
      * @param {HTMLElement} element
+     * @param {string} source
      * @returns {string | object}
      */
     _proto.read = function read(element, source) {
       return element.getAttribute(source);
     };
 
-    return ElementAttributeReader;
+    return AttributeReader;
   }();
 
-  return ElementAttributeReader;
+  return AttributeReader;
 });
-//# sourceMappingURL=element-attribute-reader.js.map
+//# sourceMappingURL=attribute-reader.js.map

@@ -70,7 +70,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],
@@ -329,7 +329,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ],
                                     1 => [
                                         'var' => 'attribute_change',
@@ -337,7 +337,7 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'persistence_mode' => 'write',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ],
                                     2 => [
                                         'var' => 'attribute_add',
@@ -345,7 +345,7 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'persistence_mode' => 'write',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ],
                                     3 => [
                                         'var' => 'original_complex',
@@ -377,7 +377,7 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'persistence_mode' => 'write',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ],
                                     7 => [
                                         'var' => 'new_complex',
@@ -439,7 +439,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],
@@ -468,7 +468,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],
@@ -542,7 +542,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],
@@ -606,7 +606,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],
@@ -671,7 +671,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],

@@ -51,7 +51,7 @@ return [
                                         'converter' => null,
                                         'persistence_mode' => 'readwrite',
                                         'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/element-attribute-reader'
+                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                     ]
                                 ],
                                 'tag' => [],

@@ -12,7 +12,7 @@ use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
-    const DEFAULT_ATTRIBUTE_READER = 'Magento_PageBuilder/js/property/element-attribute-reader';
+    const DEFAULT_ATTRIBUTE_READER = 'Magento_PageBuilder/js/property/attribute-reader';
     const DEFAULT_PROPERTY_READER = 'Magento_PageBuilder/js/property/style-property-reader';
 
     /**
