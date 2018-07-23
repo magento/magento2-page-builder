@@ -12,10 +12,9 @@ import DeferredInterface from "./promise-deferred.d";
  * @api
  */
 export default function deferred(): DeferredInterface {
-    let resolve: PromiseLike<any> | any;
-    let reject: any;
-    const promise = new Promise(
-        (promiseResolve: (value?: (PromiseLike<any> | any)) => void, promiseReject: (reason?: any) => void) => {
+    let resolve: () => void;
+    let reject: () => void;
+    const promise = new Promise((promiseResolve: () => void, promiseReject: () => void) => {
             resolve = promiseResolve;
             reject = promiseReject;
     });
