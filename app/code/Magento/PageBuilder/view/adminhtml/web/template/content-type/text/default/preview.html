@@ -6,7 +6,9 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-text" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
-    <div class="placeholder-text" ifnot="data.main.html" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Text'"></div>
+    <div data-bind="attr: {id: $parent.id + '-editor'}">
+        <div if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
+        <div class="placeholder-text" ifnot="data.main.html" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Text'"></div>
+    </div>
     <render args="getOptions().template" />
 </div>
