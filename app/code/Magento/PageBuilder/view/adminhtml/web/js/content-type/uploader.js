@@ -12,32 +12,67 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
   /*#__PURE__*/
   function () {
     /**
-     * Id of uploader instance
-     */
-
-    /**
-     * Name of uploader instance
-     */
-
-    /**
      * Config data of uploader instance
      */
 
     /**
-     * @param {String} id
-     * @param {String} name - Name to use for lookup reference in registry
-     * @param {Object} config
+     * The supplied data store
      */
-    function Uploader(id, name, config) {
-      this.id = void 0;
-      this.name = void 0;
+
+    /**
+     * @param {String} name Name to use for lookup reference in registry
+     * @param {Object} uploaderConfig
+     * @param {String} contentTypeId
+     * @param {DataStore} dataStore
+     * @param {Object[]} initialValue
+     * @param {Function} onChangeCallback Called when image is added or updated
+     * @param {Function} onDeleteCallback Called when currently set image is deleted from storage
+     */
+    function Uploader(name, uploaderConfig, contentTypeId, dataStore, initialValue, onChangeCallback, onDeleteCallback) {
+      if (onChangeCallback === void 0) {
+        onChangeCallback = null;
+      }
+
+      if (onDeleteCallback === void 0) {
+        onDeleteCallback = null;
+      }
+
       this.config = void 0;
-      config.id = this.id = id;
-      config.name = this.name = name;
+      this.dataStore = void 0;
+      var config = Object.assign({}, uploaderConfig, {
+        value: initialValue
+      });
+      config.id = contentTypeId;
+      config.name = name;
+      this.dataStore = dataStore;
+
+      _events.on("image:" + contentTypeId + ":uploadAfter", onChangeCallback ? onChangeCallback : this.onImageChanged.bind(this));
+
+      _events.on("image:" + contentTypeId + ":deleteFileAfter", onDeleteCallback ? onDeleteCallback : this.onImageDeleted.bind(this));
+
       this.config = config; // Render uploader
 
       this.render();
     }
+    /**
+     * Default callback for upload event
+     * @param {object[]} data
+     */
+
+
+    var _proto = Uploader.prototype;
+
+    _proto.onImageChanged = function onImageChanged(data) {
+      this.dataStore.update(data, this.config.dataScope);
+    };
+    /**
+     * Default callback for image deleted event
+     */
+
+
+    _proto.onImageDeleted = function onImageDeleted() {
+      this.dataStore.update("", this.config.dataScope);
+    };
     /**
      * Get registry callback reference to uploader UI component
      *
@@ -45,30 +80,8 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
      */
 
 
-    var _proto = Uploader.prototype;
-
     _proto.getUiComponent = function getUiComponent() {
-      return _uiRegistry.async(this.name);
-    };
-    /**
-     * Register callback when file is uploaded through this instance
-     *
-     * @param {Function} callback - callback function containing array of file objects as argument
-     */
-
-
-    _proto.onUploaded = function onUploaded(callback) {
-      _events.on("image:" + this.id + ":uploadAfter", callback);
-    };
-    /**
-     * Register callback when file is deleted through this instance
-     *
-     * @param {Function} callback - callback function
-     */
-
-
-    _proto.onDeleted = function onDeleted(callback) {
-      _events.on("image:" + this.id + ":deleteFileAfter", callback);
+      return _uiRegistry.async(this.config.name);
     };
     /**
      * Instantiate uploader through layout UI component renderer

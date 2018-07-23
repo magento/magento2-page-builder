@@ -97,39 +97,12 @@ export default class Preview extends BasePreview {
 
             // Create uploader
             this.uploader = new Uploader(
-                this.parent.id,
                 "imageuploader_" + this.parent.id,
-                Object.assign({}, this.config.additional_data.uploaderConfig, {
-                    value: initialImageValue,
-                }),
+                this.config.additional_data.uploaderConfig,
+                this.parent.id,
+                this.parent.dataStore,
+                (initialImageValue as object[]),
             );
-
-            // Register listener when image gets uploaded from uploader UI component
-            this.uploader.onUploaded(this.onImageUploaded.bind(this));
-            // Register listener when image gets deleted from uploader UI component
-            this.uploader.onDeleted(this.onImageDeleted.bind(this));
         });
-    }
-
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-    private onImageUploaded(data: object[]) {
-        this.parent.dataStore.update(
-            data,
-            this.config.additional_data.uploaderConfig.dataScope,
-        );
-    }
-
-    /**
-     * Remove image data
-     */
-    private onImageDeleted() {
-        this.parent.dataStore.update(
-            "",
-            this.config.additional_data.uploaderConfig.dataScope,
-        );
     }
 }

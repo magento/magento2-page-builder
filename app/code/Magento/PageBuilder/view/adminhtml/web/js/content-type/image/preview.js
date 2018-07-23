@@ -54,33 +54,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
 
         var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
-          value: initialImageValue
-        })); // Register listener when image gets uploaded from uploader UI component
-
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2)); // Register listener when image gets deleted from uploader UI component
-
-
-        _this2.uploader.onDeleted(_this2.onImageDeleted.bind(_this2));
+        _this2.uploader = new _uploader("imageuploader_" + _this2.parent.id, _this2.config.additional_data.uploaderConfig, _this2.parent.id, _this2.parent.dataStore, initialImageValue);
       });
-    };
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-
-
-    _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
-    };
-    /**
-     * Remove image data
-     */
-
-
-    _proto.onImageDeleted = function onImageDeleted() {
-      this.parent.dataStore.update("", this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

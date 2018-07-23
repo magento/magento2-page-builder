@@ -6,34 +6,63 @@
 import events from "Magento_PageBuilder/js/events";
 import layout from "uiLayout";
 import registry from "uiRegistry";
+import DataStore from "../data-store";
+
+interface UploaderConfigInterface {
+    id: string;
+    name: string;
+    dataScope: string|number;
+    value: any;
+}
 
 /**
  * @api
  */
 export default class Uploader {
     /**
-     * Id of uploader instance
-     */
-    private id: string;
-
-    /**
-     * Name of uploader instance
-     */
-    private name: string;
-
-    /**
      * Config data of uploader instance
      */
-    private config: object;
+    private config: UploaderConfigInterface;
 
     /**
-     * @param {String} id
-     * @param {String} name - Name to use for lookup reference in registry
-     * @param {Object} config
+     * The supplied data store
      */
-    constructor(id: string, name: string, config: object) {
-        config.id = this.id = id;
-        config.name = this.name = name;
+    private dataStore: DataStore;
+
+    /**
+     * @param {String} name Name to use for lookup reference in registry
+     * @param {Object} uploaderConfig
+     * @param {String} contentTypeId
+     * @param {DataStore} dataStore
+     * @param {Object[]} initialValue
+     * @param {Function} onChangeCallback Called when image is added or updated
+     * @param {Function} onDeleteCallback Called when currently set image is deleted from storage
+     */
+    constructor(
+        name: string,
+        uploaderConfig: object,
+        contentTypeId: string,
+        dataStore: DataStore,
+        initialValue: string|any[],
+        onChangeCallback: (data: object[]) => void = null,
+        onDeleteCallback: () => void = null,
+    ) {
+        const config = (Object.assign({}, uploaderConfig, {
+            value: initialValue,
+        }) as UploaderConfigInterface);
+
+        config.id = contentTypeId;
+        config.name = name;
+        this.dataStore = dataStore;
+
+        events.on(
+            "image:" + contentTypeId + ":uploadAfter",
+            onChangeCallback ? onChangeCallback : this.onImageChanged.bind(this),
+        );
+        events.on(
+            "image:" + contentTypeId + ":deleteFileAfter",
+            onDeleteCallback ? onDeleteCallback : this.onImageDeleted.bind(this),
+        );
 
         this.config = config;
 
@@ -42,30 +71,33 @@ export default class Uploader {
     }
 
     /**
+     * Default callback for upload event
+     * @param {object[]} data
+     */
+    public onImageChanged(data: object[]) {
+        this.dataStore.update(
+            data,
+            this.config.dataScope,
+        );
+    }
+
+    /**
+     * Default callback for image deleted event
+     */
+    public onImageDeleted() {
+        this.dataStore.update(
+            "",
+            this.config.dataScope,
+        );
+    }
+
+    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Function}
      */
     public getUiComponent() {
-        return registry.async(this.name);
-    }
-
-    /**
-     * Register callback when file is uploaded through this instance
-     *
-     * @param {Function} callback - callback function containing array of file objects as argument
-     */
-    public onUploaded(callback: (files: object[]) => any) {
-        events.on("image:" + this.id + ":uploadAfter", callback);
-    }
-
-    /**
-     * Register callback when file is deleted through this instance
-     *
-     * @param {Function} callback - callback function
-     */
-    public onDeleted(callback: () => any) {
-        events.on("image:" + this.id + ":deleteFileAfter", callback);
+        return registry.async(this.config.name);
     }
 
     /**
