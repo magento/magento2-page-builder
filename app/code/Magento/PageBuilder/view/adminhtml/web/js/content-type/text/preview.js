@@ -52,15 +52,19 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events"
     };
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      console.log('saveContentFromWysiwygToDataStore'); // this.parent.dataStore.update(this.wysiwygAdapter.getContent(), "content");
+      console.log("saveContentFromWysiwygToDataStore");
+      this.parent.dataStore.update(this.wysiwygAdapter.getContent(), "content");
     };
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
-      console.log('setContentFromDataStoreToWysiwyg'); // this.wysiwygAdapter.setContent(this.parent.dataStore.get("content"));
+      console.log("setContentFromDataStoreToWysiwyg");
+      this.wysiwygAdapter.setContent(this.parent.dataStore.get("content"));
     };
 
     _proto.instantiateWysiwyg = function instantiateWysiwyg() {
-      this.wysiwygAdapter = new _setup(this.parent.id + "-editor");
+      this.wysiwygAdapter = new _setup(this.parent.id + "-editor"
+      /* TODO - this.config.additional_data... || Config.getConfig("") */
+      );
       this.wysiwygAdapter.setup("inline");
     };
 

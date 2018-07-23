@@ -42,23 +42,23 @@ export default class Preview extends BasePreview {
             // Update content in our data store after our stage preview wysiwyg gets updated
             this.wysiwygAdapter.eventBus.attachEventHandler(
                 "tinymceChange",
-                this.saveContentFromWysiwygToDataStore.bind(this)
+                this.saveContentFromWysiwygToDataStore.bind(this),
             );
         });
     }
 
     private saveContentFromWysiwygToDataStore() {
-        console.log('saveContentFromWysiwygToDataStore');
-        // this.parent.dataStore.update(this.wysiwygAdapter.getContent(), "content");
+        console.log("saveContentFromWysiwygToDataStore");
+        this.parent.dataStore.update(this.wysiwygAdapter.getContent(), "content");
     }
 
     private setContentFromDataStoreToWysiwyg() {
-        console.log('setContentFromDataStoreToWysiwyg');
-        // this.wysiwygAdapter.setContent(this.parent.dataStore.get("content"));
+        console.log("setContentFromDataStoreToWysiwyg");
+        this.wysiwygAdapter.setContent(this.parent.dataStore.get("content"));
     }
 
     private instantiateWysiwyg() {
-        this.wysiwygAdapter = new WysiwygSetup(`${this.parent.id}-editor`, /* TODO - this.config.additional_data... || Config.getConfig("") */);
+        this.wysiwygAdapter = new WysiwygSetup(`${this.parent.id}-editor` /* TODO - this.config.additional_data... || Config.getConfig("") */);
         this.wysiwygAdapter.setup("inline");
     }
 }
