@@ -30,7 +30,7 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events"
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      if (_config.getConfig("use_inline_editing") === "disabled") {
+      if (!_config.getConfig("can_use_inline_editing_on_stage")) {
         return;
       } // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
