@@ -16,11 +16,11 @@ export default function create(contentType: string): Promise<typeof PropertyRead
     const propertyReaders: string[] = [];
     let appearanceName: string;
     for (appearanceName of Object.keys(config.appearances)) {
-        const dataMapping = config.appearances[appearanceName].data_mapping;
-        if (dataMapping !== undefined && dataMapping.elements !== undefined) {
+        const appearance = config.appearances[appearanceName];
+        if (appearance !== undefined && appearance.elements !== undefined) {
             let elementName: string;
-            for (elementName of Object.keys(dataMapping.elements)) {
-                const element = dataMapping.elements[elementName];
+            for (elementName of Object.keys(appearance.elements)) {
+                const element = appearance.elements[elementName];
                 if (element.style !== undefined) {
                     for (const propertyConfig of element.style) {
                         if (propertyConfig.reader

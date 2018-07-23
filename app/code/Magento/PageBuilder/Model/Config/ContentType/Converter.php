@@ -39,9 +39,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      */
     public function convert($source): array
     {
-        return [
-            'types' => $this->convertTypes($source)
-        ];
+        return $this->convertTypes($source);
     }
 
     /**
@@ -133,10 +131,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         } else {
             $appearanceData['readers'] = $this->convertAppearanceReaders($appearanceNode);
         }
-        $dataMappingNode = $appearanceNode->getElementsByTagName('data_mapping')->item(0);
-        if ($dataMappingNode) {
-            $appearanceData['data_mapping'] = $this->convertDataMapping($dataMappingNode);
+        $elementsNode = $appearanceNode->getElementsByTagName('elements')->item(0);
+        if ($elementsNode) {
+            $appearanceData['elements'] = $this->convertElements($elementsNode);
         }
+        $appearanceData['converters'] = $this->convertConvertersData($appearanceNode);
         $appearanceData['preview_template'] = $this->getAttributeValue($appearanceNode, 'preview_template');
         $appearanceData['render_template'] = $this->getAttributeValue($appearanceNode, 'render_template');
         $appearanceData['reader'] = $this->getAttributeValue($appearanceNode, 'reader');
@@ -203,12 +202,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Convert data mapping
+     * Convert elements
      *
      * @param \DOMElement $childNode
      * @return array
      */
-    private function convertDataMapping(\DOMElement $childNode): array
+    private function convertElements(\DOMElement $childNode): array
     {
         $elementData = [];
         foreach ($childNode->getElementsByTagName('element') as $elementNode) {
@@ -222,12 +221,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             ];
         }
 
-        $converters = $this->convertConvertersData($childNode);
-
-        return [
-            'elements' => $elementData,
-            'converters' => $converters
-        ];
+        return $elementData;
     }
 
     /**
@@ -389,9 +383,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param \DOMElement $childNode
      * @return array
      */
-    private function convertConvertersData(\DOMElement $childNode): array
+    private function convertConvertersData(\DOMElement $appearanceNode): array
     {
-        $convertersNode = $childNode->getElementsByTagName('converters')->item(0);
+        $convertersNode = $appearanceNode->getElementsByTagName('converters')->item(0);
         $converters = [];
         if ($convertersNode) {
             foreach ($convertersNode->getElementsByTagName('converter') as $converterNode) {

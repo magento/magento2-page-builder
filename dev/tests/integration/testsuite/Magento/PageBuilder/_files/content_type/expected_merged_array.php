@@ -24,673 +24,663 @@ return [
             'translate' => 'label'
         ]
     ],
-    'types' => [
-        'type1' => [
-            'sortOrder' => '1',
-            'label' => 'Type 1 Label',
-            'icon' => 'pagebuilder-type1-custom-icon',
-            'form' => 'pagebuilder_type1_custom_form',
-            'group' => 'group2',
-            'component' => 'Path/to/component',
-            'preview_component' => 'Path/to/preview/component',
-            'master_component' => 'Path/to/master/component',
-            'allowed_parents' => [
-                0 => 'type3'
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'style' => [
-                                    0 => [
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => []
-                                ]
-                            ]
-                        ],
-                        'converters' => []
-                    ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
-            ],
-            'additional_data' => [
-                'config1' => [
-                    'name' => 'config1',
-                    'xsi:type' => 'array',
-                    'item' => [
-                        'settingWithTypeString' => [
-                            'name' => 'settingWithTypeString',
-                            'xsi:type' => 'string',
-                            'value' => 'string',
-                        ],
-                        'settingWithTypeBooleanTrue' => [
-                            'name' => 'settingWithTypeBooleanTrue',
-                            'xsi:type' => 'boolean',
-                            'value' => 'true',
-                        ],
-                        'settingWithTypeBooleanFalse' => [
-                            'name' => 'settingWithTypeBooleanFalse',
-                            'xsi:type' => 'boolean',
-                            'value' => 'false',
-                        ],
-                        'settingWithTypeInteger' => [
-                            'name' => 'settingWithTypeInteger',
-                            'xsi:type' => 'number',
-                            'value' => '20',
-                        ],
-                        'settingWithTypeNull' => [
-                            'name' => 'settingWithTypeNull',
-                            'xsi:type' => 'null',
-                        ],
-                        'settingWithTypeNumber2' => [
-                            'name' => 'settingWithTypeNumber2',
-                            'xsi:type' => 'number',
-                            'value' => '-90',
-                        ],
-                        'settingWithTypeObject' => [
-                            'name' => 'settingWithTypeObject',
-                            'xsi:type' => 'object',
-                            'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
-                                . 'ContentType\\AdditionalData\\Provider\\TestData',
-                        ],
-                    ],
-                ],
-                'config2' => [
-                    'name' => 'config2',
-                    'xsi:type' => 'array',
-                    'item' => [
-                        'arrayConfig' => [
-                            'name' => 'arrayConfig',
-                            'xsi:type' => 'array',
-                            'item' => [
-                                'settingWithTypeString' => [
-                                    'name' => 'settingWithTypeString',
-                                    'xsi:type' => 'string',
-                                    'value' => 'string',
-                                ],
-                                'settingWithTypeBooleanTrue' => [
-                                    'name' => 'settingWithTypeBooleanTrue',
-                                    'xsi:type' => 'boolean',
-                                    'value' => 'true',
-                                ],
-                                'settingWithTypeBooleanFalse' => [
-                                    'name' => 'settingWithTypeBooleanFalse',
-                                    'xsi:type' => 'boolean',
-                                    'value' => 'false',
-                                ],
-                                'settingWithTypeInteger' => [
-                                    'name' => 'settingWithTypeInteger',
-                                    'xsi:type' => 'number',
-                                    'value' => '20',
-                                ],
-                                'settingWithTypeNull' => [
-                                    'name' => 'settingWithTypeNull',
-                                    'xsi:type' => 'null',
-                                ],
-                                'settingWithTypeNumber2' => [
-                                    'name' => 'settingWithTypeNumber2',
-                                    'xsi:type' => 'number',
-                                    'value' => '-90',
-                                ],
-                                'settingWithTypeObject' => [
-                                    'name' => 'settingWithTypeObject',
-                                    'xsi:type' => 'object',
-                                    'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
-                                        . 'ContentType\\AdditionalData\\Provider\\TestData',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'settingWithTypeString' => [
-                    'name' => 'settingWithTypeString',
-                    'xsi:type' => 'string',
-                    'value' => 'string',
-                ],
-                'settingWithTypeBooleanTrue' => [
-                    'name' => 'settingWithTypeBooleanTrue',
-                    'xsi:type' => 'boolean',
-                    'value' => 'true',
-                ],
-                'settingWithTypeBooleanFalse' => [
-                    'name' => 'settingWithTypeBooleanFalse',
-                    'xsi:type' => 'boolean',
-                    'value' => 'false',
-                ],
-                'settingWithTypeInteger' => [
-                    'name' => 'settingWithTypeInteger',
-                    'xsi:type' => 'number',
-                    'value' => '20',
-                ],
-                'settingWithTypeNull' => [
-                    'name' => 'settingWithTypeNull',
-                    'xsi:type' => 'null',
-                ],
-                'settingWithTypeNumber2' => [
-                    'name' => 'settingWithTypeNumber2',
-                    'xsi:type' => 'number',
-                    'value' => '-90',
-                ],
-                'settingWithTypeObject' => [
-                    'name' => 'settingWithTypeObject',
-                    'xsi:type' => 'object',
-                    'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
-                        . 'ContentType\\AdditionalData\\Provider\\TestData',
-                ],
-            ],
-            'name' => 'type1',
-            'translate' => 'label'
+    'type1' => [
+        'sortOrder' => '1',
+        'label' => 'Type 1 Label',
+        'icon' => 'pagebuilder-type1-custom-icon',
+        'form' => 'pagebuilder_type1_custom_form',
+        'group' => 'group2',
+        'component' => 'Path/to/component',
+        'preview_component' => 'Path/to/preview/component',
+        'master_component' => 'Path/to/master/component',
+        'allowed_parents' => [
+            0 => 'type3'
         ],
-        'type2' => [
-            'sortOrder' => '2',
-            'label' => 'Type 2 Label',
-            'icon' => 'pagebuilder-type2-custom-icon',
-            'component' => 'Path/to/custom/component',
-            'preview_component' => 'Path/to/preview/custom/component',
-            'backend_block' => 'Path/to/custom/backend/block',
-            'backend_template' => 'Path/to/custom/backend/template',
-            'is_visible' => 'false',
-            'form' => 'pagebuilder_type2_custom_form',
-            'group' => 'group2',
-            'allowed_parents' => [
-                0 => 'type1'
-            ],
-            'appearances' => [
-                'default' => [
-                    'data1' => 'custom_value',
-                    'data2' => 'value2',
-                    'data3' => 'value3',
-                    'preview_template' => 'Path/to/preview/custom/template',
-                    'render_template' => 'Path/to/render/custom/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'first_element' => [
-                                'style' => [
-                                    0 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    1 => [
-                                        'var' => 'style_attributes_change',
-                                        'name' => 'custom_name',
-                                        'converter' => 'Path/to/custom/converter',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    2 => [
-                                        'var' => 'style_attributes_add',
-                                        'name' => 'attributes_add',
-                                        'converter' => 'Path/to/custom/converter',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    3 => [
-                                        'var' => 'original_complex',
-                                        'name' => null,
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Path/to/reader'
-                                    ],
-                                    4 => [
-                                        'var' => 'complex_style_attributes_change',
-                                        'name' => null,
-                                        'converter' => 'Path/to/custom/converter',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'reader' => 'Path/to/custom/reader'
-                                    ],
-                                    5 => [
-                                        'var' => 'complex_style_attributes_add',
-                                        'name' => null,
-                                        'converter' => 'Path/to/custom/converter',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'reader' => 'Path/to/custom/reader'
-                                    ],
-                                    6 => [
-                                        'var' => 'new_style',
-                                        'name' => 'new-style',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    7 => [
-                                        'var' => 'new_complex',
-                                        'name' => null,
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Path/to/reader'
-                                    ],
-                                    8 => [
-                                        'name' => 'original_static',
-                                        'value' => 'original_value',
-                                        'static' => true
-                                    ],
-                                    9 => [
-                                        'name' => 'static_style_attributes_change',
-                                        'value' => 'custom_value',
-                                        'static' => true
-                                    ],
-                                    10 => [
-                                        'name' => 'new_static',
-                                        'value' => 'new-value',
-                                        'static' => true
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ],
-                                    1 => [
-                                        'var' => 'attribute_change',
-                                        'name' => 'data-custom',
-                                        'converter' => 'Path/to/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ],
-                                    2 => [
-                                        'var' => 'attribute_add',
-                                        'name' => 'attribute_add',
-                                        'converter' => 'Path/to/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ],
-                                    3 => [
-                                        'var' => 'original_complex',
-                                        'name' => null,
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Path/to/reader'
-                                    ],
-                                    4 => [
-                                        'var' => 'complex_style_attributes_change',
-                                        'name' => null,
-                                        'converter' => 'Path/to/custom/converter',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'reader' => 'Path/to/custom/reader'
-                                    ],
-                                    5 => [
-                                        'var' => 'complex_style_attributes_add',
-                                        'name' => null,
-                                        'converter' => 'Path/to/custom/converter',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'reader' => 'Path/to/custom/reader'
-                                    ],
-                                    6 => [
-                                        'var' => 'new_attribute',
-                                        'name' => 'data-new',
-                                        'converter' => 'Path/to/custom/converter',
-                                        'persistence_mode' => 'write',
-                                        'preview_converter' => 'Path/to/preview/custom/converter',
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ],
-                                    7 => [
-                                        'var' => 'new_complex',
-                                        'name' => null,
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Path/to/reader'
-                                    ],
-                                    8 => [
-                                        'name' => 'original_static',
-                                        'value' => 'original_value',
-                                        'static' => true
-                                    ],
-                                    9 => [
-                                        'name' => 'static_attribute_change',
-                                        'value' => 'custom_value',
-                                        'static' => true
-                                    ],
-                                    10 => [
-                                        'name' => 'new_static',
-                                        'value' => 'new-value',
-                                        'static' => true
-                                    ]
-                                ],
-                                'tag' => [
-                                    'var' => 'tag',
-                                    'converter' => 'Path/to/custom/converter'
-                                ],
-                                'html' => [
-                                    'var' => 'html',
-                                    'converter' => null,
-                                    'preview_converter' => null
-                                ],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => 'Path/to/custom/converter',
-                                    'filter' => [
-                                        0 => 'class-name',
-                                        1 => 'new-class'
-                                    ]
-                                ]
-                            ],
-                            'second_element' => [
-                                'style' => [
-                                    0 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => []
-                                ]
-                            ],
-                            'third_element' => [
-                                'style' => [
-                                    0 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => []
-                                ]
-                            ]
-                        ],
-                        'converters' => [
+        'appearances' => [
+            'default' => [
+                'preview_template' => 'Path/to/preview/template',
+                'render_template' => 'Path/to/render/template',
+                'readers' => [],
+                'elements' => [
+                    'main' => [
+                        'style' => [
                             0 => [
-                                'name' => 'converter1',
-                                'component' => 'Path/to/custom/converter',
-                                'config' => [
-                                    'item1' => 'value1',
-                                    'change_value' => 'custom_value',
-                                    'new_value' => 'value3'
-                                ]
+                                'var' => 'style_converter',
+                                'name' => 'converter',
+                                'converter' => 'Path/to/converter',
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
                             ],
                             1 => [
-                                'name' => 'converter2',
-                                'component' => 'Path/to/converter',
-                                'config' => [
-                                    'item1' => 'value1'
-                                ]
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ]
+                        ],
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ]
+                        ],
+                        'tag' => [],
+                        'html' => [],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => null,
+                            'filter' => []
+                        ]
+                    ]
+                ],
+                'converters' => [],
+                'default' => 'true',
+                'reader' => 'Path/to/reader'
+            ]
+        ],
+        'additional_data' => [
+            'config1' => [
+                'name' => 'config1',
+                'xsi:type' => 'array',
+                'item' => [
+                    'settingWithTypeString' => [
+                        'name' => 'settingWithTypeString',
+                        'xsi:type' => 'string',
+                        'value' => 'string',
+                    ],
+                    'settingWithTypeBooleanTrue' => [
+                        'name' => 'settingWithTypeBooleanTrue',
+                        'xsi:type' => 'boolean',
+                        'value' => 'true',
+                    ],
+                    'settingWithTypeBooleanFalse' => [
+                        'name' => 'settingWithTypeBooleanFalse',
+                        'xsi:type' => 'boolean',
+                        'value' => 'false',
+                    ],
+                    'settingWithTypeInteger' => [
+                        'name' => 'settingWithTypeInteger',
+                        'xsi:type' => 'number',
+                        'value' => '20',
+                    ],
+                    'settingWithTypeNull' => [
+                        'name' => 'settingWithTypeNull',
+                        'xsi:type' => 'null',
+                    ],
+                    'settingWithTypeNumber2' => [
+                        'name' => 'settingWithTypeNumber2',
+                        'xsi:type' => 'number',
+                        'value' => '-90',
+                    ],
+                    'settingWithTypeObject' => [
+                        'name' => 'settingWithTypeObject',
+                        'xsi:type' => 'object',
+                        'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                            . 'ContentType\\AdditionalData\\Provider\\TestData',
+                    ],
+                ],
+            ],
+            'config2' => [
+                'name' => 'config2',
+                'xsi:type' => 'array',
+                'item' => [
+                    'arrayConfig' => [
+                        'name' => 'arrayConfig',
+                        'xsi:type' => 'array',
+                        'item' => [
+                            'settingWithTypeString' => [
+                                'name' => 'settingWithTypeString',
+                                'xsi:type' => 'string',
+                                'value' => 'string',
+                            ],
+                            'settingWithTypeBooleanTrue' => [
+                                'name' => 'settingWithTypeBooleanTrue',
+                                'xsi:type' => 'boolean',
+                                'value' => 'true',
+                            ],
+                            'settingWithTypeBooleanFalse' => [
+                                'name' => 'settingWithTypeBooleanFalse',
+                                'xsi:type' => 'boolean',
+                                'value' => 'false',
+                            ],
+                            'settingWithTypeInteger' => [
+                                'name' => 'settingWithTypeInteger',
+                                'xsi:type' => 'number',
+                                'value' => '20',
+                            ],
+                            'settingWithTypeNull' => [
+                                'name' => 'settingWithTypeNull',
+                                'xsi:type' => 'null',
+                            ],
+                            'settingWithTypeNumber2' => [
+                                'name' => 'settingWithTypeNumber2',
+                                'xsi:type' => 'number',
+                                'value' => '-90',
+                            ],
+                            'settingWithTypeObject' => [
+                                'name' => 'settingWithTypeObject',
+                                'xsi:type' => 'object',
+                                'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                                    . 'ContentType\\AdditionalData\\Provider\\TestData',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'settingWithTypeString' => [
+                'name' => 'settingWithTypeString',
+                'xsi:type' => 'string',
+                'value' => 'string',
+            ],
+            'settingWithTypeBooleanTrue' => [
+                'name' => 'settingWithTypeBooleanTrue',
+                'xsi:type' => 'boolean',
+                'value' => 'true',
+            ],
+            'settingWithTypeBooleanFalse' => [
+                'name' => 'settingWithTypeBooleanFalse',
+                'xsi:type' => 'boolean',
+                'value' => 'false',
+            ],
+            'settingWithTypeInteger' => [
+                'name' => 'settingWithTypeInteger',
+                'xsi:type' => 'number',
+                'value' => '20',
+            ],
+            'settingWithTypeNull' => [
+                'name' => 'settingWithTypeNull',
+                'xsi:type' => 'null',
+            ],
+            'settingWithTypeNumber2' => [
+                'name' => 'settingWithTypeNumber2',
+                'xsi:type' => 'number',
+                'value' => '-90',
+            ],
+            'settingWithTypeObject' => [
+                'name' => 'settingWithTypeObject',
+                'xsi:type' => 'object',
+                'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                    . 'ContentType\\AdditionalData\\Provider\\TestData',
+            ],
+        ],
+        'name' => 'type1',
+        'translate' => 'label'
+    ],
+    'type2' => [
+        'sortOrder' => '2',
+        'label' => 'Type 2 Label',
+        'icon' => 'pagebuilder-type2-custom-icon',
+        'component' => 'Path/to/custom/component',
+        'preview_component' => 'Path/to/preview/custom/component',
+        'backend_block' => 'Path/to/custom/backend/block',
+        'backend_template' => 'Path/to/custom/backend/template',
+        'is_visible' => 'false',
+        'form' => 'pagebuilder_type2_custom_form',
+        'group' => 'group2',
+        'allowed_parents' => [
+            0 => 'type1'
+        ],
+        'appearances' => [
+            'default' => [
+                'data1' => 'custom_value',
+                'data2' => 'value2',
+                'data3' => 'value3',
+                'preview_template' => 'Path/to/preview/custom/template',
+                'render_template' => 'Path/to/render/custom/template',
+                'readers' => [],
+                'elements' => [
+                    'first_element' => [
+                        'style' => [
+                            0 => [
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ],
+                            1 => [
+                                'var' => 'style_attributes_change',
+                                'name' => 'custom_name',
+                                'converter' => 'Path/to/custom/converter',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'persistence_mode' => 'write',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
                             ],
                             2 => [
-                                'name' => 'converter3',
-                                'component' => 'Path/to/custom/converter',
-                                'config' => [
-                                    'item1' => 'value1'
-                                ]
+                                'var' => 'style_attributes_add',
+                                'name' => 'attributes_add',
+                                'converter' => 'Path/to/custom/converter',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'persistence_mode' => 'write',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ],
+                            3 => [
+                                'var' => 'original_complex',
+                                'name' => null,
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Path/to/reader'
+                            ],
+                            4 => [
+                                'var' => 'complex_style_attributes_change',
+                                'name' => null,
+                                'converter' => 'Path/to/custom/converter',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'persistence_mode' => 'write',
+                                'reader' => 'Path/to/custom/reader'
+                            ],
+                            5 => [
+                                'var' => 'complex_style_attributes_add',
+                                'name' => null,
+                                'converter' => 'Path/to/custom/converter',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'persistence_mode' => 'write',
+                                'reader' => 'Path/to/custom/reader'
+                            ],
+                            6 => [
+                                'var' => 'new_style',
+                                'name' => 'new-style',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ],
+                            7 => [
+                                'var' => 'new_complex',
+                                'name' => null,
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Path/to/reader'
+                            ],
+                            8 => [
+                                'name' => 'original_static',
+                                'value' => 'original_value',
+                                'static' => true
+                            ],
+                            9 => [
+                                'name' => 'static_style_attributes_change',
+                                'value' => 'custom_value',
+                                'static' => true
+                            ],
+                            10 => [
+                                'name' => 'new_static',
+                                'value' => 'new-value',
+                                'static' => true
+                            ]
+                        ],
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ],
+                            1 => [
+                                'var' => 'attribute_change',
+                                'name' => 'data-custom',
+                                'converter' => 'Path/to/custom/converter',
+                                'persistence_mode' => 'write',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ],
+                            2 => [
+                                'var' => 'attribute_add',
+                                'name' => 'attribute_add',
+                                'converter' => 'Path/to/custom/converter',
+                                'persistence_mode' => 'write',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ],
+                            3 => [
+                                'var' => 'original_complex',
+                                'name' => null,
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Path/to/reader'
+                            ],
+                            4 => [
+                                'var' => 'complex_style_attributes_change',
+                                'name' => null,
+                                'converter' => 'Path/to/custom/converter',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'persistence_mode' => 'write',
+                                'reader' => 'Path/to/custom/reader'
+                            ],
+                            5 => [
+                                'var' => 'complex_style_attributes_add',
+                                'name' => null,
+                                'converter' => 'Path/to/custom/converter',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'persistence_mode' => 'write',
+                                'reader' => 'Path/to/custom/reader'
+                            ],
+                            6 => [
+                                'var' => 'new_attribute',
+                                'name' => 'data-new',
+                                'converter' => 'Path/to/custom/converter',
+                                'persistence_mode' => 'write',
+                                'preview_converter' => 'Path/to/preview/custom/converter',
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ],
+                            7 => [
+                                'var' => 'new_complex',
+                                'name' => null,
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Path/to/reader'
+                            ],
+                            8 => [
+                                'name' => 'original_static',
+                                'value' => 'original_value',
+                                'static' => true
+                            ],
+                            9 => [
+                                'name' => 'static_attribute_change',
+                                'value' => 'custom_value',
+                                'static' => true
+                            ],
+                            10 => [
+                                'name' => 'new_static',
+                                'value' => 'new-value',
+                                'static' => true
+                            ]
+                        ],
+                        'tag' => [
+                            'var' => 'tag',
+                            'converter' => 'Path/to/custom/converter'
+                        ],
+                        'html' => [
+                            'var' => 'html',
+                            'converter' => null,
+                            'preview_converter' => null
+                        ],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => 'Path/to/custom/converter',
+                            'filter' => [
+                                0 => 'class-name',
+                                1 => 'new-class'
                             ]
                         ]
                     ],
-                    'default' => 'true',
-                    'form' => 'Path/to/custom/form',
-                    'reader' => 'Path/to/custom/reader'
-                ],
-                'appearance1' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
+                    'second_element' => [
+                        'style' => [
+                            0 => [
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ]
                         ],
-                        'converters' => []
-                    ],
-                    'default' => 'false',
-                    'form' => 'Path/to/form',
-                    'reader' => 'Path/to/reader'
-                ],
-                'appearance2' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'default' => 'false',
-                    'reader' => 'Path/to/reader'
-                ],
-                'appearance3' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'default' => 'false',
-                    'reader' => null
-                ],
-                'appearance4' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
-                            ],
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ]
                         ],
-                        'converters' => []
+                        'tag' => [],
+                        'html' => [],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => null,
+                            'filter' => []
+                        ]
                     ],
-                    'default' => null,
-                    'form' => 'Path/to/custom/form',
-                    'reader' => 'Path/to/reader'
-                ]
+                    'third_element' => [
+                        'style' => [
+                            0 => [
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ]
+                        ],
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ]
+                        ],
+                        'tag' => [],
+                        'html' => [],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => null,
+                            'filter' => []
+                        ]
+                    ]
+                ],
+                'converters' => [
+                    0 => [
+                        'name' => 'converter1',
+                        'component' => 'Path/to/custom/converter',
+                        'config' => [
+                            'item1' => 'value1',
+                            'change_value' => 'custom_value',
+                            'new_value' => 'value3'
+                        ]
+                    ],
+                    1 => [
+                        'name' => 'converter2',
+                        'component' => 'Path/to/converter',
+                        'config' => [
+                            'item1' => 'value1'
+                        ]
+                    ],
+                    2 => [
+                        'name' => 'converter3',
+                        'component' => 'Path/to/custom/converter',
+                        'config' => [
+                            'item1' => 'value1'
+                        ]
+                    ]
+                ],
+                'default' => 'true',
+                'form' => 'Path/to/custom/form',
+                'reader' => 'Path/to/custom/reader'
             ],
-            'name' => 'type2',
-            'translate' => 'label'
+            'appearance1' => [
+                'preview_template' => 'Path/to/preview/template',
+                'render_template' => 'Path/to/render/template',
+                'readers' => [],
+                'elements' => [
+                    'main' => [
+                        'style' => [
+                            0 =>[
+                                'var' => 'style_converter',
+                                'name' => 'converter',
+                                'converter' => 'Path/to/converter',
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ],
+                            1 => [
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ]
+                        ],
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ]
+                        ],
+                        'tag' => [],
+                        'html' => [],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => null,
+                            'filter' => [],
+                        ],
+                    ],
+                ],
+                'converters' => [],
+                'default' => 'false',
+                'form' => 'Path/to/form',
+                'reader' => 'Path/to/reader'
+            ],
+            'appearance2' => [
+                'preview_template' => 'Path/to/preview/template',
+                'render_template' => 'Path/to/render/template',
+                'readers' => [],
+                'default' => 'false',
+                'converters' => [],
+                'reader' => 'Path/to/reader'
+            ],
+            'appearance3' => [
+                'preview_template' => 'Path/to/preview/template',
+                'render_template' => 'Path/to/render/template',
+                'readers' => [],
+                'converters' => [],
+                'default' => 'false',
+                'reader' => null
+            ],
+            'appearance4' => [
+                'preview_template' => 'Path/to/preview/template',
+                'render_template' => 'Path/to/render/template',
+                'readers' => [],
+                'elements' => [
+                    'main' => [
+                        'style' => [
+                            0 =>[
+                                'var' => 'style_converter',
+                                'name' => 'converter',
+                                'converter' => 'Path/to/converter',
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ],
+                            1 => [
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ]
+                        ],
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ]
+                        ],
+                        'tag' => [],
+                        'html' => [],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => null,
+                            'filter' => [],
+                        ],
+                    ],
+                ],
+                'converters' => [],
+                'default' => null,
+                'form' => 'Path/to/custom/form',
+                'reader' => 'Path/to/reader'
+            ]
         ],
-        'type3' => [
-            'sortOrder' => '3',
-            'label' => 'Custom Type 3',
-            'icon' => 'pagebuilder-type3-icon',
-            'component' => 'Path/to/custom/component',
-            'form' => 'pagebuilder_type3_form',
-            'group' => 'group1',
-            'allowed_parents' => [
-                0 => 'stage'
-            ],
-            'appearances' => [
-                'default' => [
-                    'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
-                    'readers' => [],
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
-                                    ]
-                                ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'converter' => null,
-                                        'persistence_mode' => 'readwrite',
-                                        'preview_converter' => null,
-                                        'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
-                                    'converter' => null,
-                                    'filter' => [],
-                                ],
+        'name' => 'type2',
+        'translate' => 'label'
+    ],
+    'type3' => [
+        'sortOrder' => '3',
+        'label' => 'Custom Type 3',
+        'icon' => 'pagebuilder-type3-icon',
+        'component' => 'Path/to/custom/component',
+        'form' => 'pagebuilder_type3_form',
+        'group' => 'group1',
+        'allowed_parents' => [
+            0 => 'stage'
+        ],
+        'appearances' => [
+            'default' => [
+                'preview_template' => 'Path/to/preview/template',
+                'render_template' => 'Path/to/render/template',
+                'readers' => [],
+                'elements' => [
+                    'main' => [
+                        'style' => [
+                            0 =>[
+                                'var' => 'style_converter',
+                                'name' => 'converter',
+                                'converter' => 'Path/to/converter',
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
                             ],
+                            1 => [
+                                'var' => 'style_no_converter',
+                                'name' => 'no_converter',
+                                'converter' => null,
+                                'preview_converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                            ]
                         ],
-                        'converters' => []
+                        'attributes' => [
+                            0 => [
+                                'var' => 'name',
+                                'name' => 'data-role',
+                                'converter' => null,
+                                'persistence_mode' => 'readwrite',
+                                'preview_converter' => null,
+                                'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                            ]
+                        ],
+                        'tag' => [],
+                        'html' => [],
+                        'css' => [
+                            'var' => 'css_classes',
+                            'converter' => null,
+                            'filter' => [],
+                        ],
                     ],
-                    'default' => 'true',
-                    'reader' => 'Path/to/reader'
-                ]
-            ],
-            'name' => 'type3',
-            'translate' => 'label'
-        ]
+                ],
+                'converters' => [],
+                'default' => 'true',
+                'reader' => 'Path/to/reader'
+            ]
+        ],
+        'name' => 'type3',
+        'translate' => 'label'
     ]
 ];

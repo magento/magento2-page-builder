@@ -6,68 +6,62 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="buttons"
-              label="Buttons"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/buttons/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form="pagebuilder_buttons_form"
-              group="general"
-              icon="icon-pagebuilder-button"
-              sortOrder="40"
-              translate="label">
-            <children default_policy="deny">
-                <child name="button-item" policy="allow"/>
-            </children>
-            <appearances>
-                <appearance default="true"
-                            name="inline"
-                            preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
-                            render_template="Magento_PageBuilder/content-type/buttons/inline/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <property name="text_align" source="text_align"/>
-                                <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <static_property source="display" value="inline-block"/>
-                                <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-                <appearance name="stacked"
-                            preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
-                            render_template="Magento_PageBuilder/content-type/buttons/inline/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <property name="text_align" source="text_align"/>
-                                <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <static_property source="display" value="flex"/>
-                                <static_property source="flex_direction" value="column"/>
-                                <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="buttons"
+          label="Buttons"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/buttons/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_buttons_form"
+          group="general"
+          icon="icon-pagebuilder-button"
+          sortOrder="40"
+          translate="label">
+        <children default_policy="deny">
+            <child name="button-item" policy="allow"/>
+        </children>
+        <appearances>
+            <appearance default="true"
+                        name="inline"
+                        preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
+                        render_template="Magento_PageBuilder/content-type/buttons/inline/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <property name="text_align" source="text_align"/>
+                        <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <static_property source="display" value="inline-block"/>
+                        <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="stacked"
+                        preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
+                        render_template="Magento_PageBuilder/content-type/buttons/inline/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <property name="text_align" source="text_align"/>
+                        <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <static_property source="display" value="flex"/>
+                        <static_property source="flex_direction" value="column"/>
+                        <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>

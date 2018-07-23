@@ -32,11 +32,11 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
 
-      if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.data_mapping || undefined === appearanceConfiguration.data_mapping.elements) {
+      if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.elements) {
         return;
       }
 
-      var config = appearanceConfiguration.data_mapping.elements;
+      var config = appearanceConfiguration.elements;
 
       var _arr = Object.keys(config);
 
@@ -52,7 +52,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           };
         }
 
-        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.convertData(data, appearanceConfiguration.converters);
 
         if (config[elementName].style !== undefined) {
           viewModel.data[elementName].style(this.convertStyle(config[elementName], data));

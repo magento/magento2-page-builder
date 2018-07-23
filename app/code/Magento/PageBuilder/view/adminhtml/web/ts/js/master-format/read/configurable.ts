@@ -28,7 +28,7 @@ export default class Configurable implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const role = element.getAttribute("data-role");
-        const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
+        const config = appearanceConfig(role, element.getAttribute("data-appearance"));
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
             converterPoolFactory(role),

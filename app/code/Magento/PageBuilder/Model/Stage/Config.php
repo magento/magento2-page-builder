@@ -172,7 +172,8 @@ class Config
             'additional_data' => isset($contentType['additional_data'])
                 ? $this->additionalDataParser->toArray($contentType['additional_data'])
                 : [],
-            'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
+            'elements' => isset($contentType['elements']) ? $contentType['elements'] : [],
+            'converters' => isset($contentType['converters']) ? $contentType['converters'] : [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];
     }

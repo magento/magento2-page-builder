@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Model\Config\ContentType;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
-    const TYPE_PATH = '/config/content_types/type';
+    const TYPE_PATH = '/config/type';
     
     /**
      * List of id attributes for merge
@@ -23,18 +23,18 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         self::TYPE_PATH . '/children/child' => 'name',
         self::TYPE_PATH . '/appearances/appearance' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/property'
+        self::TYPE_PATH . '/appearances/appearance/elements/element' => 'name',
+        self::TYPE_PATH . '/appearances/appearance/elements/element/property'
             => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/static_property'
+        self::TYPE_PATH . '/appearances/appearance/elements/element/static_property'
             => 'source',
         self::TYPE_PATH . '/additional_data/item' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attribute' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/static_attribute'
+        self::TYPE_PATH . '/appearances/appearance/elements/element/attribute' => 'name',
+        self::TYPE_PATH . '/appearances/appearance/elements/element/static_attribute'
             => 'source',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/css/filter/class' => 'source',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/converters/converter' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/converters/converter/config/item' => 'name',
+        self::TYPE_PATH . '/appearances/appearance/elements/element/css/filter/class' => 'source',
+        self::TYPE_PATH . '/appearances/appearance/converters/converter' => 'name',
+        self::TYPE_PATH . '/appearances/appearance/converters/converter/config/item' => 'name',
         self::TYPE_PATH . '/appearances/appearance/readers/reader' => 'name'
     ];
 

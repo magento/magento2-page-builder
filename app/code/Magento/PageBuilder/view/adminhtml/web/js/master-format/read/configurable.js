@@ -22,7 +22,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
       var _this = this;
 
       var role = element.getAttribute("data-role");
-      var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
+      var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance"));
       var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
       return new Promise(function (resolve) {
         Promise.all(componentsPromise).then(function (loadedComponents) {

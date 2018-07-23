@@ -31,15 +31,6 @@ export default interface ContentTypeConfigInterface {
 
 export interface ContentTypeConfigAppearanceInterface {
     readers: string[];
-    data_mapping: DataMappingInterface;
-    preview_template: string;
-    render_template: string;
-    render: string;
-    default: string;
-    form: string;
-}
-
-export interface DataMappingInterface {
     path: string;
     converters: ConverterInterface[];
     elements: {
@@ -51,6 +42,11 @@ export interface DataMappingInterface {
             tag: DataMappingTagInterface[];
         };
     };
+    preview_template: string;
+    render_template: string;
+    render: string;
+    default: string;
+    form: string;
 }
 
 export interface ConverterInterface {

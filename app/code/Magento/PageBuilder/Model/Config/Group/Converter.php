@@ -19,9 +19,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      */
     public function convert($source): array
     {
-        return [
-            'groups' => $this->convertGroups($source)
-        ];
+        return $this->convertGroups($source);
     }
 
     /**
@@ -34,9 +32,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     {
         $groupsData = [];
         /** @var \DOMNode $source */
-        $groups = $source->getElementsByTagName('groups');
         /** @var \DOMNode $group */
-        foreach ($groups->item(0)->childNodes as $group) {
+        foreach ($source->getElementsByTagName('group') as $group) {
             if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
                 $name = $group->attributes->getNamedItem('name')->nodeValue;
                 /** @var \DOMElement $attributeValue */

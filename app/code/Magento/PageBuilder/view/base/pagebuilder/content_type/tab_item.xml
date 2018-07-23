@@ -6,57 +6,53 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="tab-item"
-              label="Tab"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/tab-item/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form="pagebuilder_tab_item_form"
-              group="interactive"
-              icon="icon-pagebuilder-tabs"
-              sortOrder="30"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="tabs" policy="allow"/>
-            </parents>
-            <children default_policy="allow">
-                <child name="row" policy="deny"/>
-                <child name="tabs" policy="deny"/>
-            </children>
-            <appearances>
-                <appearance name="default"
-                            default="true"
-                            preview_template="Magento_PageBuilder/content-type/tab-item/default/preview"
-                            render_template="Magento_PageBuilder/content-type/tab-item/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                                <property name="background_position" source="background_position"/>
-                                <property name="background_size" source="background_size"/>
-                                <property name="background_repeat" source="background_repeat"/>
-                                <property name="background_attachment" source="background_attachment"/>
-                                <property name="text_align" source="text_align"/>
-                                <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <attribute name="tab_name" source="data-tab-name"/>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-            <is_visible>false</is_visible>
-        </type>
-    </content_types>
+    <type name="tab-item"
+          label="Tab"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/tab-item/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_tab_item_form"
+          group="interactive"
+          icon="icon-pagebuilder-tabs"
+          sortOrder="30"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="tabs" policy="allow"/>
+        </parents>
+        <children default_policy="allow">
+            <child name="row" policy="deny"/>
+            <child name="tabs" policy="deny"/>
+        </children>
+        <appearances>
+            <appearance name="default"
+                        default="true"
+                        preview_template="Magento_PageBuilder/content-type/tab-item/default/preview"
+                        render_template="Magento_PageBuilder/content-type/tab-item/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <property name="background_position" source="background_position"/>
+                        <property name="background_size" source="background_size"/>
+                        <property name="background_repeat" source="background_repeat"/>
+                        <property name="background_attachment" source="background_attachment"/>
+                        <property name="text_align" source="text_align"/>
+                        <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="tab_name" source="data-tab-name"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+        <is_visible>false</is_visible>
+    </type>
 </config>

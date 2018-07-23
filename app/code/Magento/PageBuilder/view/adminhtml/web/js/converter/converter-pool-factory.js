@@ -18,18 +18,18 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
 
     for (var _i = 0; _i < _arr.length; _i++) {
       appearanceName = _arr[_i];
-      var dataMapping = config.appearances[appearanceName].data_mapping;
+      var appearance = config.appearances[appearanceName];
 
-      if (dataMapping !== undefined && dataMapping.elements !== undefined) {
+      if (appearance !== undefined && appearance.elements !== undefined) {
         var elementName = void 0;
 
-        var _arr2 = Object.keys(dataMapping.elements);
+        var _arr2 = Object.keys(appearance.elements);
 
         for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
           elementName = _arr2[_i2];
 
-          if (dataMapping.elements[elementName].style !== undefined) {
-            for (var _iterator = dataMapping.elements[elementName].style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          if (appearance.elements[elementName].style !== undefined) {
+            for (var _iterator = appearance.elements[elementName].style, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
               var _ref;
 
               if (_isArray) {
@@ -53,8 +53,8 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
             }
           }
 
-          if (dataMapping.elements[elementName].attributes !== undefined) {
-            for (var _iterator2 = dataMapping.elements[elementName].attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+          if (appearance.elements[elementName].attributes !== undefined) {
+            for (var _iterator2 = appearance.elements[elementName].attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
               var _ref2;
 
               if (_isArray2) {
@@ -78,8 +78,8 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
             }
           }
 
-          if (dataMapping.elements[elementName].html !== undefined) {
-            var htmlConfig = dataMapping.elements[elementName].html;
+          if (appearance.elements[elementName].html !== undefined) {
+            var htmlConfig = appearance.elements[elementName].html;
 
             if (!!htmlConfig.converter && converters.indexOf(htmlConfig.converter) === -1 && !_converterPool.get(htmlConfig.converter)) {
               converters.push(htmlConfig.converter);
