@@ -24,7 +24,7 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        if (Config.getConfig("use_inline_editing") === "disabled") {
+        if (!Config.getConfig("can_use_inline_editing_on_stage")) {
             return;
         }
 
