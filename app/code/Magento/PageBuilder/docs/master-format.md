@@ -61,7 +61,7 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 ## Row
 
 ```
-<div data-element="main" data-role="row" data-appearance="default" style="..."></div>
+<div data-element="main" data-role="row" data-appearance="contained" style="..."></div>
 ```
 
 ### main element
@@ -69,7 +69,7 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 Attributes
 1. data-element [main]
 2. data-role [row]
-3. data-appearance [default]
+3. data-appearance [contained, full-width, full-bleed]
 4. data-enable-parallax [1, 0]
 5. data-parallax-speed [0-1]
 6. data-background-color-format [hex, rgb, hsl, hsv, name, none]
@@ -93,6 +93,15 @@ Inline styles
 15. justify-content
 16. display
 17. flex-direction
+
+All 3 appearances share the same master format template
+```html
+<div attr="data.main.attributes"
+     ko-style="Object.assign(data.container.style(), data.main.style())"
+     css="data.main.css">
+    <render args="renderChildTemplate"/>
+</div>
+```
 
 ## Column group
 
