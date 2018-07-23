@@ -1464,7 +1464,7 @@
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!-- Go to Media Storage from stage-->
-        <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage"/>
+        <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage1"/>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="ImageOnStage"/>
@@ -1472,84 +1472,69 @@
         <!--Delete image A-->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
-            <argument name="Image" value="PageBuilderBackgroundImage_JPGv"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
-        <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage"/>
+        <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
         <seeElementInDOM selector=".pagebuilder-empty-banner" stepKey="dontSeeImageOnStage1"/>
 
 
-
-
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder1">
-            <argument name="ImageFolder" value="ImageFolder"/>
-        </actionGroup>
-        <actionGroup ref="attachImage" stepKey="attachImageFile2">
-            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage2"/>
-        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeImageInDOM"/>
-
-
+        <!--&lt;!&ndash; Attach image B to Media Storage &ndash;&gt;-->
+        <!--<comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage2"/>-->
+        <!--<actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage2" >-->
+            <!--<argument name="contentType" value="PageBuilderBannerContentType"/>-->
+            <!--<argument name="section" value="ImageOnStage"/>-->
+        <!--</actionGroup>-->
+        <!--<waitForLoadingMaskToDisappear stepKey="waitForLoading2" />-->
+        <!--<actionGroup ref="CreateImageFolder" stepKey="createImageFolder1">-->
+            <!--<argument name="ImageFolder" value="ImageFolder"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="attachImage" stepKey="attachImageFile2">-->
+            <!--<argument name="Image" value="PageBuilderBackgroundImage_JPG"/>-->
+        <!--</actionGroup>-->
+        <!--<actionGroup ref="saveImage" stepKey="saveImage2"/>-->
+        <!--<waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeImageInDOM"/>-->
+        <!--<comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage3"/>-->
+        <!--<actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage3" >-->
+            <!--<argument name="contentType" value="PageBuilderBannerContentType"/>-->
+            <!--<argument name="section" value="ImageOnStage"/>-->
+        <!--</actionGroup>-->
+        <!--&lt;!&ndash;Delete image B&ndash;&gt;-->
+        <!--<comment stepKey="deleteImageB" userInput="Delete image B"/>-->
+        <!--<actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">-->
+            <!--<argument name="Image" value="PageBuilderBackgroundImage_JPG"/>-->
+        <!--</actionGroup>-->
+        <!--<click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut2"/>-->
+        <!--<comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage2"/>-->
+        <!--<seeElementInDOM selector=".pagebuilder-empty-banner" stepKey="dontSeeImageOnStage4"/>-->
 
 
 
 
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout1">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!--Delete image C-->
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <comment stepKey="deleteImageC" userInput="Delete image C"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
-            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay" visible="true"/>
         <!--<click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut3"/>-->
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeMainImageSource"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormUploadedImageSource(PageBuilderBackgroundImage_JPG.section, PageBuilderBackgroundImage_JPG.fieldName, PageBuilderBackgroundImage_JPG.fileName, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeUploadedFile"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <seeElementInDOM selector=".pagebuilder-empty-banner" stepKey="dontSeeImageOnStage2"/>
-
-        <!-- Attach image B to Image slideout form from Media Storage -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <click selector="{{EditPanelForm.selectFromGalleryBtnInitial('general','image')}}" stepKey="clickSelectfromGallery"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
-            <argument name="ImageFolder" value="ImageFolder"/>
-        </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
-        </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout2">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <!--Delete image B-->
-        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut2">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <comment stepKey="deleteImageCB" userInput="Delete image B"/>
-        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
-            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay2" visible="true"/>
-        <!--<click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut3"/>-->
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeMainImageSource2"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
-        <seeElementInDOM selector=".pagebuilder-empty-banner" stepKey="dontSeeImageOnStage3"/>
 
     </test>
 </tests>
