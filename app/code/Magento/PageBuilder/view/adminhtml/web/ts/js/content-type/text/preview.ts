@@ -60,14 +60,12 @@ export default class Preview extends BasePreview {
         });
     }
 
-    private hidePlaceholder()
-    {
+    private hidePlaceholder() {
         console.log("hidePlaceholder");
         this.isWysiwygFocused(true);
     }
 
-    private showPlaceholderIfContentIsEmpty()
-    {
+    private showPlaceholderIfContentIsEmpty() {
         console.log("showPlaceholderIfContentIsEmpty");
         this.isWysiwygFocused(false);
     }
@@ -83,7 +81,11 @@ export default class Preview extends BasePreview {
     }
 
     private instantiateWysiwyg() {
-        this.wysiwygAdapter = new WysiwygSetup(`${this.parent.id}-editor` /* TODO - this.config.additional_data... || Config.getConfig("") */);
+        this.wysiwygAdapter = new WysiwygSetup(
+            `${this.parent.id}-editor`,
+            this.config.additional_data.inlineWysiwygConfig
+        );
+
         this.wysiwygAdapter.setup("inline");
     }
 }
