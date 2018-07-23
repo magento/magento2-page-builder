@@ -10,18 +10,20 @@ define([
     'use strict';
 
     return Select.extend({
+        defaults: {
+            warningMessage: ''
+        },
+
         /**
-         * Sets the row appearance warning message text and updates visibility.
+         * Initializes observable properties of instance
          *
-         * @param {String} warningMessage
+         * @returns {Abstract} Chainable.
          */
-        updateAppearanceMessage: function (warningMessage) {
-            if (warningMessage) {
-                document.getElementById('warningMessage').innerHTML = warningMessage;
-                document.getElementById('warningMessage').style.visibility = 'visible';
-            } else {
-                document.getElementById('warningMessage').style.visibility = 'hidden';
-            }
-        }
+        initObservable: function () {
+            this._super();
+            this.observe('warningMessage');
+
+            return this;
+        },
     });
 });
