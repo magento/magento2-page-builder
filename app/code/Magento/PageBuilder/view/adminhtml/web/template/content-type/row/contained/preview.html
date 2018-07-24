@@ -11,7 +11,7 @@
          ko-style="data.main.style"
          css="Object.assign(data.main.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1})"
          event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-         afterRender="function (element) { setTimeout(function () { initParallax.call($data, element); }, 0) }">
+         afterRender="initParallax">
         <render args="getOptions().template"/>
         <render args="previewChildTemplate"/>
         <div class="pagebuilder-display-label"

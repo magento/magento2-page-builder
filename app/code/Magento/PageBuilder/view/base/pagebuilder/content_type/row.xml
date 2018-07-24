@@ -31,6 +31,12 @@
                             reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
+                            <element name="wrapper">
+                                <attributes>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                </attributes>
+                            </element>
                             <element name="main">
                                 <style_properties>
                                     <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -50,8 +56,6 @@
                                     <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="appearance" source="data-appearance"/>
                                     <attribute name="enable_parallax" source="data-enable-parallax"/>
                                     <attribute name="parallax_speed" source="data-parallax-speed"/>
                                     <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>

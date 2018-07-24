@@ -11,7 +11,7 @@ define([
 
     return Select.extend({
         defaults: {
-            warningMessage: ''
+            noticeMessage: ''
         },
 
         /**
@@ -21,7 +21,7 @@ define([
          */
         initObservable: function () {
             this._super();
-            this.observe('warningMessage');
+            this.observe('noticeMessage');
 
             return this;
         },
