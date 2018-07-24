@@ -22,15 +22,9 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
 
     var _proto = Preview.prototype;
 
-    // public isShowPlaceholder: KnockoutObservable<boolean> = ko.observable(true);
-    _proto.isShowPlaceholder = function isShowPlaceholder(isShow) {
-      this.wrapperElement.querySelector("[data-bind*='isShowPlaceholder']").style.display = isShow ? "block" : "none";
-    };
     /**
      * @returns {Wysiwyg}
      */
-
-
     _proto.getWysiwyg = function getWysiwyg() {
       return this.wysiwyg;
     };
@@ -61,18 +55,6 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
         _this2.wysiwyg = new _wysiwyg(_this2.parent.id, _this2.config.additional_data.inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
 
         _this2.wysiwyg.onEdited(_this2.saveContentFromWysiwygToDataStore.bind(_this2));
-
-        _this2.wysiwyg.onBlurred(function () {
-          console.log('this.isShowPlaceholder(true)');
-
-          _this2.isShowPlaceholder(true);
-        });
-
-        _this2.wysiwyg.onFocused(function () {
-          console.log('this.isShowPlaceholder(false)');
-
-          _this2.isShowPlaceholder(false);
-        });
       });
     };
     /**

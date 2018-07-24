@@ -10,6 +10,8 @@
 
 .pagebuilder-content-type {
     .pagebuilder-text {
+        min-height: 50px;
+
         ol {
             list-style: decimal;
             padding-left: @margin;
@@ -21,11 +23,13 @@
             margin-bottom: 0;
             padding-bottom: @margin;
         }
+
         ~ .mce-tinymce-inline {
-            display: block!important;
+            display: block !important;
             height: auto !important;
             opacity: 0;
             position: absolute;
+            transform: translate(-1px, 0);
             transition: transform 200ms, opacity 200ms, visibility 200ms;
             visibility: hidden;
             width: auto !important;
@@ -43,9 +47,15 @@
             // There aren't any classes to hook into for this
             &:not([style*='display: none;']) {
                 opacity: 1;
-                transform: translate(0px, -100%);
-                visibility: visible;
+                transform: translate(-1px, -100%);
+                visibility: visible !important;
             }
+        }
+        .placeholder-text {
+            left: 5px;
+            pointer-events: none;
+            position: absolute;
+            top: 5px;
         }
         > .mce-content-body {
             min-height: 50px;
@@ -53,6 +63,11 @@
         }
         > .mce-edit-focus {
             outline: none;
+
+            ~ .pagebuilder-options,
+            ~ .placeholder-text {
+                display: none;
+            }
         }
     }
 }

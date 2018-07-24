@@ -20,12 +20,6 @@ export default class Preview extends BasePreview {
      */
     private wysiwyg: Wysiwyg;
 
-    // public isShowPlaceholder: KnockoutObservable<boolean> = ko.observable(true);
-
-    public isShowPlaceholder(isShow: boolean) {
-        this.wrapperElement.querySelector("[data-bind*='isShowPlaceholder']").style.display = isShow ? "block" : "none";
-    }
-
     /**
      * @returns {Wysiwyg}
      */
@@ -60,9 +54,6 @@ export default class Preview extends BasePreview {
 
             // Update content in our data store after our stage preview wysiwyg gets updated
             this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
-
-            this.wysiwyg.onBlurred(() => {console.log('this.isShowPlaceholder(true)'); this.isShowPlaceholder(true)});
-            this.wysiwyg.onFocused(() => {console.log('this.isShowPlaceholder(false)'); this.isShowPlaceholder(false)});
         });
     }
 
