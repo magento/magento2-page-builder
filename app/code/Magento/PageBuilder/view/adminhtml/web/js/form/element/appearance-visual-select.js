@@ -11,6 +11,7 @@ define([
 
     return Select.extend({
         defaults: {
+            visible: false,
             noticeMessage: ''
         },
 
@@ -25,5 +26,20 @@ define([
 
             return this;
         },
+
+        /**
+         * Dependently display dropdown component if it contains more than one option
+         *
+         * @returns {Object} Chainable
+         */
+        setOptions: function () {
+            this._super();
+
+            if (this.options().length > 1) {
+                this.setVisible(true);
+            }
+
+            return this;
+        }
     });
 });
