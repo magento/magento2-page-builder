@@ -24,9 +24,9 @@
         <container name="product.info.description.wrapper" after="main.content" before="product.info.details.after.wrapper" htmlTag="div" htmlClass="page-main-description product-full-width-section" htmlId="description"/>
         <!-- Create a new wrapper to house the custom Page Builder attributes -->
         <container name="product.attributes.pagebuilder.wrapper" after="product.info.description.wrapper" before="product.info.details.after.wrapper" htmlTag="div" htmlClass="page-main-pagebuilder-attributes">
-            <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.only.pagebuilder" as="additional.pagebuilder" template="Magento_PageBuilder::catalog/product/view/title_attributes.phtml">
+            <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.only.pagebuilder" as="additional.pagebuilder" template="Magento_PageBuilder::catalog/product/view/attributes.phtml">
                 <arguments>
-                    <argument name="pagebuilder_only" xsi:type="boolean">true</argument>
+                    <argument name="pagebuilder_attributes" xsi:type="boolean">true</argument>
                 </arguments>
             </block>
         </container>
@@ -41,7 +41,7 @@
                         <!-- Create a new instance of attributes which excludes Page Builder attributes -->
                         <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.exclude.pagebuilder" as="additional" template="Magento_Catalog::product/view/attributes.phtml">
                             <arguments>
-                                <argument name="exclude_pagebuilder" xsi:type="boolean">true</argument>
+                                <argument name="pagebuilder_attributes" xsi:type="boolean">false</argument>
                             </arguments>
                         </block>
                     </block>
