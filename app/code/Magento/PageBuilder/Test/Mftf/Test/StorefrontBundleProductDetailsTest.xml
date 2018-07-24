@@ -8,21 +8,11 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="StorefrontBundleProductDetailsTest">
-        <remove keyForRemoval="fillLongDescription"/>
-        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" after="fillShortDescription"/>
-        <waitForPageLoad stepKey="waitForPageLoadPageBuilder" after="clickOnPageBuilderBtn"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" after="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" after="waiForPageBuilderVisible"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage" after="seePageBuilderFullSizeScreen">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage" after="dragTextIntoStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-        </actionGroup>
-        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="This is the long description" stepKey="addTextToEditor" after="openEditMenuOnStage"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2" after="addTextToEditor"/>
-        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" after="saveEditPanelSettings2"/>
-        <waitForPageLoad stepKey="waitForReturn" after="exitPageBuilderFullScreen"/>
+        <before>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="login"/>
+        </before>
+        <after>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" before="logout"/>
+        </after>
     </test>
 </tests>
