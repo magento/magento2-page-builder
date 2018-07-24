@@ -19,7 +19,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      */
     public function convert($source): array
     {
-        return $this->convertGroups($source);
+        return [
+            'groups' => $this->convertGroups($source)
+        ];
     }
 
     /**

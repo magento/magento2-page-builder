@@ -39,7 +39,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      */
     public function convert($source): array
     {
-        return $this->convertTypes($source);
+        return [
+            'types' => $this->convertTypes($source)
+        ];
     }
 
     /**
