@@ -12,19 +12,6 @@ define([
     return Select.extend({
         defaults: {
             visible: false,
-            noticeMessage: ''
-        },
-
-        /**
-         * Initializes observable properties of instance
-         *
-         * @returns {Abstract} Chainable.
-         */
-        initObservable: function () {
-            this._super();
-            this.observe('noticeMessage');
-
-            return this;
         },
 
         /**
