@@ -12,7 +12,7 @@ define([
         var $element = $(element);
 
         if ($element.attr('data-element') && $element.attr('data-element') === 'wrapper') {
-            $element = $(element).find(">[data-element='main']");
+            $element = $(element).find('>[data-element="main"]');
         }
 
         if ($element.data('enableParallax') !== 1) {
