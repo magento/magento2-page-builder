@@ -64,9 +64,9 @@ class Config
     private $activeEditor;
 
     /**
-     * @var array
+     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditing
      */
-    private $wysiwygAdaptersSupportingInlineEditing;
+    private $inlineEditingChecker;
 
     /**
      * Config constructor.
@@ -77,7 +77,7 @@ class Config
      * @param \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
-     * @param array $wysiwygAdaptersSupportingInlineEditing
+     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditing $inlineEditingChecker
      * @param array $data
      */
     public function __construct(
@@ -88,7 +88,7 @@ class Config
         \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
-        array $wysiwygAdaptersSupportingInlineEditing = [],
+        \Magento\PageBuilder\Model\Wysiwyg\InlineEditing $inlineEditingChecker,
         array $data = []
     ) {
         $this->config = $config;
@@ -98,7 +98,7 @@ class Config
         $this->additionalDataParser = $additionalDataParser;
         $this->scopeConfig = $scopeConfig;
         $this->activeEditor = $activeEditor;
-        $this->wysiwygAdaptersSupportingInlineEditing = $wysiwygAdaptersSupportingInlineEditing;
+        $this->inlineEditingChecker = $inlineEditingChecker;
         $this->data = $data;
     }
 
@@ -203,6 +203,6 @@ class Config
     {
         $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
 
-        return $this->wysiwygAdaptersSupportingInlineEditing[$activeEditorPath] ?? false;
+        return $this->inlineEditingChecker->isAvailable($activeEditorPath);
     }
 }

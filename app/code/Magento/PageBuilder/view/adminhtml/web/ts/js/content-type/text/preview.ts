@@ -83,7 +83,7 @@ export default class Preview extends BasePreview {
     private instantiateWysiwyg() {
         this.wysiwygAdapter = new WysiwygSetup(
             `${this.parent.id}-editor`,
-            this.config.additional_data.inlineWysiwygConfig
+            this.config.additional_data.inlineWysiwygConfig.wysiwygConfig
         );
 
         this.wysiwygAdapter.setup("inline");

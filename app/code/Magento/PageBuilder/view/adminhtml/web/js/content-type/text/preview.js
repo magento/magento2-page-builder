@@ -76,7 +76,7 @@ define(["knockout", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilde
     };
 
     _proto.instantiateWysiwyg = function instantiateWysiwyg() {
-      this.wysiwygAdapter = new _setup(this.parent.id + "-editor", this.config.additional_data.inlineWysiwygConfig);
+      this.wysiwygAdapter = new _setup(this.parent.id + "-editor", this.config.additional_data.inlineWysiwygConfig.wysiwygConfig);
       this.wysiwygAdapter.setup("inline");
     };
 
