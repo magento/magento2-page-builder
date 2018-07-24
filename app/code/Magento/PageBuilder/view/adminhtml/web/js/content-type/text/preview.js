@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_events, _config, _preview, _wysiwyg) {
+define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_knockout, _events, _config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,7 +17,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.isShowPlaceholder = _knockout.observable(true), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -55,6 +55,18 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
         _this2.wysiwyg = new _wysiwyg(_this2.parent.id, _this2.config.additional_data.inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
 
         _this2.wysiwyg.onEdited(_this2.saveContentFromWysiwygToDataStore.bind(_this2));
+
+        _this2.wysiwyg.onBlurred(function () {
+          console.log('this.isShowPlaceholder(true)');
+
+          _this2.isShowPlaceholder(true);
+        });
+
+        _this2.wysiwyg.onFocused(function () {
+          console.log('this.isShowPlaceholder(false)');
+
+          _this2.isShowPlaceholder(false);
+        });
       });
     };
     /**

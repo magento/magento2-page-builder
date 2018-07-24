@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
@@ -18,6 +19,8 @@ export default class Preview extends BasePreview {
      * Wysiwyg instance
      */
     private wysiwyg: Wysiwyg;
+
+    public isShowPlaceholder: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
      * @returns {Wysiwyg}
@@ -53,6 +56,9 @@ export default class Preview extends BasePreview {
 
             // Update content in our data store after our stage preview wysiwyg gets updated
             this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
+
+            this.wysiwyg.onBlurred(() => {console.log('this.isShowPlaceholder(true)'); this.isShowPlaceholder(true)});
+            this.wysiwyg.onFocused(() => {console.log('this.isShowPlaceholder(false)'); this.isShowPlaceholder(false)});
         });
     }
 
