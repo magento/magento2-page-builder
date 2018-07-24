@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_knockout, _events, _config, _preview, _wysiwyg) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_events, _config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,14 +17,20 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.isShowPlaceholder = _knockout.observable(true), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
 
+    // public isShowPlaceholder: KnockoutObservable<boolean> = ko.observable(true);
+    _proto.isShowPlaceholder = function isShowPlaceholder(isShow) {
+      this.wrapperElement.querySelector("[data-bind*='isShowPlaceholder']").style.display = isShow ? "block" : "none";
+    };
     /**
      * @returns {Wysiwyg}
      */
+
+
     _proto.getWysiwyg = function getWysiwyg() {
       return this.wysiwyg;
     };

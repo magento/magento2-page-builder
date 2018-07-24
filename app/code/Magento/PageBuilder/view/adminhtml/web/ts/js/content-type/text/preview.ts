@@ -20,7 +20,11 @@ export default class Preview extends BasePreview {
      */
     private wysiwyg: Wysiwyg;
 
-    public isShowPlaceholder: KnockoutObservable<boolean> = ko.observable(true);
+    // public isShowPlaceholder: KnockoutObservable<boolean> = ko.observable(true);
+
+    public isShowPlaceholder(isShow: boolean) {
+        this.wrapperElement.querySelector("[data-bind*='isShowPlaceholder']").style.display = isShow ? "block" : "none";
+    }
 
     /**
      * @returns {Wysiwyg}
