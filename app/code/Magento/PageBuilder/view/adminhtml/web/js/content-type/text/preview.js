@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _setup, _events, _config, _preview) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_events, _config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,14 +17,22 @@ define(["knockout", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilde
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwygAdapter = void 0, _this.isWysiwygFocused = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
 
     /**
+     * @returns {Wysiwyg}
+     */
+    _proto.getWysiwyg = function getWysiwyg() {
+      return this.wysiwyg;
+    };
+    /**
      * @inheritDoc
      */
+
+
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
@@ -44,40 +52,28 @@ define(["knockout", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilde
           return;
         }
 
-        _this2.instantiateWysiwyg(); // Update content in our data store after our stage preview wysiwyg gets updated
+        _this2.wysiwyg = new _wysiwyg(_this2.parent.id, _this2.config.additional_data.inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
 
-
-        _this2.wysiwygAdapter.eventBus.attachEventHandler("tinymceChange", _this2.saveContentFromWysiwygToDataStore.bind(_this2));
-
-        _this2.wysiwygAdapter.eventBus.attachEventHandler("tinymceFocus", _this2.hidePlaceholder.bind(_this2));
-
-        _this2.wysiwygAdapter.eventBus.attachEventHandler("tinymceBlur", _this2.showPlaceholderIfContentIsEmpty.bind(_this2));
+        _this2.wysiwyg.onEdited(_this2.saveContentFromWysiwygToDataStore.bind(_this2));
       });
     };
+    /**
+     * Update content in our data store after our stage preview wysiwyg gets updated
+     */
 
-    _proto.hidePlaceholder = function hidePlaceholder() {
-      console.log("hidePlaceholder");
-      this.isWysiwygFocused(true);
-    };
-
-    _proto.showPlaceholderIfContentIsEmpty = function showPlaceholderIfContentIsEmpty() {
-      console.log("showPlaceholderIfContentIsEmpty");
-      this.isWysiwygFocused(false);
-    };
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
       console.log("saveContentFromWysiwygToDataStore");
-      this.parent.dataStore.update(this.wysiwygAdapter.getContent(), "content");
+      this.parent.dataStore.update(this.wysiwyg.getAdapter().getContent(), this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey);
     };
+    /**
+     * Update content in our stage wysiwyg after our data store gets updated
+     */
+
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
       console.log("setContentFromDataStoreToWysiwyg");
-      this.wysiwygAdapter.setContent(this.parent.dataStore.get("content"));
-    };
-
-    _proto.instantiateWysiwyg = function instantiateWysiwyg() {
-      this.wysiwygAdapter = new _setup(this.parent.id + "-editor", this.config.additional_data.inlineWysiwygConfig.wysiwygConfig);
-      this.wysiwygAdapter.setup("inline");
+      this.wysiwyg.getAdapter().setContent(this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey));
     };
 
     return Preview;

@@ -3,23 +3,28 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
-import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import BasePreview from "../preview";
+import Wysiwyg from "../wysiwyg";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
-    /**
-     * Wysiwyg adapter instance
-     */
-    private wysiwygAdapter: WysiwygSetup;
 
-    public isWysiwygFocused: KnockoutObservable<boolean> = ko.observable(false);
+    /**
+     * Wysiwyg instance
+     */
+    private wysiwyg: Wysiwyg;
+
+    /**
+     * @returns {Wysiwyg}
+     */
+    public getWysiwyg() {
+        return this.wysiwyg;
+    }
 
     /**
      * @inheritDoc
@@ -40,52 +45,35 @@ export default class Preview extends BasePreview {
                 return;
             }
 
-            this.instantiateWysiwyg();
+            this.wysiwyg = new Wysiwyg(
+                this.parent.id,
+                this.config.additional_data.inlineWysiwygConfig.wysiwygConfig,
+                "inline",
+            );
 
             // Update content in our data store after our stage preview wysiwyg gets updated
-            this.wysiwygAdapter.eventBus.attachEventHandler(
-                "tinymceChange",
-                this.saveContentFromWysiwygToDataStore.bind(this),
-            );
-
-            this.wysiwygAdapter.eventBus.attachEventHandler(
-                "tinymceFocus",
-                this.hidePlaceholder.bind(this),
-            );
-
-            this.wysiwygAdapter.eventBus.attachEventHandler(
-                "tinymceBlur",
-                this.showPlaceholderIfContentIsEmpty.bind(this),
-            );
+            this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
         });
     }
 
-    private hidePlaceholder() {
-        console.log("hidePlaceholder");
-        this.isWysiwygFocused(true);
-    }
-
-    private showPlaceholderIfContentIsEmpty() {
-        console.log("showPlaceholderIfContentIsEmpty");
-        this.isWysiwygFocused(false);
-    }
-
+    /**
+     * Update content in our data store after our stage preview wysiwyg gets updated
+     */
     private saveContentFromWysiwygToDataStore() {
         console.log("saveContentFromWysiwygToDataStore");
-        this.parent.dataStore.update(this.wysiwygAdapter.getContent(), "content");
+        this.parent.dataStore.update(
+            this.wysiwyg.getAdapter().getContent(),
+            this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey,
+        );
     }
 
+    /**
+     * Update content in our stage wysiwyg after our data store gets updated
+     */
     private setContentFromDataStoreToWysiwyg() {
         console.log("setContentFromDataStoreToWysiwyg");
-        this.wysiwygAdapter.setContent(this.parent.dataStore.get("content"));
-    }
-
-    private instantiateWysiwyg() {
-        this.wysiwygAdapter = new WysiwygSetup(
-            `${this.parent.id}-editor`,
-            this.config.additional_data.inlineWysiwygConfig.wysiwygConfig
+        this.wysiwyg.getAdapter().setContent(
+            this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey),
         );
-
-        this.wysiwygAdapter.setup("inline");
     }
 }
