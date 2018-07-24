@@ -125,7 +125,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $appearanceData = [];
         $appearanceData = array_merge(
             $appearanceData,
-            $this->convertAppearanceProperties($appearanceNode)
+            $this->convertAppearanceStyles($appearanceNode)
         );
         $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
         if ($readerNode && $readerNode->nodeValue) {
@@ -155,7 +155,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertAppearanceProperties(\DOMElement $elementNode): array
+    private function convertAppearanceStyles(\DOMElement $elementNode): array
     {
         $data = [];
         foreach ($elementNode->getElementsByTagName('data') as $dataNode) {
@@ -215,7 +215,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         foreach ($childNode->getElementsByTagName('element') as $elementNode) {
             $elementName = $elementNode->attributes->getNamedItem('name')->nodeValue;
             $elementData[$elementName] = [
-                'style' => $this->convertProperties($elementNode),
+                'style' => $this->convertStyles($elementNode),
                 'attributes' => $this->convertAttributes($elementNode),
                 'html' => $this->convertHtml($elementNode),
                 'css' => $this->convertCss($elementNode),
@@ -258,35 +258,35 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Convert properties
+     * Convert styles
      *
      * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertProperties(\DOMElement $elementNode): array
+    private function convertStyles(\DOMElement $elementNode): array
     {
-        $propertiesData = [];
-        foreach ($elementNode->getElementsByTagName('property') as $propertyNode) {
-            $propertiesData[] = [
-                'var' => $this->extractVariableName($propertyNode),
-                'name' => $this->getAttributeValue($propertyNode, 'source'),
-                'converter' => $this->getAttributeValue($propertyNode, 'converter'),
-                'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                'persistence_mode' => $this->getAttributeValue($propertyNode, 'persistence_mode')
+        $stylesData = [];
+        foreach ($elementNode->getElementsByTagName('style') as $styleNode) {
+            $stylesData[] = [
+                'var' => $this->extractVariableName($styleNode),
+                'name' => $this->getAttributeValue($styleNode, 'source'),
+                'converter' => $this->getAttributeValue($styleNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($styleNode, 'preview_converter'),
+                'persistence_mode' => $this->getAttributeValue($styleNode, 'persistence_mode')
                     ?? 'readwrite',
-                'reader' => $this->getAttributeValue($propertyNode, 'reader')
+                'reader' => $this->getAttributeValue($styleNode, 'reader')
                     ?? self::DEFAULT_PROPERTY_READER,
             ];
         }
-        foreach ($elementNode->getElementsByTagName('static_property') as $propertyNode) {
-            $propertiesData[] = [
-                'name' => $this->getAttributeValue($propertyNode, 'source'),
-                'value' => $this->getAttributeValue($propertyNode, 'value'),
+        foreach ($elementNode->getElementsByTagName('static_style') as $styleNode) {
+            $stylesData[] = [
+                'name' => $this->getAttributeValue($styleNode, 'source'),
+                'value' => $this->getAttributeValue($styleNode, 'value'),
                 'static' => true
             ];
         }
 
-        return $propertiesData;
+        return $stylesData;
     }
 
     /**
@@ -556,7 +556,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Extract variable name from property and attribute nodes
+     * Extract variable name from style and attribute nodes
      *
      * @param \DOMElement $node
      * @return string

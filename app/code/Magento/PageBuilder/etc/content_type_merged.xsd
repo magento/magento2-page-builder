@@ -98,13 +98,13 @@
     <xs:complexType name="elements">
         <xs:sequence>
             <xs:element type="element" name="element" minOccurs="1" maxOccurs="unbounded">
-                <xs:unique name="uniquePropertyName">
+                <xs:unique name="uniqueStyleName">
                     <xs:annotation>
                         <xs:documentation>
-                            Property name must be unique
+                            Style name must be unique
                         </xs:documentation>
                     </xs:annotation>
-                    <xs:selector xpath="property"/>
+                    <xs:selector xpath="style"/>
                     <xs:field xpath="@name"/>
                 </xs:unique>
                 <xs:unique name="uniqueAttributeName">
@@ -142,8 +142,8 @@
     </xs:complexType>
     <xs:complexType name="element">
         <xs:choice maxOccurs="unbounded">
-            <xs:element type="property" name="property" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="static_property" name="static_property" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="style" name="style" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="static_style" name="static_style" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="attribute" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="static_attribute" name="static_attribute" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="tag" name="tag" minOccurs="0" maxOccurs="1"/>
@@ -157,7 +157,7 @@
             <xs:element type="argumentType" name="item" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
-    <xs:complexType name="property">
+    <xs:complexType name="style">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
@@ -166,7 +166,7 @@
         <xs:attribute type="xs:string" name="storage_key" use="optional"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
-    <xs:complexType name="static_property">
+    <xs:complexType name="static_style">
         <xs:attribute type="xs:string" name="source" use="required"/>
         <xs:attribute type="xs:string" name="value" use="required"/>
         <xs:attribute type="xs:string" name="persistence_mode" use="optional"/>

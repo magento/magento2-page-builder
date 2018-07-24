@@ -91,7 +91,7 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
         foreach ($files as $filename) {
             $dom = new \DOMDocument();
             $dom->loadXML(file_get_contents($filename));
-            $groups = $dom->getElementsByTagName('groups')->item(0);
+            $groups = $dom->getElementsByTagName('group');
             foreach ($groups->childNodes as $group) {
                 if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
                     $data[] = $group->attributes->getNamedItem('name')->nodeValue;

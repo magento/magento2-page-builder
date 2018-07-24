@@ -23,14 +23,14 @@
                 <data name="data3">value3</data>
                 <elements>
                     <element name="first_element">
-                        <property name="style_attributes_change" source="custom_name" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
-                        <property name="style_attributes_add" source="attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
-                        <property name="new_style" source="new-style"/>
-                        <property name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
-                        <property name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
-                        <property name="new_complex" reader="Path/to/reader"/>
-                        <static_property source="static_style_attributes_change" value="custom_value"/>
-                        <static_property source="new_static" value="new-value"/>
+                        <style name="style_attributes_change" source="custom_name" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <style name="style_attributes_add" source="attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
+                        <style name="new_style" source="new-style"/>
+                        <style name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <style name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <style name="new_complex" reader="Path/to/reader"/>
+                        <static_style source="static_style_attributes_change" value="custom_value"/>
+                        <static_style source="new_static" value="new-value"/>
                         <attribute name="attribute_change" source="data-custom" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
                         <attribute name="attribute_add" source="attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
                         <attribute name="new_attribute" source="data-new" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
@@ -48,7 +48,7 @@
                         </css>
                     </element>
                     <element name="third_element">
-                        <property name="style_no_converter" source="no_converter"/>
+                        <style name="style_no_converter" source="no_converter"/>
                         <attribute name="name" source="data-role"/>
                         <css name="css_classes"/>
                     </element>
@@ -71,8 +71,8 @@
             <appearance name="appearance4" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
                 <elements>
                     <element name="main">
-                        <property name="style_converter" source="converter" converter="Path/to/converter"/>
-                        <property name="style_no_converter" source="no_converter"/>
+                        <style name="style_converter" source="converter" converter="Path/to/converter"/>
+                        <style name="style_no_converter" source="no_converter"/>
                         <attribute name="name" source="data-role"/>
                         <css name="css_classes"/>
                     </element>

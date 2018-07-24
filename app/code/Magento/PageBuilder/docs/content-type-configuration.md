@@ -98,11 +98,11 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <elements>
                 <element name="main">
-                    <property name="border" source="border_style"/>
-                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                    <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                    <style name="border" source="border_style"/>
+                    <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                    <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                     <attribute name="name" source="data-role"/>
                     <attribute name="appearance" source="data-appearance"/>
                     <attribute name="show_button" source="data-show-button"/>
@@ -116,37 +116,37 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                 </element>
                 <element name="overlay">
-                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" persistence_mode="write"/>
-                    <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                    <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" persistence_mode="write"/>
+                    <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                     <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
                     <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
                     <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
                 </element>
                 <element name="desktop_image">
-                    <property name="text_align" source="text_align"/>
-                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                    <property name="background_position" source="background_position"/>
-                    <property name="background_size" source="background_size"/>
-                    <property name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
-                    <property name="background_attachment" source="background_attachment"/>
+                    <style name="text_align" source="text_align"/>
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                    <style name="background_position" source="background_position"/>
+                    <style name="background_size" source="background_size"/>
+                    <style name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
+                    <style name="background_attachment" source="background_attachment"/>
                 </element>
                 <element name="mobile_image">
-                    <property name="text_align" source="text_align"/>
-                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                    <property name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                    <property name="background_position" source="background_position"/>
-                    <property name="background_size" source="background_size"/>
-                    <property name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
-                    <property name="background_attachment" source="background_attachment"/>
+                    <style name="text_align" source="text_align"/>
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                    <style name="background_position" source="background_position"/>
+                    <style name="background_size" source="background_size"/>
+                    <style name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
+                    <style name="background_attachment" source="background_attachment"/>
                 </element>
                 <element name="content">
                     <html name="message"/>
                 </element>
                 <element name="button">
-                    <property name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
-                    <property name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
+                    <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
+                    <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
                     <html name="button_text"/>
                     <css name="button_type">
                         <filter>
@@ -306,9 +306,9 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 ``` xml
 <elements>
     <element name="main">
-        <property name="border" source="border_style"/>
-        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-        <property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+        <style name="border" source="border_style"/>
+        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
         <attribute name="name" source="data-role"/>
         <css name="css_classes"/>
     </element>
@@ -324,17 +324,17 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
     </element>
     <element name="desktop_image">
-        <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
     </element>
     <element name="mobile_image">
-        <property name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+        <style name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
     </element>
     <element name="content">
         <html name="message"/>
     </element>
     <element name="button">
-        <property name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
-        <property name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
+        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
+        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
         <html name="button_text"/>
         <css name="button_type">
             <filter>
@@ -372,17 +372,17 @@ You may optionally set a `reader` value in configuration, otherwise `Magento_Pag
 `property` and `attribute` can contain `converter` and `preview_converter`.
 
 ``` xml
-<property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+<style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 ```
 
-`static_property` and `static_attribute` allows you to add specific style properites or attributes to an element.
+`static_style` and `static_attribute` allows you to add specific style properites or attributes to an element.
 
-`static_property` and `static_attribute` do not contain `converter` and `preview_converter` elements.
+`static_style` and `static_attribute` do not contain `converter` and `preview_converter` elements.
 
 ``` xml
 <element name="desktop_image">
-    <static_property source="max-width" value="100%"/>
-    <static_property source="height" value="auto"/>
+    <static_style source="max-width" value="100%"/>
+    <static_style source="height" value="auto"/>
 </element>
 ```
 

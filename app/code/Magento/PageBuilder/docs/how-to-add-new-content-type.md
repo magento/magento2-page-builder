@@ -81,13 +81,13 @@ To add configuration for a new content type, create a file under the following l
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <property name="text_align" source="text_align"/>
-                        <property name="border" source="border_style"/>
-                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                        <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <css name="css_classes"/>
                     </element>
@@ -277,13 +277,13 @@ Now, let's add content type that can contain other content types. Create configu
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <property name="text_align" source="text_align"/>
-                        <property name="border" source="border_style"/>
-                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                        <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <css name="css_classes"/>
                     </element>

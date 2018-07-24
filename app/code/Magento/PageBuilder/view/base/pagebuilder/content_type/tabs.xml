@@ -31,8 +31,8 @@
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                        <property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="default_active" source="data-active-tab"/>
@@ -45,21 +45,21 @@
                         </css>
                     </element>
                     <element name="headers">
-                        <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     </element>
                     <element name="navigation">
-                        <property name="navigation_alignment" source="text_align"/>
+                        <style name="navigation_alignment" source="text_align"/>
                     </element>
                     <element name="content">
-                        <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <property name="text_align" source="text_align"/>
-                        <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="text_align" source="text_align"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     </element>
                 </elements>
                 <converters>
