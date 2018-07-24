@@ -11,7 +11,7 @@ define([
     return function (config, element) {
         var $element = $(element);
 
-        if ($element.attr("data-element") && $element.attr("data-element") === "wrapper") {
+        if ($element.attr('data-element') && $element.attr('data-element') === 'wrapper') {
             $element = $(element).find(">[data-element='main']");
         }
 

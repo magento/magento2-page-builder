@@ -906,7 +906,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -1013,7 +1013,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -1087,7 +1087,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateOnStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
             <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
@@ -1097,19 +1097,19 @@
             <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
             <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
         </actionGroup>
         <actionGroup ref="validateLayoutStylesWithAllUpdated" stepKey="validateAllLayoutStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -1235,9 +1235,9 @@
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1"/>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceContained(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3"/>
         <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage"/>
         <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage"/>
         <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage"/>
@@ -1245,9 +1245,9 @@
         <comment userInput="Validate Stage after save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1AfterSave"/>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2AfterSave"/>
-        <waitForElementVisible selector="{{RowOnStage.appearance(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3AfterSave"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceContained(('1', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForAppearanceVisible1AfterSave"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullWidth.value)}}" stepKey="waitForAppearanceVisible2AfterSave"/>
+        <waitForElementVisible selector="{{RowOnStage.appearanceFullWidthFullBleed(('3', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="waitForAppearanceVisible3AfterSave"/>
         <actionGroup ref="validateContainedRowAppearanceOnStage" stepKey="validateContainedRowAppearanceOnStage2"/>
         <actionGroup ref="validateFullWidthRowAppearanceOnStage" stepKey="validateFullWidthRowAppearanceOnStage2"/>
         <actionGroup ref="validateFullBleedRowAppearanceOnStage" stepKey="validateFullBleedRowAppearanceOnStage2"/>

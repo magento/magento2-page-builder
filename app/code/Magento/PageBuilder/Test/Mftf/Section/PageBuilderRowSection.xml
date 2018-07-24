@@ -31,7 +31,9 @@
         <element name="rowChildrenStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-row')])[{{arg1}}]//div[contains(@class, 'element-children') and contains(@class, 'row-container')][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="rowWidthJS" type="text" selector="document.querySelectorAll('[data-appearance=\'{{arg1}}\']')[{{arg2}}].clientWidth" parameterized="true"/>
         <element name="rowH2ChildWidthJS" type="text" selector="document.querySelectorAll('div[data-appearance~=\'{{arg1}}\'] .element-children')[{{arg2}}].clientWidth" parameterized="true"/>
-        <element name="appearance" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@data-appearance,'{{arg2}}')]" parameterized="true"/>
+        <element name="appearanceContained" type="text" selector="(//div[contains(@class,'row-contained')])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <element name="appearanceFullWidthFullBleed" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
@@ -68,11 +70,11 @@
         <element name="rowStyle" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="rowWidthJS" type="text" selector="document.querySelectorAll('[data-appearance=\'{{arg1}}\']')[{{arg2}}].clientWidth" parameterized="true"/>
         <element name="rowH2ChildWidthJS" type="text" selector="document.querySelectorAll('div[data-appearance~=\'{{arg1}}\'] h2')[{{arg2}}].clientWidth" parameterized="true"/>
-        <element name="appearance" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@data-appearance,'{{arg2}}')]" parameterized="true"/>
+        <element name="appearance" type="text" selector="(//div[@data-role='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@style,"background-image: url(&apos;") and contains(@style,"/{{arg2}}_") and contains(@style,".{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="backgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/div[contains(@style,"background-image: url(&apos;") and contains(@style,"/{{arg2}}_") and contains(@style,".{{arg3}}&apos;);")]' parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][not(contains(@style,"background-image:"))]' parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundSize" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
@@ -82,7 +84,7 @@
         <element name="parallaxClass" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@class='jarallax']" parameterized="true"/>
         <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@data-parallax-speed='{{arg2}}']" parameterized="true"/>
-        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/div[contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
@@ -98,6 +100,43 @@
         <element name="noCssClasses" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="RowOnStorefront_FullWidth_FullBleed">
+        <element name="base" type="text" selector="(//div[@data-role='row'])[{{arg1}}]" parameterized="true"/>
+        <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=row]')).width)"/>
+        <element name="rowStyle" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, '{{arg2}}')]" parameterized="true"/>
+        <element name="rowWidthJS" type="text" selector="document.querySelectorAll('[data-appearance=\'{{arg1}}\']')[{{arg2}}].clientWidth" parameterized="true"/>
+        <element name="rowH2ChildWidthJS" type="text" selector="document.querySelectorAll('div[data-appearance~=\'{{arg1}}\'] h2')[{{arg2}}].clientWidth" parameterized="true"/>
+        <element name="appearance" type="text" selector="(//div[@data-role='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
+        <!-- Background Configuration -->
+        <element name="backgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@style,"background-image: url(&apos;") and contains(@style,"/{{arg2}}_") and contains(@style,".{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][not(contains(@style,"background-image:"))]' parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <!-- Parallax Background Configuration -->
+        <element name="parallaxClass" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@class='jarallax']" parameterized="true"/>
+        <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-enable-parallax='{{arg2}}']" parameterized="true"/>
+        <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <!-- Layout Configuration -->
+        <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="ParallaxForm">
         <element name="sectionName" type="button" selector="//div[@data-index='parallax_background']"/>
