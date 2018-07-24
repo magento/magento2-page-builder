@@ -27,20 +27,36 @@ class Row implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
-        $rootElementAttributes = [
-            'data-element' => 'main',
-            'data-role' => 'row',
-            'data-appearance' => 'contained',
-            'class' => $itemData['formData']['css_classes'] ?? '',
-        ];
-
         $formData = $itemData['formData'] ?? [];
+        $appearance = (isset($formData['template'])
+            && $formData['template'] === 'full-width.phtml') ? 'full-width' : 'contained';
 
-        if (isset($formData['template']) && $formData['template'] === 'full-width.phtml') {
-            $rootElementAttributes['data-appearance'] = 'full-width';
+        // Handle adding the wrapper element attributes when using the contained appearance
+        $rootElementAttributes = [];
+        if ($appearance === 'contained') {
+            $wrapperElementAttributes = [
+                'data-element' => 'wrapper',
+                'data-role' => 'row',
+                'data-appearance' => 'contained',
+                'class' => 'row-contained',
+            ];
+            $rootElementAttributes = [
+                'data-element' => 'main',
+                'class' => $itemData['formData']['css_classes'] ?? '',
+            ];
+        } elseif ($appearance === 'full-width') {
+            $rootElementAttributes = [
+                'data-element' => 'main',
+                'data-role' => 'row',
+                'data-appearance' => 'full-width',
+                'class' => $itemData['formData']['css_classes'] ?? '',
+            ];
         }
 
         $style = $this->styleExtractor->extractStyle($formData);
@@ -54,6 +70,17 @@ class Row implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
         $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
+
+        // Wrap the root element in our wrapper for contained appearances
+        if ($appearance === 'contained' && isset($wrapperElementAttributes)) {
+            $wrapperElementHtml = '<div';
+            foreach ($wrapperElementAttributes as $attributeName => $attributeValue) {
+                $attributeValue = trim($attributeValue);
+                $wrapperElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            }
+            $wrapperElementHtml .= '>' . $rootElementHtml . '</div>';
+            return $wrapperElementHtml;
+        }
 
         return $rootElementHtml;
     }
