@@ -542,8 +542,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12"/>
         <assertEquals stepKey="assertColumnsAreEqual">
             <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
             <actualResult type="variable">columnTwoWidthGrid12</actualResult>
@@ -551,8 +551,8 @@
         <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo13">
             <argument name="gridSize" value="13"/>
         </actionGroup>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid13"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid13"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid13"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid13"/>
         <!-- Validate first column grew larger -->
         <comment userInput="Validate first column grew larger" stepKey="commentValidateFirstCommentUnchanged"/>
         <assertGreaterThan stepKey="assertColumnOneGreaterThanColumnTwo">
@@ -562,8 +562,8 @@
         <fillField selector="{{ColumnOnBackend.gridSizeInput('1')}}" userInput="12" stepKey="resetGridSizeTo12"/>
         <pressKey selector="{{ColumnOnBackend.gridSizeInput('1')}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForPageLoad stepKey="waitForUpdate" />
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12Restored"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12Restored"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth / 10, 10) * 10;" stepKey="columnOneWidthGrid12Restored"/>
+        <executeJS function="return parseInt(document.querySelector('{{ColumnOnBackend.columnX('2')}}').clientWidth / 10, 10) * 10;" stepKey="columnTwoWidthGrid12Restored"/>
         <!-- Validate columns are equal again -->
         <comment userInput="Validate columns are equal again" stepKey="commentValidateColumnsEqual"/>
         <assertEquals stepKey="assertColumnsAreEqualAgain">

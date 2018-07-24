@@ -11,6 +11,10 @@ define([
     return function (config, element) {
         var $element = $(element);
 
+        if ($element.attr("data-element") && $element.attr("data-element") === "wrapper") {
+            $element = $(element).find(">[data-element='main']");
+        }
+
         if ($element.data('enableParallax') !== 1) {
             return;
         }
