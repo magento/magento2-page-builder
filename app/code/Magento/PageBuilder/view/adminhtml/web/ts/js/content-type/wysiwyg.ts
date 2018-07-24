@@ -15,8 +15,6 @@ export default class Wysiwyg {
      */
     private wysiwygAdapter: WysiwygSetup;
 
-    public isFocused: KnockoutObservable<boolean> = ko.observable(false);
-
     /**
      * @param {String} id
      * @param {String} mode
@@ -28,16 +26,6 @@ export default class Wysiwyg {
         if (mode) {
             this.wysiwygAdapter.setup(mode);
         }
-
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceFocus",
-            this.hidePlaceholder.bind(this),
-        );
-
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceBlur",
-            this.showPlaceholderIfContentIsEmpty.bind(this),
-        );
     }
 
     /**
@@ -57,13 +45,23 @@ export default class Wysiwyg {
         );
     }
 
-    private hidePlaceholder() {
-        console.log("hidePlaceholder");
-        this.isFocused(true);
+    /**
+     * @param {Function} callback
+     */
+    public onFocused(callback: Function) {
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            "tinymceFocus",
+            callback,
+        );
     }
 
-    private showPlaceholderIfContentIsEmpty() {
-        console.log("showPlaceholderIfContentIsEmpty");
-        this.isFocused(false);
+    /**
+     * @param {Function} callback
+     */
+    public onBlurred(callback: Function) {
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            "tinymceBlur",
+            callback,
+        );
     }
 }
