@@ -1121,9 +1121,6 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
         <!-- Add Border Width: Empty -->
         <comment userInput="Add Border Width: Empty" stepKey="commentAddBorderWidthEmpty"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
@@ -1196,8 +1193,8 @@
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <!-- Add Border Width: 500 -->
-        <comment userInput="Add Border Width: 500" stepKey="commentAddBorderWidth500"/>
+        <!-- Add Border Width: Invalid -->
+        <comment userInput="Add Border Width: Invalid" stepKey="commentAddBorderWidthInvalid"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1216,32 +1213,9 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth4">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty500"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <!-- Add Border Width: Invalid -->
-        <comment userInput="Add Border Width: Invalid" stepKey="commentAddBorderWidthInvalid"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentTypeIndex" value="5"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="contentTypeIndex" value="5"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth5">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyInvalid"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Stage: Check Border Width: Empty -->
         <comment userInput="Stage: Check Border Width: Empty" stepKey="commentStageCheckEmpty"/>
         <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageEmpty">
@@ -1265,20 +1239,12 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Border Width: 500 -->
-        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Border Width: Invalid -->
         <comment userInput="Stage: Check Border Width: Invalid" stepKey="commentStageCheckInvalid"/>
         <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageInvalid">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1306,20 +1272,12 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Border Width: 500 -->
-        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Border Width: Invalid -->
         <comment userInput="Stage: Check Border Width: Invalid" stepKey="commentStageCheckInvalid2"/>
         <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageInvalid2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -1347,20 +1305,93 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
+        <!-- Storefront: Check Border Width: Invalid -->
+        <comment userInput="Storefront: Check Border Width: Invalid" stepKey="commentStorefrontCheckInvalid"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStorefrontInvalid">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="AdvancedConfigurationFunctionalBorderWidth500">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Large Border Width"/>
+            <description value="Tests that the large Border Width attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MAGETWO-89355"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Border Width: 500 -->
+        <comment userInput="Add Border Width: 500" stepKey="commentAddBorderWidth500"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Border Width: 500 -->
+        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Border Width: 500 -->
+        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck5002"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <!-- Storefront: Check Border Width: 500 -->
         <comment userInput="Storefront: Check Border Width: 500" stepKey="commentStorefrontCheck500"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
-        <!-- Storefront: Check Border Width: Invalid -->
-        <comment userInput="Storefront: Check Border Width: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStorefrontInvalid">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="1"/>
         </actionGroup>
     </test>
     <test name="AdvancedConfigurationFunctionalBorderRadius">
