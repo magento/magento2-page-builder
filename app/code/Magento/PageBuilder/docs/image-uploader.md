@@ -107,7 +107,7 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
 
 To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file:
 
-1. Import the `Magento_PageBuilder/js/content-type/uploader` component as dependency.
+1. Import the `Magento_PageBuilder/js/content-type/uploader` component as dependency:
 
 For example:
 
