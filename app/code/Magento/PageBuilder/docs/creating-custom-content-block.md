@@ -64,13 +64,13 @@
 
 Use the content type configuration to add new content types. Refer to content-type-configuration.md, in the configuration section for further details.
 
-The following is an example of a custom container content type configuration in DaveMacaulay_PageBuilderGrid/view/base/pagebuilder/content_type/homepage_grid.xml:
+The following is an example of a custom container content type configuration in SamplePageBuilderModule_PageBuilderGrid/view/base/pagebuilder/content_type/homepage_grid.xml:
 
 ``` xml
 <type name="homepage-grid"
       label="Grid"
       component="Magento_PageBuilder/js/content-type-collection"
-      preview_component="DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid/preview"
+      preview_component="SamplePageBuilderModule_PageBuilderGrid/js/content-type/homepage-grid/preview"
       master_component="Magento_PageBuilder/js/content-type/master-collection"
       form="pagebuilder_homepage_grid_form"
       group="general"
@@ -86,8 +86,8 @@ The following is an example of a custom container content type configuration in 
     <appearances>
         <appearance default="true"
                     name="default"
-                    preview_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid/default/preview"
-                    render_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid/default/master"
+                    preview_template="SamplePageBuilderModule_PageBuilderGrid/content-type/homepage-grid/default/preview"
+                    render_template="SamplePageBuilderModule_PageBuilderGrid/content-type/homepage-grid/default/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <elements>
                  <element name="main">
@@ -126,13 +126,13 @@ The following is an example of a custom container content type configuration in 
 </type>
 ```
 
-The following is an example of a custom container children content type configuration in DaveMacaulay_PageBuilderGrid/view/base/pagebuilder/content_type/homepage_grid_item.xml:
+The following is an example of a custom container children content type configuration in SamplePageBuilderModule_PageBuilderGrid/view/base/pagebuilder/content_type/homepage_grid_item.xml:
 
 ``` xml
 <type name="homepage-grid-item"
               label="Grid Item"
               component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid-item/preview"
+              preview_component="SamplePageBuilderModule_PageBuilderGrid/js/content-type/homepage-grid-item/preview"
               master_component="Magento_PageBuilder/js/content-type/master-collection"
               form="pagebuilder_homepage_grid_item_form"
               group="general"
@@ -151,8 +151,8 @@ The following is an example of a custom container children content type configur
     <appearances>
         <appearance default="true"
                     name="default"
-                    preview_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid-item/default/preview"
-                    render_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid-item/default/master"
+                    preview_template="SamplePageBuilderModule_PageBuilderGrid/content-type/homepage-grid-item/default/preview"
+                    render_template="SamplePageBuilderModule_PageBuilderGrid/content-type/homepage-grid-item/default/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <elements>
                 <element name="main">
@@ -435,7 +435,7 @@ Following an example of a custom layout:
                     <argument name="config" xsi:type="array">
                         <item name="homepage-grid" xsi:type="array">
                             <item name="default" xsi:type="array">
-                                <item name="component" xsi:type="string">DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid/appearance/default/widget</item>
+                                <item name="component" xsi:type="string">SamplePageBuilderModule_PageBuilderGrid/js/content-type/homepage-grid/appearance/default/widget</item>
                             </item>
                         </item>
                     </argument>
@@ -451,7 +451,7 @@ This will get merged with the PageBuilders layout, adding the widget configurati
 Afterwards, it is time to create the actual widget. The widget should be stored in the component location in the layout configuration which in this example is:
 
 ``` xml
-DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid/appearance/default/widget
+SamplePageBuilderModule_PageBuilderGrid/js/content-type/homepage-grid/appearance/default/widget
 ```
 
 Inside the widget, it should look similar to preview component because it is similar. It is just a component dedicated to storefront content types.
