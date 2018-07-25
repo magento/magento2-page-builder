@@ -52,7 +52,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
           return;
         }
 
-        _this2.wysiwyg = new _wysiwyg(_this2.parent.id, _this2.config.additional_data.inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
+        _this2.wysiwyg = new _wysiwyg(_this2.parent.id + "-editor", _this2.config.additional_data.inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
 
         _this2.wysiwyg.onEdited(_this2.saveContentFromWysiwygToDataStore.bind(_this2));
       });

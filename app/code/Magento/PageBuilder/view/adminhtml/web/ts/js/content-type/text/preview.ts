@@ -47,7 +47,7 @@ export default class Preview extends BasePreview {
             }
 
             this.wysiwyg = new Wysiwyg(
-                this.parent.id,
+                this.parent.id + "-editor",
                 this.config.additional_data.inlineWysiwygConfig.wysiwygConfig,
                 "inline",
             );

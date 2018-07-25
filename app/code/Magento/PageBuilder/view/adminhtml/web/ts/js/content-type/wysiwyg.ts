@@ -20,7 +20,7 @@ export default class Wysiwyg {
      * @param {String} mode
      */
     constructor(id: string, config: object, mode: string) {
-        this.wysiwygAdapter = new WysiwygSetup(id + "-editor", config);
+        this.wysiwygAdapter = new WysiwygSetup(id, config);
 
         if (mode) {
             this.wysiwygAdapter.setup(mode);
