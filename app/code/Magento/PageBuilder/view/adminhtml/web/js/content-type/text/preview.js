@@ -60,7 +60,6 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBu
 
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      console.log("saveContentFromWysiwygToDataStore");
       this.parent.dataStore.update(this.wysiwyg.getAdapter().getContent(), this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey);
     };
     /**
@@ -69,7 +68,6 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBu
 
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
-      console.log("setContentFromDataStoreToWysiwyg");
       this.wysiwyg.getAdapter().setContent(this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey));
     };
 

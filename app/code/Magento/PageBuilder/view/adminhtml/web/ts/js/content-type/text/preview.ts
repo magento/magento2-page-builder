@@ -4,11 +4,9 @@
  */
 
 import $ from "jquery";
-import ko from "knockout";
 import _ from "underscore";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import BasePreview from "../preview";
 import Wysiwyg from "../wysiwyg";
 
@@ -64,7 +62,6 @@ export default class Preview extends BasePreview {
      * Update content in our data store after our stage preview wysiwyg gets updated
      */
     private saveContentFromWysiwygToDataStore() {
-        console.log("saveContentFromWysiwygToDataStore");
         this.parent.dataStore.update(
             this.wysiwyg.getAdapter().getContent(),
             this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey,
@@ -75,7 +72,6 @@ export default class Preview extends BasePreview {
      * Update content in our stage wysiwyg after our data store gets updated
      */
     private setContentFromDataStoreToWysiwyg() {
-        console.log("setContentFromDataStoreToWysiwyg");
         this.wysiwyg.getAdapter().setContent(
             this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey),
         );
