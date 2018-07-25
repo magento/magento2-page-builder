@@ -107,10 +107,12 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
 
 To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file:
 
-1. Add the uploader component, 'Magento_PageBuilder/js/content-type/uploader', dependency:
+1. Import the `Magento_PageBuilder/js/content-type/uploader` component as dependency.
+
+For example:
 
 ``` js
-import Uploader from "../uploader";
+define(['Magento_PageBuilder/js/content-type/uploader'], function (Uploader) {
 ```
 
 **Constructor arguments**
@@ -124,6 +126,21 @@ import Uploader from "../uploader";
 | `initialValue`     | Object[]  | The value that should be used for the initial state of the component.               | true     | None                                                                                                    |
 | `onChangeCallback` | Function  | A callback that will be called when an image is selected.                           | false    | The image will be saved to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
 | `onDeleteCallback` | Function  | A callback that will be called when the current used image is deleted from storage. | false    | The image will be removed from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
+
+An example extracted from the image content type:
+
+```js
+var dataStore = this.parent.dataStore.get();
+var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+this.uploader = new Uploader(
+    'imageuploader_' + this.parent.id,
+    this.config.additional_data.uploaderConfig,
+    this.parent.id,
+    this.parent.dataStore,
+    initialImageValue,
+);
+```
 
 2. Add configuration for the uploader in the `<content-type-name>.xml` file to initialize the uploader.
 
