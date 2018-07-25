@@ -4,6 +4,8 @@
  */
 
 /**
+ * Interface for deferred promise
+ *
  * @api
  */
 export default interface DeferredInterface {
