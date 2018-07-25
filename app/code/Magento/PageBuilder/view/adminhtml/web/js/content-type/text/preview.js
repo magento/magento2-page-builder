@@ -48,7 +48,7 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBu
         });
       }
 
-      this.wysiwyg = new _wysiwyg(element.id, inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
+      this.wysiwyg = new _wysiwyg(element.id, inlineWysiwygConfig.wysiwygConfig, inlineWysiwygConfig.mode); // Update content in our data store after our stage preview wysiwyg gets updated
 
       this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
