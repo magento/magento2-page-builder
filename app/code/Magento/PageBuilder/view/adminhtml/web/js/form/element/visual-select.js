@@ -12,6 +12,9 @@ define([
     return Select.extend({
         defaults: {
             noticeMessage: '',
+            listens: {
+                value: 'setNoticeMessage',
+            }
         },
 
         /**
@@ -108,6 +111,26 @@ define([
             }
 
             return this;
-        }
+        },
+
+        /**
+         * Set the notice message on value change
+         *
+         * @param value
+         * @returns {exports}
+         */
+        setNoticeMessage: function (value) {
+            var noticeMessage = "",
+                selectedOption = _.find(this.options(), function (option) {
+                    return option.value === value;
+                });
+
+            if (selectedOption && typeof selectedOption.noticeMessage !== "undefined") {
+                noticeMessage = selectedOption.noticeMessage;
+            }
+
+            this.noticeMessage(noticeMessage);
+            return this;
+        },
     });
 });
