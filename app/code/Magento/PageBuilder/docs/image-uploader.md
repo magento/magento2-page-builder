@@ -113,6 +113,18 @@ To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_nam
 import Uploader from "../uploader";
 ```
 
+**Constructor arguments**
+
+| Argument           | Type      | Description                                                                         | Required | Default                                                                                                 |
+| ------------------ | --------- | ----------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
+| `name`             | string    | Used to locate the component in the UIRegistry once it is created.                  | true     | None                                                                                                    |
+| `uploaderConfig`   | object    | Used to initialize the Image Uploader UIComponent.                                  | true     | None                                                                                                    |
+| `contentTypeId`    | string    | The ID of the parent content type this will be used in.                             | true     | None                                                                                                    |
+| `dataStore`        | DataStore | The DataStore that the selected image should be stored in.                          | true     | None                                                                                                    |
+| `initialValue`     | Object[]  | The value that should be used for the initial state of the component.               | true     | None                                                                                                    |
+| `onChangeCallback` | Function  | A callback that will be called when an image is selected.                           | false    | The image will be saved to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
+| `onDeleteCallback` | Function  | A callback that will be called when the current used image is deleted from storage. | false    | The image will be removed from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
+
 2. Add configuration for the uploader in the `<content-type-name>.xml` file to initialize the uploader.
 
 3. Register the listener to specify when the image is loaded from the uploader UI component:
