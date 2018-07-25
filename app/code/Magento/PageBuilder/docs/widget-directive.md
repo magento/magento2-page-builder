@@ -111,15 +111,13 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
 To add the extended converter to your content type declaration XML file, 'Magento_PageBuilder/view/base/pagebuilder/content_type/<my-type>.xml':
 
 ``` xml
-<data_mapping>
-    <converters>
-        <converter component="Magento_PageBuilder/js/content-type/<my-type>/mass-converter/widget-directive" name="widget_directive">
-            <config>
-                <item name="html_variable" value="html"/>
-            </config>
-        </converter>
-    </converters>
-</data_mapping>
+<converters>
+    <converter component="Magento_PageBuilder/js/content-type/<my-type>/mass-converter/widget-directive" name="widget_directive">
+        <config>
+            <item name="html_variable" value="html"/>
+        </config>
+    </converter>
+</converters>
 ```
 The preceding code samples utilize example file paths. Substitute the file path with values specific to your content type and component.
 

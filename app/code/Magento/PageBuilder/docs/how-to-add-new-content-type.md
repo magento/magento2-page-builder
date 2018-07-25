@@ -64,47 +64,39 @@ Adding new content type starts with [configuration](content-type-configuration.m
 To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_type.xsd">
-    <content_types>
-        <type name="simple"
-              label="Simple"
-              component="Vendor_ModuleName/js/content-type"
-              form="modulename_simple_form"
-              group="general"
-              icon="icon-modulename-simple"
-              sortOrder="35"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="row" policy="allow"/>
-            </parents>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview"
-                            render_template="Vendor_ModuleNameCustom/content-type/simple/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="simple"
+          label="Simple"
+          component="Vendor_ModuleName/js/content-type"
+          form="modulename_simple_form"
+          group="general"
+          icon="icon-modulename-simple"
+          sortOrder="35"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="row" policy="allow"/>
+        </parents>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview"
+                        render_template="Vendor_ModuleNameCustom/content-type/simple/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>
 ```
 
@@ -266,49 +258,41 @@ Now, let's add content type that can contain other content types. Create configu
 
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="complex"
-              label="Complex"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/preview-collection"
-              master_component="Magento_PageBuilder/js/content-type/content-collection"
-              form="vendorname_complex_form"
-              group="general"
-              icon="icon-vendorname-complex"
-              sortOrder="35"
-              translate="label">
-            <children default_policy="deny">
-                <child name="heading" policy="allow"/>
-            </children>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Vendor_ModuleName/content-type/complex/default/preview"
-                            render_template="Vendor_ModuleName/content-type/complex/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="complex"
+          label="Complex"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/preview-collection"
+          master_component="Magento_PageBuilder/js/content-type/content-collection"
+          form="vendorname_complex_form"
+          group="general"
+          icon="icon-vendorname-complex"
+          sortOrder="35"
+          translate="label">
+        <children default_policy="deny">
+            <child name="heading" policy="allow"/>
+        </children>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Vendor_ModuleName/content-type/complex/default/preview"
+                        render_template="Vendor_ModuleName/content-type/complex/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>
 ```
 

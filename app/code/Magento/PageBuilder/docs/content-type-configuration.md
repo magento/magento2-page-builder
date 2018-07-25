@@ -68,9 +68,7 @@ The following is an example of a group configuration in `view/adminhtml/pagebuil
 
 ``` xml
 <!-- Definition of main menu, used for grouping content types  -->
-<groups>
     <group name="media" translate="label" sortOrder="10" label="Media"/>
-</groups>
 ```
 ### Configuration reference
 
@@ -85,131 +83,111 @@ The following is an example of a group configuration in `view/adminhtml/pagebuil
 The following is an example of a content type configuration in `view/adminhtml/pagebuilder/content_type/banner.xml`:
 
 ``` xml
-<content_types>
-    <!-- Content type declaration -->
-    <type name="banner"
-          label="Banner"
-          component="Magento_PageBuilder/js/content-type"
-          preview_component="Magento_PageBuilder/js/content-type/banner/preview"
-          form="pagebuilder_banner_form"
-          group="media"
-          icon="icon-pagebuilder-image"
-          sortOrder="1"
-          translate="label">
-        <children default_policy="deny"/>
-        <appearances>
-            <appearance default="true"
-                        name="poster"
-                        preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/poster/master"
-                        reader="Magento_PageBuilder/js/master-format/read/configurable">
-                <data_mapping>
-                    <elements>
-                        <element name="main">
-                            <style_properties>
-                                <property name="border" source="border_style"/>
-                                <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                            </style_properties>
-                            <attributes>
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <attribute name="show_button" source="data-show-button"/>
-                                <attribute name="show_overlay" source="data-show-overlay"/>
-                            </attributes>
-                            <css name="css_classes"/>
-                        </element>
-                        <element name="link">
-                            <attributes>
-                                <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
-                            </attributes>
-                        </element>
-                        <element name="overlay">
-                            <style_properties>
-                                <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <property name="background_color" source="background_color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color"/>
-                                <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                            </style_properties>
-                            <attributes>
-                                <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
-                                <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-                                <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
-                            </attributes>
-                        </element>
-                        <element name="desktop_image">
-                            <style_properties>
-                                <property name="text_align" source="text_align"/>
-                                <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                                <property name="background_position" source="background_position"/>
-                                <property name="background_size" source="background_size"/>
-                                <property name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
-                                <property name="background_attachment" source="background_attachment"/>
-                            </style_properties>
-                        </element>
-                        <element name="mobile_image">
-                            <style_properties>
-                                <property name="text_align" source="text_align"/>
-                                <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <property name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                                <property name="background_position" source="background_position"/>
-                                <property name="background_size" source="background_size"/>
-                                <property name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
-                                <property name="background_attachment" source="background_attachment"/>
-                            </style_properties>
-                        </element>
-                        <element name="content">
-                            <html name="message"/>
-                        </element>
-                        <element name="button">
-                            <style_properties>
-                                <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
-                                <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
-                            </style_properties>
-                            <html name="button_text"/>
-                            <css name="button_type">
-                                <filter>
-                                    <class source="pagebuilder-banner-button"/>
-                                </filter>
-                            </css>
-                        </element>
-                    </elements>
-                    <converters>
-                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
-                            <config>
-                                <item name="desktop_image_variable" value="background_image"/>
-                                <item name="mobile_image_variable" value="mobile_image"/>
-                            </config>
-                        </converter>
-                    </converters>
-                </data_mapping>
-            </appearance>
-            <appearance name="collage-left"
-                        preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
-                        reader="Magento_PageBuilder/js/master-format/read/configurable">
-                <!-- Collage left appearance configuration -->
-            </appearance>
-            <appearance name="collage-centered"
-                        preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
-                        reader="Magento_PageBuilder/js/master-format/read/configurable">
-                <!-- Collage centered appearance configuration -->
-            </appearance>
-            <appearance name="collage-right"
-                        preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
-                        reader="Magento_PageBuilder/js/master-format/read/configurable">
-                <!-- Collage right appearance configuration -->
-            </appearance>
-        </appearances>
-    </type>
-</content_types>
+<!-- Content type declaration -->
+<type name="banner"
+      label="Banner"
+      component="Magento_PageBuilder/js/content-type"
+      preview_component="Magento_PageBuilder/js/content-type/banner/preview"
+      form="pagebuilder_banner_form"
+      group="media"
+      icon="icon-pagebuilder-image"
+      sortOrder="1"
+      translate="label">
+    <children default_policy="deny"/>
+    <appearances>
+        <appearance default="true"
+                    name="poster"
+                    preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
+                    render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                    reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <elements>
+                <element name="main">
+                    <style name="border" source="border_style"/>
+                    <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                    <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                    <attribute name="name" source="data-role"/>
+                    <attribute name="appearance" source="data-appearance"/>
+                    <attribute name="show_button" source="data-show-button"/>
+                    <attribute name="show_overlay" source="data-show-overlay"/>
+                    <css name="css_classes"/>
+                </element>
+                <element name="link">
+                    <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+                    <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
+                    <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
+                    <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
+                </element>
+                <element name="overlay">
+                    <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" persistence_mode="write"/>
+                    <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                    <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
+                    <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
+                    <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
+                </element>
+                <element name="desktop_image">
+                    <style name="text_align" source="text_align"/>
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                    <style name="background_position" source="background_position"/>
+                    <style name="background_size" source="background_size"/>
+                    <style name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
+                    <style name="background_attachment" source="background_attachment"/>
+                </element>
+                <element name="mobile_image">
+                    <style name="text_align" source="text_align"/>
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                    <style name="background_position" source="background_position"/>
+                    <style name="background_size" source="background_size"/>
+                    <style name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
+                    <style name="background_attachment" source="background_attachment"/>
+                </element>
+                <element name="content">
+                    <html name="message"/>
+                </element>
+                <element name="button">
+                    <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
+                    <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
+                    <html name="button_text"/>
+                    <css name="button_type">
+                        <filter>
+                            <class source="pagebuilder-banner-button"/>
+                        </filter>
+                    </css>
+                </element>
+            </elements>
+            <converters>
+                <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
+                    <config>
+                        <item name="desktop_image_variable" value="background_image"/>
+                        <item name="mobile_image_variable" value="mobile_image"/>
+                    </config>
+                </converter>
+            </converters>
+        </appearance>
+        <appearance name="collage-left"
+                    preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
+                    render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                    reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <!-- Collage left appearance configuration -->
+        </appearance>
+        <appearance name="collage-centered"
+                    preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
+                    render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                    reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <!-- Collage centered appearance configuration -->
+        </appearance>
+        <appearance name="collage-right"
+                    preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
+                    render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                    reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <!-- Collage right appearance configuration -->
+        </appearance>
+    </appearances>
+</type>
 ```
 ### Configuration reference
 
@@ -309,7 +287,6 @@ It reads data based on the configuration specified in `data_mapping`.
             preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
             render_template="Magento_PageBuilder/content-type/banner/poster/master"
             reader="Magento_PageBuilder/js/master-format/read/configurable">
-    <data_mapping/>
 </appearance>
 ```
 
@@ -323,59 +300,45 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 | ------------------ | ----------------------------------------------------------------------------------------------------- |
 | `elements`         | The container for all the elements of the content type.                                               |
 | `element`          | The name of the element that contains data for the master format and the render and preview template. |
-| `style_properties` | Specifies styles properties for the element in the master format                                      |
-| `attributes`       | Specifies attributes for the element in master format                                                 |
+| `property`         | Specifies style property for the element in the master format                                         |
+| `attribute`        | Specifies attribute for the element in master format                                                  |
 | `css`              | Specifies whether element has classes and in which variable they should be read                       |
 | `html`             | Specifies whether element has html content and in which variable they should be read                  |
-| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                 |
+| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                  |
 
 **Example:**
 ``` xml
 <elements>
     <element name="main">
-        <style_properties>
-            <property name="border" source="border_style"/>
-            <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-        </style_properties>
-        <attributes>
-            <attribute name="name" source="data-role"/>
-        </attributes>
+        <style name="border" source="border_style"/>
+        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+        <attribute name="name" source="data-role"/>
         <css name="css_classes"/>
     </element>
     <element name="link">
-        <attributes>
-            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-            <attribute name="virtual_link_href" storage_key="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-            <attribute name="virtual_link_target" storage_key="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-            <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
-        </attributes>
+        <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
+        <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
+        <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
     </element>
     <element name="overlay">
-        <attributes>
-            <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
-            <attribute name="overlay_transparency" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency"/>
-            <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency"/>
-        </attributes>
+        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
+        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
+        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
     </element>
     <element name="desktop_image">
-        <style_properties>
-            <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-        </style_properties>
+        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
     </element>
     <element name="mobile_image">
-        <style_properties>
-            <property name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-        </style_properties>
+        <style name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
     </element>
     <element name="content">
         <html name="message"/>
     </element>
     <element name="button">
-        <style_properties>
-            <property name="opacity" source="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
-            <property name="visibility" source="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
-        </style_properties>
+        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" persistence_mode="write"/>
+        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" persistence_mode="write"/>
         <html name="button_text"/>
         <css name="button_type">
             <filter>
@@ -398,36 +361,32 @@ Name attribute in the element tags gets converted to ```data-element``` attribut
 
 ### Attributes for `property` and `attribute`
 
-| Attribute           | Description                                                                                                            |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `name`              | Unique name used for configuration merging, and the default value for storage_key if none is provided.                 |
-| `storage_key`       | Optional variable name for value in the data storage. If no value is provided, name will be used.                      |
-| `source`            | The name of the property in the DOM. Must be in snake case.                                                            |
-| `converter`         | Converts the value after reading or before saving to the DOM.                                                          |
-| `preview_converter` | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
-| `virtual`           | Used for properties that need to be saved but not viewed. For example, a value that is computed using multiple values. |
-| `persist`           | Used for read-only properties.                                                                                         |
+| Attribute             | Description                                                                                                           |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------|
+| `name`                | Unique name used for configuration merging, and the default value for storage_key if none is provided.                |
+| `storage_key`         | Optional variable name for value in the data storage. If no value is provided, name will be used.                     |
+| `source`              | The name of the property or attribute in the DOM. Must be in snake case.                                              |
+| `converter`           | Converts the value after reading or before saving to the DOM.                                                         |
+| `preview_converter`   | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.     |
+| `persistence_mode`    | Used for read/write properties.                                                                                       |
+| `reader`              | Reader used for parsing attributes and properties out of the DOM. Should not be used with read-only persistence_mode. |
 
-`complex_property` and `complex_attribute` allows you to specify the custom reader component used for reading data for an element.
+You may optionally set a `reader` value in configuration, otherwise `Magento_PageBuilder/js/property/style-property-reader` will be used for properties, and `Magento_PageBuilder/js/property/attribute-reader` will be used for attributes. Both default readers accept `source` as a parameter, and will return that value.
 
-`complex_property` and `complex_attribute` can contain `converter` and `preview_converter`.
+`property` and `attribute` can contain `converter` and `preview_converter`.
 
 ``` xml
-<style_properties>
-    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-</style_properties>
+<style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 ```
 
-`static_property` and `static_attribute` allows you to add specific style properites or attributes to an element.
+`static_style` and `static_attribute` allows you to add specific style properites or attributes to an element.
 
-`static_property` and `static_attribute` do not contain `converter` and `preview_converter` elements.
+`static_style` and `static_attribute` do not contain `converter` and `preview_converter` elements.
 
 ``` xml
 <element name="desktop_image">
-    <style_properties>
-        <static_property source="max-width" value="100%"/>
-        <static_property source="height" value="auto"/>
-    </style_properties>
+    <static_style source="max-width" value="100%"/>
+    <static_style source="height" value="auto"/>
 </element>
 ```
 
@@ -604,16 +563,14 @@ The `toDom` method is called before data is converted by element converters to u
 
 **Example:** Mass converter that defaults mobile image value to desktop image value if not configured 
 ``` xml
-<data_mapping>
-    <converters>
-        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
-            <config>
-                <item name="desktop_image_variable" value="background_image"/>
-                <item name="mobile_image_variable" value="mobile_image"/>
-            </config>
-        </converter>
-    </converters>
-</data_mapping>
+<converters>
+    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
+        <config>
+            <item name="desktop_image_variable" value="background_image"/>
+            <item name="mobile_image_variable" value="mobile_image"/>
+        </config>
+    </converter>
+</converters>
 ```
 
 ``` js
