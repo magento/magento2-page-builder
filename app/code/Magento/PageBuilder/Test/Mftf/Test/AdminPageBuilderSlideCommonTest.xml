@@ -1887,6 +1887,7 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!--Upload image from local machine using image placeholder button-->
+        <comment userInput="Upload image from local machine using image placeholder button on slide out" stepKey="commentUploadImage"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
@@ -1907,7 +1908,7 @@
 
 
         <!--Upload image from local machine -->
-        <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal1" />
+        <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
         <attachFile userInput="{{PageBuilderSlideBackgroundImageProperty2.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForPageLoad4" />
         <waitForElementVisible selector="{{SlideOnBackend.imageOnStage(PageBuilderSlideBackgroundImageProperty2.fileName)}}" stepKey="waitForMainImageSource1"/>
