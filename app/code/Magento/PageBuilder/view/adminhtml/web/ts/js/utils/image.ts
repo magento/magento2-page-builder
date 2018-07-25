@@ -22,9 +22,8 @@ export function decodeUrl(value: string): string | [object] {
             name: url.split("/").pop(),
             size: 0,
             type: "image/" + type,
-            url: Config.getConfig("media_url") + url
+            url: Config.getConfig("media_url") + url,
         };
-
         result = [image];
     }
     return result;
