@@ -15,21 +15,15 @@ import Config from "../config";
 export function decodeUrl(value: string): string | [object] {
     let result: any = "";
     value = decodeURIComponent((value).replace(window.location.href, ""));
-    const regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?.*?}}/;
+    const regexp = /{{.*\s*url="?(.*\.([a-z|A-Z]*))"?\s*}}/;
     if (regexp.test(value)) {
         const [, url, type] = regexp.exec(value);
         const image = {
             name: url.split("/").pop(),
             size: 0,
             type: "image/" + type,
-            url: Config.getConfig("media_url") + url,
-            id: "",
+            url: Config.getConfig("media_url") + url
         };
-        const imageIdMatch = value.match(/{{.*\s*id\s*="?([a-zA-Z0-9-]*)"?\s*}}/);
-
-        if (imageIdMatch) {
-            image.id = imageIdMatch[1];
-        }
 
         result = [image];
     }
