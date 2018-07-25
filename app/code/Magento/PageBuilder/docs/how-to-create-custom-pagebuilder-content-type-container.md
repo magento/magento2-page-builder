@@ -499,8 +499,8 @@ And inside it should have:
 
 In order for the icons to work, you have to create the following files:
 ``` xml
-view/web/css/images/content-type/custom-container-group/appearance/left.svg
-view/web/css/images/content-type/custom-container-group/appearance/right.svg
+view/adminhtml/web/css/images/content-type/custom-container-group/appearance/left.svg
+view/adminhtml/web/css/images/content-type/custom-container-group/appearance/right.svg
 ```
 
 ## Templates
