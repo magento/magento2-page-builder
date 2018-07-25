@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test>
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Content types are grouped as specified"/>
+            <description value="The panel should contain the proper groups with content types"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3168"/>
+            <testCaseId value="MC-943"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Layout group-->
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Row', 'layout')}}" stepkey="validateContentType1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Column', 'layout')}}" stepkey="validateContentType2"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Tabs', 'layout')}}" stepkey="validateContentType3"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Accordion', 'layout')}}" stepkey="validateContentType4"/>
+        <click selector="{{PageBuilderPanel.group('layout')}}" stepkey="closeLayoutGroup"/>
+        <!-- Validate Elements group -->
+        <click selector="{{PageBuilderPanel.group('elements')}}" stepkey="openElementGroup"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Text', 'elements')}}" stepkey="validateContentType5"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Heading', 'elements')}}" stepkey="validateContentType6"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Buttons', 'elements')}}" stepkey="validateContentType7"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Divider', 'elements')}}" stepkey="validateContentType8"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Newsletter', 'elements')}}" stepkey="validateContentType9"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Anchor', 'elements')}}" stepkey="validateContentType10"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('HTML Code', 'elements')}}" stepkey="validateContentType11"/>
+        <click selector="{{PageBuilderPanel.group('elements')}}" stepkey="closeElementGroup"/>
+        <!-- Validate Media Group -->
+        <click selector="{{PageBuilderPanel.group('media')}}" stepkey="openMediaGroup"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Image', 'media')}}" stepkey="validateContentType12"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Video', 'media')}}" stepkey="validateContentType13"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Banner', 'media')}}" stepkey="validateContentType14"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Slider', 'media')}}" stepkey="validateContentType15"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Map', 'media')}}" stepkey="validateContentType16"/>
+        <click selector="{{PageBuilderPanel.group('media')}}" stepkey="closeMediaGroup"/>
+        <!-- Validate Add Content Group -->
+        <click selector="{{PageBuilderPanel.group('add-content')}}" stepkey="openAddContentGroup"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Block', 'add-content')}}" stepkey="validateContentType17"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('Products', 'add-content')}}" stepkey="validateContentType18"/>
+        <click selector="{{PageBuilderPanel.group('add-content')}}" stepkey="closeAddContentGroup"/>
+    </test>
+    <test>
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel default state as specified"/>
+            <description value="The panel should only have the layout group expanded"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3168"/>
+            <testCaseId value="MC-943"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <seeElement selector="{{PageBuilderPanel.groupExpanded('layout')}}" stepkey="checkLayoutActive"/>
+        <dontSeeElement selector="{{PageBuilderPanel.groupExpanded('elements')}}" stepkey="checkInactiveGroup1"/>
+        <dontSeeElement selector="{{PageBuilderPanel.groupExpanded('media')}}" stepkey="checkInactiveGroup2"/>
+        <dontSeeElement selector="{{PageBuilderPanel.groupExpanded('add-content')}}" stepkey="checkInactiveGroup3"/>
+    </test>
+    <test>
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Panel Icons are as specified"/>
+            <description value="The panel should have correct icons for each content type"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3168"/>
+            <testCaseId value="MC-943"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Layout Icons -->
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Row','row')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Column','column')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Tabs','tabs')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Accordion','accordian')}}" stepkey="validateIcon1"/>
+        <click selector="{{PageBuilderPanel.group('layout')}}" stepkey="closeLayoutGroup"/>
+        <!-- Validate Elements Icons -->
+        <click selector="{{PageBuilderPanel.group('elements')}}" stepkey="openElementsGroup"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Text','text')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Heading','heading')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Buttons','button')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Divider','divider')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Newsletter','newsletter')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Anchor','anchor')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('HTML Code','code')}}" stepkey="validateIcon1"/>
+        <click selector="{{PageBuilderPanel.group('elements')}}" stepkey="closeElementsGroup"/>
+        <!-- Validate Media Icons -->
+        <click selector="{{PageBuilderPanel.group('media')}}" stepkey="openMediaGroup"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Image','image')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Video','video')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Banner','banner')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Slider','slider')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Map','map')}}" stepkey="validateIcon1"/>
+        <click selector="{{PageBuilderPanel.group('media')}}" stepkey="closeMediaGroup"/>
+        <!-- Validate Media Icons -->
+        <click selector="{{PageBuilderPanel.group('add-content')}}" stepkey="openAddContentGroup"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Block','block')}}" stepkey="validateIcon1"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('Products','products')}}" stepkey="validateIcon1"/>
+    </test>
+</tests>
