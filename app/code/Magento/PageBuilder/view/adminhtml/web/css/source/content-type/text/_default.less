@@ -7,7 +7,6 @@
 //  Default appearance styles
 //  _____________________________________________
 
-
 .pagebuilder-content-type {
     .pagebuilder-text {
         min-height: 50px;
@@ -23,33 +22,8 @@
             margin-bottom: 0;
             padding-bottom: @margin;
         }
-
         ~ .mce-tinymce-inline {
-            display: block !important;
-            height: auto !important;
-            opacity: 0;
-            position: absolute;
-            transform: translate(-1px, 0);
-            transition: transform 200ms, opacity 200ms, visibility 200ms;
-            visibility: hidden;
-            width: auto !important;
-
-            .mce-container,
-            .mce-container-body {
-                display: flex;
-                flex-wrap: wrap;
-                height: auto !important;
-                width: auto !important;
-            }
-            .mce-abs-layout-item {
-                position: static;
-            }
-            // There aren't any classes to hook into for this
-            &:not([style*='display: none;']) {
-                opacity: 1;
-                transform: translate(-1px, -100%);
-                visibility: visible !important;
-            }
+            transform: translateX(-1px);
         }
         .placeholder-text {
             left: 5px;
@@ -62,8 +36,6 @@
             padding: 5px;
         }
         > .mce-edit-focus {
-            outline: none;
-
             ~ .pagebuilder-options,
             ~ .placeholder-text {
                 display: none;
@@ -71,4 +43,3 @@
         }
     }
 }
-

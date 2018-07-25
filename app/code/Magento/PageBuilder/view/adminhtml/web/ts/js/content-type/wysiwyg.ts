@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import events from "Magento_PageBuilder/js/events";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 
 /**
@@ -24,6 +25,16 @@ export default class Wysiwyg {
 
         if (mode) {
             this.wysiwygAdapter.setup(mode);
+        }
+
+        if (mode === "inline") {
+            this.onFocused(() => {
+                events.trigger("stage:interactionStart");
+            });
+
+            this.onBlurred(() => {
+                events.trigger("stage:interactionStop");
+            });
         }
     }
 

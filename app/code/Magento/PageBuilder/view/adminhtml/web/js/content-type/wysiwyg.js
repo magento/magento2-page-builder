@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_setup) {
+define(["Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_events, _setup) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -26,6 +26,15 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_setup) {
 
       if (mode) {
         this.wysiwygAdapter.setup(mode);
+      }
+
+      if (mode === "inline") {
+        this.onFocused(function () {
+          _events.trigger("stage:interactionStart");
+        });
+        this.onBlurred(function () {
+          _events.trigger("stage:interactionStop");
+        });
       }
     }
     /**
