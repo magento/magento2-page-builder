@@ -40,11 +40,10 @@ export default class BackgroundImage implements ConverterInterface {
             return "";
         }
         const imageUrl = value[0].url;
-        const imageId = value[0].id;
         const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getConfig("media_url"), imageUrl);
 
         const mediaPath = imageUrl.split(mediaUrl);
-        const directive = "{{media url=" + mediaPath[1] + (imageId ? " id=" + imageId : "") + "}}";
+        const directive = "{{media url=" + mediaPath[1] + "}}";
         return "url(\'" + toDataUrl(directive) + "\')";
     }
 }

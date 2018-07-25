@@ -21,10 +21,10 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
 
     /**
      * @param {String} name Name to use for lookup reference in registry
-     * @param {Object} uploaderConfig
-     * @param {String} contentTypeId
-     * @param {DataStore} dataStore
-     * @param {Object[]} initialValue
+     * @param {Object} uploaderConfig The config used when initializing the Uploader UI component
+     * @param {String} contentTypeId The id of the content type this will be used in
+     * @param {DataStore} dataStore The datastore that the selected image should be stored in.
+     * @param {Object[]} initialValue The value that should be used for the initial state of the component.
      * @param {Function} onChangeCallback Called when image is added or updated
      * @param {Function} onDeleteCallback Called when currently set image is deleted from storage
      */

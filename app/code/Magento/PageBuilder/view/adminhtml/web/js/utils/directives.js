@@ -89,7 +89,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
   function removeQuotesInMediaDirectives(html) {
     var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
-    var urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*(?:id\s*=(.*?))?\s*\}\}/;
+    var urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
     var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
 
     if (mediaDirectiveMatches) {
@@ -97,7 +97,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
         var urlMatches = mediaDirective.match(urlRegExp);
 
         if (urlMatches && urlMatches[1] !== undefined) {
-          var directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") + (urlMatches[2] ? " id=" + urlMatches[2].replace(/("|&quot;|\s)/g, "") : "") + "}}";
+          var directiveWithOutQuotes = "{{media url=" + urlMatches[1].replace(/("|&quot;|\s)/g, "") + "}}";
           html = html.replace(mediaDirective, directiveWithOutQuotes);
         }
       });
