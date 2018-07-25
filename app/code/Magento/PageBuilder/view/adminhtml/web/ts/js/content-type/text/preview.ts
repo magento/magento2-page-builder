@@ -35,10 +35,15 @@ export default class Preview extends BasePreview {
         if (inlineWysiwygConfig.encapsulateSelectorConfigKeys) {
             inlineWysiwygConfig = $.extend(true, {}, this.config.additional_data.inlineWysiwygConfig);
             _.each(inlineWysiwygConfig.encapsulateSelectorConfigKeys, (isEnabled, configKey) => {
-                if (isEnabled) {
-                    inlineWysiwygConfig.wysiwygConfig.settings[configKey] =
-                        `#${this.parent.id} ${inlineWysiwygConfig.wysiwygConfig.settings[configKey]}`;
+                const configValue = inlineWysiwygConfig.wysiwygConfig.settings[configKey];
+
+                if (!isEnabled) {
+                    return;
                 }
+
+                inlineWysiwygConfig.wysiwygConfig.settings[configKey] = (
+                    this.parent.id + (configValue ? " " + configValue : "")
+                );
             });
         }
 

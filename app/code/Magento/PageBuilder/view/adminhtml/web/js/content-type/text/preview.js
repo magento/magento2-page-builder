@@ -38,9 +38,13 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBu
         inlineWysiwygConfig = _jquery.extend(true, {}, this.config.additional_data.inlineWysiwygConfig);
 
         _underscore.each(inlineWysiwygConfig.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
-          if (isEnabled) {
-            inlineWysiwygConfig.wysiwygConfig.settings[configKey] = "#" + _this2.parent.id + " " + inlineWysiwygConfig.wysiwygConfig.settings[configKey];
+          var configValue = inlineWysiwygConfig.wysiwygConfig.settings[configKey];
+
+          if (!isEnabled) {
+            return;
           }
+
+          inlineWysiwygConfig.wysiwygConfig.settings[configKey] = _this2.parent.id + (configValue ? " " + configValue : "");
         });
       }
 
