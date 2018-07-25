@@ -10,6 +10,21 @@ define([
     'use strict';
 
     return Select.extend({
+        defaults: {
+            noticeMessage: '',
+        },
+
+        /**
+         * Initializes observable properties of instance
+         *
+         * @returns {Abstract} Chainable.
+         */
+        initObservable: function () {
+            this._super();
+            this.observe('noticeMessage');
+
+            return this;
+        },
 
         /**
          * Parses incoming options, considers options with undefined value property

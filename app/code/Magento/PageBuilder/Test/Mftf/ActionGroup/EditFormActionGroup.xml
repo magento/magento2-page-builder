@@ -56,6 +56,7 @@
         <arguments>
             <argument name="section" defaultValue="AdvancedForm"/>
         </arguments>
+        <waitForPageLoad stepKey="waitForPageToFinishLoading"/>
         <waitForElementVisible selector="{{EditPanelForm.editPanelSectionName(section.dataIndex)}}" stepKey="waitForSectionVisible"/>
         <conditionalClick selector="{{EditPanelForm.editPanelSectionName(section.dataIndex)}}" dependentSelector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" visible="false" stepKey="expandSection"/>
         <waitForElementVisible selector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" stepKey="waitForSectionExpanded"/>
