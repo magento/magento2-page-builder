@@ -153,7 +153,7 @@ class Config
             'form' => $contentType['form'],
             'contentType' => '',
             'group' => $contentType['group'] ?? 'general',
-            'fields' => $this->uiComponentConfig->getFields($contentType['form'],
+            'fields' => $this->uiComponentConfig->getFields($contentType['form']),
             'preview_template' => $contentType['preview_template'] ?? '',
             'render_template' => $contentType['render_template'] ?? '',
             'component' => $contentType['component'],
