@@ -9,11 +9,15 @@ namespace Magento\PageBuilder\Block\Catalog\Block\Product\View;
 
 class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
 {
+    const DISPLAY_ATTRIBUTES_NON_PAGEBUILDER = 'non_pagebuilder';
+
+    const DISPLAY_ATTRIBUTES_PAGEBUILDER_ONLY = 'pagebuilder_only';
+
     /**
      * Determine if we should display the attribute on the front-end, add support for exclude page builder & page
      * builder only options on class.
      *
-     * pagebuilder_attributes can be set to determine whether to include just Page Builder attributes or to exclude
+     * display_attributes can be set to determine whether to include just Page Builder attributes or to exclude
      * them.
      *
      * @param \Magento\Eav\Model\Entity\Attribute\AbstractAttribute $attribute
@@ -24,9 +28,11 @@ class Attributes extends \Magento\Catalog\Block\Product\View\Attributes
     protected function isVisibleOnFrontend(
         \Magento\Eav\Model\Entity\Attribute\AbstractAttribute $attribute,
         array $excludeAttr
-    ) {
+    ) : bool {
         return parent::isVisibleOnFrontend($attribute, $excludeAttr)
-            && (($this->getPagebuilderAttributes() && $attribute->getIsPagebuilderEnabled())
-            || (!$this->getPagebuilderAttributes() && !$attribute->getIsPagebuilderEnabled()));
+            && (($this->getDisplayAttributes() == self::DISPLAY_ATTRIBUTES_NON_PAGEBUILDER
+                    && !$attribute->getIsPagebuilderEnabled())
+            || ($this->getDisplayAttributes() == self::DISPLAY_ATTRIBUTES_PAGEBUILDER_ONLY
+                    && $attribute->getIsPagebuilderEnabled()));
     }
 }

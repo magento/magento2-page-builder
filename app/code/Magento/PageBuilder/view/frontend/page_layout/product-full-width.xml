@@ -24,9 +24,9 @@
         <container name="product.info.description.wrapper" after="main.content" before="product.info.details.after.wrapper" htmlTag="div" htmlClass="page-main-description product-full-width-section" htmlId="description"/>
         <!-- Create a new wrapper to house the custom Page Builder attributes -->
         <container name="product.attributes.pagebuilder.wrapper" after="product.info.description.wrapper" before="product.info.details.after.wrapper" htmlTag="div" htmlClass="page-main-pagebuilder-attributes">
-            <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.only.pagebuilder" as="additional.pagebuilder" template="Magento_PageBuilder::catalog/product/view/attributes.phtml">
+            <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.only.pagebuilder" as="additional.pagebuilder" template="Magento_PageBuilder::catalog/product/view/attribute_list.phtml">
                 <arguments>
-                    <argument name="pagebuilder_attributes" xsi:type="boolean">true</argument>
+                    <argument name="display_attributes" xsi:type="string">pagebuilder_only</argument>
                 </arguments>
             </block>
         </container>
@@ -34,18 +34,18 @@
         <container name="product.info.details.after.wrapper" after="product.attributes.pagebuilder.wrapper" before="product.info.details.wrapper" htmlTag="div" htmlClass="page-main page-main-details">
             <container name="product.info.details.after.wrapper.columns" htmlTag="div" htmlClass="columns">
                 <container name="product.info.details.after.wrapper.main" label="Product Details Main Content Container" htmlTag="div" htmlClass="column main">
-                    <block class="Magento\Framework\View\Element\Template" name="product.attributes.wrapper" template="Magento_PageBuilder::catalog/product/view/title_wrapper.phtml">
+                    <block class="Magento\Framework\View\Element\Template" name="product.attributes.wrapper" template="Magento_PageBuilder::catalog/product/view/section_wrapper.html">
                         <arguments>
                             <argument name="title" translate="true" xsi:type="string">More Information</argument>
                         </arguments>
                         <!-- Create a new instance of attributes which excludes Page Builder attributes -->
-                        <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.exclude.pagebuilder" as="additional" template="Magento_Catalog::product/view/attributes.phtml">
+                        <block class="Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes" name="product.attributes.exclude.pagebuilder" as="additional" template="Magento_Catalog::product/view/attribute_list.phtml">
                             <arguments>
-                                <argument name="pagebuilder_attributes" xsi:type="boolean">false</argument>
+                                <argument name="display_attributes" xsi:type="string">non_pagebuilder</argument>
                             </arguments>
                         </block>
                     </block>
-                    <block class="Magento\Framework\View\Element\Template" name="product.reviews.wrapper" after="product.attributes.wrapper" template="Magento_PageBuilder::catalog/product/view/title_wrapper.phtml">
+                    <block class="Magento\Framework\View\Element\Template" name="product.reviews.wrapper" after="product.attributes.wrapper" template="Magento_PageBuilder::catalog/product/view/section_wrapper.html">
                         <arguments>
                             <argument name="title" translate="true" xsi:type="string">Reviews</argument>
                         </arguments>
