@@ -54,7 +54,6 @@ class Config implements ProviderInterface
         $config = [];
         if ($this->inlineEditingChecker->isAvailable($this->activeEditor->getWysiwygAdapterPath())) {
             $config = $this->wysiwygConfig->getConfig()->getData();
-
         }
         return [$itemName => $config];
     }

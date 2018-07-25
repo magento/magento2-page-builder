@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 
 /**
@@ -21,7 +20,7 @@ export default class Wysiwyg {
      * @param {Object} config
      */
     constructor(id: string, config: object, mode: string) {
-        this.wysiwygAdapter = new WysiwygSetup(id + '-editor', config);
+        this.wysiwygAdapter = new WysiwygSetup(id + "-editor", config);
 
         if (mode) {
             this.wysiwygAdapter.setup(mode);
@@ -31,14 +30,14 @@ export default class Wysiwyg {
     /**
      * @returns {WysiwygSetup}
      */
-    public getAdapter() {
+    getAdapter() {
         return this.wysiwygAdapter;
     }
 
     /**
      * @param {Function} callback
      */
-    public onEdited(callback: Function) {
+    onEdited(callback: Function) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceChange",
             callback,
@@ -48,7 +47,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    public onFocused(callback: Function) {
+    onFocused(callback: Function) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceFocus",
             callback,
@@ -58,7 +57,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    public onBlurred(callback: Function) {
+    onBlurred(callback: Function) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceBlur",
             callback,

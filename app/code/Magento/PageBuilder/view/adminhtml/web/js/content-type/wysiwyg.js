@@ -22,7 +22,7 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_setup) {
      */
     function Wysiwyg(id, config, mode) {
       this.wysiwygAdapter = void 0;
-      this.wysiwygAdapter = new _setup(id + '-editor', config);
+      this.wysiwygAdapter = new _setup(id + "-editor", config);
 
       if (mode) {
         this.wysiwygAdapter.setup(mode);
