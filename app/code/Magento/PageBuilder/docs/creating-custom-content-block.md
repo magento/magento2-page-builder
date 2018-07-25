@@ -67,77 +67,69 @@ Use the content type configuration to add new content types. Refer to content-ty
 The following is an example of a custom container content type configuration in DaveMacaulay_PageBuilderGrid/view/base/pagebuilder/content_type/homepage_grid.xml:
 
 ``` xml
-<content_types>
-        <type name="homepage-grid"
-              label="Grid"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form="pagebuilder_homepage_grid_form"
-              group="general"
-              icon="icon-pagebuilder-row"
-              sortOrder="1"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="stage" policy="allow"/>
-            </parents>
-            <children default_policy="deny">
-                <child name="homepage-grid-item" policy="allow"/>
-            </children>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid/default/preview"
-                            render_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                                    <property name="background_position" source="background_position"/>
-                                    <property name="background_size" source="background_size"/>
-                                    <property name="background_repeat" source="background_repeat"/>
-                                    <property name="background_attachment" source="background_attachment"/>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="appearance" source="data-appearance"/>
-                                    <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
-                                </attributes>
-                                <css name="css_classes">
-                                    <filter>
-                                        <class source="pagebuilder-homepage-grid"/>
-                                    </filter>
-                                </css>
-                            </element>
-                        </elements>
-                        <converters>
-                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
-                                <config>
-                                    <item name="background_color_format" value="background_color_format"/>
-                                </config>
-                            </converter>
-                        </converters>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+<type name="homepage-grid"
+      label="Grid"
+      component="Magento_PageBuilder/js/content-type-collection"
+      preview_component="DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid/preview"
+      master_component="Magento_PageBuilder/js/content-type/master-collection"
+      form="pagebuilder_homepage_grid_form"
+      group="general"
+      icon="icon-pagebuilder-row"
+      sortOrder="1"
+      translate="label">
+    <parents default_policy="deny">
+        <parent name="stage" policy="allow"/>
+    </parents>
+    <children default_policy="deny">
+        <child name="homepage-grid-item" policy="allow"/>
+    </children>
+    <appearances>
+        <appearance default="true"
+                    name="default"
+                    preview_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid/default/preview"
+                    render_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid/default/master"
+                    reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <elements>
+                 <element name="main">
+                     <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                     <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                     <style name="background_position" source="background_position"/>
+                     <style name="background_size" source="background_size"/>
+                     <style name="background_repeat" source="background_repeat"/>
+                     <style name="background_attachment" source="background_attachment"/>
+                     <style name="text_align" source="text_align"/>
+                     <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                     <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                     <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                     <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                     <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+                     <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+                     <attribute name="name" source="data-role"/>
+                     <attribute name="appearance" source="data-appearance"/>
+                     <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
+                     <css name="css_classes">
+                         <filter>
+                             <class source="pagebuilder-homepage-grid"/>
+                         </filter>
+                     </css>
+                 </element>
+             </elements>
+             <converters>
+                 <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                     <config>
+                         <item name="background_color_format" value="background_color_format"/>
+                     </config>
+                 </converter>
+             </converters>
+        </appearance>
+    </appearances>
+</type>
 ```
 
 The following is an example of a custom container children content type configuration in DaveMacaulay_PageBuilderGrid/view/base/pagebuilder/content_type/homepage_grid_item.xml:
 
 ``` xml
-<content_types>
-        <type name="homepage-grid-item"
+<type name="homepage-grid-item"
               label="Grid Item"
               component="Magento_PageBuilder/js/content-type-collection"
               preview_component="DaveMacaulay_PageBuilderGrid/js/content-type/homepage-grid-item/preview"
@@ -147,62 +139,56 @@ The following is an example of a custom container children content type configur
               icon="icon-pagebuilder-row"
               sortOrder="1"
               translate="label">
-            <parents default_policy="deny">
-                <parent name="homepage-grid" policy="allow"/>
-            </parents>
-            <children default_policy="deny"> 
-                <child name="heading" policy="allow"/> 
-                <child name="buttons" policy="allow"/> 
-                <child name="text" policy="allow"/> 
-            </children>
-            <is_visible>false</is_visible>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid-item/default/preview"
-                            render_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid-item/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                                    <property name="background_position" source="background_position"/>
-                                    <property name="background_size" source="background_size"/>
-                                    <property name="background_repeat" source="background_repeat"/>
-                                    <property name="background_attachment" source="background_attachment"/>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="appearance" source="data-appearance"/>
-                                    <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
-                                </attributes>
-                                <css name="css_classes">
-                                    <filter>
-                                        <class source="pagebuilder-homepage-grid-item"/>
-                                    </filter>
-                                </css>
-                            </element>
-                        </elements>
-                        <converters>
-                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
-                                <config>
-                                    <item name="background_color_format" value="background_color_format"/>
-                                </config>
-                            </converter>
-                        </converters>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <parents default_policy="deny">
+        <parent name="homepage-grid" policy="allow"/>
+    </parents>
+    <children default_policy="deny"> 
+        <child name="heading" policy="allow"/> 
+        <child name="buttons" policy="allow"/> 
+        <child name="text" policy="allow"/> 
+    </children>
+    <is_visible>false</is_visible>
+    <appearances>
+        <appearance default="true"
+                    name="default"
+                    preview_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid-item/default/preview"
+                    render_template="DaveMacaulay_PageBuilderGrid/content-type/homepage-grid-item/default/master"
+                    reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <elements>
+                <element name="main">
+                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                    <style name="background_position" source="background_position"/>
+                    <style name="background_size" source="background_size"/>
+                    <style name="background_repeat" source="background_repeat"/>
+                    <style name="background_attachment" source="background_attachment"/>
+                    <style name="text_align" source="text_align"/>
+                    <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                    <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                    <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+                    <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+                    <attribute name="name" source="data-role"/>
+                    <attribute name="appearance" source="data-appearance"/>
+                    <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
+                    <css name="css_classes">
+                        <filter>
+                            <class source="pagebuilder-homepage-grid-item"/>
+                        </filter>
+                    </css>
+                </element>
+            </elements>
+            <converters>
+                <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                    <config>
+                        <item name="background_color_format" value="background_color_format"/>
+                    </config>
+                </converter>
+            </converters>
+        </appearance>
+    </appearances>
+</type>
 ```
 
 ### Preview template & block system
