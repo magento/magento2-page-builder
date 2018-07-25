@@ -16,8 +16,8 @@ export default class Wysiwyg {
 
     /**
      * @param {String} id
-     * @param {String} mode
      * @param {Object} config
+     * @param {String} mode
      */
     constructor(id: string, config: object, mode: string) {
         this.wysiwygAdapter = new WysiwygSetup(id + "-editor", config);

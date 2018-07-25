@@ -17,8 +17,8 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_setup) {
 
     /**
      * @param {String} id
-     * @param {String} mode
      * @param {Object} config
+     * @param {String} mode
      */
     function Wysiwyg(id, config, mode) {
       this.wysiwygAdapter = void 0;
