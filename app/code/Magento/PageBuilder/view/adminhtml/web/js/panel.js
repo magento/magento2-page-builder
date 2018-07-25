@@ -26,17 +26,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchTitle = (0, _translate)("Clear Search");
       this.parent = void 0;
       this.id = void 0;
+      this.element = void 0;
       this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
       this.id = this.parent.id;
       this.initListeners();
     }
     /**
-     * Init listeners
+     * On render init the panel
+     *
+     * @param {Element} element
      */
 
 
     var _proto = Panel.prototype;
+
+    _proto.afterRender = function afterRender(element) {
+      this.element = element;
+    };
+    /**
+     * Init listeners
+     */
+
 
     _proto.initListeners = function initListeners() {
       var _this = this;
@@ -122,8 +133,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.onScroll = function onScroll() {
       var self = this;
       var pageActions = (0, _jquery)(".page-actions");
-      var panel = (0, _jquery)(".pagebuilder-panel-wrapper");
-      var stage = (0, _jquery)(".pagebuilder-stage");
+      var panel = (0, _jquery)(this.element);
+      var stage = panel.siblings(".pagebuilder-stage");
       (0, _jquery)(window).scroll(function () {
         var panelOffsetTop = panel.offset().top;
         var stageOffsetTop = stage.offset().top;

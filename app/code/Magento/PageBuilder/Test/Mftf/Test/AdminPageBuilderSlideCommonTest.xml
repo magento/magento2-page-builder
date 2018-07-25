@@ -933,6 +933,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
+            <!-- Skipped due to form key issues MC-3386 -->
+            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1360,6 +1362,9 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoRowAboveSlider">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1419,6 +1424,9 @@
         <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
         <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
         <executeJS function="return Math.round({$sliderHeightSansPadding}/5)" stepKey="sliderHeightOffset"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderTop">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="targetBlockType" value="PageBuilderSliderContentType"/>

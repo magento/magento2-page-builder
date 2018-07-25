@@ -316,7 +316,10 @@
         <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <seeElement selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible" />
         <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">

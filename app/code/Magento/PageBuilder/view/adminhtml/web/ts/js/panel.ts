@@ -36,12 +36,22 @@ export default class Panel implements PanelInterface {
     public searchTitle: string = $t("Clear Search");
     public parent: PageBuilder;
     public id: string;
+    private element: Element;
     private template: string = "Magento_PageBuilder/panel";
 
     constructor(parent: PageBuilder) {
         this.parent = parent;
         this.id = this.parent.id;
         this.initListeners();
+    }
+
+    /**
+     * On render init the panel
+     *
+     * @param {Element} element
+     */
+    public afterRender(element: Element): void {
+        this.element = element;
     }
 
     /**
@@ -127,8 +137,8 @@ export default class Panel implements PanelInterface {
     public onScroll(): void {
         const self = this;
         const pageActions = $(".page-actions");
-        const panel = $(".pagebuilder-panel-wrapper");
-        const stage = $(".pagebuilder-stage");
+        const panel = $(this.element);
+        const stage = panel.siblings(".pagebuilder-stage");
         $(window).scroll(function() {
             const panelOffsetTop = panel.offset().top;
             const stageOffsetTop = stage.offset().top;
