@@ -19,18 +19,43 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       this.converterResolver = converterResolver;
     }
     /**
-     * Update preview observables after data changed in data store
+     * Prepare a view model for preview data to be updated later
      *
-     * @param {object} viewModel
+     * @param {Preview} viewModel
      * @param {DataObject} data
      */
 
 
     var _proto = ObservableUpdater.prototype;
 
+    _proto.prepare = function prepare(viewModel, data) {
+      var appearanceConfiguration = this.getAppearanceConfig(viewModel, data);
+
+      var _arr = Object.keys(appearanceConfiguration.data_mapping.elements);
+
+      for (var _i = 0; _i < _arr.length; _i++) {
+        var elementName = _arr[_i];
+
+        if (viewModel.data[elementName] === undefined) {
+          viewModel.data[elementName] = {
+            attributes: _knockout.observable({}),
+            style: _knockout.observable({}),
+            css: _knockout.observable({}),
+            html: _knockout.observable({})
+          };
+        }
+      }
+    };
+    /**
+     * Update preview observables after data changed in data store
+     *
+     * @param {Preview | Master} viewModel
+     * @param {DataObject} data
+     */
+
+
     _proto.update = function update(viewModel, data) {
-      var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
-      var appearanceConfiguration = (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
+      var appearanceConfiguration = this.getAppearanceConfig(viewModel, data);
 
       if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.data_mapping || undefined === appearanceConfiguration.data_mapping.elements) {
         return;
@@ -38,10 +63,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
       var config = appearanceConfiguration.data_mapping.elements;
 
-      var _arr = Object.keys(config);
+      var _arr2 = Object.keys(config);
 
-      for (var _i = 0; _i < _arr.length; _i++) {
-        var elementName = _arr[_i];
+      for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+        var elementName = _arr2[_i2];
 
         if (viewModel.data[elementName] === undefined) {
           viewModel.data[elementName] = {
@@ -79,10 +104,10 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
               });
             }
 
-            var _arr2 = Object.keys(viewModel.data[elementName].css());
+            var _arr3 = Object.keys(viewModel.data[elementName].css());
 
-            for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
-              var className = _arr2[_i2];
+            for (var _i3 = 0; _i3 < _arr3.length; _i3++) {
+              var className = _arr3[_i3];
 
               if (!(className in newClasses)) {
                 newClasses[className] = false;
@@ -115,16 +140,16 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
     _proto.convertAttributes = function convertAttributes(config, data) {
       var result = {};
 
-      for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i4 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
         var _ref;
 
         if (_isArray) {
-          if (_i3 >= _iterator.length) break;
-          _ref = _iterator[_i3++];
+          if (_i4 >= _iterator.length) break;
+          _ref = _iterator[_i4++];
         } else {
-          _i3 = _iterator.next();
-          if (_i3.done) break;
-          _ref = _i3.value;
+          _i4 = _iterator.next();
+          if (_i4.done) break;
+          _ref = _i4.value;
         }
 
         var _attributeConfig = _ref;
@@ -159,16 +184,16 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       var result = {};
 
       if (config.style) {
-        for (var _iterator2 = config.style, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+        for (var _iterator2 = config.style, _isArray2 = Array.isArray(_iterator2), _i5 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
           var _ref2;
 
           if (_isArray2) {
-            if (_i4 >= _iterator2.length) break;
-            _ref2 = _iterator2[_i4++];
+            if (_i5 >= _iterator2.length) break;
+            _ref2 = _iterator2[_i5++];
           } else {
-            _i4 = _iterator2.next();
-            if (_i4.done) break;
-            _ref2 = _i4.value;
+            _i5 = _iterator2.next();
+            if (_i5.done) break;
+            _ref2 = _i5.value;
           }
 
           var _propertyConfig = _ref2;
@@ -236,16 +261,16 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
 
     _proto.convertData = function convertData(data, convertersConfig) {
-      for (var _iterator3 = convertersConfig, _isArray3 = Array.isArray(_iterator3), _i5 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+      for (var _iterator3 = convertersConfig, _isArray3 = Array.isArray(_iterator3), _i6 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
         var _ref3;
 
         if (_isArray3) {
-          if (_i5 >= _iterator3.length) break;
-          _ref3 = _iterator3[_i5++];
+          if (_i6 >= _iterator3.length) break;
+          _ref3 = _iterator3[_i6++];
         } else {
-          _i5 = _iterator3.next();
-          if (_i5.done) break;
-          _ref3 = _i5.value;
+          _i6 = _iterator3.next();
+          if (_i6.done) break;
+          _ref3 = _i6.value;
         }
 
         var _converterConfig = _ref3;
@@ -253,6 +278,19 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       }
 
       return data;
+    };
+    /**
+     * Retrieve the appearance config
+     *
+     * @param {Preview | Master} viewModel
+     * @param {DataObject} data
+     * @returns {ContentTypeConfigAppearanceInterface}
+     */
+
+
+    _proto.getAppearanceConfig = function getAppearanceConfig(viewModel, data) {
+      var appearance = data && data.appearance !== undefined ? data.appearance.toString() : undefined;
+      return (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
     };
 
     return ObservableUpdater;
