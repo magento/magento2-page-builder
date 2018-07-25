@@ -30,14 +30,14 @@ export default class Wysiwyg {
     /**
      * @returns {WysiwygSetup}
      */
-    getAdapter() {
+    public getAdapter() {
         return this.wysiwygAdapter;
     }
 
     /**
      * @param {Function} callback
      */
-    onEdited(callback: Function) {
+    public onEdited(callback: Function) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceChange",
             callback,
@@ -47,7 +47,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    onFocused(callback: Function) {
+    public onFocused(callback: Function) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceFocus",
             callback,
@@ -57,7 +57,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    onBlurred(callback: Function) {
+    public onBlurred(callback: Function) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceBlur",
             callback,
