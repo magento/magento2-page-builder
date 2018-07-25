@@ -50,8 +50,10 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBu
 
       this.wysiwyg = new _wysiwyg(element.id, inlineWysiwygConfig.wysiwygConfig, inlineWysiwygConfig.mode); // Update content in our data store after our stage preview wysiwyg gets updated
 
-      this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
-      this.wysiwyg.onFocused(_events.trigger.bind(null, "stage:interactionStart"));
+      this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this)); // prevent interactability with options when in inline editing mode
+
+      this.wysiwyg.onFocused(_events.trigger.bind(null, "stage:interactionStart")); // resume normal interactability with opens when leaving inline editing mode
+
       this.wysiwyg.onBlurred(_events.trigger.bind(null, "stage:interactionStop")); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));

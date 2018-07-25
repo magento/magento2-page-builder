@@ -54,7 +54,10 @@ export default class Preview extends BasePreview {
         // Update content in our data store after our stage preview wysiwyg gets updated
         this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
 
+        // prevent interactability with options when in inline editing mode
         this.wysiwyg.onFocused(events.trigger.bind(null, "stage:interactionStart"));
+
+        // resume normal interactability with opens when leaving inline editing mode
         this.wysiwyg.onBlurred(events.trigger.bind(null, "stage:interactionStop"));
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
