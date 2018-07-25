@@ -27,9 +27,6 @@ class Row implements RendererInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
@@ -40,12 +37,6 @@ class Row implements RendererInterface
         // Handle adding the wrapper element attributes when using the contained appearance
         $rootElementAttributes = [];
         if ($appearance === 'contained') {
-            $wrapperElementAttributes = [
-                'data-element' => 'wrapper',
-                'data-role' => 'row',
-                'data-appearance' => 'contained',
-                'class' => 'row-contained',
-            ];
             $rootElementAttributes = [
                 'data-element' => 'main',
                 'class' => $itemData['formData']['css_classes'] ?? '',
@@ -64,24 +55,49 @@ class Row implements RendererInterface
             $rootElementAttributes['style'] = $style;
         }
 
+        $childrenHtml = (isset($additionalData['children']) ? $additionalData['children'] : '');
+
+        // Wrap the children when the layout is full width
+        if ($appearance === 'full-width') {
+            $childrenHtml = '<div class="row-full-width-inner" data-element="inner">' . $childrenHtml . '</div>';
+        }
+
+        $rootElementHtml = $this->renderElementWithAttributes(
+            $rootElementAttributes,
+            $childrenHtml
+        );
+
+        // Wrap the root element in our wrapper for contained appearances
+        if ($appearance === 'contained') {
+            return $this->renderElementWithAttributes(
+                [
+                    'data-element' => 'wrapper',
+                    'data-role' => 'row',
+                    'data-appearance' => 'contained',
+                    'class' => 'row-contained',
+                ],
+                $rootElementHtml
+            );
+        }
+
+        return $rootElementHtml;
+    }
+
+    /**
+     * Render an element with an attributes array
+     *
+     * @param array $attributes
+     * @param string $childrenHtml
+     * @return string
+     */
+    private function renderElementWithAttributes(array $attributes, string $childrenHtml = '') : string
+    {
         $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+        foreach ($attributes as $attributeName => $attributeValue) {
             $attributeValue = trim($attributeValue);
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
-
-        // Wrap the root element in our wrapper for contained appearances
-        if ($appearance === 'contained' && isset($wrapperElementAttributes)) {
-            $wrapperElementHtml = '<div';
-            foreach ($wrapperElementAttributes as $attributeName => $attributeValue) {
-                $attributeValue = trim($attributeValue);
-                $wrapperElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-            }
-            $wrapperElementHtml .= '>' . $rootElementHtml . '</div>';
-            return $wrapperElementHtml;
-        }
-
+        $rootElementHtml .= '>' . $childrenHtml . '</div>';
         return $rootElementHtml;
     }
 }
