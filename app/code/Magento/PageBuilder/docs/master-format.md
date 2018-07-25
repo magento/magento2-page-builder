@@ -62,7 +62,7 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 
 #### Contained:
 ```
-<div class="row-contained" data-element="wrapper" data-role="row" data-appearance="contained">
+<div class="row-contained-wrapper" data-element="wrapper" data-role="row" data-appearance="contained">
     <div style="..."></div>
 </div>
 ```
@@ -80,7 +80,14 @@ Attributes
 6. data-background-color-format [hex, rgb, hsl, hsv, name, none]
 7. class
 
-#### Full Width & Full Bleed:
+#### Full Width:
+```
+<div data-element="main" data-role="row" data-appearance="contained" style="...">
+    <div data-element="inner" class="row-full-width-inner"></div>
+</div>
+```
+
+#### Full Bleed:
 ```
 <div data-element="main" data-role="row" data-appearance="contained" style="..."></div>
 ```
