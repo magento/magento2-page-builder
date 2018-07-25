@@ -48,7 +48,7 @@ export default class Preview extends BasePreview {
         this.wysiwyg = new Wysiwyg(
             element.id,
             inlineWysiwygConfig.wysiwygConfig,
-            "inline",
+            inlineWysiwygConfig.mode,
         );
 
         // Update content in our data store after our stage preview wysiwyg gets updated
