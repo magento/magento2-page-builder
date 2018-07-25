@@ -54,6 +54,9 @@ export default class Preview extends BasePreview {
         // Update content in our data store after our stage preview wysiwyg gets updated
         this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
 
+        this.wysiwyg.onFocused(events.trigger.bind(null, "stage:interactionStart"));
+        this.wysiwyg.onBlurred(events.trigger.bind(null, "stage:interactionStop"));
+
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
     }
