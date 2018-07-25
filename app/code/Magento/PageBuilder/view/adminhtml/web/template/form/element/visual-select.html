@@ -12,7 +12,7 @@
            attr="id: uid, name: inputName"/>
 
     <ol data-bind="foreach: options, css: {'_disabled': disabled}">
-        <li data-bind="click: function() { if(!$parent.disabled()) {$parent.value(value); $parent.noticeMessage($data.noticeMessage);} }, css: {active: $parent.value() == value, 'admin__field-visual-select-small': $data.size == 'small', 'admin__field-visual-select-large': $data.size == 'large', 'no-pointer-events': $parent.disabled()}, event: {keyup: function() { if(!$parent.disabled() && (event.keyCode==32||event.keyCode==13)) { $parent.value(value); $parent.noticeMessage($data.noticeMessage);} }}, attr: { tabindex: !$parent.disabled() ? 0 : 'false', name: value }">
+        <li data-bind="click: function() { if(!$parent.disabled()) {$parent.value(value);} }, css: {active: $parent.value() == value, 'admin__field-visual-select-small': $data.size == 'small', 'admin__field-visual-select-large': $data.size == 'large', 'no-pointer-events': $parent.disabled()}, event: {keyup: function() { if(!$parent.disabled() && (event.keyCode==32||event.keyCode==13)) { $parent.value(value);} }}, attr: { tabindex: !$parent.disabled() ? 0 : 'false', name: value }">
             <img if="$data.icon" data-bind="attr:{src: $data.icon}" draggable="false" aria-hidden="true"/>
             <!-- ko if: $data.size == 'large' -->
                 <div ifnot="$data.icon" class="admin__field-visual-select-spacer"></div>
