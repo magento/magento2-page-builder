@@ -1263,6 +1263,77 @@
         <actionGroup ref="validateFullWidthRowAppearanceOnStorefront" stepKey="validateFullWidthRowAppearanceOnStorefront"/>
         <actionGroup ref="validateFullBleedRowAppearanceOnStorefront" stepKey="validateFullBleedRowAppearanceOnStorefront"/>
     </test>
+    <test name="RowAppearancesFullWidthTextAlignment">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Text content type is aligned correctly"/>
+            <description value="Verify text is aligned at the same offset left as heading on storefront in full width appearance."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3389"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowAppearances"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+            </actionGroup>
+        </before>
+        <after>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Set background color and appearance of row 1 -->
+        <comment userInput="Set background color and appearance of row" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColorRow">
+            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStageRow">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextToRow">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageText">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="fillTextField"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <executeJS function="return {{HeadingOnStorefront.baseJs('0')}}.offsetLeft" stepKey="headingOffsetLeft"/>
+        <executeJS function="return {{TextOnStorefront.baseJs('0')}}.offsetLeft" stepKey="textOffsetLeft"/>
+        <assertEquals stepKey="assertMatchingOffsetLeft">
+            <expectedResult type="variable">headingOffsetLeft</expectedResult>
+            <actualResult type="variable">textOffsetLeft</actualResult>
+        </assertEquals>
+    </test>
     <test name="RowFullWidthAppearanceWithInvalidLayoutTest">
         <annotations>
             <features value="PageBuilder"/>
