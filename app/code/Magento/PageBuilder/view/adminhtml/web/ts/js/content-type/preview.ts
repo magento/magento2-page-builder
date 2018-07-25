@@ -29,7 +29,6 @@ import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
-import PreviewData from "./preview-data";
 
 /**
  * @api
@@ -37,7 +36,7 @@ import PreviewData from "./preview-data";
 export default class Preview {
     public parent: ContentTypeCollectionInterface;
     public config: ContentTypeConfigInterface;
-    public data: PreviewData = {};
+    public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
     public wrapperElement: Element;
 
@@ -78,12 +77,6 @@ export default class Preview {
         this.displayLabel = ko.observable(this.config.label);
         this.setupDataFields();
         this.bindEvents();
-
-        // Prepare the observable updater to create all observables required on the view model
-        this.observableUpdater.prepare(
-            this,
-            _.extend({}, this.parent.dataStore.get() as DataObject),
-        );
     }
 
     /**
@@ -439,9 +432,9 @@ export default class Preview {
      */
     protected bindEvents() {
         this.parent.dataStore.subscribe(
-            _.debounce(() => {
+            (data: DataObject) => {
                 this.updateObservables();
-            }, 10),
+            },
         );
     }
 
