@@ -29,9 +29,11 @@ define(["Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_mce/setup"
       }
 
       if (mode === "inline") {
+        // prevent interactability with options when in inline editing mode
         this.onFocused(function () {
           _events.trigger("stage:interactionStart");
-        });
+        }); // resume normal interactability with opens when leaving inline editing mode
+
         this.onBlurred(function () {
           _events.trigger("stage:interactionStop");
         });

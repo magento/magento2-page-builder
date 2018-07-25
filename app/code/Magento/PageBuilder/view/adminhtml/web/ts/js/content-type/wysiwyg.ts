@@ -28,10 +28,12 @@ export default class Wysiwyg {
         }
 
         if (mode === "inline") {
+            // prevent interactability with options when in inline editing mode
             this.onFocused(() => {
                 events.trigger("stage:interactionStart");
             });
 
+            // resume normal interactability with opens when leaving inline editing mode
             this.onBlurred(() => {
                 events.trigger("stage:interactionStop");
             });
