@@ -79,80 +79,74 @@ The configuration for container group will be the following snippet:
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="custom-container-group"
-              label="Custom Container Group"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container-group/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form="pagebuilder_custom_container_group_form"
-              group="general"
-              icon="icon-pagebuilder-row"
-              sortOrder="1"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="stage" policy="allow"/>
-            </parents>
-            <children default_policy="deny">
-                <child name="custom-container" policy="allow"/>
-            </children>
-            <appearances>
-                <appearance default="true"
-                            name="left"
-                            preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/left/preview"
-                            render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/left/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style name="text_align" source="text_align"/>
-                                <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-                                <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <css name="css_classes">
-                                    <filter>
-                                        <class source="pagebuilder-custom-container-group"/>
-                                        <class source="left-appearance"/>
-                                    </filter>
-                                </css>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-                <appearance name="right"
-                            preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/right/preview"
-                            render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/right/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style name="text_align" source="text_align"/>
-                                <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-                                <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>                                
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <css name="css_classes">
-                                    <filter>
-                                        <class source="pagebuilder-custom-container-group"/>
-                                        <class source="right-appearance"/>
-                                    </filter>
-                                </css>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="custom-container-group"
+          label="Custom Container Group"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container-group/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_custom_container_group_form"
+          group="general"
+          icon="icon-pagebuilder-row"
+          sortOrder="1"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="stage" policy="allow"/>
+        </parents>
+        <children default_policy="deny">
+            <child name="custom-container" policy="allow"/>
+        </children>
+        <appearances>
+            <appearance default="true"
+                        name="left"
+                        preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/left/preview"
+                        render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/left/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <css name="css_classes">
+                            <filter>
+                                <class source="pagebuilder-custom-container-group"/>
+                                <class source="left-appearance"/>
+                            </filter>
+                        </css>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="right"
+                        preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/right/preview"
+                        render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/right/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>                                
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <css name="css_classes">
+                            <filter>
+                                <class source="pagebuilder-custom-container-group"/>
+                                <class source="right-appearance"/>
+                            </filter>
+                        </css>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>
 ```
 
@@ -176,73 +170,69 @@ The configuration for container group will be the following snippet:
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="custom-container"
-              label="Container"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form="pagebuilder_custom_container_form"
-              group="general"
-              icon="icon-pagebuilder-row"
-              sortOrder="1"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="custom-container-group" policy="allow"/>
-            </parents>
-            <children default_policy="allow">
-                <child name="custom-container-group" policy="deny"/>
-                <child name="row" policy="deny"/>
-                <child name="column" policy="deny"/>
-                <child name="column-group" policy="deny"/>
-                <child name="tabs" policy="deny"/>
-                <child name="tab-item" policy="deny"/>
-            </children>
-            <is_visible>false</is_visible>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container/default/preview"
-                            render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                                <style name="background_position" source="background_position"/>
-                                <style name="background_size" source="background_size"/>
-                                <style name="background_repeat" source="background_repeat"/>
-                                <style name="background_attachment" source="background_attachment"/>
-                                <style name="text_align" source="text_align"/>
-                                <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-                                <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                                <attribute name="name" source="data-role"/>
-                                <attribute name="appearance" source="data-appearance"/>
-                                <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
-                                <css name="css_classes">
-                                    <filter>
-                                        <class source="pagebuilder-custom-container"/>
-                                    </filter>
-                                </css>
-                            </element>
-                        </elements>
-                        <converters>
-                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
-                                <config>
-                                    <item name="background_color_format" value="background_color_format"/>
-                                </config>
-                            </converter>
-                        </converters>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="custom-container"
+          label="Container"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_custom_container_form"
+          group="general"
+          icon="icon-pagebuilder-row"
+          sortOrder="1"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="custom-container-group" policy="allow"/>
+        </parents>
+        <children default_policy="allow">
+            <child name="custom-container-group" policy="deny"/>
+            <child name="row" policy="deny"/>
+            <child name="column" policy="deny"/>
+            <child name="column-group" policy="deny"/>
+            <child name="tabs" policy="deny"/>
+            <child name="tab-item" policy="deny"/>
+        </children>
+        <is_visible>false</is_visible>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container/default/preview"
+                        render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_position" source="background_position"/>
+                        <style name="background_size" source="background_size"/>
+                        <style name="background_repeat" source="background_repeat"/>
+                        <style name="background_attachment" source="background_attachment"/>
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
+                        <css name="css_classes">
+                            <filter>
+                                <class source="pagebuilder-custom-container"/>
+                            </filter>
+                        </css>
+                    </element>
+                </elements>
+                <converters>
+                    <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                        <config>
+                            <item name="background_color_format" value="background_color_format"/>
+                        </config>
+                    </converter>
+                </converters>
+            </appearance>
+        </appearances>
+    </type>
 </config>
 ```
 
