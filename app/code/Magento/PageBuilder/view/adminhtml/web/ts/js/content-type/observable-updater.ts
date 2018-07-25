@@ -10,6 +10,8 @@ import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
 import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
+import Master from "./master";
+import Preview from "./preview";
 
 export default class ObservableUpdater {
     private converterPool: typeof ConverterPool;
@@ -32,14 +34,34 @@ export default class ObservableUpdater {
     }
 
     /**
-     * Update preview observables after data changed in data store
+     * Prepare a view model for preview data to be updated later
      *
-     * @param {object} viewModel
+     * @param {Preview} viewModel
      * @param {DataObject} data
      */
-    public update(viewModel: object, data: DataObject) {
-        const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
-        const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
+    public prepare(viewModel: Preview, data: DataObject) {
+        const appearanceConfiguration = this.getAppearanceConfig(viewModel, data);
+
+        for (const elementName of Object.keys(appearanceConfiguration.data_mapping.elements)) {
+            if (viewModel.data[elementName] === undefined) {
+                viewModel.data[elementName] = {
+                    attributes: ko.observable({}),
+                    style: ko.observable({}),
+                    css: ko.observable({}),
+                    html: ko.observable({}),
+                };
+            }
+        }
+    }
+
+    /**
+     * Update preview observables after data changed in data store
+     *
+     * @param {Preview | Master} viewModel
+     * @param {DataObject} data
+     */
+    public update(viewModel: Preview | Master, data: DataObject) {
+        const appearanceConfiguration = this.getAppearanceConfig(viewModel, data);
         if (undefined === appearanceConfiguration
             || undefined === appearanceConfiguration.data_mapping
             || undefined === appearanceConfiguration.data_mapping.elements
@@ -198,5 +220,17 @@ export default class ObservableUpdater {
             data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }
         return data;
+    }
+
+    /**
+     * Retrieve the appearance config
+     *
+     * @param {Preview | Master} viewModel
+     * @param {DataObject} data
+     * @returns {ContentTypeConfigAppearanceInterface}
+     */
+    private getAppearanceConfig(viewModel: Preview | Master, data: DataObject) {
+        const appearance = data && data.appearance !== undefined ? data.appearance.toString() : undefined;
+        return appearanceConfig(viewModel.parent.config.name, appearance);
     }
 }

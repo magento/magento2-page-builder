@@ -49,7 +49,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.observableUpdater = observableUpdater;
       this.displayLabel = _knockout.observable(this.config.label);
       this.setupDataFields();
-      this.bindEvents();
+      this.bindEvents(); // Prepare the observable updater to create all observables required on the view model
+
+      this.observableUpdater.prepare(this, _underscore.extend({}, this.parent.dataStore.get()));
     }
     /**
      * Retrieve the preview template
@@ -386,9 +388,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      this.parent.dataStore.subscribe(function (data) {
+      this.parent.dataStore.subscribe(_underscore.debounce(function () {
         _this4.updateObservables();
-      });
+      }, 10));
     };
     /**
      * After observables updated, allows to modify observables
