@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_events, _config, _preview, _wysiwyg) {
+define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _underscore, _events, _config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -23,39 +23,32 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
     var _proto = Preview.prototype;
 
     /**
-     * @returns {Wysiwyg}
+     * @param {HTMLElement} element
      */
-    _proto.getWysiwyg = function getWysiwyg() {
-      return this.wysiwyg;
-    };
-    /**
-     * @inheritDoc
-     */
-
-
-    _proto.bindEvents = function bindEvents() {
+    _proto.initWysiwyg = function initWysiwyg(element) {
       var _this2 = this;
-
-      _BasePreview.prototype.bindEvents.call(this);
 
       if (!_config.getConfig("can_use_inline_editing_on_stage")) {
         return;
-      } // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
+      }
 
+      var inlineWysiwygConfig = this.config.additional_data.inlineWysiwygConfig;
 
-      _events.on("form:" + this.parent.id + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this)); // Create wysiwyg instance after content type is rendered
+      if (inlineWysiwygConfig.encapsulateSelectorConfigKeys) {
+        inlineWysiwygConfig = _jquery.extend(true, {}, this.config.additional_data.inlineWysiwygConfig);
 
+        _underscore.each(inlineWysiwygConfig.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
+          if (isEnabled) {
+            inlineWysiwygConfig.wysiwygConfig.settings[configKey] = "#" + _this2.parent.id + " " + inlineWysiwygConfig.wysiwygConfig.settings[configKey];
+          }
+        });
+      }
 
-      _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.contentType.id !== _this2.parent.id) {
-          // guard against re-instantiation on existing content types
-          return;
-        }
+      this.wysiwyg = new _wysiwyg(element.id, inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
 
-        _this2.wysiwyg = new _wysiwyg(_this2.parent.id + "-editor", _this2.config.additional_data.inlineWysiwygConfig.wysiwygConfig, "inline"); // Update content in our data store after our stage preview wysiwyg gets updated
+      this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
-        _this2.wysiwyg.onEdited(_this2.saveContentFromWysiwygToDataStore.bind(_this2));
-      });
+      _events.on("form:" + this.parent.id + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
     };
     /**
      * Update content in our data store after our stage preview wysiwyg gets updated
