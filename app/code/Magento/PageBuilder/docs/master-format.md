@@ -60,7 +60,7 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 
 ## Row
 
-#### Contained:
+Contained:
 ```
 <div class="row-contained-wrapper" data-element="wrapper" data-role="row" data-appearance="contained">
     <div style="..."></div>
@@ -75,21 +75,21 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 ### main element
 
 Attributes
-4. data-enable-parallax [1, 0]
-5. data-parallax-speed [0-1]
-6. data-background-color-format [hex, rgb, hsl, hsv, name, none]
-7. class
+1. data-enable-parallax [1, 0]
+2. data-parallax-speed [0-1]
+3. data-background-color-format [hex, rgb, hsl, hsv, name, none]
+4. class
 
-#### Full Width:
+Full Width:
 ```
 <div data-element="main" data-role="row" data-appearance="contained" style="...">
     <div data-element="inner" class="row-full-width-inner"></div>
 </div>
 ```
 
-#### Full Bleed:
+Full Bleed:
 ```
-<div data-element="main" data-role="row" data-appearance="contained" style="..."></div>
+<div data-element="main" data-role="row" data-appearance="full-bleed" style="..."></div>
 ```
 
 ### main element
