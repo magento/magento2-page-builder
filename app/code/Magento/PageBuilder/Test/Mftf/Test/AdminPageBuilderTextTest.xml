@@ -125,14 +125,14 @@
             <argument name="page" value="text{{PageBuilderPageTitle.pageName}}"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.stageValue)}}" stepKey="waitForVariableStage"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.stageValue)}}" stepKey="waitForWidgetStage"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -141,7 +141,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
         <waitForElementVisible selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}text{{PageBuilderPageTitle.pageName}}']" stepKey="waitForWidgetStorefront"/>
-        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextDelete">
         <annotations>
@@ -207,7 +207,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Edit Panel -->
@@ -335,7 +335,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -509,7 +509,7 @@
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -555,7 +555,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -563,7 +563,7 @@
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -607,7 +607,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -615,7 +615,7 @@
         <!-- Validate Edit Panel For Duplicate After Save -->
         <comment userInput="Validate Edit Panel For Duplicate After Save" stepKey="commentValidateEdit2"/>
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -659,7 +659,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextValidateGeneralDefaultSettings">
         <annotations>
@@ -794,37 +794,37 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel"/>
-        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="fillTextField"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextField"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
-        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="seeInField"/>
+        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="seeInField"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
-        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="seeInField2"/>
+        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="seeInField2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextDisabledWYSIWYGAddWidget">
         <annotations>
