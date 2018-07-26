@@ -12,8 +12,10 @@
         outline: none;
     }
     ~ .mce-tinymce-inline {
+        display: block !important;
         height: auto !important;
         opacity: 0;
+        pointer-events: none;
         position: absolute;
         transform: translateY(0);
         transition: transform 200ms, opacity 200ms, visibility 200ms;
@@ -33,8 +35,8 @@
 
         // Targeting focused editor (there aren't any classes to hook into for this)
         &:not([style*='display: none;']) {
-            display: block !important;
             opacity: 1;
+            pointer-events: all;
             transform: translateY(-100%);
             visibility: visible !important;
         }
