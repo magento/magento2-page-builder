@@ -37,6 +37,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_
         }); // resume normal interactability with opens when leaving inline editing mode
 
         this.onBlurred(function () {
+          window.getSelection().empty();
           (0, _jquery)("#" + id).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
 
           _events.trigger("stage:interactionStop");
