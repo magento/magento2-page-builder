@@ -37,6 +37,7 @@ export default class Wysiwyg {
 
             // resume normal interactability with opens when leaving inline editing mode
             this.onBlurred(() => {
+                window.getSelection().empty();
                 $(`#${id}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
                 events.trigger("stage:interactionStop");
             });
