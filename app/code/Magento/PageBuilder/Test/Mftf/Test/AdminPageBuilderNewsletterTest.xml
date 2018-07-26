@@ -522,11 +522,6 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
-            <argument name="contentType" value="PageBuilderNewsletterContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-            <argument name="containerTargetIndex" value="2"/>
-        </actionGroup>
+        <waitForElementVisible time="30" selector="(//div[@data-role='column'])[2]//div[contains(@class,'pagebuilder-newsletter')]" stepKey="waitForContentTypeStorefront"/>
     </test>
 </tests>
