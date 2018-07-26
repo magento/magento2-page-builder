@@ -107,40 +107,38 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
 
 To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file:
 
-1. Import the `Magento_PageBuilder/js/content-type/uploader` component as dependency:
+1. Import the 'Magento_PageBuilder/js/content-type/uploader' component as a dependency:
 
-For example:
+    ``` js
+    define(['Magento_PageBuilder/js/content-type/uploader'], function (Uploader) {
+    ```
 
-``` js
-define(['Magento_PageBuilder/js/content-type/uploader'], function (Uploader) {
-```
-
-**Constructor arguments**
-
-| Argument           | Type      | Description                                                                         | Required | Default                                                                                                 |
-| ------------------ | --------- | ----------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
-| `name`             | string    | Used to locate the component in the UIRegistry once it is created.                  | true     | None                                                                                                    |
-| `uploaderConfig`   | object    | Used to initialize the Image Uploader UIComponent.                                  | true     | None                                                                                                    |
-| `contentTypeId`    | string    | The ID of the parent content type this will be used in.                             | true     | None                                                                                                    |
-| `dataStore`        | DataStore | The DataStore that the selected image should be stored in.                          | true     | None                                                                                                    |
-| `initialValue`     | Object[]  | The value that should be used for the initial state of the component.               | true     | None                                                                                                    |
-| `onChangeCallback` | Function  | A callback that will be called when an image is selected.                           | false    | The image will be saved to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
-| `onDeleteCallback` | Function  | A callback that will be called when the current used image is deleted from storage. | false    | The image will be removed from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
-
-An example extracted from the image content type:
-
-```js
-var dataStore = this.parent.dataStore.get();
-var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
-
-this.uploader = new Uploader(
-    'imageuploader_' + this.parent.id,
-    this.config.additional_data.uploaderConfig,
-    this.parent.id,
-    this.parent.dataStore,
-    initialImageValue,
-);
-```
+    **Constructor arguments**
+     
+    | Argument           | Type      | Description                                                                         | Required | Default                                                                                                 |
+    | ------------------ | --------- | ----------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
+    | `name`             | String    | Used to locate the component in the UI registry once it is created.                  | yes     | None                                                                                                    |
+    | `uploaderConfig`   | Object    | Initializes the image uploader UI component.                                  | yes     | None                                                                                                    |
+    | `contentTypeId`    | String    | The ID of the parent content type this will be used in.                             | yes     | None                                                                                                    |
+    | `dataStore`        | DataStore | The DataStore that the selected image should be stored in.                          | yes     | None                                                                                                    |
+    | `initialValue`     | Object[]  | The value to be used for the initial state of the component.               | yes     | None                                                                                                    |
+    | `onChangeCallback` | Function  | A callback that will be called when an image is selected.                           | no    | The image will be saved to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
+    | `onDeleteCallback` | Function  | A callback that will be called when the current used image is deleted from storage. | no    | The image will be removed from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
+ 
+    The following is an example extracted from the image content type:
+     
+    ```js
+    var dataStore = this.parent.dataStore.get();
+    var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+     
+    this.uploader = new Uploader(
+       'imageuploader_' + this.parent.id,
+       this.config.additional_data.uploaderConfig,
+       this.parent.id,
+       this.parent.dataStore,
+       initialImageValue,
+    );
+    ```
 
 2. Add configuration for the uploader in the `<content-type-name>.xml` file to initialize the uploader.
 
@@ -170,3 +168,5 @@ Update the preview template file, `bluefoot/app/code/Magento/PageBuilder/view/ad
    ...
 </div>
 ```
+
+**Note:** When a file is deleted from the media browser, the `fileDeleted` event is triggered on the window with the `mediabrowser` namespace. The passed argument is an object containing the `ids` property, which is an array of ID strings for each of the deleted files. The IDs of the selected files are provided in the objects dispatched by the `addFile` and `processFile` methods inside the image uploader UI Component.
