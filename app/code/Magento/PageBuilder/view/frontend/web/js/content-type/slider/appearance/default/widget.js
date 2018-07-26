@@ -10,8 +10,16 @@ define([
     'use strict';
 
     return function (config, sliderElement) {
+        var $element = $(sliderElement),
+            visibleSlides = $element.find('[data-role=slide]').filter(function (index, el) {
+                return el.style.display !== 'none';
+            });
 
-        var $element = $(sliderElement);
+        if (!visibleSlides.length) {
+            $element.addClass('slider-empty');
+
+            return;
+        }
 
         /**
          * Prevent each slick slider from being initialized more than once which could throw an error.
