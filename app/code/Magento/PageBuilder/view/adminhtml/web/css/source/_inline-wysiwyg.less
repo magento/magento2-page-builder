@@ -12,7 +12,6 @@
         outline: none;
     }
     ~ .mce-tinymce-inline {
-        display: block !important;
         height: auto !important;
         opacity: 0;
         position: absolute;
@@ -31,8 +30,10 @@
         .mce-abs-layout-item {
             position: static;
         }
-        // There aren't any classes to hook into for this
+
+        // Targeting focused editor (there aren't any classes to hook into for this)
         &:not([style*='display: none;']) {
+            display: block !important;
             opacity: 1;
             transform: translateY(-100%);
             visibility: visible !important;
