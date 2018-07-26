@@ -41,7 +41,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionIntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.elementsGroup}}" stepKey="clickElementsGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -66,7 +68,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupMedia">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
@@ -82,7 +86,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.addContentGroup}}" stepKey="clickAddContentGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
