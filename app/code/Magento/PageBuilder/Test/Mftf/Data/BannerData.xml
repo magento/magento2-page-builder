@@ -15,6 +15,12 @@
         <data key="fieldName">appearance</data>
         <data key="value">poster</data>
     </entity>
+    <entity name="PageBuilderBannerAppearance_Poster" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">poster</data>
+    </entity>
     <entity name="PageBuilderBannerCollageLeftProperty" type="pagebuilder_banner_appearance_property">
         <data key="name">Appearance</data>
         <data key="section">appearance_fieldset</data>
@@ -109,13 +115,19 @@
         <data key="value">hover</data>
     </entity>
     <!-- Button Text -->
-    <entity name="PageBuilderBannerButtonTextProperty" type="pagebuilder_banner_buttonText_property">
+    <entity name="PageBuilderBannerButtonText_Default" type="pagebuilder_banner_button_text_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextProperty" type="pagebuilder_banner_button_text_property">
         <data key="name">Button Text</data>
         <data key="section">contents</data>
         <data key="fieldName">button_text</data>
         <data key="value">Good Morning!</data>
     </entity>
-    <entity name="PageBuilderBannerButtonTextProperty2" type="pagebuilder_banner_buttonText_property2">
+    <entity name="PageBuilderBannerButtonTextProperty2" type="pagebuilder_banner_button_text_property">
         <data key="name">Button Text</data>
         <data key="section">contents</data>
         <data key="fieldName">button_text</data>
@@ -126,7 +138,7 @@
         <data key="name">Button Type</data>
         <data key="section">contents</data>
         <data key="fieldName">button_type</data>
-        <data key="value">Primary</data>
+        <data key="value">pagebuilder-button-primary</data>
         <data key="class">true</data>
     </entity>
     <entity name="PageBuilderBannerButtonTypePrimaryProperty" type="pagebuilder_banner_buttonType_property">
@@ -173,11 +185,18 @@
         <data key="value">never</data>
     </entity>
     <!-- Overlay Color -->
-    <entity name="PageBuilderBannerContentOverlayColorProperty" type="pagebuilder_banner_contentOverlayColor_property">
+    <entity name="PageBuilderBannerContentOverlayColorProperty" type="pagebuilder_banner_overlay_color_property">
         <data key="name">Overlay Color</data>
         <data key="section">contents</data>
         <data key="fieldName">overlay_color</data>
         <data key="value">#ffffff</data>
+    </entity>
+    <entity name="PageBuilderBannerOverlayColor_FF0000" type="pagebuilder_banner_overlay_color_property">
+        <data key="name">Overlay Color</data>
+        <data key="section">contents</data>
+        <data key="fieldName">overlay_color</data>
+        <data key="value">#ff0000</data>
+        <data key="rgb">255,0,0</data>
     </entity>
     <!-- Overlay Transparency -->
     <entity name="PageBuilderBannerOverlayTransparencyProperty" type="pagebuilder_banner_overlayTransparency_property">
@@ -185,6 +204,7 @@
         <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">70</data>
+        <data key="decimal">0.7</data>
     </entity>
     <entity name="PageBuilderBannerOverlayTransparencyDefaultProperty" type="pagebuilder_banner_overlayTransparencyDefault_property">
         <data key="name">Overlay Transparency</data>
@@ -197,17 +217,87 @@
         <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">-1</data>
+        <data key="errorMessage">Please enter a value greater than or equal to 0.</data>
     </entity>
     <entity name="PageBuilderBannerOverlayTransparencyInvalidMaxProperty" type="pagebuilder_banner_overlayTransparency_property">
         <data key="name">Overlay Transparency</data>
         <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">101</data>
+        <data key="errorMessage">Please enter a value less than or equal to 100.</data>
     </entity>
     <entity name="PageBuilderBannerOverlayTransparencyInvalidTypeProperty" type="pagebuilder_banner_overlayTransparency_property">
         <data key="name">Overlay Transparency</data>
         <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">abc</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <!-- Padding -->
+    <entity name="PageBuilderBannerCollageLeftPaddingPropertyDefault" type="pagebuilder_banner_collage_left_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="paddingTop">40</data>
+        <data key="paddingRight">40</data>
+        <data key="paddingBottom">40</data>
+        <data key="paddingLeft">40</data>
+        <data key="desktopValue">40px calc(50% + 40px) 40px 40px</data>
+        <data key="mobileValue">40px 40px 40px 40px</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageLeftPaddingPropertyUnique" type="pagebuilder_banner_collage_left_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="paddingTop">1</data>
+        <data key="paddingRight">2</data>
+        <data key="paddingBottom">3</data>
+        <data key="paddingLeft">4</data>
+        <data key="desktopValue">1px calc(50% + 2px) 3px 4px</data>
+        <data key="mobileValue">1px 2px 3px 4px</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageCenterPaddingPropertyDefault" type="pagebuilder_banner_collage_center_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="paddingTop">1</data>
+        <data key="paddingRight">2</data>
+        <data key="paddingBottom">3</data>
+        <data key="paddingLeft">4</data>
+        <data key="desktopValue">40px calc(25% + 40px)</data>
+        <data key="mobileValue">40px 40px 40px 40px</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageCenterPaddingPropertyUnique" type="pagebuilder_banner_collage_center_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="paddingTop">1</data>
+        <data key="paddingRight">2</data>
+        <data key="paddingBottom">3</data>
+        <data key="paddingLeft">4</data>
+        <data key="desktopValue">1px calc(25% + 2px) 3px calc(25% + 4px)</data>
+        <data key="mobileValue">1px 2px 3px 4px</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageRightPaddingPropertyDefault" type="pagebuilder_banner_collage_right_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="paddingTop">1</data>
+        <data key="paddingRight">2</data>
+        <data key="paddingBottom">3</data>
+        <data key="paddingLeft">4</data>
+        <data key="desktopValue">40px 40px 40px calc(50% + 40px)</data>
+        <data key="mobileValue">40px 40px 40px 40px</data>
+    </entity>
+    <entity name="PageBuilderBannerCollageRightPaddingPropertyUnique" type="pagebuilder_banner_collage_right_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="paddingTop">1</data>
+        <data key="paddingRight">2</data>
+        <data key="paddingBottom">3</data>
+        <data key="paddingLeft">4</data>
+        <data key="desktopValue">1px 2px 3px calc(50% + 4px)</data>
+        <data key="mobileValue">1px 2px 3px 4px</data>
     </entity>
 </entities>
