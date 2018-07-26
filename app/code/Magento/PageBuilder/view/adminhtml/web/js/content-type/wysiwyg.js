@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_events, _setup) {
+define(["jquery", "Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_jquery, _events, _setup) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -31,10 +31,14 @@ define(["Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_mce/setup"
       if (mode === "inline") {
         // prevent interactability with options when in inline editing mode
         this.onFocused(function () {
+          (0, _jquery)("#" + id).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
           _events.trigger("stage:interactionStart");
         }); // resume normal interactability with opens when leaving inline editing mode
 
         this.onBlurred(function () {
+          (0, _jquery)("#" + id).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+
           _events.trigger("stage:interactionStop");
         });
       }

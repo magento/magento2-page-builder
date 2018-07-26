@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 
@@ -30,11 +31,13 @@ export default class Wysiwyg {
         if (mode === "inline") {
             // prevent interactability with options when in inline editing mode
             this.onFocused(() => {
+                $(`#${id}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
                 events.trigger("stage:interactionStart");
             });
 
             // resume normal interactability with opens when leaving inline editing mode
             this.onBlurred(() => {
+                $(`#${id}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
                 events.trigger("stage:interactionStop");
             });
         }
