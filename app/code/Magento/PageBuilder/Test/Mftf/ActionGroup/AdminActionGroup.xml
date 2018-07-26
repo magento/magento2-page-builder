@@ -94,4 +94,11 @@
             <actualResult type="variable">rowWidth</actualResult>
         </assertGreaterThan>
     </actionGroup>
+    <actionGroup name="openPageBuilderOnCatalog">
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
+        <!--See PageBuilder fullsize-->
+        <comment userInput="See PageBuilder fullsize" stepKey="commentSeePageBuilderFullsize"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+    </actionGroup>
 </actionGroups>

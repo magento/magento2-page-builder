@@ -1318,4 +1318,214 @@
         </assertRegExp>
         <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
     </test>
+    <test name="AdminPageBuilderProductDirectivesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Product"/>
+            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Product Page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1364"/>
+            <testCaseId value="MC-3174 "/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_newDefaultProduct" stepKey="createPreReqProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
+            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+            <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct" />
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Go to Product Page-->
+        <comment userInput="Go to Product Page" stepKey="goToProductPage"/>
+        <amOnPage url="{{AdminProductEditPage.url($$createPreReqProduct.id$$)}}" stepKey="goToEditPage"/>
+        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <!--Click enable PageBuilder button-->
+        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
+        <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
+        <!--Add button into PageBuilder-->
+        <comment userInput="Add button into PageBuilder" stepKey="addButtonIntoPageBuilder"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!--Choose cms page link type-->
+        <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
+        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
+            <argument name="fieldName" value="button_link"/>
+            <argument name="linkName" value="ExternalLink.page"/>
+            <argument name="searchString" value="ExternalLinkSearch.page"/>
+            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!--Add image into PageBuilder-->
+        <comment userInput="Add image into PageBuilder" stepKey="addImageIntoPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Add variable into Text content-->
+        <comment userInput="Add variable into Text content" stepKey="addVariableIntoTextContent"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableCountry"/>
+        </actionGroup>
+        <!--Add variable into Text content-->
+        <comment userInput="Add widget into Text content" stepKey="addWidgetIntoTextContent"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <!--Go to storefront to verify Product Link-->
+        <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
+        <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
+        <comment userInput="Verify directive link on Storefront" stepKey="verifyDirectiveLinkOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <scrollTo selector="{{StorefrontProductInfoDetailsSection.detailsTab}}" stepKey="scrollToDetailsTab"/>
+        <see userInput="US" stepKey="verifyCountryVariableName" />
+        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
+            <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderCategoryDirectivesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Category"/>
+            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Category Page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-3173"/>
+            <useCaseId value="MC-1364"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
+            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Go to Category Page-->
+        <comment userInput="Go to Category Page" stepKey="goToCategoryPage"/>
+        <amOnPage url="{{AdminCategoryEditPage.url($$createPreReqCategory.id$$)}}" stepKey="goToCategoryEditPage"/>
+        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
+        <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="clickContentTab"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <!--Click enable PageBuilder button-->
+        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
+        <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
+        <!--Add button to PageBuilder-->
+        <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!--Choose cms page link type-->
+        <comment stepKey="commentChooseCmsPageLinkType" userInput="Choose cms page link type"/>
+        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
+            <argument name="fieldName" value="button_link"/>
+            <argument name="linkName" value="ExternalLink.page"/>
+            <argument name="searchString" value="ExternalLinkSearch.page"/>
+            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <!--Add image to PageBuilder-->
+        <comment userInput="Add image to PageBuilder" stepKey="addImageToPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Add variable to PageBuilder-->
+        <comment userInput="Add variable to PageBuilder" stepKey="addVariableToPageBuilder"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableCountry"/>
+        </actionGroup>
+        <!--Add widget to PageBuilder-->
+        <comment userInput="Add widget to PageBuilder" stepKey="addWidgetToPageBuilder"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <!--Go to storefront to verify Category Link-->
+        <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
+        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <see userInput="US" stepKey="verifyCountryVariableName" />
+        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
+            <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
 </tests>
