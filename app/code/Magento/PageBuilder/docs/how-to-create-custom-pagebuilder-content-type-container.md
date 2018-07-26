@@ -80,7 +80,7 @@ The configuration for container group will be the following snippet:
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="custom-container-group"
-          label="Custom Container Group"
+          label="Containers"
           component="Magento_PageBuilder/js/content-type-collection"
           preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
@@ -622,7 +622,7 @@ Now we are going to add logic to the container group and container.
 In the file:
 
 ``` xml
-view/adminhtml/web/js/content-type/custom-container-group.js
+view/adminhtml/web/js/content-type/custom-container-group/preview.js
 ```
 
 We are going to add the following:
@@ -703,7 +703,7 @@ In this preview component we are doing 4 things.
 Next lets add logic to the container in the file:
 
 ``` xml
-view/adminhtml/web/js/content-type/custom-container.js
+view/adminhtml/web/js/content-type/custom-container/preview.js
 ```
 
 With the content:
