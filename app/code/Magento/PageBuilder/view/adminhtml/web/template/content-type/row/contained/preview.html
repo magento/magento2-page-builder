@@ -5,13 +5,13 @@
  */
 -->
 
-<div attr="data.wrapper.attributes"
-     ko-style="data.wrapper.style"
-     css="data.wrapper.css">
+<div attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="data.main.css">
     <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
-         attr="data.main.attributes"
-         ko-style="data.main.style"
-         css="Object.assign(data.main.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1})"
+         attr="data.inner.attributes"
+         ko-style="data.inner.style"
+         css="Object.assign(data.inner.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.inner.attributes()['data-enable-parallax'] == 1})"
          event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
          afterRender="initParallax">
         <render args="getOptions().template"/>

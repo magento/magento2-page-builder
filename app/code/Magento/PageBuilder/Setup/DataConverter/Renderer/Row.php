@@ -34,53 +34,48 @@ class Row implements RendererInterface
         $appearance = (isset($formData['template'])
             && $formData['template'] === 'full-width.phtml') ? 'full-width' : 'contained';
 
-        // Handle adding the wrapper element attributes when using the contained appearance
-        $rootElementAttributes = [];
-        if ($appearance === 'contained') {
-            $rootElementAttributes = [
-                'data-element' => 'main',
-                'class' => $itemData['formData']['css_classes'] ?? '',
-            ];
-        } elseif ($appearance === 'full-width') {
-            $rootElementAttributes = [
-                'data-element' => 'main',
-                'data-role' => 'row',
-                'data-appearance' => 'full-width',
-                'class' => $itemData['formData']['css_classes'] ?? '',
-            ];
-        }
-
         $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
-        }
 
         $childrenHtml = (isset($additionalData['children']) ? $additionalData['children'] : '');
 
-        // Wrap the children when the layout is full width
         if ($appearance === 'full-width') {
-            $childrenHtml = '<div class="row-full-width-inner" data-element="inner">' . $childrenHtml . '</div>';
-        }
-
-        $rootElementHtml = $this->renderElementWithAttributes(
-            $rootElementAttributes,
-            $childrenHtml
-        );
-
-        // Wrap the root element in our wrapper for contained appearances
-        if ($appearance === 'contained') {
             return $this->renderElementWithAttributes(
                 [
-                    'data-element' => 'wrapper',
+                    'data-element' => 'main',
                     'data-role' => 'row',
-                    'data-appearance' => 'contained',
-                    'class' => 'row-contained',
+                    'data-appearance' => 'full-width',
+                    'class' => $itemData['formData']['css_classes'] ?? '',
+                    'style' => $style ?? null
                 ],
-                $rootElementHtml
+                $this->renderElementWithAttributes(
+                    [
+                        'data-element' => 'inner',
+                        'class' => 'row-full-width-inner',
+                    ],
+                    $childrenHtml
+                )
             );
         }
 
-        return $rootElementHtml;
+        if ($appearance === 'contained') {
+            return $this->renderElementWithAttributes(
+                [
+                    'data-element' => 'main',
+                    'data-role' => 'row',
+                    'data-appearance' => 'contained',
+                ],
+                $this->renderElementWithAttributes(
+                    [
+                        'data-element' => 'inner',
+                        'class' => $itemData['formData']['css_classes'] ?? '',
+                        'style' => $style ?? null
+                    ],
+                    $childrenHtml
+                )
+            );
+        }
+
+        return '';
     }
 
     /**
@@ -95,7 +90,9 @@ class Row implements RendererInterface
         $rootElementHtml = '<div';
         foreach ($attributes as $attributeName => $attributeValue) {
             $attributeValue = trim($attributeValue);
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            if ($attributeValue) {
+                $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            }
         }
         $rootElementHtml .= '>' . $childrenHtml . '</div>';
         return $rootElementHtml;
