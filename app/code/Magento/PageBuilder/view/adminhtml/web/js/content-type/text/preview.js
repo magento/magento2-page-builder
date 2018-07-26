@@ -44,7 +44,7 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/events", "Magento_PageBu
             return;
           }
 
-          inlineWysiwygConfig.wysiwygConfig.settings[configKey] = _this2.parent.id + (configValue ? " " + configValue : "");
+          inlineWysiwygConfig.wysiwygConfig.settings[configKey] = "#" + _this2.parent.id + (configValue ? " " + configValue : "");
         });
       }
 

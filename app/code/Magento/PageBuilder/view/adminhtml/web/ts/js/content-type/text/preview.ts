@@ -40,7 +40,7 @@ export default class Preview extends BasePreview {
                 }
 
                 inlineWysiwygConfig.wysiwygConfig.settings[configKey] = (
-                    this.parent.id + (configValue ? " " + configValue : "")
+                    "#" + this.parent.id + (configValue ? " " + configValue : "")
                 );
             });
         }
