@@ -4,8 +4,8 @@
  */
 
 import $ from "jquery";
-import events from "Magento_PageBuilder/js/events";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
+import events from "Magento_PageBuilder/js/events";
 
 /**
  * @api
@@ -54,7 +54,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    public onEdited(callback: Function) {
+    public onEdited(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceChange",
             callback,
@@ -64,7 +64,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    public onFocused(callback: Function) {
+    public onFocused(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceFocus",
             callback,
@@ -74,7 +74,7 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    public onBlurred(callback: Function) {
+    public onBlurred(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceBlur",
             callback,

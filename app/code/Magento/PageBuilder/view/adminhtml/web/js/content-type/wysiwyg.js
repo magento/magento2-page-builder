@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_jquery, _events, _setup) {
+define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events"], function (_jquery, _setup, _events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

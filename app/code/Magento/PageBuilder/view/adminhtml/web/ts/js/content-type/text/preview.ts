@@ -4,8 +4,8 @@
  */
 
 import $ from "jquery";
-import _ from "underscore";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import Config from "../../config";
 import BasePreview from "../preview";
 import Wysiwyg from "../wysiwyg";
@@ -73,7 +73,7 @@ export default class Preview extends BasePreview {
      */
     private setContentFromDataStoreToWysiwyg() {
         this.wysiwyg.getAdapter().setContent(
-            this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey),
+            this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey) as string,
         );
     }
 }
