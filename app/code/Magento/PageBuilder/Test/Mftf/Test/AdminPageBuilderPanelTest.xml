@@ -195,6 +195,7 @@
         <comment userInput="Clear input field using backspace to show all content types on Pagebuilder panel" stepKey="commentDeleteSearch"/>
         <pressKey selector="{{PageBuilderPanel.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
         <dontSee userInput="r" selector="{{PageBuilderPanel.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClearField"/>
     </test>
     <test name="SearchContentTypeAndAddToStage">
