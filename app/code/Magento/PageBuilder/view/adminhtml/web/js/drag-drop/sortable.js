@@ -148,8 +148,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     ui.item.removeClass("pagebuilder-sorting-original");
     (0, _dropIndicators.hideDropIndicators)();
     (0, _registry.setDraggedContentTypeConfig)(null);
-
-    _events.trigger("stage:interactionStop");
   }
   /**
    * Handle receiving a content type from the left panel

@@ -168,9 +168,17 @@ export default class Stage {
             }
         });
 
-        events.on("stage:interactionStart", () => this.interacting(true));
-        events.on("stage:interactionStop", () => this.interacting(false));
+        let interactionLevel = 0;
 
+        events.on("stage:interactionStart", () => {
+            ++interactionLevel;
+            this.interacting(true);
+        });
+        events.on("stage:interactionStop", () => {
+            if ( --interactionLevel === 0) {
+                this.interacting(false)
+            }
+        });
         events.on("stage:childFocusStart", () => this.focusChild(true));
         events.on("stage:childFocusStop", () => this.focusChild(false));
     }
