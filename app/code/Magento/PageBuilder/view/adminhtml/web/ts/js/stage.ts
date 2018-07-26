@@ -175,8 +175,8 @@ export default class Stage {
             this.interacting(true);
         });
         events.on("stage:interactionStop", () => {
-            if ( --interactionLevel === 0) {
-                this.interacting(false)
+            if (--interactionLevel === 0) {
+                this.interacting(false);
             }
         });
         events.on("stage:childFocusStart", () => this.focusChild(true));
