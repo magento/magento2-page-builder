@@ -48,7 +48,7 @@
         <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
@@ -59,6 +59,9 @@
             <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -113,7 +116,7 @@
         <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
@@ -126,6 +129,9 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
         <!-- Add heading to stage -->
         <comment userInput="Add heading to stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingOntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>

@@ -227,6 +227,9 @@
         <waitForElementVisible selector="{{RowOnStage.empty('1')}}" stepKey="waitForEmptyRow"/>
         <see selector="{{RowOnStage.base('1')}}" userInput="Drag content types or columns here" stepKey="seeRowPlaceholder"/>
         <see selector="{{RowOnStage.displayLabel('1')}}" userInput="Row" stepKey="seeRowDisplayLabel"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -262,6 +265,9 @@
             <expectedResult type="string">320</expectedResult>
             <actualResult type="variable">getEmptyRowHeight</actualResult>
         </assertEquals>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>

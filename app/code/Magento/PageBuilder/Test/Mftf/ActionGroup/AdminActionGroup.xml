@@ -59,17 +59,17 @@
         <see userInput="You saved the page." selector="{{CmsPagesPageActionsSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnStaging">
-        <scrollTo selector="{{PageBuilderPanel.generalGroup}}" stepKey="scrollToIdentifyPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
+        <scrollTo selector="{{PageBuilderPanel.layoutGroup}}" stepKey="scrollToIdentifyPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
-        <dontSee selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
+        <dontSee selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
     <actionGroup name="setLayout">
         <arguments>
@@ -101,7 +101,7 @@
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <!--See PageBuilder fullsize-->
         <comment userInput="See PageBuilder fullsize" stepKey="commentSeePageBuilderFullsize"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
     </actionGroup>
 </actionGroups>
