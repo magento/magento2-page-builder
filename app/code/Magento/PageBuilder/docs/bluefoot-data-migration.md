@@ -56,7 +56,6 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
-[Creating Custom Content Block]: creating-custom-content-block.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
 
 ## Overview

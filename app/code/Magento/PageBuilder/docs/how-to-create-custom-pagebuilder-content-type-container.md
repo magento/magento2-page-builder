@@ -54,16 +54,15 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
-[Creating Custom Content Block]: creating-custom-content-block.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
 
 ## Before you begin
 
-Refer to how-to-add-new-content-type.md for creating generic content type and content type collection.
+Refer to [How to add a new content type](how-to-add-new-content-type.md) for creating generic content type and content type collection.
 
 Also, make sure you know how to register your custom module, if not refer to:  https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html
 
-In this tutorial, we will be creating a custom container group module named `CustomPageBuilder_CustomContentTypes` that will have 2 appearances, `left` and `right`. And each container group will contain 3 containers in a grid and will be styled differently based on the container groups appearance.
+In this tutorial, we will be creating a custom container group module named `VendorName_CustomContainers` that will have 2 appearances, `left` and `right`. And each container group will contain 3 containers in a grid and will be styled differently based on the container groups appearance.
 
 ## Configuration
 
@@ -71,7 +70,7 @@ We will be creating the configurations for the custom container group and custom
 
 For the container group we will be creating the file:
 
-``` xml
+``` text
 view/base/pagebuilder/content_type/custom_container_group.xml
 ```
 
@@ -80,9 +79,9 @@ The configuration for container group will be the following snippet:
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="custom-container-group"
-          label="Containers"
+          label="Custom Containers"
           component="Magento_PageBuilder/js/content-type-collection"
-          preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container-group/preview"
+          preview_component="VendorName_CustomContainers/js/content-type/custom-container-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_group_form"
           group="general"
@@ -98,8 +97,8 @@ The configuration for container group will be the following snippet:
         <appearances>
             <appearance default="true"
                         name="left"
-                        preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/left/preview"
-                        render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/left/master"
+                        preview_template="VendorName_CustomContainers/content-type/custom-container-group/left/preview"
+                        render_template="VendorName_CustomContainers/content-type/custom-container-group/left/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -112,18 +111,13 @@ The configuration for container group will be the following snippet:
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
-                        <css name="css_classes">
-                            <filter>
-                                <class source="pagebuilder-custom-container-group"/>
-                                <class source="left-appearance"/>
-                            </filter>
-                        </css>
+                        <css name="css_classes"/>
                     </element>
                 </elements>
             </appearance>
             <appearance name="right"
-                        preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/right/preview"
-                        render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container-group/right/master"
+                        preview_template="VendorName_CustomContainers/content-type/custom-container-group/right/preview"
+                        render_template="VendorName_CustomContainers/content-type/custom-container-group/right/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -136,12 +130,7 @@ The configuration for container group will be the following snippet:
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>                                
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
-                        <css name="css_classes">
-                            <filter>
-                                <class source="pagebuilder-custom-container-group"/>
-                                <class source="right-appearance"/>
-                            </filter>
-                        </css>
+                        <css name="css_classes"/>
                     </element>
                 </elements>
             </appearance>
@@ -162,7 +151,7 @@ Next we will do the same for containers.
 
 For the container we will be creating the file:
 
-``` xml
+``` text
 view/base/pagebuilder/content_type/custom_container.xml
 ```
 
@@ -173,7 +162,7 @@ The configuration for container group will be the following snippet:
     <type name="custom-container"
           label="Container"
           component="Magento_PageBuilder/js/content-type-collection"
-          preview_component="CustomPageBuilder_CustomContentTypes/js/content-type/custom-container/preview"
+          preview_component="VendorName_CustomContainers/js/content-type/custom-container/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_form"
           group="general"
@@ -195,8 +184,8 @@ The configuration for container group will be the following snippet:
         <appearances>
             <appearance default="true"
                         name="default"
-                        preview_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container/default/preview"
-                        render_template="CustomPageBuilder_CustomContentTypes/content-type/custom-container/default/master"
+                        preview_template="VendorName_CustomContainers/content-type/custom-container/default/preview"
+                        render_template="VendorName_CustomContainers/content-type/custom-container/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -216,11 +205,7 @@ The configuration for container group will be the following snippet:
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
-                        <css name="css_classes">
-                            <filter>
-                                <class source="pagebuilder-custom-container"/>
-                            </filter>
-                        </css>
+                        <css name="css_classes"/>
                     </element>
                 </elements>
                 <converters>
@@ -246,7 +231,7 @@ First lets create the layouts.
 
 Container group will be in:
 
-``` xml
+``` text
 view/adminhtml/layout/pagebuilder_custom_container_group_form.xml
 ```
 
@@ -265,7 +250,7 @@ view/adminhtml/layout/pagebuilder_custom_container_group_form.xml
 
 Container will be in:
 
-``` xml
+``` text
 view/adminhtml/layout/pagebuilder_custom_container_form.xml
 ```
 
@@ -286,7 +271,7 @@ Next lets create the actual forms.
 
 Container group will be in:
 
-``` xml
+``` text
 view/adminhtml/ui_component/pagebuilder_custom_container_group_form.xml
 ```
 
@@ -352,7 +337,7 @@ view/adminhtml/ui_component/pagebuilder_custom_container_group_form.xml
             <formElements>
                 <select>
                     <settings>
-                        <options class="AppearanceSourceCustomContainerGroup" />
+                        <options class="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainerGroup" />
                     </settings>
                 </select>
             </formElements>
@@ -363,7 +348,7 @@ view/adminhtml/ui_component/pagebuilder_custom_container_group_form.xml
 
 Container will be in:
 
-``` xml
+``` text
 view/adminhtml/ui_component/pagebuilder_custom_container_form.xml
 ```
 
@@ -429,7 +414,7 @@ view/adminhtml/ui_component/pagebuilder_custom_container_form.xml
             <formElements>
                 <select>
                     <settings>
-                        <options class="AppearanceSourceCustomContainer" />
+                        <options class="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainer" />
                     </settings>
                 </select>
             </formElements>
@@ -448,7 +433,7 @@ Notice in the form section above, there is
 <formElements>
     <select>
         <settings>
-            <options class="AppearanceSourceCustomContainer" />
+            <options class="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainer" />
         </settings>
     </select>
 </formElements>
@@ -466,24 +451,24 @@ And inside it should have:
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="AppearanceSourceCustomContainerGroup" type="Magento\PageBuilder\Model\Source\VisualSelect">
+    <virtualType name="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainerGroup" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
             <argument name="optionsSize" xsi:type="string">large</argument>
             <argument name="optionsData" xsi:type="array">
                 <item name="10" xsi:type="array">
                     <item name="value" xsi:type="string">left</item>
                     <item name="title" xsi:type="string" translate="true">Left</item>
-                    <item name="icon" xsi:type="string">CustomPageBuilder_CustomContentTypes/css/images/content-type/custom-container-group/appearance/left.svg</item>
+                    <item name="icon" xsi:type="string">VendorName_CustomContainers/css/images/content-type/custom-container-group/appearance/left.svg</item>
                 </item>
                 <item name="20" xsi:type="array">
                     <item name="value" xsi:type="string">right</item>
                     <item name="title" xsi:type="string" translate="true">Right</item>
-                    <item name="icon" xsi:type="string">CustomPageBuilder_CustomContentTypes/css/images/content-type/custom-container-group/appearance/right.svg</item>
+                    <item name="icon" xsi:type="string">VendorName_CustomContainers/css/images/content-type/custom-container-group/appearance/right.svg</item>
                 </item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="AppearanceSourceCustomContainer" type="Magento\PageBuilder\Model\Source\VisualSelect">
+    <virtualType name="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainer" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
             <argument name="optionsSize" xsi:type="string">large</argument>
             <argument name="optionsData" xsi:type="array">
@@ -498,7 +483,7 @@ And inside it should have:
 ```
 
 In order for the icons to work, you have to create the following files:
-``` xml
+``` text
 view/adminhtml/web/css/images/content-type/custom-container-group/appearance/left.svg
 view/adminhtml/web/css/images/content-type/custom-container-group/appearance/right.svg
 ```
@@ -511,14 +496,14 @@ Container group will have 2 sets of templates, 1 for each appearance.
 
 For left appearance preview template create:
 
-``` xml
+``` text
 view/adminhtml/web/template/content-type/custom-container-group/left/preview.html
 ```
 
 It will contain:
 
 ``` xml
-<div class="pagebuilder-content-type type-container pagebuilder-custom-container-group left-appearance"
+<div class="pagebuilder-content-type type-container pagebuilder-custom-container-group"
      attr="data.main.attributes"
      ko-style="data.main.style"
      css="data.main.css"
@@ -530,28 +515,28 @@ It will contain:
 
 For left appearance master template create:
 
-``` xml
+``` text
 view/adminhtml/web/template/content-type/custom-container-group/left/master.html
 ```
 
 It will contain:
 
 ``` xml
-<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" class="pagebuilder-custom-container-group left-appearance">
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
     <render args="renderChildTemplate"/>
 </div>
 ```
 
 For right appearance preview template create:
 
-``` xml
+``` text
 view/adminhtml/web/template/content-type/custom-container-group/right/preview.html
 ```
 
 It will contain:
 
 ``` xml
-<div class="pagebuilder-content-type type-container pagebuilder-custom-container-group right-appearance"
+<div class="pagebuilder-content-type type-container pagebuilder-custom-container-group"
      attr="data.main.attributes"
      ko-style="data.main.style"
      css="data.main.css"
@@ -563,14 +548,14 @@ It will contain:
 
 For right appearance master template create:
 
-``` xml
+``` text
 view/adminhtml/web/template/content-type/custom-container-group/right/master.html
 ```
 
 It will contain:
 
 ``` xml
-<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" class="pagebuilder-custom-container-group right-appearance">
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
     <render args="renderChildTemplate"/>
 </div>
 ```
@@ -579,7 +564,7 @@ Next we will create the templates for container:
 
 For preview template create:
 
-``` xml
+``` text
 view/adminhtml/web/template/content-type/custom-container/default/preview.html
 ```
 
@@ -603,14 +588,14 @@ It will contain:
 
 For master template create:
 
-``` xml
+``` text
 view/adminhtml/web/template/content-type/custom-container/default/master.html
 ```
 
 It will contain:
 
-``` xml
-<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" class="pagebuilder-custom-container">
+``` html
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
     <render args="renderChildTemplate"/>
 </div>
 ```
@@ -621,7 +606,7 @@ Now we are going to add logic to the container group and container.
 
 In the file:
 
-``` xml
+``` text
 view/adminhtml/web/js/content-type/custom-container-group/preview.js
 ```
 
@@ -702,7 +687,7 @@ In this preview component we are doing 4 things.
 
 Next lets add logic to the container in the file:
 
-``` xml
+``` text
 view/adminhtml/web/js/content-type/custom-container/preview.js
 ```
 
@@ -753,67 +738,13 @@ In this preview component we are doing 2 things.
 1. Inside the constructor we are extending preview collection since it is a collection content type.
 2. In the retrieveOptions method, we are overwriting this content types options list to remove options `move`, `duplicate`, and `remove`.
 
-## Widget
-
-In order for additional logic to be added in the store front, we would have to create a custom widget for the custom content types.
-
-In this case we will add a simple widget to the container group.
-
-First we have to add a layout for this widget, so create file:
-
-``` xml
-view/frontend/layout/default.xml
-```
-
-Inside, fill it with:
-
-``` xml
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
-        <referenceBlock name="head.components">
-            <block class="Magento\PageBuilder\Block\WidgetInitializer" name="pagebuilder.widget.initializer" template="Magento_PageBuilder::widget_initializer.phtml">
-                <arguments>
-                    <argument name="config" xsi:type="array">
-                        <item name="custom-container-group" xsi:type="array">
-                            <item name="default" xsi:type="array">
-                                <item name="component" xsi:type="string">CustomPageBuilder_CustomContentTypes/js/content-type/custom-container-group/appearance/default/widget</item>
-                            </item>
-                        </item>
-                    </argument>
-                </arguments>
-            </block>
-        </referenceBlock>
-    </body>
-</page>
-```
-
-Now we will create the actual widget component in
-
-``` xml
-view/frontend/web/js/content-type/custom-container-group/appearance/default/widget.js
-```
-   
-And inside it will be:
-
-``` js
-define([], function () {
-    'use strict';
-
-    return function (config, element) {
-        console.log('Hello World');
-    };
-});
-```
-
-All this widget will do on the storefront, for every container group, it will output `Hello World` to the console.
-
 ## Styling
 
 We will be adding styles to this module on both admin panel as well as store front.
 
 For admin panel, create 
 
-``` xml
+``` text
 view/adminhtml/web/css/source/_module.less
 ```
 
@@ -842,7 +773,7 @@ And it will contain:
         }
     }
 
-    &.left-appearance {
+    &[data-appearance='left'] {
         > .element-children {
             .pagebuilder-content-type-wrapper {
                 &:nth-child(1) {
@@ -861,7 +792,7 @@ And it will contain:
         }
     }
 
-    &.right-appearance {
+    &[data-appearance='right'] {
         > .element-children {
             .pagebuilder-content-type-wrapper {
                 &:nth-child(1) {
@@ -880,25 +811,31 @@ And it will contain:
         }
     }
 }
+
+.icon-pagebuilder-custom-container:before {
+    content: '\e912';
+}
 ```
+
+Notice on the bottom there is ```.icon-pagebuilder-custom-container:before```. It is to create the custom icon for the content type.
 
 For storefront, create 
 
-``` xml
+``` text
 view/frontend/web/css/source/_module.less
 ```
 
 And it will contain:
 
 ``` css
-.pagebuilder-custom-container-group {
+div[data-role='custom-container-group'] {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 270px 370px 270px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
 
-    .left-appearance& {
-        .pagebuilder-custom-container {
+    &[data-appearance='left'] {
+        div[data-role='custom-container'] {
             &:nth-child(1) {
                 grid-column: 1;
                 grid-row: 1;
@@ -914,8 +851,8 @@ And it will contain:
         }
     }
 
-    .right-appearance& {
-        .pagebuilder-custom-container {
+    &[data-appearance='right'] {
+        div[data-role='custom-container'] {
             &:nth-child(1) {
                 grid-column: 1;
                 grid-row: ~"1 / 3";
@@ -931,14 +868,59 @@ And it will contain:
         }
     }
 }
+
+@media all and (max-width: @screen__m) {
+    div[data-role='custom-container-group'] {
+        grid-template-columns: 1fr;
+
+
+        &[data-appearance='left'] {
+            grid-template-rows: 200px 200px 400px;
+        }
+
+        &[data-appearance='right'] {
+            grid-template-rows: 400px 200px 200px;
+        }
+
+        &[data-appearance='left'],
+        &[data-appearance='right'] {
+            div[data-role='custom-container'] {
+                &:nth-child(1) {
+                    grid-column: 1;
+                    grid-row: 1;
+                }
+                &:nth-child(2) {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+                &:nth-child(3) {
+                    grid-column: 1;
+                    grid-row: 3;
+                }
+            }
+        }
+
+    }
+}
 ```
+
+Note the @media section is to set up responsive design in which we stack the containers.
 
 ## Final note
 
-Now register your new module and clear your cache and you should have a new custom content type called `Custom Container Group` and it default to left appearance.
+Now register your new module and clear your cache and you should have a new custom content type called `Custom Container` and it default to left appearance.
+
+![Custom Containers Panel](images/custom-containers-panel.png)
 
 When it is loaded to the stage, it should be filled with 3 container content types that have only one option to edit. 
 
 The left appearance will have 2 rows of contains on the left while on right appearance there will be 2 rows on the right side.
 
-Finally, you can switch between the 2 appearances via the container group edit panel.
+Left:
+![Custom Containers Left Appearance](images/custom-containers-left.png)
+
+Right:
+![Custom Containers Right Appearance](images/custom-containers-right.png)
+
+Finally, you can switch between the 2 appearances via the container group edit panel in its configuration form.
+![Custom Containers Form](images/custom-containers-form.png)
