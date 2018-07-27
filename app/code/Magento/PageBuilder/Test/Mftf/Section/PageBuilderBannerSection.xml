@@ -41,14 +41,14 @@
         <element name="buttonType" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonText" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//button[.='{{arg2}}']" parameterized="true"/>
         <element name="showOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-overlay-color='rgba({{arg2}},{{arg3}})']" parameterized="true"/>
-        <element name="noOverlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-overlay-color='transparent']" parameterized="true"/>
+        <element name="overlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="transparentOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <element name="mobileMessageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="mobileNoMessageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
         <element name="mobileButtonType" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="mobileButtonText" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//button[.='{{arg2}}']" parameterized="true"/>
-        <element name="mobileOverlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-overlay-color='rgba({{arg2}},{{arg3}})']" parameterized="true"/>
-        <element name="mobileNoOverlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-overlay-color='transparent']" parameterized="true"/>
+        <element name="mobileOverlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="mobileTransparentOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -68,11 +68,9 @@
 
         <!--fix or replace these-->
         <element name="poster" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden"/>
-        <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="collageLeft" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
         <element name="collageCentered" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)'][style*='magento']"/>
         <element name="collageRight" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
-        <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="posterMobileWithMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='m-logo']"/>
         <element name="collageMobileWithMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='m-logo']"/>
         <element name="collageMobileWithoutMobileImage" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='magento']"/>
@@ -100,12 +98,13 @@
         <!-- Content Configuration -->
         <element name="messageContent" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
+        <element name="button" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//button" parameterized="true"/>
         <element name="showButton" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][@data-show-button='{{arg2}}']" parameterized="true"/>
         <element name="buttonType" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonText" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//button//span[.='{{arg2}}']" parameterized="true"/>
         <element name="showOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayColorAndTransparency" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-overlay-color='rgba({{arg2}},{{arg3}})']" parameterized="true"/>
-        <element name="noOverlayColorAndTransparency" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-overlay-color='transparent']" parameterized="true"/>
+        <element name="overlayColorAndTransparency" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="transparentOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
