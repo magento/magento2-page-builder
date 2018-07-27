@@ -37,9 +37,10 @@ class Wysiwyg extends Template
 
     /**
      * Get config for wysiwyg initialization
-     * @return \Magento\Framework\DataObject
+     *
+     * @return string
      */
-    public function getConfig() : DataObject
+    public function getConfigJson() : string
     {
         $config = $this->config->getConfig();
 
@@ -47,6 +48,6 @@ class Wysiwyg extends Template
             $config = new DataObject($config);
         }
 
-        return $config;
+        return $config->toJson();
     }
 }
