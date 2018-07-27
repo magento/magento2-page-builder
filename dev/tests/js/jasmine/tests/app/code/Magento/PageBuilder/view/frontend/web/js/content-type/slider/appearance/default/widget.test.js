@@ -9,11 +9,19 @@ define([
     'use strict';
 
     describe('Magento_PageBuilder/js/content-type/slider/appearance/default/widget', function () {
+        var el;
+
+        beforeEach(function () {
+            var childEl = document.createElement('div');
+
+            el = document.createElement('div');
+
+            childEl.setAttribute('data-role', 'slide');
+            el.appendChild(childEl);
+        });
+
         it('Should call unslick if element has class slick-initialized', function () {
-            var el = document.createElement('div');
-
             spyOn($.fn, 'slick');
-
             el.classList.add('slick-initialized');
 
             sliderWidgetInitializer(undefined, el);
@@ -22,8 +30,6 @@ define([
         });
 
         it('Should call slick on element based on its data', function () {
-            var el = document.createElement('div');
-
             spyOn($.fn, 'slick');
 
             el.setAttribute('data-autoplay', 'true');
