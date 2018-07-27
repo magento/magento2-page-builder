@@ -51,15 +51,14 @@ class Driver implements RendererInterface
             throw new \InvalidArgumentException('entityId is missing.');
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
-
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'banner',
             'data-appearance' => 'poster',
             'data-show-button' => 'never',
             'data-show-overlay' => 'never',
             'class' => $eavData['css_classes'] ?? ''
         ];
-
         $margin = ' margin: 0px;';
         $padding = ' padding: 40px;';
         $textAlign = '';
@@ -79,13 +78,13 @@ class Driver implements RendererInterface
             }
         }
         $rootElementAttributes['style'] .= $margin;
-
         $linkAttributes = [
+            'data-element' => 'link',
             'href' => $eavData['link_url'] ?? '',
             'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
-
         $imageAttributes = [
+            'data-element' => 'desktop_image',
             'style' => 'background-image: url('
                 . "'{{media url=wysiwyg"
                 . $eavData['image']
@@ -95,8 +94,8 @@ class Driver implements RendererInterface
                 . $textAlign,
             'class' => 'pagebuilder-banner-wrapper pagebuilder-mobile-hidden'
         ];
-
         $mobileImageAttributes = [
+            'data-element' => 'mobile_image',
             'style' => 'background-image: url('
                 . "'{{media url=wysiwyg"
                 . (isset($eavData['image']) ? $eavData['image'] : $eavData['mobile_image'])
@@ -105,20 +104,18 @@ class Driver implements RendererInterface
                 . 'background-attachment: scroll;'
                 . $textAlign
         ];
-
         $mobileImageElementHtml = '<div'
             . $this->printAttributes($mobileImageAttributes)
             . ' class="pagebuilder-banner-wrapper pagebuilder-mobile-only">';
 
         $imageElementHtml = '<div' . $this->printAttributes($imageAttributes) . '>';
-
-        $overlayElementHtml = '<div class="pagebuilder-poster-overlay" data-overlay-color="transparent" ' .
-            'style="background-color: transparent; min-height: 300px;' . $padding . '">';
-
+        $overlayElementHtml = '<div '
+            . 'data-element="overlay" class="pagebuilder-poster-overlay" data-overlay-color="transparent" '
+            . 'style="background-color: transparent; min-height: 300px;' . $padding . '">';
         $buttonHtml = '';
         if (isset($eavData['link_text']) && $eavData['link_text'] !== '') {
             $rootElementAttributes['data-show-button'] = 'always';
-            $buttonHtml = '<button class="pagebuilder-banner-button pagebuilder-button-primary" '
+            $buttonHtml = '<button data-element="button" class="pagebuilder-banner-button pagebuilder-button-primary" '
                 . 'style="visibility: visible; opacity: 1;">'
                 . $eavData['link_text']
                 . '</button>';
@@ -131,12 +128,12 @@ class Driver implements RendererInterface
             . '>'
             . $imageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div>'
+            . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
             . '</div></div></div>'
             . $mobileImageElementHtml
             . $overlayElementHtml
-            . '<div class="pagebuilder-poster-content"><div></div>'
+            . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
             . '</div></div></div></a></div>';
     }

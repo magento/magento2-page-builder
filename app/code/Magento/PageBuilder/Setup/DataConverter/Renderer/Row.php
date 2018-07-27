@@ -31,6 +31,7 @@ class Row implements RendererInterface
     public function render(array $itemData, array $additionalData = []) : string
     {
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'row',
             'data-appearance' => 'default',
             'class' => $itemData['formData']['css_classes'] ?? '',

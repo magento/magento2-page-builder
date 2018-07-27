@@ -45,6 +45,7 @@ class Heading implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'heading',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
