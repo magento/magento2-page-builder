@@ -26,8 +26,7 @@
     1. **Custom Toolbar**
     1. [Full width page layouts]
 5. [Roadmap and known issues]
-6. [Creating custom content block]
-7. [How to create custom PageBuilder content type container]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
