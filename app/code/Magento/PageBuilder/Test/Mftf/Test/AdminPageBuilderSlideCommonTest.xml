@@ -1700,6 +1700,14 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
+        <!--Upload image from local machine using image placeholder button-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
+            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+        </actionGroup>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1857,7 +1865,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
