@@ -23,7 +23,9 @@
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
-[Roadmap and known issues]: roadmap.md
+[Roadmap and Known Issues]: roadmap.md
+[Creating Custom Content Block]: creating-custom-content-block.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
 
 ## Overview
 
