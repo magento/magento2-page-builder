@@ -52,6 +52,7 @@ class ProductConditions extends Template
     {
         $formNamespace = $this->getData('formNamespace');
         $attribute = $this->getData('attribute');
+        $jsObjectName = $formNamespace . '_' . $attribute;
 
         return [
             'formNamespace' => $formNamespace,
@@ -62,12 +63,13 @@ class ProductConditions extends Template
                     'prefix' => $attribute,
                 ]
             ),
-            'jsObjectName' => $formNamespace . '_' . $attribute,
+            'jsObjectName' => $jsObjectName,
             'childComponentUrl' => $this->getUrl(
                 'pagebuilder/form/element_productconditions_child',
                 [
                     'form_namespace' => $formNamespace,
                     'prefix' => $attribute,
+                    'js_object_name' => $jsObjectName,
                 ]
             ),
             'attribute' => $attribute,
