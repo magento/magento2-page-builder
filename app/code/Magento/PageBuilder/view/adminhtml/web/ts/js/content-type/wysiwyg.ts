@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import _ from "underscore";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 
@@ -57,7 +58,7 @@ export default class Wysiwyg {
     public onEdited(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
             "tinymceChange",
-            callback,
+            _.debounce(callback, 100),
         );
     }
 
