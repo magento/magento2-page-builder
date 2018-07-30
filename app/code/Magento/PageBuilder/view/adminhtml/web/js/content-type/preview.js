@@ -35,6 +35,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.config = void 0;
       this.data = {};
       this.displayLabel = void 0;
+      this.display = _knockout.observable(true);
       this.wrapperElement = void 0;
       this.previewData = {};
       this.previewStyle = void 0;
@@ -404,7 +405,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this4 = this;
 
       this.parent.dataStore.subscribe(function (data) {
-        _this4.updateObservables();
+        _this4.updateObservables(); // Keep a reference to the display state in an observable for adding classes to the wrapper
+
+
+        _this4.display(!!data.display);
       });
     };
     /**

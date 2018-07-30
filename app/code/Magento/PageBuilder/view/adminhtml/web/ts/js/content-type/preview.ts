@@ -39,6 +39,7 @@ export default class Preview {
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
+    public display: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperElement: Element;
 
     /**
@@ -460,6 +461,8 @@ export default class Preview {
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
+                // Keep a reference to the display state in an observable for adding classes to the wrapper
+                this.display(!!data.display);
             },
         );
     }
