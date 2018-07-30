@@ -73,6 +73,8 @@
         </actionGroup>
         <executeJS function="tinymce.get(jQuery('.inline-wysiwyg').eq(0).attr('id')).insertContent('Hello World')" stepKey="addTextToWYSIWYG"/>
         <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <!--Verify inputed text on slideout-->
+        <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -162,10 +164,21 @@
         </actionGroup>
         <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
-            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+            <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableStage"/>
-
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="waitForVariableCountryStage"/>
+        <!--Select another variable-->
+        <comment userInput="Select another variable" stepKey="selectAnotherVariable"/>
+        <doubleClick  selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableCountry.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(TinyMCEVariableCountry.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
+        <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
+        <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURLleStage"/>
+        <!--Verify inputed variable on slideout-->
+        <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
         <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -174,10 +187,8 @@
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
         <switchToIFrame stepKey="exitIFrame"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <comment userInput="Verify Variable Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <seeElementInDOM selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
@@ -217,7 +228,6 @@
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
-
         <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -226,7 +236,6 @@
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
         <switchToIFrame stepKey="exitIFrame"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
