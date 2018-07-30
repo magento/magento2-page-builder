@@ -5,11 +5,12 @@
 
 import $ from "jquery";
 import _ from "underscore";
+import ContentTypeInterface from "../content-type.d";
 
 /**
  * @api
  */
-export default function createFromConfig(wysiwygConfig: object) {
+export default function createConfigBasedOnContentType(contentType: ContentTypeInterface, wysiwygConfig: object) {
     const clonedWysiwygConfig = $.extend(true, {}, wysiwygConfig);
 
     if (clonedWysiwygConfig.encapsulateSelectorConfigKeys) {
@@ -21,7 +22,7 @@ export default function createFromConfig(wysiwygConfig: object) {
             }
 
             clonedWysiwygConfig.wysiwygConfigData.settings[configKey] = (
-                "#" + this.parent.id + (configValue ? " " + configValue : "")
+                "#" + contentType.id + (configValue ? " " + configValue : "")
             );
         });
     }

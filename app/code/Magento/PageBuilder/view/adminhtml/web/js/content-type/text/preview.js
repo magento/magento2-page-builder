@@ -30,7 +30,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
         return;
       }
 
-      var wysiwygConfig = (0, _wysiwygConfigFactory)(this.config.additional_data.wysiwygConfig);
+      var wysiwygConfig = (0, _wysiwygConfigFactory)(this.parent, this.config.additional_data.wysiwygConfig);
       this.wysiwyg = new _wysiwyg(this.parent.id, element.id, wysiwygConfig.wysiwygConfigData, wysiwygConfig.mode, this.parent.dataStore, wysiwygConfig.contentDataStoreKey);
     };
 

@@ -26,7 +26,10 @@ export default class Preview extends BasePreview {
             return;
         }
 
-        const wysiwygConfig = wysiwygConfigFactory(this.config.additional_data.wysiwygConfig);
+        const wysiwygConfig = wysiwygConfigFactory(
+            this.parent,
+            this.config.additional_data.wysiwygConfig
+        );
 
         this.wysiwyg = new Wysiwyg(
             this.parent.id,

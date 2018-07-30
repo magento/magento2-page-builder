@@ -8,9 +8,7 @@ define(["jquery", "underscore"], function (_jquery, _underscore) {
   /**
    * @api
    */
-  function createFromConfig(wysiwygConfig) {
-    var _this = this;
-
+  function createConfigBasedOnContentType(contentType, wysiwygConfig) {
     var clonedWysiwygConfig = _jquery.extend(true, {}, wysiwygConfig);
 
     if (clonedWysiwygConfig.encapsulateSelectorConfigKeys) {
@@ -21,13 +19,13 @@ define(["jquery", "underscore"], function (_jquery, _underscore) {
           return;
         }
 
-        clonedWysiwygConfig.wysiwygConfigData.settings[configKey] = "#" + _this.parent.id + (configValue ? " " + configValue : "");
+        clonedWysiwygConfig.wysiwygConfigData.settings[configKey] = "#" + contentType.id + (configValue ? " " + configValue : "");
       });
     }
 
     return clonedWysiwygConfig;
   }
 
-  return createFromConfig;
+  return createConfigBasedOnContentType;
 });
 //# sourceMappingURL=wysiwyg-config-factory.js.map
