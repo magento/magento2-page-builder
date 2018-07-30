@@ -12,8 +12,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Collage Left - Check value of a collage left mobile banner with mobile image"/>
-            <description value="Check value of a collage left mobile banner with mobile image"/>
+            <title value="Collage Left - Check desktop and mobile images of a collage left banner with mobile image"/>
+            <description value="Check desktop and mobile images of a collage left banner with mobile image"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MAGETWO-89590"/>
@@ -27,6 +27,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
@@ -59,60 +60,45 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeDefaultPaddingsInAdmin">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
-            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
-            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
-            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="waitForCollageLeftInAdmin" />
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="verifyCollageLeftInAdmin"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="verifyBannerInFrontend"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
-        <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="pageNamePrefix" value="banner"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <dontSeeElement selector="{{BannerOnFrontend.backgroundMobileImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="dontSeeMobileImage"/>
+        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="pageNamePrefix" value="banner"/>
+            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+        </actionGroup>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageLeftInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="dontSeeCollageLeftInFrontend"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
-        <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
-        <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithMobileImage2"/>
+        <dontSeeElement selector="{{BannerOnFrontend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeDesktopImage"/>
     </test>
     <test name="BannerCollageLeftMobileWithoutMobileImageValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Collage Left - Check value of a collage left mobile banner without mobile image"/>
-            <description value="Check value of a collage left mobile banner without mobile image"/>
+            <title value="Collage Left - Check desktop and mobile images of a collage left banner without mobile image"/>
+            <description value="Check desktop and mobile images of a collage left banner without mobile image"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83553"/>
             <testCaseId value="MAGETWO-89587"/>
@@ -126,6 +112,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
@@ -152,50 +139,34 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeDefaultPaddingsInAdmin">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
-            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
-            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
-            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="waitForCollageLeftInAdmin" />
-        <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageLeftProperty.value)}}" stepKey="verifyCollageLeftInAdmin"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="verifyBannerInFrontend"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
-        <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithoutMobileImage"/>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="waitForCollageLeftInFrontendMobileWithoutMobileImage"/>
-        <seeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageLeftInFrontendMobileWithoutMobileImage"/>
-        <dontSeeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="dontSeeCollageLeftInFrontend"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.collageLeft}}" stepKey="waitForCollageLeftInFrontend2"/>
-        <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend2"/>
-        <dontSeeElement selector="{{BannerOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageLeftInFrontendMobileWithoutMobileImage2"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="pageNamePrefix" value="banner"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Validate Image Still Visible In Mobile -->
+        <comment userInput="Validate Image Still Visible In Mobile" stepKey="commentValidateStorefront2"/>
+        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="pageNamePrefix" value="banner"/>
+            <argument name="backgroundMobileImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
     </test>
     <test name="BannerCollageLeftButtonNeverShow">
         <annotations>
@@ -216,6 +187,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -288,6 +260,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -363,6 +336,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -435,6 +409,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -513,6 +488,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -889,6 +865,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
