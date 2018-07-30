@@ -46,34 +46,12 @@ export default class Preview extends BasePreview {
         }
 
         this.wysiwyg = new Wysiwyg(
+            this.parent.id,
             element.id,
             inlineWysiwygConfig.wysiwygConfig,
             inlineWysiwygConfig.mode,
-        );
-
-        // Update content in our data store after our stage preview wysiwyg gets updated
-        this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this));
-
-        // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
-        events.on(`form:${this.parent.id}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
-    }
-
-    /**
-     * Update content in our data store after our stage preview wysiwyg gets updated
-     */
-    private saveContentFromWysiwygToDataStore() {
-        this.parent.dataStore.update(
-            this.wysiwyg.getAdapter().getContent(),
+            this.parent.dataStore,
             this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey,
-        );
-    }
-
-    /**
-     * Update content in our stage wysiwyg after our data store gets updated
-     */
-    private setContentFromDataStoreToWysiwyg() {
-        this.wysiwyg.getAdapter().setContent(
-            this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey) as string,
         );
     }
 }

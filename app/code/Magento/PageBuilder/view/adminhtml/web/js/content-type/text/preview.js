@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _events, _underscore, _config, _preview, _wysiwyg) {
+define(["jquery", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _underscore, _config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -48,27 +48,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         });
       }
 
-      this.wysiwyg = new _wysiwyg(element.id, inlineWysiwygConfig.wysiwygConfig, inlineWysiwygConfig.mode); // Update content in our data store after our stage preview wysiwyg gets updated
-
-      this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
-
-      _events.on("form:" + this.parent.id + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
-    };
-    /**
-     * Update content in our data store after our stage preview wysiwyg gets updated
-     */
-
-
-    _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      this.parent.dataStore.update(this.wysiwyg.getAdapter().getContent(), this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey);
-    };
-    /**
-     * Update content in our stage wysiwyg after our data store gets updated
-     */
-
-
-    _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
-      this.wysiwyg.getAdapter().setContent(this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey));
+      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, inlineWysiwygConfig.wysiwygConfig, inlineWysiwygConfig.mode, this.parent.dataStore, this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey);
     };
 
     return Preview;
