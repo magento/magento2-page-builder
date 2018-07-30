@@ -513,7 +513,7 @@
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContent('2')}}" stepKey="seeNewTabContent"/>
+        <waitForElementVisible selector="{{TabOnStorefront.container('2')}}" stepKey="seeNewTabContent"/>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <waitForElementVisible selector="{{TabOnStorefront.tab2ContentAdvancedStyles}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
         <waitForElementVisible selector="{{TabOnStorefront.tab2ContentAdvancedClass}}" stepKey="seeTabContentClassInStorefront2"/>
@@ -677,9 +677,9 @@
         <comment userInput="Tab 1 is focused and Tab 2 is hidden" stepKey="focus"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="waitForFirstTabHeader"/>
         <waitForPageLoad stepKey="waitForTabsInit" time="30"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1Visible"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('2')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab2Hidden"/>
+        <waitForElementVisible selector="{{TabOnStorefront.container('1')}}" stepKey="waitForFirstTabContent"/>
+        <assertElementContainsAttribute selector="{{TabOnStorefront.container('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1Visible"/>
+        <assertElementContainsAttribute selector="{{TabOnStorefront.container('2')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab2Hidden"/>
         <comment userInput="User sees Tab 1 with background color and min height on Storefront" stepKey="AC14"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
