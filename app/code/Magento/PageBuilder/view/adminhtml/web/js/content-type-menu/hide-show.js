@@ -43,9 +43,9 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
   }(_option);
 
   HideShow.SHOW_TEXT = (0, _translate)("Show");
-  HideShow.SHOW_ICON = "<i class='icon-admin-pagebuilder-systems'></i>";
+  HideShow.SHOW_ICON = "<i class='icon-pagebuilder-show'></i>";
   HideShow.HIDE_TEXT = (0, _translate)("Hide");
-  HideShow.HIDE_ICON = "<i class='icon-pagebuilder-copy'></i>";
+  HideShow.HIDE_ICON = "<i class='icon-pagebuilder-hide'></i>";
   return HideShow;
 });
 //# sourceMappingURL=hide-show.js.map

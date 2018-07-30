@@ -10,10 +10,10 @@ import OptionInterface from "./option.d";
 export default class HideShow extends Option implements OptionInterface {
 
     public static SHOW_TEXT = $t("Show");
-    public static SHOW_ICON = "<i class='icon-admin-pagebuilder-systems'></i>";
+    public static SHOW_ICON = "<i class='icon-pagebuilder-show'></i>";
 
     public static HIDE_TEXT = $t("Hide");
-    public static HIDE_ICON = "<i class='icon-pagebuilder-copy'></i>";
+    public static HIDE_ICON = "<i class='icon-pagebuilder-hide'></i>";
 
     /**
      * Bind events for the icon & title change
