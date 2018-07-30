@@ -111,6 +111,9 @@
         <!-- Go back to cms page and change configuration to collage left -->
         <comment userInput="Go back to cms page and change configuration to collage left" stepKey="commentCollageLeft"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditPoster">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -119,7 +122,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageLeft"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageLeftBanner"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Validate Stage: Collage Left -->
         <comment userInput="Validate Stage: Collage Left" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent2"/>
@@ -132,9 +135,8 @@
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover1"/>
         <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButtonOnHover1"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <!-- Validate Storefront: Collage Left -->
         <comment userInput="Validate Storefront: Collage Left" stepKey="commentValidateStorefront2"/>
         <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend2"/>
@@ -150,6 +152,9 @@
         <!-- Go back to cms page and change configuration to collage centered -->
         <comment userInput="Go back to cms page and change configuration to collage centered" stepKey="commentCollageCenter"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageLeft">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -158,7 +163,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageCentered"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageCenteredBanner"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
         <!-- Validate Stage: Collage Center -->
         <comment userInput="Validate Stage: Collage Center" stepKey="commentValidateStage3"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent3"/>
@@ -171,9 +176,8 @@
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover2"/>
         <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButtonOnHover2"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <!-- Validate Storefront: Collage Center -->
         <comment userInput="Validate Storefront: Collage Center" stepKey="commentValidateStorefront3"/>
         <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend3"/>
@@ -189,6 +193,9 @@
         <!-- Go back to cms page and change configuration to collage right -->
         <comment userInput="Go back to cms page and change configuration to collage right" stepKey="commentCollageRight"/>
         <switchToPreviousTab stepKey="switchToPreviousTab3"/>
+        <reloadPage stepKey="reloadPage4"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage6"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageCentered">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -197,7 +204,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageRight"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageRightBanner"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage7"/>
         <!-- Validate Stage: Collage Right -->
         <comment userInput="Validate Stage: Collage Right" stepKey="commentValidateStage4"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent4"/>
@@ -210,9 +217,8 @@
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover3"/>
         <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButtonOnHover3"/>
         <switchToNextTab stepKey="switchToNextTab3"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage5"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
         <!-- Validate Storefront: Collage Right -->
         <comment userInput="Validate Storefront: Collage Right" stepKey="commentValidateStorefront4"/>
         <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend4"/>
@@ -851,6 +857,9 @@
         <!-- Change button type value to secondary -->
         <comment userInput="Change button type value to secondary" stepKey="commentSecondary"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -859,7 +868,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Validate Stage: Secondary -->
         <comment userInput="Validate Stage: Secondary" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
@@ -869,9 +878,8 @@
         <!-- Validate Storefront: Secondary -->
         <comment userInput="Validate Storefront: Secondary" stepKey="commentValidateStorefront2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStorefront2"/>
@@ -879,6 +887,9 @@
         <!-- Change button type value to link -->
         <comment userInput="Change button type value to link" stepKey="commentLink"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -887,7 +898,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
         <!-- Validate Stage: Link -->
         <comment userInput="Validate Stage: Link" stepKey="commentValidateStage3"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage3"/>
@@ -897,9 +908,8 @@
         <!-- Validate Storefront: Link -->
         <comment userInput="Validate Storefront: Link" stepKey="commentValidateStorefront3"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage4"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeLinkProperty.value)}}" stepKey="seeButtonTypeStorefront3"/>
@@ -931,6 +941,7 @@
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
+            <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1088,18 +1099,6 @@
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
-            </actionGroup>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
-                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
-                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
-            </actionGroup>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder3">
-                <argument name="FolderName" value="{{PageBuilderImagePropertyJpgCopy.path}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
-                <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>

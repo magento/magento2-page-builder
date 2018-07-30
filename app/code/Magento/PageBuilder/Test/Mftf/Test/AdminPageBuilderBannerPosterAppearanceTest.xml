@@ -187,6 +187,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -213,20 +214,24 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.wysiwygLinkUrl(ExternalLink.googleUrl)}}" stepKey="waitForBannerStage"/>
+        <seeElement selector="{{BannerOnBackend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStage"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Page Save -->
         <comment userInput="Validate Stage After Page Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{BannerOnBackend.wysiwygLinkUrl(ExternalLink.googleUrl)}}" stepKey="waitForBannerStage2"/>
+        <seeElement selector="{{BannerOnBackend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStage2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{BannerOnFrontend.linkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStorefront"/>
+        <!-- Validate Storefront Mobile -->
+        <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <seeElement selector="{{BannerOnFrontend.mobileWysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="waitForBannerStorefrontMobile"/>
     </test>
     <test name="BannerPosterButtonNeverShow">
         <annotations>
@@ -292,14 +297,15 @@
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMStorefrontMobile"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonInDOMStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefrontMobile"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefrontMobile"/>
     </test>
     <test name="BannerPosterButtonOnHover">
         <annotations>
@@ -367,15 +373,16 @@
         <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
-        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
+        <dontSeeElement selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
     </test>
     <test name="BannerPosterOverlayNeverShow">
         <annotations>
@@ -441,6 +448,7 @@
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayOnHoverStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
@@ -520,6 +528,7 @@
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
@@ -603,21 +612,22 @@
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefront"/>
         <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefront"/>
-        <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefront"/>
         <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStorefront"/>
+        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seePosterStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
-        <dontSeeElement selector="{{BannerOnBackend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
     </test>
     <test name="BannerPosterButtonsCanBeEditedInline">
