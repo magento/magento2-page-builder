@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events"], function (_jquery, _setup, _events) {
+define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore"], function (_jquery, _setup, _events, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -60,7 +60,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
 
 
     _proto.onEdited = function onEdited(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler("tinymceChange", callback);
+      this.wysiwygAdapter.eventBus.attachEventHandler("tinymceChange", _underscore.debounce(callback, 100));
     };
     /**
      * @param {Function} callback
