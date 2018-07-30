@@ -7,5 +7,7 @@
 
 <div class="pagebuilder-content-type type-container pagebuilder-tab-item" attr="Object.assign({}, {id: parent.id}, data.main.attributes())" ko-style="Object.assign({}, data.main.style(), {borderRadius: data.main.style().borderRadius || $parent.parent.preview.data.headers.style().borderRadius})" css="Object.assign({'empty-container': parent.children().length == 0}, data.main.css())">
     <render args="previewChildTemplate" />
-    <div class="pagebuilder-empty-container empty-placeholder" css="{visible: parent.children().length == 0}" translate="'Drag content types or columns here'"></div>
+    <div class="pagebuilder-empty-container empty-placeholder"
+         css="getPlaceholderStyles()"
+         translate="'Drag content types or columns here'"/>
 </div>

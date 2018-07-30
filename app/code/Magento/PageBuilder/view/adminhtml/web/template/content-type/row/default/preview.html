@@ -9,5 +9,7 @@
     <render args="getOptions().template"/>
     <render args="previewChildTemplate"/>
     <div class="pagebuilder-display-label" data-bind="text: function () { return displayLabel().toUpperCase(); }()"></div>
-    <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: parent.children().length == 0}, i18n: 'Drag content types or columns here'"></div>
+    <div class="pagebuilder-empty-container empty-placeholder"
+         css="getPlaceholderStyles()"
+         translate="'Drag content types or columns here'"/>
 </div>

@@ -561,4 +561,22 @@ export default class Preview {
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});
     }
+
+    /**
+     * Show/hide empty placeholder
+     * @returns {object}
+     */
+    public getPlaceholderStyles(): object {
+        let style = this.data.main.style(),
+            minHeight = parseFloat(style.minHeight) || 300,
+            paddingBottom = parseFloat(style.paddingBottom) || 0,
+            paddingTop = parseFloat(style.paddingBottom) || 0,
+            isBackgroundVisible = paddingBottom + paddingTop + minHeight > 130,
+            isVisible = this.parent.children().length == 0;
+
+        return {
+            visible: isVisible,
+            'empty-placeholder-background': isBackgroundVisible
+        }
+    }
 }

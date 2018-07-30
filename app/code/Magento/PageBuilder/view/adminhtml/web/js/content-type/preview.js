@@ -516,9 +516,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.get()));
       this.afterObservablesUpdated();
 
-      _events.trigger("previewData:updateAfter", {
+      _events.trigger("previewData:updateAfte" + "r", {
         preview: this
       });
+    };
+    /**
+     * Show/hide placeholder
+     * @returns {object}
+     */
+
+
+    _proto.getPlaceholderStyles = function getPlaceholderStyles() {
+      var style = this.data.main.style(),
+          minHeight = parseFloat(style.minHeight) || 300,
+          paddingBottom = parseFloat(style.paddingBottom) || 0,
+          paddingTop = parseFloat(style.paddingBottom) || 0,
+          isBackgroundVisible = paddingBottom + paddingTop + minHeight > 130,
+          isVisible = this.parent.children().length == 0;
+      return {
+        visible: isVisible,
+        'empty-placeholder-background': isBackgroundVisible
+      };
     };
 
     _createClass(Preview, [{
