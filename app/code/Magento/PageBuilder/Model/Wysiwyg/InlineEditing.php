@@ -14,16 +14,25 @@ namespace Magento\PageBuilder\Model\Wysiwyg;
 class InlineEditing
 {
     /**
+     * @var \Magento\Cms\Model\Wysiwyg\Config
+     */
+    private $wysiwygConfig;
+
+    /**
      * @var array
      */
     private $wysiwygAdaptersSupportingInlineEditing;
 
     /**
      * InlineEditing constructor.
+     * @param \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
      * @param array $wysiwygAdaptersSupportingInlineEditing
      */
-    public function __construct($wysiwygAdaptersSupportingInlineEditing = [])
-    {
+    public function __construct(
+        \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
+        array $wysiwygAdaptersSupportingInlineEditing
+    ) {
+        $this->wysiwygConfig = $wysiwygConfig;
         $this->wysiwygAdaptersSupportingInlineEditing = $wysiwygAdaptersSupportingInlineEditing;
     }
 
@@ -34,6 +43,7 @@ class InlineEditing
      */
     public function isAvailable(string $editorPath) : bool
     {
-        return $this->wysiwygAdaptersSupportingInlineEditing[$editorPath] ?? false;
+
+        return $this->wysiwygAdaptersSupportingInlineEditing[$editorPath] && $this->wysiwygConfig->isEnabled() ?? false;
     }
 }
