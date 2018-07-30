@@ -31,14 +31,13 @@ class Row implements RendererInterface
     public function render(array $itemData, array $additionalData = []) : string
     {
         $formData = $itemData['formData'] ?? [];
-        $appearance = (isset($formData['template'])
-            && $formData['template'] === 'full-width.phtml') ? 'full-width' : 'contained';
 
         $style = $this->styleExtractor->extractStyle($formData);
 
         $childrenHtml = (isset($additionalData['children']) ? $additionalData['children'] : '');
 
-        if ($appearance === 'full-width') {
+        // Return an altered appearance for full width
+        if (isset($formData['template']) && $formData['template'] === 'full-width.phtml') {
             return $this->renderElementWithAttributes(
                 [
                     'data-element' => 'main',
@@ -57,25 +56,22 @@ class Row implements RendererInterface
             );
         }
 
-        if ($appearance === 'contained') {
-            return $this->renderElementWithAttributes(
+        // All other rows default to our new default of contained
+        return $this->renderElementWithAttributes(
+            [
+                'data-element' => 'main',
+                'data-role' => 'row',
+                'data-appearance' => 'contained',
+            ],
+            $this->renderElementWithAttributes(
                 [
-                    'data-element' => 'main',
-                    'data-role' => 'row',
-                    'data-appearance' => 'contained',
+                    'data-element' => 'inner',
+                    'class' => $itemData['formData']['css_classes'] ?? '',
+                    'style' => $style ?? null
                 ],
-                $this->renderElementWithAttributes(
-                    [
-                        'data-element' => 'inner',
-                        'class' => $itemData['formData']['css_classes'] ?? '',
-                        'style' => $style ?? null
-                    ],
-                    $childrenHtml
-                )
-            );
-        }
-
-        return '';
+                $childrenHtml
+            )
+        );
     }
 
     /**
