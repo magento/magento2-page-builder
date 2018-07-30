@@ -148,6 +148,102 @@
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTabBackgroundRepeatNoStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentStorefront"/>
     </test>
+    <test name="TabItemValidateLayoutSectionDefaultValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Item - Validate Layout Section Default Values"/>
+            <description value="Validate the default values for fields in the Layout section for Tab."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-931"/>
+            <testCaseId value="MC-3435"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Validate Min Height Field -->
+        <comment userInput="Validate min height fields" stepKey="commentMinHeight"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEmptyHeightField">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <!-- Validate Vertical Alignment Fields -->
+        <comment userInput="Validate vertical alignment fields" stepKey="commentVerticalAlignment"/>
+        <actionGroup ref="validateVerticalAlignmentVisualSelects" stepKey="validateVerticalAlignment">
+            <argument name="property1" value="PageBuilderVerticalAlignmentPropertyTop"/>
+            <argument name="property2" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="property3" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="verticalAlignTopSelected">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <!-- Verify Min Height Not Used and Vertical Alignment On Stage - Before Save -->
+        <comment userInput="Verify min height not used and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
+        <actionGroup ref="validateLayoutStylesDefault" stepKey="validateLayoutStylesBeforeSave">
+            <argument name="page" value="TabOnStage"/>
+            <argument name="index" value="1"/>
+            <argument name="style" value="min-height"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <!-- Verify Min Height Not Used and Vertical Alignment On Stage - After Save -->
+        <comment userInput="Verify min height not used and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="validateLayoutStylesDefault" stepKey="validateLayoutStylesAfterSave">
+            <argument name="page" value="TabOnStage"/>
+            <argument name="index" value="1"/>
+            <argument name="style" value="min-height"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <!-- Verify Min Height Not Used and Vertical Alignment In Form - After Save -->
+        <comment userInput="Verify min height and vertical alignment in form after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentInFormAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelForFirstTabAfterSave">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEmptyHeightFieldAfterSave">
+            <argument name="property" value="PageBuilderMinHeightProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="validateVerticalAlignmentVisualSelects" stepKey="validateVerticalAlignmentAfterSave">
+            <argument name="property1" value="PageBuilderVerticalAlignmentPropertyTop"/>
+            <argument name="property2" value="PageBuilderVerticalAlignmentPropertyCenter"/>
+            <argument name="property3" value="PageBuilderVerticalAlignmentPropertyBottom"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="verticalAlignTopSelectedAfterSave">
+            <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+        <!-- Verify Min Height and Vertical Alignment Not Used In Storefront -->
+        <comment userInput="Verify min height and vertical alignment not used in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentNotUsedInStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateLayoutStylesDefault" stepKey="validateLayoutStylesInStorefront">
+            <argument name="page" value="TabOnStorefront"/>
+            <argument name="index" value="1"/>
+            <argument name="style" value="min-height"/>
+            <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyTop"/>
+        </actionGroup>
+    </test>
     <test name="TabItemValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
