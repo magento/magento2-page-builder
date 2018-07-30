@@ -8,6 +8,304 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="SaveEmptyTextContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Verify Text placeholder and save empty Text Content Block"/>
+            <description value="Verify Text placeholder and save empty Text Content Block"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Assert Text placeholder-->
+        <comment userInput="Assert Text placeholder" stepKey="assertTextPlaceholder"/>
+        <seeElement selector="{{TextOnStage.placeholder('1')}}" stepKey="seeTextPlaceholder"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!--Verify empty Content Block on storefront-->
+        <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
+    </test>
+    <test name="InlineTextEditing">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Inline editing text and see it on storefront "/>
+            <description value="Verify that user are able to add text into Text Content Block and see it on storefront "/>
+            <severity value="CRITICAL"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <executeJS function="tinymce.get(jQuery('.inline-wysiwyg').eq(0).attr('id')).insertContent('Hello World')" stepKey="addTextToWYSIWYG"/>
+        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame('Hello World')}}" stepKey="waitForText"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!--Verify Content Block on storefront-->
+        <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <see userInput="Hello World" stepKey="seeTextContentType"/>
+    </test>
+    <test name="InlineImageEditing">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Inline editing image and see it on storefront "/>
+            <description value="Verify that user are able to add image into Text Content Block and see it on storefront "/>
+            <severity value="CRITICAL"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnTextEditorArea"/>
+        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon" />
+        <waitForPageLoad stepKey="waitForPageLoad" />
+        <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
+        <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage1">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup" />
+        <seeElementInDOM selector="{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!--Verify empty Content Block on storefront-->
+        <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElementInDOM selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
+    </test>
+    <test name="InlineVariableEditing">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Inline editing variable and see it on storefront "/>
+            <description value="Verify that user are able to add variable into Text Content Block and see it on storefront "/>
+            <severity value="CRITICAL"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnTextEditorArea"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableStage"/>
+
+        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <comment userInput="Verify Variable Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
+    </test>
+    <test name="InlineWidgetEditing">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Inline editing widget and see it on storefront "/>
+            <description value="Verify that user are able to add widget into Text Content Block and see it on storefront "/>
+            <severity value="CRITICAL"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageA" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnTextEditorArea"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+
+        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Verify Widget Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElementInDOM selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
+    </test>
+    <test name="VerifyTinyMCE4ToolbarOnPageBuilderStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="TinyMCE4 toolbar on PageBuilder stage"/>
+            <description value="Verify buttons on WYSIWYG toolbar inside PageBuilder"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1412"/>
+            <testCaseId value="MAGETWO-90274"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnTextEditorArea"/>
+        <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4"/>
+        <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntities"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.undo}}" stepKey="seeUndo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.redo}}" stepKey="seeRedo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="seeFontsize"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.textColor}}" stepKey="seeTextColor"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.backgroundColor}}" stepKey="seeBackgroundColor"/>
+
+        <!--Verify FontSize-->
+        <click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>
+        <see userInput="10px" stepKey="see10px" />
+        <see userInput="12px" stepKey="see12px" />
+        <see userInput="14px" stepKey="see14px" />
+        <see userInput="16px" stepKey="see16px" />
+        <see userInput="18px" stepKey="see18px" />
+        <see userInput="20px" stepKey="see20px" />
+        <see userInput="24px" stepKey="see24px" />
+        <see userInput="26px" stepKey="see26px" />
+        <see userInput="28px" stepKey="see28px" />
+        <see userInput="32px" stepKey="see32px" />
+        <see userInput="34px" stepKey="see34px" />
+        <see userInput="36px" stepKey="see36px" />
+        <see userInput="38px" stepKey="see38px" />
+        <see userInput="40px" stepKey="see40px" />
+        <see userInput="42px" stepKey="see42px" />
+        <see userInput="48px" stepKey="see48px" />
+        <see userInput="52px" stepKey="see52px" />
+        <see userInput="56px" stepKey="see56px" />
+        <see userInput="64px" stepKey="see64px" />
+        <see userInput="72px" stepKey="see72px" />
+
+        <!--Verify FontStyle on preview-->
+        <executeJS function="tinymce.get(jQuery('.inline-wysiwyg').eq(0).attr('id')).insertContent('Hello World')" stepKey="addTextToWYSIWYG"/>
+        <click selector="{{WYSIWYGOnPageBuilder.formatSelector}}" stepKey="expandFormatList"/>
+        <see userInput="Important" stepKey="seeImportantStyle"/>
+        <click selector="//span[text()='Important']" stepKey="selectFormatStyle" />
+
+        <seeElement selector="//div/div[contains(normalize-space(@class), 'cms-content-important') and text()='Hello World']" stepKey="seeTextInImportantStyleOnPreview" />
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+
+        <!--Verify FontStyle on Storeview-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <waitForPageLoad  stepKey="waitForPageLoad3"/>
+        <seeElement selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='Hello World']" stepKey="seeTextInImportantStyleOnStorefront" />
+    </test>
     <test name="TextAddTextWithCustomTinyMCE">
         <annotations>
             <features value="PageBuilder"/>
@@ -114,10 +412,20 @@
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
+        <!--Switch to iFrame 1-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="text{{PageBuilderPageTitle.pageName}}"/>
         </actionGroup>
+        <!--Switch to iFrame-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
