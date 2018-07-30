@@ -60,20 +60,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsThirdColumn"/>
         <!-- Verify Min Height Not Used and Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height not used and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <actionGroup ref="validateLayoutStylesDefault" stepKey="validateLayoutStylesBeforeSave">
+        <actionGroup ref="validateLayoutStylesNoHeight" stepKey="validateLayoutStylesBeforeSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
-            <argument name="style" value="min-height"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <!-- Verify Min Height Not Used and Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height not used and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateLayoutStylesDefault" stepKey="validateLayoutStylesAfterSave">
+        <actionGroup ref="validateLayoutStylesNoHeight" stepKey="validateLayoutStylesAfterSave">
             <argument name="page" value="TabOnStage"/>
             <argument name="index" value="1"/>
-            <argument name="style" value="min-height"/>
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <!-- Verify Min Height Not Used and Vertical Alignment In Form - After Save -->

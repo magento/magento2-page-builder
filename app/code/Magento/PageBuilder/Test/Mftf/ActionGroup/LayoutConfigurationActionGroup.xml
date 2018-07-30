@@ -8,16 +8,15 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="validateLayoutStylesDefault">
+    <actionGroup name="validateLayoutStylesNoHeight">
         <arguments>
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="style"/>
             <argument name="verticalAlignContainer" defaultValue="PageBuilderVerticalAlignmentPropertyTop"/>
         </arguments>
         <waitForElement selector="{{page.container(index)}}" stepKey="waitForVerticalAlignContainer"/>
-        <dontSeeElement selector="{{page.containerStyle('1', style)}}" stepKey="dontSeeStyle"/>
-        <seeElement selector="{{page.containerStyle('1', verticalAlignContainer.style)}}" stepKey="seeVerticalAlignmentStyle"/>
+        <dontSeeElement selector="{{page.containerStyle(index, PageBuilderMinHeightProperty_Empty.style)}}" stepKey="dontSeeStyle"/>
+        <seeElement selector="{{page.containerStyle(index, verticalAlignContainer.style)}}" stepKey="seeVerticalAlignmentStyle"/>
     </actionGroup>
     <!-- Validate All Layout Styles -->
     <actionGroup name="validateLayoutStylesWithAllUpdated">
