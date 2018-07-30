@@ -12,6 +12,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
   /*#__PURE__*/
   function () {
     /**
+     * Id of content type
+     */
+
+    /**
      * Wysiwyg adapter instance
      */
 
@@ -20,47 +24,46 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
      */
 
     /**
-     * Key in data store reflecting value held in wysiwyg
+     * Field name in data store reflecting value held in wysiwyg
      */
 
     /**
      * @param {String} contentTypeId
      * @param {String} elementId
      * @param {Object} config
-     * @param {String} mode
      * @param {DataStore} dataStore
-     * @param {String} dataStoreKey
      */
-    function Wysiwyg(contentTypeId, elementId, config, mode, dataStore, dataStoreKey) {
+    function Wysiwyg(contentTypeId, elementId, config, dataStore) {
+      this.contentTypeId = void 0;
       this.wysiwygAdapter = void 0;
       this.dataStore = void 0;
-      this.dataStoreKey = void 0;
-      this.wysiwygAdapter = new _setup(elementId, config);
+      this.fieldName = void 0;
+      this.contentTypeId = contentTypeId;
+      this.fieldName = config.fieldName;
       this.dataStore = dataStore;
-      this.dataStoreKey = dataStoreKey;
+      config = this.encapsulateConfigBasedOnContentType(config);
+      var mode = config.mode;
+      this.wysiwygAdapter = new _setup(elementId, config.wysiwygConfigData);
 
       if (mode) {
         this.wysiwygAdapter.setup(mode);
-      }
-
-      if (mode === "inline") {
-        // prevent interactability with options when in inline editing mode
-        this.onFocused(function () {
-          (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
-
-          _events.trigger("stage:interactionStart");
-        }); // resume normal interactability with opens when leaving inline editing mode
-
-        this.onBlurred(function () {
-          window.getSelection().empty();
-          (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
-
-          _events.trigger("stage:interactionStop");
-        });
-      } // Update content in our data store after our stage preview wysiwyg gets updated
+      } // prevent interactability with options when in editing mode
 
 
-      this.onEdited(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
+      this.onFocus(function () {
+        (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
+        _events.trigger("stage:interactionStart");
+      }); // resume normal interactability with opens when leaving editing mode
+
+      this.onBlur(function () {
+        window.getSelection().empty();
+        (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+
+        _events.trigger("stage:interactionStop");
+      }); // Update content in our data store after our stage preview wysiwyg gets updated
+
+      this.onEdit(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
       _events.on("form:" + contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
     }
@@ -79,7 +82,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
      */
 
 
-    _proto.onEdited = function onEdited(callback) {
+    _proto.onEdit = function onEdit(callback) {
       this.wysiwygAdapter.eventBus.attachEventHandler("tinymceChange", _underscore.debounce(callback, 100));
     };
     /**
@@ -87,7 +90,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
      */
 
 
-    _proto.onFocused = function onFocused(callback) {
+    _proto.onFocus = function onFocus(callback) {
       this.wysiwygAdapter.eventBus.attachEventHandler("tinymceFocus", callback);
     };
     /**
@@ -95,7 +98,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
      */
 
 
-    _proto.onBlurred = function onBlurred(callback) {
+    _proto.onBlur = function onBlur(callback) {
       this.wysiwygAdapter.eventBus.attachEventHandler("tinymceBlur", callback);
     };
     /**
@@ -104,7 +107,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
 
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      this.dataStore.update(this.getAdapter().getContent(), this.dataStoreKey);
+      this.dataStore.update(this.getAdapter().getContent(), this.fieldName);
     };
     /**
      * Update content in our stage wysiwyg after our data store gets updated
@@ -112,7 +115,36 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
 
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
-      this.getAdapter().setContent(this.dataStore.get(this.dataStoreKey));
+      this.getAdapter().setContent(this.dataStore.get(this.fieldName));
+    };
+    /**
+     * Prepend specific config with id to encapsulate its targeting by the vendor wysiwyg editor
+     *
+     * @param {object} config
+     * @returns {object} - interpolated configuration
+     */
+
+
+    _proto.encapsulateConfigBasedOnContentType = function encapsulateConfigBasedOnContentType(config) {
+      var _this = this;
+
+      var clonedConfig = _jquery.extend(true, {}, config);
+
+      if (!clonedConfig.encapsulateSelectorConfigKeys) {
+        return clonedConfig;
+      }
+
+      _underscore.each(clonedConfig.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
+        var configValue = clonedConfig.wysiwygConfigData.settings[configKey];
+
+        if (!isEnabled) {
+          return;
+        }
+
+        clonedConfig.wysiwygConfigData.settings[configKey] = "#" + _this.contentTypeId + (configValue ? " " + configValue : "");
+      });
+
+      return clonedConfig;
     };
 
     return Wysiwyg;

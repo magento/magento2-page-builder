@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg", "Magento_PageBuilder/js/content-type/wysiwyg-config-factory"], function (_config, _preview, _wysiwyg, _wysiwygConfigFactory) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -30,8 +30,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
         return;
       }
 
-      var wysiwygConfig = (0, _wysiwygConfigFactory)(this.parent, this.config.additional_data.wysiwygConfig);
-      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, wysiwygConfig.wysiwygConfigData, wysiwygConfig.mode, this.parent.dataStore, wysiwygConfig.contentDataStoreKey);
+      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig, this.parent.dataStore);
     };
 
     return Preview;

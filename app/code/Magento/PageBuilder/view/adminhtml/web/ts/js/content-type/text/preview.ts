@@ -6,13 +6,11 @@
 import Config from "../../config";
 import BasePreview from "../preview";
 import Wysiwyg from "../wysiwyg";
-import wysiwygConfigFactory from "../wysiwyg-config-factory";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
-
     /**
      * Wysiwyg instance
      */
@@ -26,18 +24,11 @@ export default class Preview extends BasePreview {
             return;
         }
 
-        const wysiwygConfig = wysiwygConfigFactory(
-            this.parent,
-            this.config.additional_data.wysiwygConfig
-        );
-
         this.wysiwyg = new Wysiwyg(
             this.parent.id,
             element.id,
-            wysiwygConfig.wysiwygConfigData,
-            wysiwygConfig.mode,
+            this.config.additional_data.wysiwygConfig,
             this.parent.dataStore,
-            wysiwygConfig.contentDataStoreKey,
         );
     }
 }
