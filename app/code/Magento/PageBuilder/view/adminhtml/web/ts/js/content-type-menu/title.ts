@@ -31,4 +31,11 @@ export default class TitleOption implements OptionInterface {
     get template(): string {
         return "Magento_PageBuilder/content-type/title";
     }
+
+    /**
+     * Bind events for the option menu item
+     */
+    public bindEvents(): void {
+        // Bind any events required by the option menu item
+    }
 }

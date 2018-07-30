@@ -8,9 +8,14 @@
  */
 export default interface OptionInterface {
     code: string;
-    icon?: string;
-    title?: string;
-    classes?: string;
+    icon?: KnockoutObservable<string>;
+    title?: KnockoutObservable<string>;
+    classes?: KnockoutObservable<{ [key: string]: boolean }>;
     sort: number;
     optionTemplate?: string;
+
+    /**
+     * Bind events for the option menu item
+     */
+    bindEvents: () => void;
 }

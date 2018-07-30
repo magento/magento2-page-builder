@@ -151,6 +151,8 @@ class Config
             'label' => $contentType['label'],
             'icon' => $contentType['icon'],
             'form' => $contentType['form'],
+            'concealable' =>
+                isset($contentType['concealable']) && $contentType['concealable'] === 'false' ? false : true,
             'contentType' => '',
             'group' => (isset($contentType['group'])
                 ? $contentType['group'] : 'general'),

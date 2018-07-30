@@ -27,6 +27,14 @@ define([], function () {
       this.code = "title";
     }
 
+    var _proto = TitleOption.prototype;
+
+    /**
+     * Bind events for the option menu item
+     */
+    _proto.bindEvents = function bindEvents() {// Bind any events required by the option menu item
+    };
+
     _createClass(TitleOption, [{
       key: "template",
       get: function get() {

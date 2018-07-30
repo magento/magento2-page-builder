@@ -72,10 +72,12 @@ export default function createContentType(
  * @param {object} data
  * @returns {any}
  */
-function prepareData(config, data: {}) {
-    const defaults: FieldDefaultsInterface = {};
+function prepareData(config: ContentTypeConfigInterface, data: {}) {
+    const defaults: FieldDefaultsInterface = {
+        display: true,
+    };
     if (config.fields) {
-        _.each(config.fields, (field: ConfigFieldInterface, key: string | number) => {
+        _.each(config.fields, (field, key: string | number) => {
             defaults[key] = field.default;
         });
     }

@@ -3,28 +3,29 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import Preview from "../content-type/preview";
 import OptionInterface from "./option.d";
 
 export default class Option implements OptionInterface {
-    public classes: string;
+    public classes: KnockoutObservable<{[key: string]: boolean}> = ko.observable({});
     public code: string;
-    public icon: string;
+    public icon: KnockoutObservable<string> = ko.observable("");
     public parent: Preview;
     public sort: number;
-    public title: string;
+    public title: KnockoutObservable<string> = ko.observable("");
     public action: () => void;
     public optionTemplate: string;
 
     /**
-     * @param parent
-     * @param code
-     * @param icon
-     * @param title
-     * @param action
-     * @param classes
-     * @param sort
-     * @param optionTemplate
+     * @param {Preview} parent
+     * @param {string} code
+     * @param {string} icon
+     * @param {string} title
+     * @param {() => void} action
+     * @param {string[]} classes
+     * @param {number} sort
+     * @param {string} optionTemplate
      */
     constructor(
         parent: Preview,
@@ -38,8 +39,8 @@ export default class Option implements OptionInterface {
     ) {
         this.parent = parent;
         this.code = code;
-        this.icon = icon;
-        this.title = title;
+        this.icon(icon);
+        this.title(title);
         if (action) {
             this.action = action;
         } else {
@@ -47,12 +48,23 @@ export default class Option implements OptionInterface {
                 return;
             };
         }
-        this.classes = classes.join(" ");
+        const koClasses: {[key: string]: boolean} = {};
+        classes.forEach((cssClass) => {
+            koClasses[cssClass] = true;
+        });
+        this.classes(koClasses);
         this.sort = sort;
         this.optionTemplate = optionTemplate;
     }
 
     get template(): string {
         return this.optionTemplate || null;
+    }
+
+    /**
+     * Bind events for the option menu item
+     */
+    public bindEvents() {
+        // Bind any events required by the option menu item
     }
 }

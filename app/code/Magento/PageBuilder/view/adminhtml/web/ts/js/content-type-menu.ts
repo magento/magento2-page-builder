@@ -22,7 +22,9 @@ export default class ContentTypeMenu {
      */
     constructor(parent: Preview, options: OptionInterface[]) {
         this.parent = parent;
-        this.options(options);
+        options.forEach((option) => {
+            this.addOption(option, true);
+        });
         this.sort();
     }
 
@@ -31,13 +33,17 @@ export default class ContentTypeMenu {
     }
 
     /**
-     * Add an option into the options array
+     * Add an option into the content type menu
      *
-     * @param option
+     * @param {OptionInterface} option
+     * @param {boolean} skipSort
      */
-    public addOption(option: OptionInterface) {
+    public addOption(option: OptionInterface, skipSort: boolean = false) {
+        option.bindEvents();
         this.options.push(option);
-        this.sort();
+        if (!skipSort) {
+            this.sort();
+        }
     }
 
     /**

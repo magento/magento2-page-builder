@@ -64,7 +64,9 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
 
 
   function prepareData(config, data) {
-    var defaults = {};
+    var defaults = {
+      display: true
+    };
 
     if (config.fields) {
       _underscore.each(config.fields, function (field, key) {

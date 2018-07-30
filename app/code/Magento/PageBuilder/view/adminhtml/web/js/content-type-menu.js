@@ -17,23 +17,36 @@ define(["knockout"], function (_knockout) {
      * @param options
      */
     function ContentTypeMenu(parent, options) {
+      var _this = this;
+
       this.parent = void 0;
       this.options = _knockout.observableArray([]);
       this.parent = parent;
-      this.options(options);
+      options.forEach(function (option) {
+        _this.addOption(option, true);
+      });
       this.sort();
     }
 
     var _proto = ContentTypeMenu.prototype;
 
     /**
-     * Add an option into the options array
+     * Add an option into the content type menu
      *
-     * @param option
+     * @param {OptionInterface} option
+     * @param {boolean} skipSort
      */
-    _proto.addOption = function addOption(option) {
+    _proto.addOption = function addOption(option, skipSort) {
+      if (skipSort === void 0) {
+        skipSort = false;
+      }
+
+      option.bindEvents();
       this.options.push(option);
-      this.sort();
+
+      if (!skipSort) {
+        this.sort();
+      }
     };
     /**
      * Remove an option

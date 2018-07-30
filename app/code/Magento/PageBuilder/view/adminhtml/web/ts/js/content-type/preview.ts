@@ -29,6 +29,7 @@ import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import HideShow from "../content-type-menu/hide-show";
 
 /**
  * @api
@@ -56,6 +57,7 @@ export default class Preview {
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
     private edit: Edit;
+    private optionsMenu: ContentTypeMenu;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
     private mouseoverContext: Preview;
@@ -73,6 +75,7 @@ export default class Preview {
         this.parent = parent;
         this.config = config;
         this.edit = new Edit(this.parent, this.parent.dataStore);
+        this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
         this.observableUpdater = observableUpdater;
         this.displayLabel = ko.observable(this.config.label);
         this.setupDataFields();
@@ -227,7 +230,7 @@ export default class Preview {
      * @returns {ContentTypeMenu}
      */
     public getOptions(): ContentTypeMenu {
-        return new ContentTypeMenu(this, this.retrieveOptions());
+        return this.optionsMenu;
     }
 
     /**
@@ -235,6 +238,14 @@ export default class Preview {
      */
     public onOptionEdit(): void {
         this.openEdit();
+    }
+
+    /**
+     * Reverse the display data currently in the data store
+     */
+    public onOptionHideShow(): void {
+        const display = this.parent.dataStore.get("display");
+        this.parent.dataStore.update(!display, "display");
     }
 
     /**
@@ -364,7 +375,7 @@ export default class Preview {
      * @returns {Array<OptionInterface>}
      */
     protected retrieveOptions(): OptionInterface[] {
-        return [
+        const options: OptionInterface[] = [
             new Option(
                 this,
                 "move",
@@ -391,7 +402,7 @@ export default class Preview {
                 $t("Duplicate"),
                 this.onOptionDuplicate,
                 ["duplicate-structural"],
-                40,
+                50,
             ),
             new Option(
                 this,
@@ -400,9 +411,24 @@ export default class Preview {
                 $t("Remove"),
                 this.onOptionRemove,
                 ["remove-structural"],
-                50,
+                60,
             ),
         ];
+
+        // If the content type is concealable show the hide / show option
+        if (this.parent.config.concealable) {
+            options.push(new HideShow(
+                this,
+                "hide_show",
+                HideShow.SHOW_ICON,
+                HideShow.SHOW_TEXT,
+                this.onOptionHideShow,
+                ["hide-show-content-type"],
+                40,
+            ));
+        }
+
+        return options;
     }
 
     /**
