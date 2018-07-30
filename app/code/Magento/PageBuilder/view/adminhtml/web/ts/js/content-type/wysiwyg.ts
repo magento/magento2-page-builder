@@ -4,9 +4,9 @@
  */
 
 import $ from "jquery";
-import _ from "underscore";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 
 /**
  * @api
