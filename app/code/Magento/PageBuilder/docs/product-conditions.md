@@ -53,7 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## What's in this topic
 This topic describes how use the product conditions rule tree for different content types. By reusing the conditions mechanism you can apply it to your own custom content types.

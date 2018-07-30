@@ -53,7 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## What's in this topic
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.

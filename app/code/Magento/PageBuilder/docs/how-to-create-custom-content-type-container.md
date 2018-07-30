@@ -1,4 +1,4 @@
-# How to create custom PageBuilder content type container
+# How to create custom content type container
 
 ## Navigation
 
@@ -53,9 +53,9 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
-This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainers`.
+This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainer`.
 
 The module creates a new custom container group content type with a `left` and `right` appearance.
 It also creates a new custon container content type for the container group.
@@ -67,7 +67,7 @@ Each container group has 3 containers in a grid and styled differently based on 
 For creating a generic content type and content type collection, see [How to add a new content type][].
 
 Make sure you know how to register your custom module.
-See [Register your component][] in devdocs.
+See [Register your component](https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html) in devdocs.
 
 ## Configuration
 
@@ -86,7 +86,7 @@ Write the following content into this configuration file:
     <type name="custom-container-group"
           label="Custom Containers"
           component="Magento_PageBuilder/js/content-type-collection"
-          preview_component="VendorName_CustomContainers/js/content-type/custom-container-group/preview"
+          preview_component="VendorName_CustomContainer/js/content-type/custom-container-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_group_form"
           group="general"
@@ -102,8 +102,8 @@ Write the following content into this configuration file:
         <appearances>
             <appearance default="true"
                         name="left"
-                        preview_template="VendorName_CustomContainers/content-type/custom-container-group/left/preview"
-                        render_template="VendorName_CustomContainers/content-type/custom-container-group/left/master"
+                        preview_template="VendorName_CustomContainer/content-type/custom-container-group/left/preview"
+                        render_template="VendorName_CustomContainer/content-type/custom-container-group/left/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -121,8 +121,8 @@ Write the following content into this configuration file:
                 </elements>
             </appearance>
             <appearance name="right"
-                        preview_template="VendorName_CustomContainers/content-type/custom-container-group/right/preview"
-                        render_template="VendorName_CustomContainers/content-type/custom-container-group/right/master"
+                        preview_template="VendorName_CustomContainer/content-type/custom-container-group/right/preview"
+                        render_template="VendorName_CustomContainer/content-type/custom-container-group/right/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -149,17 +149,17 @@ Some important configurations to note:
 * The "left" and "right" appearances have different custom preview components:
 
   ``` xml
-  preview_template="VendorName_CustomContainers/content-type/custom-container-group/left/preview"
+  preview_template="VendorName_CustomContainer/content-type/custom-container-group/left/preview"
   ```
 
   ``` xml
-  preview_template="VendorName_CustomContainers/content-type/custom-container-group/right/preview"
+  preview_template="VendorName_CustomContainer/content-type/custom-container-group/right/preview"
   ```
 
-* The icon used for this component is the row icon:
+* The icon used for this component is the custom container icon:
 
   ``` xml
-  icon="icon-pagebuilder-row"
+  icon="icon-pagebuilder-custom-container"
   ```
 
 * This content type cannot be used anywhere except the stage:
@@ -193,7 +193,7 @@ Write the following content into this configuration file:
     <type name="custom-container"
           label="Container"
           component="Magento_PageBuilder/js/content-type-collection"
-          preview_component="VendorName_CustomContainers/js/content-type/custom-container/preview"
+          preview_component="VendorName_CustomContainer/js/content-type/custom-container/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_form"
           group="general"
@@ -215,8 +215,8 @@ Write the following content into this configuration file:
         <appearances>
             <appearance default="true"
                         name="default"
-                        preview_template="VendorName_CustomContainers/content-type/custom-container/default/preview"
-                        render_template="VendorName_CustomContainers/content-type/custom-container/default/master"
+                        preview_template="VendorName_CustomContainer/content-type/custom-container/default/preview"
+                        render_template="VendorName_CustomContainer/content-type/custom-container/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -463,7 +463,7 @@ Content:
             <formElements>
                 <select>
                     <settings>
-                        <options class="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainer" />
+                        <options class="VendorName\CustomContainers\Model\Source\AppearanceSource" />
                     </settings>
                 </select>
             </formElements>
@@ -484,7 +484,7 @@ Example:
 <formElements>
     <select>
         <settings>
-            <options class="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainer" />
+            <options class="VendorName\CustomContainers\Model\Source\AppearanceSource" />
         </settings>
     </select>
 </formElements>
@@ -501,17 +501,17 @@ The data sources are virtual types of the `VisualSelect` class and defined in yo
                 <item name="10" xsi:type="array">
                     <item name="value" xsi:type="string">left</item>
                     <item name="title" xsi:type="string" translate="true">Left</item>
-                    <item name="icon" xsi:type="string">VendorName_CustomContainers/css/images/content-type/custom-container-group/appearance/left.svg</item>
+                    <item name="icon" xsi:type="string">VendorName_CustomContainer/css/images/content-type/custom-container-group/appearance/left.svg</item>
                 </item>
                 <item name="20" xsi:type="array">
                     <item name="value" xsi:type="string">right</item>
                     <item name="title" xsi:type="string" translate="true">Right</item>
-                    <item name="icon" xsi:type="string">VendorName_CustomContainers/css/images/content-type/custom-container-group/appearance/right.svg</item>
+                    <item name="icon" xsi:type="string">VendorName_CustomContainer/css/images/content-type/custom-container-group/appearance/right.svg</item>
                 </item>
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="VendorName\CustomContainers\Model\Source\AppearanceSourceCustomContainer" type="Magento\PageBuilder\Model\Source\VisualSelect">
+    <virtualType name="VendorName\CustomContainers\Model\Source\AppearanceSource" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
             <argument name="optionsSize" xsi:type="string">large</argument>
             <argument name="optionsData" xsi:type="array">
@@ -776,11 +776,13 @@ The following sections describe files that add styles to the content types for t
 
 ### Admin panel styles
 
-File name and location: `view/adminhtml/web/css/source/_module.less`
+Lets start with custom-containers left appearance styling.
+
+File name and location: `view/adminhtml/web/css/source/content-type/custom-container/_left.less`
 
 Content:
 
-``` css
+``` less
 .pagebuilder-custom-container-group.pagebuilder-content-type.type-container {
     border: none;
     outline: none;
@@ -822,6 +824,42 @@ Content:
             }
         }
     }
+}
+
+.icon-pagebuilder-custom-container:before {
+    content: '\e912';
+}
+```
+
+Next create custom-containers right appearance styling.
+
+File name and location: `view/adminhtml/web/css/source/content-type/custom-container/_right.less`
+
+Content:
+
+``` less
+.pagebuilder-custom-container-group.pagebuilder-content-type.type-container {
+    border: none;
+    outline: none;
+
+    > .element-children {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px 200px;
+
+        .pagebuilder-content-type-wrapper {
+            height: 100%;
+
+            .pagebuilder-custom-container {
+                height: 100%;
+
+                > .element-children {
+                    height: 100%;
+                }
+            }
+        }
+    }
 
     &[data-appearance='right'] {
         > .element-children {
@@ -848,15 +886,38 @@ Content:
 }
 ```
 
+Then create an import styling sheet to merge the 2 appearance styles.
+
+File name and location: `view/adminhtml/web/css/source/content-type/custom-container/_import.less`
+
+Content:
+
+``` less
+@import './_left.less';
+@import './_right.less';
+```
+
+Then create the module style that will grab the imported styles.
+
+File name and location: `view/adminhtml/web/css/source/module.less`
+
+Content:
+
+``` less
+@import 'content-type/custom-container/_import.less';
+```
+
 ***Note:** The `.icon-pagebuilder-custom-container:before` entry creates the custom icon for the content type.*
 
 ### Storefront styles
 
-File name and location: `view/frontend/web/css/source/_module.less`
+Lets start with custom-containers left appearance styling.
+
+File name and location: `view/frontend/web/css/source/content-type/custom-container/_left.less`
 
 Content:
 
-``` css
+``` less
 div[data-role='custom-container-group'] {
     display: grid;
     grid-gap: 10px;
@@ -879,6 +940,50 @@ div[data-role='custom-container-group'] {
             }
         }
     }
+}
+
+@media all and (max-width: @screen__m) {
+    div[data-role='custom-container-group'] {
+        grid-template-columns: 1fr;
+
+
+        &[data-appearance='left'] {
+            grid-template-rows: 200px 200px 400px;
+        }
+
+        &[data-appearance='left'] {
+            div[data-role='custom-container'] {
+                &:nth-child(1) {
+                    grid-column: 1;
+                    grid-row: 1;
+                }
+                &:nth-child(2) {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+                &:nth-child(3) {
+                    grid-column: 1;
+                    grid-row: 3;
+                }
+            }
+        }
+
+    }
+}
+```
+
+Next create custom-containers right appearance styling.
+
+File name and location: `view/frontend/web/css/source/content-type/custom-container/_right.less`
+
+Content:
+
+``` less
+div[data-role='custom-container-group'] {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
 
     &[data-appearance='right'] {
         div[data-role='custom-container'] {
@@ -902,16 +1007,10 @@ div[data-role='custom-container-group'] {
     div[data-role='custom-container-group'] {
         grid-template-columns: 1fr;
 
-
-        &[data-appearance='left'] {
-            grid-template-rows: 200px 200px 400px;
-        }
-
         &[data-appearance='right'] {
             grid-template-rows: 400px 200px 200px;
         }
 
-        &[data-appearance='left'],
         &[data-appearance='right'] {
             div[data-role='custom-container'] {
                 &:nth-child(1) {
@@ -933,6 +1032,27 @@ div[data-role='custom-container-group'] {
 }
 ```
 
+Then create an import styling sheet to merge the 2 appearance styles.
+
+File name and location: `view/frontend/web/css/source/content-type/custom-container/_import.less`
+
+Content:
+
+``` less
+@import './_left.less';
+@import './_right.less';
+```
+
+Then create the module style that will grab the imported styles.
+
+File name and location: `view/frontend/web/css/source/module.less`
+
+Content:
+
+``` less
+@import 'content-type/custom-container/_import.less';
+```
+
 ***Note:** The @media section sets up the responsive design feature of stacking the containers.*
 
 ## Final steps
@@ -940,7 +1060,7 @@ div[data-role='custom-container-group'] {
 Enable and install your component using the following commands:
 
 ```
-bin/magento module:enable --clear-static-content VendorName_CustomContainers
+bin/magento module:enable --clear-static-content VendorName_CustomContainer
 bin/magento setup:upgrade
 ```
 
