@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _underscore, _config, _preview, _wysiwyg) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg", "Magento_PageBuilder/js/content-type/wysiwyg-config-factory"], function (_config, _preview, _wysiwyg, _wysiwygConfigFactory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -26,29 +26,12 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBu
      * @param {HTMLElement} element
      */
     _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
-
       if (!_config.getConfig("can_use_inline_editing_on_stage")) {
         return;
       }
 
-      var inlineWysiwygConfig = this.config.additional_data.inlineWysiwygConfig;
-
-      if (inlineWysiwygConfig.encapsulateSelectorConfigKeys) {
-        inlineWysiwygConfig = _jquery.extend(true, {}, this.config.additional_data.inlineWysiwygConfig);
-
-        _underscore.each(inlineWysiwygConfig.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
-          var configValue = inlineWysiwygConfig.wysiwygConfig.settings[configKey];
-
-          if (!isEnabled) {
-            return;
-          }
-
-          inlineWysiwygConfig.wysiwygConfig.settings[configKey] = "#" + _this2.parent.id + (configValue ? " " + configValue : "");
-        });
-      }
-
-      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, inlineWysiwygConfig.wysiwygConfig, inlineWysiwygConfig.mode, this.parent.dataStore, this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey);
+      var wysiwygConfig = (0, _wysiwygConfigFactory)(this.config.additional_data.wysiwygConfig);
+      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, wysiwygConfig.wysiwygConfigData, wysiwygConfig.mode, this.parent.dataStore, wysiwygConfig.contentDataStoreKey);
     };
 
     return Preview;
