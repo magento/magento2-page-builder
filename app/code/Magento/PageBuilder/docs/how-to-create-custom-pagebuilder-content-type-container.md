@@ -55,25 +55,31 @@
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-pagebuilder-content-type-container.md
 
+This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainers`.
+
+The module creates a new custom container group content type with a `left` and `right` appearance.
+It also creates a new custon container content type for the container group.
+
+Each container group has 3 containers in a grid and styled differently based on the appearance of the container group.
+
 ## Before you begin
 
-Refer to [How to add a new content type](how-to-add-new-content-type.md) for creating generic content type and content type collection.
+For creating a generic content type and content type collection, see [How to add a new content type][].
 
-Also, make sure you know how to register your custom module, if not refer to:  https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html
-
-In this tutorial, we will be creating a custom container group module named `VendorName_CustomContainers` that will have 2 appearances, `left` and `right`. And each container group will contain 3 containers in a grid and will be styled differently based on the container groups appearance.
+Make sure you know how to register your custom module.
+See [Register your component][] in devdocs.
 
 ## Configuration
 
-We will be creating the configurations for the custom container group and custom containers.
+### Custom container group
 
-For the container group we will be creating the file:
+Create the following file to hold the configuration for the custom container group:
 
 ``` text
 view/base/pagebuilder/content_type/custom_container_group.xml
 ```
 
-The configuration for container group will be the following snippet:
+Write the following content into this configuration file:
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
@@ -126,7 +132,7 @@ The configuration for container group will be the following snippet:
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>                                
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
@@ -138,23 +144,49 @@ The configuration for container group will be the following snippet:
 </config>
 ```
 
-As noted in the configuration above, we will be creating a custom preview component for this content type. 
+Some important configurations to note:
 
-As for Icon, we will just be using rows icons as placeholder, feel free to add your own. 
+* The "left" and "right" appearances have different custom preview components:
 
-Also this content type will only be allowed on the stage and only accepts containers content type as children. 
+  ``` xml
+  preview_template="VendorName_CustomContainers/content-type/custom-container-group/left/preview"
+  ```
 
-Finally take notice of the css filter, we are adding a custom hard coded class to dictate appearance style, there are other ways to implement this so don't feel obligated to always add custom classes to change your appearances.
+  ``` xml
+  preview_template="VendorName_CustomContainers/content-type/custom-container-group/right/preview"
+  ```
 
-Next we will do the same for containers.
+* The icon used for this component is the row icon:
 
-For the container we will be creating the file:
+  ``` xml
+  icon="icon-pagebuilder-row"
+  ```
+
+* This content type cannot be used anywhere except the stage:
+
+  ``` xml
+  <parents default_policy="deny">
+      <parent name="stage" policy="allow"/>
+  </parents>
+  ```
+
+* This content type only accepts [custom container][] content types as children:
+
+  ``` xml
+  <children default_policy="deny">
+      <child name="custom-container" policy="allow"/>
+  </children>
+  ```
+
+### Custom container
+
+Create the following file to hold the configuration for the custom container:
 
 ``` text
 view/base/pagebuilder/content_type/custom_container.xml
 ```
 
-The configuration for container group will be the following snippet:
+Write the following content into this configuration file:
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
@@ -220,21 +252,47 @@ The configuration for container group will be the following snippet:
 </config>
 ```
 
-Same as above, we only allow container to be inside container groups, but it can be filled with all content types except container group, column, row, and tabs.
+Some important configurations to note:
+
+* This content type can only be used inside a [custom container group][].
+
+  ``` xml
+  <parents default_policy="deny">
+      <parent name="custom-container-group" policy="allow"/>
+  </parents>
+  ```
+
+* This content type can contain all content types except:
+
+  * custom container groups
+  * columns
+  * rows
+  * tabs
+
+  ``` xml
+  <children default_policy="allow">
+      <child name="custom-container-group" policy="deny"/>
+      <child name="row" policy="deny"/>
+      <child name="column" policy="deny"/>
+      <child name="column-group" policy="deny"/>
+      <child name="tabs" policy="deny"/>
+      <child name="tab-item" policy="deny"/>
+  </children>
+  ```
 
 ## Form
 
-Now that we have the configurations, lets create the forms that will allow the users to make edits to attributes when they are in the admin panel.
+Forms let users edit attributes in the admin panel.
 
-First lets create the layouts.
+### Layout
 
-Container group will be in:
+Create the following layout files with the given content:
 
-``` text
-view/adminhtml/layout/pagebuilder_custom_container_group_form.xml
-```
+#### Custom container group layout
 
-`pagebuilder_custom_container_group_form.xml` contents will be:
+File name and location: `view/adminhtml/layout/pagebuilder_custom_container_group_form.xml`
+
+Content:
 
 ``` xml
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -247,13 +305,11 @@ view/adminhtml/layout/pagebuilder_custom_container_group_form.xml
 </page>
 ```
 
-Container will be in:
+#### Custom container layout
 
-``` text
-view/adminhtml/layout/pagebuilder_custom_container_form.xml
-```
+File name and location: `view/adminhtml/layout/pagebuilder_custom_container_form.xml`
 
-`pagebuilder_custom_container_form.xml` contents will be:
+Content:
 
 ``` xml
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -266,15 +322,11 @@ view/adminhtml/layout/pagebuilder_custom_container_form.xml
 </page>
 ```
 
-Next lets create the actual forms.
+#### Custom container group form layout
 
-Container group will be in:
+File name and location: `view/adminhtml/ui_component/pagebuilder_custom_container_group_form.xml`
 
-``` text
-view/adminhtml/ui_component/pagebuilder_custom_container_group_form.xml
-```
-
-`pagebuilder_custom_container_group_form.xml` contents will be:
+Content:
 
 ``` xml
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"  extends="pagebuilder_base_form">
@@ -345,13 +397,11 @@ view/adminhtml/ui_component/pagebuilder_custom_container_group_form.xml
 </form>
 ```
 
-Container will be in:
+#### Custom container form layout
 
-``` text
-view/adminhtml/ui_component/pagebuilder_custom_container_form.xml
-```
+File name and location: `view/adminhtml/ui_component/pagebuilder_custom_container_form.xml`
 
-`pagebuilder_custom_container_form.xml` contents will be:
+Content:
 
 ``` xml
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"  extends="pagebuilder_base_form_with_background_attributes">
@@ -422,11 +472,13 @@ view/adminhtml/ui_component/pagebuilder_custom_container_form.xml
 </form>
 ```
 
-Take notice that container group extends from base form while container extends from base form with background attributes.
+***Note:** The custom container group extends from `pagebuilder_base_form` while the custom container extends from `pagebuilder_base_form_with_background_attributes`.*
 
-## Appearance Source
+## Appearance source
 
-Notice in the form section above, there is
+The layout file for a [custom container group form][] and [custom container form][] specify which data source to use to populate the option elements in the `appearance` select list field.
+
+Example:
 
 ``` xml 
 <formElements>
@@ -438,15 +490,7 @@ Notice in the form section above, there is
 </formElements>
 ```
 
-You have to specify those appearance source in the di.xml so lets do that.
-
-Create file:
-
-``` xml
-etc/adminhtml/di.xml
-```
-
-And inside it should have:
+The data sources are virtual types of the `VisualSelect` class and defined in your module's `etc/adminhtml/di.xml` file:
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
@@ -481,58 +525,24 @@ And inside it should have:
 </config>
 ```
 
-In order for the icons to work, you have to create the following files:
-``` text
-view/adminhtml/web/css/images/content-type/custom-container-group/appearance/left.svg
-view/adminhtml/web/css/images/content-type/custom-container-group/appearance/right.svg
-```
+Create the icon files in the following locations inside your module to match the deployed location specified in the configuration:
+
+* `view/adminhtml/web/css/images/content-type/custom-container-group/appearance/left.svg`
+* `view/adminhtml/web/css/images/content-type/custom-container-group/appearance/right.svg`
 
 ## Templates
 
-Here we will create the preview and master templates.
+Templates define the HTML used to render the content type on the store front and in preview mode.
 
-Container group will have 2 sets of templates, 1 for each appearance.
+### Container group templates
 
-For left appearance preview template create:
+The following sections describe the preview and master templates for the left and right views for container groups.
 
-``` text
-view/adminhtml/web/template/content-type/custom-container-group/left/preview.html
-```
+#### Container group left preview template
 
-It will contain:
+File name and location: `view/adminhtml/web/template/content-type/custom-container-group/left/preview.html`
 
-``` xml
-<div class="pagebuilder-content-type type-container pagebuilder-custom-container-group"
-     attr="data.main.attributes"
-     ko-style="data.main.style"
-     css="data.main.css"
-     event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
-</div>
-```
-
-For left appearance master template create:
-
-``` text
-view/adminhtml/web/template/content-type/custom-container-group/left/master.html
-```
-
-It will contain:
-
-``` xml
-<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
-</div>
-```
-
-For right appearance preview template create:
-
-``` text
-view/adminhtml/web/template/content-type/custom-container-group/right/preview.html
-```
-
-It will contain:
+Content:
 
 ``` xml
 <div class="pagebuilder-content-type type-container pagebuilder-custom-container-group"
@@ -545,13 +555,11 @@ It will contain:
 </div>
 ```
 
-For right appearance master template create:
+#### Container group left master template
 
-``` text
-view/adminhtml/web/template/content-type/custom-container-group/right/master.html
-```
+File name and location: `view/adminhtml/web/template/content-type/custom-container-group/left/master.html`
 
-It will contain:
+Content:
 
 ``` xml
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
@@ -559,15 +567,44 @@ It will contain:
 </div>
 ```
 
-Next we will create the templates for container:
+#### Container group right preview template
 
-For preview template create:
+File name and location: `view/adminhtml/web/template/content-type/custom-container-group/right/preview.html`
 
-``` text
-view/adminhtml/web/template/content-type/custom-container/default/preview.html
+Content:
+
+``` xml
+<div class="pagebuilder-content-type type-container pagebuilder-custom-container-group"
+     attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="data.main.css"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
+    <render args="getOptions().template" />
+    <render args="previewChildTemplate" />
+</div>
 ```
 
-It will contain:
+#### Container group right master template
+
+File name and location: `view/adminhtml/web/template/content-type/custom-container-group/right/master.html`
+
+Content:
+
+``` xml
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+    <render args="renderChildTemplate"/>
+</div>
+```
+
+### Container templates
+
+The following sections describe the preview and master templates for the container types.
+
+#### Container preview template
+
+File name and location: `view/adminhtml/web/template/content-type/custom-container/default/preview.html`
+
+Content:
 
 ``` xml
 <div class="pagebuilder-content-type type-container pagebuilder-custom-container"
@@ -585,13 +622,11 @@ It will contain:
 </div>
 ```
 
-For master template create:
+#### Container master template
 
-``` text
-view/adminhtml/web/template/content-type/custom-container/default/master.html
-```
+File name and location: `view/adminhtml/web/template/content-type/custom-container/default/master.html`
 
-It will contain:
+Content:
 
 ``` html
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
@@ -599,17 +634,15 @@ It will contain:
 </div>
 ```
 
-## JS Components
+## JavaScript components
 
-Now we are going to add logic to the container group and container.
+The following JavaScript components add logic to the preview for the custom container group and custom container types.
 
-In the file:
+### Custom container group JS component
 
-``` text
-view/adminhtml/web/js/content-type/custom-container-group/preview.js
-```
+File name and location: `view/adminhtml/web/js/content-type/custom-container-group/preview.js`
 
-We are going to add the following:
+Content:
 
 ``` js
 define([
@@ -677,20 +710,19 @@ define([
 });
 ```
 
-In this preview component we are doing 4 things.
+The code for this component does the following:
 
-1. Inside the constructor we are extending preview collection since it is a collection content type.
-2. Also inside the constructor, we are adding an event listener to listen for when container group is dropped onto stage, execute populateContainerGroup method.
-3. In the populateContainerGroup method, we are adding 3 containers into container group on drop.
-4. In the isContainer method, we are marking this content type as not a standard container.
+* Since custom container group is a collection content type, the component extends the `PreviewCollection` component in the constructor.
+* An event listener is added during construction to listen for when the container group is dropped onto the stage.
+  The `populateContainerGroup()` method executes when this event occurs.
+* The `populateContainerGroup()` method adds 3 containers inside the container group when executed.
+* The `isContainer()` method marks this content type as not a standard container.
 
-Next lets add logic to the container in the file:
+### Custom container JS component
 
-``` text
-view/adminhtml/web/js/content-type/custom-container/preview.js
-```
+File name and location: `view/adminhtml/web/js/content-type/custom-container/preview.js`
 
-With the content:
+Content:
 
 ``` js
 define([
@@ -732,22 +764,22 @@ define([
 });
 ```
 
-In this preview component we are doing 2 things.
+The code for this component does the following:
 
-1. Inside the constructor we are extending preview collection since it is a collection content type.
-2. In the retrieveOptions method, we are overwriting this content types options list to remove options `move`, `duplicate`, and `remove`.
+* Since custom container is a collection content type, the component extends the `PreviewCollection` component in the constructor.
+* The `retrieveOptions()` method overwrites the content types options list and removes the `move`, `duplicate` , and `remove` options.
 
 ## Styling
 
-We will be adding styles to this module on both admin panel as well as store front.
+The following sections describe files that add styles to the content types for the admin panel and storefront.
 
-For admin panel, create 
 
-``` text
-view/adminhtml/web/css/source/_module.less
-```
+### Admin panel styles
 
-And it will contain:
+File name and location: `view/adminhtml/web/css/source/_module.less`
+
+Content:
+
 ``` css
 .pagebuilder-custom-container-group.pagebuilder-content-type.type-container {
     border: none;
@@ -816,15 +848,13 @@ And it will contain:
 }
 ```
 
-Notice on the bottom there is ```.icon-pagebuilder-custom-container:before```. It is to create the custom icon for the content type.
+***Note:** The `.icon-pagebuilder-custom-container:before` entry creates the custom icon for the content type.*
 
-For storefront, create 
+### Storefront styles
 
-``` text
-view/frontend/web/css/source/_module.less
-```
+File name and location: `view/frontend/web/css/source/_module.less`
 
-And it will contain:
+Content:
 
 ``` css
 div[data-role='custom-container-group'] {
@@ -903,17 +933,24 @@ div[data-role='custom-container-group'] {
 }
 ```
 
-Note the @media section is to set up responsive design in which we stack the containers.
+***Note:** The @media section sets up the responsive design feature of stacking the containers.*
 
-## Final note
+## Final steps
 
-Now register your new module and clear your cache and you should have a new custom content type called `Custom Container` and it default to left appearance.
+Enable and install your component using the following commands:
+
+```
+bin/magento module:enable --clear-static-content VendorName_CustomContainers
+bin/magento setup:upgrade
+```
+
+You should now see a new custom content type in PageBuilder called **Custom Container** with a default appearance of **left**.
 
 ![Custom Containers Panel](images/custom-containers-panel.png)
 
-When it is loaded to the stage, it should be filled with 3 container content types that have only one option to edit. 
+When you place it onto the stage, it should be filled with 3 container content types that have only one option to edit.
 
-The left appearance will have 2 rows of contains on the left while on right appearance there will be 2 rows on the right side.
+The left appearance will have 2 rows of containers on the left side and the right appearance will have 2 rows on the right side.
 
 Left:
 ![Custom Containers Left Appearance](images/custom-containers-left.png)
@@ -921,5 +958,13 @@ Left:
 Right:
 ![Custom Containers Right Appearance](images/custom-containers-right.png)
 
-Finally, you can switch between the 2 appearances via the container group edit panel in its configuration form.
+Use the configuration form in the container group's edit panel to switch between the left and right appearances.
+
 ![Custom Containers Form](images/custom-containers-form.png)
+
+[How to add a new content type]: how-to-add-new-content-type.md
+[Register your component]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html
+[custom container]: #custom-container
+[custom container group]: #custom-container-group
+[custom container group form]: #custom-container-group-form-layout
+[custom container form]: #custom-container-form-layout
