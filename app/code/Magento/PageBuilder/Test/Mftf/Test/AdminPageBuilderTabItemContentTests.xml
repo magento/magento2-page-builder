@@ -620,54 +620,6 @@
         <seeElement selector="{{ColumnOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
         <seeElement selector="{{ColumnOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
     </test>
-    <test name="CanAddAccordionToTab">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs"/>
-            <title value="Tabs Content - Add Accordion to Tabs container and view on Admin and Storefront"/>
-            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89963"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-tabs-content"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <!-- Add Tabs to Stage -->
-        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <!-- Validate Tabs default state On Stage -->
-        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
-        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
-        <!-- Add Accordion to Tab -->
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragAccordionOntoTab">
-            <argument name="contentType" value="PageBuilderAccordionContentType"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
-            <argument name="containerTargetIndex" value="1" />
-        </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <!-- Verify Accordion in Tab on storefront -->
-        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-    </test>
     <test name="CanAddHeadingToTab">
         <annotations>
             <features value="PageBuilder"/>
