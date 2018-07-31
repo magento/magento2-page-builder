@@ -58,9 +58,21 @@ export default class Wysiwyg {
             this.wysiwygAdapter.setup(mode);
         }
 
+        const $element = $("#" + elementId);
+        const maxToolbarWidth = 360;
+
         // prevent interactability with options when in editing mode
         this.onFocus(() => {
             $(`#${elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
+            // If there isn't enough room for a left-aligned toolbar, right align it
+            if ($(window).width() < $element.offset().left + maxToolbarWidth) {
+                $element.addClass('_right-aligned-toolbar');
+            }
+            else {
+                $element.removeClass('_right-aligned-toolbar')
+            }
+
             events.trigger("stage:interactionStart");
         });
 
