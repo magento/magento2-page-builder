@@ -14,7 +14,7 @@ use Magento\Framework\DataObject;
 /**
  * @api
  */
-class Wysiwyg extends Template
+class WysiwygSetup extends Template
 {
     /**
      * @var \Magento\Ui\Component\Wysiwyg\ConfigInterface

@@ -21,7 +21,7 @@ class Config implements ProviderInterface
     private $wysiwygConfig;
 
     /**
-     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditing
+     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList
      */
     private $inlineEditingChecker;
 
@@ -31,19 +31,27 @@ class Config implements ProviderInterface
     private $activeEditor;
 
     /**
-     * ConfigProvider constructor.
+     * @var array
+     */
+    private $additionalConfig;
+
+    /**
+     * Config constructor.
      * @param \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
-     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditing $inlineEditingChecker
+     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
+     * @param array $additionalConfig
      */
     public function __construct(
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
-        \Magento\PageBuilder\Model\Wysiwyg\InlineEditing $inlineEditingChecker,
-        \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
+        \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
+        \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
+        $additionalConfig = []
     ) {
         $this->wysiwygConfig = $wysiwygConfig;
         $this->inlineEditingChecker = $inlineEditingChecker;
         $this->activeEditor = $activeEditor;
+        $this->additionalConfig = $additionalConfig;
     }
 
     /**
@@ -52,9 +60,13 @@ class Config implements ProviderInterface
     public function getData(string $itemName) : array
     {
         $config = [];
-        if ($this->inlineEditingChecker->isAvailable($this->activeEditor->getWysiwygAdapterPath())) {
-            $config = $this->wysiwygConfig->getConfig()->getData();
+        $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
+        if ($this->inlineEditingChecker->isAvailable($activeEditorPath)) {
+            $config['adapter'] = $this->wysiwygConfig->getConfig()->getData();
+            if (isset($this->additionalConfig[$activeEditorPath])) {
+                $config['additional'] = $this->additionalConfig[$activeEditorPath];
+            }
         }
-        return [$itemName => $config];
+        return [$itemName => $config,];
     }
 }

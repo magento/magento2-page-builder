@@ -1,11 +1,13 @@
 /*eslint-disable */
-define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore"], function (_jquery, _setup, _events, _underscore) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type/wysiwyg-factory"], function (_jquery, _events, _underscore, _wysiwygFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
 
   /**
+   * Inline editing wysiwyg component
+   *
    * @api
    */
   var Wysiwyg =
@@ -38,17 +40,12 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
       this.wysiwygAdapter = void 0;
       this.dataStore = void 0;
       this.fieldName = void 0;
-      this.contentTypeId = contentTypeId;
-      this.fieldName = config.fieldName;
+      this.contentTypeId = contentTypeId; // todo refactor here
+
+      this.fieldName = config.additional.fieldName;
       this.dataStore = dataStore;
       config = this.encapsulateConfigBasedOnContentType(config);
-      var mode = config.mode;
-      this.wysiwygAdapter = new _setup(elementId, config.wysiwygConfigData);
-
-      if (mode) {
-        this.wysiwygAdapter.setup(mode);
-      }
-
+      this.wysiwygAdapter = (0, _wysiwygFactory)(elementId, config);
       var $element = (0, _jquery)("#" + elementId);
       var maxToolbarWidth = 360; // prevent interactability with options when in editing mode
 
@@ -130,26 +127,27 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
      *
      * @param {object} config
      * @returns {object} - interpolated configuration
+     * //todo move in the separate function
      */
 
 
     _proto.encapsulateConfigBasedOnContentType = function encapsulateConfigBasedOnContentType(config) {
       var _this = this;
 
-      var clonedConfig = _jquery.extend(true, {}, config);
+      var clonedConfig = Object.assign({}, config);
 
-      if (!clonedConfig.encapsulateSelectorConfigKeys) {
+      if (!clonedConfig["additional"].encapsulateSelectorConfigKeys) {
         return clonedConfig;
       }
 
-      _underscore.each(clonedConfig.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
-        var configValue = clonedConfig.wysiwygConfigData.settings[configKey];
+      _underscore.each(clonedConfig["additional"].encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
+        var configValue = clonedConfig["adapter"].settings[configKey];
 
         if (!isEnabled) {
           return;
         }
 
-        clonedConfig.wysiwygConfigData.settings[configKey] = "#" + _this.contentTypeId + (configValue ? " " + configValue : "");
+        clonedConfig['adapter'].settings[configKey] = "#" + _this.contentTypeId + (configValue ? " " + configValue : "");
       });
 
       return clonedConfig;

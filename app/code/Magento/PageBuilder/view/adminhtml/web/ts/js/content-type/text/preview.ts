@@ -37,7 +37,7 @@ export default class Preview extends BasePreview {
         this.wysiwyg = new Wysiwyg(
             this.parent.id,
             element.id,
-            this.config.additional_data.wysiwygConfig,
+            this.config.additional_data.wysiwygConfig.wysiwygConfigData,
             this.parent.dataStore,
         );
 

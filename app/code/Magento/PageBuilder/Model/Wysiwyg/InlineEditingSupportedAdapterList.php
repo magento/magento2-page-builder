@@ -11,7 +11,7 @@ namespace Magento\PageBuilder\Model\Wysiwyg;
 /**
  * Returns information if inline editing available by adapter path
  */
-class InlineEditing
+class InlineEditingSupportedAdapterList
 {
     /**
      * @var \Magento\Cms\Model\Wysiwyg\Config

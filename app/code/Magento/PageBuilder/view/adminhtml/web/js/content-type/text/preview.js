@@ -30,29 +30,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
         return;
       }
 
-      this.element = element;
-      element.id = this.parent.id + "-editor";
-      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig, this.parent.dataStore);
-      this.wysiwyg.onFocus(this.onFocus.bind(this));
-      this.wysiwyg.onBlur(this.onBlur.bind(this));
-    };
-    /**
-     * Event handler for wysiwyg focus
-     * Fixes z-index issues for tabs and column
-     */
-
-
-    _proto.onFocus = function onFocus() {
-      (0, _jquery)(this.element).closest('.tabs-content, .pagebuilder-column').css("z-index", 100);
-    };
-    /**
-     * Event handler for wysiwyg blue
-     * Fixes z-index issues for tabs and column
-     */
-
-
-    _proto.onBlur = function onBlur() {
-      (0, _jquery)(this.element).closest('.tabs-content, .pagebuilder-column').css("z-index", "");
+      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore);
     };
 
     return Preview;

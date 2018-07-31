@@ -64,7 +64,7 @@ class Config
     private $activeEditor;
 
     /**
-     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditing
+     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList
      */
     private $inlineEditingChecker;
 
@@ -77,7 +77,7 @@ class Config
      * @param \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
-     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditing $inlineEditingChecker
+     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param array $data
      */
     public function __construct(
@@ -88,7 +88,7 @@ class Config
         \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
-        \Magento\PageBuilder\Model\Wysiwyg\InlineEditing $inlineEditingChecker,
+        \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         array $data = []
     ) {
         $this->config = $config;

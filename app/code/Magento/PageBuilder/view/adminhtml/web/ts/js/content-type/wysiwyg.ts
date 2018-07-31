@@ -8,8 +8,11 @@ import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import DataStore from "../data-store";
+import WysiwygFactory from "./wysiwyg-factory";
 
 /**
+ * Inline editing wysiwyg component
+ *
  * @api
  */
 export default class Wysiwyg {
@@ -46,17 +49,13 @@ export default class Wysiwyg {
         dataStore: DataStore,
     ) {
         this.contentTypeId = contentTypeId;
-        this.fieldName = config.fieldName;
+        // todo refactor here
+        this.fieldName = config.additional.fieldName;
         this.dataStore = dataStore;
 
         config = this.encapsulateConfigBasedOnContentType(config);
-        const mode = config.mode;
 
-        this.wysiwygAdapter = new WysiwygSetup(elementId, config.wysiwygConfigData);
-
-        if (mode) {
-            this.wysiwygAdapter.setup(mode);
-        }
+        this.wysiwygAdapter = WysiwygFactory(elementId, config);
 
         const $element = $("#" + elementId);
         const maxToolbarWidth = 360;
@@ -151,23 +150,24 @@ export default class Wysiwyg {
      *
      * @param {object} config
      * @returns {object} - interpolated configuration
+     * //todo move in the separate function
      */
     private encapsulateConfigBasedOnContentType(config: object)
     {
-        const clonedConfig = $.extend(true, {}, config);
+        const clonedConfig = Object.assign( {}, config);
 
-        if (!clonedConfig.encapsulateSelectorConfigKeys) {
+        if (!clonedConfig["additional"].encapsulateSelectorConfigKeys) {
             return clonedConfig;
         }
 
-        _.each(clonedConfig.encapsulateSelectorConfigKeys, (isEnabled, configKey) => {
-            const configValue = clonedConfig.wysiwygConfigData.settings[configKey];
+        _.each(clonedConfig["additional"].encapsulateSelectorConfigKeys, (isEnabled, configKey) => {
+            const configValue = clonedConfig["adapter"].settings[configKey];
 
             if (!isEnabled) {
                 return;
             }
 
-            clonedConfig.wysiwygConfigData.settings[configKey] = (
+            clonedConfig['adapter'].settings[configKey] = (
                 "#" + this.contentTypeId + (configValue ? " " + configValue : "")
             );
         });
