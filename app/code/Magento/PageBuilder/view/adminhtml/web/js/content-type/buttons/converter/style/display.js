@@ -16,25 +16,29 @@ define([], function () {
     var _proto = Display.prototype;
 
     /**
-     * Ensure the display none property doesn't persist to the preview
+     * Convert value to internal format
      *
      * @param value string
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return;
+      return !(value === "none");
     };
     /**
-     * Ensure the display none property doesn't persist to the preview
+     * Convert value to knockout format, if buttons are displayed they should be inline block
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      return;
+      if (typeof data[name] !== "undefined" && data[name] === false) {
+        return "none";
+      }
+
+      return "inline-block";
     };
 
     return Display;

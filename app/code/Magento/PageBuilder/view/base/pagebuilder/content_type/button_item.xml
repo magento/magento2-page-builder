@@ -15,8 +15,7 @@
               form="pagebuilder_button_item_form"
               group="general"
               icon="icon-pagebuilder-button"
-              translate="label"
-              concealable="false">
+              translate="label">
             <parents default_policy="deny">
                 <parent name="buttons" policy="allow"/>
             </parents>
@@ -32,7 +31,7 @@
                         <elements>
                             <element name="main">
                                 <style_properties>
-                                    <static_property source="display" value="inline-block"/>
+                                    <property name="display" source="display" converter="Magento_PageBuilder/js/content-type/buttons/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>

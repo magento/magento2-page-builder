@@ -11,7 +11,7 @@ import ConverterInterface from "../../converter-interface";
  */
 export default class Display implements ConverterInterface {
     /**
-     * Convert value to internal format
+     * Ensure the display none property doesn't persist to the preview
      *
      * @param value string
      * @returns {string | object}
@@ -21,7 +21,7 @@ export default class Display implements ConverterInterface {
     }
 
     /**
-     * Convert value to knockout format
+     * Ensure the display none property doesn't persist to the preview
      *
      * @param name string
      * @param data Object
