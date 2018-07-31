@@ -23,6 +23,8 @@
         <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
     </actionGroup>
     <actionGroup name="validateGroupsAndContentTypes">
+        <seeNumberOfElements selector="{{PageBuilderPanel.allPanelGroups}}" userInput="5" stepKey="seeNumberOfGroups"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('general')}}" userInput="6" stepKey="seeNumberOfGeneralGroupContentTypes"/>
         <see userInput="General" selector="{{PageBuilderPanel.generalGroup}}" stepKey="seeGeneralGroup"/>
         <see userInput="Row" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupRow"/>
         <see userInput="Column" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupColumn"/>
@@ -31,21 +33,25 @@
         <see userInput="Buttons" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupButtons"/>
         <see userInput="Divider" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupDivider"/>
         <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('media')}}" userInput="4" stepKey="seeNumberOfMediaGroupContentTypes"/>
         <see userInput="Media" selector="{{PageBuilderPanel.mediaGroup}}" stepKey="seeMediaGroup"/>
         <see userInput="Image" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupImage"/>
         <see userInput="Banner" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupBanner"/>
         <see userInput="Video" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupVideo"/>
         <see userInput="Slider" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupSlider"/>
         <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('interactive')}}" userInput="3" stepKey="seeNumberOfInteractiveGroupContentTypes"/>
         <see userInput="Interactive" selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="seeInteractiveGroup"/>
         <see userInput="Tabs" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupTabs"/>
         <see userInput="Map" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupMap"/>
         <see userInput="Newsletter" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupNewsletter"/>
         <click selector="{{PageBuilderPanel.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('magento')}}" userInput="2" stepKey="seeNumberOfMagentoGroupContentTypes"/>
         <see userInput="Magento" selector="{{PageBuilderPanel.magentoGroup}}" stepKey="seeMagentoGroup"/>
         <see userInput="Block" selector="{{PageBuilderPanel.magentoGroupContentType}}" stepKey="seeMagentoGroupBlock"/>
         <see userInput="Product" selector="{{PageBuilderPanel.magentoGroupContentType}}" stepKey="seeMagentoGroupProduct"/>
         <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('other')}}" userInput="2" stepKey="seeNumberOfOtherGroupContentTypes"/>
         <see userInput="Anchor" selector="{{PageBuilderPanel.otherGroupContentType}}" stepKey="seeOtherGroupAnchor"/>
         <dontSee selector="{{PageBuilderPanel.codeContentType}}" stepKey="dontSeeOtherGroupCode"/>
         <see userInput="Html" selector="{{PageBuilderPanel.otherGroupContentType}}" stepKey="seeOtherGroupHtml"/>
