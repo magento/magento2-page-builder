@@ -30,6 +30,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
         return;
       }
 
+      element.id = this.parent.id + "-editor";
       this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig, this.parent.dataStore);
     };
 
