@@ -9,6 +9,39 @@
 
 .pagebuilder-content-type {
     .pagebuilder-button-item {
+        &.pagebuilder-content-type-active {
+            .button-item-drag-handle {
+                &.disabled:before {
+                    color: @color-light-gray;
+                    cursor: not-allowed;
+                }
+
+                &.disabled:active:before {
+                    cursor: not-allowed;
+                }
+
+                &:before {
+                    .abs-icon;
+                    color: @color-dark-gray0;
+                    content: @icon-gripper__content;
+                    cursor: move; /* fallback if grab cursor is unsupported */
+                    cursor: grab;
+                    cursor: -moz-grab;
+                    cursor: -webkit-grab;
+                    display: inline-block;
+                    font-size: 16px;
+                    left: 0;
+                    line-height: 2.2rem;
+                    position: absolute;
+                }
+
+                &:active:before {
+                    cursor: grabbing;
+                    cursor: -moz-grabbing;
+                    cursor: -webkit-grabbing;
+                }
+            }
+        }
         [contenteditable=true] {
             display: inline-block;
             min-height: 18px;
@@ -20,7 +53,7 @@
         .pagebuilder-options {
             bottom: 0;
             left: calc(50% - 5px);
-            transform: translate(-50%, 90%);
+            transform: translate(-50%, -50%);
             li.pagebuilder-options-link {
                 margin: 0;
             }

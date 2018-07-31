@@ -5,9 +5,10 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-button-item no-system-border" event="{ click: onMouseOver, focusout: onMouseOut }">
+<div class="pagebuilder-content-type pagebuilder-button-item no-system-border focus-options" event="{ click: onMouseOver, focusout: onMouseOut }">
     <render args="getOptions().template" />
     <a attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
+        <span class="button-item-drag-handle" css="{disabled: parent.parent.children().length <= 1}"></span>
         <span attr="data.link_text.attributes" data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }, hasFocus: $parent.parent.preview.isLiveEditing() === $index()" event="{ focusout: onFocusOut.call($data) }"></span>
     </a>
 </div>

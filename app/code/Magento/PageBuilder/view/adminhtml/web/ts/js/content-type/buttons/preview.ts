@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import {SortableOptionsInterface} from "../../binding/sortable-options";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import createContentType from "../../content-type-factory";
@@ -20,6 +21,14 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+    public disableSorting: KnockoutComputed<void> = ko.computed(() => {
+        const sortableElement = $(this.wrapperElement).find(".buttons-container");
+        if (this.parent.children().length <= 1) {
+            sortableElement.sortable("disable");
+        } else {
+            sortableElement.sortable("enable");
+        }
+    });
 
     public bindEvents() {
         super.bindEvents();
@@ -83,5 +92,61 @@ export default class Preview extends PreviewCollection {
         }).catch((error: Error) => {
             console.error(error);
         });
+    }
+
+    /**
+     * Get the sortable options for the tab heading sorting
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    public getSortableOptions(): SortableOptionsInterface {
+        return {
+            handle: ".button-item-drag-handle",
+            items: ".pagebuilder-content-type-wrapper",
+            containment: "parent",
+            tolerance: "pointer",
+            cursor: "grabbing",
+            cursorAt: { left: 25, top: 25 },
+            disabled: this.parent.children().length <= 1,
+            /**
+             * Provide custom helper element
+             *
+             * @param {Event} event
+             * @param {JQueryUI.Sortable} element
+             * @returns {Element}
+             */
+            helper(event: Event, element: JQueryUI.Sortable): Element {
+                const helper = $(element).clone().css({
+                    opacity: "0.7",
+                    width: "auto",
+                });
+                helper[0].querySelector(".pagebuilder-options").remove();
+                return helper[0];
+            },
+            placeholder: {
+                /**
+                 * Provide custom placeholder element
+                 *
+                 * @param {JQuery} item
+                 * @returns {JQuery}
+                 */
+                element(item: JQuery) {
+                    const placeholder = item
+                        .clone()
+                        .show()
+                        .css({
+                            display: "inline-block",
+                            opacity: "0.3",
+                        })
+                        .removeClass("focused")
+                        .addClass("sortable-placeholder");
+                    placeholder[0].querySelector(".pagebuilder-options").remove();
+                    return placeholder[0];
+                },
+                update() {
+                    return;
+                },
+            },
+        };
     }
 }

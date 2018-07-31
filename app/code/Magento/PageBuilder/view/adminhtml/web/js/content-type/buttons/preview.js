@@ -17,7 +17,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.disableSorting = _knockout.computed(function () {
+        var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
+
+        if (_this.parent.children().length <= 1) {
+          sortableElement.sortable("disable");
+        } else {
+          sortableElement.sortable("enable");
+        }
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -78,6 +86,62 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }).catch(function (error) {
         console.error(error);
       });
+    };
+    /**
+     * Get the sortable options for the tab heading sorting
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+
+
+    _proto.getSortableOptions = function getSortableOptions() {
+      return {
+        handle: ".button-item-drag-handle",
+        items: ".pagebuilder-content-type-wrapper",
+        containment: "parent",
+        tolerance: "pointer",
+        cursor: "grabbing",
+        cursorAt: {
+          left: 25,
+          top: 25
+        },
+        disabled: this.parent.children().length <= 1,
+
+        /**
+         * Provide custom helper element
+         *
+         * @param {Event} event
+         * @param {JQueryUI.Sortable} element
+         * @returns {Element}
+         */
+        helper: function helper(event, element) {
+          var helper = (0, _jquery)(element).clone().css({
+            opacity: "0.7",
+            width: "auto"
+          });
+          helper[0].querySelector(".pagebuilder-options").remove();
+          return helper[0];
+        },
+        placeholder: {
+          /**
+           * Provide custom placeholder element
+           *
+           * @param {JQuery} item
+           * @returns {JQuery}
+           */
+          element: function element(item) {
+            var placeholder = item.clone().show().css({
+              display: "inline-block",
+              opacity: "0.3"
+            }).removeClass("focused").addClass("sortable-placeholder");
+            placeholder[0].querySelector(".pagebuilder-options").remove();
+            return placeholder[0];
+          },
+          update: function update() {
+            return;
+          }
+        }
+      };
     };
 
     return Preview;
