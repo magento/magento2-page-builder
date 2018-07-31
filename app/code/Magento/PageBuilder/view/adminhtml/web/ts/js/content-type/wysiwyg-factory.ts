@@ -16,11 +16,11 @@ export default function create(
     elementId: string,
     config: object,
 ): WysiwygSetup {
-    const wysiwygAdapter =  new WysiwygSetup(elementId, config.adapter);
+    const wysiwygSetup =  new WysiwygSetup(elementId, config.adapter);
 
     if (config.additional.mode) {
-        wysiwygAdapter.setup(config.additional.mode);
+        wysiwygSetup.setup(config.additional.mode);
     }
 
-    return wysiwygAdapter;
+    return wysiwygSetup.wysiwygInstance;
 }

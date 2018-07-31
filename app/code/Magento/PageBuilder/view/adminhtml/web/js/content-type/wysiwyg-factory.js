@@ -13,13 +13,13 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_setup) {
    * @api
    */
   function create(elementId, config) {
-    var wysiwygAdapter = new _setup(elementId, config.adapter);
+    var wysiwygSetup = new _setup(elementId, config.adapter);
 
     if (config.additional.mode) {
-      wysiwygAdapter.setup(config.additional.mode);
+      wysiwygSetup.setup(config.additional.mode);
     }
 
-    return wysiwygAdapter;
+    return wysiwygSetup.wysiwygInstance;
   }
 
   return create;

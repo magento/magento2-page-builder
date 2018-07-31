@@ -37,39 +37,16 @@ export default class Wysiwyg {
     private fieldName: string;
 
     /**
-     * Element id
-     */
-    private elementId: string;
-
-    /**
-     * Element
-     */
-    private element: JQuery;
-
-    /**
-     * String
-     */
-    private maxToolbarWidth: number;
-
-    /**
-     *
      * @param {String} contentTypeId
      * @param {String} elementId
      * @param {Object} config
      * @param {DataStore} dataStore
-     * @param {() => void} onFocusCallback
-     * @param {() => void} onBlurCallback
-     * @param {() => void} onEditCallback
      */
     constructor(
         contentTypeId: string,
         elementId: string,
         config: object,
         dataStore: DataStore,
-        onFocusCallback: () => void = null,
-        onBlurCallback: () => void = null,
-        onEditCallback: () => void = null
-
     ) {
         this.contentTypeId = contentTypeId;
         // todo refactor here
@@ -80,27 +57,33 @@ export default class Wysiwyg {
 
         this.wysiwygAdapter = WysiwygFactory(elementId, config);
 
-        this.element = $("#" + elementId);
-        this.elementId = elementId;
-        this.maxToolbarWidth = 360;
+        const $element = $("#" + elementId);
+        const maxToolbarWidth = 360;
 
         // prevent interactability with options when in editing mode
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceFocus",
-            onFocusCallback ? onFocusCallback : this.onFocus.bind(this),
-        );
+        this.onFocus(() => {
+            $(`#${elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
+            // If there isn't enough room for a left-aligned toolbar, right align it
+            if ($(window).width() < $element.offset().left + maxToolbarWidth) {
+                $element.addClass('_right-aligned-toolbar');
+            }
+            else {
+                $element.removeClass('_right-aligned-toolbar')
+            }
+
+            events.trigger("stage:interactionStart");
+        });
 
         // resume normal interactability with opens when leaving editing mode
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceBlur",
-            onBlurCallback ? onBlurCallback : this.onBlur.bind(this),
-        );
+        this.onBlur(() => {
+            window.getSelection().empty();
+            $(`#${elementId}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+            events.trigger("stage:interactionStop");
+        });
 
         // Update content in our data store after our stage preview wysiwyg gets updated
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceChange",
-            _.debounce(onEditCallback ? onEditCallback : this.saveContentFromWysiwygToDataStore.bind(this), 100),
-        );
+        this.onEdit(this.saveContentFromWysiwygToDataStore.bind(this));
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
         events.on(`form:${contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
@@ -116,29 +99,31 @@ export default class Wysiwyg {
     /**
      * @param {Function} callback
      */
-    public onFocus(callback: () => void)
-    {
-        $(`#${this.elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
-
-        // If there isn't enough room for a left-aligned toolbar, right align it
-        if ($(window).width() < this.element.offset().left + this.maxToolbarWidth) {
-            this.element.addClass('_right-aligned-toolbar');
-        }
-        else {
-            this.element.removeClass('_right-aligned-toolbar')
-        }
-
-        events.trigger("stage:interactionStart");
+    public onEdit(callback: () => void) {
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            "tinymceChange",
+            _.debounce(callback, 100),
+        );
     }
 
     /**
      * @param {Function} callback
      */
-    public onBlur(callback: () => void)
-    {
-        window.getSelection().empty();
-        $(`#${this.elementId}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
-        events.trigger("stage:interactionStop");
+    public onFocus(callback: () => void) {
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            "tinymceFocus",
+            callback,
+        );
+    }
+
+    /**
+     * @param {Function} callback
+     */
+    public onBlur(callback: () => void) {
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            "tinymceBlur",
+            callback,
+        );
     }
 
     /**

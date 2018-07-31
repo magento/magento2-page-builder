@@ -151,8 +151,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.setFocusedTab = function setFocusedTab(index, force) {
-      var _this2 = this;
-
       if (force === void 0) {
         force = false;
       }
@@ -198,20 +196,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("stage:interactionStop", function () {
         interactionState = false;
-      }); // Add a 200ms delay after a null set to allow for clicks to be captured
-
-
-      _underscore.delay(function () {
-        if (!_this2.disableInteracting && Preview.focusOperationTime === focusTime) {
-          if (index !== null) {
-            _events.trigger("stage:interactionStart");
-          } else {
-            if (interactionState !== true) {
-              _events.trigger("stage:interactionStop");
-            }
-          }
-        }
-      }, index === null ? 200 : 0);
+      });
     };
     /**
      * Return an array of options
@@ -232,21 +217,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.addTab = function addTab() {
-      var _this3 = this;
+      var _this2 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
         _events.on("tab-item:mountAfter", function (args) {
           if (args.id === tab.id) {
-            _this3.setFocusedTab(_this3.parent.children().length - 1);
+            _this2.setFocusedTab(_this2.parent.children().length - 1);
 
             _events.off("tab-item:" + tab.id + ":mountAfter");
           }
         }, "tab-item:" + tab.id + ":mountAfter");
 
-        _this3.parent.addChild(tab, _this3.parent.children().length); // Update the default tab title when adding a new tab
+        _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
 
 
-        tab.dataStore.update((0, _translate)("Tab") + " " + (_this3.parent.children.indexOf(tab) + 1), "tab_name");
+        tab.dataStore.update((0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
       });
     };
     /**
@@ -385,24 +370,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this4 = this;
+      var _this3 = this;
 
       _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
       _events.on("tabs:dropAfter", function (args) {
-        if (args.id === _this4.parent.id && _this4.parent.children().length === 0) {
-          _this4.addTab();
+        if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
+          _this3.addTab();
         }
       }); // ContentType being removed from container
 
 
       _events.on("tab-item:removeAfter", function (args) {
-        if (args.parent.id === _this4.parent.id) {
+        if (args.parent.id === _this3.parent.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
-          _this4.refreshTabs(newIndex, true);
+          _this3.refreshTabs(newIndex, true);
         }
       }); // Capture when a content type is duplicated within the container
 
@@ -411,28 +396,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedTabIndex;
 
       _events.on("tab-item:duplicateAfter", function (args) {
-        if (_this4.parent.id === args.duplicateContentType.parent.id) {
+        if (_this3.parent.id === args.duplicateContentType.parent.id) {
           var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
         }
 
-        _this4.buildTabs(args.index);
+        _this3.buildTabs(args.index);
       });
 
       _events.on("tab-item:mountAfter", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
-          _this4.refreshTabs(duplicatedTabIndex, true);
+          _this3.refreshTabs(duplicatedTabIndex, true);
 
           duplicatedTab = duplicatedTabIndex = null;
         }
 
-        if (_this4.parent.id === args.contentType.parent.id) {
-          _this4.updateTabNamesInDataStore();
+        if (_this3.parent.id === args.contentType.parent.id) {
+          _this3.updateTabNamesInDataStore();
 
           args.contentType.dataStore.subscribe(function () {
-            _this4.updateTabNamesInDataStore();
+            _this3.updateTabNamesInDataStore();
           });
         }
       });

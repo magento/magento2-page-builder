@@ -34,6 +34,7 @@ export default class Preview extends BasePreview {
 
         element.id = this.parent.id + "-editor";
 
+
         this.wysiwyg = new Wysiwyg(
             this.parent.id,
             element.id,
