@@ -102,6 +102,72 @@
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
     </test>
+    <test name="TabItemMinHeightInvalidInputs">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tab"/>
+            <title value="Tab Item Min Height Invalid Inputs"/>
+            <description value="A user cannot submit an invalid min height value for tab"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-931"/>
+            <testCaseId value="MC-3439"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsLayout"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Enter Height: NonNumeric -->
+        <comment userInput="Enter Height: NonNumeric" stepKey="commentEnterHeightNonNumeric"/>
+        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset" stepKey="enterMinHeightPropertyNonNumeric">
+            <argument name="property" value="PageBuilderMinHeightProperty_NonNumeric"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorNonNumeric">
+            <argument name="property" value="PageBuilderMinHeightProperty_NonNumeric"/>
+        </actionGroup>
+        <!-- Enter Height: Negative -->
+        <comment userInput="Enter Height: Negative" stepKey="commentEnterHeightNegative"/>
+        <actionGroup ref="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset" stepKey="enterMinHeightPropertyNegative">
+            <argument name="property" value="PageBuilderMinHeightProperty_Negative1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorNegative">
+            <argument name="property" value="PageBuilderMinHeightProperty_Negative1"/>
+        </actionGroup>
+        <!-- Enter Height: Valid After Invalid -->
+        <comment userInput="Enter Height: Valid After Invalid" stepKey="commentEnterHeightValidAfterInvalid"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightPropertyValid">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Valid Height After Invalid - Before Save -->
+        <comment userInput="Verify valid height after invalid on stage before save" stepKey="commentVerifyValidHeightAfterInvalidBeforeSave"/>
+        <waitForElementVisible selector="{{TabOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeTabMinHeight"/>
+        <!-- Verify Valid Height After Invalid - After Save -->
+        <comment userInput="Verify valid height after invalid on stage after save" stepKey="commentVerifyHeightAfterInvalidOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{TabOnStage.minHeight('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeTabMinHeightAfterSave"/>
+    </test>
     <test name="TabContentIsVerticallyAligned">
         <annotations>
             <features value="PageBuilder"/>
