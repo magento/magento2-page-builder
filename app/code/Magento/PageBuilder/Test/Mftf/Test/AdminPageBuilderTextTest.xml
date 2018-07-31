@@ -13,10 +13,10 @@
             <features value="PageBuilder"/>
             <stories value="Text"/>
             <title value="Verify Text placeholder and save empty Text Content Block"/>
-            <description value="Verify Text placeholder and save empty Text Content Block"/>
+            <description value="Verify placeholder and empty text content block, make sure there is no content display on storefront when saving an empty Text Content Block"/>
             <severity value="CRITICAL"/>
             <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3464"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -52,7 +52,7 @@
             <description value="Verify that user are able to add text into Text Content Block and see it on storefront "/>
             <severity value="CRITICAL"/>
             <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3465"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -96,7 +96,7 @@
             <description value="Verify that user are able to add image into Text Content Block and see it on storefront "/>
             <severity value="CRITICAL"/>
             <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3466"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -129,6 +129,16 @@
         <actionGroup ref="saveImage" stepKey="insertImage"/>
         <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup" />
         <seeElementInDOM selector="{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage"/>
+        <!--Verify inputed image on slideout-->
+        <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
+        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEImage(ImageUpload3.fileName)}}" stepKey="waitForImage3"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify empty Content Block on storefront-->
         <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
@@ -143,7 +153,7 @@
             <description value="Verify that user are able to add variable into Text Content Block and see it on storefront "/>
             <severity value="CRITICAL"/>
             <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3467"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -171,8 +181,8 @@
         <comment userInput="Select another variable" stepKey="selectAnotherVariable"/>
         <doubleClick  selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableCountry.variableName)}}" stepKey="waitForVariable1"/>
-        <checkOption selector="{{VariableSection.Radio(TinyMCEVariableCountry.variableName)}}" stepKey="selectVariable"/>
+        <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="waitForVariable1"/>
+        <checkOption selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="selectVariable"/>
         <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
@@ -201,7 +211,7 @@
             <description value="Verify that user are able to add widget into Text Content Block and see it on storefront "/>
             <severity value="CRITICAL"/>
             <useCaseId value=""/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3468"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -228,6 +238,16 @@
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+        <!--Verify widget edit page-->
+        <comment userInput="Verify widget edit page" stepKey="commentVerifyEditWidget"/>
+        <doubleClick  selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{WidgetSection.WidgetType}}" stepKey="waitForWidgetType"/>
+        <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
+        <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
+        <!--Verify inputed widget on slideout-->
+        <comment userInput="Verify inputed widget on slideout" stepKey="commentVerifyInputedWidget"/>
         <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -250,7 +270,7 @@
             <description value="Verify buttons on WYSIWYG toolbar inside PageBuilder"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1412"/>
-            <testCaseId value="MAGETWO-90274"/>
+            <testCaseId value="MC-3463"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
