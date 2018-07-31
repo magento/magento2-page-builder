@@ -14,7 +14,7 @@
             <stories value="Tabs"/>
             <title value="Tab Item - Validate Layout Section Default Values"/>
             <description value="Validate the default values for fields in the Layout section for Tab."/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-931"/>
             <testCaseId value="MC-3435"/>
             <group value="pagebuilder"/>
@@ -106,9 +106,9 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Tab"/>
-            <title value="Tab Item Min Height Invalid Inputs"/>
+            <title value="Tab Item - Tab Min Height Invalid Inputs"/>
             <description value="A user cannot submit an invalid min height value for tab"/>
-            <severity value="CRITICAL"/>
+            <severity value="AVERAGE"/>
             <useCaseId value="MC-931"/>
             <testCaseId value="MC-3439"/>
             <group value="pagebuilder"/>
@@ -172,12 +172,13 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Tab"/>
-            <title value="Tab Content Can Be Vertically Aligned"/>
+            <title value="Tab Item - Tab Content Can Be Vertically Aligned"/>
             <description value="A user can vertically align tab contents"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-931"/>
             <testCaseId value="MC-3437"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-me"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabsLayout"/>
         </annotations>
@@ -194,14 +195,14 @@
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTabsContentType"/>
-        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSecondRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoRow1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
@@ -229,6 +230,9 @@
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstTab"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupButtons">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonToFirstTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
@@ -304,8 +308,9 @@
             <argument name="verticalAlignContainer" value="PageBuilderVerticalAlignmentPropertyBottom"/>
         </actionGroup>
         <!-- Verify Vertical Alignment In Storefront -->
+        <comment userInput="Verify vertical alignment in storefront" stepKey="commentVerifyVerticalAlignmentInStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="validateLayoutStylesNoHeight" stepKey="validateTopLayoutStylesOnStorefront">
             <argument name="page" value="TabOnStorefront"/>
@@ -327,7 +332,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Tab"/>
-            <title value="Tab Content Can Be Vertically Aligned With Different Heights"/>
+            <title value="Tab Item - Tab Content Can Be Vertically Aligned With Different Heights"/>
             <description value="A user can vertically align tab contents with different heights"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-931"/>
@@ -349,14 +354,14 @@
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add tabs to stage" stepKey="commentAddTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTabsContentType"/>
-        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSecondRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoRow1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
@@ -376,6 +381,9 @@
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyTop"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsFirstRow"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupButtons">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonToFirstTab">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
