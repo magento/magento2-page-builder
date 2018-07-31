@@ -188,19 +188,6 @@ export default class Preview extends PreviewCollection {
         events.on("stage:interactionStop", () => {
             interactionState = false;
         });
-
-        // Add a 200ms delay after a null set to allow for clicks to be captured
-        _.delay(() => {
-            if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
-                if (index !== null) {
-                    events.trigger("stage:interactionStart");
-                } else {
-                    if (interactionState !== true) {
-                        events.trigger("stage:interactionStop");
-                    }
-                }
-            }
-        }, ((index === null) ? 200 : 0));
     }
 
     /**
