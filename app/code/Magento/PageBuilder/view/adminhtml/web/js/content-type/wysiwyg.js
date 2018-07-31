@@ -47,11 +47,19 @@ define(["jquery", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/
 
       if (mode) {
         this.wysiwygAdapter.setup(mode);
-      } // prevent interactability with options when in editing mode
+      }
 
+      var $element = (0, _jquery)("#" + elementId);
+      var maxToolbarWidth = 360; // prevent interactability with options when in editing mode
 
       this.onFocus(function () {
-        (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+        (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active"); // If there isn't enough room for a left-aligned toolbar, right align it
+
+        if ((0, _jquery)(window).width() < $element.offset().left + maxToolbarWidth) {
+          $element.addClass('_right-aligned-toolbar');
+        } else {
+          $element.removeClass('_right-aligned-toolbar');
+        }
 
         _events.trigger("stage:interactionStart");
       }); // resume normal interactability with opens when leaving editing mode
