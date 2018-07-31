@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _events, _underscore, _config, _preview, _wysiwyg) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -26,49 +26,11 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
      * @param {HTMLElement} element
      */
     _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
-
       if (!_config.getConfig("can_use_inline_editing_on_stage")) {
         return;
       }
 
-      var inlineWysiwygConfig = this.config.additional_data.inlineWysiwygConfig;
-
-      if (inlineWysiwygConfig.encapsulateSelectorConfigKeys) {
-        inlineWysiwygConfig = _jquery.extend(true, {}, this.config.additional_data.inlineWysiwygConfig);
-
-        _underscore.each(inlineWysiwygConfig.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
-          var configValue = inlineWysiwygConfig.wysiwygConfig.settings[configKey];
-
-          if (!isEnabled) {
-            return;
-          }
-
-          inlineWysiwygConfig.wysiwygConfig.settings[configKey] = "#" + _this2.parent.id + (configValue ? " " + configValue : "");
-        });
-      }
-
-      this.wysiwyg = new _wysiwyg(element.id, inlineWysiwygConfig.wysiwygConfig, inlineWysiwygConfig.mode); // Update content in our data store after our stage preview wysiwyg gets updated
-
-      this.wysiwyg.onEdited(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
-
-      _events.on("form:" + this.parent.id + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
-    };
-    /**
-     * Update content in our data store after our stage preview wysiwyg gets updated
-     */
-
-
-    _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
-      this.parent.dataStore.update(this.wysiwyg.getAdapter().getContent(), this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey);
-    };
-    /**
-     * Update content in our stage wysiwyg after our data store gets updated
-     */
-
-
-    _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
-      this.wysiwyg.getAdapter().setContent(this.parent.dataStore.get(this.config.additional_data.inlineWysiwygConfig.contentDataStoreKey));
+      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig, this.parent.dataStore);
     };
 
     return Preview;
