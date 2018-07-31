@@ -15,7 +15,7 @@
             <argument name="verticalAlignContainer" defaultValue="PageBuilderVerticalAlignmentPropertyTop"/>
         </arguments>
         <waitForElement selector="{{page.container(index)}}" stepKey="waitForVerticalAlignContainer"/>
-        <dontSeeElement selector="{{page.containerStyle(index, PageBuilderMinHeightProperty_Empty.style)}}" stepKey="dontSeeStyle"/>
+        <seeElement selector="{{page.noMinHeight(index)}}" stepKey="dontSeeStyle"/>
         <seeElement selector="{{page.containerStyle(index, verticalAlignContainer.style)}}" stepKey="seeVerticalAlignmentStyle"/>
     </actionGroup>
     <!-- Validate All Layout Styles -->
