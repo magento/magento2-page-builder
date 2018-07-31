@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_config, _preview, _wysiwyg) {
+define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _config, _preview, _wysiwyg) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,7 +17,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -30,8 +30,29 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
         return;
       }
 
+      this.element = element;
       element.id = this.parent.id + "-editor";
       this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig, this.parent.dataStore);
+      this.wysiwyg.onFocus(this.onFocus.bind(this));
+      this.wysiwyg.onBlur(this.onBlur.bind(this));
+    };
+    /**
+     * Event handler for wysiwyg focus
+     * Fixes z-index issues for tabs and column
+     */
+
+
+    _proto.onFocus = function onFocus() {
+      (0, _jquery)(this.element).closest('.tabs-content, .pagebuilder-column').css("z-index", 100);
+    };
+    /**
+     * Event handler for wysiwyg blue
+     * Fixes z-index issues for tabs and column
+     */
+
+
+    _proto.onBlur = function onBlur() {
+      (0, _jquery)(this.element).closest('.tabs-content, .pagebuilder-column').css("z-index", "");
     };
 
     return Preview;
