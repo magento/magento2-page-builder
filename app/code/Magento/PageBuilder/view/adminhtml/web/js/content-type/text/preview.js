@@ -46,7 +46,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
       (0, _jquery)(this.element).closest(".tabs-content, .pagebuilder-column").css("z-index", 100);
     };
     /**
-     * Event handler for wysiwyg blue
+     * Event handler for wysiwyg blur
      * Fixes z-index issues for tabs and column
      */
 
