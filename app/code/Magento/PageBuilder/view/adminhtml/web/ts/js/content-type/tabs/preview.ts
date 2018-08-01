@@ -31,7 +31,6 @@ import PreviewCollection from "../preview-collection";
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public static focusOperationTime: number;
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private disableInteracting: boolean;
     private element: Element;
@@ -50,6 +49,7 @@ export default class Preview extends PreviewCollection {
             }
             $(this.element).tabs({
                 create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
+                    this.$activeTabPositioner = $(this.element).find('.active-tab-positioner');
                     this.setFocusedTab(activeTabIndex || 0);
                 },
             });
@@ -176,26 +176,6 @@ export default class Preview extends PreviewCollection {
                 }
             });
         }
-
-        /**
-         * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
-         * interaction has started after.
-         */
-        const focusTime = new Date().getTime();
-        Preview.focusOperationTime = focusTime;
-
-        /**
-         * Keep a reference of the state of the interaction state on the stage to check if the interaction has
-         * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
-         * an interaction during the delay period.
-         */
-        let interactionState: boolean = false;
-        events.on("stage:interactionStart", () => {
-            interactionState = true;
-        });
-        events.on("stage:interactionStop", () => {
-            interactionState = false;
-        });
     }
 
     /**

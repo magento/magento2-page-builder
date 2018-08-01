@@ -50,9 +50,11 @@ export default class Preview extends BasePreview {
      * Fixes z-index issues for tabs and column
      */
     private onFocus() {
-        $(this.element).closest(
-            this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(",") as string,
-        ).css("z-index", 100);
+        const $element = $(this.element);
+
+        $.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, (i, selector) => {
+            $element.closest(selector as string).css("z-index", 100);
+        });
     }
 
     /**
@@ -60,8 +62,10 @@ export default class Preview extends BasePreview {
      * Fixes z-index issues for tabs and column
      */
     private onBlur() {
-        $(this.element).closest(
-            this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(",") as string,
-        ).css("z-index", "");
+        const $element = $(this.element);
+
+        $.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, (i, selector) => {
+            $element.closest(selector as string).css("z-index", "");
+        });
     }
 }

@@ -43,6 +43,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           (0, _jquery)(_this.element).tabs({
             create: function create(event, ui) {
+              _this.$activeTabPositioner = (0, _jquery)(_this.element).find('.active-tab-positioner');
+
               _this.setFocusedTab(activeTabIndex || 0);
             }
           });
@@ -181,29 +183,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         });
       }
-      /**
-       * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
-       * interaction has started after.
-       */
-
-
-      var focusTime = new Date().getTime();
-      Preview.focusOperationTime = focusTime;
-      /**
-       * Keep a reference of the state of the interaction state on the stage to check if the interaction has
-       * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
-       * an interaction during the delay period.
-       */
-
-      var interactionState = false;
-
-      _events.on("stage:interactionStart", function () {
-        interactionState = true;
-      });
-
-      _events.on("stage:interactionStop", function () {
-        interactionState = false;
-      });
     };
     /**
      * Return an array of options
@@ -451,7 +430,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   }(_previewCollection); // Resolve issue with jQuery UI tabs content typeing events on content editable areas
 
 
-  Preview.focusOperationTime = void 0;
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;
 
   _jquery.ui.tabs.prototype._tabKeydown = function (event) {

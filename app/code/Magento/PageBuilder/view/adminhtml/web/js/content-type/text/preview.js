@@ -43,7 +43,11 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
 
 
     _proto.onFocus = function onFocus() {
-      (0, _jquery)(this.element).closest(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(",")).css("z-index", 100);
+      var $element = (0, _jquery)(this.element);
+
+      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
+        $element.closest(selector).css("z-index", 100);
+      });
     };
     /**
      * Event handler for wysiwyg blur
@@ -52,7 +56,11 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
 
 
     _proto.onBlur = function onBlur() {
-      (0, _jquery)(this.element).closest(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(",")).css("z-index", "");
+      var $element = (0, _jquery)(this.element);
+
+      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
+        $element.closest(selector).css("z-index", "");
+      });
     };
 
     return Preview;
