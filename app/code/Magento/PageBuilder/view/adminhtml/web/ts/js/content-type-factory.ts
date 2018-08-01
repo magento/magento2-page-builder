@@ -68,7 +68,7 @@ export default function createContentType(
 /**
  * Merge defaults and content type data
  *
- * @param {Config} config
+ * @param {ContentTypeConfigInterface} config
  * @param {object} data
  * @returns {any}
  */
@@ -81,7 +81,13 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
             defaults[key] = field.default;
         });
     }
-    return _.extend(defaults, data);
+    return _.extend(
+        defaults,
+        data,
+        {
+            name: config.name,
+        },
+    );
 }
 
 /**
