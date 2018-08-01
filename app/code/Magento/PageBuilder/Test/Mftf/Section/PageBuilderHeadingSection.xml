@@ -10,7 +10,9 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="HeadingOnStage">
         <element name="all" type="button" selector="//div[contains(@class,'pagebuilder-heading')]"/>
-        <element name="base" type="text" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
+        <element name="base" type="text" selector="(//h2)[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::h2)[{{arg1}}]" parameterized="true"/>
+        <element name="baseByTagName" type="text" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
         <element name="allHeadingsInContainer" type="button" selector="(//div[contains(@class, '{{arg1}}-container')])[{{arg2}}]//div[contains(@class,'pagebuilder-heading')]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[.= '{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingPlaceholder" type="button" selector="(//{{arg1}}[contains(@data-placeholder,'{{arg2}}')])[{{arg3}}]" parameterized="true"/>
@@ -38,8 +40,10 @@
         <element name="noPadding" type="text" selector="(//{{arg1}})[{{arg2}}][not(contains(@style,'padding:'))]" parameterized="true"/>
     </section>
     <section name="HeadingOnStorefront">
-        <element name="base" type="text" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
+        <element name="base" type="text" selector="(//h2)[{{arg2}}]" parameterized="true"/>
+        <element name="baseByTagName" type="text" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
         <element name="baseJs" type="text" selector="document.querySelectorAll('[data-role=\'heading\']')[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//h2)[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="headingNoText" type="button" selector="(//{{arg1}}[@data-role='heading' and .=''])[{{arg2}}]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[@data-role='heading' and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingType" type="button" selector="(//{{arg1}}[@data-role='heading'])[{{arg2}}]" parameterized="true"/>

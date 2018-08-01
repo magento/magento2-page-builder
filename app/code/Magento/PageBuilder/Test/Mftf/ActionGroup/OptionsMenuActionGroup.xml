@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
             <argument name="contentType"/>
@@ -183,5 +183,39 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, '1')}}" stepKey="seeOptionsDuplicate"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="seeOptionsRemove"/>
         <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
+    <actionGroup name="hideContentType">
+        <arguments>
+            <argument name="section"/>
+            <argument name="contentType"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Hiding content type -->
+        <comment userInput="Hiding content type" stepKey="commentHideContentType" />
+        <waitForElementVisible selector="{{section.base(targetIndex)}}" stepKey="waitForContentType" />
+        <moveMouseOver selector="{{section.base(targetIndex)}}" stepKey="moveMouseOverAnchor" />
+        <waitForPageLoad stepKey="waitForMouseOver" />
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role)}}" stepKey="waitForHideOptionVisible" />
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role)}}" stepKey="hideContentType" />
+        <waitForPageLoad stepKey="waitForDisable" />
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role)}}" stepKey="waitForShowOptionVisible" />
+        <waitForElementVisible selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
+    </actionGroup>
+    <actionGroup name="showContentType">
+        <arguments>
+            <argument name="section"/>
+            <argument name="contentType"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Showing content type -->
+        <comment userInput="Showing content type" stepKey="commentShowContentType" />
+        <waitForElementVisible selector="{{section.base(targetIndex)}}" stepKey="waitForContentType" />
+        <moveMouseOver selector="{{section.base(targetIndex)}}" stepKey="moveMouseOverAnchor" />
+        <waitForPageLoad stepKey="waitForMouseOver" />
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role)}}" stepKey="waitForShowOptionVisible" />
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role)}}" stepKey="showContentType" />
+        <waitForPageLoad stepKey="waitForDisable" />
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role)}}" stepKey="waitForHideOptionVisible" />
+        <waitForElementNotVisible selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
     </actionGroup>
 </actionGroups>
