@@ -222,48 +222,6 @@ Inline styles
 14. align-self
 15. min-height
 
-## Accordion
-
-```
-<div data-element="main" data-role="accordion" data-appearance="default" style="..."></div>
-```
-
-Attributes
-1. data-element [main]
-2. data-role [accordion]
-3. data-appearance [default]
-4. class
-
-Inline styles
-1. text-align
-2. border-style
-3. border-color
-4. border-width
-5. border-radius
-6. margin
-7. padding
-8. align-self
-9. min-height
-
-## Accordion item
-
-```
-<div data-collapsible="true" data-open-on-load="true" class="title">
-    <div data-role="trigger">
-        <span>Section 1 Title</span></div>
-    </div>
-    <div data-content="true" class="content">Section 1 content</div>
-</div>
-```
-
-Attributes
-1. data-open-on-load [true, false]
-2. class
-
-Title.
-
-HTML content.
-
 ## Text
 
 ```
