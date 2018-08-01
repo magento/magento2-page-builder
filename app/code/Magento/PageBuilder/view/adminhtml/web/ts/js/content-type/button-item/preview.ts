@@ -56,7 +56,6 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onButtonMouseOver(context: Preview, event: Event): void {
-        console.log(this.mouseover);
         if (this.display() === false) {
             this.onMouseOver(context, event);
         }

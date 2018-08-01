@@ -64,8 +64,6 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
 
 
     _proto.onButtonMouseOver = function onButtonMouseOver(context, event) {
-      console.log(this.mouseover);
-
       if (this.display() === false) {
         this.onMouseOver(context, event);
       }
