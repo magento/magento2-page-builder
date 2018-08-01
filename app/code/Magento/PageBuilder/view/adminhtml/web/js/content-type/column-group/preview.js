@@ -272,10 +272,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         _this3.resizeColumnInstance = column;
         _this3.resizeColumnWidths = _this3.resizeUtils.determineColumnWidths(_this3.resizeColumnInstance, groupPosition);
-        _this3.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this3.resizeColumnWidths); // Set a flag of the columns which are currently being resized
-
-        _this3.setColumnsAsResizing(column, (0, _resize.getAdjacentColumn)(column, "+1")); // Force the cursor to resizing
-
+        _this3.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this3.resizeColumnWidths); // Force the cursor to resizing
 
         (0, _jquery)("body").css("cursor", "col-resize"); // Reset the resize history
 
@@ -724,7 +721,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
               this.recordResizeHistory(usedHistory, direction, _adjustedColumn, _modifyColumnInPair);
               this.resizeLastPosition = newColumnWidth.position;
-              this.resizeLastColumnInPair = _modifyColumnInPair;
+              this.resizeLastColumnInPair = _modifyColumnInPair; // Ensure the adjusted column is marked as resizing to animate correctly
+
+              this.setColumnsAsResizing(mainColumn, _adjustedColumn);
               this.onColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {

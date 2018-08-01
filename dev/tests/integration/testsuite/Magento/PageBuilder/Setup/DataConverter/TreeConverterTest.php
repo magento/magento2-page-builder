@@ -161,6 +161,11 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                 'row_empty.json',
                 'row_empty.html'
             ],
+            'row default and full width' => [
+                [],
+                'row_default_full_width.json',
+                'row_default_full_width.html'
+            ],
             'row with column and heading' => [
                 [
                     'heading' => [

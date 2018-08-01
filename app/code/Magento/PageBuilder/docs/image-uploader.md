@@ -70,7 +70,7 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="MyName" translate="label" label="MyName" icon="icon-modulename-simple" component="Vendor_ModuleName/js/content-type" form="modulename_simple_form" group="general">
+        <type name="MyName" translate="label" label="MyName" icon="icon-modulename-simple" component="Vendor_ModuleName/js/content-type" form="modulename_simple_form" group="layout">
             ...
             <additional_data>
                 <item name="uploaderConfig" xsi:type="array">

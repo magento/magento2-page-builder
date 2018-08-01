@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _events, _jqueryUiTouchPunch, _alert, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUiTouchPunch, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -25,13 +25,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       this.focusChild = _knockout.observable(false);
       this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       this.dataStore = new _dataStore();
+      this.afterRenderDeferred = (0, _promiseDeferred)();
       this.template = "Magento_PageBuilder/content-type/preview";
       this.render = new _render();
       this.collection = new _collection();
       this.parent = parent;
       this.id = parent.id;
       this.initListeners();
-      (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
+      Promise.all([(0, _stageBuilder)(this, parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
       (0, _matrix.generateAllowedParents)();
     }
     /**
@@ -126,7 +127,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
 
     _proto.getSortableOptions = function getSortableOptions() {
-      return (0, _sortable.getSortableOptions)(this);
+      return (0, _sortable2.getSortableOptions)(this);
     };
     /**
      * Init listeners

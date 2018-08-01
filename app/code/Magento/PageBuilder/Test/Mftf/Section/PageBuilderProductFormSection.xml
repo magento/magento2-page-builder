@@ -12,5 +12,10 @@
         <element name="PageBuilderBtn" type="text" selector="[data-index='{{var1}}'] button.action-default" parameterized="true"/>
         <element name="WarningMsg" type="text" selector=".pagebuilder-modal-content-body"/>
         <element name="AcceptBtn" type="button" selector=".action-primary.action-accept"/>
+        <element name="attributeTextInput" type="text" selector="[data-index='{{var1}}'] input.admin__control-text" parameterized="true"/>
+    </section>
+    <section name="PageBuilderProductStorefront">
+        <element name="attributeSectionHeading" type="text" selector="(//div[contains(@class, 'pagebuilder-attributes-wrapper')]/div[contains(@class, 'product-full-width-section')])[{{var1}}]/descendant::h2[contains(@class, 'product-section-title') and text()='{{var2}}']" parameterized="true"/>
+        <element name="attributeTableValue" type="text" selector="//td[@data-th='{{var1}}' and text()='{{var2}}']" parameterized="true"/>
     </section>
 </sections>
