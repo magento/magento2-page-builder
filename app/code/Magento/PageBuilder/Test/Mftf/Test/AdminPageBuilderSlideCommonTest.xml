@@ -568,7 +568,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible time="10" selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <waitForElement time="10" selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="waitEmptySliderOnPageBuilderPage"/>
+        <dontSeeElement selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="dontSeeEmptySlider"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
@@ -579,9 +580,9 @@
         <comment userInput="Verify slide defaults on storefront: Appearance defaults to Poster" stepKey="storefrontDefaultAppearance" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-appearance" expectedValue="poster" stepKey="slideStorefrontPoster"/>
         <comment userInput="Verify slide defaults on storefront: Minimum Height defaults to 300" stepKey="storefrontDefaultMinHeight"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
         <comment userInput="Verify slide background defaults on storefront: Background Color defaults to empty" stepKey="storefrontDefaultColor" />
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper .pagebuilder-overlay" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
         <comment userInput="Verify slide background defaults on storefront: Background Position defaults to Top Aligned" stepKey="storefrontDefaultPosition"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-position: left top;" stepKey="slideStorefrontPosition"/>
         <comment userInput="Verify slide background defaults on storefront: Background Size defaults to Cover" stepKey="storefrontDefaultSize"/>
@@ -1700,6 +1701,9 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
+        <actionGroup ref="pickColorSwatchCell" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1857,7 +1861,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
