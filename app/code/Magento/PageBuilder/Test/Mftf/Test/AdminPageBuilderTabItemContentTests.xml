@@ -25,9 +25,11 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
@@ -47,6 +49,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Text to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupText">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
@@ -121,8 +126,8 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
-        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', 'text', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.text('1', '{{_ENV.MAGENTO_BASE_URL}}')}}" stepKey="waitForVariableStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', '{{_ENV.MAGENTO_BASE_URL}}', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="CanAddTextToTab">
         <annotations>
@@ -149,7 +154,7 @@
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
