@@ -69,7 +69,7 @@ export default class Wysiwyg {
             $(`#${elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
 
             // If there isn't enough room for a left-aligned toolbar, right align it
-            if ($(window).width() < $element.offset().left + minToolbarWidth) {
+            if ($(window).width() < $element.offset().left + parseInt(minToolbarWidth)) {
                 $element.addClass("_right-aligned-toolbar");
             }
             else {
