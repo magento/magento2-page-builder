@@ -69,12 +69,12 @@ To add Visual Select customization to a Page Builder content block:
 
 ## Override the select component with an element template {#element-template}
 
-We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, specifying an element template for this functionality, to implement the Visual Select option.
+We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, specifying an element template & component for this functionality, to implement the Visual Select option.
 
-In the provided template, specify `<elementTmpl>`:
+In the provided template, specify `<elementTmpl>` alongside updating the fields component to `Magento_PageBuilder/js/form/element/visual-select`:
 
 ``` xml
-<field name="text_align" sortOrder="10" formElement="select">
+<field name="text_align" sortOrder="10" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
     <settings>
         <dataType>text</dataType>
         <label translate="true">Alignment</label>
@@ -84,7 +84,7 @@ In the provided template, specify `<elementTmpl>`:
 
 ## Add Visual Select to the XML config {#xml-config}
 
-The available options for select, `value`, `title`, and `icon`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method. 
+The available options for select, `value`, `title`, `icon` and `noticeMessage`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method. 
 
 Options should return an array with the following format:
 
@@ -92,7 +92,8 @@ Options should return an array with the following format:
 [
     value => "value", //key used in the component dataSource
     title => "Title",
-    icon => "path/to/picture/on/server"
+    icon => "path/to/picture/on/server",
+    noticeMessage => "A message to be displayed when option is selected"
 ]
 ```
 
@@ -100,7 +101,7 @@ These new configuration values are used in the `align.html` template file stored
 
 Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your module's `di.xml` configuration file to define the options in a visual select field.
 
-``` xml
+```xml
 <virtualType name="AlignmentSource" type="Magento\PageBuilder\Model\Source\VisualSelect">
        <arguments>
            <argument name="optionsSize" xsi:type="string">small</argument>
@@ -127,6 +128,17 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
            </argument>
        </arguments>
    </virtualType>
+```
+
+### Display notice when option is selected
+For some options you may wish to display an additional notice when the user selects the item. You can do this by providing a `noticeMessage` within the items declaration.
+```xml
+<item name="3" xsi:type="array">
+   <item name="value" xsi:type="string">right</item>
+   <item name="title" xsi:type="string" translate="true">Right</item>
+   <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/right.svg</item>
+   <item name="noticeMessage" xsi:type="string" translate="true">Message to be displayed below field when selected.</item>
+</item>
 ```
 
 ## How to reuse vertical alignment between different content types {#vertical-alignment}
@@ -158,7 +170,7 @@ To apply vertical alignment to a content type using the Visual Select component,
 ```
 ### Add the Visual Select option in your module's form configuration file.
 ```xml
-<field name="justify_content" sortOrder="20" formElement="select">
+<field name="justify_content" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
     <argument name="data" xsi:type="array">
         <item name="config" xsi:type="array">
             <item name="default" xsi:type="string">flex-start</item>
