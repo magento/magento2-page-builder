@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="EmptyButtonItem">
         <annotations>
             <features value="PageBuilder"/>
@@ -1050,15 +1050,15 @@
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Common .value)}}" stepKey="seeButtonTextOnStorefront"/>
     </test>
-    <test name="ButtonItemChangeButtonOrderWithTwoButtons">
+    <test name="ButtonItemHoverOverButtonItemShowsButtonGroupMenu">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Button Item - Change Button Order With Two Buttons"/>
-            <description value="A user should be able to change the order of buttons."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92057"/>
+            <title value="Button Item - Hovering Over Button Item Shows Button Group Menu"/>
+            <description value="A user should see the button group on-hover menu when they hover over a button item."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-941"/>
+            <testCaseId value="MC-3497"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -1074,76 +1074,34 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <!-- Add Button Group -->
-        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <!-- Add 2nd Button -->
-        <comment userInput="Add 2nd Button" stepKey="commentAddButton"/>
-        <actionGroup ref="addButton" stepKey="addButton"/>
-        <!-- Edit 1st button -->
-        <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
-            <argument name="text" value="PageBuilderButtonItemText_First"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <!-- Edit 2nd Button -->
-        <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
-            <argument name="text" value="PageBuilderButtonItemText_Second"/>
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <!-- Stage: Validate Initial Button Order -->
-        <comment userInput="Stage: Validate Initial Button Order" stepKey="commentValidateStage1"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage1"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage1"/>
-        <!-- Move Button -->
-        <comment userInput="Move Button" stepKey="commentMoveButton"/>
-        <!-- Get Width Of 1st Button Time 1/4 -->
-        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[0].clientWidth * (1/4))" stepKey="xCoordinateToMoveTo"/>
-        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
-        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[0].clientHeight * (1/2))" stepKey="yCoordinateToMoveTo"/>
-        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
-        <actionGroup ref="moveButton" stepKey="moveButton">
-            <argument name="targetSelector" value="{{ButtonItemOnStage.base('1')}}"/>
-            <argument name="x" value="$xCoordinateToMoveTo"/>
-            <argument name="y" value="$yCoordinateToMoveTo"/>
-            <argument name="buttonIndexToMove" value="2"/>
-        </actionGroup>
-        <!-- Stage: Validate Changed Button Order -->
-        <comment userInput="Stage: Validate Changed Button Order" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage2"/>
-        <!-- Save Page -->
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Stage: Validate Changed Button Order After Save -->
-        <comment userInput="Stage: Validate Changed Button Order After Save" stepKey="commentValidateStage3"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage3"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage3"/>
-        <!-- Storefront: Validate Changed Button Order -->
-        <comment userInput="Storefront: Validate Changed Button Order" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Storefront"/>
+        <!-- Must Click Button Item To Show Menu -->
+        <comment userInput="Must Click Button Item To Show Menu" stepKey="commentValidateOptionMenu"/>
+        <moveMouseOver selector="{{ButtonItemOnStage.base('1')}}" stepKey="moveMouseOverButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForButtonGroupOptionsMenu"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="seeButtonGroupOptionsMenu"/>
+        <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="dontSeeButtonItemOptionsMenu"/>
+        <click selector="{{ButtonItemOnStage.base('1')}}" stepKey="clickButtonItem"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="waitForButtonItemOptionsMenuVisible"/>
+        <seeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="seeButtonItemOptionsMenu"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForButtonGroupOptionsMenuNotVisible"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="dontSeeButtonGroupOptionsMenu"/>
     </test>
-    <test name="ButtonItemMoveButtonToAnotherButtonGroup">
+    <test name="ButtonItemMoveHandleDisabledWhenOnlyOneButton">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Button Item - Move Button To Another Button Group"/>
-            <description value="A user should be able to move a button item to another button group."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92098"/>
+            <title value="Button Item - Move Handle Disabled When Only One Button"/>
+            <description value="The button item move handle should be disabled when there is only one button item."/>
+            <severity value="MINOR"/>
+            <useCaseId value="MC-941"/>
+            <testCaseId value="MC-3498"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
-            <!-- MC-1141 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1156,75 +1114,26 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <!-- Add Button Group -->
-        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <!-- Add 2nd Button Group -->
-        <comment userInput="Add 2nd Button Group" stepKey="commentAddButtonGroup2"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage2">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <!-- Add 2nd Button To 1st Group -->
-        <comment userInput="Add 2nd Button To 1st Group" stepKey="commentAddButton"/>
+        <!-- Validate Disabled Move Handle -->
+        <comment userInput="Validate Disabled Move Handle" stepKey="commentValidateDisabled"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="seeMoveHandleDisabled"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="dontSeeMoveHandleEnabled"/>
+        <clickWithLeftButton selector="{{ButtonItemOnStage.base('1')}}" x="-1" y="-1" stepKey="clickOutsideButton"/>
+        <!-- Add Button and Validate Move Handles Enabled -->
+        <comment userInput="Add Button and Validate Move Handles Enabled" stepKey="commentValidateEnabled"/>
         <actionGroup ref="addButton" stepKey="addButton"/>
-        <!-- Edit 1st button -->
-        <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
-            <argument name="text" value="PageBuilderButtonItemText_First"/>
-            <argument name="index" value="1"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="seeMoveHandleEnabled"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="dontSeeMoveHandleDisabled"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandle('2')}}" stepKey="seeMoveHandleEnabled2"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('2')}}" stepKey="dontSeeMoveHandleDisabled2"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButton">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <!-- Edit 2nd Button -->
-        <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
-            <argument name="text" value="PageBuilderButtonItemText_Second"/>
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <!-- Edit 3rd Button -->
-        <comment userInput="Edit 3rd Button" stepKey="commentEditButton3"/>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
-            <argument name="text" value="PageBuilderButtonItemText_Third"/>
-            <argument name="index" value="3"/>
-        </actionGroup>
-        <!-- Stage: Validate Initial Button Order -->
-        <comment userInput="Stage: Validate Initial Button Order: First, Second, Third" stepKey="commentValidateStage1"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage1"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage1"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage1"/>
-        <!-- Move First Button To Last -->
-        <comment userInput="Move First Button To Last" stepKey="commentMoveButton"/>
-        <!-- Get Width Of 3rd Button Time 3/4 -->
-        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[2].clientWidth * (3/4))" stepKey="xCoordinateToMoveTo"/>
-        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
-        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[2].clientHeight * (1/2))" stepKey="yCoordinateToMoveTo"/>
-        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
-        <actionGroup ref="moveButton" stepKey="moveButton">
-            <argument name="targetSelector" value="{{ButtonItemOnStage.base('3')}}"/>
-            <argument name="x" value="$xCoordinateToMoveTo"/>
-            <argument name="y" value="$yCoordinateToMoveTo"/>
-            <argument name="buttonIndexToMove" value="1"/>
-        </actionGroup>
-        <!-- Stage: Validate Changed Button Order -->
-        <comment userInput="Stage: Validate Changed Button Order: Second, Third, First" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Stage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage2"/>
-        <!-- Save Page -->
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Stage: Validate Changed Button Order After Save -->
-        <comment userInput="Stage: Validate Changed Button Order After Save: Second, Third, First" stepKey="commentValidateStage3"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage3"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Stage3"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage3"/>
-        <!-- Storefront: Validate Changed Button Order -->
-        <comment userInput="Storefront: Validate Changed Button Order: Second, Third, First" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Storefront"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="seeMoveHandleDisabled2"/>
+        <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="dontSeeMoveHandleEnabled2"/>
     </test>
 </tests>
