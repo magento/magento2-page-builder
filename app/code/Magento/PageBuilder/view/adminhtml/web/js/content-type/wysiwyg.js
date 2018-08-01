@@ -79,7 +79,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/event
       _events2.on("form:" + contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
     }
     /**
-     * @returns {WysiwygSetup}
+     * @returns {WysiwygInstanceInterface}
      */
 
 
