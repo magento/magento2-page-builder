@@ -3,22 +3,23 @@
  * See COPYING.txt for license details.
  */
 
+import BaseDisplay from "../../../../converter/attribute/display";
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
 
-export default class Display implements ConverterInterface {
+export default class Display extends BaseDisplay implements ConverterInterface {
     /**
      * Convert value to internal format
      *
      * @param value string
-     * @returns {void}
+     * @returns {boolean}
      */
-    public fromDom(value: string): void {
-        return;
+    public fromDom(value: string): boolean {
+        return true;
     }
 
     /**
-     * Convert value to knockout format
+     * Hide the slide if the slide is empty on the storefront, fallback to support the ability to hide items
      *
      * @param name string
      * @param data Object
@@ -33,8 +34,8 @@ export default class Display implements ConverterInterface {
             && data.show_button === "never"
             && data.show_overlay === "never"
         ) {
-            return "none";
+            return "false";
         }
-        return;
+        return super.toDom(name, data);
     }
 }
