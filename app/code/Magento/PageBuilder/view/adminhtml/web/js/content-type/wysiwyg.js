@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type/wysiwyg-factory"], function (_jquery, _events, _underscore, _wysiwygFactory) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type/wysiwyg-factory"], function (_jquery, _events, _events2, _underscore, _wysiwygFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -59,7 +59,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
           $element.removeClass("_right-aligned-toolbar");
         }
 
-        _events.trigger("stage:interactionStart"); // Wait for everything else to finish
+        _events2.trigger("stage:interactionStart"); // Wait for everything else to finish
 
 
         _underscore.defer(function () {
@@ -71,12 +71,12 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         window.getSelection().empty();
         (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
 
-        _events.trigger("stage:interactionStop");
+        _events2.trigger("stage:interactionStop");
       }); // Update content in our data store after our stage preview wysiwyg gets updated
 
       this.onEdit(this.saveContentFromWysiwygToDataStore.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
-      _events.on("form:" + contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
+      _events2.on("form:" + contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
     }
     /**
      * @returns {WysiwygSetup}
@@ -94,7 +94,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.onEdit = function onEdit(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler(this.wysiwygAdapter.EVENT.AFTER_CONTENT_CHANGE, _underscore.debounce(callback, 100));
+      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterChangeContent, _underscore.debounce(callback, 100));
     };
     /**
      * @param {Function} callback
@@ -102,7 +102,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.onFocus = function onFocus(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler(this.wysiwygAdapter.EVENT.AFTER_FOCUS, callback);
+      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterFocus, callback);
     };
     /**
      * @param {Function} callback
@@ -110,7 +110,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.onBlur = function onBlur(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler(this.wysiwygAdapter.EVENT.AFTER_BLUR, callback);
+      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterBlur, callback);
     };
     /**
      * Update content in our data store after our stage preview wysiwyg gets updated

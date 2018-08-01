@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
+import wysiwygEvents from "mage/adminhtml/wysiwyg/events";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import WysiwygInstance from "wysiwygAdapter";
@@ -111,7 +112,7 @@ export default class Wysiwyg {
      */
     public onEdit(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
-            this.wysiwygAdapter.EVENT.AFTER_CONTENT_CHANGE,
+            wysiwygEvents.afterChangeContent,
             _.debounce(callback, 100),
         );
     }
@@ -121,7 +122,7 @@ export default class Wysiwyg {
      */
     public onFocus(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
-            this.wysiwygAdapter.EVENT.AFTER_FOCUS,
+            wysiwygEvents.afterFocus,
             callback,
         );
     }
@@ -131,7 +132,7 @@ export default class Wysiwyg {
      */
     public onBlur(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
-            this.wysiwygAdapter.EVENT.AFTER_BLUR,
+            wysiwygEvents.afterBlur,
             callback,
         );
     }
