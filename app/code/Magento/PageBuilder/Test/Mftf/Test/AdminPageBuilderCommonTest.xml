@@ -1403,12 +1403,22 @@
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
+        <!--Switch to iFrame 1-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
         <!--Add variable into Text content-->
         <comment userInput="Add widget into Text content" stepKey="addWidgetIntoTextContent"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
+        <!--Switch to iFrame-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
@@ -1509,12 +1519,22 @@
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
+        <!--Switch to iFrame 1-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
         <!--Add widget to PageBuilder-->
         <comment userInput="Add widget to PageBuilder" stepKey="addWidgetToPageBuilder"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
+        <!--Switch to iFrame-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
         <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />

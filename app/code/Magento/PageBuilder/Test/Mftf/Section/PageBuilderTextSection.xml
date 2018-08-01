@@ -11,7 +11,11 @@
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div" parameterized="true"/>
         <element name="textAreaText" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div[.='{{arg2}}']" parameterized="true"/>
         <element name="textAreaTextContains" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div[contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div//p[contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div//p[contains(.,'{{arg2}}')]/span" parameterized="true"/>
+        <element name="placeholder" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//div[contains(@class, 'placeholder-text') and text()='Edit Text']" parameterized="true"/>
+        <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
+        <element name="importantStyle" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg}}]//span[text()='Important']" parameterized="true"/>
+        <element name="textInImportantStyle" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//div/div[contains(normalize-space(@class), 'cms-content-important') and text()='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -36,6 +40,7 @@
         <element name="textInIFrame" type="text" selector="//body//p[.='{{arg1}}']" parameterized="true"/>
         <element name="tinyMCEVariable" type="text" selector="(//body//span[contains(@class,'magento-variable') and .='{{arg1}}'])[{{arg2}}]" parameterized="true"/>
         <element name="tinyMCEWidget" type="text" selector="(//body//span[contains(@class,'magento-widget') and .='{{arg1}}'])[{{arg2}}]" parameterized="true"/>
+        <element name="tinyMCEImage" type="text" selector="//img[contains(@src,'{{arg}}')]" parameterized="true"/>
         <!-- WYSIWYG Disabled -->
         <element name="textArea" type="text" selector="#pagebuilder_text_form_content"/>
         <element name="textAreaId" type="text" selector="pagebuilder_text_form_content"/>
@@ -49,7 +54,8 @@
         <element name="textAreaText" type="text" selector="(//div[@data-role='text'])[{{arg1}}][.='{{arg2}}']" parameterized="true"/>
         <element name="textAreaWidget" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
         <element name="textAreaVariable" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
-        <element name="text" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//p[contains(text(),'{{arg2}}')]" parameterized="true"/>
+        <element name="empty" type="text" selector="//div[@data-role='text'][{{arg1}}][not(*)]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
