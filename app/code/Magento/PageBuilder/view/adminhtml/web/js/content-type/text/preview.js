@@ -43,7 +43,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
 
 
     _proto.onFocus = function onFocus() {
-      (0, _jquery)(this.element).closest('.tabs-content, .pagebuilder-column').css("z-index", 100);
+      (0, _jquery)(this.element).closest(".tabs-content, .pagebuilder-column").css("z-index", 100);
     };
     /**
      * Event handler for wysiwyg blue
@@ -52,7 +52,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
 
 
     _proto.onBlur = function onBlur() {
-      (0, _jquery)(this.element).closest('.tabs-content, .pagebuilder-column').css("z-index", "");
+      (0, _jquery)(this.element).closest(".tabs-content, .pagebuilder-column").css("z-index", "");
     };
 
     return Preview;

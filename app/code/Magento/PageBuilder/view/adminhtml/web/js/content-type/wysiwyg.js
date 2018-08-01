@@ -50,12 +50,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var maxToolbarWidth = 360; // prevent interactability with options when in editing mode
 
       this.onFocus(function () {
+        window.getSelection().empty();
         (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active"); // If there isn't enough room for a left-aligned toolbar, right align it
 
         if ((0, _jquery)(window).width() < $element.offset().left + maxToolbarWidth) {
-          $element.addClass('_right-aligned-toolbar');
+          $element.addClass("_right-aligned-toolbar");
         } else {
-          $element.removeClass('_right-aligned-toolbar');
+          $element.removeClass("_right-aligned-toolbar");
         }
 
         _events.trigger("stage:interactionStart");
@@ -136,18 +137,18 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
       var clonedConfig = Object.assign({}, config);
 
-      if (!clonedConfig["additional"].encapsulateSelectorConfigKeys) {
+      if (!clonedConfig.additional.encapsulateSelectorConfigKeys) {
         return clonedConfig;
       }
 
-      _underscore.each(clonedConfig["additional"].encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
-        var configValue = clonedConfig["adapter"].settings[configKey];
+      _underscore.each(clonedConfig.additional.encapsulateSelectorConfigKeys, function (isEnabled, configKey) {
+        var configValue = clonedConfig.adapter.settings[configKey];
 
         if (!isEnabled) {
           return;
         }
 
-        clonedConfig['adapter'].settings[configKey] = "#" + _this.contentTypeId + (configValue ? " " + configValue : "");
+        clonedConfig.adapter.settings[configKey] = "#" + _this.contentTypeId + (configValue ? " " + configValue : "");
       });
 
       return clonedConfig;

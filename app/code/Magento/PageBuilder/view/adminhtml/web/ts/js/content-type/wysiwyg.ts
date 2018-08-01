@@ -62,14 +62,15 @@ export default class Wysiwyg {
 
         // prevent interactability with options when in editing mode
         this.onFocus(() => {
+            window.getSelection().empty();
             $(`#${elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
 
             // If there isn't enough room for a left-aligned toolbar, right align it
             if ($(window).width() < $element.offset().left + maxToolbarWidth) {
-                $element.addClass('_right-aligned-toolbar');
+                $element.addClass("_right-aligned-toolbar");
             }
             else {
-                $element.removeClass('_right-aligned-toolbar')
+                $element.removeClass("_right-aligned-toolbar");
             }
 
             events.trigger("stage:interactionStart");
@@ -156,18 +157,18 @@ export default class Wysiwyg {
     {
         const clonedConfig = Object.assign( {}, config);
 
-        if (!clonedConfig["additional"].encapsulateSelectorConfigKeys) {
+        if (!clonedConfig.additional.encapsulateSelectorConfigKeys) {
             return clonedConfig;
         }
 
-        _.each(clonedConfig["additional"].encapsulateSelectorConfigKeys, (isEnabled, configKey) => {
-            const configValue = clonedConfig["adapter"].settings[configKey];
+        _.each(clonedConfig.additional.encapsulateSelectorConfigKeys, (isEnabled, configKey) => {
+            const configValue = clonedConfig.adapter.settings[configKey];
 
             if (!isEnabled) {
                 return;
             }
 
-            clonedConfig['adapter'].settings[configKey] = (
+            clonedConfig.adapter.settings[configKey] = (
                 "#" + this.contentTypeId + (configValue ? " " + configValue : "")
             );
         });
