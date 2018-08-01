@@ -101,7 +101,7 @@ export default class Wysiwyg {
      */
     public onEdit(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceChange",
+            this.wysiwygAdapter.EVENT.AFTER_CONTENT_CHANGE,
             _.debounce(callback, 100),
         );
     }
@@ -111,7 +111,7 @@ export default class Wysiwyg {
      */
     public onFocus(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceFocus",
+            this.wysiwygAdapter.EVENT.AFTER_FOCUS,
             callback,
         );
     }
@@ -121,7 +121,7 @@ export default class Wysiwyg {
      */
     public onBlur(callback: () => void) {
         this.wysiwygAdapter.eventBus.attachEventHandler(
-            "tinymceBlur",
+            this.wysiwygAdapter.EVENT.AFTER_BLUR,
             callback,
         );
     }
