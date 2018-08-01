@@ -89,7 +89,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.onEdit = function onEdit(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler("tinymceChange", _underscore.debounce(callback, 100));
+      this.wysiwygAdapter.eventBus.attachEventHandler(this.wysiwygAdapter.EVENT.AFTER_CONTENT_CHANGE, _underscore.debounce(callback, 100));
     };
     /**
      * @param {Function} callback
@@ -97,7 +97,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.onFocus = function onFocus(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler("tinymceFocus", callback);
+      this.wysiwygAdapter.eventBus.attachEventHandler(this.wysiwygAdapter.EVENT.AFTER_FOCUS, callback);
     };
     /**
      * @param {Function} callback
@@ -105,7 +105,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.onBlur = function onBlur(callback) {
-      this.wysiwygAdapter.eventBus.attachEventHandler("tinymceBlur", callback);
+      this.wysiwygAdapter.eventBus.attachEventHandler(this.wysiwygAdapter.EVENT.AFTER_BLUR, callback);
     };
     /**
      * Update content in our data store after our stage preview wysiwyg gets updated
