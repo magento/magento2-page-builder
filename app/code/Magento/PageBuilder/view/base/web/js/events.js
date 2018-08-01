@@ -42,11 +42,7 @@ define(['uiEvents'], function (uiEvents) {
          * @returns {Boolean}
          */
         trigger: function (name, args) {
-            // console.log(`START triggering pagebuilder:${name}`, args);
-            var result = uiEvents.trigger('pagebuilder:' + name, args);
-            // console.log(`DONE triggering pagebuilder:${name}`);
-
-            return result;
+            return uiEvents.trigger('pagebuilder:' + name, args);
         }
     };
 });
