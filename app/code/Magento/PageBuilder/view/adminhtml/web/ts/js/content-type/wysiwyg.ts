@@ -7,6 +7,8 @@ import $ from "jquery";
 import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
+import WysiwygInstance from "wysiwygAdapter";
+import {AdditionalDataConfigInterface} from "../content-type-config";
 import DataStore from "../data-store";
 import WysiwygFactory from "./wysiwyg-factory";
 
@@ -24,7 +26,7 @@ export default class Wysiwyg {
     /**
      * Wysiwyg adapter instance
      */
-    private wysiwygAdapter: WysiwygSetup;
+    private wysiwygAdapter: WysiwygInstance;
 
     /**
      * Content type's data store
@@ -39,13 +41,13 @@ export default class Wysiwyg {
     /**
      * @param {String} contentTypeId
      * @param {String} elementId
-     * @param {Object} config
+     * @param {AdditionalDataConfigInterface} config
      * @param {DataStore} dataStore
      */
     constructor(
         contentTypeId: string,
         elementId: string,
-        config: object,
+        config: AdditionalDataConfigInterface,
         dataStore: DataStore,
     ) {
         this.contentTypeId = contentTypeId;
@@ -149,13 +151,12 @@ export default class Wysiwyg {
     /**
      * Prepend specific config with id to encapsulate its targeting by the vendor wysiwyg editor
      *
-     * @param {object} config
-     * @returns {object} - interpolated configuration
-     * //todo move in the separate function
+     * @param {AdditionalDataConfigInterface} config
+     * @returns {AdditionalDataConfigInterface} - interpolated configuration
      */
     private encapsulateConfigBasedOnContentType(config: object)
     {
-        const clonedConfig = Object.assign( {}, config);
+        const clonedConfig = $.extend(true, {}, config);
 
         if (!clonedConfig.additional.encapsulateSelectorConfigKeys) {
             return clonedConfig;

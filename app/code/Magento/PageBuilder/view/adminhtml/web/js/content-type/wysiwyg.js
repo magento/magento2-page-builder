@@ -32,7 +32,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     /**
      * @param {String} contentTypeId
      * @param {String} elementId
-     * @param {Object} config
+     * @param {AdditionalDataConfigInterface} config
      * @param {DataStore} dataStore
      */
     function Wysiwyg(contentTypeId, elementId, config, dataStore) {
@@ -126,16 +126,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     /**
      * Prepend specific config with id to encapsulate its targeting by the vendor wysiwyg editor
      *
-     * @param {object} config
-     * @returns {object} - interpolated configuration
-     * //todo move in the separate function
+     * @param {AdditionalDataConfigInterface} config
+     * @returns {AdditionalDataConfigInterface} - interpolated configuration
      */
 
 
     _proto.encapsulateConfigBasedOnContentType = function encapsulateConfigBasedOnContentType(config) {
       var _this = this;
 
-      var clonedConfig = Object.assign({}, config);
+      var clonedConfig = _jquery.extend(true, {}, config);
 
       if (!clonedConfig.additional.encapsulateSelectorConfigKeys) {
         return clonedConfig;
