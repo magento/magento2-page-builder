@@ -30,7 +30,6 @@ export default class Uploader {
      * @param {String} id
      * @param {String} name - Name to use for lookup reference in registry
      * @param {Object} config
-     * //see to wysiwyg.ts
      */
     constructor(id: string, name: string, config: object) {
         config.id = this.id = id;
