@@ -11,11 +11,10 @@ define([
 
     return function (config, sliderElement) {
         var $element = $(sliderElement),
-            visibleSlides = $element.find('[data-role=slide]').filter(function (index, el) {
-                return el.style.display !== 'none';
-            });
+            isSliderVisible = $element.data('display'),
+            isSlidesVisible = $element.find('[data-role=slide]').length > $element.find('[data-display=false]').length;
 
-        if (!visibleSlides.length) {
+        if (!isSliderVisible || !isSlidesVisible) {
             $element.addClass('slider-empty');
 
             return;
