@@ -61,10 +61,9 @@ class Accordion implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'accordion',
+            'data-role' => 'html',
             'data-appearance' => 'default',
-            'data-mage-init' => $this->getMageInitValue($itemData),
-            'class' => 'pagebuilder-accordion ' . ($eavData['css_classes'] ?? '')
+            'class' => $eavData['css_classes'] ?? ''
         ];
         $rootElementAttributes['class'] = rtrim($rootElementAttributes['class']);
 
@@ -79,7 +78,9 @@ class Accordion implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
+        $rootElementHtml .= '><div class="pagebuilder-accordion" data-mage-init="' . $this->getMageInitValue($itemData) . '">' .
+            (isset($additionalData['children']) ? $additionalData['children'] : '') .
+            '</div></div>';
 
         return $rootElementHtml;
     }

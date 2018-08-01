@@ -47,7 +47,7 @@ class AccordionItem implements RendererInterface
         // data-role is not present on the accordion item as it's no longer it's own type
         $rootElementAttributes = [
             'data-collapsible' => 'true',
-            'class' => 'accordion-collapsible',
+            'class' => 'item title accordion-collapsible',
             'data-open-on-load' => $eavData['open_on_load'] ? "1" : "0"
         ];
 
@@ -62,8 +62,8 @@ class AccordionItem implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><div data-role="trigger"><span>' . $eavData['title'] . '</span></div></div>'
-        . '<div data-content="true" class="accordion-content">' . $eavData['textarea'] . '</div>';
+        $rootElementHtml .= '><div class="switch" data-role="trigger"><span>' . $eavData['title'] . '</span></div></div>'
+        . '<div data-content="true" class="item content accordion-content">' . $eavData['textarea'] . '</div>';
 
         return $rootElementHtml;
     }
