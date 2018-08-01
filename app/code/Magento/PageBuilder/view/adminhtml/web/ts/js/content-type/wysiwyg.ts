@@ -80,8 +80,9 @@ export default class Wysiwyg {
 
             // Wait for everything else to finish
             _.defer(() => {
-                $(config.adapter.settings.fixed_toolbar_container + ' .mce-tinymce-inline').css('min-width', minToolbarWidth + "px");
-            })
+                $(config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline")
+                    .css("min-width", minToolbarWidth + "px");
+            });
         });
 
         // resume normal interactability with opens when leaving editing mode

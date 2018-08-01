@@ -63,7 +63,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
         _underscore.defer(function () {
-          (0, _jquery)(config.adapter.settings.fixed_toolbar_container + ' .mce-tinymce-inline').css('min-width', minToolbarWidth + "px");
+          (0, _jquery)(config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline").css("min-width", minToolbarWidth + "px");
         });
       }); // resume normal interactability with opens when leaving editing mode
 

@@ -51,7 +51,7 @@ export default class Preview extends BasePreview {
      */
     private onFocus() {
         $(this.element).closest(
-            this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(",")
+            this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(","),
         ).css("z-index", 100);
     }
 
@@ -61,7 +61,7 @@ export default class Preview extends BasePreview {
      */
     private onBlur() {
         $(this.element).closest(
-            this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(",")
+            this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay.join(","),
         ).css("z-index", "");
     }
 }
