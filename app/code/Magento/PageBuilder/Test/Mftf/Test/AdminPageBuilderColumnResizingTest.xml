@@ -49,6 +49,9 @@
         <!-- Assert the width class changed to 100 correctly on the first column -->
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','100')}}" stepKey="assertWidthClass1"/>
         <!-- Add a new column -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -125,6 +128,9 @@
         <!-- Assert the width classes are correct after manual resize -->
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','90')}}" stepKey="assertWidthClass1"/>
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('2','20')}}" stepKey="assertWidthClass2"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -212,6 +218,9 @@
         <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -400,6 +409,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -486,6 +498,9 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -599,6 +614,9 @@
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('3')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeSecondColumnToTwo"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -741,6 +759,9 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -812,5 +833,72 @@
             <expectedResult type="int">1</expectedResult>
             <actualResult type="variable">columnRatioFrontend2</actualResult>
         </assertEquals>
+    </test>
+    <test name="ColumnResizeLeftColumnFromSecondColumnHandle">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Resize Column: Resize the first column via the second columns resize handle to the smallest possible column size"/>
+            <description value="Resize the first column via the second columns resize handle to the smallest possible column size"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-831"/>
+            <testCaseId value="MC-3219"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="expectedIndex" value="3"/>
+        </actionGroup>
+        <!-- Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left -->
+        <comment userInput="Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left" stepKey="commentInitialResize"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForPageLoad" />
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','5/12')}}" stepKey="validateFirstColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="validateThirdColumnWidth"/>
+        <!-- Resize left column to 4/12 via second column -->
+        <comment userInput="Resize left column to 4/12 via second column" stepKey="commentFourTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn1"/>
+        <waitForPageLoad stepKey="waitForResize1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','4/12')}}" stepKey="validateFirstColumnWidth1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth1"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','7/12')}}" stepKey="validateThirdColumnWidth1"/>
+        <!-- Resize left column to 3/12 via second column -->
+        <comment userInput="Resize left column to 3/12 via second column" stepKey="commentThreeTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn2"/>
+        <waitForPageLoad stepKey="waitForResize2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateFirstColumnWidth2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth2"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','8/12')}}" stepKey="validateThirdColumnWidth2"/>
+        <!-- Resize left column to 2/12 via second column -->
+        <comment userInput="Resize left column to 2/12 via second column" stepKey="commentTwoTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn3"/>
+        <waitForPageLoad stepKey="waitForResize3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateFirstColumnWidth3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth3"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','9/12')}}" stepKey="validateThirdColumnWidth3"/>
+        <!-- Resize left column to 1/12 via second column -->
+        <comment userInput="Resize left column to 1/12 via second column" stepKey="commentOneTwelth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn4"/>
+        <waitForPageLoad stepKey="waitForResize4"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth4"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth4"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','10/12')}}" stepKey="validateThirdColumnWidth4"/>
     </test>
 </tests>
