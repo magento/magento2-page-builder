@@ -144,7 +144,7 @@
         <seeElement selector="{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage1"/>
         <!--Verify inputed image on slideout-->
         <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
-        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -280,7 +280,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElementIn selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="VerifyTinyMCE4ToolbarOnPageBuilderStage">
         <annotations>
