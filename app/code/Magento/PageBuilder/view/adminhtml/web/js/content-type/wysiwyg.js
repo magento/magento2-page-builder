@@ -47,19 +47,24 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       config = this.encapsulateConfigBasedOnContentType(config);
       this.wysiwygAdapter = (0, _wysiwygFactory)(elementId, config);
       var $element = (0, _jquery)("#" + elementId);
-      var maxToolbarWidth = 360; // prevent interactability with options when in editing mode
+      var minToolbarWidth = config.additional.minToolbarWidth; // prevent interactability with options when in editing mode
 
       this.onFocus(function () {
         window.getSelection().empty();
         (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active"); // If there isn't enough room for a left-aligned toolbar, right align it
 
-        if ((0, _jquery)(window).width() < $element.offset().left + maxToolbarWidth) {
+        if ((0, _jquery)(window).width() < $element.offset().left + minToolbarWidth) {
           $element.addClass("_right-aligned-toolbar");
         } else {
           $element.removeClass("_right-aligned-toolbar");
         }
 
-        _events.trigger("stage:interactionStart");
+        _events.trigger("stage:interactionStart"); // Wait for everything else to finish
+
+
+        _underscore.defer(function () {
+          (0, _jquery)(config.adapter.settings.fixed_toolbar_container + ' .mce-tinymce-inline').css('min-width', minToolbarWidth + "px");
+        });
       }); // resume normal interactability with opens when leaving editing mode
 
       this.onBlur(function () {

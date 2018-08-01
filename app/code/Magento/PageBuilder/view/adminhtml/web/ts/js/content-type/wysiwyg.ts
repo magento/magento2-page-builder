@@ -58,15 +58,16 @@ export default class Wysiwyg {
         this.wysiwygAdapter = WysiwygFactory(elementId, config);
 
         const $element = $("#" + elementId);
-        const maxToolbarWidth = 360;
+        const minToolbarWidth = config.additional.minToolbarWidth;
 
         // prevent interactability with options when in editing mode
         this.onFocus(() => {
             window.getSelection().empty();
+
             $(`#${elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
 
             // If there isn't enough room for a left-aligned toolbar, right align it
-            if ($(window).width() < $element.offset().left + maxToolbarWidth) {
+            if ($(window).width() < $element.offset().left + minToolbarWidth) {
                 $element.addClass("_right-aligned-toolbar");
             }
             else {
@@ -74,6 +75,11 @@ export default class Wysiwyg {
             }
 
             events.trigger("stage:interactionStart");
+
+            // Wait for everything else to finish
+            _.defer(() => {
+                $(config.adapter.settings.fixed_toolbar_container + ' .mce-tinymce-inline').css('min-width', minToolbarWidth + "px");
+            })
         });
 
         // resume normal interactability with opens when leaving editing mode
