@@ -37,17 +37,4 @@
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="seeMainImageSource"/>
     </actionGroup>
-    <actionGroup name="goToMediaStorageFromStage">
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="section"/>
-            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
-            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
-        </arguments>
-        <comment userInput="Hover uploaded image to check Upload New Image button and Select From Gallery button" stepKey="commentHover"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverBannerContentTypeStage"/>
-        <waitForElementVisible selector="{{section.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
-        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn1" />
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-    </actionGroup>
 </actionGroups>

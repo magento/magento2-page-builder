@@ -1864,10 +1864,11 @@
             <description value="Image from Slider Content Block get wiped out after delete image from Media Storage"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-2294"/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3494"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
             <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1883,12 +1884,12 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!--Upload image from local machine using image placeholder button-->
         <comment userInput="Upload image from local machine using image placeholder button on slide out" stepKey="commentUploadImage"/>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
         <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage1" />
@@ -1896,36 +1897,38 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
-        <comment stepKey="deleteImageB" userInput="Delete image C"/>
+        <!-- Delete image B -->
+        <comment stepKey="deleteImageB" userInput="Delete image B"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
             <argument name="Image" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeStorage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
         <!--<conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay1" visible="true"/>-->
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear" />
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="dontSeeImageNameOnPreview1"/>
-
-
+        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageNameOnPreview1"/>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
-        <attachFile userInput="{{PageBuilderSlideBackgroundImageProperty2.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad4" />
-        <waitForElementVisible selector="{{SlideOnBackend.imageOnStage(PageBuilderSlideBackgroundImageProperty2.fileName)}}" stepKey="waitForMainImageSource1"/>
-
-        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
-        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <!--Delete image A-->
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+        </actionGroup>
+        <!--<waitForElementVisible selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="waitForMainImageSource1"/>-->
+        <!--<click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>-->
+        <!--<waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />-->
+        <!--<click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />-->
+        <!--<waitForPageLoad stepKey="waitForPageLoad2" />-->
+        <!--<waitForLoadingMaskToDisappear stepKey="waitForLoading2" />-->
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
+            <argument name="contentType" value="PageBuildersSliderContentType"/>
+            <argument name="section" value="ImageOnStage"/>
+        </actionGroup>
+        <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
             <argument name="Image" value="PageBuilderSlideBackgroundImageProperty2"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
+        <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
-        <dontSeeElementInDOM selector="{{SlideOnBackend.imageOnStage(PageBuilderSlideBackgroundImageProperty2.fileName)}}" stepKey="dontSeeImageInrMainImageSource1"/>
-
+        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
 </tests>
