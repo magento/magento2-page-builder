@@ -121,7 +121,7 @@
         <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', 'text', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', '{{_ENV.MAGENTO_BASE_URL}}', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="ColumnAddToRowAndHeightAdjusts">
         <annotations>

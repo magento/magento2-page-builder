@@ -3,37 +3,37 @@
  * See COPYING.txt for license details.
  */
 
-interface EventBus {
+interface EventBusInterface {
     attachEventHandler(eventName: string, handler: () => any): void;
 }
 
-interface WysiwygSetup {
-    eventBus: EventBus,
+interface WysiwygSetupInterface {
+    eventBus: EventBusInterface,
     setup(mode: string): void,
-    wysiwygInstance: WysiwygInstance
+    wysiwygInstance: WysiwygInstanceInterface
 }
 
-interface WysiwygInstance {
-    eventBus: EventBus,
+interface WysiwygInstanceInterface {
+    eventBus: EventBusInterface,
     EVENT: any,
     getContent(): string,
     setContent(content: string): void
 }
 
-declare var WysiwygSetup: {
-    prototype: WysiwygSetup;
-    new (id: string, config: object): WysiwygSetup;
+declare var WysiwygSetupInterface: {
+    prototype: WysiwygSetupInterface;
+    new (id: string, config: object): WysiwygSetupInterface;
 };
 
 declare var WysiwygInstance: {
-    prototype: WysiwygInstance;
-    new (id: string, config: object): WysiwygInstance
+    prototype: WysiwygInstanceInterface;
+    new (id: string, config: object): WysiwygInstanceInterface
 };
 
 declare module "mage/adminhtml/wysiwyg/tiny_mce/setup" {
-    export = WysiwygSetup;
+    export = WysiwygSetupInterface;
 }
 
 declare module "wysiwygAdapter" {
-    export = WysiwygInstance;
+    export = WysiwygInstanceInterface;
 }

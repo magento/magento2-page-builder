@@ -203,6 +203,6 @@ class Config
     {
         $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
 
-        return $this->inlineEditingChecker->isAvailable($activeEditorPath);
+        return $this->inlineEditingChecker->isSupported($activeEditorPath);
     }
 }
