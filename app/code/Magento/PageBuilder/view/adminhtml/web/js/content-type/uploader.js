@@ -27,6 +27,7 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
      * @param {String} id
      * @param {String} name - Name to use for lookup reference in registry
      * @param {Object} config
+     * //see to wysiwyg.ts
      */
     function Uploader(id, name, config) {
       this.id = void 0;
