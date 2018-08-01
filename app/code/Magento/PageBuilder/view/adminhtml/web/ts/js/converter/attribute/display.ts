@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ConverterInterface from "../../../../converter/converter-interface";
-import {DataObject} from "../../../../data-store";
+import {DataObject} from "../../data-store";
+import ConverterInterface from "../converter-interface";
 
 /**
  * @api
@@ -17,20 +17,20 @@ export default class Display implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): boolean {
-        return !(value === "none");
+        return value === "true";
     }
 
     /**
-     * Convert value to knockout format, if buttons are displayed they should be inline block
+     * Convert value to knockout format
      *
-     * @param {string} name
-     * @param {DataObject} data
+     * @param name string
+     * @param data Object
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
         if (typeof data[name] !== "undefined" && data[name] === false) {
-            return "none";
+            return "false";
         }
-        return "inline-block";
+        return "true";
     }
 }

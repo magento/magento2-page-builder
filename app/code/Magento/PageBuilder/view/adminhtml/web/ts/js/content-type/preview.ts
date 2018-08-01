@@ -17,6 +17,7 @@ import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
+import HideShow from "../content-type-menu/hide-show";
 import Option from "../content-type-menu/option";
 import OptionInterface from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title";
@@ -29,7 +30,6 @@ import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
-import HideShow from "../content-type-menu/hide-show";
 
 /**
  * @api
@@ -150,7 +150,6 @@ export default class Preview {
         this.mouseoverContext = context;
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
-        console.log(optionsMenu);
 
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();

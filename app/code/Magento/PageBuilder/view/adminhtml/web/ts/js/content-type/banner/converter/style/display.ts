@@ -4,9 +4,10 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
+import BaseDisplay from "../../../../converter/style/display";
 import {DataObject} from "../../../../data-store";
 
-export default class Display implements ConverterInterface {
+export default class Display extends BaseDisplay implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -18,13 +19,13 @@ export default class Display implements ConverterInterface {
     }
 
     /**
-     * Convert value to knockout format
+     * Hide the banner if the banner is empty on the storefront, fallback to support the ability to hide items
      *
      * @param name string
      * @param data Object
      * @returns {string | void}
      */
-    public toDom(name: string, data: DataObject): string | void {
+    public toDom(name: string, data: DataObject) {
         if (
             data.background_color === ""
             && data.background_image.length === 0
@@ -35,6 +36,6 @@ export default class Display implements ConverterInterface {
         ) {
             return "none";
         }
-        return;
+        return super.toDom(name, data);
     }
 }

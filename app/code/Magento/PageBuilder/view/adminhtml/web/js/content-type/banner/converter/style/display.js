@@ -1,13 +1,15 @@
 /*eslint-disable */
-define([], function () {
-  /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
+define(["Magento_PageBuilder/js/converter/style/display"], function (_display) {
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
   var Display =
   /*#__PURE__*/
-  function () {
-    function Display() {}
+  function (_BaseDisplay) {
+    _inheritsLoose(Display, _BaseDisplay);
+
+    function Display() {
+      return _BaseDisplay.apply(this, arguments) || this;
+    }
 
     var _proto = Display.prototype;
 
@@ -21,7 +23,7 @@ define([], function () {
       return;
     };
     /**
-     * Convert value to knockout format
+     * Hide the banner if the banner is empty on the storefront, fallback to support the ability to hide items
      *
      * @param name string
      * @param data Object
@@ -34,11 +36,11 @@ define([], function () {
         return "none";
       }
 
-      return;
+      return _BaseDisplay.prototype.toDom.call(this, name, data);
     };
 
     return Display;
-  }();
+  }(_display);
 
   return Display;
 });

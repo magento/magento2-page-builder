@@ -121,7 +121,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.mouseoverContext = context;
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
-      console.log(optionsMenu);
 
       if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
         optionsMenu = optionsMenu.first();
