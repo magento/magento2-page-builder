@@ -8,15 +8,15 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanAddTextToTab">
+    <test name="AddWYSIWYGContentTypeToTabOnStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Tabs Content - Add Text to Tabs container and view on Admin and Storefront"/>
-            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <title value="Add WYSIWYG Text Content Type to Tabs on stage"/>
+            <description value="Verify that user are able to interact with WYSIWYG Text Content Type to Column on stage"/>
             <severity value="CRITICAL"/>
-            <useCaseId value=""/>
-            <testCaseId value=""/>
+            <useCaseId value="MC-1416"/>
+            <testCaseId value="MC-3470"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-tabs-content"/>
@@ -54,27 +54,28 @@
         </actionGroup>
         <!--Input text into stage-->
         <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
-        <executeJS function="tinymce.get(jQuery('.inline-wysiwyg').eq(0).attr('id')).insertContent('Hello World')" stepKey="addTextToWYSIWYG"/>
-        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
         <!--Verify inputed text on slideout-->
         <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame('Hello World')}}" stepKey="waitForText"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForText"/>
         <switchToIFrame stepKey="exitIFrame1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
-        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnEditorArea1"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
         <!--Verify inputed variable on slideout-->
         <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
-        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -84,13 +85,13 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
-        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnEditorArea2"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
-        <click selector="{{CmsNewPagePageBasicFieldsSection.contentHeading}}" stepKey="lostFocusFromWYSIWYG"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG3"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -99,8 +100,8 @@
         <switchToIFrame stepKey="exitIFrame3"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!--Input image into stage-->
-        <comment userInput="Input text into stage" stepKey="commentInputImageIntoStage"/>
-        <click selector="{{TextOnStage.tinymce}}" stepKey="focusOnTextEditorArea"/>
+        <comment userInput="Input image into stage" stepKey="commentInputImageIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon" />
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
@@ -114,15 +115,71 @@
         <actionGroup ref="saveImage" stepKey="insertImage"/>
         <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup" />
         <seeElementInDOM selector="{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage"/>
-        <!-- Verify Tab Height Adjusts to Content - Depends on MQE-818 -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="Hello World" stepKey="seeTextContentType"/>
-        <seeElementInDOM selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
-        <seeElementInDOM selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElementInDOM selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
+        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
+        <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
+        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', 'text', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+    </test>
+    <test name="CanAddTextToTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs Content - Add Text to Tabs container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <testCaseId value="MAGETWO-89954"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Add Text to Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
+        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" stepKey="addTextToWYSIWYG"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Tab Height Adjusts to Content - Depends on MQE-818 -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Text in Tab on storefront -->
+        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <see userInput="This is some text" stepKey="assertTextOnStorefront"/>
     </test>
     <test name="CanAddContentTypeToTab">
         <annotations>
