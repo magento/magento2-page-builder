@@ -568,7 +568,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElement time="10" selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <waitForElement time="10" selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="waitEmptySliderOnPageBuilderPage"/>
+        <dontSeeElement selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="dontSeeEmptySlider"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
@@ -1700,14 +1701,9 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+        <actionGroup ref="pickColorSwatchCell" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
         </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
