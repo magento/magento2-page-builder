@@ -55,6 +55,13 @@ process.stdin.on('end', () => {
         });
     }
 
+    // Uncomment to re-generate
+    // require('fs').writeFileSync(
+    //     require('path').join(__dirname, 'ts-errors.json'),
+    //     JSON.stringify(compilerErrors, null, 2),
+    //     'utf8'
+    // );
+
     const newErrors = [];
     const resolvedErrors = [];
     // Walk each file to do an error comparison

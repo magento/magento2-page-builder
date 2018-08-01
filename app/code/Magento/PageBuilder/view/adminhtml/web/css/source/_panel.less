@@ -17,17 +17,26 @@
         color: @color-ivory;
         cursor: pointer;
         display: block;
-        padding: 12px;
+        padding: 9px;
         text-decoration: none;
         white-space: nowrap;
 
         i {
             color: @color-gray65-lighten;
+            font-size: 18px;
             margin-right: 6px;
+
+            &:before {
+                vertical-align: middle;
+            }
         }
 
         &:hover {
+            -moz-transition: 200ms;
+            -o-transition: 200ms;
+            -webkit-transition: 200ms;
             background: @color-very-dark-grayish-orange;
+            transition: 200ms;
         }
     }
 
@@ -45,6 +54,16 @@
 
     &.visible {
         display: block;
+
+        &.sticky-top {
+            position: fixed;
+            top: 90px;
+        }
+
+        &.sticky-bottom {
+            bottom: 0;
+            position: absolute;
+        }
     }
 
     .expand {
@@ -228,7 +247,7 @@
             .group-title {
                 border-bottom: 1px solid @color-brownie-almost;
                 cursor: pointer;
-                padding: 12px;
+                padding: 9px;
                 position: relative;
 
                 :before {

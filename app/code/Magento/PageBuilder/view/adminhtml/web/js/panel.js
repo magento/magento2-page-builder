@@ -16,6 +16,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchResults = _knockout.observableArray([]);
       this.isCollapsed = _knockout.observable(false);
       this.isVisible = _knockout.observable(false);
+      this.isStickyBottom = _knockout.observable(false);
+      this.isStickyTop = _knockout.observable(false);
       this.searching = _knockout.observable(false);
       this.searchValue = _knockout.observable("");
       this.searchPlaceholder = (0, _translate)("Find items");
@@ -24,23 +26,36 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchTitle = (0, _translate)("Clear Search");
       this.parent = void 0;
       this.id = void 0;
+      this.element = void 0;
       this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
       this.id = this.parent.id;
       this.initListeners();
     }
     /**
-     * Init listeners
+     * On render init the panel
+     *
+     * @param {Element} element
      */
 
 
     var _proto = Panel.prototype;
+
+    _proto.afterRender = function afterRender(element) {
+      this.element = element;
+    };
+    /**
+     * Init listeners
+     */
+
 
     _proto.initListeners = function initListeners() {
       var _this = this;
 
       _events.on("stage:" + this.id + ":readyAfter", function () {
         _this.populateContentTypes();
+
+        _this.onScroll();
 
         _this.isVisible(true);
       });
@@ -105,6 +120,52 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
+    };
+    /**
+     * Toggle stickiness of panel based on browser scroll position and height of panel
+     * Enable panel stickiness if panel and stage are available
+     * Only stick when panel height is smaller than stage height
+     * Stick panel to top when scroll reaches top position of stage
+     * Stick panel to bottom when scroll reaches bottom position of stage
+     */
+
+
+    _proto.onScroll = function onScroll() {
+      var self = this;
+      var pageActions = (0, _jquery)(".page-actions");
+      var panel = (0, _jquery)(this.element);
+      var stage = panel.siblings(".pagebuilder-stage");
+      (0, _jquery)(window).scroll(function () {
+        var panelOffsetTop = panel.offset().top;
+        var stageOffsetTop = stage.offset().top;
+        var panelHeight = panel.outerHeight();
+        var stageHeight = stage.outerHeight();
+        var currentPanelBottom = Math.round(panelOffsetTop + panel.outerHeight(true) - (0, _jquery)(this).scrollTop());
+        var currentStageBottom = Math.round(stageOffsetTop + stage.outerHeight(true) - (0, _jquery)(this).scrollTop());
+        var currentPanelTop = Math.round(panelOffsetTop - (0, _jquery)(this).scrollTop());
+        var currentStageTop = Math.round(stageOffsetTop - (0, _jquery)(this).scrollTop()); // When panel height is less than stage, begin stickiness
+
+        if (panelHeight <= stageHeight && pageActions.hasClass("_fixed")) {
+          var pageActionsHeight = pageActions.outerHeight() + 15; // When scroll reaches top of stage, stick panel to top
+
+          if (currentStageTop <= pageActionsHeight) {
+            // When panel reaches bottom of stage, stick panel to bottom of stage
+            if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
+              self.isStickyBottom(true);
+              self.isStickyTop(false);
+            } else {
+              self.isStickyBottom(false);
+              self.isStickyTop(true);
+            }
+          } else {
+            self.isStickyBottom(false);
+            self.isStickyTop(false);
+          }
+        } else {
+          self.isStickyBottom(false);
+          self.isStickyTop(false);
+        }
+      });
     };
     /**
      * Retrieve the draggable options for the panel items
