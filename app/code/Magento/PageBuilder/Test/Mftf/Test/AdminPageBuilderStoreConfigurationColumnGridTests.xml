@@ -208,16 +208,9 @@
             <group value="pagebuilder-columnGridSizeConfig"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 4" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 5" stepKey="setMaxGridSize"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-            <conditionalClick stepKey="uncheckUseSystemValue" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
-            <comment userInput="Change Maximum Grid Size to 5" stepKey="comment1"/>
-            <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
-                <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
-            </actionGroup>
-            <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-            <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
