@@ -54,7 +54,7 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Event handler for wysiwyg blue
+     * Event handler for wysiwyg blur
      * Fixes z-index issues for tabs and column
      */
     private onBlur() {
