@@ -66,7 +66,7 @@ To add configuration for a new content type, create a file under the following l
           label="Simple"
           component="Vendor_ModuleName/js/content-type"
           form="modulename_simple_form"
-          group="general"
+          group="layout"
           icon="icon-modulename-simple"
           sortOrder="35"
           translate="label">
@@ -262,7 +262,7 @@ Now, let's add content type that can contain other content types. Create configu
           preview_component="Magento_PageBuilder/js/content-type/preview-collection"
           master_component="Magento_PageBuilder/js/content-type/content-collection"
           form="vendorname_complex_form"
-          group="general"
+          group="layout"
           icon="icon-vendorname-complex"
           sortOrder="35"
           translate="label">
