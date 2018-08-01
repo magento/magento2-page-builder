@@ -116,14 +116,16 @@ export default class Preview extends PreviewCollection {
      */
     public initParallax(element: Element) {
         this.element = element;
-        this.buildJarallax();
+        _.defer(() => {
+            this.buildJarallax();
+        });
 
-        // Observe for resizes of the element and force jarallax to display correctly
-        if ($(this.element).hasClass("jarallax")) {
-            new ResizeObserver(() => {
+        new ResizeObserver(() => {
+            // Observe for resizes of the element and force jarallax to display correctly
+            if ($(this.element).hasClass("jarallax")) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");
-            }).observe(this.element);
-        }
+            }
+        }).observe(this.element);
     }
 }

@@ -75,7 +75,6 @@
     .element-children {
         font-size: 0;
         position: relative;
-        z-index: 10;
     }
 
     &.children-min-height {
@@ -207,7 +206,6 @@
     box-sizing: border-box;
     position: relative;
     transition: box-shadow 200ms ease 200ms;
-    z-index: 10;
 }
 .pagebuilder-system-border-hover {
     -moz-transition: box-shadow 200ms ease 200ms;
@@ -215,7 +213,6 @@
     -webkit-transition: box-shadow 200ms ease 200ms;
     box-shadow: 0 0 0 1px rgb(153, 153, 153);
     transition: box-shadow 200ms ease 200ms;
-    z-index: 25;
 
     &.type-container {
         box-shadow: 0 0 0 1px rgb(153, 153, 153);
@@ -285,7 +282,6 @@
 
 .pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-content-type-active:hover {
     box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
-    z-index: 10;
 
     &.type-container {
         box-shadow: 0 0 0 1px rgba(153, 153, 153, .3);
@@ -495,18 +491,6 @@
         .pagebuilder-options {
             display: block;
         }
-    }
-}
-
-//
-//  When we're focusing a child within the stage force containers to have auto z-index
-//  __________________________________________________________________
-
-.pagebuilder-stage.focus-child .pagebuilder-content-type {
-    z-index: auto;
-
-    .element-children {
-        z-index: auto;
     }
 }
 
