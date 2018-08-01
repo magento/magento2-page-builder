@@ -55,6 +55,34 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
     _proto.onFocusOut = function onFocusOut() {
       this.parent.parent.preview.isLiveEditing(null);
     };
+    /**
+     * If the button is displayed we need to show the options menu on hover
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onButtonMouseOver = function onButtonMouseOver(context, event) {
+      console.log(this.mouseover);
+
+      if (this.display() === false) {
+        this.onMouseOver(context, event);
+      }
+    };
+    /**
+     * If the button is displayed we need to hide the options menu on mouse out
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onButtonMouseOut = function onButtonMouseOut(context, event) {
+      if (this.display() === false) {
+        this.onMouseOut(context, event);
+      }
+    };
 
     return Preview;
   }(_preview);

@@ -45,7 +45,32 @@ export default class Preview extends BasePreview {
     /**
      * Focus out of the element
      */
-    private onFocusOut(): void {
+    public onFocusOut(): void {
         this.parent.parent.preview.isLiveEditing(null);
+    }
+
+    /**
+     * If the button is displayed we need to show the options menu on hover
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onButtonMouseOver(context: Preview, event: Event): void {
+        console.log(this.mouseover);
+        if (this.display() === false) {
+            this.onMouseOver(context, event);
+        }
+    }
+
+    /**
+     * If the button is displayed we need to hide the options menu on mouse out
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onButtonMouseOut(context: Preview, event: Event): void {
+        if (this.display() === false) {
+            this.onMouseOut(context, event);
+        }
     }
 }

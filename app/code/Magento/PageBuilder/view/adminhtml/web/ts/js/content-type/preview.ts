@@ -150,6 +150,7 @@ export default class Preview {
         this.mouseoverContext = context;
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+        console.log(optionsMenu);
 
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
