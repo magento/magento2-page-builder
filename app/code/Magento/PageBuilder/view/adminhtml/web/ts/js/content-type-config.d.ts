@@ -27,7 +27,7 @@ export default interface ContentTypeConfigInterface {
     readers: string[];
     allowed_parents: string[];
     is_visible: boolean;
-    additional_data: any;
+    additional_data: AdditionalDataConfigInterface;
 }
 
 export interface ContentTypeConfigAppearanceInterface {
@@ -103,4 +103,8 @@ export interface DataMappingCssInterface {
 export interface DataMappingTagInterface {
     var: string;
     converter: string;
+}
+
+export interface AdditionalDataConfigInterface {
+    [key: string]: any;
 }

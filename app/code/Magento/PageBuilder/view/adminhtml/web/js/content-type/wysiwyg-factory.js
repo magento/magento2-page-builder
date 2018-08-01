@@ -8,8 +8,8 @@ define(["mage/adminhtml/wysiwyg/tiny_mce/setup"], function (_setup) {
   /**
    * Create new wysiwyg adapter instance
    * @param {string} elementId
-   * @param {object} config
-   * @returns {WysiwygSetup}
+   * @param {AdditionalDataConfigInterface} config
+   * @returns {WysiwygInstance}
    * @api
    */
   function create(elementId, config) {
