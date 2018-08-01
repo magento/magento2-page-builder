@@ -41,7 +41,7 @@ class InlineEditingSupportedAdapterList
      * @param string $editorPath
      * @return bool
      */
-    public function isAvailable(string $editorPath) : bool
+    public function isSupported(string $editorPath) : bool
     {
 
         return $this->wysiwygAdaptersSupportingInlineEditing[$editorPath] && $this->wysiwygConfig->isEnabled() ?? false;
