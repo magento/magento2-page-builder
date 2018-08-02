@@ -79,10 +79,10 @@ export default class Master {
                 this.parent.config.name,
                 data.appearance,
             );
-            const config = appearanceConfiguration.data_mapping.elements[element];
+            const config = appearanceConfiguration.elements[element];
 
             if (config.css && config.css.var !== undefined && config.css.var in data ) {
-                data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+                data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
                 css = data[config.css.var].toString();
             }
         }
@@ -112,9 +112,9 @@ export default class Master {
         }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
-        const config = appearanceConfiguration.data_mapping.elements;
+        const config = appearanceConfiguration.elements;
 
-        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
         let result = {};
         if (config[element].style.length) {
@@ -141,9 +141,9 @@ export default class Master {
         }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
-        const config = appearanceConfiguration.data_mapping.elements;
+        const config = appearanceConfiguration.elements;
 
-        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
         let result = {};
         if (config[element].attributes.length) {
@@ -162,7 +162,7 @@ export default class Master {
      */
     public getHtml(element: string) {
         const data = this.parent.dataStore.get() as DataObject;
-        const config = appearanceConfig(this.parent.config.name, data.appearance).data_mapping.elements[element];
+        const config = appearanceConfig(this.parent.config.name, data.appearance).elements[element];
         let result = "";
         if (undefined !== config.html.var) {
             result = this.observableUpdater.convertHtml(config, data, "master");
@@ -185,9 +185,9 @@ export default class Master {
         }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
-        const config = appearanceConfiguration.data_mapping.elements;
+        const config = appearanceConfiguration.elements;
 
-        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
         const result = {};
         if (undefined !== config[element].tag.var) {

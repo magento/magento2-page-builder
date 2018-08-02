@@ -33,16 +33,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertGroups(\DOMDocument $source): array
     {
         $groupsData = [];
-        /** @var \DOMNode $source */
-        $groups = $source->getElementsByTagName('groups');
         /** @var \DOMNode $group */
-        foreach ($groups->item(0)->childNodes as $group) {
-            if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
-                $name = $group->attributes->getNamedItem('name')->nodeValue;
-                /** @var \DOMElement $attributeValue */
-                foreach ($group->attributes as $attributeName => $attributeValue) {
-                    $groupsData[$name][$attributeName] = $attributeValue->nodeValue;
-                }
+        foreach ($source->getElementsByTagName('group') as $group) {
+            $name = $group->attributes->getNamedItem('name')->nodeValue;
+            /** @var \DOMElement $attributeValue */
+            foreach ($group->attributes as $attributeName => $attributeValue) {
+                $groupsData[$name][$attributeName] = $attributeValue->nodeValue;
             }
         }
         uasort($groupsData, function ($firstElement, $secondElement) {
