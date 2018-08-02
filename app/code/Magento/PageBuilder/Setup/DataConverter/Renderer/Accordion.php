@@ -60,11 +60,10 @@ class Accordion implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-element' => 'main',
-            'data-role' => 'html',
-            'data-appearance' => 'default',
-            'class' => $eavData['css_classes'] ?? ''
+            'data-mage-init' => $this->getMageInitValue($itemData),
+            'class' => 'pagebuilder-accordion ' . ($eavData['css_classes'] ?? '')
         ];
+
         $rootElementAttributes['class'] = rtrim($rootElementAttributes['class']);
 
         if (isset($itemData['formData'])) {
@@ -74,13 +73,15 @@ class Accordion implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<div';
+        $accordionElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            $accordionElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><div class="pagebuilder-accordion" data-mage-init="' . $this->getMageInitValue($itemData) . '">' .
-            (isset($additionalData['children']) ? $additionalData['children'] : '') .
-            '</div></div>';
+        $accordionElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') .
+            '</div>';
+
+        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml .= $accordionElementHtml . '</div>';
 
         return $rootElementHtml;
     }
