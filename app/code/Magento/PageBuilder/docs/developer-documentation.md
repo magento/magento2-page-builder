@@ -26,6 +26,7 @@
     1. [Custom Toolbar]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
 
@@ -92,3 +93,4 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md

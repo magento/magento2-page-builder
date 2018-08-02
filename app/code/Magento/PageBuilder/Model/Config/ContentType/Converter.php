@@ -12,6 +12,9 @@ use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
+    const DEFAULT_ATTRIBUTE_READER = 'Magento_PageBuilder/js/property/attribute-reader';
+    const DEFAULT_PROPERTY_READER = 'Magento_PageBuilder/js/property/style-property-reader';
+
     /**
      * @var ArgumentParser
      */
@@ -122,7 +125,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $appearanceData = [];
         $appearanceData = array_merge(
             $appearanceData,
-            $this->convertAppearanceProperties($appearanceNode)
+            $this->convertAppearanceStyles($appearanceNode)
         );
         $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
         if ($readerNode && $readerNode->nodeValue) {
@@ -130,10 +133,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         } else {
             $appearanceData['readers'] = $this->convertAppearanceReaders($appearanceNode);
         }
-        $dataMappingNode = $appearanceNode->getElementsByTagName('data_mapping')->item(0);
-        if ($dataMappingNode) {
-            $appearanceData['data_mapping'] = $this->convertDataMapping($dataMappingNode);
+        $elementsNode = $appearanceNode->getElementsByTagName('elements')->item(0);
+        if ($elementsNode) {
+            $appearanceData['elements'] = $this->convertElements($elementsNode);
         }
+        $appearanceData['converters'] = $this->convertConvertersData($appearanceNode);
         $appearanceData['preview_template'] = $this->getAttributeValue($appearanceNode, 'preview_template');
         $appearanceData['render_template'] = $this->getAttributeValue($appearanceNode, 'render_template');
         $appearanceData['reader'] = $this->getAttributeValue($appearanceNode, 'reader');
@@ -151,7 +155,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertAppearanceProperties(\DOMElement $elementNode): array
+    private function convertAppearanceStyles(\DOMElement $elementNode): array
     {
         $data = [];
         foreach ($elementNode->getElementsByTagName('data') as $dataNode) {
@@ -200,18 +204,18 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Convert data mapping
+     * Convert elements
      *
      * @param \DOMElement $childNode
      * @return array
      */
-    private function convertDataMapping(\DOMElement $childNode): array
+    private function convertElements(\DOMElement $childNode): array
     {
         $elementData = [];
         foreach ($childNode->getElementsByTagName('element') as $elementNode) {
             $elementName = $elementNode->attributes->getNamedItem('name')->nodeValue;
             $elementData[$elementName] = [
-                'style' => $this->convertProperties($elementNode),
+                'style' => $this->convertStyles($elementNode),
                 'attributes' => $this->convertAttributes($elementNode),
                 'html' => $this->convertHtml($elementNode),
                 'css' => $this->convertCss($elementNode),
@@ -219,12 +223,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             ];
         }
 
-        $converters = $this->convertConvertersData($childNode);
-
-        return [
-            'elements' => $elementData,
-            'converters' => $converters
-        ];
+        return $elementData;
     }
 
     /**
@@ -259,45 +258,35 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Convert properties
+     * Convert styles
      *
      * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertProperties(\DOMElement $elementNode): array
+    private function convertStyles(\DOMElement $elementNode): array
     {
-        $propertiesData = [];
-        $propertiesNode = $elementNode->getElementsByTagName('style_properties')->item(0);
-        if ($propertiesNode) {
-            foreach ($propertiesNode->getElementsByTagName('property') as $propertyNode) {
-                $propertiesData[] = [
-                    'var' => $this->extractVariableName($propertyNode),
-                    'name' => $this->getAttributeValue($propertyNode, 'source'),
-                    'converter' => $this->getAttributeValue($propertyNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
-                    'persist' => $this->getAttributeValue($propertyNode, 'persist'),
-                ];
-            }
-            foreach ($propertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
-                $propertiesData[] = [
-                    'var' => $this->extractVariableName($propertyNode),
-                    'reader' => $this->getAttributeValue($propertyNode, 'reader'),
-                    'converter' => $this->getAttributeValue($propertyNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
-                    'complex' => true
-                ];
-            }
-            foreach ($propertiesNode->getElementsByTagName('static_property') as $propertyNode) {
-                $propertiesData[] = [
-                    'name' => $this->getAttributeValue($propertyNode, 'source'),
-                    'value' => $this->getAttributeValue($propertyNode, 'value'),
-                    'static' => true
-                ];
-            }
+        $stylesData = [];
+        foreach ($elementNode->getElementsByTagName('style') as $styleNode) {
+            $stylesData[] = [
+                'var' => $this->extractVariableName($styleNode),
+                'name' => $this->getAttributeValue($styleNode, 'source'),
+                'converter' => $this->getAttributeValue($styleNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($styleNode, 'preview_converter'),
+                'persistence_mode' => $this->getAttributeValue($styleNode, 'persistence_mode')
+                    ?? 'readwrite',
+                'reader' => $this->getAttributeValue($styleNode, 'reader')
+                    ?? self::DEFAULT_PROPERTY_READER,
+            ];
         }
-        return $propertiesData;
+        foreach ($elementNode->getElementsByTagName('static_style') as $styleNode) {
+            $stylesData[] = [
+                'name' => $this->getAttributeValue($styleNode, 'source'),
+                'value' => $this->getAttributeValue($styleNode, 'value'),
+                'static' => true
+            ];
+        }
+
+        return $stylesData;
     }
 
     /**
@@ -309,37 +298,26 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertAttributes(\DOMElement $elementNode): array
     {
         $attributesData = [];
-        $attributesNode = $elementNode->getElementsByTagName('attributes')->item(0);
-        if ($attributesNode) {
-            foreach ($attributesNode->getElementsByTagName('attribute') as $attributeNode) {
-                $attributesData[] = [
-                    'var' => $this->extractVariableName($attributeNode),
-                    'name' => $this->getAttributeValue($attributeNode, 'source'),
-                    'converter' => $this->getAttributeValue($attributeNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
-                ];
-            }
-            foreach ($attributesNode->getElementsByTagName('static_attribute') as $attributeNode) {
-                $attributesData[] = [
-                    'name' => $this->getAttributeValue($attributeNode, 'source'),
-                    'value' => $this->getAttributeValue($attributeNode, 'value'),
-                    'static' => true
-                ];
-            }
-            foreach ($attributesNode->getElementsByTagName('complex_attribute') as $attributeNode) {
-                $attributesData[] = [
-                    'var' => $this->extractVariableName($attributeNode),
-                    'reader' => $this->getAttributeValue($attributeNode, 'reader'),
-                    'converter' => $this->getAttributeValue($attributeNode, 'converter'),
-                    'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
-                    'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                    'complex' => true,
-                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
-                ];
-            }
+        foreach ($elementNode->getElementsByTagName('attribute') as $attributeNode) {
+            $attributesData[] = [
+                'var' => $this->extractVariableName($attributeNode),
+                'name' => $this->getAttributeValue($attributeNode, 'source'),
+                'converter' => $this->getAttributeValue($attributeNode, 'converter'),
+                'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
+                'persistence_mode' => $this->getAttributeValue($attributeNode, 'persistence_mode')
+                    ?? 'readwrite',
+                'reader' => $this->getAttributeValue($attributeNode, 'reader')
+                    ?? self::DEFAULT_ATTRIBUTE_READER,
+            ];
         }
+        foreach ($elementNode->getElementsByTagName('static_attribute') as $attributeNode) {
+            $attributesData[] = [
+                'name' => $this->getAttributeValue($attributeNode, 'source'),
+                'value' => $this->getAttributeValue($attributeNode, 'value'),
+                'static' => true
+            ];
+        }
+
         return $attributesData;
     }
 
@@ -407,9 +385,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param \DOMElement $childNode
      * @return array
      */
-    private function convertConvertersData(\DOMElement $childNode): array
+    private function convertConvertersData(\DOMElement $appearanceNode): array
     {
-        $convertersNode = $childNode->getElementsByTagName('converters')->item(0);
+        $convertersNode = $appearanceNode->getElementsByTagName('converters')->item(0);
         $converters = [];
         if ($convertersNode) {
             foreach ($convertersNode->getElementsByTagName('converter') as $converterNode) {
@@ -578,7 +556,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Extract variable name from property and attribute nodes
+     * Extract variable name from style and attribute nodes
      *
      * @param \DOMElement $node
      * @return string

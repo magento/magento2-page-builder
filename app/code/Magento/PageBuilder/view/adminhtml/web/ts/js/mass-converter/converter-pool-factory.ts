@@ -16,9 +16,9 @@ export default function create(contentType: string): Promise<typeof ConverterPoo
     const converters: string[] = [];
     let appearanceName: string;
     for (appearanceName of Object.keys(config.appearances)) {
-        const dataMapping = config.appearances[appearanceName].data_mapping;
-        if (undefined !== dataMapping && undefined !== dataMapping.converters) {
-            for (const converterConfig of dataMapping.converters) {
+        const appearance = config.appearances[appearanceName];
+        if (undefined !== appearance && undefined !== appearance.converters) {
+            for (const converterConfig of appearance.converters) {
                 if (!!converterConfig.component && !ConverterPool.get(converterConfig.component)) {
                     converters.push(converterConfig.component);
                 }
