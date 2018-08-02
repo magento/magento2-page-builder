@@ -88,19 +88,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
-     * Get the sortable options for the tab heading sorting
+     * Get the sortable options for the buttons sorting
      *
      * @returns {JQueryUI.SortableOptions}
      */
 
 
     _proto.getSortableOptions = function getSortableOptions() {
+      var placeholderGhost;
       return {
         handle: ".button-item-drag-handle",
         items: ".pagebuilder-content-type-wrapper",
-        containment: "parent",
-        tolerance: "pointer",
         cursor: "grabbing",
+        containment: "parent",
+        revert: 200,
         cursorAt: {
           left: 25,
           top: 25
@@ -130,9 +131,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            * @returns {JQuery}
            */
           element: function element(item) {
-            var placeholder = item.clone().show().css({
+            var placeholder = item.clone().css({
               display: "inline-block",
-              opacity: "0.3"
+              opacity: 0,
+              width: item.width(),
+              height: item.height()
             }).removeClass("focused").addClass("sortable-placeholder");
             placeholder[0].querySelector(".pagebuilder-options").remove();
             return placeholder[0];
@@ -140,6 +143,70 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           update: function update() {
             return;
           }
+        },
+
+        /**
+         * Logic for starting the sorting
+         * Adding the placeholderGhost
+         *
+         * @param {Event} event
+         * @param {JQueryUI.Sortable} element
+         */
+        start: function start(event, element) {
+          placeholderGhost = element.placeholder.clone().css({
+            opacity: 0.3,
+            position: "absolute",
+            left: element.placeholder.position().left,
+            top: element.placeholder.position().top
+          });
+          element.item.parent().append(placeholderGhost);
+
+          _events.trigger("stage:interactionStart");
+        },
+
+        /**
+         * Logic for changing element position during the sorting
+         * Set the width and height of the moving placeholder animation
+         * Add animation of placeholder ghost to the placeholder position
+         *
+         * @param {Event} event
+         * @param {JQueryUI.Sortable} element
+         */
+        change: function change(event, element) {
+          element.placeholder.stop(true, false);
+
+          if (this.getAttribute("data-appearance") === "stacked") {
+            element.placeholder.css({
+              height: element.item.height() / 2
+            });
+            element.placeholder.animate({
+              height: element.item.height()
+            }, 200, "linear");
+          }
+
+          if (this.getAttribute("data-appearance") === "inline") {
+            element.placeholder.css({
+              width: element.item.width() / 2
+            });
+            element.placeholder.animate({
+              width: element.item.width()
+            }, 200, "linear");
+          }
+
+          placeholderGhost.stop(true, false).animate({
+            left: element.placeholder.position().left,
+            top: element.placeholder.position().top
+          }, 200);
+        },
+
+        /**
+         * Logic for post sorting
+         * Removing the placeholderGhost
+         */
+        stop: function stop() {
+          placeholderGhost.remove();
+
+          _events.trigger("stage:interactionStop");
         }
       };
     };

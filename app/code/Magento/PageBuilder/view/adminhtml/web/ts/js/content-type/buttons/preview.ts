@@ -21,6 +21,9 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+    /**
+     * Keeps track of number of button item to disable sortable if there is only 1.
+     */
     public disableSorting: KnockoutComputed<void> = ko.computed(() => {
         const sortableElement = $(this.wrapperElement).find(".buttons-container");
         if (this.parent.children().length <= 1) {
@@ -93,19 +96,19 @@ export default class Preview extends PreviewCollection {
             console.error(error);
         });
     }
-
     /**
-     * Get the sortable options for the tab heading sorting
+     * Get the sortable options for the buttons sorting
      *
      * @returns {JQueryUI.SortableOptions}
      */
     public getSortableOptions(): SortableOptionsInterface {
+        let placeholderGhost: JQuery;
         return {
             handle: ".button-item-drag-handle",
             items: ".pagebuilder-content-type-wrapper",
-            containment: "parent",
-            tolerance: "pointer",
             cursor: "grabbing",
+            containment: "parent",
+            revert: 200,
             cursorAt: { left: 25, top: 25 },
             disabled: this.parent.children().length <= 1,
             /**
@@ -133,10 +136,11 @@ export default class Preview extends PreviewCollection {
                 element(item: JQuery) {
                     const placeholder = item
                         .clone()
-                        .show()
                         .css({
                             display: "inline-block",
-                            opacity: "0.3",
+                            opacity: 0,
+                            width: item.width(),
+                            height: item.height(),
                         })
                         .removeClass("focused")
                         .addClass("sortable-placeholder");
@@ -146,6 +150,56 @@ export default class Preview extends PreviewCollection {
                 update() {
                     return;
                 },
+            },
+            /**
+             * Logic for starting the sorting
+             * Adding the placeholderGhost
+             *
+             * @param {Event} event
+             * @param {JQueryUI.Sortable} element
+             */
+            start(event, element) {
+                placeholderGhost = element.placeholder
+                    .clone()
+                    .css({
+                        opacity: 0.3,
+                        position: "absolute",
+                        left: element.placeholder.position().left,
+                        top: element.placeholder.position().top,
+                    });
+                element.item.parent().append(placeholderGhost);
+                events.trigger("stage:interactionStart");
+            },
+            /**
+             * Logic for changing element position during the sorting
+             * Set the width and height of the moving placeholder animation
+             * Add animation of placeholder ghost to the placeholder position
+             *
+             * @param {Event} event
+             * @param {JQueryUI.Sortable} element
+             */
+            change(event, element) {
+                element.placeholder.stop(true, false);
+                if (this.getAttribute("data-appearance") === "stacked") {
+                    element.placeholder.css({height: element.item.height() / 2});
+                    element.placeholder.animate({height: element.item.height()}, 200, "linear");
+                }
+                if (this.getAttribute("data-appearance") === "inline") {
+                    element.placeholder.css({width: element.item.width() / 2});
+                    element.placeholder.animate({width: element.item.width()}, 200, "linear");
+                }
+                placeholderGhost.stop(true, false).animate({
+                    left: element.placeholder.position().left,
+                    top: element.placeholder.position().top,
+                }, 200);
+            },
+            /**
+             * Logic for post sorting
+             * Removing the placeholderGhost
+             */
+            stop() {
+                placeholderGhost.remove();
+                events.trigger("stage:interactionStop");
             },
         };
     }
