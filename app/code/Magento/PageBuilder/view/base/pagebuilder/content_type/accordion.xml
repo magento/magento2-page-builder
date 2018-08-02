@@ -6,29 +6,27 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="accordion"
-              label="Accordion"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/accordion/preview"
-              master_component="Magento_PageBuilder/js/content-type/accordion/master"
-              form="pagebuilder_accordion_form"
-              group="layout"
-              icon="icon-pagebuilder-accordion"
-              sortOrder="30"
-              translate="label">
-            <children default_policy="deny"/>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Magento_PageBuilder/content-type/accordion/default/preview"
-                            render_template="Magento_PageBuilder/content-type/accordion/default/master">
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                        <reader component="Magento_PageBuilder/js/master-format/read/accordion" name="accordion"/>
-                    </readers>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="accordion"
+          label="Accordion"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/accordion/preview"
+          master_component="Magento_PageBuilder/js/content-type/accordion/master"
+          form="pagebuilder_accordion_form"
+          group="layout"
+          icon="icon-pagebuilder-accordion"
+          sortOrder="30"
+          translate="label">
+        <children default_policy="deny"/>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Magento_PageBuilder/content-type/accordion/default/preview"
+                        render_template="Magento_PageBuilder/content-type/accordion/default/master">
+                <readers>
+                    <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
+                    <reader component="Magento_PageBuilder/js/master-format/read/accordion" name="accordion"/>
+                </readers>
+            </appearance>
+        </appearances>
+    </type>
 </config>
