@@ -6,96 +6,78 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="type2" translate="label" label="Type 2" icon="pagebuilder-type2-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type2_form" group="group1">
-            <backend_block>Path/to/backend/block</backend_block>
-            <backend_template>Path/to/backend/template</backend_template>
-            <is_visible>true</is_visible>
-            <parents default_policy="deny">
-                <parent name="stage" policy="allow"/>
-            </parents>
-            <children default_policy="allow"/>
-            <appearances>
-                <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
-                    <data name="data1">value1</data>
-                    <data name="data2">value2</data>
-                    <data_mapping>
-                        <elements>
-                            <element name="first_element">
-                                <style_properties>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                    <property name="style_attributes_change" source="attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" persist="false" virtual="true"/>
-                                    <property name="style_attributes_add" source="attributes_add"/>
-                                    <complex_property name="original_complex" reader="Path/to/reader"/>
-                                    <complex_property name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" reader="Path/to/reader"/>
-                                    <complex_property name="complex_style_attributes_add" reader="Path/to/reader"/>
-                                    <static_property source="original_static" value="original_value"/>
-                                    <static_property source="static_style_attributes_change" value="value"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="attribute_change" source="data-change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" persist="false"/>
-                                    <attribute name="attribute_add" source="attribute_add"/>
-                                    <complex_attribute name="original_complex" reader="Path/to/reader"/>
-                                    <complex_attribute name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" reader="Path/to/reader"/>
-                                    <complex_attribute name="complex_style_attributes_add" reader="Path/to/reader"/>
-                                    <static_attribute source="original_static" value="original_value"/>
-                                    <static_attribute source="static_attribute_change" value="value"/>
-                                </attributes>
-                                <tag name="tag" converter="Path/to/converter"/>
-                                <html name="html"/>
-                                <css name="css_classes" converter="Path/to/converter">
-                                    <filter>
-                                        <class source="class-name"/>
-                                    </filter>
-                                </css>
-                            </element>
-                            <element name="second_element">
-                                <style_properties>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                        <converters>
-                            <converter name="converter1" component="Path/to/converter">
-                                <config>
-                                    <item name="item1" value="value1"/>
-                                    <item name="change_value" value="value2"/>
-                                </config>
-                            </converter>
-                            <converter name="converter2" component="Path/to/converter">
-                                <config>
-                                    <item name="item1" value="value1"/>
-                                </config>
-                            </converter>
-                        </converters>
-                    </data_mapping>
-                    <form>Path/to/form</form>
-                </appearance>
-                <appearance name="appearance1" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="style_converter" source="converter" converter="Path/to/converter"/>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                    <form>Path/to/form</form>
-                </appearance>
-                <appearance name="appearance2" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader"/>
-                <appearance name="appearance3" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template"/>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="type2" translate="label" label="Type 2" icon="pagebuilder-type2-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type2_form" group="group1">
+        <backend_block>Path/to/backend/block</backend_block>
+        <backend_template>Path/to/backend/template</backend_template>
+        <is_visible>true</is_visible>
+        <parents default_policy="deny">
+            <parent name="stage" policy="allow"/>
+        </parents>
+        <children default_policy="allow"/>
+        <appearances>
+            <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+                <data name="data1">value1</data>
+                <data name="data2">value2</data>
+                <elements>
+                    <element name="first_element">
+                        <style name="style_no_converter" source="no_converter"/>
+                        <style name="style_attributes_change" source="attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" persistence_mode="read"/>
+                        <style name="style_attributes_add" source="attributes_add"/>
+                        <style name="original_complex" reader="Path/to/reader"/>
+                        <style name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" reader="Path/to/reader" persistence_mode="read"/>
+                        <style name="complex_style_attributes_add" reader="Path/to/reader"/>
+                        <static_style source="original_static" value="original_value"/>
+                        <static_style source="static_style_attributes_change" value="value"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="attribute_change" source="data-change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" persistence_mode="read"/>
+                        <attribute name="attribute_add" source="attribute_add"/>
+                        <attribute name="original_complex" reader="Path/to/reader"/>
+                        <attribute name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" reader="Path/to/reader" persistence_mode="read"/>
+                        <attribute name="complex_style_attributes_add" reader="Path/to/reader"/>
+                        <static_attribute source="original_static" value="original_value"/>
+                        <static_attribute source="static_attribute_change" value="value"/>
+                        <tag name="tag" converter="Path/to/converter"/>
+                        <html name="html"/>
+                        <css name="css_classes" converter="Path/to/converter">
+                            <filter>
+                                <class source="class-name"/>
+                            </filter>
+                        </css>
+                    </element>
+                    <element name="second_element">
+                        <style name="style_no_converter" source="no_converter"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+                <converters>
+                    <converter name="converter1" component="Path/to/converter">
+                        <config>
+                            <item name="item1" value="value1"/>
+                            <item name="change_value" value="value2"/>
+                        </config>
+                    </converter>
+                    <converter name="converter2" component="Path/to/converter">
+                        <config>
+                            <item name="item1" value="value1"/>
+                        </config>
+                    </converter>
+                </converters>
+                <form>Path/to/form</form>
+            </appearance>
+            <appearance name="appearance1" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+                <elements>
+                    <element name="main">
+                        <style name="style_converter" source="converter" converter="Path/to/converter"/>
+                        <style name="style_no_converter" source="no_converter"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+                <form>Path/to/form</form>
+            </appearance>
+            <appearance name="appearance2" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader"/>
+            <appearance name="appearance3" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template"/>
+        </appearances>
+    </type>
 </config>

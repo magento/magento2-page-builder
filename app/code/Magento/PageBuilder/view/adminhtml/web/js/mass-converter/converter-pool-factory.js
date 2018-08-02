@@ -19,10 +19,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
 
     for (var _i = 0; _i < _arr.length; _i++) {
       appearanceName = _arr[_i];
-      var dataMapping = config.appearances[appearanceName].data_mapping;
+      var appearance = config.appearances[appearanceName];
 
-      if (undefined !== dataMapping && undefined !== dataMapping.converters) {
-        for (var _iterator = dataMapping.converters, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      if (undefined !== appearance && undefined !== appearance.converters) {
+        for (var _iterator = appearance.converters, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
           var _ref;
 
           if (_isArray) {

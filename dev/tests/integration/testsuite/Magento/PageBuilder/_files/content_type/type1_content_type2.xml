@@ -6,28 +6,31 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="type1" translate="label" label="Type 1 Label" icon="pagebuilder-type1-custom-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type1_custom_form" group="group2">
-            <appearances>
-                <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="style_converter" source="converter" converter="Path/to/converter"/>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-            <additional_data>
-                <item name="config1" xsi:type="array">
+    <type name="type1" translate="label" label="Type 1 Label" icon="pagebuilder-type1-custom-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type1_custom_form" group="group2">
+        <appearances>
+            <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+                <elements>
+                    <element name="main">
+                        <style name="style_converter" source="converter" converter="Path/to/converter"/>
+                        <style name="style_no_converter" source="no_converter"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+        <additional_data>
+            <item name="config1" xsi:type="array">
+                <item name="settingWithTypeString" xsi:type="string">string</item>
+                <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
+                <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
+                <item name="settingWithTypeInteger" xsi:type="number">20</item>
+                <item name="settingWithTypeNull" xsi:type="null"/>
+                <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
+                <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
+            </item>
+            <item name="config2" xsi:type="array">
+                <item name="arrayConfig" xsi:type="array">
                     <item name="settingWithTypeString" xsi:type="string">string</item>
                     <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
                     <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
@@ -36,25 +39,14 @@
                     <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
                     <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
                 </item>
-                <item name="config2" xsi:type="array">
-                    <item name="arrayConfig" xsi:type="array">
-                        <item name="settingWithTypeString" xsi:type="string">string</item>
-                        <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
-                        <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
-                        <item name="settingWithTypeInteger" xsi:type="number">20</item>
-                        <item name="settingWithTypeNull" xsi:type="null"/>
-                        <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
-                        <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
-                    </item>
-                </item>
-                <item name="settingWithTypeString" xsi:type="string">string</item>
-                <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
-                <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
-                <item name="settingWithTypeInteger" xsi:type="number">20</item>
-                <item name="settingWithTypeNull" xsi:type="null"/>
-                <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
-                <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
-            </additional_data>
-        </type>
-    </content_types>
+            </item>
+            <item name="settingWithTypeString" xsi:type="string">string</item>
+            <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
+            <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
+            <item name="settingWithTypeInteger" xsi:type="number">20</item>
+            <item name="settingWithTypeNull" xsi:type="null"/>
+            <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
+            <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
+        </additional_data>
+    </type>
 </config>

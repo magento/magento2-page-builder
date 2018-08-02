@@ -6,63 +6,51 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="button-item"
-              label="Button"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/button-item/preview"
-              master_component="Magento_PageBuilder/js/content-type/master"
-              form="pagebuilder_button_item_form"
-              group="elements"
-              icon="icon-pagebuilder-button"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="buttons" policy="allow"/>
-            </parents>
-            <children default_policy="deny"/>
-            <is_visible>false</is_visible>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Magento_PageBuilder/content-type/button-item/default/preview"
-                            render_template="Magento_PageBuilder/content-type/button-item/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <static_property source="display" value="inline-block"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="appearance" source="data-appearance"/>
-                                </attributes>
-                            </element>
-                            <element name="link">
-                                <style_properties>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                </style_properties>
-                                <attributes>
-                                    <complex_attribute name="button_link" reader="Magento_PageBuilder/js/property/link" persist="false"/>
-                                    <attribute name="virtual_link_href" storage_key="button_link" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href"/>
-                                    <attribute name="virtual_link_target" storage_key="button_link" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target"/>
-                                    <attribute name="virtual_link_type" storage_key="button_link" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type"/>
-                                </attributes>
-                                <css name="button_type"/>
-                            </element>
-                            <element name="link_text">
-                                <html name="button_text"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="button-item"
+          label="Button"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/button-item/preview"
+          master_component="Magento_PageBuilder/js/content-type/master"
+          form="pagebuilder_button_item_form"
+          group="elements"
+          icon="icon-pagebuilder-button"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="buttons" policy="allow"/>
+        </parents>
+        <children default_policy="deny"/>
+        <is_visible>false</is_visible>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Magento_PageBuilder/content-type/button-item/default/preview"
+                        render_template="Magento_PageBuilder/content-type/button-item/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <static_style source="display" value="inline-block"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                    </element>
+                    <element name="link">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="button_link" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
+                        <attribute name="virtual_link_href" storage_key="button_link" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
+                        <attribute name="virtual_link_target" storage_key="button_link" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
+                        <attribute name="virtual_link_type" storage_key="button_link" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
+                        <css name="button_type"/>
+                    </element>
+                    <element name="link_text">
+                        <html name="button_text"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>

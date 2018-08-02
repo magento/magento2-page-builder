@@ -6,30 +6,22 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="type3" translate="label" sortOrder="3" label="Type 3" icon="pagebuilder-type3-icon" component="Path/to/custom/component" form="pagebuilder_type3_form" group="group1">
-            <parents default_policy="deny">
-                <parent name="stage" policy="allow"/>
-            </parents>
-            <children default_policy="allow"/>
-            <appearances>
-                <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <property name="style_converter" source="converter" converter="Path/to/converter"/>
-                                    <property name="style_no_converter" source="no_converter"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="type3" translate="label" sortOrder="3" label="Type 3" icon="pagebuilder-type3-icon" component="Path/to/custom/component" form="pagebuilder_type3_form" group="group1">
+        <parents default_policy="deny">
+            <parent name="stage" policy="allow"/>
+        </parents>
+        <children default_policy="allow"/>
+        <appearances>
+            <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+                <elements>
+                    <element name="main">
+                        <style name="style_converter" source="converter" converter="Path/to/converter"/>
+                        <style name="style_no_converter" source="no_converter"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>
