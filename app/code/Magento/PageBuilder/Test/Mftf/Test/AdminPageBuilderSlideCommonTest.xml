@@ -417,11 +417,9 @@
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
         </assertEquals>
         <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideOverlayColorDefaultProperty.section, PageBuilderSlideOverlayColorDefaultProperty.fieldName)}}" stepKey="grabOverlayColorValue"/>
-        <assertEquals stepKey="assertOverlayColorValue" message="Overlay Color has text: $grabOverlayColorValue">
-            <expectedResult type="string">#FFFFFF</expectedResult>
-            <actualResult type="variable">grabOverlayColorValue</actualResult>
-        </assertEquals>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
+            <argument name="property" value="PageBuilderSlideWhiteOverlayColorProperty"/>
+        </actionGroup>
         <comment userInput="Overlay Color: Field is disabled by default due to Never Show default on Show Overlay." stepKey="AC11"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateOverlayColorDisabled">
             <argument name="property" value="PageBuilderSlideOverlayColorDefaultProperty"/>
@@ -933,6 +931,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
+            <!-- Skipped due to form key issues MC-3386 -->
+            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1192,10 +1192,10 @@
         </actionGroup>
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
         <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
         <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <!--See PageBuilder fullsize-->
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -1249,8 +1249,8 @@
         <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton"/>
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveButton"/>
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible"/>
-        <waitForElementVisible selector=".icon-pagebuilder-fullscreen-exit" stepKey="waitForExitPageBuilderFullScreen"/>
-        <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitPageBuilderFullScreen"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
         <waitForElementVisible selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="waitForSaveCategory"/>
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
@@ -1360,6 +1360,9 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoRowAboveSlider">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1419,6 +1422,9 @@
         <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
         <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
         <executeJS function="return Math.round({$sliderHeightSansPadding}/5)" stepKey="sliderHeightOffset"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderTop">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
@@ -1778,7 +1784,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupLayout">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragSliderIntoStage">
@@ -1817,7 +1823,7 @@
         </actionGroup>
         <!-- Add Slider to Stage -->
         <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupLayout">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragSliderOntoColumnAndExpectEditPanel">

@@ -26,6 +26,7 @@
     1. [Custom Toolbar]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -52,6 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## What's in this topic
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
@@ -69,12 +71,12 @@ To add Visual Select customization to a Page Builder content block:
 
 ## Override the select component with an element template {#element-template}
 
-We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, specifying an element template for this functionality, to implement the Visual Select option.
+We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, specifying an element template & component for this functionality, to implement the Visual Select option.
 
-In the provided template, specify `<elementTmpl>`:
+In the provided template, specify `<elementTmpl>` alongside updating the fields component to `Magento_PageBuilder/js/form/element/visual-select`:
 
 ``` xml
-<field name="text_align" sortOrder="10" formElement="select">
+<field name="text_align" sortOrder="10" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
     <settings>
         <dataType>text</dataType>
         <label translate="true">Alignment</label>
@@ -84,7 +86,7 @@ In the provided template, specify `<elementTmpl>`:
 
 ## Add Visual Select to the XML config {#xml-config}
 
-The available options for select, `value`, `title`, and `icon`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method. 
+The available options for select, `value`, `title`, `icon` and `noticeMessage`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method. 
 
 Options should return an array with the following format:
 
@@ -92,7 +94,8 @@ Options should return an array with the following format:
 [
     value => "value", //key used in the component dataSource
     title => "Title",
-    icon => "path/to/picture/on/server"
+    icon => "path/to/picture/on/server",
+    noticeMessage => "A message to be displayed when option is selected"
 ]
 ```
 
@@ -100,7 +103,7 @@ These new configuration values are used in the `align.html` template file stored
 
 Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your module's `di.xml` configuration file to define the options in a visual select field.
 
-``` xml
+```xml
 <virtualType name="AlignmentSource" type="Magento\PageBuilder\Model\Source\VisualSelect">
        <arguments>
            <argument name="optionsSize" xsi:type="string">small</argument>
@@ -127,6 +130,17 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
            </argument>
        </arguments>
    </virtualType>
+```
+
+### Display notice when option is selected
+For some options you may wish to display an additional notice when the user selects the item. You can do this by providing a `noticeMessage` within the items declaration.
+```xml
+<item name="3" xsi:type="array">
+   <item name="value" xsi:type="string">right</item>
+   <item name="title" xsi:type="string" translate="true">Right</item>
+   <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/right.svg</item>
+   <item name="noticeMessage" xsi:type="string" translate="true">Message to be displayed below field when selected.</item>
+</item>
 ```
 
 ## How to reuse vertical alignment between different content types {#vertical-alignment}
@@ -158,7 +172,7 @@ To apply vertical alignment to a content type using the Visual Select component,
 ```
 ### Add the Visual Select option in your module's form configuration file.
 ```xml
-<field name="justify_content" sortOrder="20" formElement="select">
+<field name="justify_content" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
     <argument name="data" xsi:type="array">
         <item name="config" xsi:type="array">
             <item name="default" xsi:type="string">flex-start</item>
@@ -183,38 +197,32 @@ To apply vertical alignment to a content type using the Visual Select component,
 ```html
 <elements>
     <element name="main" path=".">
-        <style_properties>
-            <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-            <property name="background_position" source="background_position"/>
-            <property name="background_size" source="background_size"/>
-            <property name="background_repeat" source="background_repeat"/>
-            <property name="background_attachment" source="background_attachment"/>
-            <property name="text_align" source="text_align"/>
-            <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-            <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <property name="justify_content" source="justify_content" persist="false"/>
-            <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-        </style_properties>
-        <attributes>
-            <attribute name="name" source="data-role"/>
-            <attribute name="appearance" source="data-appearance"/>
-            <attribute name="enable_parallax" source="data-enable-parallax"/>
-            <attribute name="parallax_speed" source="data-parallax-speed"/>
-            <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
-        </attributes>
+        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+        <style name="background_position" source="background_position"/>
+        <style name="background_size" source="background_size"/>
+        <style name="background_repeat" source="background_repeat"/>
+        <style name="background_attachment" source="background_attachment"/>
+        <style name="text_align" source="text_align"/>
+        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="justify_content" source="justify_content" persistence_mode="read"/>
+        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+        <attribute name="name" source="data-role"/>
+        <attribute name="appearance" source="data-appearance"/>
+        <attribute name="enable_parallax" source="data-enable-parallax"/>
+        <attribute name="parallax_speed" source="data-parallax-speed"/>
+        <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
         <css name="css_classes"/>
     </element>
     <element name="container">
-        <style_properties>
-            <property name="justify_content" source="justify_content"/>
-            <static_property source="display" value="flex"/>
-            <static_property source="flex_direction" value="column"/>
-        </style_properties>
+        <style name="justify_content" source="justify_content"/>
+        <static_style source="display" value="flex"/>
+        <static_style source="flex_direction" value="column"/>
     </element>
 </elements>
 ```

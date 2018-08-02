@@ -31,7 +31,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
             <argument name="group" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
@@ -123,7 +123,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
             <argument name="group" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
@@ -157,7 +157,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
             <argument name="group" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragNewsletterIntoStage">
@@ -491,7 +491,7 @@
         </actionGroup>
         <!-- Add Newsletter to Stage -->
         <comment userInput="Add Newsletter to Stage" stepKey="addNewsletterToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
             <argument name="group" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewsletterOntoColumn">
@@ -522,11 +522,6 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
-            <argument name="contentType" value="PageBuilderNewsletterContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-            <argument name="containerTargetIndex" value="2"/>
-        </actionGroup>
+        <waitForElementVisible time="30" selector="(//div[@data-role='column'])[2]//div[contains(@class,'pagebuilder-newsletter')]" stepKey="waitForContentTypeStorefront"/>
     </test>
 </tests>
