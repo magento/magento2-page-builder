@@ -7,7 +7,7 @@
 -->
 
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+          xsi:noNamespaceSchemaLocation="../../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="ButtonGroupOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
         <element name="appearance" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-appearance='{{arg2}}']" parameterized="true"/>
@@ -49,6 +49,8 @@
         <element name="emptyButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@class,'placeholder-text') and not(text())]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@contenteditable,'true')]" parameterized="true"/>
         <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}-1]" parameterized="true"/>
+        <element name="moveHandle" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a//span[@class='button-item-drag-handle']" parameterized="true"/>
+        <element name="moveHandleDisabled" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a//span[contains(@class,'button-item-drag-handle') and contains(@class,'disabled')]" parameterized="true"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
