@@ -24,7 +24,7 @@ declare var WysiwygSetupInterface: {
     new (id: string, config: object): WysiwygSetupInterface;
 };
 
-declare var WysiwygInstance: {
+declare var WysiwygInstanceInterface: {
     prototype: WysiwygInstanceInterface;
     new (id: string, config: object): WysiwygInstanceInterface
 };
