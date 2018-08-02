@@ -43,8 +43,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           (0, _jquery)(_this.element).tabs({
             create: function create(event, ui) {
-              _this.$activeTabPositioner = (0, _jquery)(_this.element).find('.active-tab-positioner');
-
               _this.setFocusedTab(activeTabIndex || 0);
             }
           });
