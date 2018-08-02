@@ -7,9 +7,10 @@
 -->
 
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+          xsi:noNamespaceSchemaLocation="../../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="ButtonGroupOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
         <element name="appearance" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="addNewButtonItemOption" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//a[contains(@title,'Add Button')]" parameterized="true"/>
         <element name="oldAddNewButtonItem" type="button" selector="//button[contains(text(),'Add Button')]"/>
@@ -29,6 +30,7 @@
     </section>
     <section name="ButtonGroupOnStorefront">
         <element name="base" type="button" selector="(//div[@data-role='buttons'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='buttons'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="appearance" type="button" selector="(//div[@data-role='buttons'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='buttons'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
