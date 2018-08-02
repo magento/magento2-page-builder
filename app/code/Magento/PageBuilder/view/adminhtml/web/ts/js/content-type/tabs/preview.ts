@@ -49,7 +49,6 @@ export default class Preview extends PreviewCollection {
             }
             $(this.element).tabs({
                 create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.$activeTabPositioner = $(this.element).find('.active-tab-positioner');
                     this.setFocusedTab(activeTabIndex || 0);
                 },
             });
