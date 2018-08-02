@@ -184,6 +184,16 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="seeOptionsRemove"/>
         <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
     </actionGroup>
+    <actionGroup name="validateOnHoverNoOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="onMouseOverStage"/>
+        <waitForPageLoad stepKey="waitForMouseOver"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptionsMenu" />
+        <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
     <actionGroup name="hideContentType">
         <arguments>
             <argument name="section"/>
