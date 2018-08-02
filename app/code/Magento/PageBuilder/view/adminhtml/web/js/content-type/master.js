@@ -69,10 +69,10 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
         }
       } else {
         var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-        var config = appearanceConfiguration.data_mapping.elements[element];
+        var config = appearanceConfiguration.elements[element];
 
         if (config.css && config.css.var !== undefined && config.css.var in data) {
-          data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+          data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
           css = data[config.css.var].toString();
         }
       }
@@ -105,8 +105,8 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var config = appearanceConfiguration.elements;
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
       var result = {};
 
       if (config[element].style.length) {
@@ -135,8 +135,8 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var config = appearanceConfiguration.elements;
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
       var result = {};
 
       if (config[element].attributes.length) {
@@ -156,7 +156,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
     _proto.getHtml = function getHtml(element) {
       var data = this.parent.dataStore.get();
-      var config = (0, _appearanceConfig)(this.parent.config.name, data.appearance).data_mapping.elements[element];
+      var config = (0, _appearanceConfig)(this.parent.config.name, data.appearance).elements[element];
       var result = "";
 
       if (undefined !== config.html.var) {
@@ -182,8 +182,8 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var config = appearanceConfiguration.elements;
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
       var result = {};
 
       if (undefined !== config[element].tag.var) {

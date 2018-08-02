@@ -26,6 +26,7 @@
     1. [Custom Toolbar]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -52,6 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## What's in this topic
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
@@ -195,38 +197,32 @@ To apply vertical alignment to a content type using the Visual Select component,
 ```html
 <elements>
     <element name="main" path=".">
-        <style_properties>
-            <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-            <property name="background_position" source="background_position"/>
-            <property name="background_size" source="background_size"/>
-            <property name="background_repeat" source="background_repeat"/>
-            <property name="background_attachment" source="background_attachment"/>
-            <property name="text_align" source="text_align"/>
-            <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-            <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-            <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <property name="justify_content" source="justify_content" persist="false"/>
-            <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
-            <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-        </style_properties>
-        <attributes>
-            <attribute name="name" source="data-role"/>
-            <attribute name="appearance" source="data-appearance"/>
-            <attribute name="enable_parallax" source="data-enable-parallax"/>
-            <attribute name="parallax_speed" source="data-parallax-speed"/>
-            <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
-        </attributes>
+        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+        <style name="background_position" source="background_position"/>
+        <style name="background_size" source="background_size"/>
+        <style name="background_repeat" source="background_repeat"/>
+        <style name="background_attachment" source="background_attachment"/>
+        <style name="text_align" source="text_align"/>
+        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="justify_content" source="justify_content" persistence_mode="read"/>
+        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
+        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
+        <attribute name="name" source="data-role"/>
+        <attribute name="appearance" source="data-appearance"/>
+        <attribute name="enable_parallax" source="data-enable-parallax"/>
+        <attribute name="parallax_speed" source="data-parallax-speed"/>
+        <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
         <css name="css_classes"/>
     </element>
     <element name="container">
-        <style_properties>
-            <property name="justify_content" source="justify_content"/>
-            <static_property source="display" value="flex"/>
-            <static_property source="flex_direction" value="column"/>
-        </style_properties>
+        <style name="justify_content" source="justify_content"/>
+        <static_style source="display" value="flex"/>
+        <static_style source="flex_direction" value="column"/>
     </element>
 </elements>
 ```

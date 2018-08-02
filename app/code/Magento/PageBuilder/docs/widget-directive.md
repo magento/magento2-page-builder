@@ -26,6 +26,7 @@
     1. [Custom Toolbar]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -52,7 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
-
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## What's in this topic
 This topic describes how to store a component's master format as a `widget-directive`.
@@ -108,15 +109,13 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
 To add the extended converter to your content type declaration XML file, 'Magento_PageBuilder/view/base/pagebuilder/content_type/<my-type>.xml':
 
 ``` xml
-<data_mapping>
-    <converters>
-        <converter component="Magento_PageBuilder/js/content-type/<my-type>/mass-converter/widget-directive" name="widget_directive">
-            <config>
-                <item name="html_variable" value="html"/>
-            </config>
-        </converter>
-    </converters>
-</data_mapping>
+<converters>
+    <converter component="Magento_PageBuilder/js/content-type/<my-type>/mass-converter/widget-directive" name="widget_directive">
+        <config>
+            <item name="html_variable" value="html"/>
+        </config>
+    </converter>
+</converters>
 ```
 The preceding code samples utilize example file paths. Substitute the file path with values specific to your content type and component.
 

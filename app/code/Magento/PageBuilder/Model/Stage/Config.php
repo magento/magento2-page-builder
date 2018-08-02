@@ -169,27 +169,21 @@ class Config
             'icon' => $contentType['icon'],
             'form' => $contentType['form'],
             'contentType' => '',
-            'group' => (isset($contentType['group'])
-                ? $contentType['group'] : 'general'),
+            'group' => $contentType['group'] ?? 'general',
             'fields' => $this->uiComponentConfig->getFields($contentType['form']),
-            'preview_template' => (isset($contentType['preview_template'])
-                ? $contentType['preview_template'] : ''),
-            'render_template' => (isset($contentType['render_template'])
-                ? $contentType['render_template'] : ''),
+            'preview_template' => $contentType['preview_template'] ?? '',
+            'render_template' => $contentType['render_template'] ?? '',
             'component' => $contentType['component'],
-            'preview_component' => (isset($contentType['preview_component'])
-                ? $contentType['preview_component']
-                : self::DEFAULT_PREVIEW_COMPONENT),
-            'master_component' => (isset($contentType['master_component'])
-                ? $contentType['master_component']
-                : self::DEFAULT_MASTER_COMPONENT),
-            'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
-            'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
-            'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
+            'preview_component' => $contentType['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT,
+            'master_component' => $contentType['master_component'] ?? self::DEFAULT_MASTER_COMPONENT,
+            'allowed_parents' => $contentType['allowed_parents'] ?? [],
+            'readers' => $contentType['readers'] ?? [],
+            'appearances' => $contentType['appearances'] ?? [],
             'additional_data' => isset($contentType['additional_data'])
                 ? $this->additionalDataParser->toArray($contentType['additional_data'])
                 : [],
-            'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
+            'elements' => $contentType['elements'] ?? [],
+            'converters' => $contentType['converters'] ?? [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];
     }

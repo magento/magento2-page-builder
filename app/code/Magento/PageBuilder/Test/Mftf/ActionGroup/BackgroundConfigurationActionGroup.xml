@@ -63,6 +63,24 @@
         <waitForElementVisible selector="{{section.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{section.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
+    <actionGroup name="validateMobileBackgroundAttributes">
+        <arguments>
+            <argument name="section"/>
+            <argument name="mobileBackgroundColor"/>
+            <argument name="mobileBackgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
+            <argument name="mobileBackgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
+            <argument name="mobileBackgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
+            <argument name="mobileBackgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateMobileBackgroundAttributes" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundColor(index, mobileBackgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundPosition(index, mobileBackgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundSize(index, mobileBackgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundRepeat(index, mobileBackgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{section.mobileBackgroundAttachment(index, mobileBackgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
     <actionGroup name="validateBackgroundImage">
         <arguments>
             <argument name="section"/>
