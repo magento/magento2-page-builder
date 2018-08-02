@@ -78,6 +78,7 @@ export default class Preview extends PreviewCollection {
     private groupPositionCache: GroupPositionCache;
     private resizeUtils: Resize;
     private gridSizeHistory: Map<number, number[]> = new Map();
+    private interactionLevel: number = 0;
 
     /**
      *
@@ -313,6 +314,7 @@ export default class Preview extends PreviewCollection {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
+            ++this.interactionLevel;
             events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
         });
     }
@@ -509,7 +511,9 @@ export default class Preview extends PreviewCollection {
      */
     private endAllInteractions(): void {
         if (this.resizing() === true) {
-            events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
+            for (;this.interactionLevel > 0;this.interactionLevel--) {
+                events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
+            }
         }
 
         this.resizing(false);
