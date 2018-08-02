@@ -10,12 +10,15 @@ export default interface OptionInterface {
     code: string;
     icon?: KnockoutObservable<string>;
     title?: KnockoutObservable<string>;
-    classes?: KnockoutObservable<{ [key: string]: boolean }>;
+    classes?: KnockoutObservable<{ [key: string]: boolean | KnockoutObservable<boolean> }>;
     sort: number;
     optionTemplate?: string;
+    disabled?: KnockoutObservable<boolean>;
+
+    setAction?(action: () => void): void;
 
     /**
      * Bind events for the option menu item
      */
-    bindEvents: () => void;
+    bindEvents(): void;
 }

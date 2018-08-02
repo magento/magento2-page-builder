@@ -49,9 +49,9 @@ export default class ContentTypeMenu {
     /**
      * Remove an option
      *
-     * @param code
+     * @param {string} code
      */
-    public removeOption(code: string) {
+    public removeOption(code: string): void {
         this.options(this.options().filter((option: OptionInterface) => {
             return (option.code !== code);
         }));
@@ -62,9 +62,9 @@ export default class ContentTypeMenu {
      * Get an option from the options array
      *
      * @param {string} code
-     * @returns {(OptionInterface | undefined) & (OptionInterface[] | undefined)}
+     * @returns {OptionInterface}
      */
-    public getOption(code: string) {
+    public getOption(code: string): OptionInterface {
         return this.options().find((option: OptionInterface) => {
             return (option.code === code);
         });

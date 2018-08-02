@@ -51,7 +51,7 @@ define(["knockout"], function (_knockout) {
     /**
      * Remove an option
      *
-     * @param code
+     * @param {string} code
      */
 
 
@@ -65,7 +65,7 @@ define(["knockout"], function (_knockout) {
      * Get an option from the options array
      *
      * @param {string} code
-     * @returns {(OptionInterface | undefined) & (OptionInterface[] | undefined)}
+     * @returns {OptionInterface}
      */
 
 

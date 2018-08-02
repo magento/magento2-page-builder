@@ -4,8 +4,8 @@
  */
 
 import $t from "mage/translate";
-import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import events from "Magento_PageBuilder/js/events";
+import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params";
 import BasePreview from "../preview";
 
 /**
@@ -15,31 +15,23 @@ export default class Preview extends BasePreview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
+     * Bind events
      */
-    public retrieveOptions(): OptionInterface[] {
-        const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
+    public bindEvents(): void {
+        super.bindEvents();
+
+        events.on(`${this.config.name}:mountAfter`, (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.parent.id) {
+                // Disable the remove option when there is only a single button
+                const removeOption = this.getOptions().getOption("remove");
+                if (this.parent.parent.children().length < 2) {
+                    removeOption.disabled(true);
+                }
+                this.parent.parent.children.subscribe((children) => {
+                    removeOption.disabled((children.length < 2));
+                });
+            }
         });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length < 2) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
-        }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
     }
 
     /**

@@ -10,6 +10,7 @@ import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
 import _ from "underscore";
+import ContentTypeCollection from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
@@ -72,6 +73,12 @@ export default class Preview extends PreviewCollection {
         events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 this.buildJarallax();
+
+                // Disable the remove option when there is only a single row
+                const removeOption = this.getOptions().getOption("remove");
+                this.parent.parent.children.subscribe((children) => {
+                    removeOption.disabled((children.length < 2));
+                });
             }
         });
         events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
@@ -79,34 +86,6 @@ export default class Preview extends PreviewCollection {
                 this.buildJarallax();
             }
         });
-    }
-
-    /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
-     */
-    public retrieveOptions(): OptionInterface[] {
-        const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
-        });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length < 2) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
-        }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
     }
 
     /**

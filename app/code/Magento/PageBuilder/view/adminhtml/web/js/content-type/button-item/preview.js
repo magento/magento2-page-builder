@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _option, _preview) {
+define(["mage/translate", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/events"], function (_translate, _preview, _events) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -23,29 +23,27 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
     var _proto = Preview.prototype;
 
     /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
+     * Bind events
      */
-    _proto.retrieveOptions = function retrieveOptions() {
-      var options = _BasePreview.prototype.retrieveOptions.call(this);
+    _proto.bindEvents = function bindEvents() {
+      var _this2 = this;
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
+      _BasePreview.prototype.bindEvents.call(this);
+
+      _events.on(this.config.name + ":mountAfter", function (args) {
+        if (args.id === _this2.parent.id) {
+          // Disable the remove option when there is only a single button
+          var removeOption = _this2.getOptions().getOption("remove");
+
+          if (_this2.parent.parent.children().length < 2) {
+            removeOption.disabled(true);
+          }
+
+          _this2.parent.parent.children.subscribe(function (children) {
+            removeOption.disabled(children.length < 2);
+          });
+        }
       });
-      var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
-
-      if (this.parent.parent.children().length < 2) {
-        removeFn = function removeFn() {
-          return;
-        };
-
-        removeClasses.push("disabled");
-      }
-
-      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
-      return newOptions;
     };
     /**
      * Focus out of the element
