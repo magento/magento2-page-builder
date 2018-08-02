@@ -16,6 +16,7 @@
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//span[.='{{arg2}}']" parameterized="true"/>
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-video')])[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//iframe[@src='{{arg2}}']" parameterized="true"/>
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
@@ -37,6 +38,7 @@
         <element name="empty" type="text" selector="//div[@data-role='video'][count(iframe)=0]"/>
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[@data-role='video'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="iframe" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
