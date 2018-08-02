@@ -53,7 +53,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/event
         window.getSelection().empty();
         (0, _jquery)("#" + elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active"); // If there isn't enough room for a left-aligned toolbar, right align it
 
-        if ((0, _jquery)(window).width() < $element.offset().left + parseInt(minToolbarWidth)) {
+        if ((0, _jquery)(window).width() < $element.offset().left + parseInt(minToolbarWidth, 10)) {
           $element.addClass("_right-aligned-toolbar");
         } else {
           $element.removeClass("_right-aligned-toolbar");
