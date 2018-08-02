@@ -63,7 +63,6 @@
                 </xs:complexType>
             </xs:element>
             <xs:element type="data_mapping" name="data_mapping" minOccurs="0"/>
-            <xs:element type="readers" name="readers" minOccurs="0" maxOccurs="1"/>
             <xs:element type="xs:string" name="form" minOccurs="0" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute type="xs:string" name="name" use="required"/>
@@ -91,15 +90,6 @@
     <xs:complexType name="child">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="policy" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="readers">
-        <xs:sequence>
-            <xs:element type="reader" name="reader" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="reader">
-        <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="component" use="optional"/>
     </xs:complexType>
     <xs:complexType name="data_mapping">
         <xs:sequence>

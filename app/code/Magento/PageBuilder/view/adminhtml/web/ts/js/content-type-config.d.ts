@@ -30,7 +30,7 @@ export default interface ContentTypeConfigInterface {
 }
 
 export interface ContentTypeConfigAppearanceInterface {
-    readers: string[];
+    reader: string;
     data_mapping: DataMappingInterface;
     preview_template: string;
     render_template: string;

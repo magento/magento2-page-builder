@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/read/composite", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives"], function (_translate, _events, _alert, _, _config, _contentTypeFactory, _composite, _validator, _directives) {
+define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives"], function (_translate, _events, _loader, _alert, _, _config, _contentTypeFactory, _appearanceConfig, _validator, _directives) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -85,10 +85,32 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
       return "";
     });
 
-    var attributeReaderComposite = new _composite();
-    var readPromise = attributeReaderComposite.read(element);
-    return readPromise.then(function (data) {
-      return _.extend(result, data);
+    return new Promise(function (resolve, reject) {
+      var role = element.dataset.role;
+
+      if (!_config.getConfig("content_types").hasOwnProperty(role)) {
+        resolve(result);
+      } else {
+        var readerComponents = (0, _appearanceConfig)(role, element.dataset.appearance).reader;
+
+        try {
+          (0, _loader)([readerComponents], function () {
+            for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
+              readers[_key] = arguments[_key];
+            }
+
+            var Reader = readers.pop();
+            var reader = new Reader();
+            reader.read(element).then(function (readerData) {
+              _.extend(result, readerData);
+
+              resolve(result);
+            });
+          });
+        } catch (e) {
+          reject(e);
+        }
+      }
     });
   }
   /**

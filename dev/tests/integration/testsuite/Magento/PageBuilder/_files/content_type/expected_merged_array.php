@@ -41,7 +41,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -237,7 +236,6 @@ return [
                     'data3' => 'value3',
                     'preview_template' => 'Path/to/preview/custom/template',
                     'render_template' => 'Path/to/render/custom/template',
-                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'first_element' => [
@@ -517,7 +515,6 @@ return [
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -567,21 +564,18 @@ return [
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'default' => 'false',
                     'reader' => 'Path/to/reader'
                 ],
                 'appearance3' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'default' => 'false',
                     'reader' => null
                 ],
                 'appearance4' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -646,7 +640,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [

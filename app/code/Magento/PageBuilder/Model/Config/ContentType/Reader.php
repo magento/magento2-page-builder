@@ -39,7 +39,6 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/css/filter/class' => 'source',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/converters/converter' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/converters/converter/config/item' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/readers/reader' => 'name'
     ];
 
     /**

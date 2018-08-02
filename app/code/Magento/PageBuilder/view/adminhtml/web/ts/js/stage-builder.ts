@@ -5,6 +5,7 @@
 
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import loadReader from "Magento_PageBuilder/js/utils/loader";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
@@ -12,7 +13,7 @@ import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
-import AttributeReaderComposite from "./master-format/read/composite";
+import appearanceConfig from "./content-type/appearance-config";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
@@ -104,10 +105,26 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
     const result = _.mapObject(config.fields, () => {
         return "";
     });
-    const attributeReaderComposite = new AttributeReaderComposite();
-    const readPromise = attributeReaderComposite.read(element);
-    return readPromise.then((data) => {
-        return _.extend(result, data);
+
+    return new Promise((resolve: (result: object) => void, reject: (e: string) => void) => {
+        const role = element.dataset.role;
+        if (!Config.getConfig("content_types").hasOwnProperty(role)) {
+            resolve(result);
+        } else {
+            const readerComponents = appearanceConfig(role, element.dataset.appearance).reader;
+            try {
+                loadReader([readerComponents], (...readers: any[]) => {
+                    const Reader = readers.pop();
+                    const reader = new Reader();
+                    reader.read(element).then((readerData: any) => {
+                        _.extend(result, readerData);
+                        resolve(result);
+                    });
+                });
+            } catch (e) {
+                reject(e);
+            }
+        }
     });
 }
 

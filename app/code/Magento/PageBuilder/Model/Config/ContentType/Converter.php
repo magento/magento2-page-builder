@@ -124,12 +124,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $appearanceData,
             $this->convertAppearanceProperties($appearanceNode)
         );
-        $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
-        if ($readerNode && $readerNode->nodeValue) {
-            $appearanceData['readers'] = [$readerNode->nodeValue];
-        } else {
-            $appearanceData['readers'] = $this->convertAppearanceReaders($appearanceNode);
-        }
         $dataMappingNode = $appearanceNode->getElementsByTagName('data_mapping')->item(0);
         if ($dataMappingNode) {
             $appearanceData['data_mapping'] = $this->convertDataMapping($dataMappingNode);
@@ -159,24 +153,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $data[$dataName] = $dataNode->nodeValue;
         }
         return $data;
-    }
-
-    /**
-     * Convert appearance readers
-     *
-     * @param \DOMElement $elementNode
-     * @return array
-     */
-    private function convertAppearanceReaders(\DOMElement $elementNode): array
-    {
-        $readersNode = $elementNode->getElementsByTagName('readers')->item(0);
-        $readers = [];
-        if ($readersNode) {
-            foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
-                $readers[] = $this->getAttributeValue($readerNode, 'component');
-            }
-        }
-        return $readers;
     }
 
     /**
