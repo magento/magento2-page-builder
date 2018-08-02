@@ -10,6 +10,7 @@
           xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="base" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
         <element name="placeholderText" type="text" selector="//div[text()='{{arg1}}']" parameterized="true"/>
@@ -71,6 +72,7 @@
     </section>
     <section name="BannerOnBackend">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[contains(@class, 'pagebuilder-banner')])[{{arg1}}][contains(@style, 'border-style: {{arg2}};') and contains(@style, 'border-radius: {{arg3}}px;') and contains(@style, 'margin: {{arg4}}px;')]//div[contains(@class, 'pagebuilder-banner-wrapper') and contains(@style, 'background-size: {{arg6}};') and contains(@style, 'background-repeat: {{arg7}};') and contains(@style, 'background-attachment: {{arg8}};')]//div[contains(@class, 'pagebuilder-poster-overlay')][contains(@style,'padding: {{arg10}}px;')]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
