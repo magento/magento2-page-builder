@@ -26,33 +26,46 @@ define(["knockout"], function (_knockout) {
       this.title = _knockout.observable("");
       this.action = void 0;
       this.optionTemplate = void 0;
+      this.disabled = _knockout.observable(false);
       this.parent = parent;
       this.code = code;
       this.icon(icon);
       this.title(title);
-
-      if (action) {
-        this.action = action;
-      } else {
-        this.action = function () {
-          return;
-        };
-      }
-
       var koClasses = {};
       classes.forEach(function (cssClass) {
         koClasses[cssClass] = true;
       });
+      koClasses["disabled"] = this.disabled;
       this.classes(koClasses);
       this.sort = sort;
       this.optionTemplate = optionTemplate;
+      this.setAction(action);
     }
 
     var _proto = Option.prototype;
 
     /**
+     * Set the action for the options menu
+     *
+     * @param {() => {}} action
+     */
+    _proto.setAction = function setAction(action) {
+      var _this = this,
+          _arguments = arguments;
+
+      action = action ? action : function () {};
+
+      this.action = function () {
+        if (!_this.disabled()) {
+          action.call(_this.parent, _arguments);
+        }
+      };
+    };
+    /**
      * Bind events for the option menu item
      */
+
+
     _proto.bindEvents = function bindEvents() {// Bind any events required by the option menu item
     };
 

@@ -164,10 +164,12 @@ export default class Resize {
         let searchArray: Array<ContentTypeCollectionInterface<ColumnPreview>>;
         switch (direction) {
             case "right":
-                searchArray = parentChildren.slice(currentIndex + 1);
+                searchArray =
+                    parentChildren.slice(currentIndex + 1) as Array<ContentTypeCollectionInterface<ColumnPreview>>;
                 break;
             case "left":
-                searchArray = parentChildren.slice(0).reverse().slice(parentChildren.length - currentIndex);
+                searchArray = parentChildren.slice(0).reverse().slice(parentChildren.length - currentIndex) as
+                    Array<ContentTypeCollectionInterface<ColumnPreview>>;
                 break;
         }
         return searchArray.find((groupColumn: ContentTypeCollectionInterface<ColumnPreview>) => {
@@ -388,7 +390,8 @@ export function getAdjacentColumn(
 ): ContentTypeCollectionInterface<ColumnPreview> {
     const currentIndex = getColumnIndexInGroup(column);
     if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-        return column.parent.children()[currentIndex + parseInt(direction, 10)];
+        return column.parent.children()[currentIndex + parseInt(direction, 10)] as
+            ContentTypeCollectionInterface<ColumnPreview>;
     }
     return null;
 }

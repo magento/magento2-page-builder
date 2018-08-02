@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _jarallax, _ResizeObserver, _underscore, _option, _previewCollection) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _events, _jarallax, _ResizeObserver, _underscore, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -53,7 +53,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("row:mountAfter", function (args) {
         if (args.id === _this.parent.id) {
-          _this.buildJarallax();
+          _this.buildJarallax(); // Disable the remove option when there is only a single row
+
+
+          var removeOption = _this.getOptions().getOption("remove");
+
+          _this.parent.parent.children.subscribe(function (children) {
+            removeOption.disabled(children.length < 2);
+          });
         }
       });
 
@@ -66,40 +73,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _this;
     }
     /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
-     */
-
-
-    var _proto = Preview.prototype;
-
-    _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
-
-      var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
-      });
-      var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
-
-      if (this.parent.parent.children().length < 2) {
-        removeFn = function removeFn() {
-          return;
-        };
-
-        removeClasses.push("disabled");
-      }
-
-      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
-      return newOptions;
-    };
-    /**
      * Init the parallax element
      *
      * @param {Element} element
      */
 
+
+    var _proto = Preview.prototype;
 
     _proto.initParallax = function initParallax(element) {
       var _this2 = this;

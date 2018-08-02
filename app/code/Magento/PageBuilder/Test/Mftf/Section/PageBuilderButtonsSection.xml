@@ -46,10 +46,11 @@
     <section name="ButtonItemOnStage">
         <element name="all" type="button" selector=".pagebuilder-button-item"/>
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@class,'placeholder-text') and not(text())]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@contenteditable,'true')]" parameterized="true"/>
         <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}-1]" parameterized="true"/>
-        <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
+        <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <!-- Content Configuration -->
@@ -74,6 +75,7 @@
     <section name="ButtonItemOnStorefront">
         <element name="all" type="button" selector="[data-role='button-item']"/>
         <element name="base" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[not(text())]" parameterized="true"/>
         <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-role=\'button-item\']')[{{arg1}}-1]" parameterized="true"/>
         <!-- Content Configuration -->

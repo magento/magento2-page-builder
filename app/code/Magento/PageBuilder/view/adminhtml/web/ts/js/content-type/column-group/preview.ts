@@ -779,7 +779,8 @@ export default class Preview extends PreviewCollection {
             if (columnInstance.parent === this.parent) {
                 const currentColumn = dragColumn.preview.element;
                 const currentColumnRight = currentColumn.position().left + currentColumn.width();
-                const lastColInGroup = this.parent.children()[this.parent.children().length - 1].preview.element;
+                const lastColInGroup = (this.parent.children()[this.parent.children().length - 1]
+                    .preview as ColumnPreview).element;
                 const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
 
                 this.movePosition = this.dropPositions.find((position) => {
@@ -987,12 +988,13 @@ export default class Preview extends PreviewCollection {
             // As the original column has been removed from the array, check the new index for a column
             if ((params.index) <= this.parent.children().length
                 && typeof this.parent.children()[params.index] !== "undefined") {
-                columnToModify = this.parent.children()[params.index];
+                columnToModify = this.parent.children()[params.index] as ContentTypeCollectionInterface<ColumnPreview>;
             }
             if (!columnToModify && (params.index - i) >= 0 &&
                 typeof this.parent.children()[params.index - i] !== "undefined"
             ) {
-                columnToModify = this.parent.children()[params.index - i];
+                columnToModify =
+                    this.parent.children()[params.index - i] as ContentTypeCollectionInterface<ColumnPreview>;
             }
             if (columnToModify) {
                 updateColumnWidth(

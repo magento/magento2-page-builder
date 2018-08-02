@@ -8,7 +8,7 @@ import Preview from "../content-type/preview";
 import OptionInterface from "./option.d";
 
 export default class Option implements OptionInterface {
-    public classes: KnockoutObservable<{[key: string]: boolean}> = ko.observable({});
+    public classes: KnockoutObservable<{[key: string]: boolean | KnockoutObservable<boolean>}> = ko.observable({});
     public code: string;
     public icon: KnockoutObservable<string> = ko.observable("");
     public parent: Preview;
@@ -16,6 +16,7 @@ export default class Option implements OptionInterface {
     public title: KnockoutObservable<string> = ko.observable("");
     public action: () => void;
     public optionTemplate: string;
+    public disabled: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * @param {Preview} parent
@@ -41,24 +42,34 @@ export default class Option implements OptionInterface {
         this.code = code;
         this.icon(icon);
         this.title(title);
-        if (action) {
-            this.action = action;
-        } else {
-            this.action = () => {
-                return;
-            };
-        }
-        const koClasses: {[key: string]: boolean} = {};
+        const koClasses: {[key: string]: boolean | KnockoutObservable<boolean>} = {};
         classes.forEach((cssClass) => {
             koClasses[cssClass] = true;
         });
+        koClasses.disabled = this.disabled;
         this.classes(koClasses);
         this.sort = sort;
         this.optionTemplate = optionTemplate;
+
+        this.setAction(action);
     }
 
     get template(): string {
         return this.optionTemplate || null;
+    }
+
+    /**
+     * Set the action for the options menu
+     *
+     * @param {() => {}} action
+     */
+    public setAction(action: () => void): void {
+        action = action ? action : () => {};
+        this.action = () => {
+            if (!this.disabled()) {
+                action.call(this.parent, arguments);
+            }
+        };
     }
 
     /**
