@@ -17,7 +17,7 @@
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1416"/>
             <testCaseId value="MC-3469"/>
-            <group value="kieu"/>
+            <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-column-content"/>
         </annotations>
@@ -29,12 +29,6 @@
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{ImageUpload3.path}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="ImageUpload3"/>
-            </actionGroup>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
             <actionGroup ref="logout" stepKey="logout"/>
@@ -44,6 +38,9 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextToColumn">
             <argument name="contentType" value="PageBuilderTextContentType"/>
