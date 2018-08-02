@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="SaveEmptyTextContentType">
+    <test name="TextSaveEmptyTextContentType">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -48,7 +48,7 @@
         <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
         <dontSeeElement selector="{{TextOnStorefront.empty('1')}}" stepKey="dontSeeEmptyTextContentTypeOnStorefront"/>
     </test>
-    <test name="InlineTextEditing">
+    <test name="TextInlineTextEditing">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -101,7 +101,7 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStorefront"/>
     </test>
-    <test name="InlineImageEditing">
+    <test name="TextInlineImageEditing">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -154,7 +154,7 @@
         <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup" />
         <waitForElementVisible selector="{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage1"/>
         <!--Verify inputed image on slideout-->
-        <comment userInput="Verify inputed variable on slideout" stepKey="commentVerifyVariableOnSlideout"/>
+        <comment userInput="Verify inputed image on slideout" stepKey="commentVerifyImageOnSlideout"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -173,7 +173,7 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForElementVisible selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
     </test>
-    <test name="InlineVariableEditing">
+    <test name="TextInlineVariableEditing">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -236,7 +236,7 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForElementVisible selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
     </test>
-    <test name="InlineWidgetEditing">
+    <test name="TextInlineWidgetEditing">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -303,7 +303,7 @@
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
         <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
     </test>
-    <test name="VerifyTinyMCE4ToolbarOnPageBuilderStage">
+    <test name="TextVerifyTinyMCE4ToolbarOnPageBuilderStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
@@ -375,6 +375,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify FontStyle on stage-->
         <comment userInput="Verify FontStyle on stage" stepKey="commentVerifyFontStyleOnStage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextContentTypeDefault.value)}}" stepKey="seeTextInImportantStyleOnPreview2" />
         <!--Verify FontStyle on Storeview-->
         <comment userInput="Verify FontStyle on Storeview" stepKey="commentVerifyFontStyleOnStoreview"/>
