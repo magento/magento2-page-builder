@@ -15,7 +15,6 @@ interface WysiwygSetupInterface {
 
 interface WysiwygInstanceInterface {
     eventBus: EventBusInterface,
-    EVENT: any,
     getContent(): string,
     setContent(content: string): void
 }
@@ -25,7 +24,7 @@ declare var WysiwygSetupInterface: {
     new (id: string, config: object): WysiwygSetupInterface;
 };
 
-declare var WysiwygInstance: {
+declare var WysiwygInstanceInterface: {
     prototype: WysiwygInstanceInterface;
     new (id: string, config: object): WysiwygInstanceInterface
 };
