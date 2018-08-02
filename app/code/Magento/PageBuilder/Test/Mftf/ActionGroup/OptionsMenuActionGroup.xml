@@ -201,7 +201,7 @@
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role)}}" stepKey="hideContentType" />
         <waitForPageLoad stepKey="waitForDisable" />
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role)}}" stepKey="waitForShowOptionVisible" />
-        <waitForElementVisible selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
     </actionGroup>
     <actionGroup name="showContentType">
         <arguments>
@@ -220,6 +220,6 @@
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role)}}" stepKey="showContentType" />
         <waitForPageLoad stepKey="waitForDisable" />
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role)}}" stepKey="waitForHideOptionVisible" />
-        <waitForElementNotVisible selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
+        <dontSeeElement selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
     </actionGroup>
 </actionGroups>
