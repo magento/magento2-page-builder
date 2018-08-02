@@ -13,7 +13,7 @@ import MassConverterPool from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {fromSnakeToCamelCase} from "../../utils/string";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
 
 /**
  * @api
@@ -28,7 +28,7 @@ export default class Configurable implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<any> {
         const role = element.getAttribute("data-role");
-        const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
+        const config = appearanceConfig(role, element.getAttribute("data-appearance"));
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
             converterPoolFactory(role),
@@ -102,12 +102,12 @@ export default class Configurable implements ReadInterface {
     ) {
         const result = {};
         for (const attributeConfig of config) {
-            if (true === !!attributeConfig.virtual) {
+            if ("write" === attributeConfig.persistence_mode) {
                 continue;
             }
-            let value = !!attributeConfig.complex
-                ? propertyReaderPool.get(attributeConfig.reader).read(element)
-                : element.getAttribute(attributeConfig.name);
+            let value = !!attributeConfig.static
+                ? attributeConfig.value
+                : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
             if (converterPool.get(attributeConfig.converter)) {
                 value = converterPool.get(attributeConfig.converter).fromDom(value);
             }
@@ -138,12 +138,12 @@ export default class Configurable implements ReadInterface {
     ) {
         const result: object = _.extend({}, data);
         for (const propertyConfig of config) {
-            if (true === !!propertyConfig.virtual) {
+            if ("write" === propertyConfig.persistence_mode) {
                 continue;
             }
-            let value = !!propertyConfig.complex
-                ? propertyReaderPool.get(propertyConfig.reader).read(element)
-                : element.style[fromSnakeToCamelCase(propertyConfig.name)];
+            let value = !!propertyConfig.static
+                ? propertyConfig.value
+                : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
             if (converterPool.get(propertyConfig.converter)) {
                 value = converterPool.get(propertyConfig.converter).fromDom(value);
             }

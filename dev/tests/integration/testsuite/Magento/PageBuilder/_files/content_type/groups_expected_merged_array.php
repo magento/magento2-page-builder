@@ -25,6 +25,6 @@ return [
             'sortOrder' => '2',
             'name' => 'group3',
             'translate' => 'label'
-        ],
+        ]
     ]
 ];
