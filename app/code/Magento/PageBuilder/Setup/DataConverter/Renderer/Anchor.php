@@ -46,8 +46,11 @@ class Anchor implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'anchor',
-            'data-appearance' => 'default',
+            'data-role' => 'html',
+            'data-appearance' => 'default'
+        ];
+
+        $anchorElementAttributes = [
             'class' => $eavData['css_classes'] ?? '',
             'id' => $eavData['anchor_id']
         ];
@@ -55,7 +58,7 @@ class Anchor implements RendererInterface
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] = $style;
+                $anchorElementAttributes['style'] = $style;
             }
         }
 
@@ -63,7 +66,11 @@ class Anchor implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></div>';
+        $rootElementHtml .= '><div';
+        foreach ($anchorElementAttributes as $attributeName => $attributeValue) {
+            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        $rootElementHtml .= '></div></div>';
 
         return $rootElementHtml;
     }
