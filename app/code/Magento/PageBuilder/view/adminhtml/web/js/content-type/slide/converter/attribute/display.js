@@ -1,15 +1,13 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/converter/attribute/display"], function (_display) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+define([], function () {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var Display =
   /*#__PURE__*/
-  function (_BaseDisplay) {
-    _inheritsLoose(Display, _BaseDisplay);
-
-    function Display() {
-      return _BaseDisplay.apply(this, arguments) || this;
-    }
+  function () {
+    function Display() {}
 
     var _proto = Display.prototype;
 
@@ -27,7 +25,7 @@ define(["Magento_PageBuilder/js/converter/attribute/display"], function (_displa
      *
      * @param name string
      * @param data Object
-     * @returns {string | void}
+     * @returns {string}
      */
 
 
@@ -36,11 +34,11 @@ define(["Magento_PageBuilder/js/converter/attribute/display"], function (_displa
         return "false";
       }
 
-      return _BaseDisplay.prototype.toDom.call(this, name, data);
+      return "true";
     };
 
     return Display;
-  }(_display);
+  }();
 
   return Display;
 });

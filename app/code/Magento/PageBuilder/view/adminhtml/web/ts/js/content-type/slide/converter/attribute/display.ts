@@ -3,11 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import BaseDisplay from "../../../../converter/attribute/display";
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
 
-export default class Display extends BaseDisplay implements ConverterInterface {
+export default class Display implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -23,9 +22,9 @@ export default class Display extends BaseDisplay implements ConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | void}
+     * @returns {string}
      */
-    public toDom(name: string, data: DataObject): string | void {
+    public toDom(name: string, data: DataObject): string {
         if (
             data.background_color === ""
             && data.background_image.length === 0
@@ -36,6 +35,6 @@ export default class Display extends BaseDisplay implements ConverterInterface {
         ) {
             return "false";
         }
-        return super.toDom(name, data);
+        return "true";
     }
 }
