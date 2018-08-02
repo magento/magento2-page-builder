@@ -15,7 +15,6 @@ interface WysiwygSetupInterface {
 
 interface WysiwygInstanceInterface {
     eventBus: EventBusInterface,
-    EVENT: any,
     getContent(): string,
     setContent(content: string): void
 }
