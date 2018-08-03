@@ -18,7 +18,13 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
   // Create a new sortable Knockout binding
   _knockout.default.bindingHandlers.draggable = {
     init: function init(element, valueAccessor) {
-      (0, _jquery.default)(element).draggable(valueAccessor());
+      (0, _jquery.default)(element).on("mousedown", function () {
+        try {
+          document.activeElement.blur();
+        } catch (error) {
+          console.error(error);
+        }
+      }).draggable(valueAccessor());
     }
   };
 });
