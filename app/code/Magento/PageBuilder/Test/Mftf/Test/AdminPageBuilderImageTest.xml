@@ -57,6 +57,7 @@
         <!-- Assert don't see deleted image on stage -->
         <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
         <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -76,7 +77,6 @@
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <!--<conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay" visible="true"/>-->
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut3"/>
         <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeMainImageSource"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
@@ -86,7 +86,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderStage.selectFromGalleryImageBtn(PageBuilderImageProperty_JPG2.section,PageBuilderImageProperty_JPG2.fieldName)}}" stepKey="clickSelectfromGallery"/>
+        <click selector="{{PageBuilderStage.selectFromGalleryImageBtn}}" stepKey="clickSelectfromGallery"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
@@ -106,10 +106,10 @@
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay2" visible="true"/>
         <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeMainImageSource2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>

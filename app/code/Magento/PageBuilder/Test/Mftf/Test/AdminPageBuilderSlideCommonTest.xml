@@ -1910,21 +1910,14 @@
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeStorage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
-        <!--<conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay1" visible="true"/>-->
         <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageNameOnPreview1"/>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
-        <!--<waitForElementVisible selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="waitForMainImageSource1"/>-->
-        <!--<click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>-->
-        <!--<waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />-->
-        <!--<click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />-->
-        <!--<waitForPageLoad stepKey="waitForPageLoad2" />-->
-        <!--<waitForLoadingMaskToDisappear stepKey="waitForLoading2" />-->
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
-            <argument name="contentType" value="PageBuildersSliderContentType"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="section" value="ImageOnStage"/>
         </actionGroup>
         <!-- Delete image A -->
