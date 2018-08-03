@@ -10,6 +10,7 @@
     <section name="HtmlOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
         <element name="empty" type="text" selector="(//div[contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
         <element name="html" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html')])[{{arg1}}]{{arg2}}" parameterized="true"/>
         <!-- Advanced Configuration -->
@@ -28,6 +29,7 @@
     <section name="HtmlOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='html'])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[@data-role='html'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[@data-role='html'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="html" type="text" selector="(//div[@data-role='html'])[{{arg1}}]{{arg2}}" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='html'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
