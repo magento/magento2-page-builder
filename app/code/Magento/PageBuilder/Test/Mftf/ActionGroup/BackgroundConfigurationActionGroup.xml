@@ -96,9 +96,9 @@
         <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
         <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
         <!-- Return the string value of background-image -->
-        <executeJS function="return '$contentTypeStyle'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
+        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
         <!-- Convert all characters in string variables to regex friendly strings  -->
-        <executeJS function="return '$baseURL'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
+        <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
         <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
         <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
             <expectedResult type="string">/{$regexBaseURL}\/pub\/media.*{$regexFilePath}\/{{backgroundImage.fileName}}(_\d+)?\.{{backgroundImage.extension}}/</expectedResult>
@@ -121,9 +121,9 @@
         <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
         <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
         <!-- Return the string value of background-image -->
-        <executeJS function="return '$contentTypeStyle'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundMobileImageValue"/>
+        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundMobileImageValue"/>
         <!-- Convert all characters in string variables to regex friendly strings  -->
-        <executeJS function="return '$baseURL'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
+        <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
         <executeJS function="return '{{backgroundMobileImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
         <assertRegExp stepKey="assertBackgroundMobileImageContainsFileInformation">
             <expectedResult type="string">/{$regexBaseURL}\/pub\/media.*{$regexFilePath}\/{{backgroundMobileImage.fileName}}(_\d+)?\.{{backgroundMobileImage.extension}}/</expectedResult>
