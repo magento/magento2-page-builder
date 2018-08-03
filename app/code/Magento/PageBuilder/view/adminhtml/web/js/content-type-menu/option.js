@@ -35,7 +35,7 @@ define(["knockout"], function (_knockout) {
       classes.forEach(function (cssClass) {
         koClasses[cssClass] = true;
       });
-      koClasses["disabled"] = this.disabled;
+      koClasses.disabled = this.disabled;
       this.classes(koClasses);
       this.sort = sort;
       this.optionTemplate = optionTemplate;

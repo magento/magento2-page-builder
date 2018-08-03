@@ -36,14 +36,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
 
         if (_this.element && _this.element.children.length > 0) {
+          var focusedTab = _this.focusedTab();
+
           try {
             (0, _jquery)(_this.element).tabs("destroy");
           } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
           }
 
           (0, _jquery)(_this.element).tabs({
-            create: function create(event, ui) {
-              _this.setFocusedTab(activeTabIndex || 0);
+            create: function create() {
+              // Ensure focus tab is restored after a rebuild cycle
+              if (focusedTab) {
+                _this.setFocusedTab(focusedTab);
+              }
             }
           });
         }

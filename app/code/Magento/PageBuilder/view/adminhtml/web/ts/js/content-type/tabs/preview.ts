@@ -43,14 +43,18 @@ export default class Preview extends PreviewCollection {
      */
     private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
         if (this.element && this.element.children.length > 0) {
+            const focusedTab = this.focusedTab();
             try {
                 $(this.element).tabs("destroy");
             } catch (e) {
                 // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
             }
             $(this.element).tabs({
-                create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setFocusedTab(activeTabIndex || 0);
+                create: () => {
+                    // Ensure focus tab is restored after a rebuild cycle
+                    if (focusedTab) {
+                        this.setFocusedTab(focusedTab);
+                    }
                 },
             });
         }
