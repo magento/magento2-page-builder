@@ -135,10 +135,10 @@
             <features value="PageBuilder"/>
             <stories value="Video"/>
             <title value="Delete Video"/>
-            <description value="A user should be able to delete a Video content type. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to delete a video content type. Verify on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83929"/>
-            <testCaseId value="MAGETWO-89869"/>
+            <testCaseId value="MC-2522"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-video"/>
         </annotations>
@@ -150,17 +150,47 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Add Video and Save Page -->
+        <comment userInput="Add Video and Save Page" stepKey="commentAddVideo"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Delete Video -->
+        <comment userInput="Delete Video" stepKey="commentDeleteVideo"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeVideo">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderVideoContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderVideoContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElementInDOM selector="{{VideoOnStage.empty('1')}}" stepKey="dontSeeEmptyContentTypeInStage"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderVideoContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage2"/>
+        <dontSeeElementInDOM selector="{{VideoOnStage.empty('1')}}" stepKey="dontSeeEmptyContentTypeInStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{VideoOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
+        <dontSeeElementInDOM selector="{{VideoOnStorefront.empty('1')}}" stepKey="dontSeeEmptyContentTypeInStorefront"/>
     </test>
     <test name="VideoValidateGeneralDefaultValues">
         <annotations>
@@ -734,6 +764,343 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="VideoMoveVideo">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Video"/>
+            <title value="Move Video Between Columns"/>
+            <description value="Verify that moving a video content type on the stage will update the storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3229"/>
+            <testCaseId value="MC-3380"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Stage -->
+        <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Video to Stage -->
+        <comment userInput="Add Video to Stage" stepKey="commentAddVideoToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragVideoToColumn">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateVideoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Move Video -->
+        <comment userInput="Move Video" stepKey="commentMoveVideo"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveVideoToLeftColumn">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateVideoStage2">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="validateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateHeadingStorefront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateVideoStorefront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="VideoDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Video"/>
+            <title value="Duplicate Video"/>
+            <description value="A user should be able to duplicate a video content type. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3229"/>
+            <testCaseId value="MC-3387"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Update General Section -->
+        <comment userInput="Update General Section" stepKey="commentUpdateGeneralSection"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <!-- Update Advanced Section -->
+        <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Duplicate and Verify Stage -->
+        <comment userInput="Duplicate and Verify Stage" stepKey="commentDuplicateAndVerifyStage"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Validate Duplicate On Stage -->
+        <comment userInput="Validate Duplicate On Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateVideo" stepKey="validateVideoStage1">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage1">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Duplicate On Edit Panel -->
+        <comment userInput="Verify Duplicate On Edit Panel" stepKey="commentVerifyEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify General Settings Section -->
+        <comment userInput="Edit Panel: Verify General Settings Section" stepKey="commentVerifyGeneralSettingsSection"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrl">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateVideoWidth">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Advanced Section -->
+        <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Verify Duplicate On Stage After Save -->
+        <comment userInput="Verify Duplicate On Stage After Save" stepKey="commentVerifyStageAfterSave"/>
+        <actionGroup ref="validateVideo" stepKey="validateVideoStage2">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Duplicate On Edit Panel After Save -->
+        <comment userInput="Verify Duplicate On Edit Panel After Save" stepKey="commentVerifyEditPanelAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify General Settings Section After Save -->
+        <comment userInput="Edit Panel: Verify General Settings Section After Save" stepKey="commentVerifyGeneralSettingsSectionAfterSave"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateVideoUrl2">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateVideoWidth2">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Advanced Section After Save -->
+        <comment userInput="Edit Panel: Verify Advanced Section After Save" stepKey="commentVerifyAdvancedSectionAfterSave"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <!-- Validate Duplicate On Storefront -->
+        <comment userInput="Validate Duplicate On Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateVideo" stepKey="validateStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="index" value="2"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
         </actionGroup>
     </test>
     <test name="ValidateShowHideOnVideo">

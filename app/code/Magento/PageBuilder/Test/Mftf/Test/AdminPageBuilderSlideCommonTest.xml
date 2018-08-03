@@ -417,11 +417,9 @@
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
         </assertEquals>
         <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideOverlayColorDefaultProperty.section, PageBuilderSlideOverlayColorDefaultProperty.fieldName)}}" stepKey="grabOverlayColorValue"/>
-        <assertEquals stepKey="assertOverlayColorValue" message="Overlay Color has text: $grabOverlayColorValue">
-            <expectedResult type="string">#FFFFFF</expectedResult>
-            <actualResult type="variable">grabOverlayColorValue</actualResult>
-        </assertEquals>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
+            <argument name="property" value="PageBuilderSlideWhiteOverlayColorProperty"/>
+        </actionGroup>
         <comment userInput="Overlay Color: Field is disabled by default due to Never Show default on Show Overlay." stepKey="AC11"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateOverlayColorDisabled">
             <argument name="property" value="PageBuilderSlideOverlayColorDefaultProperty"/>
