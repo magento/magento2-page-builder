@@ -10,7 +10,7 @@
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. [Iconography]
-    2. **Add image uploader to content type**
+    1. **Add image uploader to content type**
     1. [Module integration]
     1. [Additional data configuration]
     1. [Content type configuration]
@@ -22,6 +22,7 @@
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
     1. [Use the block chooser UI component]
+    1. [Use the inline text editing component]
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
     1. [Full width page layouts]
@@ -47,8 +48,9 @@
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
-[Render a backend content type preview]: content-type-preview.md
 [Use the block chooser UI component]: block-chooser-component.md
+[Use the inline text editing component]: inline-editing-component.md
+[Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md

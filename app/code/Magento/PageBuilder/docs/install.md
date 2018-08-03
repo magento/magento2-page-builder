@@ -12,11 +12,13 @@
 3. [Contribution guide]
 4. [Developer documentation]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
 [Developer documentation]: developer-documentation.md
 [Roadmap and known issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## Overview
 
