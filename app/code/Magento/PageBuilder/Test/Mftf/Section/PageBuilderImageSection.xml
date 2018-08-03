@@ -11,6 +11,7 @@
     <section name="ImageOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
         <element name="attachImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" />
         <element name="imageSourceByIndex" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-image')])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="imageEmptyPreview" type="text" selector="//div[contains(concat(' ', normalize-space(@class), ' '), ' pagebuilder-image-empty-preview ')]" />
@@ -36,6 +37,7 @@
     <section name="ImageOnStorefront">
         <element name="base" type="text" selector="(//figure[@data-role='image'])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//figure[@data-role='image'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//figure[@data-role='image'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="backgroundImageSource" type="text" selector="//div[contains(@style,'{{var1}}')]" parameterized="true"/>
         <element name="imageDisplay" type="button" selector="figure[data-role='image']"/>
         <element name="imageElement" type="button" selector="figure[data-role='image'] img:nth-child({{arg1}})" parameterized="true"/>
