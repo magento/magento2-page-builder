@@ -92,24 +92,19 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
         resolve(result);
       } else {
         var readerComponents = (0, _appearanceConfig)(role, element.dataset.appearance).reader;
+        (0, _loader)([readerComponents], function () {
+          for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
+            readers[_key] = arguments[_key];
+          }
 
-        try {
-          (0, _loader)([readerComponents], function () {
-            for (var _len = arguments.length, readers = new Array(_len), _key = 0; _key < _len; _key++) {
-              readers[_key] = arguments[_key];
-            }
+          var ReaderComponent = readers.pop();
+          var reader = new ReaderComponent();
+          reader.read(element).then(function (readerData) {
+            _.extend(result, readerData);
 
-            var Reader = readers.pop();
-            var reader = new Reader();
-            reader.read(element).then(function (readerData) {
-              _.extend(result, readerData);
-
-              resolve(result);
-            });
+            resolve(result);
           });
-        } catch (e) {
-          reject(e);
-        }
+        });
       }
     });
   }

@@ -112,18 +112,14 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
             resolve(result);
         } else {
             const readerComponents = appearanceConfig(role, element.dataset.appearance).reader;
-            try {
-                loadReader([readerComponents], (...readers: any[]) => {
-                    const Reader = readers.pop();
-                    const reader = new Reader();
-                    reader.read(element).then((readerData: any) => {
-                        _.extend(result, readerData);
-                        resolve(result);
-                    });
+            loadReader([readerComponents], (...readers: any[]) => {
+                const ReaderComponent = readers.pop();
+                const reader = new ReaderComponent();
+                reader.read(element).then((readerData: any) => {
+                    _.extend(result, readerData);
+                    resolve(result);
                 });
-            } catch (e) {
-                reject(e);
-            }
+            });
         }
     });
 }

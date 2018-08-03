@@ -73,15 +73,14 @@ class Accordion implements RendererInterface
             }
         }
 
-        $accordionElementHtml = '<div';
+        $accordionHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $accordionElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            $accordionHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $accordionElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') .
-            '</div>';
+        $accordionHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
 
         $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
-        $rootElementHtml .= $accordionElementHtml . '</div>';
+        $rootElementHtml .= $accordionHtml . '</div>';
 
         return $rootElementHtml;
     }
