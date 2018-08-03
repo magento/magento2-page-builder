@@ -723,7 +723,6 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <waitForElementVisible selector="{{TabsOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
@@ -746,7 +745,6 @@
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions2"/>
         <waitForPageLoad stepKey="waitForOptionsHide1"/>
         <actionGroup ref="showContentType" stepKey="showContentType">
             <argument name="section" value="TabsOnStage"/>
