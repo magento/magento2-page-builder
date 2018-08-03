@@ -11,6 +11,7 @@
     .pagebuilder-button-item {
         &.pagebuilder-content-type-active {
             .button-item-drag-handle {
+                position: absolute;
                 &.disabled:before {
                     color: @color-light-gray;
                     cursor: not-allowed;
@@ -30,9 +31,10 @@
                     cursor: -webkit-grab;
                     display: inline-block;
                     font-size: 16px;
-                    left: 0;
+                    left: -16px;
                     line-height: 2.2rem;
-                    position: absolute;
+                    position: relative;
+                    width: 0;
                 }
 
                 &:active:before {
