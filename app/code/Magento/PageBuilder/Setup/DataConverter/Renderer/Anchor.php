@@ -45,12 +45,6 @@ class Anchor implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-element' => 'main',
-            'data-role' => 'html',
-            'data-appearance' => 'default'
-        ];
-
-        $anchorElementAttributes = [
             'class' => $eavData['css_classes'] ?? '',
             'id' => $eavData['anchor_id']
         ];
@@ -58,19 +52,18 @@ class Anchor implements RendererInterface
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $anchorElementAttributes['style'] = $style;
+                $rootElementAttributes['style'] = $style;
             }
         }
 
-        $rootElementHtml = '<div';
+        $anchorHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            $anchorHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><div';
-        foreach ($anchorElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-        }
-        $rootElementHtml .= '></div></div>';
+        $anchorHtml .= '></div>';
+
+        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml .= $anchorHtml . '</div>';
 
         return $rootElementHtml;
     }
