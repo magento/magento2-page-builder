@@ -511,7 +511,7 @@ export default class Preview extends PreviewCollection {
      */
     private endAllInteractions(): void {
         if (this.resizing() === true) {
-            for (;this.interactionLevel > 0;this.interactionLevel--) {
+            for (; this.interactionLevel > 0; this.interactionLevel--) {
                 events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
             }
         }

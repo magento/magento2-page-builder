@@ -525,7 +525,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <waitForElementVisible selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/text{{PageBuilderPageTitle.pageName}}']" stepKey="waitForWidgetStorefront"/>
+        <waitForElementVisible selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}text{{PageBuilderPageTitle.pageName}}']" stepKey="waitForWidgetStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextDelete">
