@@ -42,6 +42,8 @@
         <element name="panelCollapsed" type="button" selector='(//div[contains(@class, "pagebuilder-stage") and contains(@class, "panel-collapsed")])'/>
         <element name="expandPanel" type="button" selector='//div[contains(@class, "expand")]//a'/>
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
+        <element name="allPanelGroups" type="button" selector="#pagebuilder-panel-groups .group-title"/>
+        <element name="allGroupContentTypes" type="button" selector="#pagebuilder-panel-groups #group-{{arg1}} .pagebuilder-draggable-content-type" parameterized="true"/>
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="layoutGroup" type="button" selector='//*[@id="group-layout"]' timeout="10"/>
