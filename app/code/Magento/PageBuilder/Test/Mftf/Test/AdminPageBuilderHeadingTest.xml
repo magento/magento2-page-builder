@@ -1157,7 +1157,7 @@
     <test name="ValidateShowHideOnHeading">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Text"/>
+            <stories value="Heading"/>
             <title value="Heading has hide show capabilities"/>
             <description value="A user is able to hide and show the heading successfully"/>
             <severity value="CRITICAL"/>
@@ -1223,7 +1223,7 @@
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{TextOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <dontSeeElement selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
 </tests>
