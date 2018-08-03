@@ -10,6 +10,7 @@
     <section name="TabsOnStage">
         <element name="base" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
         <element name="tabsNavigation" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')])"/>
         <element name="tabsNavAligned" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
@@ -26,6 +27,7 @@
     <section name="TabsOnFrontend">
         <element name="base" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="tabsMinHeight" type="button" selector="//div[@data-role='tabs']//div[@class='tabs-content'][contains(@style, 'min-height: {{arg1}}px')]" parameterized="true"/>
         <element name="tabsNavAligned" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
         <element name="tabsContentAdvancedStyles" type="button" selector="//div[@class='tabs-content'][contains(@style, 'border-style: solid;')][contains(@style, 'border-color: rgb(0, 0, 0);')][contains(@style, 'border-width: 10px;')][contains(@style, 'border-radius: 12px;')][contains(@style, 'min-height: 300px;')]"/>
