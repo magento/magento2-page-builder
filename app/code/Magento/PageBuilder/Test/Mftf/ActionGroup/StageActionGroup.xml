@@ -70,4 +70,12 @@
         <click selector="{{section.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGalleryBtn1" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
+    <actionGroup name="uploadImageToContentTypeFromStage">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{PageBuilderStage.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
+    </actionGroup>
 </actionGroups>

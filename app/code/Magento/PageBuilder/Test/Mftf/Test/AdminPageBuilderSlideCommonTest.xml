@@ -1901,8 +1901,9 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+        </actionGroup>
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
@@ -1916,7 +1917,7 @@
         <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageNameOnPreview1"/>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="attachImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
         </actionGroup>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
@@ -1931,6 +1932,7 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
+        <seeElementInDOM selector="{{SlideOnBackend.emptyslide}}" stepKey="seeEmptySliderOnStage"/>
         <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
 </tests>

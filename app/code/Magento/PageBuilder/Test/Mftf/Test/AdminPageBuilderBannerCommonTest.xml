@@ -1938,7 +1938,7 @@
         <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage1"/>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
@@ -1946,9 +1946,10 @@
             <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
+        <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder1"/>
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
+        <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1968,10 +1969,13 @@
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
             <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <!--<conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay" visible="true"/>-->
-        <dontSeeElementInDOM selector="{{EditPanelForm.editFormUploadedImageSource(PageBuilderBackgroundImage_JPG.section, PageBuilderBackgroundImage_JPG.fieldName, PageBuilderBackgroundImage_JPG.fileName, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="dontSeeImage"/>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Verify image is removed from Banner stage -->
+        <comment userInput="Verify image is removed from Banner stage" stepKey="commentVerifyBannerStage"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder2"/>
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
+        <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
 </tests>

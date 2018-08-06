@@ -42,7 +42,7 @@
         </actionGroup>
         <!-- Attach image A to PageBuilder stage -->
         <comment userInput="Attach image A to PageBuilder stage" stepKey="attachImageToStage"/>
-        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <!-- Go to Media Storage from stage-->
@@ -59,7 +59,7 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert don't see deleted image on stage -->
         <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
-        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
+        <seeElement selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
         <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
@@ -81,7 +81,9 @@
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut3"/>
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeMainImageSource"/>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage2"/>
         <!-- Attach image B to Image slideout form from Media Storage -->
@@ -95,7 +97,7 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout2">
@@ -109,8 +111,12 @@
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeMainImageSource2"/>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage1">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!-- Assert not to see image on stage -->
+        <comment userInput="Assert not to see image on stage" stepKey="commentVerifyImageStage" />
         <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
         <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
