@@ -15,6 +15,7 @@
         <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//div[contains(@class,'option-title') and text()='{{arg}}']" parameterized="true"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-block')])[{{arg1}}]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[contains(@class,'pagebuilder-block')])[{{arg1}}]" parameterized="true"/>
         <element name="hr" type="button" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[@data-identifier])[{{arg2}}]//hr" parameterized="true"/>
         <element name="content" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'block-static-block')]" parameterized="true"/>
         <!-- Advanced Configuration -->
@@ -44,6 +45,7 @@
         <element name="html" type="text" selector="(//div[@data-role='html'])[{{arg1}}]//a[contains(@class,'pagebuilder-button-primary')]" parameterized="true"/>
         <element name="base" type="text" selector="(//div[@data-role='block'])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[@data-role='block'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[@data-role='block'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="hr" type="button" selector="(//div[@data-role='block'])[{{arg1}}]/hr" parameterized="true"/>
         <element name="empty" type="text" selector="//div[@data-role='block'][{{arg1}}][not(*)]" parameterized="true"/>
         <!-- Advanced Configuration -->
