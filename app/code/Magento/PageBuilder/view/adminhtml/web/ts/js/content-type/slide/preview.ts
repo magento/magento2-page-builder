@@ -197,10 +197,10 @@ export default class Preview extends BasePreview {
                     (this.parent.parent.preview as SliderPreview).setFocusedSlide(index - 1);
                 });
                 if (this.parent.parent.children().length < 2) {
-                    removeOption.is_disabled(true);
+                    removeOption.isDisabled(true);
                 }
                 this.parent.parent.children.subscribe((children) => {
-                    removeOption.is_disabled((children.length < 2));
+                    removeOption.isDisabled((children.length < 2));
                 });
 
                 // Update the display label for the slide

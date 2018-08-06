@@ -77,7 +77,7 @@ export default class Preview extends PreviewCollection {
                 // Disable the remove option when there is only a single row
                 const removeOption = this.getOptions().getOption("remove");
                 this.parent.parent.children.subscribe((children) => {
-                    removeOption.is_disabled((children.length < 2));
+                    removeOption.isDisabled((children.length < 2));
                 });
             }
         });
