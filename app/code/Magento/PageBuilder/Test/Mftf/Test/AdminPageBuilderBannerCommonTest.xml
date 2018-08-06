@@ -1947,7 +1947,8 @@
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
-        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="dontSeeImageOnStage1"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder1"/>
+        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1970,6 +1971,7 @@
         <!--<conditionalClick selector=".modals-overlay" dependentSelector=".modals-overlay" stepKey="clickOverlay" visible="true"/>-->
         <dontSeeElementInDOM selector="{{EditPanelForm.editFormUploadedImageSource(PageBuilderBackgroundImage_JPG.section, PageBuilderBackgroundImage_JPG.fieldName, PageBuilderBackgroundImage_JPG.fileName, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="dontSeeImage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="dontSeeImageOnStage2"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder2"/>
+        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
 </tests>
