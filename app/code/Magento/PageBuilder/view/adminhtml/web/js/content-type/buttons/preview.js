@@ -101,10 +101,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         items: ".pagebuilder-content-type-wrapper",
         cursor: "grabbing",
         containment: "parent",
+        tolerance: this.data.main.attributes()["data-appearance"] === "stacked" ? "pointer" : "intersect",
         revert: 200,
         cursorAt: {
-          left: 25,
-          top: 25
+          left: 15,
+          top: 15
         },
         disabled: this.parent.children().length <= 1,
 
@@ -177,7 +178,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           if (this.getAttribute("data-appearance") === "stacked") {
             element.placeholder.css({
-              height: element.item.height() / 2
+              height: element.item.height() / 1.2
             });
             element.placeholder.animate({
               height: element.item.height()
@@ -186,7 +187,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           if (this.getAttribute("data-appearance") === "inline") {
             element.placeholder.css({
-              width: element.item.width() / 2
+              width: element.item.width() / 1.2
             });
             element.placeholder.animate({
               width: element.item.width()

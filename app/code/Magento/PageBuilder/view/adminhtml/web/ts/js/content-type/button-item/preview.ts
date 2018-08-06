@@ -22,7 +22,7 @@ export default class Preview extends BasePreview {
     public retrieveOptions(): OptionInterface[] {
         const options = super.retrieveOptions();
         const newOptions = options.filter((option) => {
-            return ["remove", "title", "move"].indexOf(option.code) !== -1;
+            return ["remove", "title", "move"].indexOf(option.code) === -1;
         });
         const removeClasses = ["remove-structural"];
         let removeFn = this.onOptionRemove;

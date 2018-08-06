@@ -108,8 +108,9 @@ export default class Preview extends PreviewCollection {
             items: ".pagebuilder-content-type-wrapper",
             cursor: "grabbing",
             containment: "parent",
+            tolerance: this.data.main.attributes()["data-appearance"] === "stacked" ? "pointer" : "intersect",
             revert: 200,
-            cursorAt: { left: 25, top: 25 },
+            cursorAt: { left: 15, top: 15 },
             disabled: this.parent.children().length <= 1,
             /**
              * Provide custom helper element
@@ -181,11 +182,11 @@ export default class Preview extends PreviewCollection {
             change(event, element) {
                 element.placeholder.stop(true, false);
                 if (this.getAttribute("data-appearance") === "stacked") {
-                    element.placeholder.css({height: element.item.height() / 2});
+                    element.placeholder.css({height: element.item.height() / 1.2});
                     element.placeholder.animate({height: element.item.height()}, 200, "linear");
                 }
                 if (this.getAttribute("data-appearance") === "inline") {
-                    element.placeholder.css({width: element.item.width() / 2});
+                    element.placeholder.css({width: element.item.width() / 1.2});
                     element.placeholder.animate({width: element.item.width()}, 200, "linear");
                 }
                 placeholderGhost.stop(true, false).animate({
