@@ -21,7 +21,8 @@ export default class Display implements ConverterInterface {
     }
 
     /**
-     * Convert value to knockout format
+     * Convert value to knockout format, we only provide a none property if we intend for the content type to be hidden,
+     * otherwise we let the original display property handle the display of the content type.
      *
      * @param {string} name
      * @param {DataObject} data

@@ -13,7 +13,7 @@ export default interface OptionInterface {
     classes?: KnockoutObservable<{ [key: string]: boolean | KnockoutObservable<boolean> }>;
     sort: number;
     optionTemplate?: string;
-    disabled?: KnockoutObservable<boolean>;
+    is_disabled?: KnockoutObservable<boolean>;
 
     setAction?(action: () => void): void;
 

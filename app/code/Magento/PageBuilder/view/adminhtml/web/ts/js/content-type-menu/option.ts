@@ -16,7 +16,7 @@ export default class Option implements OptionInterface {
     public title: KnockoutObservable<string> = ko.observable("");
     public action: () => void;
     public optionTemplate: string;
-    public disabled: KnockoutObservable<boolean> = ko.observable(false);
+    public is_disabled: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
      * @param {Preview} parent
@@ -46,7 +46,7 @@ export default class Option implements OptionInterface {
         classes.forEach((cssClass) => {
             koClasses[cssClass] = true;
         });
-        koClasses.disabled = this.disabled;
+        koClasses.disabled = this.is_disabled;
         this.classes(koClasses);
         this.sort = sort;
         this.optionTemplate = optionTemplate;
@@ -66,7 +66,7 @@ export default class Option implements OptionInterface {
     public setAction(action: () => void): void {
         action = action ? action : () => {};
         this.action = () => {
-            if (!this.disabled()) {
+            if (!this.is_disabled()) {
                 action.call(this.parent, arguments);
             }
         };

@@ -26,7 +26,7 @@ define(["knockout"], function (_knockout) {
       this.title = _knockout.observable("");
       this.action = void 0;
       this.optionTemplate = void 0;
-      this.disabled = _knockout.observable(false);
+      this.is_disabled = _knockout.observable(false);
       this.parent = parent;
       this.code = code;
       this.icon(icon);
@@ -35,7 +35,7 @@ define(["knockout"], function (_knockout) {
       classes.forEach(function (cssClass) {
         koClasses[cssClass] = true;
       });
-      koClasses.disabled = this.disabled;
+      koClasses.disabled = this.is_disabled;
       this.classes(koClasses);
       this.sort = sort;
       this.optionTemplate = optionTemplate;
@@ -56,7 +56,7 @@ define(["knockout"], function (_knockout) {
       action = action ? action : function () {};
 
       this.action = function () {
-        if (!_this.disabled()) {
+        if (!_this.is_disabled()) {
           action.call(_this.parent, _arguments);
         }
       };

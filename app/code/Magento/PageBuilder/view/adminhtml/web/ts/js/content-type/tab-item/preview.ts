@@ -44,10 +44,10 @@ export default class Preview extends PreviewCollection {
                 // Disable the remove option when there is only a single tab
                 const removeOption = this.getOptions().getOption("remove");
                 if (this.parent.parent.children().length < 2) {
-                    removeOption.disabled(true);
+                    removeOption.is_disabled(true);
                 }
                 this.parent.parent.children.subscribe((children) => {
-                    removeOption.disabled((children.length < 2));
+                    removeOption.is_disabled((children.length < 2));
                 });
             }
         });
