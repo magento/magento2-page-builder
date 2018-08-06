@@ -10,7 +10,7 @@ define([
     /**
      * Equalize the width of a list of button-item components
      *
-     * @param {JQuerySerializeArrayElement} buttonList
+     * @param {JQuery} buttonList
      */
     var equalizeButtonWidth = function (buttonList) {
         var buttonMinWidth = 0;
@@ -28,7 +28,7 @@ define([
     return function (config, element) {
         var $element = $(element);
 
-        if ($element.data('sameWidth') === '1') {
+        if ($element.data('sameWidth')) {
             equalizeButtonWidth($element.find('[data-element="link"]'));
         }
     };
