@@ -12,11 +12,11 @@ import ContentTypeInterface from "../../content-type";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
 import PreviewCollection from "../preview-collection";
 import PreviewDataUpdateAfterParamsInterface from "../preview-data-update-after-params";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
 
 /**
  * @api
