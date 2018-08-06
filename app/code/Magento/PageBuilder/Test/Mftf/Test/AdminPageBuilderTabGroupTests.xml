@@ -836,8 +836,8 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <click selector="{{TabOnStage.openOptionsMenu('1')}}" stepKey="openTabOptionMenu"/>
-        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderTabContentType.role)}}" stepKey="waitForHideOptionNotVisible" />
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderTabContentType.role)}}" stepKey="dontSeeHideOption" />
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderTabContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderTabContentType.role, '1')}}" stepKey="dontSeeHideOption" />
     </test>
     <test name="ValidateShowHideOnTabChildDefaultState">
         <annotations>
