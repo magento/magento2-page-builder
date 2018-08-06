@@ -32,6 +32,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this2.addButton();
         }
       });
+
+      _events.on("previewData:updateAfter", function (eventData) {
+        var contentTypePreview = eventData.preview;
+
+        if (contentTypePreview.config.name === "button-item" && contentTypePreview.parent.parent.id === _this2.parent.id || contentTypePreview.config.name === "buttons" && contentTypePreview.parent.id === _this2.parent.id) {
+          _this2.resizeChildButtons();
+        }
+      });
+
+      _events.on("button-item:renderAfter", function (eventData) {
+        if (eventData.contentType.parent.id === _this2.parent.id) {
+          _this2.resizeChildButtons();
+        }
+      });
+
+      _events.on("button-item:removeAfter", function (eventData) {
+        if (eventData.parent.id === _this2.parent.id) {
+          _this2.resizeChildButtons();
+        }
+      });
     };
     /**
      * Set state based on mouseover event for the preview
@@ -78,6 +98,45 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }).catch(function (error) {
         console.error(error);
       });
+    };
+    /**
+     * Resize width of all child buttons. Dependently make them the same width if configured.
+     */
+
+
+    _proto.resizeChildButtons = function resizeChildButtons() {
+      if (this.wrapperElement) {
+        var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
+        var buttonResizeValue = "";
+
+        if (this.parent.dataStore.get("same_width") === "1") {
+          if (buttonItems.length > 0) {
+            var currentLargestButton = this.findLargestButton(buttonItems);
+            buttonResizeValue = currentLargestButton.css("min-width", "").outerWidth();
+          }
+        }
+
+        buttonItems.css("min-width", buttonResizeValue);
+      }
+    };
+    /**
+     * Find the largest button text value which will determine the button width we use for re-sizing.
+     *
+     * @param {JQuery} buttonItems
+     * @returns {JQuery}
+     */
+
+
+    _proto.findLargestButton = function findLargestButton(buttonItems) {
+      var largestButton = null;
+      buttonItems.each(function (index, element) {
+        var buttonElement = (0, _jquery)(element);
+
+        if (largestButton === null || buttonElement.find("span").width() > largestButton.find("span").width()) {
+          largestButton = buttonElement;
+        }
+      });
+      return largestButton;
     };
 
     return Preview;
