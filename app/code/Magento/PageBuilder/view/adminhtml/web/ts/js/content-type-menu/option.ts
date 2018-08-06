@@ -64,7 +64,7 @@ export default class Option implements OptionInterface {
      * @param {() => {}} action
      */
     public setAction(action: () => void): void {
-        action = action ? action : () => {};
+        action = action ? action : () => { return; };
         this.action = () => {
             if (!this.isDisabled()) {
                 action.call(this.parent, arguments);
