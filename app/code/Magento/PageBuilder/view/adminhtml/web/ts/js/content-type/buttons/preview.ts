@@ -152,8 +152,7 @@ export default class Preview extends PreviewCollection {
                 },
             },
             /**
-             * Logic for starting the sorting
-             * Adding the placeholderGhost
+             * Logic for starting the sorting and adding the placeholderGhost
              *
              * @param {Event} event
              * @param {JQueryUI.Sortable} element
@@ -171,9 +170,10 @@ export default class Preview extends PreviewCollection {
                 events.trigger("stage:interactionStart");
             },
             /**
-             * Logic for changing element position during the sorting
+             * Logic for changing element position
+             *
              * Set the width and height of the moving placeholder animation
-             * Add animation of placeholder ghost to the placeholder position
+             * and then add animation of placeholder ghost to the placeholder position.
              *
              * @param {Event} event
              * @param {JQueryUI.Sortable} element
@@ -194,8 +194,7 @@ export default class Preview extends PreviewCollection {
                 }, 200);
             },
             /**
-             * Logic for post sorting
-             * Removing the placeholderGhost
+             * Logic for post sorting and removing the placeholderGhost
              */
             stop() {
                 placeholderGhost.remove();
