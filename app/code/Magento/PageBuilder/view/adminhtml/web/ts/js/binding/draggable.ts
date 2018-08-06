@@ -13,11 +13,8 @@ import ko from "knockout";
 ko.bindingHandlers.draggable = {
     init(element, valueAccessor) {
         $(element).on("mousedown", () => {
-            try {
+            if (document.hasFocus()) {
                 (document.activeElement as HTMLElement).blur();
-            }
-            catch (error) {
-                console.error(error);
             }
         }).draggable(valueAccessor());
     },
