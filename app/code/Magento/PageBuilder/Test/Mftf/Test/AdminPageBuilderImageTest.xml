@@ -8,6 +8,112 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="ImageContentBlockDeleteImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image from Image Content Block get wiped out after delete image from Media Storage"/>
+            <description value="Image from Image Content Block get wiped out after delete image from Media Storage"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-2294"/>
+            <testCaseId value="MC-3494"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <skip>
+                <issueId value="MC-3348"/>
+            </skip>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Attach image A to PageBuilder stage -->
+        <comment userInput="Attach image A to PageBuilder stage" stepKey="attachImageToStage"/>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Go to Media Storage from stage-->
+        <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage"/>
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="section" value="ImageOnStage"/>
+        </actionGroup>
+        <!--Delete image A-->
+        <comment stepKey="deleteImageA" userInput="Delete image A"/>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
+        <!-- Assert don't see deleted image on stage -->
+        <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
+        <!-- Attach image C to Image slideout form -->
+        <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout1">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Delete image C-->
+        <comment stepKey="deleteImageC" userInput="Delete image C"/>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut3"/>
+        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeMainImageSource"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage2"/>
+        <!-- Attach image B to Image slideout form from Media Storage -->
+        <comment userInput="Attach image B to Image slideout form from Media Storage" stepKey="attachImageBToSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderStage.selectFromGalleryImageBtn}}" stepKey="clickSelectfromGallery"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout2">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Delete image B -->
+        <comment stepKey="deleteImageB" userInput="Delete image B"/>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut2">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeMainImageSource2"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
+    </test>
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>
             <features value="PageBuilder"/>
