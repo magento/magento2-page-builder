@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "Magento_PageBuilder/js/master-format/attribute-mapper", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
+define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -11,22 +11,6 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
   /*#__PURE__*/
   function () {
     /**
-     * @deprecated
-     */
-
-    /**
-     * @deprecated
-     */
-
-    /**
-     * @deprecated
-     */
-
-    /**
-     * @deprecated
-     */
-
-    /**
      * @param {ContentTypeInterface} parent
      * @param {ObservableUpdater} observableUpdater
      */
@@ -34,10 +18,6 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       this.data = {};
       this.parent = void 0;
       this.observableUpdater = void 0;
-      this.attributeFilter = new _attributeFilter();
-      this.attributeMapper = new _attributeMapper();
-      this.styleAttributeFilter = new _styleAttributeFilter();
-      this.styleAttributeMapper = new _styleAttributeMapper();
       this.parent = parent;
       this.observableUpdater = observableUpdater;
       this.bindEvents();
@@ -96,14 +76,6 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
     _proto.getStyle = function getStyle(element) {
       var data = _underscore.extend({}, this.parent.dataStore.get(), this.parent.config);
 
-      if (element === undefined) {
-        if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
-          _underscore.extend(data, data.appearances[data.appearance]);
-        }
-
-        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(data));
-      }
-
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
       data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
@@ -125,14 +97,6 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
     _proto.getAttributes = function getAttributes(element) {
       var data = _underscore.extend({}, this.parent.dataStore.get(), this.parent.config);
-
-      if (element === undefined) {
-        if (undefined === data.appearance || !data.appearance) {
-          data.appearance = undefined !== this.parent.config.fields.appearance ? this.parent.config.fields.appearance.default : "default";
-        }
-
-        return this.attributeMapper.toDom(this.attributeFilter.filter(data));
-      }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
@@ -176,10 +140,6 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
     _proto.getData = function getData(element) {
       var data = _underscore.extend({}, this.parent.dataStore.get());
-
-      if (undefined === element) {
-        return data;
-      }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;

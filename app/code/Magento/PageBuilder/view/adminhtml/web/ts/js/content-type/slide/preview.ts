@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import ContentTypeCollectionInterface from "../../content-type-collection";
@@ -13,9 +12,6 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
-import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
-import {fromHex} from "../../utils/color-converter";
-import {percentToDecimal} from "../../utils/number-converter";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
@@ -24,8 +20,6 @@ import Uploader from "../uploader";
  * @api
  */
 export default class Preview extends BasePreview {
-    private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
-    private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
@@ -50,164 +44,6 @@ export default class Preview extends BasePreview {
             const index = children.indexOf(this.parent);
             this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
         });
-    }
-
-    /**
-     * Get the background wrapper attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getBackgroundStyles() {
-        const desktopStyles = this.data.desktop_image.style();
-        return {
-            ...desktopStyles,
-            paddingBottom: "",
-            paddingLeft: "",
-            paddingRight: "",
-            paddingTop: "",
-            borderStyle: "none",
-            borderRadius: "0px",
-        };
-    }
-    /**
-     * Get the slide wrapper attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getPaddingStyles() {
-        const previewData = this.previewData;
-        const appearance = this.data.main.attributes()["data-appearance"];
-        const paddingData: any =  {};
-        switch (appearance) {
-            case "collage-centered":
-                paddingData.paddingLeft = `calc(25% + ${this.data.desktop_image.style().paddingLeft})`;
-                paddingData.paddingRight = `calc(25% + ${this.data.desktop_image.style().paddingRight})`;
-                break;
-            case "collage-left":
-                paddingData.paddingRight = `calc(50% + ${this.data.desktop_image.style().paddingRight})`;
-                break;
-            case "collage-right":
-                paddingData.paddingLeft = `calc(50% + ${this.data.desktop_image.style().paddingLeft})`;
-                break;
-            default:
-                break;
-        }
-        let backgroundImage: string = "none";
-        if (previewData.background_image() && previewData.background_image() !== "" &&
-            previewData.background_image() !== undefined &&
-            previewData.background_image()[0] !== undefined) {
-            backgroundImage = "url(" + previewData.background_image()[0].url + ")";
-        }
-        const styles =  {
-            backgroundImage,
-            backgroundSize: previewData.background_size(),
-            minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
-            overflow: "hidden",
-            paddingBottom: this.data.desktop_image.style().paddingBottom || "",
-            paddingLeft: this.data.desktop_image.style().paddingLeft || "",
-            paddingRight: this.data.desktop_image.style().paddingRight || "",
-            paddingTop: this.data.desktop_image.style().paddingTop || "",
-        };
-        return {
-            ...styles,
-            ...paddingData,
-        };
-    }
-
-    /**
-     * Get the slide overlay attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getOverlayStyles() {
-        const data = this.previewData;
-        const paddingTop = data.margins_and_padding().padding.top || "0";
-        const paddingRight = data.margins_and_padding().padding.right || "0";
-        const paddingBottom = data.margins_and_padding().padding.bottom || "0";
-        const paddingLeft = data.margins_and_padding().padding.left || "0";
-        return {
-            backgroundColor: this.getOverlayColorStyle().backgroundColor,
-            minHeight: data.min_height ? data.min_height() + "px" : "300px",
-            paddingBottom: paddingBottom + "px",
-            paddingLeft: paddingLeft + "px",
-            paddingRight: paddingRight + "px",
-            paddingTop: paddingTop + "px",
-        };
-    }
-
-    /**
-     * Get the overlay background style for the preview
-     *
-     * @returns {any}
-     */
-    public getOverlayColorStyle() {
-        const data = this.previewData;
-        let overlayColor: string = "transparent";
-        if (data.show_overlay() === "always" || this.showOverlayHover()) {
-            if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
-                const colors = data.overlay_color();
-                const alpha = percentToDecimal(data.overlay_transparency());
-                overlayColor = fromHex(colors, alpha);
-            } else {
-                overlayColor = "transparent";
-            }
-        }
-        return {
-            backgroundColor: overlayColor,
-        };
-    }
-
-    /**
-     * Is there content in the WYSIWYG?
-     *
-     * @returns {boolean}
-     */
-    public isContentEmpty(): boolean {
-        const data = this.previewData.content();
-        return data === "" || data === undefined;
-    }
-
-    /**
-     * Get the content for the preview
-     *
-     * @returns {any}
-     */
-    public getContentHtml() {
-        if (this.isContentEmpty()) {
-            return $t("Edit slide text");
-        } else {
-            return $t(this.previewData.content());
-        }
-    }
-
-    /**
-     * Get the button text for the preview
-     *
-     * @returns {any}
-     */
-    public getButtonStyles() {
-        const buttonStyle = {
-            opacity : "0",
-            visibility : "hidden",
-        };
-        if (this.previewData.show_button() === "always" || this.showButtonHover()) {
-            buttonStyle.opacity = "1";
-            buttonStyle.visibility = "visible";
-        }
-        return buttonStyle;
-    }
-
-    /**
-     * Get the link href for preview
-     *
-     * @returns {String}
-     */
-    public getHref() {
-        let href = "";
-        if (!!this.previewData.link_url && typeof this.previewData.link_url() === "object") {
-            href = this.previewData.link_url()[this.previewData.link_url().type];
-        }
-        return href;
     }
 
     /**
@@ -282,71 +118,6 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Get the slide wrapper styles for the storefront
-     *
-     * @returns {object}
-     */
-    public getSlideStyles(type: string): {} {
-        const data = this.previewData;
-        const style = _.clone(this.getStyle());
-
-        let backgroundImage: any = "";
-        if (type === "image") {
-            backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
-        }
-
-        if (type === "mobileImage") {
-            if (this.getMobileImage()) {
-                backgroundImage = this.getStyle().mobileImage;
-            } else {
-                if (this.getImage()) {
-                    backgroundImage = this.getStyle().backgroundImage;
-                } else {
-                    backgroundImage = "none";
-                }
-            }
-        }
-
-        return Object.assign(
-            style,
-            {
-                backgroundImage,
-                backgroundSize: data.background_size(),
-                border: "",
-                borderColor: "",
-                borderRadius: "",
-                borderWidth: "",
-                marginBottom: "",
-                marginLeft: "",
-                marginRight: "",
-                marginTop: "",
-                paddingBottom: "",
-                paddingLeft: "",
-                paddingRight: "",
-                paddingTop: "",
-            },
-        );
-    }
-
-    /**
-     * Get the slide overlay attributes for the storefront
-     *
-     * @returns {object}
-     */
-    public getOverlayAttributes(): {} {
-        const data = this.previewData;
-        let overlayColorAttr: string = "transparent";
-        if (data.show_overlay() !== "never") {
-            if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
-                overlayColorAttr = fromHex(data.overlay_color(), percentToDecimal(data.overlay_transparency()));
-            }
-        }
-        return {
-            "data-overlay-color" : overlayColorAttr,
-        };
-    }
-
-    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
@@ -417,22 +188,6 @@ export default class Preview extends BasePreview {
             // Register listener when image gets uploaded from uploader UI component
             this.uploader.onUploaded(this.onImageUploaded.bind(this));
         });
-    }
-
-    protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        const data = this.previewData;
-        if (data.background_image() && typeof data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + data.background_image()[0].url + ")";
-        }
-        if (data.mobile_image()
-            && data.mobile_image() !== ""
-            && typeof data.mobile_image()[0] === "object"
-        ) {
-            styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
-        }
-        return styles;
     }
 
     /**

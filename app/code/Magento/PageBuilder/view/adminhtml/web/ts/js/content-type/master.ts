@@ -6,10 +6,6 @@
 import _ from "underscore";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
-import AttributeFilter from "../master-format/attribute-filter";
-import AttributeMapper from "../master-format/attribute-mapper";
-import StyleAttributeFilter from "../master-format/style-attribute-filter";
-import StyleAttributeMapper from "../master-format/style-attribute-mapper";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -21,22 +17,6 @@ export default class Master {
     public data: ObservableObject = {};
     protected parent: ContentTypeInterface;
     private observableUpdater: ObservableUpdater;
-    /**
-     * @deprecated
-     */
-    private attributeFilter: AttributeFilter = new AttributeFilter();
-    /**
-     * @deprecated
-     */
-    private attributeMapper: AttributeMapper =  new AttributeMapper();
-    /**
-     * @deprecated
-     */
-    private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
-    /**
-     * @deprecated
-     */
-    private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     /**
      * @param {ContentTypeInterface} parent
@@ -102,14 +82,6 @@ export default class Master {
      */
     public getStyle(element: string) {
         let data = _.extend({}, this.parent.dataStore.get(), this.parent.config);
-        if (element === undefined) {
-            if (typeof data.appearance !== "undefined" &&
-                typeof data.appearances !== "undefined" &&
-                typeof data.appearances[data.appearance] !== "undefined") {
-                _.extend(data, data.appearances[data.appearance]);
-            }
-            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(data));
-        }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
@@ -131,14 +103,6 @@ export default class Master {
      */
     public getAttributes(element: string) {
         let data = _.extend({}, this.parent.dataStore.get(), this.parent.config);
-        if (element === undefined) {
-            if (undefined === data.appearance || !data.appearance) {
-                data.appearance = undefined !== this.parent.config.fields.appearance
-                    ? this.parent.config.fields.appearance.default
-                    : "default";
-            }
-            return this.attributeMapper.toDom(this.attributeFilter.filter(data));
-        }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
@@ -179,10 +143,6 @@ export default class Master {
      */
     public getData(element: string) {
         let data = _.extend({}, this.parent.dataStore.get());
-
-        if (undefined === element) {
-            return data;
-        }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
