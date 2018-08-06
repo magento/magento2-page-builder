@@ -16,22 +16,20 @@ define([
         var buttonMinWidth = 0;
 
         buttonList.each(function () {
-            var buttonWidth = this.querySelector('[data-element="link"]').offsetWidth;
+            var buttonWidth = this.offsetWidth;
 
             if (buttonWidth > buttonMinWidth) {
                 buttonMinWidth = buttonWidth;
             }
         });
-        buttonList.each(function () {
-            this.querySelector('[data-element="link"]').style.width = buttonMinWidth + 'px';
-        });
+        buttonList.css('width', buttonMinWidth);
     };
 
     return function (config, element) {
         var $element = $(element);
 
-        if ($element.attr('data-same-width') === '1') {
-            equalizeButtonWidth($element.children());
+        if ($element.data('sameWidth') === '1') {
+            equalizeButtonWidth($element.find('[data-element="link"]'));
         }
     };
 });
