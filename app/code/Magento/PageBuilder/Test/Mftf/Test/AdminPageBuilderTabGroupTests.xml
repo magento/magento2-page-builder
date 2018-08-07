@@ -387,7 +387,7 @@
             <description value="A user should be able to duplicate Tabs content type. Verify on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3596"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -625,22 +625,62 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="TextOnStage"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
         <comment userInput="Tabs duplicate with custom content" stepKey="AC3"/>
         <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions"/>
+        <!-- Validate content type is disabled on duplicate -->
+        <comment userInput="Validate content type is disabled on duplicate" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{TextOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="TextOnStage"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="switchTabs" stepKey="switchTabsStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="2"/>
+            <argument name="to" value="1"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions2"/>
+        <actionGroup ref="showContentType" stepKey="showContentType1">
+            <argument name="section" value="TextOnStage"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
+        <waitForElementVisible selector="{{TextOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent"/>
     </test>
     <test name="TabsCannotAddToStage">
