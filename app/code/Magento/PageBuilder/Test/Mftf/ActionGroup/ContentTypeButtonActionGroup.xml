@@ -51,10 +51,10 @@
         <comment userInput="inlineEditButton" stepKey="comment"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
-        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
+        <fillField selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusLiveEdit"/>
-        <waitForPageLoad stepKey="waitForUnfocus"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
     <actionGroup name="moveButton">
         <arguments>
@@ -80,6 +80,7 @@
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
+        <comment userInput="validateButtonGroupInlineAppearance" stepKey="comment"/>
         <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
         <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Inline.value)}}" stepKey="seeButtonAppearance"/>
         <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
@@ -105,6 +106,7 @@
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
+        <comment userInput="validateButtonGroupInlineAppearanceWraps" stepKey="comment"/>
         <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
         <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Inline.value)}}" stepKey="seeButtonAppearance"/>
         <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
@@ -126,12 +128,13 @@
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
-            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
+            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
-        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Stacked.value)}}" stepKey="seeButtonAppearance"/>
+        <comment userInput="validateButtonGroupStackedAppearance" stepKey="comment"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupIndex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupIndex, PageBuilderButtonGroupAppearance_Stacked.value)}}" stepKey="seeButtonAppearance"/>
         <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
         <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
         <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
@@ -146,5 +149,37 @@
             <expectedResult type="variable">yCoordinate1</expectedResult>
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertGreaterThan>
+    </actionGroup>
+    <actionGroup name="validateButtonItemsSameSize">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="validateButtonItemsSameSize" stepKey="comment"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupIndex)}}" stepKey="waitForButtonGroup"/>
+        <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Enabled.value)}}" stepKey="seeButtonSameSizeValue"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{buttonItemPage.jsButtonSelector(firstButtonIndex)}}).width)" stepKey="button1Width"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{buttonItemPage.jsButtonSelector(secondButtonIndex)}}).width)" stepKey="button2Width"/>
+        <assertGreaterThan stepKey="assertButtonWidthGreaterThanZero">
+            <actualResult type="variable">button1Width</actualResult>
+            <expectedResult type="int">0</expectedResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="assertButtonWidthSize">
+            <actualResult type="variable">button1Width</actualResult>
+            <expectedResult type="variable">button2Width</expectedResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateButtonItemsDifferentSizes" extends="validateButtonItemsSameSize">
+        <comment userInput="validateButtonItemsDifferentSizes" stepKey="comment"/>
+        <seeElement selector="{{buttonGroupPage.sameSizeValue(buttonGroupIndex, PageBuilderButtonGroupSameSize_Disabled.value)}}" stepKey="seeButtonSameSizeValue"/>
+        <assertNotEquals stepKey="assertButtonWidthSize">
+            <actualResult type="variable">button1Width</actualResult>
+            <expectedResult type="variable">button2Width</expectedResult>
+        </assertNotEquals>
     </actionGroup>
 </actionGroups>

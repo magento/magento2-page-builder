@@ -132,10 +132,13 @@
         </actionGroup>
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -171,7 +174,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
-            <argument name="property" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="property" value="PageBuilderButtonItemText_First"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButton1TypeField">
             <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
@@ -183,7 +186,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Duplicate and Validate Stage -->
@@ -192,6 +195,16 @@
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="buttonGroupIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="buttonGroupIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -204,15 +217,10 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
-            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
-            <argument name="buttonGroupindex" value="2"/>
-        </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
             <argument name="url" value="PageBuilderButtonItemLink_Secure"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
@@ -221,7 +229,7 @@
         <!-- 2nd Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
@@ -230,10 +238,13 @@
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance">
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateStackedAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
         </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -263,6 +274,16 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="buttonGroupIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="buttonGroupIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -275,15 +296,10 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
-            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
-            <argument name="buttonGroupindex" value="2"/>
-        </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Stage2">
             <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
             <argument name="url" value="PageBuilderButtonItemLink_Secure"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
@@ -292,13 +308,23 @@
         <!-- 2nd Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Stage2">
             <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonGroupIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
@@ -312,15 +338,10 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
-            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
-            <argument name="buttonGroupindex" value="2"/>
-        </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Storefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
             <argument name="url" value="PageBuilderButtonItemLink_Secure"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
@@ -329,7 +350,7 @@
         <!-- 2nd Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Storefront2">
             <argument name="page" value="ButtonItemOnStorefront"/>
-            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
@@ -643,19 +664,38 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <!-- Add Button 1 Text -->
+        <comment userInput="Add Button 1 Text" stepKey="commentButton1Text"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
         <actionGroup ref="addButton" stepKey="addButton"/>
+        <!-- Add Button 2 Text -->
+        <comment userInput="Add Button 2 Text" stepKey="commentButton2Text"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <!-- Validate Default Values -->
-        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateInlineAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateButtonSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
@@ -667,6 +707,10 @@
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -675,12 +719,19 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateInlineAppearance2">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
@@ -1490,6 +1541,610 @@
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
     </test>
+    <test name="ButtonGroupInlineAppearanceEnableSameSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Enable Same Size For Inline Appearance"/>
+            <description value="Validate that enabling the same size button feature will update the Stage and Storefront correctly for the Inline appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3603"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+        </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonGroupStackedAppearanceEnableSameSize" extends="ButtonGroupInlineAppearanceEnableSameSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Enable Same Size For Stacked Appearance"/>
+            <description value="Validate that enabling the same size button feature will update the Stage and Storefront correctly for the Stacked appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3604"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonGroupInlineAppearanceDisableSameSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Disable Same Size For Inline Appearance"/>
+            <description value="Validate that disabling the same size button feature will update the Stage and Storefront correctly for the Inline appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3605"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+        </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Disable Same Size -->
+        <comment userInput="Disable Same Size" stepKey="commentDisableSameSize"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize2">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage After Disable -->
+        <comment userInput="Validate Stage After Disable" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage3"/>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStage3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Disabled"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonGroupStackedAppearanceDisableSameSize" extends="ButtonGroupInlineAppearanceDisableSameSize">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Disable Same Size For Stacked Appearance"/>
+            <description value="Validate that disabling the same size button feature will update the Stage and Storefront correctly for the Stacked appearance."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3606"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <!--todo: fails storefront cause div is width of whole page-->
+    </test>
+    <test name="ButtonGroupUpdateButtonTextWithSameSizeEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Update Button Text With Same Size Enabled"/>
+            <description value="Validate that when the same size button feature is enabled, updating the text of one button will affect the size of all buttons only when it updates to be longer than the currently longest button or if the longest button shrinks."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3607"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_ThreeCharacters"/>
+        </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_FourCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage: Initial -->
+        <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage1"/>
+        <!-- Validate Storefront: Initial -->
+        <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
+        <!-- Edit Button: Make Largest Button Larger -->
+        <comment userInput="Edit Button: Make Largest Button Larger" stepKey="commentEdit1"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_FiveCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Stage: Make Largest Button Larger -->
+        <comment userInput="Validate Stage: Make Largest Button Larger" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage2"/>
+        <assertGreaterThan stepKey="assertButtonWidthLargerThanInitialStage">
+            <actualResult type="variable">button1WidthStage2</actualResult>
+            <expectedResult type="variable">button1WidthStage1</expectedResult>
+        </assertGreaterThan>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront: Make Largest Button Larger -->
+        <comment userInput="Validate Storefront: Make Largest Button Larger" stepKey="commentValidateStorefront2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
+        <assertGreaterThan stepKey="assertButtonWidthLargerThanInitialStorefront">
+            <actualResult type="variable">button1WidthStorefront2</actualResult>
+            <expectedResult type="variable">button1WidthStorefront1</expectedResult>
+        </assertGreaterThan>
+        <!-- Edit Button: Make Largest Button Smallest -->
+        <comment userInput="Edit Button: Make Largest Button Smallest" stepKey="commentEdit2"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab2"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton4">
+            <argument name="text" value="PageBuilderButtonItemText_TwoCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Stage: Make Largest Button Smallest -->
+        <comment userInput="Validate Stage: Make Largest Button Smallest" stepKey="commentValidateStage3"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage3"/>
+        <assertLessThan stepKey="assertButtonWidthSmallerThanInitialStage">
+            <actualResult type="variable">button1WidthStage3</actualResult>
+            <expectedResult type="variable">button1WidthStage1</expectedResult>
+        </assertLessThan>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <!-- Validate Storefront: Make Largest Button Smallest -->
+        <comment userInput="Validate Storefront: Make Largest Button Smallest" stepKey="commentValidateStorefront3"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage4"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront3"/>
+        <assertLessThan stepKey="assertButtonWidthSmallerThanInitialStorefront">
+            <actualResult type="variable">button1WidthStorefront3</actualResult>
+            <expectedResult type="variable">button1WidthStorefront1</expectedResult>
+        </assertLessThan>
+        <!-- Edit Button: Make Smallest Button Smaller -->
+        <comment userInput="Edit Button: Make Smallest Button Smaller" stepKey="commentEdit3"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab3"/>
+        <reloadPage stepKey="reloadPage5"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton5">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Stage: Make Smallest Button Smaller -->
+        <comment userInput="Validate Stage: Make Smallest Button Smaller" stepKey="commentValidateStage4"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage4">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage4"/>
+        <assertEquals stepKey="assertButtonWidthUnchangedStage">
+            <actualResult type="variable">button1WidthStage4</actualResult>
+            <expectedResult type="variable">button1WidthStage3</expectedResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+        <!-- Validate Storefront: Make Smallest Button Smaller -->
+        <comment userInput="Validate Storefront: Make Smallest Button Smaller" stepKey="commentValidateStorefront4"/>
+        <switchToNextTab stepKey="switchToNextTab3"/>
+        <reloadPage stepKey="reloadPage6"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront4">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront4"/>
+        <assertEquals stepKey="assertButtonWidthUnchangedStorefront">
+            <actualResult type="variable">button1WidthStorefront4</actualResult>
+            <expectedResult type="variable">button1WidthStorefront3</expectedResult>
+        </assertEquals>
+        <!-- Edit Button: Make Smallest Button Largest -->
+        <comment userInput="Edit Button: Make Smallest Button Largest" stepKey="commentEdit4"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab4"/>
+        <reloadPage stepKey="reloadPage7"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton6">
+            <argument name="text" value="PageBuilderButtonItemText_FourCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Stage: Make Smallest Button Largest -->
+        <comment userInput="Validate Stage: Make Smallest Button Largest" stepKey="commentValidateStage5"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage5">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage5"/>
+        <assertEquals stepKey="assertButtonWidthSameAsInitialStage">
+            <actualResult type="variable">button1WidthStage5</actualResult>
+            <expectedResult type="variable">button1WidthStage1</expectedResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage5"/>
+        <!-- Validate Storefront: Make Smallest Button Largest -->
+        <comment userInput="Validate Storefront: Make Smallest Button Largest" stepKey="commentValidateStorefront5"/>
+        <switchToNextTab stepKey="switchToNextTab4"/>
+        <reloadPage stepKey="reloadPage8"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront5">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront5"/>
+        <assertEquals stepKey="assertButtonWidthSameAsInitialStorefront">
+            <actualResult type="variable">button1WidthStorefront5</actualResult>
+            <expectedResult type="variable">button1WidthStorefront1</expectedResult>
+        </assertEquals>
+    </test>
+    <test name="ButtonGroupCreateNewLargestButtonWithSameSizeEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Create New Largest Button With Same Size Enabled"/>
+            <description value="Validate that when the same size button feature is enabled, creating a new button that is the largest size will increase the size of all buttons"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3608"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+        </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_TwoCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentUpdateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage: Initial -->
+        <comment userInput="Validate Stage: Initial" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage1"/>
+        <!-- Validate Storefront: Initial -->
+        <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
+        <!-- Add New Longest Button -->
+        <comment userInput="Add New Longest Button" stepKey="commentAddNewButton"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="addButton" stepKey="addButton2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_ThreeCharacters"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Validate Stage: New Longest Button -->
+        <comment userInput="Validate Stage: New Longest Button" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="secondButtonIndex" value="3"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="button1WidthStage2"/>
+        <assertGreaterThan stepKey="assertButtonWidthStage">
+            <actualResult type="variable">button1WidthStage2</actualResult>
+            <expectedResult type="variable">button1WidthStage1</expectedResult>
+        </assertGreaterThan>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Validate Storefront: New Longest Button -->
+        <comment userInput="Validate Storefront: New Longest Button" stepKey="commentValidateStorefront2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="secondButtonIndex" value="3"/>
+        </actionGroup>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
+        <assertGreaterThan stepKey="assertButtonWidthStorefront">
+            <actualResult type="variable">button1WidthStorefront2</actualResult>
+            <expectedResult type="variable">button1WidthStorefront1</expectedResult>
+        </assertGreaterThan>
+    </test>
+    <test name="ButtonGroupCreateNewSmallerButtonWithSameSizeEnabled" extends="ButtonGroupCreateNewLargestButtonWithSameSizeEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Create New Smaller Button With Same Size Enabled"/>
+            <description value="Validate that when the same size button feature is enabled, creating a new button that is not thee largest size will not increase the size of all buttons"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3609"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add New Smaller Button -->
+        <comment userInput="Add New Smaller Button" stepKey="commentAddNewButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Validate Stage: New Smaller Button -->
+        <comment userInput="Validate Stage: New Smaller Button" stepKey="commentValidateStage2"/>
+        <assertEquals stepKey="assertButtonWidthStage">
+            <actualResult type="variable">button1WidthStage2</actualResult>
+            <expectedResult type="variable">button1WidthStage1</expectedResult>
+        </assertEquals>
+        <!-- Validate Storefront: New Smaller Button -->
+        <comment userInput="Validate Storefront: New Smaller Button" stepKey="commentValidateStorefront2"/>
+        <assertEquals stepKey="assertButtonWidthStorefront">
+            <actualResult type="variable">button1WidthStorefront2</actualResult>
+            <expectedResult type="variable">button1WidthStorefront1</expectedResult>
+        </assertEquals>
+    </test>
     <test name="ButtonsCannotAddToStage">
         <annotations>
             <features value="PageBuilder"/>
@@ -1588,6 +2243,194 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="ButtonGroupUpdateAllAttributes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Update All Attributes"/>
+            <description value="Validate that updating every attribute for a Button group will update the Stage and Storefront correctly."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-961"/>
+            <testCaseId value="MC-3597"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+        </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Update Appearance Section -->
+        <comment userInput="Update Appearance Section" stepKey="commentUpdateAppearance"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <!-- Update Advanced Section -->
+        <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvanced"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
+            <argument name="page" value="ButtonGroupOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateStackedAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="ButtonGroupOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="ButtonGroupOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
         </actionGroup>
     </test>
 </tests>
