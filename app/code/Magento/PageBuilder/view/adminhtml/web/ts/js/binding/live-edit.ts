@@ -6,6 +6,7 @@
  * @api
  */
 import $ from "jquery";
+import events from "Magento_PageBuilder/js/events";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
 
@@ -64,6 +65,7 @@ ko.bindingHandlers.liveEdit = {
          * Record the value on focus, only conduct an update when data changes
          */
         const onFocus = () => {
+            events.trigger("stage:interactionStart");
             focusedValue = updateHtml(element.innerHTML);
         };
 
@@ -74,6 +76,7 @@ ko.bindingHandlers.liveEdit = {
             if (focusedValue !== updateHtml(element.innerHTML)) {
                 viewModel.updateData(field, updateHtml(element.innerHTML));
             }
+            events.trigger("stage:interactionStop");
         };
 
         /**

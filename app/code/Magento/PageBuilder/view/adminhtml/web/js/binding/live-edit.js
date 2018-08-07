@@ -1,8 +1,9 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
+define(["jquery", "Magento_PageBuilder/js/events", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _events, _knockout, _keyCodes) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
+  _events = _interopRequireDefault(_events);
   _knockout = _interopRequireDefault(_knockout);
   _keyCodes = _interopRequireDefault(_keyCodes);
 
@@ -78,6 +79,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onFocus = function onFocus() {
+        _events.default.trigger("stage:interactionStart");
+
         focusedValue = updateHtml(element.innerHTML);
       };
       /**
@@ -89,6 +92,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
         if (focusedValue !== updateHtml(element.innerHTML)) {
           viewModel.updateData(field, updateHtml(element.innerHTML));
         }
+
+        _events.default.trigger("stage:interactionStop");
       };
       /**
        * Click event on element
