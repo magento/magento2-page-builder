@@ -445,6 +445,7 @@
             <testCaseId value="MC-3463"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <group value="ira"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -498,21 +499,21 @@
         <!--Verify FontStyle on preview-->
         <comment userInput="Verify FontStyle on preview" stepKey="commentVerifyFontsizeOnPreview"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTinyMCE4"/>
+        <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTinyMCE4"/>
         <click selector="{{WYSIWYGOnPageBuilder.formatSelector}}" stepKey="expandFormatList"/>
         <see userInput="Important" stepKey="seeImportantStyle"/>
         <click selector="{{TextOnStage.importantStyle('1')}}" stepKey="selectFormatStyle" />
-        <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextContentTypeDefault.value)}}" stepKey="seeTextInImportantStyleOnPreview1" />
+        <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnPreview1" />
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify FontStyle on stage-->
         <comment userInput="Verify FontStyle on stage" stepKey="commentVerifyFontStyleOnStage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextContentTypeDefault.value)}}" stepKey="seeTextInImportantStyleOnPreview2" />
+        <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnPreview2" />
         <!--Verify FontStyle on Storeview-->
         <comment userInput="Verify FontStyle on Storeview" stepKey="commentVerifyFontStyleOnStoreview"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextContentTypeDefault.value)}}" stepKey="seeTextInImportantStyleOnStorefront" />
+        <seeElement selector="{{TextOnStorefront.textInImportantStyle(PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnStorefront" />
     </test>
     <test name="TextAddTextWithCustomTinyMCE">
         <annotations>
@@ -523,6 +524,7 @@
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1412"/>
             <testCaseId value="MAGETWO-90274"/>
+            <!--<group value="ira"/>-->
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -582,13 +584,14 @@
         <see userInput="Important" stepKey="seeImportantStyle"/>
         <click selector="//span[text()='Important']" stepKey="selectFormatStyle" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <seeElement selector="//div/div[contains(normalize-space(@class), 'cms-content-important') and text()='{{PageBuilderTextContentTypeDefault.value}}']" stepKey="seeTextInImportantStyleOnPreview" />
+        <seeElement selector="{{TextOnStage.emptyTextInImportantStyle('1')}}" stepKey="seeTextInImportantStyleOnPreview" />
+        <grabValueFrom selector="{{TextOnStage.emptyTextInImportantStyle('1')}}" stepKey="grabTextFromEditor"/>
+        <assertEmpty stepKey="assertTextIsEmpty" actual="grabTextFromEditor" actualType="variable"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-
         <!--Verify FontStyle on Storeview-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <seeElement selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='{{PageBuilderTextContentTypeDefault.value}}']" stepKey="seeTextInImportantStyleOnStorefront" />
+        <seeElement selector="//div[contains(normalize-space(@class), 'cms-content-important') and not(text())]" stepKey="seeTextInImportantStyleOnStorefront" />
     </test>
     <test name="TextAddTextWithTinyMCE">
         <annotations>
