@@ -59,7 +59,7 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert don't see deleted image on stage -->
         <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
-        <seeElement selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
         <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
