@@ -12,7 +12,7 @@
     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.main.html" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Text'"></div>
 
     <div ifnot="isWysiwygSupported()">
-        <div html="data.main.html" data-bind="liveEdit: { field: 'content', placeholder: $t('Edit Text'), isSupportingHtml: true, isMultiline: true, preventSelectingAllOnClick: true }" />
+        <div html="data.main.html" data-bind="liveEdit: { field: 'content', placeholder: $t('Edit Text'), isSupportingHtml: true, isMultiline: true, preventSelectingAllOnClick: true }" class="live-edit-text"/>
     </div>
 
     <render args="getOptions().template" />

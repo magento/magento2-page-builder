@@ -67,7 +67,6 @@ export default class Wysiwyg {
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
     ) {
-
         this.contentTypeId = contentTypeId;
         this.elementId = elementId;
         this.contentTypeName = contentTypeName;
