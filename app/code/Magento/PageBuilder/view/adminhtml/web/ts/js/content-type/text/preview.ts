@@ -23,13 +23,16 @@ export default class Preview extends BasePreview {
     private element: HTMLElement;
 
     /**
+     * @returns {Boolean}
+     */
+    public isWysiwygSupported(): boolean {
+        return Config.getConfig("can_use_inline_editing_on_stage");
+    }
+
+    /**
      * @param {HTMLElement} element
      */
     public initWysiwyg(element: HTMLElement) {
-        if (!Config.getConfig("can_use_inline_editing_on_stage")) {
-            return;
-        }
-
         this.element = element;
 
         element.id = this.parent.id + "-editor";

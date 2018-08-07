@@ -35,8 +35,17 @@ ko.bindingHandlers.liveEdit = {
      * @param {KnockoutBindingContext} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const {field, placeholder} = valueAccessor();
+        const {field, placeholder, isSupportingHtml, isMultiline, preventSelectingAllOnClick} = valueAccessor();
         let focusedValue = element.innerHTML;
+
+        /**
+         * Get updated html based on options passed to binding
+         * @param {String} html
+         * @returns {String}
+         */
+        const updateHtml = (html: string) => {
+            return isSupportingHtml ? html : stripHtml(html);
+        };
 
         /**
          * Strip HTML and return text
@@ -55,15 +64,15 @@ ko.bindingHandlers.liveEdit = {
          * Record the value on focus, only conduct an update when data changes
          */
         const onFocus = () => {
-            focusedValue = stripHtml(element.innerHTML);
+            focusedValue = updateHtml(element.innerHTML);
         };
 
         /**
          * Blur event on element
          */
         const onBlur = () => {
-            if (focusedValue !== stripHtml(element.innerHTML)) {
-                viewModel.updateData(field, stripHtml(element.innerHTML));
+            if (focusedValue !== updateHtml(element.innerHTML)) {
+                viewModel.updateData(field, updateHtml(element.innerHTML));
             }
         };
 
@@ -71,7 +80,7 @@ ko.bindingHandlers.liveEdit = {
          * Click event on element
          */
         const onClick = () => {
-            if (element.innerHTML !== "") {
+            if (element.innerHTML !== "" && !preventSelectingAllOnClick) {
                 document.execCommand("selectAll", false, null);
             }
         };
@@ -93,7 +102,7 @@ ko.bindingHandlers.liveEdit = {
                     event.preventDefault();
                 }
             }
-            if (key === "enterKey") {
+            if (key === "enterKey" && !isMultiline) {
                 event.preventDefault();
             }
             // prevent slides from sliding

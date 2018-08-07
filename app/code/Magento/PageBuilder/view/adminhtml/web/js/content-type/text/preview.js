@@ -23,13 +23,17 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
     var _proto = Preview.prototype;
 
     /**
+     * @returns {Boolean}
+     */
+    _proto.isWysiwygSupported = function isWysiwygSupported() {
+      return _config.getConfig("can_use_inline_editing_on_stage");
+    };
+    /**
      * @param {HTMLElement} element
      */
-    _proto.initWysiwyg = function initWysiwyg(element) {
-      if (!_config.getConfig("can_use_inline_editing_on_stage")) {
-        return;
-      }
 
+
+    _proto.initWysiwyg = function initWysiwyg(element) {
       this.element = element;
       element.id = this.parent.id + "-editor";
       this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore);

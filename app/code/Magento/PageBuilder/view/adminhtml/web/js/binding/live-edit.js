@@ -44,15 +44,28 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
-          placeholder = _valueAccessor.placeholder;
+          placeholder = _valueAccessor.placeholder,
+          isSupportingHtml = _valueAccessor.isSupportingHtml,
+          isMultiline = _valueAccessor.isMultiline,
+          preventSelectingAllOnClick = _valueAccessor.preventSelectingAllOnClick;
 
       var focusedValue = element.innerHTML;
+      /**
+       * Get updated html based on options passed to binding
+       * @param {String} html
+       * @returns {String}
+       */
+
+      var updateHtml = function updateHtml(html) {
+        return isSupportingHtml ? html : stripHtml(html);
+      };
       /**
        * Strip HTML and return text
        *
        * @param {string} html
        * @returns {string}
        */
+
 
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
@@ -65,7 +78,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onFocus = function onFocus() {
-        focusedValue = stripHtml(element.innerHTML);
+        focusedValue = updateHtml(element.innerHTML);
       };
       /**
        * Blur event on element
@@ -73,8 +86,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onBlur = function onBlur() {
-        if (focusedValue !== stripHtml(element.innerHTML)) {
-          viewModel.updateData(field, stripHtml(element.innerHTML));
+        if (focusedValue !== updateHtml(element.innerHTML)) {
+          viewModel.updateData(field, updateHtml(element.innerHTML));
         }
       };
       /**
@@ -83,7 +96,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onClick = function onClick() {
-        if (element.innerHTML !== "") {
+        if (element.innerHTML !== "" && !preventSelectingAllOnClick) {
           document.execCommand("selectAll", false, null);
         }
       };
@@ -106,7 +119,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
           }
         }
 
-        if (key === "enterKey") {
+        if (key === "enterKey" && !isMultiline) {
           event.preventDefault();
         } // prevent slides from sliding
 
