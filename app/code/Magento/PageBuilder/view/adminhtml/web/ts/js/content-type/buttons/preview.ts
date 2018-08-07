@@ -129,7 +129,7 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Find the largest button text value which will determine the button width we use for re-sizing.
+     * Find the largest button which will determine the button width we use for re-sizing.
      *
      * @param {JQuery} buttonItems
      * @returns {JQuery}
@@ -139,11 +139,26 @@ export default class Preview extends PreviewCollection {
         buttonItems.each((index, element) => {
             const buttonElement = $(element);
             if (largestButton === null
-                || buttonElement.find("span").width() > largestButton.find("span").width()) {
+                || this.calculateButtonWidth(buttonElement) > this.calculateButtonWidth(largestButton)) {
                 largestButton = buttonElement;
             }
         });
 
         return largestButton;
+    }
+
+    /**
+     * Manually calculate button width using content plus box widths (padding, border)
+     *
+     * @param {JQuery} buttonItem
+     * @returns {number}
+     */
+    private calculateButtonWidth(buttonItem: JQuery): number {
+        const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+        const calculatedButtonWidth: number = widthProperties.reduce((accumulatedWidth, widthProperty): number => {
+            return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
+        }, buttonItem.find("span").width());
+
+        return calculatedButtonWidth;
     }
 }

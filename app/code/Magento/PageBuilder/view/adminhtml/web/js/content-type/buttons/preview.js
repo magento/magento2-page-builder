@@ -120,7 +120,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     };
     /**
-     * Find the largest button text value which will determine the button width we use for re-sizing.
+     * Find the largest button which will determine the button width we use for re-sizing.
      *
      * @param {JQuery} buttonItems
      * @returns {JQuery}
@@ -128,15 +128,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.findLargestButton = function findLargestButton(buttonItems) {
+      var _this4 = this;
+
       var largestButton = null;
       buttonItems.each(function (index, element) {
         var buttonElement = (0, _jquery)(element);
 
-        if (largestButton === null || buttonElement.find("span").width() > largestButton.find("span").width()) {
+        if (largestButton === null || _this4.calculateButtonWidth(buttonElement) > _this4.calculateButtonWidth(largestButton)) {
           largestButton = buttonElement;
         }
       });
       return largestButton;
+    };
+    /**
+     * Manually calculate button width using content plus box widths (padding, border)
+     *
+     * @param {JQuery} buttonItem
+     * @returns {number}
+     */
+
+
+    _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
+      var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+      var calculatedButtonWidth = widthProperties.reduce(function (accumulatedWidth, widthProperty) {
+        return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
+      }, buttonItem.find("span").width());
+      return calculatedButtonWidth;
     };
 
     return Preview;
