@@ -1623,8 +1623,8 @@
         </actionGroup>
         <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn" />
         <waitForPageLoad stepKey="waitForMouseOver" />
-        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role)}}" stepKey="waitForHideOptionNotVisible" />
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role)}}" stepKey="dontSeeHideOption" />
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="dontSeeHideOption" />
     </test>
     <test name="ValidateShowHideOnColumnChildDefaultState">
         <annotations>
@@ -1634,7 +1634,7 @@
             <description value="Children of column is shown by default in stage and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3541"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
             <group value="pagebuilder-column"/>

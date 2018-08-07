@@ -994,9 +994,28 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <!-- Duplicate and Verify Stage -->
         <actionGroup ref="duplicateContentType" stepKey="duplicateHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="index" value="2"/>
@@ -1058,6 +1077,10 @@
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Storefront -->
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
             <argument name="index" value="2"/>
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
@@ -1162,7 +1185,7 @@
             <description value="Heading is shown by default in stage and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3545"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
             <group value="pagebuilder-hideShow"/>

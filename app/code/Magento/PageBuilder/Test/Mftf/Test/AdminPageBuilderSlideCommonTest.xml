@@ -1874,7 +1874,7 @@
             <description value="Slider is shown by default in stage and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3553"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tab"/>
             <group value="pagebuilder-tabGroup"/>
@@ -2030,7 +2030,7 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <click selector="{{SlideOnBackend.openOptionsMenu('1')}}" stepKey="openSlideOptionsMenu"/>
-        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role)}}" stepKey="waitForHideOptionNotVisible" />
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role)}}" stepKey="dontSeeHideOption" />
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="dontSeeHideOption" />
     </test>
 </tests>

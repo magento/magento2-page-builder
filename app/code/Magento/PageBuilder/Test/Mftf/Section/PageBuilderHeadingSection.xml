@@ -11,8 +11,8 @@
     <section name="HeadingOnStage">
         <element name="all" type="button" selector="//div[contains(@class,'pagebuilder-heading')]"/>
         <element name="base" type="text" selector="(//*[@data-role='heading'])[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::*[@data-role='heading'])[{{arg1}}]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::*[@data-role='heading'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//*[@data-role='heading'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//*[@data-role='heading'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))]" parameterized="true"/>
         <element name="baseByTagName" type="text" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
         <element name="allHeadingsInContainer" type="button" selector="(//div[contains(@class, '{{arg1}}-container')])[{{arg2}}]//div[contains(@class,'pagebuilder-heading')]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[.= '{{arg2}}'])[{{arg3}}]" parameterized="true"/>
