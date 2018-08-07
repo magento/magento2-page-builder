@@ -59,7 +59,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
           var removeOption = _this.getOptions().getOption("remove");
 
           _this.parent.parent.children.subscribe(function (children) {
-            removeOption.is_disabled(children.length < 2);
+            removeOption.isDisabled(children.length < 2);
           });
         }
       });

@@ -36,11 +36,11 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
           var removeOption = _this2.getOptions().getOption("remove");
 
           if (_this2.parent.parent.children().length < 2) {
-            removeOption.is_disabled(true);
+            removeOption.isDisabled(true);
           }
 
           _this2.parent.parent.children.subscribe(function (children) {
-            removeOption.is_disabled(children.length < 2);
+            removeOption.isDisabled(children.length < 2);
           });
         }
       });

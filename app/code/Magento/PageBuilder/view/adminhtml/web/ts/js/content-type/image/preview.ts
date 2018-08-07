@@ -34,8 +34,12 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
-            events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0];
+            // Image is a required field, so we should only run assignAfter once an image is present, otherwise other
+            // modifications to the data store for this content type will cause the uploader to hide.
+            if (imageObject) {
+                events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+            }
         });
 
         events.on(`${this.config.name}:mountAfter`, () => {

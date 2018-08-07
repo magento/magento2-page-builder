@@ -26,7 +26,7 @@ define(["knockout"], function (_knockout) {
       this.title = _knockout.observable("");
       this.action = void 0;
       this.optionTemplate = void 0;
-      this.is_disabled = _knockout.observable(false);
+      this.isDisabled = _knockout.observable(false);
       this.parent = parent;
       this.code = code;
       this.icon(icon);
@@ -35,7 +35,7 @@ define(["knockout"], function (_knockout) {
       classes.forEach(function (cssClass) {
         koClasses[cssClass] = true;
       });
-      koClasses.disabled = this.is_disabled;
+      koClasses.disabled = this.isDisabled;
       this.classes(koClasses);
       this.sort = sort;
       this.optionTemplate = optionTemplate;
@@ -53,10 +53,12 @@ define(["knockout"], function (_knockout) {
       var _this = this,
           _arguments = arguments;
 
-      action = action ? action : function () {};
+      action = action ? action : function () {
+        return;
+      };
 
       this.action = function () {
-        if (!_this.is_disabled()) {
+        if (!_this.isDisabled()) {
           action.call(_this.parent, _arguments);
         }
       };
@@ -66,7 +68,9 @@ define(["knockout"], function (_knockout) {
      */
 
 
-    _proto.bindEvents = function bindEvents() {// Bind any events required by the option menu item
+    _proto.bindEvents = function bindEvents() {
+      // Bind any events required by the option menu item
+      return;
     };
 
     _createClass(Option, [{

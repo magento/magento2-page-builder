@@ -43,9 +43,12 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this2.parent.dataStore.get();
 
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0]; // Image is a required field, so we should only run assignAfter once an image is present, otherwise other
+        // modifications to the data store for this content type will cause the uploader to hide.
 
-        _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
+        if (imageObject) {
+          _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
+        }
       });
 
       _events.on(this.config.name + ":mountAfter", function () {
