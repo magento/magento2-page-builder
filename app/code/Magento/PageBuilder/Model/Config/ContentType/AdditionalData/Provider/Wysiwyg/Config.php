@@ -33,25 +33,25 @@ class Config implements ProviderInterface
     /**
      * @var array
      */
-    private $additionalConfig;
+    private $editors;
 
     /**
      * Config constructor.
      * @param \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
-     * @param array $additionalConfig
+     * @param array $editors
      */
     public function __construct(
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
-        $additionalConfig = []
+        $editors = []
     ) {
         $this->wysiwygConfig = $wysiwygConfig;
         $this->inlineEditingChecker = $inlineEditingChecker;
         $this->activeEditor = $activeEditor;
-        $this->additionalConfig = $additionalConfig;
+        $this->editors = $editors;
     }
 
     /**
@@ -63,8 +63,8 @@ class Config implements ProviderInterface
         $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
         if ($this->inlineEditingChecker->isSupported($activeEditorPath)) {
             $config['adapter'] = $this->wysiwygConfig->getConfig()->getData();
-            if (isset($this->additionalConfig[$activeEditorPath])) {
-                $config['additional'] = $this->additionalConfig[$activeEditorPath];
+            if (isset($this->editors[$activeEditorPath])) {
+                $config['additional'] = $this->editors[$activeEditorPath];
             }
         }
         return [$itemName => $config,];

@@ -4,13 +4,13 @@
  */
 
 import $ from "jquery";
-import wysiwygEvents from "mage/adminhtml/wysiwyg/events";
+import WysiwygEvents from "mage/adminhtml/wysiwyg/events";
+import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config";
 import DataStore from "../data-store";
-import WysiwygFactory from "./wysiwyg-factory";
 
 /**
  * Inline editing wysiwyg component
@@ -18,6 +18,16 @@ import WysiwygFactory from "./wysiwyg-factory";
  * @api
  */
 export default class Wysiwyg {
+    /**
+     * The id of the editor element
+     */
+    public elementId: string;
+
+    /**
+     * The supplied wysiwyg configuration
+     */
+    public config: AdditionalDataConfigInterface;
+
     /**
      * Id of content type
      */
@@ -39,64 +49,57 @@ export default class Wysiwyg {
     private fieldName: string;
 
     /**
+     * The content type name e.g. "text"
+     */
+    private contentTypeName: string;
+
+    /**
      * @param {String} contentTypeId
      * @param {String} elementId
+     * @param {String} contentTypeName
      * @param {AdditionalDataConfigInterface} config
      * @param {DataStore} dataStore
      */
     constructor(
         contentTypeId: string,
         elementId: string,
+        contentTypeName: string,
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
     ) {
+
         this.contentTypeId = contentTypeId;
-        // todo refactor here
+        this.elementId = elementId;
+        this.contentTypeName = contentTypeName;
         this.fieldName = config.additional.fieldName;
+        this.config = config;
         this.dataStore = dataStore;
 
-        config = this.encapsulateConfigBasedOnContentType(config);
+        const wysiwygSetup = new WysiwygSetup(this.elementId, this.config.adapter);
 
-        this.wysiwygAdapter = WysiwygFactory(elementId, config);
+        if (this.config.additional.mode) {
+            wysiwygSetup.setup(this.config.additional.mode);
+        }
+        this.wysiwygAdapter = wysiwygSetup.wysiwygInstance;
 
-        const $element = $("#" + elementId);
-        const minToolbarWidth = config.additional.minToolbarWidth;
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            WysiwygEvents.afterFocus,
+            this.onFocus.bind(this),
+        );
 
-        // prevent interactability with options when in editing mode
-        this.onFocus(() => {
-            window.getSelection().empty();
-
-            $(`#${elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
-
-            // If there isn't enough room for a left-aligned toolbar, right align it
-            if ($(window).width() < $element.offset().left + parseInt(minToolbarWidth, 10)) {
-                $element.addClass("_right-aligned-toolbar");
-            }
-            else {
-                $element.removeClass("_right-aligned-toolbar");
-            }
-
-            events.trigger("stage:interactionStart");
-
-            // Wait for everything else to finish
-            _.defer(() => {
-                $(config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline")
-                    .css("min-width", minToolbarWidth + "px");
-            });
-        });
-
-        // resume normal interactability with opens when leaving editing mode
-        this.onBlur(() => {
-            window.getSelection().empty();
-            $(`#${elementId}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
-            events.trigger("stage:interactionStop");
-        });
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            WysiwygEvents.afterBlur,
+            this.onBlur.bind(this),
+        );
 
         // Update content in our data store after our stage preview wysiwyg gets updated
-        this.onEdit(this.saveContentFromWysiwygToDataStore.bind(this));
+        this.wysiwygAdapter.eventBus.attachEventHandler(
+            WysiwygEvents.afterChangeContent,
+            _.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100),
+        );
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
-        events.on(`form:${contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
+        events.on(`form:${this.contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
     }
 
     /**
@@ -107,33 +110,31 @@ export default class Wysiwyg {
     }
 
     /**
-     * @param {Function} callback
+     * Called for the onFocus event
      */
-    public onEdit(callback: () => void) {
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            wysiwygEvents.afterChangeContent,
-            _.debounce(callback, 100),
-        );
+    private onFocus() {
+        // Clear any existing document selections
+        window.getSelection().empty();
+
+        $(`#${this.elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
+        events.trigger("stage:interactionStart");
+
+        // Wait for everything else to finish
+        _.defer(() => {
+            $(this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline")
+                .css("min-width", this.config.additional.minToolbarWidth + "px");
+        });
     }
 
     /**
-     * @param {Function} callback
+     * Called for the onBlur events
      */
-    public onFocus(callback: () => void) {
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            wysiwygEvents.afterFocus,
-            callback,
-        );
-    }
-
-    /**
-     * @param {Function} callback
-     */
-    public onBlur(callback: () => void) {
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            wysiwygEvents.afterBlur,
-            callback,
-        );
+    private onBlur() {
+        // Clear any selections in the editable area
+        window.getSelection().empty();
+        $(`#${this.elementId}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStop");
     }
 
     /**
@@ -153,34 +154,5 @@ export default class Wysiwyg {
         this.getAdapter().setContent(
             this.dataStore.get(this.fieldName) as string,
         );
-    }
-
-    /**
-     * Prepend specific config with id to encapsulate its targeting by the vendor wysiwyg editor
-     *
-     * @param {AdditionalDataConfigInterface} config
-     * @returns {AdditionalDataConfigInterface} - interpolated configuration
-     */
-    private encapsulateConfigBasedOnContentType(config: object)
-    {
-        const clonedConfig = $.extend(true, {}, config);
-
-        if (!clonedConfig.additional.encapsulateSelectorConfigKeys) {
-            return clonedConfig;
-        }
-
-        _.each(clonedConfig.additional.encapsulateSelectorConfigKeys, (isEnabled, configKey) => {
-            const configValue = clonedConfig.adapter.settings[configKey];
-
-            if (!isEnabled) {
-                return;
-            }
-
-            clonedConfig.adapter.settings[configKey] = (
-                "#" + this.contentTypeId + (configValue ? " " + configValue : "")
-            );
-        });
-
-        return clonedConfig;
     }
 }

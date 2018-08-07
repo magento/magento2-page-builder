@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _config, _preview, _wysiwyg) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg-factory"], function (_config, _preview, _wysiwygFactory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -34,36 +34,12 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
 
 
     _proto.initWysiwyg = function initWysiwyg(element) {
+      var _this2 = this;
+
       this.element = element;
       element.id = this.parent.id + "-editor";
-      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore);
-      this.wysiwyg.onFocus(this.onFocus.bind(this));
-      this.wysiwyg.onBlur(this.onBlur.bind(this));
-    };
-    /**
-     * Event handler for wysiwyg focus
-     * Fixes z-index issues for tabs and column
-     */
-
-
-    _proto.onFocus = function onFocus() {
-      var $element = (0, _jquery)(this.element);
-
-      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
-        $element.closest(selector).css("z-index", 100);
-      });
-    };
-    /**
-     * Event handler for wysiwyg blur
-     * Fixes z-index issues for tabs and column
-     */
-
-
-    _proto.onBlur = function onBlur() {
-      var $element = (0, _jquery)(this.element);
-
-      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
-        $element.closest(selector).css("z-index", "");
+      (0, _wysiwygFactory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore).then(function (wysiwyg) {
+        _this2.wysiwyg = wysiwyg;
       });
     };
 
