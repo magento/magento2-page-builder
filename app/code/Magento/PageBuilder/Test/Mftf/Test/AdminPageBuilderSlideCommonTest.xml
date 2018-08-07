@@ -696,6 +696,19 @@
         <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
         <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName1InTooltip"/>
+        <comment userInput="User sorts slides using drag and drop" stepKey="AC16"/>
+        <executeJS function="return document.querySelectorAll('{{SliderInAdmin.slideNavigationDragHandle}}')[0].clientWidth / 4" stepKey="xCoordinateToMoveTo"/>
+        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
+        <executeJS function="return document.querySelectorAll('{{SliderInAdmin.slideNavigationDragHandle}}')[1].clientHeight / 2" stepKey="yCoordinateToMoveTo"/>
+        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
+        <click selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="clickButton"/>
+        <dragAndDrop selector1="{{SliderInAdmin.slideNavigationDragHandleArgs('2')}}" selector2="{{SliderInAdmin.slideNavigationDot('1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
+        <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide name after sorting" stepKey="AC17"/>
+        <click selector="{{SliderInAdmin.sliderContainer}}" stepKey="unfocusNavigationAfterSort"/>
+        <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSort"/>
+        <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName2InTooltipAfterSort"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSecondSlideNavigationDot"/>
+        <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName1InTooltipAfterSort"/>
     </test>
     <test name="SliderDelete">
         <annotations>
