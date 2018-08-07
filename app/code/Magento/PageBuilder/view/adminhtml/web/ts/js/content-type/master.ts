@@ -41,100 +41,6 @@ export default class Master {
     }
 
     /**
-     * Get data for css binding, example {"class-name": true}
-     *
-     * @returns {DataObject}
-     * @deprecated
-     */
-    public getCss(element: string) {
-        const result: object = {};
-        let css: string = "";
-        let data: DataObject = _.extend({}, this.parent.dataStore.get());
-        if (element === undefined) {
-            if ("css_classes" in data && data.css_classes !== "") {
-                css = data.css_classes.toString();
-            }
-        } else {
-            const appearanceConfiguration = appearanceConfig(
-                this.parent.config.name,
-                data.appearance,
-            );
-            const config = appearanceConfiguration.data_mapping.elements[element];
-
-            if (config.css && config.css.var !== undefined && config.css.var in data ) {
-                data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
-                css = data[config.css.var].toString();
-            }
-        }
-        if (css) {
-            css.split(" ").map(
-                (value: any, index: number) => result[value] = true,
-            );
-        }
-        return result;
-    }
-
-    /**
-     * Get data for style binding, example {"backgroundColor": "#cccccc"}
-     *
-     * @returns {DataObject}
-     * @deprecated
-     */
-    public getStyle(element: string) {
-        let data = _.extend({}, this.parent.dataStore.get(), this.parent.config);
-
-        const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
-        const config = appearanceConfiguration.data_mapping.elements;
-
-        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
-
-        let result = {};
-        if (config[element].style.length) {
-            result = this.observableUpdater.convertStyle(config[element], data, "master");
-        }
-        return result;
-    }
-
-    /**
-     * Get data for attr binding, example {"data-role": "element"}
-     *
-     * @returns {DataObject}
-     * @deprecated
-     */
-    public getAttributes(element: string) {
-        let data = _.extend({}, this.parent.dataStore.get(), this.parent.config);
-
-        const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
-        const config = appearanceConfiguration.data_mapping.elements;
-
-        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
-
-        let result = {};
-        if (config[element].attributes.length) {
-            result = this.observableUpdater.convertAttributes(config[element], data, "master");
-        }
-
-        return result;
-    }
-
-    /**
-     * Get data for html binding
-     *
-     * @param {string} element
-     * @returns {object}
-     * @deprecated
-     */
-    public getHtml(element: string) {
-        const data = this.parent.dataStore.get() as DataObject;
-        const config = appearanceConfig(this.parent.config.name, data.appearance).data_mapping.elements[element];
-        let result = "";
-        if (undefined !== config.html.var) {
-            result = this.observableUpdater.convertHtml(config, data, "master");
-        }
-        return result;
-    }
-
-    /**
      * Get content type data
      *
      * @param {string} element
@@ -143,6 +49,10 @@ export default class Master {
      */
     public getData(element: string) {
         let data = _.extend({}, this.parent.dataStore.get());
+
+        if (undefined === element) {
+            return data;
+        }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;

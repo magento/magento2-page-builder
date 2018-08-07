@@ -49,6 +49,8 @@ export default class ObservableUpdater {
 
         const config = appearanceConfiguration.data_mapping.elements;
 
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
         for (const elementName of Object.keys(config)) {
             if (viewModel.data[elementName] === undefined) {
                 viewModel.data[elementName] = {
@@ -58,8 +60,6 @@ export default class ObservableUpdater {
                     html: ko.observable({}),
                 };
             }
-
-            data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
             if (config[elementName].style !== undefined) {
                 viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
@@ -99,14 +99,28 @@ export default class ObservableUpdater {
     }
 
     /**
+     * Process data for elements before its converted to knockout format
+     *
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
+     * @deprecated
+     */
+    public convertData(data: object, convertersConfig: object) {
+        for (const converterConfig of convertersConfig) {
+            data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
+        }
+        return data;
+    }
+
+    /**
      * Convert attributes
      *
      * @param {object} config
      * @param {DataObject} data
      * @returns {object}
-     * @deprecated
      */
-    public convertAttributes(config: any, data: DataObject) {
+    private convertAttributes(config: any, data: DataObject) {
         const result: any = {};
         for (const attributeConfig of config.attributes) {
             if (undefined !== attributeConfig.persist
@@ -132,9 +146,8 @@ export default class ObservableUpdater {
      * @param {object}config
      * @param {object}data
      * @returns {object}
-     * @deprecated
      */
-    public convertStyle(config: any, data: any) {
+    private convertStyle(config: any, data: any) {
         const result = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
@@ -170,9 +183,8 @@ export default class ObservableUpdater {
      * @param {object} config
      * @param {DataObject} data
      * @returns {string}
-     * @deprecated
      */
-    public convertHtml(config: any, data: DataObject) {
+    private convertHtml(config: any, data: DataObject) {
         let value = data[config.html.var] || config.html.placeholder;
         const converter = this.converterResolver(config.html);
         if (this.converterPool.get(converter)) {
@@ -183,20 +195,5 @@ export default class ObservableUpdater {
             value = config.html.placeholder;
         }
         return value;
-    }
-
-    /**
-     * Process data for elements before its converted to knockout format
-     *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
-     */
-    public convertData(data: object, convertersConfig: object) {
-        for (const converterConfig of convertersConfig) {
-            data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
-        }
-        return data;
     }
 }

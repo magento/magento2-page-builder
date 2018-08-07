@@ -37,6 +37,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       }
 
       var config = appearanceConfiguration.data_mapping.elements;
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
       var _arr = Object.keys(config);
 
@@ -51,8 +52,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
             html: _knockout.observable({})
           };
         }
-
-        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         if (config[elementName].style !== undefined) {
           viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
@@ -103,19 +102,17 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       }
     };
     /**
-     * Convert attributes
+     * Process data for elements before its converted to knockout format
      *
-     * @param {object} config
-     * @param {DataObject} data
-     * @returns {object}
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
      * @deprecated
      */
 
 
-    _proto.convertAttributes = function convertAttributes(config, data) {
-      var result = {};
-
-      for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    _proto.convertData = function convertData(data, convertersConfig) {
+      for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
         var _ref;
 
         if (_isArray) {
@@ -127,7 +124,37 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           _ref = _i3.value;
         }
 
-        var _attributeConfig = _ref;
+        var _converterConfig = _ref;
+        data = this.massConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
+      }
+
+      return data;
+    };
+    /**
+     * Convert attributes
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @returns {object}
+     */
+
+
+    _proto.convertAttributes = function convertAttributes(config, data) {
+      var result = {};
+
+      for (var _iterator2 = config.attributes, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+        var _ref2;
+
+        if (_isArray2) {
+          if (_i4 >= _iterator2.length) break;
+          _ref2 = _iterator2[_i4++];
+        } else {
+          _i4 = _iterator2.next();
+          if (_i4.done) break;
+          _ref2 = _i4.value;
+        }
+
+        var _attributeConfig = _ref2;
 
         if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && "false" === _attributeConfig.persist) {
           continue;
@@ -151,7 +178,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * @param {object}config
      * @param {object}data
      * @returns {object}
-     * @deprecated
      */
 
 
@@ -159,19 +185,19 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       var result = {};
 
       if (config.style) {
-        for (var _iterator2 = config.style, _isArray2 = Array.isArray(_iterator2), _i4 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-          var _ref2;
+        for (var _iterator3 = config.style, _isArray3 = Array.isArray(_iterator3), _i5 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+          var _ref3;
 
-          if (_isArray2) {
-            if (_i4 >= _iterator2.length) break;
-            _ref2 = _iterator2[_i4++];
+          if (_isArray3) {
+            if (_i5 >= _iterator3.length) break;
+            _ref3 = _iterator3[_i5++];
           } else {
-            _i4 = _iterator2.next();
-            if (_i4.done) break;
-            _ref2 = _i4.value;
+            _i5 = _iterator3.next();
+            if (_i5.done) break;
+            _ref3 = _i5.value;
           }
 
-          var _propertyConfig = _ref2;
+          var _propertyConfig = _ref3;
 
           if (undefined !== _propertyConfig.persist && null !== _propertyConfig.persist && "false" === _propertyConfig.persist) {
             continue;
@@ -206,7 +232,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * @param {object} config
      * @param {DataObject} data
      * @returns {string}
-     * @deprecated
      */
 
 
@@ -224,35 +249,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       }
 
       return value;
-    };
-    /**
-     * Process data for elements before its converted to knockout format
-     *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
-     */
-
-
-    _proto.convertData = function convertData(data, convertersConfig) {
-      for (var _iterator3 = convertersConfig, _isArray3 = Array.isArray(_iterator3), _i5 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-        var _ref3;
-
-        if (_isArray3) {
-          if (_i5 >= _iterator3.length) break;
-          _ref3 = _iterator3[_i5++];
-        } else {
-          _i5 = _iterator3.next();
-          if (_i5.done) break;
-          _ref3 = _i5.value;
-        }
-
-        var _converterConfig = _ref3;
-        data = this.massConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
-      }
-
-      return data;
     };
 
     return ObservableUpdater;

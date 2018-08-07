@@ -32,114 +32,18 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
     var _proto = Master.prototype;
 
     /**
-     * Get data for css binding, example {"class-name": true}
-     *
-     * @returns {DataObject}
-     * @deprecated
-     */
-    _proto.getCss = function getCss(element) {
-      var result = {};
-      var css = "";
-
-      var data = _underscore.extend({}, this.parent.dataStore.get());
-
-      if (element === undefined) {
-        if ("css_classes" in data && data.css_classes !== "") {
-          css = data.css_classes.toString();
-        }
-      } else {
-        var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-        var config = appearanceConfiguration.data_mapping.elements[element];
-
-        if (config.css && config.css.var !== undefined && config.css.var in data) {
-          data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
-          css = data[config.css.var].toString();
-        }
-      }
-
-      if (css) {
-        css.split(" ").map(function (value, index) {
-          return result[value] = true;
-        });
-      }
-
-      return result;
-    };
-    /**
-     * Get data for style binding, example {"backgroundColor": "#cccccc"}
-     *
-     * @returns {DataObject}
-     * @deprecated
-     */
-
-
-    _proto.getStyle = function getStyle(element) {
-      var data = _underscore.extend({}, this.parent.dataStore.get(), this.parent.config);
-
-      var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
-      var result = {};
-
-      if (config[element].style.length) {
-        result = this.observableUpdater.convertStyle(config[element], data, "master");
-      }
-
-      return result;
-    };
-    /**
-     * Get data for attr binding, example {"data-role": "element"}
-     *
-     * @returns {DataObject}
-     * @deprecated
-     */
-
-
-    _proto.getAttributes = function getAttributes(element) {
-      var data = _underscore.extend({}, this.parent.dataStore.get(), this.parent.config);
-
-      var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
-      var result = {};
-
-      if (config[element].attributes.length) {
-        result = this.observableUpdater.convertAttributes(config[element], data, "master");
-      }
-
-      return result;
-    };
-    /**
-     * Get data for html binding
-     *
-     * @param {string} element
-     * @returns {object}
-     * @deprecated
-     */
-
-
-    _proto.getHtml = function getHtml(element) {
-      var data = this.parent.dataStore.get();
-      var config = (0, _appearanceConfig)(this.parent.config.name, data.appearance).data_mapping.elements[element];
-      var result = "";
-
-      if (undefined !== config.html.var) {
-        result = this.observableUpdater.convertHtml(config, data, "master");
-      }
-
-      return result;
-    };
-    /**
      * Get content type data
      *
      * @param {string} element
      * @returns {DataObject}
      * @deprecated
      */
-
-
     _proto.getData = function getData(element) {
       var data = _underscore.extend({}, this.parent.dataStore.get());
+
+      if (undefined === element) {
+        return data;
+      }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
