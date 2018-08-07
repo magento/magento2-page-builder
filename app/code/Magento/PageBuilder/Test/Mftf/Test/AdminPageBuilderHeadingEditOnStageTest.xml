@@ -1580,7 +1580,7 @@
             <stories value="Heading"/>
             <title value="Stage Edit - Heading Toolbar should hide on drag action"/>
             <description value="Heading live edit should become unfocused on drag action"/>
-            <severity value="CRITICAL"/>
+            <severity value="MINOR"/>
             <useCaseId value="MC-843"/>
             <testCaseId value="MC-3540"/>
             <group value="pagebuilder"/>
@@ -1600,16 +1600,18 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <!-- Validate Heading edit toolbar shows after dragging in -->
         <comment userInput="Validate Heading edit toolbar" stepKey="CommentHeadingEditToolbar"/>
-        <seeElement selector="{{HeadingOnStage.headingToolbar}}" stepKey="seeHeadingToolbar"/>
+        <seeElement selector="{{HeadingOnStage.headingToolbar('1')}}" stepKey="seeHeadingToolbar"/>
+        <!-- Check if clicking on draggable content, the heading input loses focus and the toolbar hides -->
         <comment userInput="When click on draggable content, heading input loses focus, toolbar disappears, and placeholder displays Enter Heading Text" stepKey="commentClickOnDraggable"/>
         <click selector="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderHeadingContentType.name)}}" stepKey="clickDraggableInPanel"/>
-        <dontSeeElement selector="{{HeadingOnStage.headingToolbar}}" stepKey="dontSeeHeadingToolbar"/>
+        <dontSeeElement selector="{{HeadingOnStage.headingToolbar('1')}}" stepKey="dontSeeHeadingToolbar"/>
+        <!-- Check if heading toolbar shows after focusing on heading content type -->
         <comment userInput="When click inside heading see heading input gain focus, placeholder disappears and WYSIWYG toolbar appears" stepKey="commentClickInsideHeading"/>
         <actionGroup ref="clickInsideLiveEditHeading" stepKey="clickInsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
-        <seeElement selector="{{HeadingOnStage.headingToolbar}}" stepKey="seeHeadingToolbar2"/>
+        <seeElement selector="{{HeadingOnStage.headingToolbar('1')}}" stepKey="seeHeadingToolbar2"/>
     </test>
 </tests>
