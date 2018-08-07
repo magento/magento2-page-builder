@@ -6,7 +6,8 @@
 import $ from "jquery";
 import Config from "../../config";
 import BasePreview from "../preview";
-import Wysiwyg from "../wysiwyg";
+import WysiwygFactory from "../wysiwyg-factory";
+import {WysiwygInterface} from "../wysiwyg-interface";
 
 /**
  * @api
@@ -15,7 +16,7 @@ export default class Preview extends BasePreview {
     /**
      * Wysiwyg instance
      */
-    private wysiwyg: Wysiwyg;
+    private wysiwyg: WysiwygInterface;
 
     /**
      * The element the text content type is bound to
@@ -34,38 +35,14 @@ export default class Preview extends BasePreview {
 
         element.id = this.parent.id + "-editor";
 
-        this.wysiwyg = new Wysiwyg(
+        WysiwygFactory(
             this.parent.id,
             element.id,
+            this.config.name,
             this.config.additional_data.wysiwygConfig.wysiwygConfigData,
             this.parent.dataStore,
-        );
-
-        this.wysiwyg.onFocus(this.onFocus.bind(this));
-        this.wysiwyg.onBlur(this.onBlur.bind(this));
-    }
-
-    /**
-     * Event handler for wysiwyg focus
-     * Fixes z-index issues for tabs and column
-     */
-    private onFocus() {
-        const $element = $(this.element);
-
-        $.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, (i, selector) => {
-            $element.closest(selector as string).css("z-index", 100);
-        });
-    }
-
-    /**
-     * Event handler for wysiwyg blur
-     * Fixes z-index issues for tabs and column
-     */
-    private onBlur() {
-        const $element = $(this.element);
-
-        $.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, (i, selector) => {
-            $element.closest(selector as string).css("z-index", "");
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
         });
     }
 }
