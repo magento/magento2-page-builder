@@ -27,7 +27,7 @@ export default interface ContentTypeConfigInterface {
     readers: string[];
     allowed_parents: string[];
     is_visible: boolean;
-    concealable: boolean;
+    is_hideable: boolean;
 }
 
 export interface ContentTypeConfigAppearanceInterface {

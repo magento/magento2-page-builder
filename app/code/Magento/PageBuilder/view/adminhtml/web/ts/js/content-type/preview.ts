@@ -416,8 +416,8 @@ export default class Preview {
             ),
         ];
 
-        // If the content type is concealable show the hide / show option
-        if (this.parent.config.concealable) {
+        // If the content type is is_hideable show the hide / show option
+        if (this.parent.config.is_hideable) {
             options.push(new HideShow(
                 this,
                 "hide_show",

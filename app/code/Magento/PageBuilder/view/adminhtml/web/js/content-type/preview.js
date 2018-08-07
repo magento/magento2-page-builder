@@ -368,9 +368,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = [new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title(this, this.config.label, 20), new _option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-content-type"], 30), new _option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 50), new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 60)]; // If the content type is concealable show the hide / show option
+      var options = [new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title(this, this.config.label, 20), new _option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-content-type"], 30), new _option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 50), new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 60)]; // If the content type is is_hideable show the hide / show option
 
-      if (this.parent.config.concealable) {
+      if (this.parent.config.is_hideable) {
         options.push(new _hideShow(this, "hide_show", _hideShow.SHOW_ICON, _hideShow.SHOW_TEXT, this.onOptionHideShow, ["hide-show-content-type"], 40));
       }
 

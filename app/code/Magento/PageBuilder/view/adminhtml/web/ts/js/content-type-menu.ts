@@ -23,9 +23,8 @@ export default class ContentTypeMenu {
     constructor(parent: Preview, options: OptionInterface[]) {
         this.parent = parent;
         options.forEach((option) => {
-            this.addOption(option, true);
+            this.addOption(option);
         });
-        this.sort();
     }
 
     get template(): string {
@@ -38,12 +37,10 @@ export default class ContentTypeMenu {
      * @param {OptionInterface} option
      * @param {boolean} skipSort
      */
-    public addOption(option: OptionInterface, skipSort: boolean = false) {
+    public addOption(option: OptionInterface) {
         option.bindEvents();
         this.options.push(option);
-        if (!skipSort) {
-            this.sort();
-        }
+        this.sort();
     }
 
     /**

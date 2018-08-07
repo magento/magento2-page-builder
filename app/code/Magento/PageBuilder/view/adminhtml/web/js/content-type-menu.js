@@ -23,9 +23,8 @@ define(["knockout"], function (_knockout) {
       this.options = _knockout.observableArray([]);
       this.parent = parent;
       options.forEach(function (option) {
-        _this.addOption(option, true);
+        _this.addOption(option);
       });
-      this.sort();
     }
 
     var _proto = ContentTypeMenu.prototype;
@@ -36,17 +35,10 @@ define(["knockout"], function (_knockout) {
      * @param {OptionInterface} option
      * @param {boolean} skipSort
      */
-    _proto.addOption = function addOption(option, skipSort) {
-      if (skipSort === void 0) {
-        skipSort = false;
-      }
-
+    _proto.addOption = function addOption(option) {
       option.bindEvents();
       this.options.push(option);
-
-      if (!skipSort) {
-        this.sort();
-      }
+      this.sort();
     };
     /**
      * Remove an option
