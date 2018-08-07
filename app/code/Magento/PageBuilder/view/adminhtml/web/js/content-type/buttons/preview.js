@@ -101,7 +101,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         items: ".pagebuilder-content-type-wrapper",
         cursor: "grabbing",
         containment: "parent",
-        tolerance: this.data.main.attributes()["data-appearance"] === "stacked" ? "pointer" : "intersect",
+        tolerance: this.parent.dataStore.get("appearance") === "stacked" ? "pointer" : "intersect",
         revert: 200,
         cursorAt: {
           left: 15,

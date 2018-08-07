@@ -108,7 +108,7 @@ export default class Preview extends PreviewCollection {
             items: ".pagebuilder-content-type-wrapper",
             cursor: "grabbing",
             containment: "parent",
-            tolerance: this.data.main.attributes()["data-appearance"] === "stacked" ? "pointer" : "intersect",
+            tolerance: this.parent.dataStore.get("appearance") === "stacked" ? "pointer" : "intersect",
             revert: 200,
             cursorAt: { left: 15, top: 15 },
             disabled: this.parent.children().length <= 1,
