@@ -3,13 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import {AdditionalDataConfigInterface} from "../content-type-config";
-import DataStore from "../data-store";
+import {AdditionalDataConfigInterface} from "../../content-type-config";
+import DataStore from "../../data-store";
 
 /**
  * Provides an interface for the constructor of a WysiwygInterface object
  */
-export interface WysiwygConstructableInterface {
+export interface WysiwygConstructorInterface {
     /**
      * @param {String} contentTypeId The ID in the registry of the content type.
      * @param {String} elementId The ID of the editor element in the DOM.
@@ -45,3 +45,5 @@ export interface WysiwygInterface {
      */
     getAdapter(): WysiwygInstanceInterface;
 }
+
+export default WysiwygInterface;

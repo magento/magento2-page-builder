@@ -140,4 +140,4 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
   return Wysiwyg;
 });
-//# sourceMappingURL=wysiwyg.js.map
+//# sourceMappingURL=tinymce4.js.map

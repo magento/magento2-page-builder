@@ -51,4 +51,4 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
 
   return create;
 });
-//# sourceMappingURL=wysiwyg-factory.js.map
+//# sourceMappingURL=factory.js.map

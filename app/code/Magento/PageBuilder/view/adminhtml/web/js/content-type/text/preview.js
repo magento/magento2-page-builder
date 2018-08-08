@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg-factory"], function (_jquery, _config, _preview, _wysiwygFactory) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_config, _preview, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -38,11 +38,7 @@ define(["jquery", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/conte
 
       this.element = element;
       element.id = this.parent.id + "-editor";
-
-      var wysiwygConfig = _jquery.extend(true, {}, this.config.additional_data.wysiwygConfig.wysiwygConfigData);
-
-      wysiwygConfig.additional.mode = "inline";
-      (0, _wysiwygFactory)(this.parent.id, element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+      (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });
     };

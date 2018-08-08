@@ -1,10 +1,10 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _events, _knockout, _keyCodes) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _events, _keyCodes) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
-  _events = _interopRequireDefault(_events);
   _knockout = _interopRequireDefault(_knockout);
+  _events = _interopRequireDefault(_events);
   _keyCodes = _interopRequireDefault(_keyCodes);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

@@ -86,7 +86,6 @@ export function getImageUrl(image: any[]) {
  * @api
  */
 export function removeQuotesInMediaDirectives(html: string): string {
-    // Bail early
     if (!html) {
         return "";
     }
@@ -113,7 +112,6 @@ export function removeQuotesInMediaDirectives(html: string): string {
  * @api
  */
 export function convertMediaDirectivesToUrls(html: string): string {
-    // Bail early
     if (!html) {
         return "";
     }

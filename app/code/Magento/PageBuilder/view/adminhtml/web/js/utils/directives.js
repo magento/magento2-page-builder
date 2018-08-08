@@ -88,7 +88,6 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
 
   function removeQuotesInMediaDirectives(html) {
-    // Bail early
     if (!html) {
       return "";
     }
@@ -120,7 +119,6 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
 
   function convertMediaDirectivesToUrls(html) {
-    // Bail early
     if (!html) {
       return "";
     }

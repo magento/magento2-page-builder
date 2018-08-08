@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {WysiwygConfigInitializerInterface} from "../../wysiwyg-initializer-interface";
+import WysiwygConfigInitializerInterface from "../../../wysiwyg/config-initializer-interface";
 
 export default class ConfigInitializer implements WysiwygConfigInitializerInterface {
     /**

@@ -5,10 +5,10 @@
 
 import $ from "jquery";
 import loadModule from "Magento_PageBuilder/js/utils/loader";
-import {AdditionalDataConfigInterface} from "../content-type-config";
-import DataStore from "../data-store";
-import Wysiwyg from "./wysiwyg";
-import {WysiwygConstructableInterface, WysiwygInterface} from "./wysiwyg-interface";
+import {AdditionalDataConfigInterface} from "../../content-type-config";
+import DataStore from "../../data-store";
+import Wysiwyg from "./tinymce4";
+import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface";
 
 /**
  * @param {String} contentTypeId The ID in the registry of the content type.
@@ -31,7 +31,7 @@ export default function create(
     config = $.extend(true, {}, config);
 
     return new Promise((resolve: (WysiwygInstance: WysiwygInterface) => void) => {
-        loadModule([config.additional.component], (WysiwygInstance: WysiwygConstructableInterface) => {
+        loadModule([config.additional.component], (WysiwygInstance: WysiwygConstructorInterface) => {
             new Promise((configResolve: () => void): void => {
                 if (config.additional.initializers
                     && config.additional.initializers.config

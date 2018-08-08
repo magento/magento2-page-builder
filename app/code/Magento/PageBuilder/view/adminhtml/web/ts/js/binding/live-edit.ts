@@ -6,8 +6,8 @@
  * @api
  */
 import $ from "jquery";
-import events from "Magento_PageBuilder/js/events";
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
 
 /**
