@@ -137,6 +137,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.focusedSlide(slideIndex);
     };
     /**
+     * Unset focused slide on focusout event.
+     *
+     * @param {PreviewCollection} data
+     * @param {JQueryEventObject} event
+     */
+
+
+    _proto.onFocusOut = function onFocusOut(data, event) {
+      if (_underscore.isNull(event.relatedTarget) || event.relatedTarget && !_jquery.contains(event.currentTarget, event.relatedTarget)) {
+        this.setFocusedSlide(null);
+      }
+    };
+    /**
      * Navigate to a slide
      *
      * @param {number} slideIndex

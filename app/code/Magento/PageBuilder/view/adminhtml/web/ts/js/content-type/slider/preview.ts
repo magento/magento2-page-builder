@@ -169,6 +169,20 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Unset focused slide on focusout event.
+     *
+     * @param {PreviewCollection} data
+     * @param {JQueryEventObject} event
+     */
+    public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
+        if (_.isNull(event.relatedTarget) ||
+            event.relatedTarget && !$.contains(event.currentTarget as Element, event.relatedTarget)
+        ) {
+            this.setFocusedSlide(null);
+        }
+    }
+
+    /**
      * Navigate to a slide
      *
      * @param {number} slideIndex

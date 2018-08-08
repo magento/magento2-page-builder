@@ -51,7 +51,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         });
       }).on("sortupdate", function (event, ui) {
         if (this === ui.item.parent()[0]) {
-          console.log(ui);
           var index = ui.item.index();
 
           var targetParent = _knockout.default.dataFor(ui.item.parent()[0]).parent;
