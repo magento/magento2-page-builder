@@ -283,7 +283,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
       var calculatedButtonWidth = widthProperties.reduce(function (accumulatedWidth, widthProperty) {
         return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
-      }, buttonItem.find("span").width());
+      }, buttonItem.find("[data-element='link_text']").width());
       return calculatedButtonWidth;
     };
 

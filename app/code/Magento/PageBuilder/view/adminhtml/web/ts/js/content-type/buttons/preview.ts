@@ -276,7 +276,7 @@ export default class Preview extends PreviewCollection {
         const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
         const calculatedButtonWidth: number = widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
-        }, buttonItem.find("span").width());
+        }, buttonItem.find("[data-element='link_text']").width());
 
         return calculatedButtonWidth;
     }
