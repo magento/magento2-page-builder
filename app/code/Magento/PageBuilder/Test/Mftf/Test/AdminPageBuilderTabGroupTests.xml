@@ -904,11 +904,13 @@
         </actionGroup>
         <waitForElement selector="{{TabsOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
         <dontSeeElement selector="{{TabsOnFrontend.base('1')}}" stepKey="dontSeeContentType" />
-        <waitForElement selector="{{TabsOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <seeElementInDOM selector="{{TabsOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
         <waitForElement selector="{{TabOnStorefront.base('1')}}" stepKey="waitForTabNotVisible" />
         <dontSeeElement selector="{{TabOnStorefront.base('1')}}" stepKey="dontSeeTabNotVisible" />
         <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingNotVisible" />
         <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeHeadingNotVisible" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -919,13 +921,15 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{TabsOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{TabsOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
-        <waitForElementVisible selector="{{TabOnStorefront.base('1')}}" stepKey="waitForTabVisible" />
-        <waitForElementVisible selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingVisible" />
+        <dontSeeElementInDOM selector="{{TabsOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{TabsOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <seeElement selector="{{TabOnStorefront.base('1')}}" stepKey="waitForTabVisible" />
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingVisible" />
     </test>
     <test name="ValidateTabItemNotis_hideable">
         <annotations>
@@ -1091,7 +1095,9 @@
         </actionGroup>
         <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
         <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
-        <waitForElement selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <seeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -1101,10 +1107,12 @@
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
 </tests>

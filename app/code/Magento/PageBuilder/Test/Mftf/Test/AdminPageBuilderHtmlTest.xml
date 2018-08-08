@@ -998,7 +998,9 @@
         </actionGroup>
         <waitForElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
         <dontSeeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
-        <waitForElement selector="{{HtmlOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <seeElementInDOM selector="{{HtmlOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -1008,10 +1010,12 @@
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{HtmlOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <dontSeeElementInDOM selector="{{HtmlOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
 </tests>

@@ -925,7 +925,9 @@
         </actionGroup>
         <waitForElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
         <dontSeeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
-        <waitForElement selector="{{BlockOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <seeElementInDOM selector="{{BlockOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -935,10 +937,12 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{BlockOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <dontSeeElementInDOM selector="{{BlockOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{BlockOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
 </tests>

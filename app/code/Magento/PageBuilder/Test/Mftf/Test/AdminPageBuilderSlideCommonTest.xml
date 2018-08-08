@@ -2067,9 +2067,11 @@
         </actionGroup>
         <waitForElement selector="{{SliderOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
         <dontSeeElement selector="{{SliderOnFrontend.base('1')}}" stepKey="dontSeeContentType" />
-        <waitForElement selector="{{SliderOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <seeElementInDOM selector="{{SliderOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
         <waitForElement selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSlideNotVisible" />
         <dontSeeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="dontSeeSlide" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -2079,12 +2081,14 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{SliderOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{SliderOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
-        <waitForElementVisible selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSlideVisible" />
+        <dontSeeElementInDOM selector="{{SliderOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{SliderOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSlideVisible" />
     </test>
     <test name="ValidateSlideNotis_hideable">
         <annotations>

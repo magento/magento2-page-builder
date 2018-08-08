@@ -1154,7 +1154,9 @@
         </actionGroup>
         <waitForElement selector="{{VideoOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
         <dontSeeElement selector="{{VideoOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
-        <waitForElement selector="{{VideoOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <seeElementInDOM selector="{{VideoOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -1164,10 +1166,12 @@
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{VideoOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{VideoOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <dontSeeElementInDOM selector="{{VideoOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{VideoOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
 </tests>

@@ -1724,11 +1724,12 @@
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
-        <dontSeeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
         <dontSeeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonGroup" />
-        <waitForElement selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
-        <waitForElementNotVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemNotVisible" />
+        <seeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <waitForElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemNotVisible" />
         <dontSeeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="dontSeeButtonItem" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
@@ -1738,11 +1739,13 @@
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
         <switchToNextTab stepKey="switchBackToStorefront" />
         <reloadPage stepKey="reloadStorefront" />
         <waitForPageLoad stepKey="waitForStorefrontReload" />
-        <dontSeeElement selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <waitForElementVisible selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible" />
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible" />
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible" />
+        <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible" />
     </test>
 </tests>
