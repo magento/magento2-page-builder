@@ -52,6 +52,7 @@ export default class Option implements OptionInterface {
         this.optionTemplate = optionTemplate;
 
         this.setAction(action);
+        this.bindEvents();
     }
 
     get template(): string {
@@ -65,9 +66,9 @@ export default class Option implements OptionInterface {
      */
     public setAction(action: () => void): void {
         action = action ? action : () => { return; };
-        this.action = () => {
+        this.action = (...args: any[]) => {
             if (!this.isDisabled()) {
-                action.call(this.parent, arguments);
+                action.apply(this.parent, args);
             }
         };
     }

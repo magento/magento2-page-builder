@@ -40,6 +40,7 @@ define(["knockout"], function (_knockout) {
       this.sort = sort;
       this.optionTemplate = optionTemplate;
       this.setAction(action);
+      this.bindEvents();
     }
 
     var _proto = Option.prototype;
@@ -50,8 +51,7 @@ define(["knockout"], function (_knockout) {
      * @param {() => {}} action
      */
     _proto.setAction = function setAction(action) {
-      var _this = this,
-          _arguments = arguments;
+      var _this = this;
 
       action = action ? action : function () {
         return;
@@ -59,7 +59,11 @@ define(["knockout"], function (_knockout) {
 
       this.action = function () {
         if (!_this.isDisabled()) {
-          action.call(_this.parent, _arguments);
+          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+
+          action.apply(_this.parent, args);
         }
       };
     };

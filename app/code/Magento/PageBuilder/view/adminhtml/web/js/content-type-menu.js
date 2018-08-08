@@ -33,10 +33,8 @@ define(["knockout"], function (_knockout) {
      * Add an option into the content type menu
      *
      * @param {OptionInterface} option
-     * @param {boolean} skipSort
      */
     _proto.addOption = function addOption(option) {
-      option.bindEvents();
       this.options.push(option);
       this.sort();
     };

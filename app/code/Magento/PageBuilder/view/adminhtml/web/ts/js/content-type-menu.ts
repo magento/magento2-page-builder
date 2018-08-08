@@ -35,10 +35,8 @@ export default class ContentTypeMenu {
      * Add an option into the content type menu
      *
      * @param {OptionInterface} option
-     * @param {boolean} skipSort
      */
     public addOption(option: OptionInterface) {
-        option.bindEvents();
         this.options.push(option);
         this.sort();
     }
