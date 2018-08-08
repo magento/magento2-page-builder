@@ -42,7 +42,7 @@ export default function create(
                         (InitializerInstance: any) => {
                             const initializer = new InitializerInstance();
                             // Allow dynamic settings to be set before editor is initialized
-                            initializer.initializeConfig(contentTypeId, config);
+                            initializer.initialize(contentTypeId, config);
                             configResolve();
                         },
                     );
@@ -70,7 +70,7 @@ export default function create(
                         (InitializerInstance: any) => {
                             const initializer = new InitializerInstance();
                             // Allow dynamic bindings from configuration such as events from the editor
-                            initializer.initializeComponent(wysiwyg);
+                            initializer.initialize(wysiwyg);
                             resolve(wysiwyg);
                         },
                     );

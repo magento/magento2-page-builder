@@ -17,7 +17,7 @@ define([], function () {
      * @param {String} contentTypeId
      * @param {Object} config
      */
-    _proto.initializeConfig = function initializeConfig(contentTypeId, config) {
+    _proto.initialize = function initialize(contentTypeId, config) {
       if (config.additional.mode === "inline") {
         config.adapter.settings.fixed_toolbar_container = "#" + contentTypeId + " " + config.adapter.settings.fixed_toolbar_container;
       }

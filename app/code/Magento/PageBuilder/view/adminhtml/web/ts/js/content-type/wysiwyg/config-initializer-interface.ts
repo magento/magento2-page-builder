@@ -4,7 +4,7 @@
  */
 
 export interface WysiwygConfigInitializerInterface {
-    initializeConfig(contentTypeId: string, config: any): void;
+    initialize(contentTypeId: string, config: any): void;
 }
 
 export default WysiwygConfigInitializerInterface;

@@ -6,7 +6,7 @@
 import WysiwygInterface from "./wysiwyg-interface";
 
 export interface WysiwygComponentInitializerInterface {
-    initializeComponent(wysiwyg: WysiwygInterface): void;
+    initialize(wysiwyg: WysiwygInterface): void;
 }
 
 export default WysiwygComponentInitializerInterface;

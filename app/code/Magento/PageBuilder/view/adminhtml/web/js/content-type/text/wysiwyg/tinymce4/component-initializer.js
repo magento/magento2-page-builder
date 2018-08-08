@@ -19,7 +19,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
      *
      * @param {Wysiwyg} wysiwyg
      */
-    _proto.initializeComponent = function initializeComponent(wysiwyg) {
+    _proto.initialize = function initialize(wysiwyg) {
       this.$element = (0, _jquery)("#" + wysiwyg.elementId);
       this.config = wysiwyg.config;
       var tinymce = wysiwyg.getAdapter();

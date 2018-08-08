@@ -24,7 +24,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
             (0, _loader)([config.additional.initializers.config[contentTypeName]], function (InitializerInstance) {
               var initializer = new InitializerInstance(); // Allow dynamic settings to be set before editor is initialized
 
-              initializer.initializeConfig(contentTypeId, config);
+              initializer.initialize(contentTypeId, config);
               configResolve();
             });
           } else {
@@ -38,7 +38,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
             (0, _loader)([config.additional.initializers.component[contentTypeName]], function (InitializerInstance) {
               var initializer = new InitializerInstance(); // Allow dynamic bindings from configuration such as events from the editor
 
-              initializer.initializeComponent(wysiwyg);
+              initializer.initialize(wysiwyg);
               resolve(wysiwyg);
             });
           } else {

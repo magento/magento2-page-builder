@@ -12,7 +12,7 @@ export default class ConfigInitializer implements WysiwygConfigInitializerInterf
      * @param {String} contentTypeId
      * @param {Object} config
      */
-    public initializeConfig(contentTypeId: string, config: any): void {
+    public initialize(contentTypeId: string, config: any): void {
         if (config.additional.mode === "inline") {
             config.adapter.settings.fixed_toolbar_container = "#" + contentTypeId
                 + " " + config.adapter.settings.fixed_toolbar_container;

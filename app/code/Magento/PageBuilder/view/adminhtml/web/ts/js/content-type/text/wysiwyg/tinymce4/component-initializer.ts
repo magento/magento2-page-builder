@@ -25,7 +25,7 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
      *
      * @param {Wysiwyg} wysiwyg
      */
-    public initializeComponent(wysiwyg: WysiwygInterface): void {
+    public initialize(wysiwyg: WysiwygInterface): void {
         this.$element = $("#" + wysiwyg.elementId);
         this.config = wysiwyg.config;
         const tinymce = wysiwyg.getAdapter();
