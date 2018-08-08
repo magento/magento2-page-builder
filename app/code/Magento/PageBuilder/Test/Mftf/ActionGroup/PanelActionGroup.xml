@@ -22,12 +22,14 @@
         <click selector="{{PageBuilderPanel.addContentGroup}}" stepKey="clickAddContentGroup"/>
     </actionGroup>
     <actionGroup name="validateGroupsAndContentTypes">
+        <seeNumberOfElements selector="{{PageBuilderPanel.allPanelGroups}}" userInput="4" stepKey="seeNumberOfGroups"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('layout')}}" userInput="3" stepKey="seeNumberOfLayoutGroupContentTypes"/>
         <see userInput="Layout" selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seeLayoutGroup"/>
         <see userInput="Row" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupRow"/>
         <see userInput="Column" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupColumn"/>
         <see userInput="Tabs" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupTabs"/>
-        <see userInput="Accordion" selector="{{PageBuilderPanel.layoutGroupContentType}}" stepKey="seeLayoutGroupAccordion"/>
         <click selector="{{PageBuilderPanel.elementsGroup}}" stepKey="clickElementsGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('elements')}}" userInput="7" stepKey="seeNumberOfElementsGroupContentTypes"/>
         <see userInput="Elements" selector="{{PageBuilderPanel.elementsGroup}}" stepKey="seeElementsGroup"/>
         <see userInput="Text" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupText"/>
         <see userInput="Heading" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupHeading"/>
@@ -37,6 +39,7 @@
         <see userInput="Anchor" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupAnchor"/>
         <see userInput="HTML Code" selector="{{PageBuilderPanel.elementsGroupContentType}}" stepKey="seeElementsGroupHtml"/>
         <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('media')}}" userInput="5" stepKey="seeNumberOfMediaGroupContentTypes"/>
         <see userInput="Media" selector="{{PageBuilderPanel.mediaGroup}}" stepKey="seeMediaGroup"/>
         <see userInput="Image" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupImage"/>
         <see userInput="Video" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupVideo"/>
@@ -44,6 +47,7 @@
         <see userInput="Slider" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupSlider"/>
         <see userInput="Map" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupMap"/>
         <click selector="{{PageBuilderPanel.addContentGroup}}" stepKey="clickAddContentGroup"/>
+        <seeNumberOfElements selector="{{PageBuilderPanel.allGroupContentTypes('add_content')}}" userInput="2" stepKey="seeNumberOfAddContentGroupContentTypes"/>
         <see userInput="Add Content" selector="{{PageBuilderPanel.addContentGroup}}" stepKey="seeAddContentGroup"/>
         <see userInput="Block" selector="{{PageBuilderPanel.addContentGroupContentType}}" stepKey="seeAddContentGroupBlock"/>
         <see userInput="Products" selector="{{PageBuilderPanel.addContentGroupContentType}}" stepKey="seeAddContentGroupProducts"/>

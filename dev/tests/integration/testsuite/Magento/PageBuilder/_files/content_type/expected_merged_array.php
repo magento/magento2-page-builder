@@ -41,7 +41,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -235,7 +234,6 @@ return [
                     'data3' => 'value3',
                     'preview_template' => 'Path/to/preview/custom/template',
                     'render_template' => 'Path/to/render/custom/template',
-                    'readers' => [],
                     'elements' => [
                         'first_element' => [
                             'style' => [
@@ -509,7 +507,6 @@ return [
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -557,7 +554,6 @@ return [
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'default' => 'false',
                     'converters' => [],
                     'reader' => 'Path/to/reader'
@@ -565,7 +561,6 @@ return [
                 'appearance3' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'converters' => [],
                     'default' => 'false',
                     'reader' => null
@@ -573,7 +568,6 @@ return [
                 'appearance4' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -636,7 +630,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [

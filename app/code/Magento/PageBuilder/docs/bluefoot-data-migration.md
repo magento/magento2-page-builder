@@ -195,7 +195,7 @@ class Heading implements RendererInterface
 
 #### Children content blocks
 
-Some BlueFoot content types, such as accordion and slider, can contain child content types.
+Some BlueFoot content types, such as slider, can contain child content types.
 This can result in trees with deeply nested content blocks.
 
 During rendering, content types are processed from the bottom of the tree to the top.
