@@ -103,28 +103,38 @@ ko.bindingHandlers.liveEdit = {
         };
 
         /**
+         * Prevent content from being dropped inside of inline edit area
+         *
+         * @param {DragEvent} event
+         */
+        const onDrop = (event: DragEvent) => {
+            event.preventDefault();
+        };
+
+        /**
          * Input event on element
          */
         const onInput = () => {
             handlePlaceholderClass(element);
         };
         element.setAttribute("data-placeholder", placeholder);
-        element.innerText = viewModel.previewData[field]();
+        element.innerText = viewModel.parent.dataStore.get(field);
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("input", onInput);
+        element.addEventListener("drop", onDrop);
 
         $(element).parent().css("cursor", "text");
         handlePlaceholderClass(element);
 
         // Create a subscription onto the original data to update the internal value
-        viewModel.previewData[field].subscribe((value: string) => {
-            element.innerText = viewModel.previewData[field]();
+        viewModel.parent.dataStore.subscribe(() => {
+            element.innerText = viewModel.parent.dataStore.get(field);
             handlePlaceholderClass(element);
-        });
+        }, field);
     },
 
     /**
@@ -139,7 +149,7 @@ ko.bindingHandlers.liveEdit = {
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field} = valueAccessor();
 
-        element.innerText = viewModel.previewData[field]();
+        element.innerText = viewModel.parent.dataStore.get(field);
         handlePlaceholderClass(element);
     },
 };
