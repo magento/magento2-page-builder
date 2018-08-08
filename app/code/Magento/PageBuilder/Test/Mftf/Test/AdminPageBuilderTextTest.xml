@@ -1200,14 +1200,15 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
-        <waitForElementVisible selector="{{TextOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{TextOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForElementNotVisible selector="{{TextOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <waitForElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{TextOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
         <waitForElement selector="{{TextOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />

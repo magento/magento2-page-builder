@@ -1746,7 +1746,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
-        <waitForElementVisible selector="{{RowOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{RowOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <!-- Verify we cannot interact with the internal heading after save -->
         <comment userInput="Verify we cannot interact with the internal heading after save" stepKey="commentVerifyHeadingIsDisabledAfterSave"/>
         <actionGroup ref="validateOnHoverNoOptionMenu" stepKey="verifyHeadingHasNoOptionMenuAfterSave">
@@ -1759,8 +1759,10 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <waitForElement selector="{{RowOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
-        <waitForElementNotVisible selector="{{RowOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
-        <waitForElementNotVisible selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingNotVisible" />
+        <waitForElement selector="{{RowOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{RowOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
+        <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingNotVisible" />
+        <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeHeadingNotVisible" />
         <switchToNextTab stepKey="switchBackToAdmin" />
         <reloadPage stepKey="reloadPage" />
         <waitForPageLoad stepKey="waitForAdminReload" />
