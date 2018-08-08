@@ -40,7 +40,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
     {
         $contentTypes = $this->contentTypesReader->read();
 
-        foreach ($contentTypes['types'] as $configName => $type) {
+        foreach ($contentTypes as $configName => $type) {
             $form = $type['form'] ?? null;
 
             if (!$form) {

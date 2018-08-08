@@ -32,12 +32,12 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
 
-      if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.data_mapping || undefined === appearanceConfiguration.data_mapping.elements) {
+      if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.elements) {
         return;
       }
 
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var config = appearanceConfiguration.elements;
+      data = this.convertData(data, appearanceConfiguration.converters);
 
       var _arr = Object.keys(config);
 
@@ -156,7 +156,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
         var _attributeConfig = _ref2;
 
-        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && "false" === _attributeConfig.persist) {
+        if ("read" === _attributeConfig.persistence_mode) {
           continue;
         }
 
@@ -199,7 +199,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
           var _propertyConfig = _ref3;
 
-          if (undefined !== _propertyConfig.persist && null !== _propertyConfig.persist && "false" === _propertyConfig.persist) {
+          if ("read" === _propertyConfig.persistence_mode) {
             continue;
           }
 

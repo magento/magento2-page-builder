@@ -33,7 +33,6 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -104,7 +103,6 @@
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
         </assertGreaterThanOrEqual>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -172,7 +170,6 @@
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
         </assertGreaterThanOrEqual>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -218,6 +215,11 @@
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Stage -->
+        <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -329,6 +331,9 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="3" stepKey="seeThreeColumnsFirstGroup"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="5" stepKey="validateFiveTotalColumns"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -386,6 +391,9 @@
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragFirstColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>

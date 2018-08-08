@@ -55,9 +55,9 @@ export default class Master {
         }
 
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
-        const config = appearanceConfiguration.data_mapping.elements;
+        const config = appearanceConfiguration.elements;
 
-        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
         const result = {};
         if (undefined !== config[element].tag.var) {

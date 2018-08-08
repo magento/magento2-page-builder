@@ -46,8 +46,8 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
       }
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
-      var config = appearanceConfiguration.data_mapping.elements;
-      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var config = appearanceConfiguration.elements;
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
       var result = {};
 
       if (undefined !== config[element].tag.var) {

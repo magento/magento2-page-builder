@@ -22,48 +22,46 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'data_mapping' => [
-                        'elements' => [
-                            'main' => [
-                                'style' => [
-                                    0 =>[
-                                        'var' => 'style_converter',
-                                        'name' => 'converter',
-                                        'converter' => 'Path/to/converter',
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ],
-                                    1 => [
-                                        'var' => 'style_no_converter',
-                                        'name' => 'no_converter',
-                                        'converter' => null,
-                                        'preview_converter' => null,
-                                        'persist' => null,
-                                        'virtual' => null
-                                    ]
+                    'elements' => [
+                        'main' => [
+                            'style' => [
+                                0 =>[
+                                    'var' => 'style_converter',
+                                    'name' => 'converter',
+                                    'converter' => 'Path/to/converter',
+                                    'preview_converter' => null,
+                                    'persistence_mode' => 'readwrite',
+                                    'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
                                 ],
-                                'attributes' => [
-                                    0 => [
-                                        'var' => 'name',
-                                        'name' => 'data-role',
-                                        'virtual' => null,
-                                        'converter' => null,
-                                        'persist' => null,
-                                        'preview_converter' => null,
-                                    ]
-                                ],
-                                'tag' => [],
-                                'html' => [],
-                                'css' => [
-                                    'var' => 'css_classes',
+                                1 => [
+                                    'var' => 'style_no_converter',
+                                    'name' => 'no_converter',
                                     'converter' => null,
-                                    'filter' => [],
-                                ],
+                                    'preview_converter' => null,
+                                    'persistence_mode' => 'readwrite',
+                                    'reader' => 'Magento_PageBuilder/js/property/style-property-reader'
+                                ]
+                            ],
+                            'attributes' => [
+                                0 => [
+                                    'var' => 'name',
+                                    'name' => 'data-role',
+                                    'converter' => null,
+                                    'persistence_mode' => 'readwrite',
+                                    'preview_converter' => null,
+                                    'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
+                                ]
+                            ],
+                            'tag' => [],
+                            'html' => [],
+                            'css' => [
+                                'var' => 'css_classes',
+                                'converter' => null,
+                                'filter' => [],
                             ],
                         ],
-                        'converters' => []
                     ],
+                    'converters' => [],
                     'default' => 'true',
                     'reader' => 'Path/to/reader'
                 ]

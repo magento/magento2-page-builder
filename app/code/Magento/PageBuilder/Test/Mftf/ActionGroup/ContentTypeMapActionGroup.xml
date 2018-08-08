@@ -194,7 +194,7 @@
         <waitForElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
         <executeJS function="return Math.round({{index}}-1)" stepKey="jSIndex"/>
-        <executeJS function="return {{MapOnStorefront.baseJS('${jSIndex}')}}.clientHeight" stepKey="mapHeight"/>
+        <executeJS function="return {{MapOnStorefront.baseJS('{$jSIndex}')}}.clientHeight" stepKey="mapHeight"/>
         <assertEquals stepKey="assertMapHeightIsZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">$mapHeight</actualResult>

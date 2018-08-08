@@ -26,6 +26,7 @@
     1. [Custom Toolbar]
     1. [Full width page layouts]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -52,6 +53,7 @@
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## What's in this topic
 This topic describes how to add a reusable image uploader component to the PageBuilder stage for a content type.
@@ -69,37 +71,35 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
 
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="MyName" translate="label" label="MyName" icon="icon-modulename-simple" component="Vendor_ModuleName/js/content-type" form="modulename_simple_form" group="general">
-            ...
-            <additional_data>
+    <type name="MyName" translate="label" label="MyName" icon="icon-modulename-simple" component="Vendor_ModuleName/js/content-type" form="modulename_simple_form" group="layout">
+        ...
+        <additional_data>
+            <item name="uploaderConfig" xsi:type="array">
+                <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
+                <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
+                <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
+                <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png</item>
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/element/image-uploader</item>
+                <item name="componentType" xsi:type="string">imageUploader</item>
+                <item name="dataScope" xsi:type="string">background_image</item>
+                <item name="formElement" xsi:type="string">imageUploader</item>
                 <item name="uploaderConfig" xsi:type="array">
-                    <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
-                    <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
-                    <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
-                    <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png</item>
-                    <item name="component" xsi:type="string">Magento_PageBuilder/js/form/element/image-uploader</item>
-                    <item name="componentType" xsi:type="string">imageUploader</item>
-                    <item name="dataScope" xsi:type="string">background_image</item>
-                    <item name="formElement" xsi:type="string">imageUploader</item>
-                    <item name="uploaderConfig" xsi:type="array">
-                        <item name="url" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\SaveUrl</item>
-                    </item>
-                    <item name="previewTmpl" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview</item>
-                    <item name="template" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview/image</item>
-                    <item name="mediaGallery" xsi:type="array">
-                        <item name="openDialogUrl" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\OpenDialogUrl</item>
-                        <item name="openDialogTitle" xsi:type="string" translate="true">Insert Images...</item>
-                        <item name="initialOpenSubpath" xsi:type="string">wysiwyg</item>
-                        <item name="storeId" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\StoreId</item>
-                    </item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    <item name="url" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\SaveUrl</item>
                 </item>
-            </additional_data>
-        </type>
-    </content_types>
+                <item name="previewTmpl" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview</item>
+                <item name="template" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview/image</item>
+                <item name="mediaGallery" xsi:type="array">
+                    <item name="openDialogUrl" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\OpenDialogUrl</item>
+                    <item name="openDialogTitle" xsi:type="string" translate="true">Insert Images...</item>
+                    <item name="initialOpenSubpath" xsi:type="string">wysiwyg</item>
+                    <item name="storeId" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\StoreId</item>
+                </item>
+                <item name="validation" xsi:type="array">
+                    <item name="required-entry" xsi:type="boolean">true</item>
+                </item>
+            </item>
+        </additional_data>
+    </type>
 </config>
 ```
 

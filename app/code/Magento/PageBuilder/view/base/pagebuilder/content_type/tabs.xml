@@ -6,84 +6,70 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="tabs"
-              label="Tabs"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/tabs/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form="pagebuilder_tabs_form"
-              group="interactive"
-              icon="icon-pagebuilder-tabs"
-              sortOrder="1"
-              translate="label">
-            <parents default_policy="deny">
-                <parent name="row" policy="allow"/>
-                <parent name="column" policy="allow"/>
-            </parents>
-            <children default_policy="deny">
-                <child name="tab-item" policy="allow"/>
-            </children>
-            <appearances>
-                <appearance name="default"
-                            default="true"
-                            preview_template="Magento_PageBuilder/content-type/tabs/default/preview"
-                            render_template="Magento_PageBuilder/content-type/tabs/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main">
-                                <style_properties>
-                                    <complex_property name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="appearance" source="data-appearance"/>
-                                    <attribute name="default_active" source="data-active-tab"/>
-                                </attributes>
-                                <css name="css_classes">
-                                    <filter>
-                                        <class source="tab-align-left"/>
-                                        <class source="tab-align-center"/>
-                                        <class source="tab-align-right"/>
-                                    </filter>
-                                </css>
-                            </element>
-                            <element name="headers">
-                                <style_properties>
-                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                </style_properties>
-                            </element>
-                            <element name="navigation">
-                                <style_properties>
-                                    <property name="navigation_alignment" source="text_align"/>
-                                </style_properties>
-                            </element>
-                            <element name="content">
-                                <style_properties>
-                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                </style_properties>
-                            </element>
-                        </elements>
-                        <converters>
-                            <converter name="header_alignment_class" component="Magento_PageBuilder/js/content-type/tabs/mass-converter/header-alignment">
-                                <config>
-                                    <item name="navigation_alignment_variable" value="navigation_alignment"/>
-                                </config>
-                            </converter>
-                        </converters>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="tabs"
+          label="Tabs"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/tabs/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_tabs_form"
+          group="layout"
+          icon="icon-pagebuilder-tabs"
+          sortOrder="20"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="row" policy="allow"/>
+            <parent name="column" policy="allow"/>
+        </parents>
+        <children default_policy="deny">
+            <child name="tab-item" policy="allow"/>
+        </children>
+        <appearances>
+            <appearance name="default"
+                        default="true"
+                        preview_template="Magento_PageBuilder/content-type/tabs/default/preview"
+                        render_template="Magento_PageBuilder/content-type/tabs/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="default_active" source="data-active-tab"/>
+                        <css name="css_classes">
+                            <filter>
+                                <class source="tab-align-left"/>
+                                <class source="tab-align-center"/>
+                                <class source="tab-align-right"/>
+                            </filter>
+                        </css>
+                    </element>
+                    <element name="headers">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    </element>
+                    <element name="navigation">
+                        <style name="navigation_alignment" source="text_align"/>
+                    </element>
+                    <element name="content">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="text_align" source="text_align"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                    </element>
+                </elements>
+                <converters>
+                    <converter name="header_alignment_class" component="Magento_PageBuilder/js/content-type/tabs/mass-converter/header-alignment">
+                        <config>
+                            <item name="navigation_alignment_variable" value="navigation_alignment"/>
+                        </config>
+                    </converter>
+                </converters>
+            </appearance>
+        </appearances>
+    </type>
 </config>

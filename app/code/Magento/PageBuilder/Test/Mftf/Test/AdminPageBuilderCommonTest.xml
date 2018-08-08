@@ -32,11 +32,17 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add all content types to stage-->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -44,49 +50,48 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragNewsletterIntoStage">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.magentoGroup}}" stepKey="clickMagentoGroup"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
-            <argument name="contentType" value="PageBuilderBlockContentType"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAnchorIntoStage">
             <argument name="contentType" value="PageBuilderAnchorContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupMedia">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- See row and column system border on default - Depends on MQE-818 -->
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('outline')" stepKey="getDefaultRowOutlineStyle"/>
@@ -114,6 +119,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -160,6 +168,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -212,6 +223,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -270,6 +284,9 @@
         <comment userInput="2nd Row and Heading" stepKey="commentAdd"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToStage2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -345,6 +362,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -419,6 +439,9 @@
         </actionGroup>
 
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -491,6 +514,9 @@
         </after>
         <!-- Add Heading -->
         <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -548,6 +574,9 @@
         </after>
         <!-- Add Heading -->
         <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -604,6 +633,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -663,6 +695,9 @@
 
         <!-- Add a single header into the first row -->
         <comment userInput="Add a heading to the stage" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -904,7 +939,9 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
             <argument name="section" value="ButtonItemOnStage"/>
@@ -993,7 +1030,9 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
@@ -1099,7 +1138,9 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
 
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
@@ -1200,7 +1241,9 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
 
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
@@ -1315,6 +1358,9 @@
         <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button into PageBuilder-->
         <comment userInput="Add button into PageBuilder" stepKey="addButtonIntoPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -1418,6 +1464,9 @@
         <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
         <!--Add button to PageBuilder-->
         <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
