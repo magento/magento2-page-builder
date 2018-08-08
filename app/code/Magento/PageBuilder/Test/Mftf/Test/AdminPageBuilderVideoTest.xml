@@ -872,10 +872,29 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="VideoOnStage"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
         <!-- Duplicate and Verify Stage -->
         <comment userInput="Duplicate and Verify Stage" stepKey="commentDuplicateAndVerifyStage"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{VideoOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{VideoOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="VideoOnStage"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="VideoOnStage"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <!-- Validate Duplicate On Stage -->
         <comment userInput="Validate Duplicate On Stage" stepKey="commentValidateStage1"/>
@@ -1009,6 +1028,10 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{VideoOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{VideoOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="validateVideo" stepKey="validateStorefront">
             <argument name="page" value="VideoOnStorefront"/>
             <argument name="index" value="2"/>

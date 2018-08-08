@@ -527,10 +527,29 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HtmlOnStage"/>
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{HtmlOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{HtmlOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="HtmlOnStage"/>
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="HtmlOnStage"/>
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <waitForElementVisible selector="{{HtmlOnStage.base('2')}}" stepKey="waitForHtmlBaseStage2"/>
         <waitForElementVisible selector="{{HtmlOnStage.html('2', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForHtmlStage2"/>
@@ -587,6 +606,10 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{HtmlOnStage.base('2')}}" stepKey="waitForHtmlBaseStage4"/>
         <waitForElementVisible selector="{{HtmlOnStage.html('2', PageBuilderHtmlPropertyButton.selector)}}" stepKey="waitForHtmlStage4"/>
+        <!-- Validate content type is enabled after save -->
+        <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
+        <waitForElementVisible selector="{{HtmlOnStage.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
+        <waitForElementVisible selector="{{HtmlOnStage.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage4">
             <argument name="page" value="HtmlOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -640,6 +663,10 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.base('2')}}" stepKey="waitForDuplicatedHtmlBaseStorefront"/>
         <waitForElementVisible selector="{{HtmlOnStorefront.html('2', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="waitForDuplicatedHtmlStorefront"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{HtmlOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront2">
             <argument name="page" value="HtmlOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>

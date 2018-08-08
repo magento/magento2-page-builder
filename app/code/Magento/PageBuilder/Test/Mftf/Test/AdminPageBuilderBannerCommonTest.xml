@@ -1665,10 +1665,29 @@
             <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
         <!-- Duplicate and Verify Stage -->
         <comment userInput="Duplicate and Verify Stage" stepKey="commentDuplicateAndVerifyStage"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{BannerOnBackend.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
@@ -1706,6 +1725,10 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <!-- Validate content type is enabled after save -->
+        <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
+        <waitForElementVisible selector="{{BannerOnBackend.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1826,6 +1849,10 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{BannerOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{BannerOnFrontend.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>

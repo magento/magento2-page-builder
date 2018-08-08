@@ -32,8 +32,8 @@
     </section>
     <section name="SliderInAdmin">
         <element name="base" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][(contains(@style, 'border-style: {{arg2}}')) and contains(@style, 'border-radius: {{arg3}}px') and contains(@style, 'margin: {{arg4}}px') and contains(@style, 'padding: {{arg5}}px') and contains(@style, 'min-height: {{arg6}}px')]" parameterized="true"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
         <element name="firstSlideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[1]"/>

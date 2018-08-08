@@ -11,8 +11,8 @@
     <section name="DividerOnStage">
         <element name="allDividers" type="text" selector="//div[contains(@class,'pagebuilder-divider')]"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
-        <element name="hidden" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type-hidden')]/descendant::div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
         <element name="noColor" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[not(contains(@style,'border-color:'))]" parameterized="true"/>
         <element name="thickness" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
