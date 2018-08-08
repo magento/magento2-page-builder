@@ -13,8 +13,11 @@ import ContentTypeInterface from "../../content-type";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
 import PreviewCollection from "../preview-collection";
+import PreviewDataUpdateAfterParamsInterface from "../preview-data-update-after-params";
 
 /**
  * @api
@@ -39,6 +42,28 @@ export default class Preview extends PreviewCollection {
         events.on("buttons:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
+            }
+        });
+
+        events.on("previewData:updateAfter", (eventData: PreviewDataUpdateAfterParamsInterface) => {
+            const contentTypePreview = eventData.preview;
+            if ((contentTypePreview.config.name === "button-item"
+                && contentTypePreview.parent.parent.id === this.parent.id)
+                || (contentTypePreview.config.name === "buttons"
+                    && contentTypePreview.parent.id === this.parent.id)) {
+                this.resizeChildButtons();
+            }
+        });
+
+        events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
+            if (eventData.contentType.parent.id === this.parent.id) {
+                this.resizeChildButtons();
+            }
+        });
+
+        events.on("button-item:removeAfter", (eventData: ContentTypeRemovedEventParamsInterface) => {
+            if (eventData.parent.id === this.parent.id) {
+                this.resizeChildButtons();
             }
         });
     }
@@ -202,5 +227,57 @@ export default class Preview extends PreviewCollection {
                 events.trigger("stage:interactionStop");
             },
         };
+    }
+
+    /**
+     * Resize width of all child buttons. Dependently make them the same width if configured.
+     */
+    private resizeChildButtons() {
+        if (this.wrapperElement) {
+            const buttonItems: JQuery = $(this.wrapperElement).find(".pagebuilder-button-item > a");
+            let buttonResizeValue: string|number = "";
+            if (this.parent.dataStore.get("same_width") === "1") {
+                if (buttonItems.length > 0) {
+                    const currentLargestButton = this.findLargestButton(buttonItems);
+                    buttonResizeValue = currentLargestButton.css("min-width", "").outerWidth();
+                }
+            }
+
+            buttonItems.css("min-width", buttonResizeValue);
+        }
+    }
+
+    /**
+     * Find the largest button which will determine the button width we use for re-sizing.
+     *
+     * @param {JQuery} buttonItems
+     * @returns {JQuery}
+     */
+    private findLargestButton(buttonItems: JQuery): JQuery {
+        let largestButton: JQuery|null = null;
+        buttonItems.each((index, element) => {
+            const buttonElement = $(element);
+            if (largestButton === null
+                || this.calculateButtonWidth(buttonElement) > this.calculateButtonWidth(largestButton)) {
+                largestButton = buttonElement;
+            }
+        });
+
+        return largestButton;
+    }
+
+    /**
+     * Manually calculate button width using content plus box widths (padding, border)
+     *
+     * @param {JQuery} buttonItem
+     * @returns {number}
+     */
+    private calculateButtonWidth(buttonItem: JQuery): number {
+        const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+        const calculatedButtonWidth: number = widthProperties.reduce((accumulatedWidth, widthProperty): number => {
+            return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
+        }, buttonItem.find("span").width());
+
+        return calculatedButtonWidth;
     }
 }
