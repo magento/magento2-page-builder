@@ -10,7 +10,6 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="NewsletterOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-newsletter')]//div[@data-title])[{{arg1}}]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[not(contains(@class, 'pagebuilder-content-type-hidden'))]/descendant::div[contains(@class,'pagebuilder-newsletter')])[{{arg1}}]" parameterized="true"/>
         <element name="form" type="button" selector="(//div[contains(@class,'pagebuilder-newsletter')]//div[@data-title])[{{arg1}}]//form[contains(@class,'subscribe')]" parameterized="true"/>
         <element name="title" type="button" selector="(//div[contains(@class,'pagebuilder-newsletter')]//div[@data-title])[{{arg1}}]//div[contains(@class,'block-title')]//strong//span[.='{{arg2}}']" parameterized="true"/>
         <element name="placeholder" type="button" selector="(//div[contains(@class,'pagebuilder-newsletter')]//div[@data-title])[{{arg1}}]//input[@placeholder='{{arg2}}']" parameterized="true"/>
@@ -31,7 +30,6 @@
     </section>
     <section name="NewsletterOnStorefront">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-newsletter')])[{{arg1}}]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-newsletter')])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="form" type="button" selector="(//div[contains(@class,'pagebuilder-newsletter')])[{{arg1}}]//form[contains(@class,'subscribe')]" parameterized="true"/>
         <element name="title" type="button" selector="(//div[contains(@class,'pagebuilder-newsletter')])[{{arg1}}]//div[contains(@class,'block-title')]//strong//span[.='{{arg2}}']" parameterized="true"/>
         <element name="placeholder" type="button" selector="(//div[contains(@class,'pagebuilder-newsletter')])[{{arg1}}]//input[@placeholder='{{arg2}}']" parameterized="true"/>
