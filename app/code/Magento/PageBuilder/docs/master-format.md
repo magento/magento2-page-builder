@@ -391,28 +391,6 @@ Inline styles
 2. border-color
 3. border-width
 
-## Anchor
-
-```
-<div data-element="main" data-role="anchor" data-appearance="default" id="" style="..."></div>
-```
-
-Attributes
-1. data-element [main]
-2. data-role [anchor]
-3. data-appearance [default]
-4. id
-5. class
-
-Inline styles
-1. text-align
-2. border-style
-3. border-color
-4. border-width
-5. border-radius
-6. margin
-7. padding
-
 ## HTML & JS Code
 
 ```
