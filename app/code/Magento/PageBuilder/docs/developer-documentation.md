@@ -22,6 +22,7 @@
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
     1. [Use the block chooser UI component]
+    1. [Use the inline text editing component]
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
     1. [Full width page layouts]
@@ -62,6 +63,8 @@
 
 **[Use the block chooser UI component]** - Documentation on using the block chooser UI component for a custom content type.
 
+**[Use the inline text editing component]** - Documentation on adding a reusable inline text editing component to the PageBuilder stage for a content type.
+
 **[Render a backend content type preview]** - Documentation on using the `RenderPool` on the stage to render a content type preview.
 
 **[Custom Toolbar]** - Documentation on adding a custom toolbar.
@@ -89,6 +92,7 @@
 [Store component master format as widget directive]: widget-directive.md
 [Render a backend content type preview]: content-type-preview.md
 [Use the block chooser UI component]: block-chooser-component.md
+[Use the inline text editing component]: inline-editing-component.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
 [Add image uploader to content type]: image-uploader.md

@@ -9,6 +9,7 @@
 
 .pagebuilder-content-type.pagebuilder-tabs {
     .tabs-navigation {
+        border-bottom: 1px solid rgba(153, 153, 153, .3);
         display: block;
         font-size: 0;
         margin: 0;
@@ -21,13 +22,11 @@
         li.tab-header {
             background: @color-gray-light0;
             border: 1px solid @color-gray80;
-            border-bottom: 0 !important;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
             display: inline-block;
             margin: 0;
             position: relative;
-            z-index: 1;
 
             a.tab-title {
                 border-right: 0;
@@ -114,12 +113,25 @@
 
             &.ui-state-active {
                 background: @color-white;
-                z-index: 19;
+
+                &:after {
+                    border-bottom: 1px solid @color-white;
+                    bottom: -1px;
+                    content: '';
+                    left: 0;
+                    position: absolute;
+                    width: 100%;
+                }
 
                 a.tab-title {
                     position: relative;
                     transition: all .3s;
                 }
+            }
+
+            // Keeps the options showing while the user clicks. Otherwise the focus is lost and the options hide.
+            .pagebuilder-options:hover {
+                .pagebuilder-options-visible;
             }
 
             &.focused {
@@ -138,7 +150,6 @@
     .tabs-content {
         border: 1px solid transparent;
         position: relative;
-        z-index: 9;
 
         > .element-children {
             min-height: inherit;

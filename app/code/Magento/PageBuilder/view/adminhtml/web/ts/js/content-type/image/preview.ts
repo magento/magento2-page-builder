@@ -34,7 +34,8 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const files: object[] = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[]);
+            const imageObject: object = files ? (files[0] as object) : {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
@@ -44,27 +45,12 @@ export default class Preview extends BasePreview {
 
             // Create uploader
             this.uploader = new Uploader(
-                this.parent.id,
                 "imageuploader_" + this.parent.id,
-                Object.assign({}, this.config.additional_data.uploaderConfig, {
-                    value: initialImageValue,
-                }),
+                this.config.additional_data.uploaderConfig,
+                this.parent.id,
+                this.parent.dataStore,
+                (initialImageValue as object[]),
             );
-
-            // Register listener when image gets uploaded from uploader UI component
-            this.uploader.onUploaded(this.onImageUploaded.bind(this));
         });
-    }
-
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-    private onImageUploaded(data: object[]) {
-        this.parent.dataStore.update(
-            data,
-            this.config.additional_data.uploaderConfig.dataScope,
-        );
     }
 }
