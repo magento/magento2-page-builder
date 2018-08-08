@@ -12,6 +12,10 @@ import ko from "knockout";
 // Create a new sortable Knockout binding
 ko.bindingHandlers.draggable = {
     init(element, valueAccessor) {
-        $(element).draggable(valueAccessor());
+        $(element).on("mousedown", () => {
+            if (document.hasFocus()) {
+                (document.activeElement as HTMLElement).blur();
+            }
+        }).draggable(valueAccessor());
     },
 };
