@@ -26,6 +26,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
      */
 
     /**
+     * The content type name e.g. "text"
+     */
+
+    /**
      * Wysiwyg adapter instance
      */
 
@@ -38,39 +42,36 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
      */
 
     /**
-     * The content type name e.g. "text"
+     * @param {String} contentTypeId The ID in the registry of the content type.
+     * @param {String} elementId The ID of the editor element in the DOM.
+     * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
+     * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
+     * @param {DataStore} dataStore The datastore to store the content in.
+     * @param {String} fieldName The ket in the provided datastore to set the data.
      */
-
-    /**
-     * @param {String} contentTypeId
-     * @param {String} elementId
-     * @param {String} contentTypeName
-     * @param {AdditionalDataConfigInterface} config
-     * @param {DataStore} dataStore
-     */
-    function Wysiwyg(contentTypeId, elementId, contentTypeName, config, dataStore) {
+    function Wysiwyg(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName) {
       this.elementId = void 0;
       this.config = void 0;
       this.contentTypeId = void 0;
+      this.contentTypeName = void 0;
       this.wysiwygAdapter = void 0;
       this.dataStore = void 0;
       this.fieldName = void 0;
-      this.contentTypeName = void 0;
       this.contentTypeId = contentTypeId;
       this.elementId = elementId;
       this.contentTypeName = contentTypeName;
-      this.fieldName = config.additional.fieldName;
+      this.fieldName = fieldName;
       this.config = config;
       this.dataStore = dataStore;
       var wysiwygSetup = new _setup(this.elementId, this.config.adapter);
-
-      if (this.config.additional.mode) {
-        wysiwygSetup.setup(this.config.additional.mode);
-      }
-
+      wysiwygSetup.setup(this.config.additional.mode);
       this.wysiwygAdapter = wysiwygSetup.wysiwygInstance;
-      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterFocus, this.onFocus.bind(this));
-      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterBlur, this.onBlur.bind(this)); // Update content in our data store after our stage preview wysiwyg gets updated
+
+      if (this.config.additional.mode === "inline") {
+        this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterFocus, this.onFocus.bind(this));
+        this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterBlur, this.onBlur.bind(this));
+      } // Update content in our data store after our stage preview wysiwyg gets updated
+
 
       this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterChangeContent, _underscore.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 

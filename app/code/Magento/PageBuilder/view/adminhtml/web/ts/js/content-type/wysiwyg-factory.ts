@@ -11,12 +11,12 @@ import Wysiwyg from "./wysiwyg";
 import {WysiwygConstructableInterface, WysiwygInterface} from "./wysiwyg-interface";
 
 /**
- *
- * @param {string} contentTypeId
- * @param {string} elementId
- * @param {String} contentTypeName
- * @param {AdditionalDataConfigInterface} config
- * @param {DataStore} dataStore
+ * @param {String} contentTypeId The ID in the registry of the content type.
+ * @param {String} elementId The ID of the editor element in the DOM.
+ * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
+ * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
+ * @param {DataStore} dataStore The datastore to store the content in.
+ * @param {String} fieldName The ket in the provided datastore to set the data.
  * @returns {Wysiwyg}
  * @api
  */
@@ -26,6 +26,7 @@ export default function create(
     contentTypeName: string,
     config: AdditionalDataConfigInterface,
     dataStore: DataStore,
+    fieldName: string,
 ): Promise<WysiwygInterface> {
     config = $.extend(true, {}, config);
 
@@ -57,6 +58,7 @@ export default function create(
                     contentTypeName,
                     config,
                     dataStore,
+                    fieldName,
                 );
 
                 if (config.additional.initializers

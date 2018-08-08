@@ -6,16 +6,16 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
    */
 
   /**
-   *
-   * @param {string} contentTypeId
-   * @param {string} elementId
-   * @param {String} contentTypeName
-   * @param {AdditionalDataConfigInterface} config
-   * @param {DataStore} dataStore
+   * @param {String} contentTypeId The ID in the registry of the content type.
+   * @param {String} elementId The ID of the editor element in the DOM.
+   * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
+   * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
+   * @param {DataStore} dataStore The datastore to store the content in.
+   * @param {String} fieldName The ket in the provided datastore to set the data.
    * @returns {Wysiwyg}
    * @api
    */
-  function create(contentTypeId, elementId, contentTypeName, config, dataStore) {
+  function create(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName) {
     config = _jquery.extend(true, {}, config);
     return new Promise(function (resolve) {
       (0, _loader)([config.additional.component], function (WysiwygInstance) {
@@ -32,7 +32,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
           }
         }).then(function () {
           // Instantiate the component
-          var wysiwyg = new WysiwygInstance(contentTypeId, elementId, contentTypeName, config, dataStore);
+          var wysiwyg = new WysiwygInstance(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName);
 
           if (config.additional.initializers && config.additional.initializers.component && config.additional.initializers.component[contentTypeName]) {
             (0, _loader)([config.additional.initializers.component[contentTypeName]], function (InitializerInstance) {

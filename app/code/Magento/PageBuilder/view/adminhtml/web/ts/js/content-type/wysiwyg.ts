@@ -11,13 +11,14 @@ import _ from "underscore";
 import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config";
 import DataStore from "../data-store";
+import {WysiwygInterface} from "./wysiwyg-interface";
 
 /**
  * Inline editing wysiwyg component
  *
  * @api
  */
-export default class Wysiwyg {
+export default class Wysiwyg implements WysiwygInterface {
     /**
      * The id of the editor element
      */
@@ -31,7 +32,12 @@ export default class Wysiwyg {
     /**
      * Id of content type
      */
-    private contentTypeId: string;
+    public contentTypeId: string;
+
+    /**
+     * The content type name e.g. "text"
+     */
+    public contentTypeName: string;
 
     /**
      * Wysiwyg adapter instance
@@ -49,16 +55,12 @@ export default class Wysiwyg {
     private fieldName: string;
 
     /**
-     * The content type name e.g. "text"
-     */
-    private contentTypeName: string;
-
-    /**
-     * @param {String} contentTypeId
-     * @param {String} elementId
-     * @param {String} contentTypeName
-     * @param {AdditionalDataConfigInterface} config
-     * @param {DataStore} dataStore
+     * @param {String} contentTypeId The ID in the registry of the content type.
+     * @param {String} elementId The ID of the editor element in the DOM.
+     * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
+     * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
+     * @param {DataStore} dataStore The datastore to store the content in.
+     * @param {String} fieldName The ket in the provided datastore to set the data.
      */
     constructor(
         contentTypeId: string,
@@ -66,30 +68,32 @@ export default class Wysiwyg {
         contentTypeName: string,
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
+        fieldName: string,
     ) {
         this.contentTypeId = contentTypeId;
         this.elementId = elementId;
         this.contentTypeName = contentTypeName;
-        this.fieldName = config.additional.fieldName;
+        this.fieldName = fieldName;
         this.config = config;
         this.dataStore = dataStore;
 
         const wysiwygSetup = new WysiwygSetup(this.elementId, this.config.adapter);
 
-        if (this.config.additional.mode) {
-            wysiwygSetup.setup(this.config.additional.mode);
-        }
+        wysiwygSetup.setup(this.config.additional.mode);
+
         this.wysiwygAdapter = wysiwygSetup.wysiwygInstance;
 
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            WysiwygEvents.afterFocus,
-            this.onFocus.bind(this),
-        );
+        if (this.config.additional.mode === "inline") {
+            this.wysiwygAdapter.eventBus.attachEventHandler(
+                WysiwygEvents.afterFocus,
+                this.onFocus.bind(this),
+            );
 
-        this.wysiwygAdapter.eventBus.attachEventHandler(
-            WysiwygEvents.afterBlur,
-            this.onBlur.bind(this),
-        );
+            this.wysiwygAdapter.eventBus.attachEventHandler(
+                WysiwygEvents.afterBlur,
+                this.onBlur.bind(this),
+            );
+        }
 
         // Update content in our data store after our stage preview wysiwyg gets updated
         this.wysiwygAdapter.eventBus.attachEventHandler(

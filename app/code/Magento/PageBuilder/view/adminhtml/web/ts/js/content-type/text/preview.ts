@@ -37,12 +37,16 @@ export default class Preview extends BasePreview {
 
         element.id = this.parent.id + "-editor";
 
+        const wysiwygConfig = $.extend(true, {}, this.config.additional_data.wysiwygConfig.wysiwygConfigData);
+        wysiwygConfig.additional.mode = "inline";
+
         WysiwygFactory(
             this.parent.id,
             element.id,
             this.config.name,
-            this.config.additional_data.wysiwygConfig.wysiwygConfigData,
+            wysiwygConfig,
             this.parent.dataStore,
+            "content",
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
