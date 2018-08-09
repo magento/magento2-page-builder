@@ -320,34 +320,22 @@
         </assertEmpty>
         <comment userInput="Background Image: mediaUpload defaults to empty" stepKey="AC1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
-        <comment userInput="Background Position: dropdown defaults to Top Aligned" stepKey="AC2"/>
+        <comment userInput="Background Position: dropdown defaults to Top Left" stepKey="AC2"/>
         <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="{{PageBuilderBackgroundPositionDefault.value}}" stepKey="seeTopAlignedPositionDefault"/>
-        <comment userInput="Background Position: available values Top Aligned, Centered, Bottom Aligned" stepKey="AC3"/>
+        <comment userInput="Background Position: validate available values" stepKey="AC3"/>
         <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
-            <expectedResult type="array">[Top Aligned, Centered, Bottom Aligned]</expectedResult>
+            <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
             <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
         </assertEquals>
-        <comment userInput="Background Size: dropdown defaults to Cover" stepKey="AC4"/>
-        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="{{PageBuilderSlideBackgroundSizeDefault.value}}" stepKey="seeBackgroundSizeDefault"/>
-        <comment userInput="Background Size: available values Auto, Cover, Contain" stepKey="AC5"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeDropdownValues"/>
-        <assertEquals stepKey="assertBackgroundSizeDropdown" message="Background sizes in dropdown">
-            <expectedResult type="array">[Auto, Cover, Contain]</expectedResult>
-            <actualResult type="variable">grabBackgroundSizeDropdownValues</actualResult>
-        </assertEquals>
+        <comment userInput="Background Size: defaults to Cover" stepKey="AC4"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundSize">
+            <argument name="property" value="PageBuilderSlideBackgroundSizeDefaultProperty"/>
+        </actionGroup>
         <comment userInput="Background Repeat: switch defaults to No" stepKey="AC6"/>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeBackgroundRepeatPropertyDefaultNo">
             <argument name="property" value="PageBuilderBackgroundRepeatOff"/>
         </actionGroup>
-        <comment userInput="Background Attachment: dropdown defaults to Scroll" stepKey="AC7"/>
-        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="Scroll" stepKey="seeBackgroundAttachmentDefault"/>
-        <comment userInput="Background Attachment: available values Scroll, Fixed" stepKey="AC8"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentDropdownValues"/>
-        <assertEquals stepKey="assertBackgroundAttachmentDropdown" message="Background sizes in dropdown">
-            <expectedResult type="array">[Scroll, Fixed]</expectedResult>
-            <actualResult type="variable">grabBackgroundAttachmentDropdownValues</actualResult>
-        </assertEquals>
     </test>
     <test name="SlideContentSectionDefaults">
         <annotations>
@@ -499,8 +487,6 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-position: left top" stepKey="verifyAdminTopAligned"/>
         <comment userInput="Verify slide defaults on admin: Background Size defaults to Cover" stepKey="adminDefaultSize"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-size: cover" stepKey="verifyAdminSizeCover"/>
-        <comment userInput="Verify slide defaults on admin: Background Attachment defaults to Scroll" stepKey="adminDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-attachment: scroll" stepKey="verifyAdminScrollAttachment"/>
         <!-- Validate Slider Edit Panel Defaults -->
         <comment userInput="Validate Slider Edit Panel Defaults" stepKey="commentSliderEditPanel"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
@@ -589,8 +575,6 @@
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-size: cover;" stepKey="slideStorefrontSize"/>
         <comment userInput="Verify slide background defaults on storefront: Background Repeat defaults to No" stepKey="storefrontDefaultRepeat"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-repeat: no-repeat;" stepKey="slideStorefrontRepeat"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Attachment defaults to Scroll" stepKey="storefrontDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-attachment: scroll;" stepKey="slideStorefrontScroll"/>
         <comment userInput="Slide Content WYSIWYG defaults to empty" stepKey="storefrontDefaultContent" />
         <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeDummyTextInPageSource"/>
         <comment userInput="Verify slide content defaults on storefront: Show Button defaults to Never Show" stepKey="storefrontDefaultShowButton"/>

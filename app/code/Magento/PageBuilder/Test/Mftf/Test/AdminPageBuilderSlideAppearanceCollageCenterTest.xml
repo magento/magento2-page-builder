@@ -80,9 +80,6 @@
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
             <argument name="property" value="PageBuilderSlideBackgroundRepeatDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
-            <argument name="property" value="PageBuilderSlideBackgroundAttachmentScrollProperty"/>
-        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
@@ -131,7 +128,6 @@
         <seeElement selector="{{SlideOnBackend.collageBackgroundPosition}}" stepKey="verifyCollageBackgroundPositionInAdmin"/>
         <seeElement selector="{{SlideOnBackend.collageBackgroundSize}}" stepKey="verifyCollageBackgroundSizeInAdmin"/>
         <seeElement selector="{{SlideOnBackend.collageBackgroundRepeat}}" stepKey="verifyCollageBackgroundRepeatInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
@@ -159,9 +155,6 @@
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeOnBackgroundRepeatOnForm">
             <argument name="property" value="PageBuilderSlideBackgroundRepeatDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
-            <argument name="property" value="PageBuilderSlideBackgroundAttachmentScrollProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderProperty">
@@ -212,7 +205,6 @@
         <seeElement selector="{{SlideOnFrontend.collageBackgroundPosition}}" stepKey="verifyFrontendCollageBackgroundPosition"/>
         <seeElement selector="{{SlideOnFrontend.collageBackgroundSize}}" stepKey="verifyFrontendCollageBackgroundSize"/>
         <seeElement selector="{{SlideOnFrontend.collageBackgroundRepeat}}" stepKey="verifyFrontendCollageBackgroundRepeat"/>
-        <seeElement selector="{{SlideOnFrontend.collageBackgroundAttachment}}" stepKey="verifyFrontendCollageBackgroundAttachment"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
@@ -221,7 +213,6 @@
         <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundPosition}}" stepKey="verifyFrontendCollageMobileBackgroundPosition"/>
         <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundSize}}" stepKey="verifyFrontendCollageMobileBackgroundSize"/>
         <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <click selector="{{SlideOnFrontend.linkUrl(PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderSlideLinkExternalUrlProperty.value}}" stepKey="amOnLinkPage"/>
