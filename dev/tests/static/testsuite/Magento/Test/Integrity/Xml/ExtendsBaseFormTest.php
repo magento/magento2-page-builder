@@ -12,6 +12,9 @@ use Magento\Framework\Component\ComponentRegistrar;
 
 class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * Verify the XML files extend the expected base form.
+     */
     public function testXmlFiles()
     {
         $invoker = new \Magento\Framework\App\Utility\AggregateInvoker($this);
@@ -42,6 +45,11 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * Return XML files that are expected to be extended.
+     *
+     * @return array
+     */
     private function getXmlFiles(): array
     {
         $data = [];
