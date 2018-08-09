@@ -255,7 +255,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="overlay_color" sortOrder="80" formElement="input">
+        <field name="overlay_color" sortOrder="80" formElement="colorPicker">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">#FFFFFF</item>
@@ -266,16 +266,28 @@
             </argument>
             <settings>
                 <label translate="true">Overlay Color</label>
+                <componentType>colorPicker</componentType>
+                <placeholder translate="true">No Color</placeholder>
                 <additionalClasses>
-                    <class name="admin__field-small">true</class>
+                    <class name="admin__field-medium">true</class>
                 </additionalClasses>
-                <addAfter translate="true">hex color</addAfter>
-                <dataType>text</dataType>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
                 <dataScope>overlay_color</dataScope>
+                <dataType>text</dataType>
                 <imports>
                     <link name="setDisabled">ns = ${ $.ns }, index = show_overlay:value</link>
                 </imports>
             </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>hex</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
         </field>
         <field name="overlay_transparency" sortOrder="90" formElement="input">
             <argument name="data" xsi:type="array">

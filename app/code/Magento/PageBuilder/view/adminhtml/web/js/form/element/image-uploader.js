@@ -153,6 +153,18 @@ define([
         },
 
         /**
+         * Trigger image:deleteFileAfter event to be handled by PageBuilder image component
+         * {inheritDoc}
+         */
+        clear: function () {
+            this._super();
+
+            events.trigger('image:' + this.id + ':deleteFileAfter');
+
+            return this;
+        },
+
+        /**
          * Propagate file changes through all image uploaders sharing the same id
          *
          * @param {Object} file
@@ -195,6 +207,14 @@ define([
             if (classesToAdd.length) {
                 this.$uploadArea.addClass(classesToAdd.join(' '));
             }
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        hasData: function() {
+            // Some of the components automatically add an empty object if the value is unset.
+            return this._super() && !$.isEmptyObject(this.value()[0]);
         }
     });
 });

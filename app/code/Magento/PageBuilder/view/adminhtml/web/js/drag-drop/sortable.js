@@ -147,9 +147,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
     (0, _dropIndicators.hideDropIndicators)();
-    (0, _registry.setDraggedContentTypeConfig)(null);
+    (0, _registry.setDraggedContentTypeConfig)(null); // Only trigger stop if we triggered start
 
-    _events.trigger("stage:interactionStop");
+    if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
+      _events.trigger("stage:interactionStop");
+    }
   }
   /**
    * Handle receiving a content type from the left panel
