@@ -324,7 +324,7 @@
         <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
         <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
         <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
-        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.cssClasses(cssClasses.value, index)}}" stepKey="waitForCSSClassesVisible"/>
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
@@ -385,7 +385,7 @@
         <waitForElementVisible selector="{{page.borderColor(index, borderColor.rbg)}}" stepKey="waitForBorderColorVisible"/>
         <waitForElementVisible selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
         <waitForElementVisible selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
-        <waitForElementVisible selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.cssClasses(cssClasses.value, index)}}" stepKey="waitForCSSClassesVisible"/>
         <waitForElementVisible selector="{{page.margins(index, margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(index, padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
@@ -414,8 +414,8 @@
         <dontSeeElement selector="{{page.borderWidth(index, borderWidth.value)}}" stepKey="dontSeeBorderWidth"/>
         <waitForElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="waitForBorderRadius"/>
         <dontSeeElement selector="{{page.borderRadius(index, borderRadius.value)}}" stepKey="dontSeeBorderRadius"/>
-        <waitForElement selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="waitForCSSClasses"/>
-        <dontSeeElement selector="{{page.cssClasses(index, cssClasses.value)}}" stepKey="dontSeeCSSClasses"/>
+        <waitForElement selector="{{page.cssClasses(cssClasses.value, index)}}" stepKey="waitForCSSClasses"/>
+        <dontSeeElement selector="{{page.cssClasses(cssClasses.value, index)}}" stepKey="dontSeeCSSClasses"/>
         <waitForElement selector="{{page.margins(index, margin.value)}}" stepKey="waitForMargin"/>
         <dontSeeElement selector="{{page.margins(index, margin.value)}}" stepKey="dontSeeMargin"/>
         <waitForElement selector="{{page.padding(index, padding.value)}}" stepKey="waitForPadding"/>
