@@ -89,8 +89,10 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterAutoplayYes">
             <argument name="property" value="PageBuilderSliderAutoplay_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoplaySpeed5000">
-            <argument name="property" value="PageBuilderSliderAutoplaySpeed_5000"/>
+        <!-- Enter high autoplay speed so the slider won't autoplay during the test -->
+        <comment userInput="Enter high autoplay speed so the slider won't autoplay during the test" stepKey="commentHighAutoplay"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoplaySpeed50000">
+            <argument name="property" value="PageBuilderSliderAutoplaySpeed_50000"/>
         </actionGroup>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFadeYes">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
@@ -203,7 +205,7 @@
         <comment userInput="Validate Slider settings on Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplay_Enabled.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
-        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed_5000.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
+        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed_50000.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
         <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderSliderFade_Enabled.value)}}" stepKey="seeSliderFadeSetting"/>
         <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderInfinite_Enabled.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeSliderShowArrowsSetting"/>
