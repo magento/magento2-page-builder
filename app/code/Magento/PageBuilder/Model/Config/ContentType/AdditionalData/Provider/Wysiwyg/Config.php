@@ -64,7 +64,7 @@ class Config implements ProviderInterface
         if ($this->inlineEditingChecker->isSupported($activeEditorPath)) {
             $config['adapter'] = $this->wysiwygConfig->getConfig()->getData();
             if (isset($this->editors[$activeEditorPath])) {
-                $config['additional'] = $this->editors[$activeEditorPath];
+                $config['adapter_config'] = $this->editors[$activeEditorPath];
             }
         }
         return [$itemName => $config,];

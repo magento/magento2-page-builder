@@ -16,7 +16,7 @@ import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface
  * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
  * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
  * @param {DataStore} dataStore The datastore to store the content in.
- * @param {String} fieldName The ket in the provided datastore to set the data.
+ * @param {String} fieldName The key in the provided datastore to set the data.
  * @returns {Wysiwyg}
  * @api
  */
@@ -31,14 +31,14 @@ export default function create(
     config = $.extend(true, {}, config);
 
     return new Promise((resolve: (WysiwygInstance: WysiwygInterface) => void) => {
-        loadModule([config.additional.component], (WysiwygInstance: WysiwygConstructorInterface) => {
+        loadModule([config["adapter_config"].component], (WysiwygInstance: WysiwygConstructorInterface) => {
             new Promise((configResolve: () => void): void => {
-                if (config.additional.initializers
-                    && config.additional.initializers.config
-                    && config.additional.initializers.config[contentTypeName]
+                if (config["adapter_config"].initializers
+                    && config["adapter_config"].initializers.config
+                    && config["adapter_config"].initializers.config[contentTypeName]
                 ) {
                     loadModule(
-                        [config.additional.initializers.config[contentTypeName]],
+                        [config["adapter_config"].initializers.config[contentTypeName]],
                         (InitializerInstance: any) => {
                             const initializer = new InitializerInstance();
                             // Allow dynamic settings to be set before editor is initialized
@@ -55,18 +55,17 @@ export default function create(
                 const wysiwyg = new WysiwygInstance(
                     contentTypeId,
                     elementId,
-                    contentTypeName,
                     config,
                     dataStore,
                     fieldName,
                 );
 
-                if (config.additional.initializers
-                    && config.additional.initializers.component
-                    && config.additional.initializers.component[contentTypeName]
+                if (config["adapter_config"].initializers
+                    && config["adapter_config"].initializers.component
+                    && config["adapter_config"].initializers.component[contentTypeName]
                 ) {
                     loadModule(
-                        [config.additional.initializers.component[contentTypeName]],
+                        [config["adapter_config"].initializers.component[contentTypeName]],
                         (InitializerInstance: any) => {
                             const initializer = new InitializerInstance();
                             // Allow dynamic bindings from configuration such as events from the editor
