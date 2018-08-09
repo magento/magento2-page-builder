@@ -11,7 +11,7 @@
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div" parameterized="true"/>
         <element name="textAreaText" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//div[.='{{arg2}}']" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="textAreaTextContains" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div//*[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="mcePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div//*[starts-with(@id, '{{arg2}}')]" parameterized="true"/>
