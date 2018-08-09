@@ -10,6 +10,7 @@
 .pagebuilder-content-type {
     .pagebuilder-button-item {
         font-size: 0;
+        max-width: 100%;
         width: auto;
         z-index: auto;
         .pagebuilder-options {
@@ -25,8 +26,12 @@
             min-height: 18px;
             min-width: 20px;
         }
-        a[data-element="link"] {
-          transition: min-width .5s ease;
+        a[data-element='link'] {
+            max-width: 100%;
+            transition: min-width .5s ease;
+            [data-element='link_text'] {
+                max-width: 100%;
+            }
         }
         &.pagebuilder-content-type-active {
             .button-item-drag-handle {
