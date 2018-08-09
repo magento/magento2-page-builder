@@ -7,6 +7,7 @@
 //  Default appearance styles
 //  _____________________________________________
 
+div[data-role='tabs'],
 .pagebuilder-content-type.pagebuilder-tabs {
     .tabs-navigation {
         border-bottom: 1px solid rgba(153, 153, 153, .3);
@@ -181,104 +182,4 @@
 
 .pagebuilder-stage.focus-child .pagebuilder-content-type.pagebuilder-tabs .tabs-content {
     z-index: auto;
-}
-@f6: #f6f6f6;
-@ccc: #ccc;
-@color-black: #000;
-@color-white: #fff;
-
-//
-//  Default appearance styles
-//  _____________________________________________
-
-div[data-role='tabs'] {
-    .tabs-navigation {
-        display: block;
-        font-size: 0;
-        margin: 0 0 -1px;
-        padding: 0;
-
-        li:first-child {
-            margin-left: 0 !important;
-        }
-
-        li.tab-header {
-            background: @f6;
-            border: 1px solid @ccc;
-            border-bottom: 0 !important;
-            border-bottom-left-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-            display: inline-block;
-            margin: 0;
-            position: relative;
-            z-index: 1;
-
-            &:not(:first-child) {
-                margin-left: -1px;
-            }
-
-            a.tab-title {
-                border-right: 0;
-                color: @color-black;
-                cursor: pointer !important;
-                display: block;
-                font-size: 14px;
-                font-weight: 600;
-                padding: 1.4rem 2rem;
-                position: relative;
-                transition: all .3s;
-                vertical-align: middle;
-                white-space: normal;
-
-                span.tab-title {
-                    display: block;
-                }
-
-                &:hover {
-                    text-decoration: none;
-                }
-            }
-
-            &:last-child {
-                border-right: 1px solid @ccc;
-            }
-
-            &.ui-state-active {
-                background: @color-white;
-                z-index: 19;
-
-                a.tab-title {
-                    position: relative;
-                    transition: all .3s;
-                }
-            }
-        }
-    }
-
-    .tabs-content {
-        border: 1px solid @ccc;
-        overflow: hidden;
-        position: relative;
-        z-index: 9;
-
-        [data-role='tab-item'] {
-            box-sizing: border-box;
-            min-height: inherit;
-
-            &:not(:first-child) {
-                display: none;
-            }
-        }
-    }
-
-    &.tab-align-left {
-        .tabs-content {
-            border-top-left-radius: 0 !important;
-        }
-    }
-    &.tab-align-right {
-        .tabs-content {
-            border-top-right-radius: 0 !important;
-        }
-    }
 }
