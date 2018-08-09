@@ -191,6 +191,7 @@
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="onMouseOverStage"/>
         <waitForPageLoad stepKey="waitForMouseOver"/>
+        <seeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="seeDomOptionsMenu" />
         <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptionsMenu" />
         <dontSee selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
     </actionGroup>
@@ -250,7 +251,7 @@
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role, targetIndex)}}" stepKey="showContentType" />
         <waitForPageLoad stepKey="waitForDisable" />
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible" />
-        <dontSeeElement selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
+        <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden" />
     </actionGroup>
     <actionGroup name="showSmallContentType">
         <arguments>
@@ -270,6 +271,6 @@
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeShow(contentType.role, targetIndex)}}" stepKey="showContentType" />
         <waitForPageLoad stepKey="waitForDisable" />
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible" />
-        <dontSeeElement selector="{{section.hidden(targetIndex)}}" stepKey="waitForContentTypeHidden" />
+        <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden" />
     </actionGroup>
 </actionGroups>
