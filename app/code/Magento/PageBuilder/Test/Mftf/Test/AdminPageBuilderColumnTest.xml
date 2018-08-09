@@ -1715,7 +1715,7 @@
         <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn" />
         <waitForPageLoad stepKey="waitForMouseOver" />
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptions"/>
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="dontSeeHideOption" />
+        <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderColumnContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
     </test>
     <test name="ValidateShowHideOnColumnChildDefaultState">
         <annotations>
