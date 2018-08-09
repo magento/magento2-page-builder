@@ -35,13 +35,13 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       var _this = this;
 
       // If there isn't enough room for a left-aligned toolbar, right align it
-      if ((0, _jquery)(window).width() < this.$element.offset().left + parseInt(this.config["adapter_config"].minToolbarWidth, 10)) {
+      if ((0, _jquery)(window).width() < this.$element.offset().left + parseInt(this.config.adapter_config.minToolbarWidth, 10)) {
         this.$element.addClass("_right-aligned-toolbar");
       } else {
         this.$element.removeClass("_right-aligned-toolbar");
       }
 
-      _jquery.each(this.config["adapter_config"].parentSelectorsToUnderlay, function (i, selector) {
+      _jquery.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
         _this.$element.closest(selector).css("z-index", 100);
       });
     };
@@ -53,7 +53,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
     _proto.onBlur = function onBlur() {
       var _this2 = this;
 
-      _jquery.each(this.config["adapter_config"].parentSelectorsToUnderlay, function (i, selector) {
+      _jquery.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
         _this2.$element.closest(selector).css("z-index", "");
       });
     };

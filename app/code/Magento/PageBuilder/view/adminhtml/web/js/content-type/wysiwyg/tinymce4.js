@@ -57,10 +57,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       this.config = config;
       this.dataStore = dataStore;
       var wysiwygSetup = new _setup(this.elementId, this.config.adapter);
-      wysiwygSetup.setup(this.config["adapter_config"].mode);
+      wysiwygSetup.setup(this.config.adapter_config.mode);
       this.wysiwygAdapter = wysiwygSetup.wysiwygInstance;
 
-      if (this.config["adapter_config"].mode === "inline") {
+      if (this.config.adapter_config.mode === "inline") {
         this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterFocus, this.onFocus.bind(this));
         this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterBlur, this.onBlur.bind(this));
       } // Update content in our data store after our stage preview wysiwyg gets updated
@@ -96,7 +96,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
 
       _underscore.defer(function () {
-        (0, _jquery)(_this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline").css("min-width", _this.config["adapter_config"].minToolbarWidth + "px");
+        (0, _jquery)(_this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline").css("min-width", _this.config.adapter_config.minToolbarWidth + "px");
       });
     };
     /**

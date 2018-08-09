@@ -71,11 +71,11 @@ export default class Wysiwyg implements WysiwygInterface {
 
         const wysiwygSetup = new WysiwygSetup(this.elementId, this.config.adapter);
 
-        wysiwygSetup.setup(this.config["adapter_config"].mode);
+        wysiwygSetup.setup(this.config.adapter_config.mode);
 
         this.wysiwygAdapter = wysiwygSetup.wysiwygInstance;
 
-        if (this.config["adapter_config"].mode === "inline") {
+        if (this.config.adapter_config.mode === "inline") {
             this.wysiwygAdapter.eventBus.attachEventHandler(
                 WysiwygEvents.afterFocus,
                 this.onFocus.bind(this),
@@ -118,7 +118,7 @@ export default class Wysiwyg implements WysiwygInterface {
         // Wait for everything else to finish
         _.defer(() => {
             $(this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline")
-                .css("min-width", this.config["adapter_config"].minToolbarWidth + "px");
+                .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
         });
     }
 

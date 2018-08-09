@@ -31,18 +31,17 @@ export default function create(
     config = $.extend(true, {}, config);
 
     return new Promise((resolve: (WysiwygInstance: WysiwygInterface) => void) => {
-        loadModule([config["adapter_config"].component], (WysiwygInstance: WysiwygConstructorInterface) => {
+        loadModule([config.adapter_config.component], (WysiwygInstance: WysiwygConstructorInterface) => {
             new Promise((configResolve: () => void): void => {
-                if (config["adapter_config"].initializers
-                    && config["adapter_config"].initializers.config
-                    && config["adapter_config"].initializers.config[contentTypeName]
+                if (config.adapter_config.config_modifiers
+                    && config.adapter_config.config_modifiers[contentTypeName]
                 ) {
                     loadModule(
-                        [config["adapter_config"].initializers.config[contentTypeName]],
-                        (InitializerInstance: any) => {
-                            const initializer = new InitializerInstance();
+                        [config.adapter_config.config_modifiers[contentTypeName]],
+                        (ConfigModifierType: any) => {
+                            const modifier = new ConfigModifierType();
                             // Allow dynamic settings to be set before editor is initialized
-                            initializer.initialize(contentTypeId, config);
+                            modifier.modify(contentTypeId, config);
                             configResolve();
                         },
                     );
@@ -60,14 +59,13 @@ export default function create(
                     fieldName,
                 );
 
-                if (config["adapter_config"].initializers
-                    && config["adapter_config"].initializers.component
-                    && config["adapter_config"].initializers.component[contentTypeName]
+                if (config.adapter_config.component_initializers
+                    && config.adapter_config.component_initializers[contentTypeName]
                 ) {
                     loadModule(
-                        [config["adapter_config"].initializers.component[contentTypeName]],
-                        (InitializerInstance: any) => {
-                            const initializer = new InitializerInstance();
+                        [config.adapter_config.component_initializers[contentTypeName]],
+                        (InitializerType: any) => {
+                            const initializer = new InitializerType();
                             // Allow dynamic bindings from configuration such as events from the editor
                             initializer.initialize(wysiwyg);
                             resolve(wysiwyg);
