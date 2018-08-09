@@ -3,22 +3,29 @@
  * See COPYING.txt for license details.
  */
 
+import Preview from "../content-type/preview";
+import ko from "knockout";
+import OptionConfigInterface from "./option-config";
+
 /**
  * @api
  */
 export default interface OptionInterface {
+    config: OptionConfigInterface;
+    parent: Preview;
     code: string;
-    icon?: KnockoutObservable<string>;
-    title?: KnockoutObservable<string>;
-    classes?: KnockoutObservable<{ [key: string]: boolean | KnockoutObservable<boolean> }>;
+    icon: KnockoutObservable<string>;
+    title: KnockoutObservable<string>;
+    classes: KnockoutObservable<{[key: string]: boolean | KnockoutObservable<boolean>}>;
     sort: number;
-    optionTemplate?: string;
-    isDisabled?: KnockoutObservable<boolean>;
+    action: () => void;
+    isDisabled: KnockoutObservable<boolean>;
+    optionTemplate: string;
+}
 
-    setAction?(action: () => void): void;
-
-    /**
-     * Bind events for the option menu item
-     */
-    bindEvents(): void;
+/**
+ * @api
+ */
+export interface OptionsInterface {
+    [key: string]: OptionInterface;
 }

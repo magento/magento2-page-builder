@@ -4,8 +4,8 @@
  */
 
 import $t from "mage/translate";
-import events from "Magento_PageBuilder/js/events";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import BasePreview from "../preview";
 
 /**
@@ -15,23 +15,14 @@ export default class Preview extends BasePreview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
-     * Bind events
+     * Use the conditional remove to disable the option when the parent has a single child
+     *
+     * @returns {OptionsInterface}
      */
-    public bindEvents(): void {
-        super.bindEvents();
-
-        events.on(`${this.config.name}:mountAfter`, (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
-                // Disable the remove option when there is only a single button
-                const removeOption = this.getOptions().getOption("remove");
-                if (this.parent.parent.children().length < 2) {
-                    removeOption.isDisabled(true);
-                }
-                this.parent.parent.children.subscribe((children) => {
-                    removeOption.isDisabled((children.length < 2));
-                });
-            }
-        });
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+        options.remove = new ConditionalRemoveOption(options.remove.config);
+        return options;
     }
 
     /**

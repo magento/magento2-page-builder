@@ -11,7 +11,7 @@ import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import PreviewCollection from "../preview-collection";
 
@@ -47,21 +47,18 @@ export default class Preview extends PreviewCollection {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        options.push(
-            new Option(
-                this,
-                "add",
-                "<i class='icon-pagebuilder-add'></i>",
-                $t("Add Button"),
-                this.addButton,
-                ["add-child"],
-                20,
-            ),
-        );
+        options.add = new Option({
+            parent: this,
+            icon: "<i class='icon-pagebuilder-add'></i>",
+            title: $t("Add Button"),
+            action: this.addButton,
+            classes: ["add-child"],
+            sort: 10,
+        });
         return options;
     }
 

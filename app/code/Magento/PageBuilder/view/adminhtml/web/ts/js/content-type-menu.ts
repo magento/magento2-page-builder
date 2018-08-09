@@ -4,7 +4,8 @@
  */
 
 import ko from "knockout";
-import OptionInterface from "./content-type-menu/option.d";
+import _ from "underscore";
+import OptionInterface, {OptionsInterface} from "./content-type-menu/option.d";
 import Preview from "./content-type/preview";
 
 /**
@@ -20,37 +21,18 @@ export default class ContentTypeMenu {
      * @param parent
      * @param options
      */
-    constructor(parent: Preview, options: OptionInterface[]) {
+    constructor(parent: Preview, options: OptionsInterface) {
         this.parent = parent;
-        options.forEach((option) => {
-            this.addOption(option);
+        const codes = _.keys(options);
+        _.values(options).forEach((option, index) => {
+            option.code = codes[index];
+            this.options.push(option);
         });
+        this.sort();
     }
 
     get template(): string {
          return "Magento_PageBuilder/content-type/menu";
-    }
-
-    /**
-     * Add an option into the content type menu
-     *
-     * @param {OptionInterface} option
-     */
-    public addOption(option: OptionInterface) {
-        this.options.push(option);
-        this.sort();
-    }
-
-    /**
-     * Remove an option
-     *
-     * @param {string} code
-     */
-    public removeOption(code: string): void {
-        this.options(this.options().filter((option: OptionInterface) => {
-            return (option.code !== code);
-        }));
-        this.sort();
     }
 
     /**

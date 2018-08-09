@@ -5,9 +5,10 @@
 import $t from "mage/translate";
 import {DataObject} from "../data-store";
 import Option from "./option";
+import OptionConfigInterface from "./option-config";
 import OptionInterface from "./option.d";
 
-export default class HideShow extends Option implements OptionInterface {
+export default class HideShowOption extends Option implements OptionInterface {
 
     public static SHOW_TEXT = $t("Show");
     public static SHOW_ICON = "<i class='icon-pagebuilder-show'></i>";
@@ -16,9 +17,13 @@ export default class HideShow extends Option implements OptionInterface {
     public static HIDE_ICON = "<i class='icon-pagebuilder-hide'></i>";
 
     /**
-     * Bind events for the icon & title change
+     * @param {OptionConfigInterface} options
      */
-    public bindEvents(): void {
+    constructor(
+        options: OptionConfigInterface,
+    ) {
+        super(options);
+
         // Modify the icon when changes are made to display in the data store
         this.parent.parent.dataStore.subscribe(
             this.onDisplayChange.bind(this),
@@ -34,11 +39,11 @@ export default class HideShow extends Option implements OptionInterface {
     private onDisplayChange(state: DataObject) {
         const display: boolean = !!state.display;
         if (display) {
-            this.icon(HideShow.HIDE_ICON);
-            this.title(HideShow.HIDE_TEXT);
+            this.icon(HideShowOption.HIDE_ICON);
+            this.title(HideShowOption.HIDE_TEXT);
         } else {
-            this.icon(HideShow.SHOW_ICON);
-            this.title(HideShow.SHOW_TEXT);
+            this.icon(HideShowOption.SHOW_ICON);
+            this.title(HideShowOption.SHOW_TEXT);
         }
     }
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview-collection"], function (_events, _previewCollection) {
+define(["Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemove, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -25,39 +25,15 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
     /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
-    _proto.getOptions = function getOptions() {
-      var options = _PreviewCollection.prototype.getOptions.call(this);
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      options.removeOption("move");
-      options.removeOption("title");
+      delete options.move;
+      delete options.title;
+      options.remove = new _conditionalRemove(options.remove.config);
       return options;
-    };
-    /**
-     * Bind events
-     */
-
-
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
-
-      _PreviewCollection.prototype.bindEvents.call(this);
-
-      _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this2.parent.id) {
-          // Disable the remove option when there is only a single tab
-          var removeOption = _this2.getOptions().getOption("remove");
-
-          if (_this2.parent.parent.children().length < 2) {
-            removeOption.isDisabled(true);
-          }
-
-          _this2.parent.parent.children.subscribe(function (children) {
-            removeOption.isDisabled(children.length < 2);
-          });
-        }
-      });
     };
 
     return Preview;

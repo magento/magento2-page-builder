@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _events, _preview) {
+define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _conditionalRemove, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -23,27 +23,15 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     var _proto = Preview.prototype;
 
     /**
-     * Bind events
+     * Use the conditional remove to disable the option when the parent has a single child
+     *
+     * @returns {OptionsInterface}
      */
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _BasePreview.prototype.retrieveOptions.call(this);
 
-      _BasePreview.prototype.bindEvents.call(this);
-
-      _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this2.parent.id) {
-          // Disable the remove option when there is only a single button
-          var removeOption = _this2.getOptions().getOption("remove");
-
-          if (_this2.parent.parent.children().length < 2) {
-            removeOption.isDisabled(true);
-          }
-
-          _this2.parent.parent.children.subscribe(function (children) {
-            removeOption.isDisabled(children.length < 2);
-          });
-        }
-      });
+      options.remove = new _conditionalRemove(options.remove.config);
+      return options;
     };
     /**
      * Focus out of the element

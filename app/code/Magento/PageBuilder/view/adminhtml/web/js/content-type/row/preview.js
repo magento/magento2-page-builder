@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _events, _jarallax, _ResizeObserver, _underscore, _previewCollection) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _events, _jarallax, _ResizeObserver, _underscore, _conditionalRemove, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -53,14 +53,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       _events.on("row:mountAfter", function (args) {
         if (args.id === _this.parent.id) {
-          _this.buildJarallax(); // Disable the remove option when there is only a single row
-
-
-          var removeOption = _this.getOptions().getOption("remove");
-
-          _this.parent.parent.children.subscribe(function (children) {
-            removeOption.isDisabled(children.length < 2);
-          });
+          _this.buildJarallax();
         }
       });
 
@@ -73,13 +66,26 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       return _this;
     }
     /**
+     * Use the conditional remove to disable the option when the parent has a single child
+     *
+     * @returns {OptionsInterface}
+     */
+
+
+    var _proto = Preview.prototype;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+
+      options.remove = new _conditionalRemove(options.remove.config);
+      return options;
+    };
+    /**
      * Init the parallax element
      *
      * @param {Element} element
      */
 
-
-    var _proto = Preview.prototype;
 
     _proto.initParallax = function initParallax(element) {
       var _this2 = this;

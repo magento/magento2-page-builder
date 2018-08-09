@@ -8,52 +8,42 @@ define(["knockout"], function (_knockout) {
   /*#__PURE__*/
   function () {
     /**
-     * @param {Preview} parent
-     * @param {string} code
-     * @param {string} icon
-     * @param {string} title
-     * @param {() => void} action
-     * @param {string[]} classes
-     * @param {number} sort
-     * @param {string} optionTemplate
+     * @param {OptionConfigInterface} config
      */
-    function Option(parent, code, icon, title, action, classes, sort, optionTemplate) {
-      this.classes = _knockout.observable({});
-      this.code = void 0;
-      this.icon = _knockout.observable("");
-      this.parent = void 0;
-      this.sort = void 0;
-      this.title = _knockout.observable("");
-      this.action = void 0;
-      this.optionTemplate = void 0;
-      this.isDisabled = _knockout.observable(false);
-      this.parent = parent;
-      this.code = code;
-      this.icon(icon);
-      this.title(title);
-      var koClasses = {};
-      classes.forEach(function (cssClass) {
-        koClasses[cssClass] = true;
-      });
-      koClasses.disabled = this.isDisabled;
-      this.classes(koClasses);
-      this.sort = sort;
-      this.optionTemplate = optionTemplate;
-      this.setAction(action);
-      this.bindEvents();
-    }
-
-    var _proto = Option.prototype;
-
-    /**
-     * Set the action for the options menu
-     *
-     * @param {() => {}} action
-     */
-    _proto.setAction = function setAction(action) {
+    function Option(config) {
       var _this = this;
 
-      action = action ? action : function () {
+      this.config = void 0;
+      this.parent = void 0;
+      this.code = void 0;
+      this.icon = _knockout.observable("");
+      this.title = _knockout.observable("");
+      this.classes = _knockout.observable({});
+      this.sort = void 0;
+      this.action = void 0;
+      this.isDisabled = _knockout.observable(false);
+      this.optionTemplate = void 0;
+      this.config = config;
+      this.parent = config.parent;
+      this.icon(config.icon);
+      this.title(config.title);
+      this.code = config.code;
+      this.sort = config.sort || 0;
+      this.optionTemplate = config.optionTemplate; // Generate an array of classes for KO to consume
+
+      var koClasses = {};
+
+      if (config.classes && config.classes.length > 0) {
+        config.classes.forEach(function (cssClass) {
+          koClasses[cssClass] = true;
+        });
+      } // Always add a disabled class which tracks whether this option is disabled
+
+
+      koClasses.disabled = this.isDisabled;
+      this.classes(koClasses); // If no action is supplied pass an empty function, this is called within the context of the preview
+
+      var action = config.action ? config.action : function () {
         return;
       };
 
@@ -66,16 +56,7 @@ define(["knockout"], function (_knockout) {
           action.apply(_this.parent, args);
         }
       };
-    };
-    /**
-     * Bind events for the option menu item
-     */
-
-
-    _proto.bindEvents = function bindEvents() {
-      // Bind any events required by the option menu item
-      return;
-    };
+    }
 
     _createClass(Option, [{
       key: "template",

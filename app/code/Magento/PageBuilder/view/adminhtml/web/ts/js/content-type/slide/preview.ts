@@ -5,12 +5,12 @@
 
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import Options from "../../content-type-menu";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
-import SliderPreview from "../slider/preview";
 import Uploader from "../uploader";
 
 /**
@@ -141,11 +141,12 @@ export default class Preview extends BasePreview {
     /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
-    public getOptions(): Options {
-        const options = super.getOptions();
-        options.removeOption("move");
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+        delete options.move;
+        options.remove = new ConditionalRemoveOption(options.remove.config);
         return options;
     }
 
@@ -186,22 +187,6 @@ export default class Preview extends BasePreview {
 
                 // Register listener when image gets uploaded from uploader UI component
                 this.uploader.onUploaded(this.onImageUploaded.bind(this));
-
-                // Update remove action to call methods on slider
-                const removeOption = this.getOptions().getOption("remove");
-                removeOption.setAction(() => {
-                    const index = this.parent.parent.getChildren().indexOf(this.parent);
-                    this.onOptionRemove();
-                    // Invoking methods on slider
-                    (this.parent.parent.preview as SliderPreview).onAfterRender();
-                    (this.parent.parent.preview as SliderPreview).setFocusedSlide(index - 1);
-                });
-                if (this.parent.parent.children().length < 2) {
-                    removeOption.isDisabled(true);
-                }
-                this.parent.parent.children.subscribe((children) => {
-                    removeOption.isDisabled((children.length < 2));
-                });
 
                 // Update the display label for the slide
                 const slider = this.parent.parent;

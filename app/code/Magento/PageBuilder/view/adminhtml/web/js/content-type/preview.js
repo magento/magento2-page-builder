@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/hide-show", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _hideShow, _option, _title, _containerAnimation, _sortable2, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _hideShowOption, _option, _containerAnimation, _sortable2, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -363,15 +363,60 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = [new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title(this, this.config.label, 20), new _option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-content-type"], 30), new _option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 50), new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 60)]; // If the content type is is_hideable show the hide / show option
+      var options = {
+        move: new _option({
+          parent: this,
+          icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+          title: (0, _translate)("Move"),
+          classes: ["move-structural"],
+          sort: 10
+        }),
+        title: new _option({
+          parent: this,
+          title: this.config.label,
+          optionTemplate: "Magento_PageBuilder/content-type/title",
+          sort: 20
+        }),
+        edit: new _option({
+          parent: this,
+          icon: "<i class='icon-admin-pagebuilder-systems'></i>",
+          title: (0, _translate)("Edit"),
+          action: this.onOptionEdit,
+          classes: ["edit-content-type"],
+          sort: 30
+        }),
+        duplicate: new _option({
+          parent: this,
+          icon: "<i class='icon-pagebuilder-copy'></i>",
+          title: (0, _translate)("Duplicate"),
+          action: this.onOptionDuplicate,
+          classes: ["duplicate-structural"],
+          sort: 50
+        }),
+        remove: new _option({
+          parent: this,
+          icon: "<i class='icon-admin-pagebuilder-remove'></i>",
+          title: (0, _translate)("Remove"),
+          action: this.onOptionRemove,
+          classes: ["remove-structural"],
+          sort: 60
+        })
+      }; // If the content type is is_hideable show the hide / show option
 
       if (this.parent.config.is_hideable) {
-        options.push(new _hideShow(this, "hide_show", _hideShow.SHOW_ICON, _hideShow.SHOW_TEXT, this.onOptionHideShow, ["hide-show-content-type"], 40));
+        options.hideShow = new _hideShowOption({
+          parent: this,
+          icon: _hideShowOption.SHOW_ICON,
+          title: _hideShowOption.SHOW_TEXT,
+          action: this.onOptionHideShow,
+          classes: ["hide-show-content-type"],
+          sort: 40
+        });
       }
 
       return options;

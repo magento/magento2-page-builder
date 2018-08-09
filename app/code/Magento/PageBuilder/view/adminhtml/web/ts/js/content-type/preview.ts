@@ -17,10 +17,9 @@ import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
-import HideShow from "../content-type-menu/hide-show";
+import HideShowOption from "../content-type-menu/hide-show-option";
 import Option from "../content-type-menu/option";
-import OptionInterface from "../content-type-menu/option.d";
-import TitleOption from "../content-type-menu/title";
+import {OptionsInterface} from "../content-type-menu/option.d";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
@@ -373,60 +372,59 @@ export default class Preview {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    protected retrieveOptions(): OptionInterface[] {
-        const options: OptionInterface[] = [
-            new Option(
-                this,
-                "move",
-                "<i class='icon-admin-pagebuilder-handle'></i>",
-                $t("Move"),
-                null,
-                ["move-structural"],
-                10,
-            ),
-            new TitleOption(this, this.config.label, 20),
-            new Option(
-                this,
-                "edit",
-                "<i class='icon-admin-pagebuilder-systems'></i>",
-                $t("Edit"),
-                this.onOptionEdit,
-                ["edit-content-type"],
-                30,
-            ),
-            new Option(
-                this,
-                "duplicate",
-                "<i class='icon-pagebuilder-copy'></i>",
-                $t("Duplicate"),
-                this.onOptionDuplicate,
-                ["duplicate-structural"],
-                50,
-            ),
-            new Option(
-                this,
-                "remove",
-                "<i class='icon-admin-pagebuilder-remove'></i>",
-                $t("Remove"),
-                this.onOptionRemove,
-                ["remove-structural"],
-                60,
-            ),
-        ];
+    protected retrieveOptions(): OptionsInterface {
+        const options: OptionsInterface = {
+            move: new Option({
+                parent: this,
+                icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+                title: $t("Move"),
+                classes: ["move-structural"],
+                sort: 10,
+            }),
+            title: new Option({
+                parent: this,
+                title: this.config.label,
+                optionTemplate: "Magento_PageBuilder/content-type/title",
+                sort: 20,
+            }),
+            edit: new Option({
+                parent: this,
+                icon: "<i class='icon-admin-pagebuilder-systems'></i>",
+                title: $t("Edit"),
+                action: this.onOptionEdit,
+                classes: ["edit-content-type"],
+                sort: 30,
+            }),
+            duplicate: new Option({
+                parent: this,
+                icon: "<i class='icon-pagebuilder-copy'></i>",
+                title: $t("Duplicate"),
+                action: this.onOptionDuplicate,
+                classes: ["duplicate-structural"],
+                sort: 50,
+            }),
+            remove: new Option({
+                parent: this,
+                icon: "<i class='icon-admin-pagebuilder-remove'></i>",
+                title: $t("Remove"),
+                action: this.onOptionRemove,
+                classes: ["remove-structural"],
+                sort: 60,
+            }),
+        };
 
         // If the content type is is_hideable show the hide / show option
         if (this.parent.config.is_hideable) {
-            options.push(new HideShow(
-                this,
-                "hide_show",
-                HideShow.SHOW_ICON,
-                HideShow.SHOW_TEXT,
-                this.onOptionHideShow,
-                ["hide-show-content-type"],
-                40,
-            ));
+            options.hideShow = new HideShowOption({
+                parent: this,
+                icon: HideShowOption.SHOW_ICON,
+                title: HideShowOption.SHOW_TEXT,
+                action: this.onOptionHideShow,
+                classes: ["hide-show-content-type"],
+                sort: 40,
+            });
         }
 
         return options;

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _events, _preview, _uploader) {
+define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _events, _conditionalRemove, _preview, _uploader) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -136,14 +136,15 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
 
 
-    _proto.getOptions = function getOptions() {
-      var options = _BasePreview.prototype.getOptions.call(this);
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _BasePreview.prototype.retrieveOptions.call(this);
 
-      options.removeOption("move");
+      delete options.move;
+      options.remove = new _conditionalRemove(options.remove.config);
       return options;
     };
     /**
@@ -184,29 +185,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
             value: initialImageValue
           })); // Register listener when image gets uploaded from uploader UI component
 
-          _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2)); // Update remove action to call methods on slider
-
-
-          var removeOption = _this2.getOptions().getOption("remove");
-
-          removeOption.setAction(function () {
-            var index = _this2.parent.parent.getChildren().indexOf(_this2.parent);
-
-            _this2.onOptionRemove(); // Invoking methods on slider
-
-
-            _this2.parent.parent.preview.onAfterRender();
-
-            _this2.parent.parent.preview.setFocusedSlide(index - 1);
-          });
-
-          if (_this2.parent.parent.children().length < 2) {
-            removeOption.isDisabled(true);
-          }
-
-          _this2.parent.parent.children.subscribe(function (children) {
-            removeOption.isDisabled(children.length < 2);
-          }); // Update the display label for the slide
+          _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2)); // Update the display label for the slide
 
 
           var slider = _this2.parent.parent;
