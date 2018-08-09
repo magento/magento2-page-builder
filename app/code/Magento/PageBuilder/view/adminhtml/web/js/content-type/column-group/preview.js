@@ -62,6 +62,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.groupPositionCache = void 0;
       _this.resizeUtils = void 0;
       _this.gridSizeHistory = new Map();
+      _this.interactionLevel = 0;
 
       _this.onDocumentClick = function (event) {
         // Verify the click event wasn't within our form
@@ -282,6 +283,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         };
         _this3.resizeLastPosition = null;
         _this3.resizeMouseDown = true;
+        ++_this3.interactionLevel;
 
         _events.trigger("stage:interactionStart", {
           stageId: _this3.parent.stageId
@@ -509,9 +511,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.endAllInteractions = function endAllInteractions() {
       if (this.resizing() === true) {
-        _events.trigger("stage:interactionStop", {
-          stageId: this.parent.stageId
-        });
+        for (; this.interactionLevel > 0; this.interactionLevel--) {
+          _events.trigger("stage:interactionStop", {
+            stageId: this.parent.stageId
+          });
+        }
       }
 
       this.resizing(false);

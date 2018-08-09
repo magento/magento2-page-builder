@@ -43,12 +43,10 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this2.parent.dataStore.get();
 
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0]; // Image is a required field, so we should only run assignAfter once an image is present, otherwise other
-        // modifications to the data store for this content type will cause the uploader to hide.
+        var files = dataStore[_this2.config.additional_data.uploaderConfig.dataScope];
+        var imageObject = files ? files[0] : {};
 
-        if (imageObject) {
-          _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
-        }
+        _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
       });
 
       _events.on(this.config.name + ":mountAfter", function () {
@@ -56,22 +54,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
 
         var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
-          value: initialImageValue
-        })); // Register listener when image gets uploaded from uploader UI component
-
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+        _this2.uploader = new _uploader("imageuploader_" + _this2.parent.id, _this2.config.additional_data.uploaderConfig, _this2.parent.id, _this2.parent.dataStore, initialImageValue);
       });
-    };
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-
-
-    _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

@@ -155,7 +155,11 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
     setDraggedContentTypeConfig(null);
-    events.trigger("stage:interactionStop");
+
+    // Only trigger stop if we triggered start
+    if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
+        events.trigger("stage:interactionStop");
+    }
 }
 
 /**

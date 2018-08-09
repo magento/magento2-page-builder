@@ -9,6 +9,7 @@
     <type name="text"
           label="Text"
           component="Magento_PageBuilder/js/content-type"
+          preview_component="Magento_PageBuilder/js/content-type/text/preview"
           form="pagebuilder_text_form"
           group="elements"
           icon="icon-pagebuilder-text"
@@ -39,5 +40,14 @@
                 </elements>
             </appearance>
         </appearances>
+        <additional_data>
+            <item name="wysiwygConfig" xsi:type="array">
+                <item name="wysiwygConfigData" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config</item>
+                <item name="parentSelectorsToUnderlay" xsi:type="array">
+                    <item name="0" xsi:type="string">.column-container</item>
+                    <item name="1" xsi:type="string">.row-container</item>
+                </item>
+            </item>
+        </additional_data>
     </type>
 </config>

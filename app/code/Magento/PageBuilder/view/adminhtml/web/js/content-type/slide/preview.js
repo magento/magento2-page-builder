@@ -181,12 +181,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
           var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-          _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
-            value: initialImageValue
-          })); // Register listener when image gets uploaded from uploader UI component
-
-          _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2)); // Update the display label for the slide
-
+          _this2.uploader = new _uploader("imageuploader_" + _this2.parent.id, _this2.config.additional_data.uploaderConfig, _this2.parent.id, _this2.parent.dataStore, initialImageValue); // Update the display label for the slide
 
           var slider = _this2.parent.parent;
 
@@ -215,16 +210,6 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
       }
 
       return styles;
-    };
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-
-
-    _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

@@ -178,15 +178,12 @@ export default class Preview extends BasePreview {
 
                 // Create uploader
                 this.uploader = new Uploader(
-                    this.parent.id,
                     "imageuploader_" + this.parent.id,
-                    Object.assign({}, this.config.additional_data.uploaderConfig, {
-                        value: initialImageValue,
-                    }),
+                    this.config.additional_data.uploaderConfig,
+                    this.parent.id,
+                    this.parent.dataStore,
+                    initialImageValue,
                 );
-
-                // Register listener when image gets uploaded from uploader UI component
-                this.uploader.onUploaded(this.onImageUploaded.bind(this));
 
                 // Update the display label for the slide
                 const slider = this.parent.parent;
@@ -197,7 +194,6 @@ export default class Preview extends BasePreview {
                 });
             }
         });
-
     }
 
     protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
@@ -214,17 +210,5 @@ export default class Preview extends BasePreview {
             styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
         }
         return styles;
-    }
-
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-    private onImageUploaded(data: object[]) {
-        this.parent.dataStore.update(
-            data,
-            this.config.additional_data.uploaderConfig.dataScope,
-        );
     }
 }
