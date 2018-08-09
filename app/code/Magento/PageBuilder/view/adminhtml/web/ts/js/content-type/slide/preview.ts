@@ -5,7 +5,7 @@
 
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import ConditionalRemoveOption from "../../content-type-menu/conditional-remove";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ConditionalRemoveOption from "../../content-type-menu/conditional-remove";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import PreviewCollection from "../preview-collection";
 

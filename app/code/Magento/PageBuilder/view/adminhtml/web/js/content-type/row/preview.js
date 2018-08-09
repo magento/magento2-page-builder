@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _events, _jarallax, _ResizeObserver, _underscore, _conditionalRemove, _previewCollection) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _events, _jarallax, _ResizeObserver, _underscore, _conditionalRemoveOption, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -77,7 +77,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      options.remove = new _conditionalRemove(options.remove.config);
+      options.remove = new _conditionalRemoveOption(options.remove.config);
       return options;
     };
     /**

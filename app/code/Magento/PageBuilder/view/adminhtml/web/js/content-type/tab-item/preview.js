@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemove, _previewCollection) {
+define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemoveOption, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -32,7 +32,7 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove", "Magento_
 
       delete options.move;
       delete options.title;
-      options.remove = new _conditionalRemove(options.remove.config);
+      options.remove = new _conditionalRemoveOption(options.remove.config);
       return options;
     };
 

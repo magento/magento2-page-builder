@@ -10,7 +10,7 @@ import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import ConditionalRemoveOption from "../../content-type-menu/conditional-remove";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
