@@ -26,16 +26,15 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $widgetDirectiveRenderer;
 
     /**
-     * Constructor
+     * CmsStaticBlock constructor.
      *
-     * @param WidgetDirective $widgetDirectiveRenderer
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
+     * @param WidgetDirective $widgetDirectiveRenderer
      */
     public function __construct(
-        WidgetDirective $widgetDirectiveRenderer,
-        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
+        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
+        WidgetDirective $widgetDirectiveRenderer
     ) {
-
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
     }
@@ -79,12 +78,28 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $directiveResult['content'];
+            $result['content'] = $this->removeScriptTags($directiveResult['content']);
             $result['error'] = $directiveResult['error'];
         } else {
             $result['error'] = __('Block disabled');
         }
 
         return $result;
+    }
+
+    /**
+     * Remove script tag from html
+     *
+     * @param string $html
+     * @return string
+     */
+    private function removeScriptTags(string $html) : string
+    {
+        $dom = new \DOMDocument();
+        $dom->loadHTML($html);
+        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
+            $item->parentNode->removeChild($item);
+        }
+        return $dom->saveHTML();
     }
 }
