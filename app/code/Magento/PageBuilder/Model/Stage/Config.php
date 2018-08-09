@@ -135,16 +135,16 @@ class Config
     }
 
     /**
-     * Flatten the content type data
+     * Flatten the content type
      *
-     * @param $name
-     * @param $contentType
+     * @param string $name
+     * @param array $contentType
      *
      * @return array
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function flattenContentTypeData($name, $contentType)
+    private function flattenContentTypeData(string $name, array $contentType)
     {
         return [
             'name' => $name,
