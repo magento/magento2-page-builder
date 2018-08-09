@@ -31,7 +31,6 @@ import PreviewCollection from "../preview-collection";
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public static focusOperationTime: number;
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private disableInteracting: boolean;
     private element: Element;
@@ -163,44 +162,19 @@ export default class Preview extends PreviewCollection {
                 (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
             }
             _.defer(() => {
-                if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
-                    document.execCommand("selectAll", false, null);
+                const $focusedElement = $(":focus");
+
+                if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
+                    // Selection alternative to execCommand to workaround issues with tinymce
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+
+                    range.selectNodeContents($focusedElement.get(0));
+                    selection.removeAllRanges();
+                    selection.addRange(range);
                 }
             });
         }
-
-        /**
-         * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
-         * interaction has started after.
-         */
-        const focusTime = new Date().getTime();
-        Preview.focusOperationTime = focusTime;
-
-        /**
-         * Keep a reference of the state of the interaction state on the stage to check if the interaction has
-         * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
-         * an interaction during the delay period.
-         */
-        let interactionState: boolean = false;
-        events.on("stage:interactionStart", () => {
-            interactionState = true;
-        });
-        events.on("stage:interactionStop", () => {
-            interactionState = false;
-        });
-
-        // Add a 200ms delay after a null set to allow for clicks to be captured
-        _.delay(() => {
-            if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
-                if (index !== null) {
-                    events.trigger("stage:interactionStart");
-                } else {
-                    if (interactionState !== true) {
-                        events.trigger("stage:interactionStop");
-                    }
-                }
-            }
-        }, ((index === null) ? 200 : 0));
     }
 
     /**
