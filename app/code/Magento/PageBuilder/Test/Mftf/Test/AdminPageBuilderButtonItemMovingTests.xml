@@ -20,9 +20,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-moveButtons"/>
-            <skip>
-                <issueId value="MC-1142"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -41,11 +38,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <!-- Select Inline Appearance -->
+        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <!-- Select Inline Appearance -->
-        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
             <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
         </actionGroup>
@@ -93,18 +90,19 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton10">
+            <argument name="text" value="PageBuilderButtonItemText_Last"/>
+            <argument name="index" value="10"/>
+        </actionGroup>
         <actionGroup ref="moveButton" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="10"/>
-            <argument name="x" value="-1000"/>
-            <!--todo: fix this test-->
-            <!--<argument name="y" value="1000"/>-->
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="waitForButton1Stage"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_Last.value)}}" stepKey="waitForButton2Stage"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="waitForButton3Stage"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
@@ -119,8 +117,8 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="waitForButton1Stage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_Last.value)}}" stepKey="waitForButton2Stage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="waitForButton3Stage2"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
@@ -136,8 +134,8 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="waitForButton1Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('9', PageBuilderButtonItemText_Last.value)}}" stepKey="waitForButton2Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('10', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('9', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('10', PageBuilderButtonItemText_Last.value)}}" stepKey="waitForButton3Storefront"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
@@ -204,13 +202,12 @@
         <actionGroup ref="moveButton" stepKey="moveButton">
             <argument name="buttonIndexToMove" value="1"/>
             <argument name="buttonIndexToMoveTo" value="3"/>
-            <argument name="y" value="1000"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Stage"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageFirstButtons">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
@@ -226,8 +223,8 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage1"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Stage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage3"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStageFirstButtons2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
@@ -244,8 +241,8 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Storefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Storefront"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefrontFirstButtons">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
@@ -287,9 +284,21 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <!-- Select Inline Appearance -->
+        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Inline"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add 2nd Button -->
         <comment userInput="Add 2nd Button" stepKey="commentAddButton"/>
         <actionGroup ref="addButton" stepKey="addButton"/>
+        <!-- Add 3rd Button -->
+        <comment userInput="Add 3rd Button" stepKey="commentAddButton2"/>
+        <actionGroup ref="addButton" stepKey="addButton2"/>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
         <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
@@ -302,20 +311,28 @@
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <!-- Edit 3rd Button -->
+        <comment userInput="Edit 3rd Button" stepKey="commentEditButton3"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_Third"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
         <!-- Stage: Validate Initial Button Order -->
         <comment userInput="Stage: Validate Initial Button Order" stepKey="commentValidateStage1"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage1"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage1"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage1"/>
         <!-- Move Button -->
         <comment userInput="Move Button" stepKey="commentMoveButton"/>
         <actionGroup ref="moveButton" stepKey="moveButton">
-            <argument name="buttonIndexToMove" value="2"/>
-            <argument name="buttonIndexToMoveTo" value="1"/>
+            <argument name="buttonIndexToMove" value="1"/>
+            <argument name="buttonIndexToMoveTo" value="3"/>
         </actionGroup>
         <!-- Stage: Validate Changed Button Order -->
         <comment userInput="Stage: Validate Changed Button Order" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage2"/>
         <!-- Save Page -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -323,6 +340,7 @@
         <comment userInput="Stage: Validate Changed Button Order After Save" stepKey="commentValidateStage3"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage3"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage3"/>
         <!-- Storefront: Validate Changed Button Order -->
         <comment userInput="Storefront: Validate Changed Button Order" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -330,6 +348,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Storefront"/>
     </test>
     <test name="ButtonItemCannotMoveButtonToAnotherButtonGroup">
         <annotations>

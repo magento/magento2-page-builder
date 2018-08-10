@@ -67,6 +67,8 @@
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton1"/>
         <click selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <!-- Note MFTF Bug: MQE-1185. We cannot reliably use offsets and therefore, dropping to index x will result in an actual drop of index x-1 -->
+        <!-- Once bug is fixed, we need to add executeJS to calculate width & height of button to determine default offsets -->
         <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle(buttonIndexToMove)}}" selector2="{{ButtonItemOnStage.base(buttonIndexToMoveTo)}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
