@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Renders a CMS Block for the stage
  *
@@ -26,17 +28,25 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $widgetDirectiveRenderer;
 
     /**
+     * @var LoggerInterface
+     */
+    private $loggerInterface;
+
+    /**
      * CmsStaticBlock constructor.
      *
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
      * @param WidgetDirective $widgetDirectiveRenderer
+     * @param LoggerInterface $loggerInterface
      */
     public function __construct(
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
-        WidgetDirective $widgetDirectiveRenderer
+        WidgetDirective $widgetDirectiveRenderer,
+        LoggerInterface $loggerInterface
     ) {
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
+        $this->loggerInterface = $loggerInterface;
     }
 
     /**
@@ -95,11 +105,16 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
      */
     private function removeScriptTags(string $html) : string
     {
-        $dom = new \DOMDocument();
-        $dom->loadHTML($html);
-        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
-            $item->parentNode->removeChild($item);
-        }
-        return $dom->saveHTML();
+            $dom = new \DOMDocument();
+            try {
+                $dom->loadHTML($html);
+            } catch (\Exception $e) {
+                $this->loggerInterface->critical($e->getMessage());
+                return $html;
+            }
+            foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
+                $item->parentNode->removeChild($item);
+            }
+            return $dom->saveHTML();
     }
 }
