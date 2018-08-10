@@ -39,6 +39,9 @@ export default class Preview {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
     public wrapperElement: Element;
+    public placeholderCss: KnockoutObservable<object>;
+    public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
+    public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
      * @deprecated
@@ -75,6 +78,10 @@ export default class Preview {
         this.edit = new Edit(this.parent, this.parent.dataStore);
         this.observableUpdater = observableUpdater;
         this.displayLabel = ko.observable(this.config.label);
+        this.placeholderCss = ko.observable({
+            "visible": this.isEmpty,
+            "empty-placeholder-background": this.isPlaceholderVisible,
+        });
         this.setupDataFields();
         this.bindEvents();
     }
@@ -434,8 +441,16 @@ export default class Preview {
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
+                this.updatePlaceholderVisibility(data);
             },
         );
+        if (this.parent.children) {
+            this.parent.children.subscribe(
+                (children: any[]) => {
+                    this.isEmpty(!children.length);
+                },
+            );
+        }
     }
 
     /**
@@ -560,5 +575,22 @@ export default class Preview {
         );
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});
+    }
+
+    /**
+     * Update placeholder background visibility base on height and padding
+     *
+     * @param {DataObject} data
+     */
+    private updatePlaceholderVisibility(data: DataObject): void {
+        const minHeight = !_.isEmpty(data.min_height) ? parseFloat(data.min_height as string) : 130;
+        const marginsAndPadding = _.isString(data.margins_and_padding) && data.margins_and_padding ?
+            JSON.parse(data.margins_and_padding as string) :
+            data.margins_and_padding || {};
+        const padding = marginsAndPadding.padding || {};
+        const paddingBottom = parseFloat(padding.bottom) || 0;
+        const paddingTop = parseFloat(padding.top) || 0;
+
+        this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
     }
 }
