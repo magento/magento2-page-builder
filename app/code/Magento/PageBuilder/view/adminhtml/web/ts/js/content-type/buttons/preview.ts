@@ -236,7 +236,7 @@ export default class Preview extends PreviewCollection {
         if (this.wrapperElement) {
             const buttonItems: JQuery = $(this.wrapperElement).find(".pagebuilder-button-item > a");
             let buttonResizeValue: string|number = "";
-            if (this.parent.dataStore.get("same_width") === "1") {
+            if (this.parent.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
                     const currentLargestButton = this.findLargestButton(buttonItems);
                     buttonResizeValue = currentLargestButton.css("min-width", "").outerWidth();
