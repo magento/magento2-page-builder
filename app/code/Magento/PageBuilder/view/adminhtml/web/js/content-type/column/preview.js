@@ -95,7 +95,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
       options.move = new _option({
-        parent: this,
+        preview: this,
         icon: "<i class='icon-admin-pagebuilder-handle'></i>",
         title: (0, _translate)("Move"),
         classes: ["move-column"],

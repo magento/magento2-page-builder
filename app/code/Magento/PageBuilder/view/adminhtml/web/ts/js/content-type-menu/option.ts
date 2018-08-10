@@ -10,7 +10,7 @@ import OptionInterface from "./option.d";
 
 export default class Option implements OptionInterface {
     public config: OptionConfigInterface;
-    public parent: Preview;
+    public preview: Preview;
     public code: string;
     public icon: KnockoutObservable<string> = ko.observable("");
     public title: KnockoutObservable<string> = ko.observable("");
@@ -18,7 +18,7 @@ export default class Option implements OptionInterface {
     public sort: number;
     public action: () => void;
     public isDisabled: KnockoutObservable<boolean> = ko.observable(false);
-    public optionTemplate: string;
+    private readonly customTemplate: string;
 
     /**
      * @param {OptionConfigInterface} config
@@ -27,13 +27,13 @@ export default class Option implements OptionInterface {
         config: OptionConfigInterface,
     ) {
         this.config = config;
-        this.parent = config.parent;
+        this.preview = config.preview;
         this.icon(config.icon);
         this.title(config.title);
 
         this.code = config.code;
         this.sort = config.sort || 0;
-        this.optionTemplate = config.optionTemplate;
+        this.customTemplate = config.template;
 
         // Generate an array of classes for KO to consume
         const koClasses: {[key: string]: boolean | KnockoutObservable<boolean>} = {};
@@ -50,12 +50,12 @@ export default class Option implements OptionInterface {
         const action = config.action ? config.action : () => { return; };
         this.action = (...args: any[]) => {
             if (!this.isDisabled()) {
-                action.apply(this.parent, args);
+                action.apply(this.preview, args);
             }
         };
     }
 
     get template(): string {
-        return this.optionTemplate || null;
+        return this.customTemplate || null;
     }
 }

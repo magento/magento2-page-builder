@@ -52,7 +52,7 @@ export default class Preview extends PreviewCollection {
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
         options.add = new Option({
-            parent: this,
+            preview: this,
             icon: "<i class='icon-pagebuilder-add'></i>",
             title: $t("Add Button"),
             action: this.addButton,

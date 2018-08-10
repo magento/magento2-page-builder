@@ -243,7 +243,7 @@ export default class Preview {
     /**
      * Reverse the display data currently in the data store
      */
-    public onOptionHideShow(): void {
+    public onOptionVisibilityToggle(): void {
         const display = this.parent.dataStore.get("display");
         this.parent.dataStore.update(!display, "display");
     }
@@ -377,20 +377,20 @@ export default class Preview {
     protected retrieveOptions(): OptionsInterface {
         const options: OptionsInterface = {
             move: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-admin-pagebuilder-handle'></i>",
                 title: $t("Move"),
                 classes: ["move-structural"],
                 sort: 10,
             }),
             title: new Option({
-                parent: this,
+                preview: this,
                 title: this.config.label,
-                optionTemplate: "Magento_PageBuilder/content-type/title",
+                template: "Magento_PageBuilder/content-type/title",
                 sort: 20,
             }),
             edit: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-admin-pagebuilder-systems'></i>",
                 title: $t("Edit"),
                 action: this.onOptionEdit,
@@ -398,7 +398,7 @@ export default class Preview {
                 sort: 30,
             }),
             duplicate: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-pagebuilder-copy'></i>",
                 title: $t("Duplicate"),
                 action: this.onOptionDuplicate,
@@ -406,7 +406,7 @@ export default class Preview {
                 sort: 50,
             }),
             remove: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-admin-pagebuilder-remove'></i>",
                 title: $t("Remove"),
                 action: this.onOptionRemove,
@@ -418,10 +418,10 @@ export default class Preview {
         // If the content type is is_hideable show the hide / show option
         if (this.parent.config.is_hideable) {
             options.hideShow = new HideShowOption({
-                parent: this,
+                preview: this,
                 icon: HideShowOption.SHOW_ICON,
                 title: HideShowOption.SHOW_TEXT,
-                action: this.onOptionHideShow,
+                action: this.onOptionVisibilityToggle,
                 classes: ["hide-show-content-type"],
                 sort: 40,
             });

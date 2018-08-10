@@ -14,7 +14,7 @@ define(["knockout"], function (_knockout) {
       var _this = this;
 
       this.config = void 0;
-      this.parent = void 0;
+      this.preview = void 0;
       this.code = void 0;
       this.icon = _knockout.observable("");
       this.title = _knockout.observable("");
@@ -22,14 +22,14 @@ define(["knockout"], function (_knockout) {
       this.sort = void 0;
       this.action = void 0;
       this.isDisabled = _knockout.observable(false);
-      this.optionTemplate = void 0;
+      this.customTemplate = void 0;
       this.config = config;
-      this.parent = config.parent;
+      this.preview = config.preview;
       this.icon(config.icon);
       this.title(config.title);
       this.code = config.code;
       this.sort = config.sort || 0;
-      this.optionTemplate = config.optionTemplate; // Generate an array of classes for KO to consume
+      this.customTemplate = config.template; // Generate an array of classes for KO to consume
 
       var koClasses = {};
 
@@ -53,7 +53,7 @@ define(["knockout"], function (_knockout) {
             args[_key] = arguments[_key];
           }
 
-          action.apply(_this.parent, args);
+          action.apply(_this.preview, args);
         }
       };
     }
@@ -61,7 +61,7 @@ define(["knockout"], function (_knockout) {
     _createClass(Option, [{
       key: "template",
       get: function get() {
-        return this.optionTemplate || null;
+        return this.customTemplate || null;
       }
     }]);
 

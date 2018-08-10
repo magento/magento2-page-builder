@@ -230,7 +230,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.onOptionHideShow = function onOptionHideShow() {
+    _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
       var display = this.parent.dataStore.get("display");
       this.parent.dataStore.update(!display, "display");
     };
@@ -370,20 +370,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.retrieveOptions = function retrieveOptions() {
       var options = {
         move: new _option({
-          parent: this,
+          preview: this,
           icon: "<i class='icon-admin-pagebuilder-handle'></i>",
           title: (0, _translate)("Move"),
           classes: ["move-structural"],
           sort: 10
         }),
         title: new _option({
-          parent: this,
+          preview: this,
           title: this.config.label,
-          optionTemplate: "Magento_PageBuilder/content-type/title",
+          template: "Magento_PageBuilder/content-type/title",
           sort: 20
         }),
         edit: new _option({
-          parent: this,
+          preview: this,
           icon: "<i class='icon-admin-pagebuilder-systems'></i>",
           title: (0, _translate)("Edit"),
           action: this.onOptionEdit,
@@ -391,7 +391,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           sort: 30
         }),
         duplicate: new _option({
-          parent: this,
+          preview: this,
           icon: "<i class='icon-pagebuilder-copy'></i>",
           title: (0, _translate)("Duplicate"),
           action: this.onOptionDuplicate,
@@ -399,7 +399,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           sort: 50
         }),
         remove: new _option({
-          parent: this,
+          preview: this,
           icon: "<i class='icon-admin-pagebuilder-remove'></i>",
           title: (0, _translate)("Remove"),
           action: this.onOptionRemove,
@@ -410,10 +410,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (this.parent.config.is_hideable) {
         options.hideShow = new _hideShowOption({
-          parent: this,
+          preview: this,
           icon: _hideShowOption.SHOW_ICON,
           title: _hideShowOption.SHOW_TEXT,
-          action: this.onOptionHideShow,
+          action: this.onOptionVisibilityToggle,
           classes: ["hide-show-content-type"],
           sort: 40
         });
