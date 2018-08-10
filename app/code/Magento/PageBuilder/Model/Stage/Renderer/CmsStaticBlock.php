@@ -88,8 +88,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $this->removeScriptTags($directiveResult['content']);
-            $result['error'] = $directiveResult['error'];
+            $result = $this->removeScriptTags($directiveResult);
         } else {
             $result['error'] = __('Block disabled');
         }
@@ -100,21 +99,26 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     /**
      * Remove script tag from html
      *
-     * @param string $html
-     * @return string
+     * @param array $directiveResult
+     * @return array
      */
-    private function removeScriptTags(string $html) : string
+    private function removeScriptTags(array $directiveResult): array
     {
-            $dom = new \DOMDocument();
-            try {
-                $dom->loadHTML($html);
-            } catch (\Exception $e) {
-                $this->loggerInterface->critical($e->getMessage());
-                return $html;
-            }
-            foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
-                $item->parentNode->removeChild($item);
-            }
-            return $dom->saveHTML();
+        $dom = new \DOMDocument();
+        try {
+            $dom->loadHTML($directiveResult['content']);
+        } catch (\Exception $e) {
+            $this->loggerInterface->critical($e->getMessage());
+            return [
+                'error' => __('The block cannot be displayed because it contains errors.')
+            ];
+        }
+        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
+            $item->parentNode->removeChild($item);
+        }
+        return [
+            'content' => $dom->saveHTML(),
+            'error' => $directiveResult['error']
+        ];
     }
 }
