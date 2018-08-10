@@ -7,9 +7,12 @@
 
 <div class="pagebuilder-content-type pagebuilder-block" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-        <div if="displayPreview" class="rendered-content" html="data.main.html"></div>
-        <div ifnot="displayPreview" class="pagebuilder-block-placeholder">
-            <span class="placeholder-text" text="placeholderText"/>
+        <div class="pagebuilder-block-wrapper">
+            <div class="pagebuilder-block-overlay"></div>
+            <div if="displayPreview" class="rendered-content" html="data.main.html"></div>
+            <div ifnot="displayPreview" class="pagebuilder-block-placeholder">
+                <span class="placeholder-text" text="placeholderText"/>
+            </div>
         </div>
     </div>
     <div data-role="spinner"
