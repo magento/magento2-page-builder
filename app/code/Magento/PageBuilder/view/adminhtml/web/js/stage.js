@@ -177,8 +177,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
         _this.interacting(true);
       });
 
-      _events.on("stage:interactionStop", function () {
-        if (--interactionLevel === 0) {
+      _events.on("stage:interactionStop", function (args) {
+        if (--interactionLevel === 0 || _underscore.isObject(args) && args.force === true) {
           _this.interacting(false);
         }
       });

@@ -108,6 +108,16 @@ export default class Preview extends PreviewCollection {
                 this.updateData("default_active", newDefaultActiveTab);
             }
         });
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedTab.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
     }
 
     /**

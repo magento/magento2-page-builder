@@ -98,7 +98,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this.updateData("default_active", newDefaultActiveTab);
         }
-      });
+      }); // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+
+
+      _this.focusedTab.subscribe(_underscore.debounce(function (index) {
+        if (index !== null) {
+          _events.trigger("stage:interactionStart");
+        } else {
+          // We have to force the stop as the event firing is inconsistent for certain operations
+          _events.trigger("stage:interactionStop", {
+            force: true
+          });
+        }
+      }, 1));
 
       return _this;
     }
