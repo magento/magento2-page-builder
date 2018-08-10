@@ -8,6 +8,179 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="TextAreaInitalStatus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Initial textarea editor in Text Content Type"/>
+            <description value="Verify that user are able to add text into Text Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Assert Text placeholder-->
+        <comment userInput="Assert Text placeholder" stepKey="assertTextPlaceholder"/>
+        <seeElement selector="{{TextOnStage.placeholder('1')}}" stepKey="seeTextPlaceholder"/>
+        <!--Check min height of textarea-->
+        <comment userInput="Check min height of textarea" stepKey="comment1"/>
+
+
+
+
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!--Verify empty content type on storefront-->
+        <comment userInput="Verify empty content type on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
+        <dontSeeElement selector="{{TextOnStorefront.empty('1')}}" stepKey="dontSeeEmptyTextContentTypeOnStorefront"/>
+        <!--Check min height of textarea on Storefront-->
+        <comment userInput="Check min height of textarea on Storefront" stepKey="comment2"/>
+
+
+        
+    </test>
+    <test name="TextAreaAddText">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Textarea editor in Text Content Type"/>
+            <description value="Verify that user are able to add text into Text Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Input text into textarea on stage-->
+        <comment userInput="Input text into textarea on stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTextarea"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <!--Verify inputed text on slideout-->
+        <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForText"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Text Content Type on stage after saving cms page-->
+        <comment userInput="Verify text content type on storefront" stepKey="commentVerifyTextOnStage"/>
+        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStage"/>
+        <!--Verify Text Content Type on storefront-->
+        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+
+
+    <test name="TinyMCE3">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Textarea s editor in Text Content Type"/>
+            <description value="Verify that user are able to add text into Text Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <!--<actionGroup ref="EnableWYSIWYG" stepKey="disableWYSIWYGByDefault"/>-->
+            <actionGroup ref="SwitchToVersion3ActionGroup" stepKey="SwitchToVersion3"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="SwitchToVersion4"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Input text into textarea on stage-->
+        <comment userInput="Input text into textarea on stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTextarea"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <!--Verify inputed text on slideout-->
+        <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForText"/>
+        <!--Verify textare display on slideout-->
+
+
+        <!--Add variable, widget and image into slideout-->
+
+
+        <!--Verify how variable, widget and image display on slide-out-->
+
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+
+        <!--Verify how variable, widget and image display on PageBuilder stage-->
+
+
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Text Content Type on stage after saving cms page-->
+        <comment userInput="Verify text content type on storefront" stepKey="commentVerifyTextOnStage"/>
+        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStage"/>
+        <!--Verify Text Content Type on storefront-->
+        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+
+
     <test name="TextAddWYSIWYGContentTypeToTabOnStage">
         <annotations>
             <features value="PageBuilder"/>
