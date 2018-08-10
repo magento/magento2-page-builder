@@ -74,7 +74,7 @@ export default class Preview extends PreviewCollection {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: Preview, event: Event) {
+    public onMouseOver(context: Preview, event: Event): any {
         // Only run the mouse over action when the active element is not a child of buttons
         if (!$.contains(this.wrapperElement, document.activeElement)) {
             return super.onMouseOver(context, event);
@@ -124,16 +124,16 @@ export default class Preview extends PreviewCollection {
     /**
      * Get the sortable options for the buttons sorting
      *
-     * @returns {JQueryUI.SortableOptions}
+     * @returns {JQueryUI.Sortable}
      */
-    public getSortableOptions(): SortableOptionsInterface {
+    public buttonsSortableOptions(tolerance: string, orientation: string): SortableOptionsInterface {
         let placeholderGhost: JQuery;
         return {
             handle: ".button-item-drag-handle",
             items: ".pagebuilder-content-type-wrapper",
             cursor: "grabbing",
             containment: "parent",
-            tolerance: this.parent.dataStore.get("appearance") === "stacked" ? "pointer" : "intersect",
+            tolerance: tolerance ? tolerance : "pointer",
             revert: 200,
             cursorAt: { left: 15, top: 15 },
             disabled: this.parent.children().length <= 1,
@@ -181,9 +181,9 @@ export default class Preview extends PreviewCollection {
              * Logic for starting the sorting and adding the placeholderGhost
              *
              * @param {Event} event
-             * @param {JQueryUI.Sortable} element
+             * @param {JQueryUI.SortableUIParams} element
              */
-            start(event, element) {
+            start(event: Event, element: JQueryUI.SortableUIParams) {
                 placeholderGhost = element.placeholder
                     .clone()
                     .css({
@@ -202,15 +202,15 @@ export default class Preview extends PreviewCollection {
              * and then add animation of placeholder ghost to the placeholder position.
              *
              * @param {Event} event
-             * @param {JQueryUI.Sortable} element
+             * @param {JQueryUI.SortableUIParams} element
              */
-            change(event, element) {
+            change(event: Event, element: JQueryUI.SortableUIParams) {
                 element.placeholder.stop(true, false);
-                if (this.getAttribute("data-appearance") === "stacked") {
+                if (orientation === "height") {
                     element.placeholder.css({height: element.item.height() / 1.2});
                     element.placeholder.animate({height: element.item.height()}, 200, "linear");
                 }
-                if (this.getAttribute("data-appearance") === "inline") {
+                if (orientation === "width") {
                     element.placeholder.css({width: element.item.width() / 1.2});
                     element.placeholder.animate({width: element.item.width()}, 200, "linear");
                 }

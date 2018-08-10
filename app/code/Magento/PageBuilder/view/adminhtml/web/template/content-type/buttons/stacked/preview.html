@@ -7,7 +7,7 @@
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit pagebuilder-buttons" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <div class="element-children buttons-container" each="parent.getChildren()" attr="Object.assign({}, data.main.attributes(), { id: parent.id + '-children' })" ko-style="data.main.style" css="data.main.css" data-bind="sortableChildren: buttonsSortableOptions('pointer', 'width')">
+    <div class="element-children buttons-container" each="parent.getChildren()" attr="Object.assign({}, data.main.attributes(), { id: parent.id + '-children' })" ko-style="data.main.style" css="data.main.css" data-bind="sortableChildren: buttonsSortableOptions('pointer', 'height')">
         <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }"></div>
     </div>
 </div>

@@ -110,18 +110,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Get the sortable options for the buttons sorting
      *
-     * @returns {JQueryUI.SortableOptions}
+     * @returns {JQueryUI.Sortable}
      */
 
 
-    _proto.getSortableOptions = function getSortableOptions() {
+    _proto.buttonsSortableOptions = function buttonsSortableOptions(tolerance, orientation) {
       var placeholderGhost;
       return {
         handle: ".button-item-drag-handle",
         items: ".pagebuilder-content-type-wrapper",
         cursor: "grabbing",
         containment: "parent",
-        tolerance: this.parent.dataStore.get("appearance") === "stacked" ? "pointer" : "intersect",
+        tolerance: tolerance ? tolerance : "pointer",
         revert: 200,
         cursorAt: {
           left: 15,
@@ -170,7 +170,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
          * Logic for starting the sorting and adding the placeholderGhost
          *
          * @param {Event} event
-         * @param {JQueryUI.Sortable} element
+         * @param {JQueryUI.SortableUIParams} element
          */
         start: function start(event, element) {
           placeholderGhost = element.placeholder.clone().css({
@@ -191,12 +191,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
          * and then add animation of placeholder ghost to the placeholder position.
          *
          * @param {Event} event
-         * @param {JQueryUI.Sortable} element
+         * @param {JQueryUI.SortableUIParams} element
          */
         change: function change(event, element) {
           element.placeholder.stop(true, false);
 
-          if (this.getAttribute("data-appearance") === "stacked") {
+          if (orientation === "height") {
             element.placeholder.css({
               height: element.item.height() / 1.2
             });
@@ -205,7 +205,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             }, 200, "linear");
           }
 
-          if (this.getAttribute("data-appearance") === "inline") {
+          if (orientation === "width") {
             element.placeholder.css({
               width: element.item.width() / 1.2
             });
