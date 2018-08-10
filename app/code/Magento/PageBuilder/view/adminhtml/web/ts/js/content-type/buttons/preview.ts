@@ -55,6 +55,12 @@ export default class Preview extends PreviewCollection {
             }
         });
 
+        events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
+            if (eventData.contentType.id === this.parent.id) {
+                this.resizeChildButtons();
+            }
+        });
+
         events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
             if (eventData.contentType.parent.id === this.parent.id) {
                 this.resizeChildButtons();
