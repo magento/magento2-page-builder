@@ -361,6 +361,18 @@
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
         </actionGroup>
+        <!-- Get Width Of Button -->
+        <executeJS function="return Math.round({{ButtonItemOnStage.jsButtonSelector('1')}}.clientWidth)" stepKey="buttonWidth"/>
+        <comment userInput="buttonWidth: $buttonWidth" stepKey="commentButtonWidth"/>
+        <!-- Get Width Of Button Group -->
+        <executeJS function="return Math.round({{ButtonGroupOnStage.jsButtonGroupSelector('1')}}.clientWidth)" stepKey="buttonGroupWidth"/>
+        <comment userInput="buttonGroupWidth: $buttonGroupWidth" stepKey="commentButtonGroupWidth"/>
+        <!-- Validate Button Item is not larger than Button Group -->
+        <comment userInput="Validate Button Item is not larger than Button Group" stepKey="commentButtonWidthValidation"/>
+        <assertGreaterOrEquals stepKey="validateButtonGroupIsLargerThanButtonItem">
+            <expectedResult type="variable">$buttonWidth</expectedResult>
+            <actualResult type="variable">$buttonGroupWidth</actualResult>
+        </assertGreaterOrEquals>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -389,6 +401,18 @@
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
         </actionGroup>
+        <!-- Get Width Of Button on Store Front -->
+        <executeJS function="return Math.round({{ButtonItemOnStorefront.jsButtonSelector('1')}}.clientWidth)" stepKey="buttonWidthStoreFront"/>
+        <comment userInput="buttonWidthStoreFront: $buttonWidthStoreFront" stepKey="commentButtonWidthStoreFront"/>
+        <!-- Get Width Of Button Group on Store Front -->
+        <executeJS function="return Math.round({{ButtonGroupOnStorefront.jsButtonGroupSelector('1')}}.clientWidth)" stepKey="buttonGroupWidthStoreFront"/>
+        <comment userInput="buttonGroupWidthStoreFront: $buttonGroupWidthStoreFront" stepKey="commentButtonGroupWidthStoreFront"/>
+        <!-- Validate Button Item is not larger than Button Group on Store Front -->
+        <comment userInput="Validate Button Item is not larger than Button Group" stepKey="commentButtonWidthValidationStoreFront"/>
+        <assertGreaterOrEquals stepKey="validateButtonGroupIsLargerThanButtonItemOnStoreFront">
+            <expectedResult type="variable">$buttonWidthStoreFront</expectedResult>
+            <actualResult type="variable">$buttonGroupWidthStoreFront</actualResult>
+        </assertGreaterOrEquals>
     </test>
     <test name="ButtonItemPrimaryButtonType">
         <annotations>
