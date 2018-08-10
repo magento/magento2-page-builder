@@ -8,13 +8,13 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ButtonItemMoveButtonInlineAppearance">
+    <test name="ButtonItemMoveButtonWhenInlineButtonsAreWrapping">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Move Button - Move Button in Inline Appearance"/>
-            <description value="Validate can move a button when Button group has Inline Appearance."/>
-            <severity value="CRITICAL"/>
+            <title value="Move Button - Move Button in Inline Appearance When There Are Enough Buttons To Wrap"/>
+            <description value="Validate can move a button when Button group has Inline Appearance and enough buttons that the buttons wrap to a new line."/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-66361"/>
             <testCaseId value="MC-3011"/>
             <group value="pagebuilder"/>
@@ -257,15 +257,15 @@
             <argument name="secondButtonIndex" value="3"/>
         </actionGroup>
     </test>
-    <test name="ButtonItemMoveButtonToChangeButtonOrderWithTwoButtons">
+    <test name="ButtonItemMoveButtonInlineAppearance">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Move Button - Change Button Order With Two Buttons"/>
-            <description value="A user should be able to change the order of two buttons."/>
+            <title value="Move Button - Move Button in Inline Appearance"/>
+            <description value="Validate can move a button when Button group has Inline Appearance."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92057"/>
+            <testCaseId value="MC-2440"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-moveButtons"/>
@@ -331,12 +331,12 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Storefront"/>
     </test>
-    <test name="ButtonItemMoveButtonToAnotherButtonGroup">
+    <test name="ButtonItemCannotMoveButtonToAnotherButtonGroup">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Move Button - Move Button To Another Button Group"/>
-            <description value="A user should be able to move a button item to another button group."/>
+            <title value="Move Button - Cannot Move Button To Another Button Group"/>
+            <description value="A user should not be able to move a button item to another button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-90474"/>
             <testCaseId value="MC-3012"/>
