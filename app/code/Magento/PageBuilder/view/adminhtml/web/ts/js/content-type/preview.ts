@@ -130,7 +130,7 @@ export default class Preview {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: Preview, event: Event) {
+    public onMouseOver(context: Preview, event: Event): void {
         if (this.mouseover) {
             return;
         }

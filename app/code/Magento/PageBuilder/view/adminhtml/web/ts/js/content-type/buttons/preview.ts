@@ -74,7 +74,7 @@ export default class Preview extends PreviewCollection {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: Preview, event: Event): any {
+    public onMouseOver(context: Preview, event: Event): void {
         // Only run the mouse over action when the active element is not a child of buttons
         if (!$.contains(this.wrapperElement, document.activeElement)) {
             return super.onMouseOver(context, event);
@@ -121,19 +121,25 @@ export default class Preview extends PreviewCollection {
             console.error(error);
         });
     }
+
     /**
      * Get the sortable options for the buttons sorting
      *
+     * @param {string} orientation
+     * @param {string} tolerance
      * @returns {JQueryUI.Sortable}
      */
-    public buttonsSortableOptions(tolerance: string, orientation: string): SortableOptionsInterface {
+    public buttonsSortableOptions(
+        orientation: string = "width",
+        tolerance: string = "intersect",
+    ): SortableOptionsInterface {
         let placeholderGhost: JQuery;
         return {
             handle: ".button-item-drag-handle",
             items: ".pagebuilder-content-type-wrapper",
             cursor: "grabbing",
             containment: "parent",
-            tolerance: tolerance ? tolerance : "pointer",
+            tolerance,
             revert: 200,
             cursorAt: { left: 15, top: 15 },
             disabled: this.parent.children().length <= 1,

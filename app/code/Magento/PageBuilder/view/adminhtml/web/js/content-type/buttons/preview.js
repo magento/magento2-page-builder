@@ -110,18 +110,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Get the sortable options for the buttons sorting
      *
+     * @param {string} orientation
+     * @param {string} tolerance
      * @returns {JQueryUI.Sortable}
      */
 
 
-    _proto.buttonsSortableOptions = function buttonsSortableOptions(tolerance, orientation) {
+    _proto.buttonsSortableOptions = function buttonsSortableOptions(orientation, tolerance) {
+      if (orientation === void 0) {
+        orientation = "width";
+      }
+
+      if (tolerance === void 0) {
+        tolerance = "intersect";
+      }
+
       var placeholderGhost;
       return {
         handle: ".button-item-drag-handle",
         items: ".pagebuilder-content-type-wrapper",
         cursor: "grabbing",
         containment: "parent",
-        tolerance: tolerance ? tolerance : "pointer",
+        tolerance: tolerance,
         revert: 200,
         cursorAt: {
           left: 15,
