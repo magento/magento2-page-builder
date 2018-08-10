@@ -47,7 +47,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             create: function create() {
               // Ensure focus tab is restored after a rebuild cycle
               if (focusedTab) {
-                _this.setFocusedTab(focusedTab);
+                _this.setFocusedTab(focusedTab, true);
               }
             }
           });
@@ -398,8 +398,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
         }
-
-        _this3.buildTabs(args.index);
       });
 
       _events.on("tab-item:mountAfter", function (args) {

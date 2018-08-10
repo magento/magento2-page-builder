@@ -52,7 +52,7 @@ export default class Preview extends PreviewCollection {
                 create: () => {
                     // Ensure focus tab is restored after a rebuild cycle
                     if (focusedTab) {
-                        this.setFocusedTab(focusedTab);
+                        this.setFocusedTab(focusedTab, true);
                     }
                 },
             });
@@ -382,7 +382,6 @@ export default class Preview extends PreviewCollection {
                 duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
             }
-            this.buildTabs(args.index);
         });
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
