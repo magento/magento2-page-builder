@@ -182,8 +182,12 @@ export default class Stage {
             this.interacting(true);
         });
         events.on("stage:interactionStop", (args: {force: boolean}) => {
-            if (--interactionLevel === 0 || (_.isObject(args) && args.force === true)) {
+            const forced = (_.isObject(args) && args.force === true);
+            if (--interactionLevel === 0 || forced) {
                 this.interacting(false);
+                if (forced) {
+                    interactionLevel = 0;
+                }
             }
         });
         events.on("stage:childFocusStart", () => this.focusChild(true));
