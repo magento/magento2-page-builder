@@ -250,7 +250,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
         var buttonResizeValue = "";
 
-        if (this.parent.dataStore.get("same_width") === "1") {
+        if (this.parent.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
             var currentLargestButton = this.findLargestButton(buttonItems);
             buttonResizeValue = currentLargestButton.css("min-width", "").outerWidth();
