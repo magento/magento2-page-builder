@@ -25,7 +25,7 @@ export default class HideShowOption extends Option implements OptionInterface {
         super(options);
 
         // Modify the icon when changes are made to display in the data store
-        this.parent.parent.dataStore.subscribe(
+        this.preview.parent.dataStore.subscribe(
             this.onDisplayChange.bind(this),
             "display",
         );

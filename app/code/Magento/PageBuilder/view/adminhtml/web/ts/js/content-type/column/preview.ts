@@ -101,7 +101,7 @@ export default class Preview extends PreviewCollection {
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
         options.move = new Option({
-            parent: this,
+            preview: this,
             icon: "<i class='icon-admin-pagebuilder-handle'></i>",
             title: $t("Move"),
             classes: ["move-column"],

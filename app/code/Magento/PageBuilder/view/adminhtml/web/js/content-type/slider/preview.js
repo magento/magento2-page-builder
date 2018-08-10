@@ -97,7 +97,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
       options.add = new _option({
-        parent: this,
+        preview: this,
         icon: "<i class='icon-pagebuilder-add'></i>",
         title: (0, _translate)("Add"),
         action: this.addSlide,

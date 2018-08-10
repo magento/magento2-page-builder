@@ -20,6 +20,7 @@ import Edit from "../content-type-menu/edit";
 import HideShowOption from "../content-type-menu/hide-show-option";
 import Option from "../content-type-menu/option";
 import {OptionsInterface} from "../content-type-menu/option.d";
+import TitleOption from "../content-type-menu/title-option";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
@@ -37,7 +38,7 @@ export default class Preview {
     public parent: ContentTypeCollectionInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
-    public displayLabel: KnockoutObservable<string>;
+    public displayLabel: KnockoutObservable<string> = ko.observable();
     public display: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperElement: Element;
 
@@ -77,7 +78,7 @@ export default class Preview {
         this.edit = new Edit(this.parent, this.parent.dataStore);
         this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
         this.observableUpdater = observableUpdater;
-        this.displayLabel = ko.observable(this.config.label);
+        this.displayLabel(this.config.label);
         this.setupDataFields();
         this.bindEvents();
     }
@@ -243,7 +244,7 @@ export default class Preview {
     /**
      * Reverse the display data currently in the data store
      */
-    public onOptionHideShow(): void {
+    public onOptionVisibilityToggle(): void {
         const display = this.parent.dataStore.get("display");
         this.parent.dataStore.update(!display, "display");
     }
@@ -377,20 +378,20 @@ export default class Preview {
     protected retrieveOptions(): OptionsInterface {
         const options: OptionsInterface = {
             move: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-admin-pagebuilder-handle'></i>",
                 title: $t("Move"),
                 classes: ["move-structural"],
                 sort: 10,
             }),
-            title: new Option({
-                parent: this,
+            title: new TitleOption({
+                preview: this,
                 title: this.config.label,
-                optionTemplate: "Magento_PageBuilder/content-type/title",
+                template: "Magento_PageBuilder/content-type/title",
                 sort: 20,
             }),
             edit: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-admin-pagebuilder-systems'></i>",
                 title: $t("Edit"),
                 action: this.onOptionEdit,
@@ -398,7 +399,7 @@ export default class Preview {
                 sort: 30,
             }),
             duplicate: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-pagebuilder-copy'></i>",
                 title: $t("Duplicate"),
                 action: this.onOptionDuplicate,
@@ -406,7 +407,7 @@ export default class Preview {
                 sort: 50,
             }),
             remove: new Option({
-                parent: this,
+                preview: this,
                 icon: "<i class='icon-admin-pagebuilder-remove'></i>",
                 title: $t("Remove"),
                 action: this.onOptionRemove,
@@ -418,10 +419,10 @@ export default class Preview {
         // If the content type is is_hideable show the hide / show option
         if (this.parent.config.is_hideable) {
             options.hideShow = new HideShowOption({
-                parent: this,
+                preview: this,
                 icon: HideShowOption.SHOW_ICON,
                 title: HideShowOption.SHOW_TEXT,
-                action: this.onOptionHideShow,
+                action: this.onOptionVisibilityToggle,
                 classes: ["hide-show-content-type"],
                 sort: 40,
             });

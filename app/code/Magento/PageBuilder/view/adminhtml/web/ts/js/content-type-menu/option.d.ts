@@ -12,7 +12,7 @@ import OptionConfigInterface from "./option-config";
  */
 export default interface OptionInterface {
     config: OptionConfigInterface;
-    parent: Preview;
+    preview: Preview;
     code: string;
     icon: KnockoutObservable<string>;
     title: KnockoutObservable<string>;
@@ -20,7 +20,6 @@ export default interface OptionInterface {
     sort: number;
     action: () => void;
     isDisabled: KnockoutObservable<boolean>;
-    optionTemplate: string;
 }
 
 /**

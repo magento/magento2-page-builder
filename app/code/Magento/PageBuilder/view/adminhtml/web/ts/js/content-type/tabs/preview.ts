@@ -52,7 +52,7 @@ export default class Preview extends PreviewCollection {
                 create: () => {
                     // Ensure focus tab is restored after a rebuild cycle
                     if (focusedTab) {
-                        this.setFocusedTab(focusedTab);
+                        this.setFocusedTab(focusedTab, true);
                     }
                 },
             });
@@ -108,6 +108,16 @@ export default class Preview extends PreviewCollection {
                 this.updateData("default_active", newDefaultActiveTab);
             }
         });
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedTab.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
     }
 
     /**
@@ -189,7 +199,7 @@ export default class Preview extends PreviewCollection {
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
         options.add = new Option({
-            parent: this,
+            preview: this,
             icon: "<i class='icon-pagebuilder-add'></i>",
             title: $t("Add"),
             action: this.addTab,
@@ -382,7 +392,6 @@ export default class Preview extends PreviewCollection {
                 duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
             }
-            this.buildTabs(args.index);
         });
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
