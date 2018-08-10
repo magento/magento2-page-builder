@@ -20,6 +20,7 @@ import Edit from "../content-type-menu/edit";
 import HideShowOption from "../content-type-menu/hide-show-option";
 import Option from "../content-type-menu/option";
 import {OptionsInterface} from "../content-type-menu/option.d";
+import TitleOption from "../content-type-menu/title-option";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
@@ -37,7 +38,7 @@ export default class Preview {
     public parent: ContentTypeCollectionInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
-    public displayLabel: KnockoutObservable<string>;
+    public displayLabel: KnockoutObservable<string> = ko.observable();
     public display: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperElement: Element;
 
@@ -77,7 +78,7 @@ export default class Preview {
         this.edit = new Edit(this.parent, this.parent.dataStore);
         this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
         this.observableUpdater = observableUpdater;
-        this.displayLabel = ko.observable(this.config.label);
+        this.displayLabel(this.config.label);
         this.setupDataFields();
         this.bindEvents();
     }
@@ -383,7 +384,7 @@ export default class Preview {
                 classes: ["move-structural"],
                 sort: 10,
             }),
-            title: new Option({
+            title: new TitleOption({
                 preview: this,
                 title: this.config.label,
                 template: "Magento_PageBuilder/content-type/title",
