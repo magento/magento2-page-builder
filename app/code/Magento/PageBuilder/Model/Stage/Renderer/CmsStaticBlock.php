@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Renders a CMS Block for the stage
  *
@@ -26,18 +28,25 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $widgetDirectiveRenderer;
 
     /**
-     * Constructor
+     * @var LoggerInterface
+     */
+    private $loggerInterface;
+
+    /**
+     * CmsStaticBlock constructor.
      *
-     * @param WidgetDirective $widgetDirectiveRenderer
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
+     * @param WidgetDirective $widgetDirectiveRenderer
+     * @param LoggerInterface $loggerInterface
      */
     public function __construct(
+        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         WidgetDirective $widgetDirectiveRenderer,
-        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
+        LoggerInterface $loggerInterface
     ) {
-
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
+        $this->loggerInterface = $loggerInterface;
     }
 
     /**
@@ -79,12 +88,37 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $directiveResult['content'];
-            $result['error'] = $directiveResult['error'];
+            $result = $this->removeScriptTags($directiveResult);
         } else {
             $result['error'] = __('Block disabled');
         }
 
         return $result;
+    }
+
+    /**
+     * Remove script tag from html
+     *
+     * @param array $directiveResult
+     * @return array
+     */
+    private function removeScriptTags(array $directiveResult): array
+    {
+        $dom = new \DOMDocument();
+        try {
+            $dom->loadHTML($directiveResult['content']);
+        } catch (\Exception $e) {
+            $this->loggerInterface->critical($e->getMessage());
+            return [
+                'error' => __('The block cannot be displayed because it contains errors.')
+            ];
+        }
+        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
+            $item->parentNode->removeChild($item);
+        }
+        return [
+            'content' => $dom->saveHTML(),
+            'error' => $directiveResult['error']
+        ];
     }
 }
