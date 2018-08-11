@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import widgetInitializer from "Magento_PageBuilder/js/widget-initializer";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config";
@@ -40,6 +41,15 @@ export default class Preview extends BasePreview {
     ) {
         super(parent, config, observableUpdater);
         this.placeholderText = ko.observable(this.messages.NOT_SELECTED);
+    }
+
+    /**
+     * Runs the widget initializer for each configured widget
+     */
+    public initializeWidgets() {
+        widgetInitializer({
+            config: Config.getConfig("widgets"),
+        });
     }
 
     /**

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _config, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _widgetInitializer, _config, _preview) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -33,11 +33,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _this;
     }
     /**
-     * @inheritdoc
+     * Runs the widget initializer for each configured widget
      */
 
 
     var _proto = Preview.prototype;
+
+    _proto.initializeWidgets = function initializeWidgets() {
+      (0, _widgetInitializer)({
+        config: _config.getConfig("widgets")
+      });
+    };
+    /**
+     * @inheritdoc
+     */
+
 
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;

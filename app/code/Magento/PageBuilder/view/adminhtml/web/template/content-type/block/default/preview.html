@@ -7,7 +7,7 @@
 
 <div class="pagebuilder-content-type pagebuilder-block" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-        <div if="displayPreview" class="rendered-content" html="data.main.html"></div>
+        <div if="displayPreview" class="rendered-content" html="data.main.html" afterRender="initializeWidgets"></div>
         <div ifnot="displayPreview" class="pagebuilder-block-placeholder">
             <span class="placeholder-text" text="placeholderText"/>
         </div>

@@ -69,6 +69,11 @@ class Config
     private $inlineEditingChecker;
 
     /**
+     * @var \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer
+     */
+    private $widgetInitializerConfig;
+
+    /**
      * Config constructor.
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
@@ -78,6 +83,7 @@ class Config
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
+     * @param \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer $widgetInitializerConfig
      * @param array $data
      */
     public function __construct(
@@ -89,6 +95,7 @@ class Config
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
+        \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer $widgetInitializerConfig,
         array $data = []
     ) {
         $this->config = $config;
@@ -99,6 +106,7 @@ class Config
         $this->scopeConfig = $scopeConfig;
         $this->activeEditor = $activeEditor;
         $this->inlineEditingChecker = $inlineEditingChecker;
+        $this->widgetInitializerConfig = $widgetInitializerConfig;
         $this->data = $data;
     }
 
@@ -117,7 +125,8 @@ class Config
             'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
             'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
-            'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage()
+            'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
+            'widgets' => $this->widgetInitializerConfig->getConfig(),
         ];
     }
 
