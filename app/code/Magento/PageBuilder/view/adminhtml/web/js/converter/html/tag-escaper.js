@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Encode =
+  var TagEscaper =
   /*#__PURE__*/
   function () {
-    function Encode() {}
+    function TagEscaper() {}
 
-    var _proto = Encode.prototype;
+    var _proto = TagEscaper.prototype;
 
     /**
      * Convert value to internal format
@@ -33,9 +33,9 @@ define([], function () {
       return data[name].toString().replace(/</g, "&amp;lt;").replace(/>/g, "&amp;gt;");
     };
 
-    return Encode;
+    return TagEscaper;
   }();
 
-  return Encode;
+  return TagEscaper;
 });
-//# sourceMappingURL=encode.js.map
+//# sourceMappingURL=tag-escaper.js.map

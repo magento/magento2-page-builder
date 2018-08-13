@@ -6,7 +6,7 @@
 import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
 
-export default class Encode implements ConverterInterface {
+export default class TagEscaper implements ConverterInterface {
     /**
      * Convert value to internal format
      *
