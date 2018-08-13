@@ -35,9 +35,6 @@
         <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(variable.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
-        <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="addPageLinkVariableWYSIWYGDisabled">
         <arguments>
@@ -84,9 +81,6 @@
         <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
-        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(widget.editPanelValue, '1')}}" stepKey="waitForWidget"/>
-        <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetWYSIWYGDisabled">
         <arguments>

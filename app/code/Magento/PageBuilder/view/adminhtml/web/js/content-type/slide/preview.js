@@ -242,11 +242,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
         var initialImageValue = dataStore[_this3.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this3.uploader = new _uploader(_this3.parent.id, "imageuploader_" + _this3.parent.id, Object.assign({}, _this3.config.additional_data.uploaderConfig, {
-          value: initialImageValue
-        })); // Register listener when image gets uploaded from uploader UI component
-
-        _this3.uploader.onUploaded(_this3.onImageUploaded.bind(_this3));
+        _this3.uploader = new _uploader("imageuploader_" + _this3.parent.id, _this3.config.additional_data.uploaderConfig, _this3.parent.id, _this3.parent.dataStore, initialImageValue);
       });
     };
     /**

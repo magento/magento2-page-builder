@@ -241,15 +241,12 @@ export default class Preview extends BasePreview {
 
             // Create uploader
             this.uploader = new Uploader(
-                this.parent.id,
                 "imageuploader_" + this.parent.id,
-                Object.assign({}, this.config.additional_data.uploaderConfig, {
-                    value: initialImageValue,
-                }),
+                this.config.additional_data.uploaderConfig,
+                this.parent.id,
+                this.parent.dataStore,
+                initialImageValue,
             );
-
-            // Register listener when image gets uploaded from uploader UI component
-            this.uploader.onUploaded(this.onImageUploaded.bind(this));
         });
     }
 

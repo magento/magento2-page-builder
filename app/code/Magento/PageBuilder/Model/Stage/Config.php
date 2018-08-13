@@ -59,6 +59,16 @@ class Config
     private $scopeConfig;
 
     /**
+     * @var \Magento\Ui\Block\Wysiwyg\ActiveEditor
+     */
+    private $activeEditor;
+
+    /**
+     * @var \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList
+     */
+    private $inlineEditingChecker;
+
+    /**
      * Config constructor.
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
@@ -66,6 +76,8 @@ class Config
      * @param \Magento\Framework\Url $frontendUrlBuilder
      * @param \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
+     * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param array $data
      */
     public function __construct(
@@ -75,6 +87,8 @@ class Config
         \Magento\Framework\Url $frontendUrlBuilder,
         \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
+        \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         array $data = []
     ) {
         $this->config = $config;
@@ -83,6 +97,8 @@ class Config
         $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->additionalDataParser = $additionalDataParser;
         $this->scopeConfig = $scopeConfig;
+        $this->activeEditor = $activeEditor;
+        $this->inlineEditingChecker = $inlineEditingChecker;
         $this->data = $data;
     }
 
@@ -101,6 +117,7 @@ class Config
             'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
             'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
             'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
+            'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage()
         ];
     }
 
@@ -169,5 +186,17 @@ class Config
             'converters' => $contentType['converters'] ?? [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];
+    }
+
+    /**
+     * Determine if active editor is configured to support inline editing mode
+     *
+     * @return bool
+     */
+    private function isWysiwygProvisionedForEditingOnStage()
+    {
+        $activeEditorPath = $this->activeEditor->getWysiwygAdapterPath();
+
+        return $this->inlineEditingChecker->isSupported($activeEditorPath);
     }
 }
