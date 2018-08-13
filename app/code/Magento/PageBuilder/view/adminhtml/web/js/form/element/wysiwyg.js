@@ -16,6 +16,7 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
+            elementSelector: 'textarea:not(".inline-wysiwyg-textarea")',
             pageBuilder: {},
             visiblePageBuilder: false,
             isComponentInitialized: false,
@@ -70,7 +71,7 @@ define([
         initPageBuilderListeners: function () {
             var id = this.pageBuilder.id;
 
-            events.on('stage:'+ id +':readyAfter', function () {
+            events.on('stage:' + id + ':readyAfter', function () {
                 this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
