@@ -14,6 +14,7 @@ define([
      */
     var equalizeButtonWidth = function (buttonList) {
         var buttonMinWidth = 0;
+
         buttonList.css('min-width', buttonMinWidth);
         buttonList.each(function () {
             var buttonWidth = this.offsetWidth;
@@ -30,7 +31,7 @@ define([
 
         if ($element.data('sameWidth')) {
             equalizeButtonWidth($element.find('[data-element="link"]'));
-            $( window ).resize(function() {
+            $(window).resize(function () {
                 equalizeButtonWidth($element.find('[data-element="link"]'));
             });
         }
