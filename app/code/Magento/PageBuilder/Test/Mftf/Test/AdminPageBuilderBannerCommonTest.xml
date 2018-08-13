@@ -489,6 +489,11 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
         </actionGroup>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
+            <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
+            <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
+        </assertEquals>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
         </actionGroup>
