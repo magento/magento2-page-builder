@@ -75,7 +75,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => []
                             ]
                         ]
@@ -409,7 +408,6 @@ return [
                             ],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => 'Path/to/custom/converter',
                                 'filter' => [
                                     0 => 'class-name',
                                     1 => 'new-class'
@@ -441,7 +439,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => []
                             ]
                         ],
@@ -470,7 +467,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => []
                             ]
                         ]
@@ -541,7 +537,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
@@ -602,7 +597,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
@@ -664,7 +658,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
