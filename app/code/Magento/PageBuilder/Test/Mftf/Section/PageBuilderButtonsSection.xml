@@ -59,8 +59,8 @@
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <!-- Content Configuration -->
-        <element name="buttonItemText" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[contains(@class,'pagebuilder-button-item')])[{{arg2}}]//span[contains(.,'{{arg3}}')]" parameterized="true"/>
+        <element name="buttonItemText" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[@data-element='link_text' and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[contains(@class,'pagebuilder-button-item')])[{{arg2}}]//span[@data-element='link_text' and contains(.,'{{arg3}}')]" parameterized="true"/>
         <element name="buttonItemType" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
         <element name="buttonItemUrl" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][@href='{{arg2}}']" parameterized="true"/>
         <element name="buttonItemNewTab" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][@target='{{arg2}}']" parameterized="true"/>
@@ -84,8 +84,8 @@
         <element name="emptyButtonItemElement" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[not(text())]" parameterized="true"/>
         <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-role=\'button-item\'] a')[{{arg1}}-1]" parameterized="true"/>
         <!-- Content Configuration -->
-        <element name="buttonItemText" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//span[contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[@data-role='buttons'])[{{arg1}}]//div[@data-role='button-item'])[{{arg2}}]//span[contains(.,'{{arg3}}')]" parameterized="true"/>
+        <element name="buttonItemText" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//span[@data-element='link_text' and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[@data-role='buttons'])[{{arg1}}]//div[@data-role='button-item'])[{{arg2}}]//span[@data-element='link_text' and contains(.,'{{arg3}}')]" parameterized="true"/>
         <element name="buttonItemType" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
         <element name="buttonItemUrl" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a[@href='{{arg2}}']" parameterized="true"/>
         <element name="buttonItemNewTab" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a[@target='{{arg2}}']" parameterized="true"/>
