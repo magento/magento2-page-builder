@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import BasePreview from "../preview";
@@ -82,6 +83,7 @@ export default class Preview extends BasePreview {
      */
     public onTextareaFocus()
     {
+        $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStart");
     }
 
@@ -90,6 +92,7 @@ export default class Preview extends BasePreview {
      */
     public onTextareaBlur()
     {
+        $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
     }
 }
