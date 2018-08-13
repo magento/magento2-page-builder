@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import BasePreview from "../preview";
 import WysiwygFactory from "../wysiwyg/factory";
@@ -21,6 +22,11 @@ export default class Preview extends BasePreview {
      * The element the text content type is bound to
      */
     private element: HTMLElement;
+
+    /**
+     * The textarea element in disabled mode
+     */
+    private textarea: HTMLTextAreaElement;
 
     /**
      * @returns {Boolean}
@@ -47,5 +53,43 @@ export default class Preview extends BasePreview {
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
+    }
+
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+    public initTextarea(element: HTMLTextAreaElement)
+    {
+        this.textarea = element;
+
+        // Update content in our stage preview textarea after its slideout counterpart gets updated
+        events.on(`form:${this.parent.id}:saveAfter`, () => {
+            this.textarea.value = this.parent.dataStore.get("content") as string;
+        });
+    }
+
+    /**
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onTextareaKeyUp(context: Preview, event: Event)
+    {
+        this.parent.dataStore.update(this.textarea.value, "content");
+    }
+
+    /**
+     * Start stage interaction on textarea blur
+     */
+    public onTextareaFocus()
+    {
+        events.trigger("stage:interactionStart");
+    }
+
+    /**
+     * Stop stage interaction on textarea blur
+     */
+    public onTextareaBlur()
+    {
+        events.trigger("stage:interactionStop");
     }
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_config, _preview, _factory) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_events, _config, _preview, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,7 +17,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _this.textarea = void 0, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -41,6 +41,45 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/pr
       (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });
+    };
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+
+
+    _proto.initTextarea = function initTextarea(element) {
+      var _this3 = this;
+
+      this.textarea = element; // Update content in our stage preview textarea after its slideout counterpart gets updated
+
+      _events.on("form:" + this.parent.id + ":saveAfter", function () {
+        _this3.textarea.value = _this3.parent.dataStore.get("content");
+      });
+    };
+    /**
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onTextareaKeyUp = function onTextareaKeyUp(context, event) {
+      this.parent.dataStore.update(this.textarea.value, "content");
+    };
+    /**
+     * Start stage interaction on textarea blur
+     */
+
+
+    _proto.onTextareaFocus = function onTextareaFocus() {
+      _events.trigger("stage:interactionStart");
+    };
+    /**
+     * Stop stage interaction on textarea blur
+     */
+
+
+    _proto.onTextareaBlur = function onTextareaBlur() {
+      _events.trigger("stage:interactionStop");
     };
 
     return Preview;
