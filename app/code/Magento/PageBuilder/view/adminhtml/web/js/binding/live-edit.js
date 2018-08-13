@@ -147,7 +147,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
           range.collapse(true);
           selection.removeAllRanges();
           selection.addRange(range);
-        }, 1000).call(_this);
+        }, 300).call(_this);
       };
       /**
        * Input event on element

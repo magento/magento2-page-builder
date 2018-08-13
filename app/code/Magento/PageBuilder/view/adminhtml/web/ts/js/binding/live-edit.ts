@@ -126,7 +126,7 @@ ko.bindingHandlers.liveEdit = {
                 range.collapse(true);
                 selection.removeAllRanges();
                 selection.addRange(range);
-            }, 1000).call(this);
+            }, 300).call(this);
         };
 
         /**
