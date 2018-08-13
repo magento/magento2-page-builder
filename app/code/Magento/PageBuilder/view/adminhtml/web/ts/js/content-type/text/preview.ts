@@ -63,6 +63,9 @@ export default class Preview extends BasePreview {
     {
         this.textarea = element;
 
+        // set initial value of textarea based on data store
+        this.textarea.value = this.parent.dataStore.get("content") as string;
+
         // Update content in our stage preview textarea after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, () => {
             this.textarea.value = this.parent.dataStore.get("content") as string;
@@ -70,10 +73,9 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * @param {Preview} context
-     * @param {Event} event
+     * Save current value of textarea in data store
      */
-    public onTextareaKeyUp(context: Preview, event: Event)
+    public onTextareaKeyUp()
     {
         this.parent.dataStore.update(this.textarea.value, "content");
     }

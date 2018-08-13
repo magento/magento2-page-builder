@@ -50,19 +50,20 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
     _proto.initTextarea = function initTextarea(element) {
       var _this3 = this;
 
-      this.textarea = element; // Update content in our stage preview textarea after its slideout counterpart gets updated
+      this.textarea = element; // set initial value of textarea based on data store
+
+      this.textarea.value = this.parent.dataStore.get("content"); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
         _this3.textarea.value = _this3.parent.dataStore.get("content");
       });
     };
     /**
-     * @param {Preview} context
-     * @param {Event} event
+     * Save current value of textarea in data store
      */
 
 
-    _proto.onTextareaKeyUp = function onTextareaKeyUp(context, event) {
+    _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.parent.dataStore.update(this.textarea.value, "content");
     };
     /**
