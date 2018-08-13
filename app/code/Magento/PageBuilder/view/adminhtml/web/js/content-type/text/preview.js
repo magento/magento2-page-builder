@@ -59,11 +59,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       });
     };
     /**
-     * Save current value of textarea in data store
+     * Adjust textarea's height based on scrollHeight and save current value of textarea in data store
      */
 
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
+      this.textarea.style.height = '';
+      (0, _jquery)(this.textarea).height(this.textarea.scrollHeight);
       this.parent.dataStore.update(this.textarea.value, "content");
     };
     /**

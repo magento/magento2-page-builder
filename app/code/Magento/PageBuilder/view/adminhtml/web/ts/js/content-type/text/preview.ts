@@ -73,10 +73,12 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Save current value of textarea in data store
+     * Adjust textarea's height based on scrollHeight and save current value of textarea in data store
      */
     public onTextareaKeyUp()
     {
+        this.textarea.style.height = '';
+        $(this.textarea).height(this.textarea.scrollHeight);
         this.parent.dataStore.update(this.textarea.value, "content");
     }
 
