@@ -39,14 +39,14 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
      */
     private onFocus() {
         // If there isn't enough room for a left-aligned toolbar, right align it
-        if ($(window).width() < this.$element.offset().left + parseInt(this.config["adapter_config"].minToolbarWidth, 10)) {
+        if ($(window).width() < this.$element.offset().left + parseInt(this.config.adapter_config.minToolbarWidth, 10)) {
             this.$element.addClass("_right-aligned-toolbar");
         }
         else {
             this.$element.removeClass("_right-aligned-toolbar");
         }
 
-        $.each(this.config["adapter_config"].parentSelectorsToUnderlay, (i, selector) => {
+        $.each(this.config.adapter_config.parentSelectorsToUnderlay, (i, selector) => {
             this.$element.closest(selector as string).css("z-index", 100);
         });
     }
@@ -55,7 +55,7 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
      * Called when tinymce is blurred
      */
     private onBlur() {
-        $.each(this.config["adapter_config"].parentSelectorsToUnderlay, (i, selector) => {
+        $.each(this.config.adapter_config.parentSelectorsToUnderlay, (i, selector) => {
             this.$element.closest(selector as string).css("z-index", "");
         });
     }

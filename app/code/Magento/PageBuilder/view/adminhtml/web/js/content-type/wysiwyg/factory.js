@@ -18,13 +18,13 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
   function create(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName) {
     config = _jquery.extend(true, {}, config);
     return new Promise(function (resolve) {
-      (0, _loader)([config["adapter_config"].component], function (WysiwygInstance) {
+      (0, _loader)([config.adapter_config.component], function (WysiwygInstance) {
         new Promise(function (configResolve) {
-          if (config["adapter_config"].initializers && config["adapter_config"].initializers.config && config["adapter_config"].initializers.config[contentTypeName]) {
-            (0, _loader)([config["adapter_config"].initializers.config[contentTypeName]], function (InitializerInstance) {
-              var initializer = new InitializerInstance(); // Allow dynamic settings to be set before editor is initialized
+          if (config.adapter_config.config_modifiers && config.adapter_config.config_modifiers[contentTypeName]) {
+            (0, _loader)([config.adapter_config.config_modifiers[contentTypeName]], function (ConfigModifierType) {
+              var modifier = new ConfigModifierType(); // Allow dynamic settings to be set before editor is initialized
 
-              initializer.initialize(contentTypeId, config);
+              modifier.modify(contentTypeId, config);
               configResolve();
             });
           } else {
@@ -34,9 +34,9 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
           // Instantiate the component
           var wysiwyg = new WysiwygInstance(contentTypeId, elementId, config, dataStore, fieldName);
 
-          if (config["adapter_config"].initializers && config["adapter_config"].initializers.component && config["adapter_config"].initializers.component[contentTypeName]) {
-            (0, _loader)([config["adapter_config"].initializers.component[contentTypeName]], function (InitializerInstance) {
-              var initializer = new InitializerInstance(); // Allow dynamic bindings from configuration such as events from the editor
+          if (config.adapter_config.component_initializers && config.adapter_config.component_initializers[contentTypeName]) {
+            (0, _loader)([config.adapter_config.component_initializers[contentTypeName]], function (InitializerType) {
+              var initializer = new InitializerType(); // Allow dynamic bindings from configuration such as events from the editor
 
               initializer.initialize(wysiwyg);
               resolve(wysiwyg);
