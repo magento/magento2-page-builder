@@ -162,6 +162,10 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
         events.trigger("stage:interactionStop");
     }
+
+    if (ui.item) {
+        ui.item.remove();
+    }
 }
 
 /**

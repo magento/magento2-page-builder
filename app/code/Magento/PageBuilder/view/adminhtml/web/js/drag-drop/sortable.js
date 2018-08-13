@@ -152,6 +152,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
       _events.trigger("stage:interactionStop");
     }
+
+    if (ui.item) {
+      ui.item.remove();
+    }
   }
   /**
    * Handle receiving a content type from the left panel
