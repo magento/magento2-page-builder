@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentType;
+namespace Magento\PageBuilder\Model;
 
 /**
  * Container for the configuration related to the widget initializer mechanism
  */
-class WidgetInitializer
+class WidgetInitializerConfig
 {
     /**
      * @var array The provided configuration

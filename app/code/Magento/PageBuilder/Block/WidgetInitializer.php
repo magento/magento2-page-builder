@@ -23,7 +23,7 @@ class WidgetInitializer extends Template
     private $jsonSerializer;
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer
+     * @var \Magento\PageBuilder\Model\WidgetInitializerConfig
      */
     private $config;
 
@@ -31,13 +31,13 @@ class WidgetInitializer extends Template
      * WidgetInitializer constructor.
      * @param Template\Context $context
      * @param \Magento\Framework\Serialize\Serializer\Json $jsonEncoder
-     * @param \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer $config
+     * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $config
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Serialize\Serializer\Json $jsonEncoder,
-        \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer $config,
+        \Magento\PageBuilder\Model\WidgetInitializerConfig $config,
         array $data = []
     ) {
         $this->jsonSerializer = $jsonEncoder;

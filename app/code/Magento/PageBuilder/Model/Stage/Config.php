@@ -69,7 +69,7 @@ class Config
     private $inlineEditingChecker;
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer
+     * @var \Magento\PageBuilder\Model\WidgetInitializerConfig
      */
     private $widgetInitializerConfig;
 
@@ -83,7 +83,7 @@ class Config
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
-     * @param \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer $widgetInitializerConfig
+     * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
      * @param array $data
      */
     public function __construct(
@@ -95,7 +95,7 @@ class Config
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
-        \Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer $widgetInitializerConfig,
+        \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
         array $data = []
     ) {
         $this->config = $config;
