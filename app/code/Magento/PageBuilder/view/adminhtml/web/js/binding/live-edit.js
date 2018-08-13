@@ -1,10 +1,9 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _events, _keyCodes) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
-  _events = _interopRequireDefault(_events);
   _keyCodes = _interopRequireDefault(_keyCodes);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -45,28 +44,15 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
-          placeholder = _valueAccessor.placeholder,
-          isSupportingHtml = _valueAccessor.isSupportingHtml,
-          isMultiline = _valueAccessor.isMultiline,
-          preventSelectingAllOnClick = _valueAccessor.preventSelectingAllOnClick;
+          placeholder = _valueAccessor.placeholder;
 
       var focusedValue = element.innerHTML;
-      /**
-       * Get updated html based on options passed to binding
-       * @param {String} html
-       * @returns {String}
-       */
-
-      var updateHtml = function updateHtml(html) {
-        return isSupportingHtml ? html : stripHtml(html);
-      };
       /**
        * Strip HTML and return text
        *
        * @param {string} html
        * @returns {string}
        */
-
 
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
@@ -79,9 +65,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
 
 
       var onFocus = function onFocus() {
-        _events.default.trigger("stage:interactionStart");
-
-        focusedValue = updateHtml(element.innerHTML);
+        focusedValue = stripHtml(element.innerHTML);
       };
       /**
        * Blur event on element
@@ -89,11 +73,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
 
 
       var onBlur = function onBlur() {
-        if (focusedValue !== updateHtml(element.innerHTML)) {
-          viewModel.updateData(field, updateHtml(element.innerHTML));
+        if (focusedValue !== stripHtml(element.innerHTML)) {
+          viewModel.updateData(field, stripHtml(element.innerHTML));
         }
-
-        _events.default.trigger("stage:interactionStop");
       };
       /**
        * Click event on element
@@ -101,7 +83,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
 
 
       var onClick = function onClick() {
-        if (element.innerHTML !== "" && !preventSelectingAllOnClick) {
+        if (element.innerHTML !== "") {
           document.execCommand("selectAll", false, null);
         }
       };
@@ -124,7 +106,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_Ui/js/li
           }
         }
 
-        if (key === "enterKey" && !isMultiline) {
+        if (key === "enterKey") {
           event.preventDefault();
         } // prevent slides from sliding
 
