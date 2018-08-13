@@ -1718,6 +1718,10 @@
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <seeElement selector="{{ButtonGroupOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <seeElement selector="{{ButtonItemOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenButtonItem" />
+        <!-- Verify we cannot interact with the internal button after save -->
+        <comment userInput="Verify we cannot interact with the internal button after save" stepKey="commentVerifyButtonItemIsDisabledAfterSave"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="seeDomButtonItemOptionsMenu"/>
+        <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="dontSeeButtonItemOptionsMenu"/>
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />

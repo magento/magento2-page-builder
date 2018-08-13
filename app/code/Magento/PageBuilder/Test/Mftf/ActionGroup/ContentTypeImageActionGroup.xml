@@ -37,4 +37,28 @@
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="seeMainImageSource"/>
     </actionGroup>
+    <actionGroup name="validateImage">
+        <arguments>
+            <argument name="section"/>
+            <argument name="pageNamePrefix" defaultValue="admin" type="string"/>
+            <argument name="image"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateImage" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.imageSourceByIndex(index, image.fileName)}}" stepKey="waitForImage"/>
+        <grabAttributeFrom selector="{{section.imageSourceByIndex(index, image.fileName)}}" userInput="src" stepKey="contentTypeSrc"/>
+        <!-- Grab base URL -->
+        <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
+        <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
+        <!-- Return the string value of image -->
+        <!--<executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(src: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="imageSrcValue"/>-->
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
+        <executeJS function="return '{{image.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertImageContainsFileInformation">
+            <expectedResult type="string">/{$regexBaseURL}\/pub\/media.*{$regexFilePath}.*\/{{image.fileName}}(_\d+)?\.{{image.extension}}/</expectedResult>
+            <actualResult type="variable">$contentTypeSrc</actualResult>
+        </assertRegExp>
+    </actionGroup>
 </actionGroups>
