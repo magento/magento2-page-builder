@@ -106,13 +106,13 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     {
         $dom = new \DOMDocument();
         try {
+            //this code is required because of https://bugs.php.net/bug.php?id=60021
+            $previous = libxml_use_internal_errors(true);
             $dom->loadHTML($directiveResult['content']);
         } catch (\Exception $e) {
             $this->loggerInterface->critical($e->getMessage());
-            return [
-                'error' => __('The block cannot be displayed because it contains errors.')
-            ];
         }
+        libxml_use_internal_errors($previous);
         foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
             $item->parentNode->removeChild($item);
         }
