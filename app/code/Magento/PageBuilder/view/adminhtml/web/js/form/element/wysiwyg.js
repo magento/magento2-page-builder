@@ -16,7 +16,7 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
-            elementSelector: 'textarea:not(".inline-wysiwyg-textarea")',
+            elementSelector: '> textarea',
             pageBuilder: {},
             visiblePageBuilder: false,
             isComponentInitialized: false,
