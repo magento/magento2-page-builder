@@ -3,6 +3,8 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@color-gray: #ccc;
+
 //
 //  Default appearance styles
 //  _____________________________________________
@@ -171,6 +173,19 @@ div[data-role='tabs'],
         .tabs-content {
             border-top-right-radius: 0 !important;
         }
+    }
+}
+div[data-role='tabs'] {
+    .tabs-navigation {
+        border: none;
+
+        .tab-header:not(:first-child) {
+            margin-left: -1px !important;
+        }
+    }
+    .tabs-content {
+        border: 1px solid @color-gray;
+        border-top: none;
     }
 }
 
