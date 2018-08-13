@@ -327,7 +327,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $cssNode = $elementNode->getElementsByTagName('css')->item(0);
         if ($cssNode) {
             $cssData['var'] = $this->getAttributeValue($cssNode, 'name');
-            $cssData['converter'] = $this->getAttributeValue($cssNode, 'converter');
             $filterClasses = [];
             $filterNode = $cssNode->getElementsByTagName('filter')->item(0);
             if ($filterNode) {

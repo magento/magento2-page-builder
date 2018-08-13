@@ -56,7 +56,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
