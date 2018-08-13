@@ -542,6 +542,10 @@ export default class Preview extends PreviewCollection {
     private initMouseMove(group: JQuery): void {
         let intersects: boolean = false;
         $(document).on("mousemove touchmove", (event: JQueryEventObject) => {
+            if (group.parents(".pagebuilder-content-type-hidden").length > 0) {
+                return;
+            }
+
             const groupPosition = this.getGroupPosition(group);
 
             // If we're handling a touch event we need to pass through the page X & Y

@@ -125,7 +125,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
    */
 
   function onSort(preview, event, ui) {
-    if ((0, _jquery)(this).sortable("option", "disabled")) {
+    if ((0, _jquery)(this).sortable("option", "disabled") || ui.placeholder.parents(".pagebuilder-content-type-hidden").length > 0) {
       ui.placeholder.hide();
     } else {
       ui.placeholder.show();
@@ -177,7 +177,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
     if (contentTypeConfig) {
       // If the sortable instance is disabled don't complete this operation
-      if ((0, _jquery)(this).sortable("option", "disabled")) {
+      if ((0, _jquery)(this).sortable("option", "disabled") || (0, _jquery)(this).parents(".pagebuilder-content-type-hidden").length > 0) {
         return;
       } // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
 
@@ -220,8 +220,18 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
   function onSortUpdate(preview, event, ui) {
     // If the sortable instance is disabled don't complete this operation
-    if ((0, _jquery)(this).sortable("option", "disabled")) {
+    if ((0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(".pagebuilder-content-type-hidden").length > 0) {
       ui.item.remove();
+      (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the parent
+
+      if (ui.item.length > 0 && typeof _knockout.dataFor(ui.item[0]) !== "undefined") {
+        var parent = _knockout.dataFor(ui.item[0]).parent;
+
+        var children = parent.getChildren()().splice(0);
+        parent.getChildren()([]);
+        parent.getChildren()(children);
+      }
+
       return;
     }
     /**

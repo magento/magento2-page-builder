@@ -896,6 +896,17 @@
         <actionGroup ref="validateOnHoverNoOptionMenu" stepKey="verifyHeadingHasNoOptionMenuAfterSave">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
+        <!-- Verify we cannot drop content types into hidden containers -->
+        <comment userInput="Verify we cannot drop content types into hidden containers" stepKey="commentDropIntoContainer"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToHiddenContainer" stepKey="dragHeaderToTabs2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />

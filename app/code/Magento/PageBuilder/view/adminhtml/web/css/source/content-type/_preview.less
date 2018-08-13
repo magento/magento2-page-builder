@@ -174,7 +174,7 @@
         transition: opacity 200ms, top 200ms, visibility 200ms;
         visibility: hidden;
         width: 100%;
-        z-index: 11;
+        z-index: 15;
     }
 }
 
@@ -595,5 +595,10 @@
     > .pagebuilder-content-type:before {
         opacity: 1;
         visibility: visible;
+    }
+    .pagebuilder-drop-indicator,
+    .pagebuilder-content-type.type-container.empty-container > .content-type-container:before {
+        opacity: 0 !important;
+        visibility: hidden !important;
     }
 }

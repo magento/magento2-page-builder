@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="dragContentTypeToStage">
         <arguments>
             <argument name="contentType"/>
@@ -54,6 +54,22 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage" />
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+    </actionGroup>
+    <actionGroup name="dragContentTypeToHiddenContainer">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocus"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementNotVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeNotOnStage" />
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElementInContainer" />
     </actionGroup>
     <actionGroup name="dragContentTypeToContainerAndExpectEditPanel">
         <arguments>

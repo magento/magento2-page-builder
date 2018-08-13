@@ -4,7 +4,10 @@
  */
 
 import ko from "knockout";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
+import ContentTypeInterface from "./content-type.d";
 import { moveArrayItemIntoArray, removeArrayItem } from "./utils/array";
+
 
 /**
  * @api
@@ -19,9 +22,9 @@ export default class Collection {
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
-    public getChildren(): KnockoutObservableArray<any> {
+    public getChildren(): KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface> {
         return this.children;
     }
 

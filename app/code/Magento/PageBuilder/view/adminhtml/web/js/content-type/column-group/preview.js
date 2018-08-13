@@ -543,6 +543,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
+        if (group.parents(".pagebuilder-content-type-hidden").length > 0) {
+          return;
+        }
+
         var groupPosition = _this7.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
 

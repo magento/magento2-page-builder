@@ -134,7 +134,9 @@ let placeholderContainer: Element;
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
-    if ($(this).sortable("option", "disabled")) {
+    if ($(this).sortable("option", "disabled") ||
+        ui.placeholder.parents(".pagebuilder-content-type-hidden").length > 0
+    ) {
         ui.placeholder.hide();
     } else {
         ui.placeholder.show();
@@ -183,7 +185,7 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
     const contentTypeConfig = getDraggedContentTypeConfig();
     if (contentTypeConfig) {
         // If the sortable instance is disabled don't complete this operation
-        if ($(this).sortable("option", "disabled")) {
+        if ($(this).sortable("option", "disabled") || $(this).parents(".pagebuilder-content-type-hidden").length > 0) {
             return;
         }
 
@@ -232,8 +234,17 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
  */
 function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     // If the sortable instance is disabled don't complete this operation
-    if ($(this).sortable("option", "disabled")) {
+    if ($(this).sortable("option", "disabled") || ui.item.parents(".pagebuilder-content-type-hidden").length > 0) {
         ui.item.remove();
+        $(this).sortable("cancel");
+
+        // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the parent
+        if (ui.item.length > 0 && typeof ko.dataFor(ui.item[0]) !== "undefined") {
+            const parent = ko.dataFor(ui.item[0]).parent as ContentTypeCollectionInterface;
+            const children = parent.getChildren()().splice(0);
+            parent.getChildren()([]);
+            parent.getChildren()(children);
+        }
         return;
     }
 
