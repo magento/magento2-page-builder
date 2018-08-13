@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -41,30 +41,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
-      _events.on("previewData:updateAfter", function (eventData) {
-        var contentTypePreview = eventData.preview;
-
-        if (contentTypePreview.config.name === "button-item" && contentTypePreview.parent.parent.id === _this2.parent.id || contentTypePreview.config.name === "buttons" && contentTypePreview.parent.id === _this2.parent.id) {
+      _events.on("stage:updateAfter", function (eventData) {
+        _underscore.debounce(function () {
           _this2.resizeChildButtons();
-        }
-      });
-
-      _events.on("buttons:renderAfter", function (eventData) {
-        if (eventData.contentType.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
-        }
-      });
-
-      _events.on("button-item:renderAfter", function (eventData) {
-        if (eventData.contentType.parent.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
-        }
-      });
-
-      _events.on("button-item:removeAfter", function (eventData) {
-        if (eventData.parent.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
-        }
+        }, 250).call(_this2);
       });
     };
     /**

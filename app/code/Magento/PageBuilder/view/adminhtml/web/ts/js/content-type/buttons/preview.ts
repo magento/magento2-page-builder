@@ -7,17 +7,16 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import {SortableOptionsInterface} from "../../binding/sortable-options";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
+import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
 import PreviewCollection from "../preview-collection";
-import PreviewDataUpdateAfterParamsInterface from "../preview-data-update-after-params";
 
 /**
  * @api
@@ -45,32 +44,10 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        events.on("previewData:updateAfter", (eventData: PreviewDataUpdateAfterParamsInterface) => {
-            const contentTypePreview = eventData.preview;
-            if ((contentTypePreview.config.name === "button-item"
-                && contentTypePreview.parent.parent.id === this.parent.id)
-                || (contentTypePreview.config.name === "buttons"
-                    && contentTypePreview.parent.id === this.parent.id)) {
+        events.on("stage:updateAfter", (eventData: StageUpdateAfterParamsInterface) => {
+            _.debounce(() => {
                 this.resizeChildButtons();
-            }
-        });
-
-        events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
-            if (eventData.contentType.id === this.parent.id) {
-                this.resizeChildButtons();
-            }
-        });
-
-        events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
-            if (eventData.contentType.parent.id === this.parent.id) {
-                this.resizeChildButtons();
-            }
-        });
-
-        events.on("button-item:removeAfter", (eventData: ContentTypeRemovedEventParamsInterface) => {
-            if (eventData.parent.id === this.parent.id) {
-                this.resizeChildButtons();
-            }
+            }, 500).call(this);
         });
     }
 
