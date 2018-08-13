@@ -105,7 +105,7 @@ ko.bindingHandlers.liveEdit = {
             _.debounce(() => {
                 const selection = window.getSelection();
                 const range = document.createRange();
-                const getCharPosition = (editableDiv: HTMLElement) => {
+                const getCharPosition = (editableDiv: HTMLElement): number => {
                     let charPosition = 0;
 
                     if (window.getSelection) {
