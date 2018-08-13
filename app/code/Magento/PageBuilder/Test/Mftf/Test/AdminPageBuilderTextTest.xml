@@ -38,11 +38,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!--Assert Text placeholder-->
-        <comment userInput="Assert Text placeholder" stepKey="assertTextPlaceholder"/>
-        <seeElement selector="{{TextOnStage.placeholder('1')}}" stepKey="seeTextPlaceholder"/>
+        <!--Assert Text placeholder and inline edit-->
+        <comment userInput="Assert Text placeholder and inline edit" stepKey="comment1"/>
+        <seeElement selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="seeTextareaPlaceholder"/>
         <!--Check min height of textarea-->
-        <comment userInput="Check min height of textarea" stepKey="comment1"/>
+        <comment userInput="Check min height of textarea" stepKey="comment2"/>
 
 
 
@@ -54,7 +54,7 @@
         <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
         <dontSeeElement selector="{{TextOnStorefront.empty('1')}}" stepKey="dontSeeEmptyTextContentTypeOnStorefront"/>
         <!--Check min height of textarea on Storefront-->
-        <comment userInput="Check min height of textarea on Storefront" stepKey="comment2"/>
+        <comment userInput="Check min height of textarea on Storefront" stepKey="comment3"/>
 
 
         
@@ -63,7 +63,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Textarea editor in Text Content Type"/>
+            <title value="Textarea editor inline Text Content Type"/>
             <description value="Verify that user are able to add text into Text Content Type and see it on storefront"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-1438"/>
@@ -91,96 +91,109 @@
         </actionGroup>
         <!--Input text into textarea on stage-->
         <comment userInput="Input text into textarea on stage" stepKey="commentInputTextIntoStage"/>
-        <click selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTextarea"/>
+        <click selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textareaPlaceholder('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTextarea"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
         <!--Verify inputed text on slideout-->
         <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForText"/>
+        <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
+        <assertContains stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">getText</actualResult>
+        </assertContains>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!--Verify Text Content Type on stage after saving cms page-->
         <comment userInput="Verify text content type on storefront" stepKey="commentVerifyTextOnStage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
         <!--Verify Text Content Type on storefront-->
         <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
     </test>
-
-
-    <test name="TinyMCE3">
+    <test name="TextTinyMCE3">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Textarea s editor in Text Content Type"/>
-            <description value="Verify that user are able to add text into Text Content Type and see it on storefront"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-1438"/>
+            <title value="TinyMCE3"/>
+            <description value="TinyMCE3 test"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value=""/>
             <testCaseId value=""/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <!--<actionGroup ref="EnableWYSIWYG" stepKey="disableWYSIWYGByDefault"/>-->
-            <actionGroup ref="SwitchToVersion3ActionGroup" stepKey="SwitchToVersion3"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="SwitchToVersion3ActionGroup" stepKey="switchToTinyMCE3" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="SwitchToVersion4"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
-            <argument name="group" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!--Input text into textarea on stage-->
-        <comment userInput="Input text into textarea on stage" stepKey="commentInputTextIntoStage"/>
-        <click selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="focusOnEditorArea"/>
-        <fillField selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="fillTextToTextarea"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
-        <!--Verify inputed text on slideout-->
-        <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForText"/>
-        <!--Verify textare display on slideout-->
-
-
-        <!--Add variable, widget and image into slideout-->
-
-
-        <!--Verify how variable, widget and image display on slide-out-->
-
+        <!--Verify Textare on stage-->
+        <comment userInput="Verify Textare on stage" stepKey="comment"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextField"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
+        <!-- Validate Edit Panel display TinyMCE3-->
+        <comment userInput="Validate Edit Panel display TinyMCE3" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TinyMCESection.TinyMCE3}}" stepKey="waitForTinyMCE3" />
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <!-- Verify inputed text is carried out to slideout -->
+        <comment userInput="Verify inputed text is carried out to slideout" stepKey="comment"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <!-- Add variable to tinymce3 -->
+        <comment userInput="Add variable to tinymce3" stepKey="comment2"/>
+        <executeJS function="tinymc.getElementById('id').setContent('{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}')" stepKey="addVariable"/>
+        <!-- Add widget to tinymce3 -->
+        <comment userInput="Add widget to tinymce3" stepKey="comment3"/>
+        <executeJS function="tinymc.getElementById('id').setContent('{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}')" stepKey="addWidget"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-
-        <!--Verify how variable, widget and image display on PageBuilder stage-->
-
-
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!--Verify Text Content Type on stage after saving cms page-->
-        <comment userInput="Verify text content type on storefront" stepKey="commentVerifyTextOnStage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStage"/>
-        <!--Verify Text Content Type on storefront-->
-        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
-        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStorefront"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetOnStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_VariableBaseURL.editPanelValue)}}" stepKey="waitForVariableOnStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaWidget('1', '{{_ENV.MAGENTO_BASE_URL}}', PageBuilderPageTitle.pageName)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', '$grabBaseURL')}}" stepKey="waitForVariableStorefront"/>
     </test>
-
-
     <test name="TextAddWYSIWYGContentTypeToTabOnStage">
         <annotations>
             <features value="PageBuilder"/>
@@ -1448,6 +1461,68 @@
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+    </test>
+    <test name="TextDisabledWYSIWYGAddImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Disabled WYSIWYG - Update Textarea With Image"/>
+            <description value="Validate that textarea works for Image with WYSIWYG disabled."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value=""/>
+            <testCaseId value=""/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+            <!--<group value="pagebuilder-customBeforeAfter"/>-->
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+                <argument name="contentType" value="PageBuilderTextContentType"/>
+            </actionGroup>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
+        <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage1">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{TextOnStage.imageSource('1', ImageUpload3.fileName)}}" stepKey="waitForImageStage1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.imageSource('1', ImageUpload3.fileName)}}" stepKey="waitForImageStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStorefront.image('1', ImageUpload3.fileName)}}" stepKey="waitForImageStorefront"/>
     </test>
     <test name="TextDisabledWYSIWYGAddText">
         <annotations>
