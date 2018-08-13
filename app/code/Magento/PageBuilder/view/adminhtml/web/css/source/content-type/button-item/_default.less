@@ -36,26 +36,26 @@
         &.pagebuilder-content-type-active {
             .button-item-drag-handle {
                 color: @color-dark-gray0;
+                cursor: move; /* fallback if grab cursor is unsupported */
+                cursor: grab;
+                cursor: -moz-grab;
+                cursor: -webkit-grab;
                 position: relative;
+
+                &:active {
+                    cursor: grabbing;
+                    cursor: -moz-grabbing;
+                    cursor: -webkit-grabbing;
+                }
 
                 &:before {
                     .abs-icon;
                     content: @icon-gripper__content;
-                    cursor: move; /* fallback if grab cursor is unsupported */
-                    cursor: grab;
-                    cursor: -moz-grab;
-                    cursor: -webkit-grab;
                     display: inline-block;
                     font-size: @pagebuilder-button__font-size;
                     left: -(@pagebuilder-button__font-size);
                     line-height: @pagebuilder-button__line-height;
                     position: absolute;
-
-                    &:active {
-                        cursor: grabbing;
-                        cursor: -moz-grabbing;
-                        cursor: -webkit-grabbing;
-                    }
                 }
 
                 &.disabled:before {
