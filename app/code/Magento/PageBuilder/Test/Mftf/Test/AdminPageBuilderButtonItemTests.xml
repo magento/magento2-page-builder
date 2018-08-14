@@ -609,7 +609,7 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
@@ -635,48 +635,67 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.defaultStyle('1')}}" stepKey="waitForButtonItemStage1"/>
+        <seeElement selector="{{ButtonItemOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorder('1')}}" stepKey="seeNoBorderStage"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorderColor('1')}}" stepKey="seeNoBorderColorStage"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStage"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStage"/>
+        <seeElement selector="{{ButtonItemOnStage.noMargins('1')}}" stepKey="seeNoMarginsStage"/>
+        <seeElement selector="{{ButtonItemOnStage.noPadding('1')}}" stepKey="seeNoPaddingStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.defaultStyle('1')}}" stepKey="waitForButtonItemStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorder('1')}}" stepKey="seeNoBorderStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorderColor('1')}}" stepKey="seeNoBorderColorStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.noMargins('1')}}" stepKey="seeNoMarginsStage2"/>
+        <seeElement selector="{{ButtonItemOnStage.noPadding('1')}}" stepKey="seeNoPaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingPropertyButtons"/>
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.defaultStyle('1')}}" stepKey="waitForButtonItemStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.noBorder('1')}}" stepKey="seeNoBorderStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.noBorderColor('1')}}" stepKey="seeNoBorderColorStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.noMargins('1')}}" stepKey="seeNoMarginsStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.noPadding('1')}}" stepKey="seeNoPaddingStorefront"/>
     </test>
     <test name="ButtonItemUpdateAdvancedConfigurationValues">
         <annotations>
@@ -718,7 +737,7 @@
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -746,7 +765,7 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
             <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -764,7 +783,7 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -794,7 +813,7 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
@@ -812,7 +831,7 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -842,7 +861,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
