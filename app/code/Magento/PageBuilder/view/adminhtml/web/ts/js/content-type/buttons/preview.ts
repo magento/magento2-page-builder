@@ -227,11 +227,11 @@ export default class Preview extends PreviewCollection {
             let buttonResizeValue: string|number = "";
             if (this.parent.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
+                    buttonItems.css("min-width", "");
                     const currentLargestButton = this.findLargestButton(buttonItems);
-                    buttonResizeValue = currentLargestButton.css("min-width", "").outerWidth();
+                    buttonResizeValue = currentLargestButton.outerWidth();
                 }
             }
-
             buttonItems.css("min-width", buttonResizeValue);
         }
     }
@@ -251,7 +251,6 @@ export default class Preview extends PreviewCollection {
                 largestButton = buttonElement;
             }
         });
-
         return largestButton;
     }
 
@@ -266,7 +265,6 @@ export default class Preview extends PreviewCollection {
         const calculatedButtonWidth: number = widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
         }, buttonItem.find("[data-element='link_text']").width());
-
         return calculatedButtonWidth;
     }
 }

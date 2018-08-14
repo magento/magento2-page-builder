@@ -44,7 +44,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("stage:updateAfter", function (eventData) {
         _underscore.debounce(function () {
           _this2.resizeChildButtons();
-        }, 250).call(_this2);
+        }, 500).call(_this2);
       });
     };
     /**
@@ -238,8 +238,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         if (this.parent.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
+            buttonItems.css("min-width", "");
             var currentLargestButton = this.findLargestButton(buttonItems);
-            buttonResizeValue = currentLargestButton.css("min-width", "").outerWidth();
+            buttonResizeValue = currentLargestButton.outerWidth();
           }
         }
 
