@@ -3,17 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../../config";
 import {DataObject} from "../../data-store";
-import {toDataUrl} from "../../utils/directives";
-import {decodeUrl, urlToDirective} from "../../utils/image";
-import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import ConverterInterface from "../converter-interface";
 
 /**
  * @api
  */
-export default class BackgroundImage implements ConverterInterface {
+export default class ContainerBackgroundImage implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -21,10 +17,7 @@ export default class BackgroundImage implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        if (!value) {
-            return "";
-        }
-        return decodeUrl(value);
+        return null;
     }
 
     /**
@@ -35,11 +28,6 @@ export default class BackgroundImage implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const value = data[name];
-        if (value[0] === undefined || value[0].url === undefined) {
-            return "";
-        }
-        const imageUrl = value[0].url;
-        return urlToDirective(imageUrl);
+        return null;
     }
 }
