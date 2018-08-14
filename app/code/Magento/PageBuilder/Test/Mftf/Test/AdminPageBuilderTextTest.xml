@@ -152,17 +152,10 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <!--Verify Textare on stage-->
-        <comment userInput="Verify Textare on stage" stepKey="comment"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel"/>
-        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextField"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
+        <!--Verify Textarea on stage-->
+        <comment userInput="Verify Textarea on stage" stepKey="comment"/>
+        <waitForElementVisible selector="{{TextOnStage.textArea('1')}}" stepKey="waitForTextOnEditPanel"/>
+        <fillField selector="{{TextOnStage.textArea('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextField"/>
         <!-- Validate Edit Panel display TinyMCE3-->
         <comment userInput="Validate Edit Panel display TinyMCE3" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -175,17 +168,17 @@
         <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
         <!-- Add variable to tinymce3 -->
         <comment userInput="Add variable to tinymce3" stepKey="comment2"/>
-        <executeJS function="tinymc.getElementById('id').setContent('{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}')" stepKey="addVariable"/>
+        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}');" stepKey="addVariable"/>
         <!-- Add widget to tinymce3 -->
         <comment userInput="Add widget to tinymce3" stepKey="comment3"/>
-        <executeJS function="tinymc.getElementById('id').setContent('{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}')" stepKey="addWidget"/>
+        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}');" stepKey="addWidget"/>
         <switchToIFrame stepKey="exitIFrame1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetOnStage"/>
         <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_VariableBaseURL.editPanelValue)}}" stepKey="waitForVariableOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
