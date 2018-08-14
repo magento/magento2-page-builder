@@ -168,7 +168,7 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
         events.trigger("stage:interactionStop");
     }
 
-    if (ui.item && sortedContentType === null) {
+    if (ui.item && !sortedContentType) {
         ui.item.remove();
     }
 

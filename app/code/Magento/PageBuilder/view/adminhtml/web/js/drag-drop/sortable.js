@@ -158,7 +158,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       _events.trigger("stage:interactionStop");
     }
 
-    if (ui.item && sortedContentType === null) {
+    if (ui.item && !sortedContentType) {
       ui.item.remove();
     }
 

@@ -8,7 +8,6 @@ import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeInterface from "./content-type.d";
 import { moveArrayItemIntoArray, removeArrayItem } from "./utils/array";
 
-
 /**
  * @api
  */
