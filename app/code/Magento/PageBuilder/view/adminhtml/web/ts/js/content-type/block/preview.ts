@@ -81,6 +81,7 @@ export default class Preview extends BasePreview {
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
                 this.displayPreview(true);
+                this.initializeWidgets();
             }
         } else {
             this.displayPreview(false);
@@ -125,6 +126,7 @@ export default class Preview extends BasePreview {
                 if (response.data.content) {
                     this.displayPreview(true);
                     this.data.main.html(response.data.content);
+                    this.initializeWidgets();
                 } else if (response.data.error) {
                     this.displayPreview(false);
                     this.placeholderText(response.data.error);

@@ -80,6 +80,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
           this.displayPreview(true);
+          this.initializeWidgets();
         }
       } else {
         this.displayPreview(false);
@@ -124,6 +125,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this3.displayPreview(true);
 
           _this3.data.main.html(response.data.content);
+
+          _this3.initializeWidgets();
         } else if (response.data.error) {
           _this3.displayPreview(false);
 
