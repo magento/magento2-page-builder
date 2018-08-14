@@ -156,22 +156,23 @@
         <comment userInput="Verify Textarea on stage" stepKey="comment"/>
         <waitForElementVisible selector="{{TextOnStage.textArea('1')}}" stepKey="waitForTextOnEditPanel"/>
         <fillField selector="{{TextOnStage.textArea('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextField"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
         <!-- Validate Edit Panel display TinyMCE3-->
         <comment userInput="Validate Edit Panel display TinyMCE3" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TinyMCESection.TinyMCE3}}" stepKey="waitForTinyMCE3" />
+        <!--<waitForElementVisible selector="{{TinyMCESection.TinyMCE3}}" stepKey="waitForTinyMCE3" />-->
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
         <!-- Verify inputed text is carried out to slideout -->
         <comment userInput="Verify inputed text is carried out to slideout" stepKey="comment1"/>
         <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
         <!-- Add variable to tinymce3 -->
         <comment userInput="Add variable to tinymce3" stepKey="comment2"/>
-        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}');" stepKey="addVariable"/>
+        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent({{PageBuilderTextArea_VariableBaseURL.editPanelValue}});" stepKey="addVariable"/>
         <!-- Add widget to tinymce3 -->
         <comment userInput="Add widget to tinymce3" stepKey="comment3"/>
-        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}');" stepKey="addWidget"/>
+        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent({{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}});" stepKey="addWidget"/>
         <switchToIFrame stepKey="exitIFrame1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage After Save -->
@@ -179,6 +180,8 @@
         <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetOnStage"/>
         <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_VariableBaseURL.editPanelValue)}}" stepKey="waitForVariableOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <amOnPage url="" stepKey="goToBaseURL"/>
+        <grabFromCurrentUrl stepKey="grabBaseURL"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
