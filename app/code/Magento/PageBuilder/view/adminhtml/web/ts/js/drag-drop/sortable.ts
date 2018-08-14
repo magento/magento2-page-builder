@@ -159,7 +159,6 @@ function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
  * On sort stop hide any indicators
  */
 function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
-    sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
     setDraggedContentTypeConfig(null);
@@ -169,9 +168,11 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
         events.trigger("stage:interactionStop");
     }
 
-    if (ui.item) {
+    if (ui.item && sortedContentType === null) {
         ui.item.remove();
     }
+
+    sortedContentType = null;
 }
 
 /**

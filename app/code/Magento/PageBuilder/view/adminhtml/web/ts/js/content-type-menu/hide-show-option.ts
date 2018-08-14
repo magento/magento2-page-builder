@@ -42,8 +42,8 @@ export default class HideShowOption extends Option implements OptionInterface {
             this.icon(HideShowOption.hideIcon);
             this.title(HideShowOption.hideText);
         } else {
-            this.icon(HideShowOption.showText);
-            this.title(HideShowOption.showIcon);
+            this.icon(HideShowOption.showIcon);
+            this.title(HideShowOption.showText);
         }
     }
 }
