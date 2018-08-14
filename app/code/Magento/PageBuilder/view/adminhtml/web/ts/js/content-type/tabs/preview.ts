@@ -53,6 +53,8 @@ export default class Preview extends PreviewCollection {
                     // Ensure focus tab is restored after a rebuild cycle
                     if (focusedTab) {
                         this.setFocusedTab(focusedTab, true);
+                    } else if (activeTabIndex) {
+                        this.setActiveTab(activeTabIndex);
                     }
                 },
             });

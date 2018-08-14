@@ -48,6 +48,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               // Ensure focus tab is restored after a rebuild cycle
               if (focusedTab) {
                 _this.setFocusedTab(focusedTab, true);
+              } else if (activeTabIndex) {
+                _this.setActiveTab(activeTabIndex);
               }
             }
           });

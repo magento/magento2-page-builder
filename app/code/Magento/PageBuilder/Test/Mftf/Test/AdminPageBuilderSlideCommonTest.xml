@@ -571,8 +571,6 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElement time="10" selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="waitEmptySliderOnPageBuilderPage"/>
-        <dontSeeElement selector="{{SliderOnFrontend.SliderEmpty}}" stepKey="dontSeeEmptySlider"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
