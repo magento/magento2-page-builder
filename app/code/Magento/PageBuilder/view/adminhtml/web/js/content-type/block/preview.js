@@ -19,7 +19,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      _this.displayPreview = _knockout.observable(false);
+      _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.placeholderText = void 0;
       _this.lastBlockId = void 0;
@@ -79,16 +79,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // The mass converter will have transformed the HTML property into a directive
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
-          this.displayPreview(true);
+          this.showBlockPreview(true);
           this.initializeWidgets();
         }
       } else {
-        this.displayPreview(false);
+        this.showBlockPreview(false);
         this.placeholderText("");
       }
 
       if (!data.block_id || data.template.length === 0) {
-        this.displayPreview(false);
+        this.showBlockPreview(false);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
@@ -111,7 +111,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       .done(function (response) {
         // Empty content means something bad happened in the controller that didn't trigger a 5xx
         if (_typeof(response.data) !== "object") {
-          _this3.displayPreview(false);
+          _this3.showBlockPreview(false);
 
           _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
 
@@ -122,13 +122,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this3.displayLabel(response.data.title ? response.data.title : _this3.config.label);
 
         if (response.data.content) {
-          _this3.displayPreview(true);
+          _this3.showBlockPreview(true);
 
           _this3.data.main.html(response.data.content);
 
           _this3.initializeWidgets();
         } else if (response.data.error) {
-          _this3.displayPreview(false);
+          _this3.showBlockPreview(false);
 
           _this3.placeholderText(response.data.error);
         }
@@ -137,12 +137,23 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this3.lastTemplate = data.template.toString();
         _this3.lastRenderedHtml = response.data.content;
       }).fail(function () {
-        _this3.displayPreview(false);
+        _this3.showBlockPreview(false);
 
         _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
       }).always(function () {
         _this3.loading(false);
       });
+    };
+    /**
+     * Toggle display of block preview.  If showing block preview, add hidden mode to PB preview.
+     * @param {boolean} isShow
+     */
+
+
+    _proto.showBlockPreview = function showBlockPreview(isShow) {
+      this.displayingBlockPreview(isShow); // preview is hidden only if block is shown
+
+      this.display(!isShow);
     };
 
     return Preview;

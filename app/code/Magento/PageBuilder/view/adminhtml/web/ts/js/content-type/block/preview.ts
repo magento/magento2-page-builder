@@ -20,7 +20,7 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
+    public displayingBlockPreview: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
     private lastBlockId: number;
@@ -80,18 +80,17 @@ export default class Preview extends BasePreview {
             // The mass converter will have transformed the HTML property into a directive
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
-                this.displayPreview(true);
+                this.showBlockPreview(true);
                 this.initializeWidgets();
             }
         } else {
-            this.displayPreview(false);
+            this.showBlockPreview(false);
             this.placeholderText("");
         }
 
         if (!data.block_id || data.template.length === 0) {
-            this.displayPreview(false);
+            this.showBlockPreview(false);
             this.placeholderText(this.messages.NOT_SELECTED);
-
             return;
         }
 
@@ -114,7 +113,7 @@ export default class Preview extends BasePreview {
             .done((response) => {
                 // Empty content means something bad happened in the controller that didn't trigger a 5xx
                 if (typeof response.data !== "object") {
-                    this.displayPreview(false);
+                    this.showBlockPreview(false);
                     this.placeholderText(this.messages.UNKNOWN_ERROR);
 
                     return;
@@ -124,11 +123,11 @@ export default class Preview extends BasePreview {
                 this.displayLabel(response.data.title ? response.data.title : this.config.label);
 
                 if (response.data.content) {
-                    this.displayPreview(true);
+                    this.showBlockPreview(true);
                     this.data.main.html(response.data.content);
                     this.initializeWidgets();
                 } else if (response.data.error) {
-                    this.displayPreview(false);
+                    this.showBlockPreview(false);
                     this.placeholderText(response.data.error);
                 }
 
@@ -137,11 +136,22 @@ export default class Preview extends BasePreview {
                 this.lastRenderedHtml = response.data.content;
             })
             .fail(() => {
-                this.displayPreview(false);
+                this.showBlockPreview(false);
                 this.placeholderText(this.messages.UNKNOWN_ERROR);
             })
             .always(() => {
                 this.loading(false);
             });
+    }
+
+    /**
+     * Toggle display of block preview.  If showing block preview, add hidden mode to PB preview.
+     * @param {boolean} isShow
+     */
+    private showBlockPreview(isShow: boolean) {
+        this.displayingBlockPreview(isShow);
+
+        // preview is hidden only if block is shown
+        this.display(!isShow);
     }
 }
