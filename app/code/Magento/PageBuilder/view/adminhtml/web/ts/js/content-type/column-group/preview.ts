@@ -16,6 +16,7 @@ import {DataObject} from "../../data-store";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
+import {hiddenClass} from "../../drag-drop/sortable";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
@@ -542,7 +543,7 @@ export default class Preview extends PreviewCollection {
     private initMouseMove(group: JQuery): void {
         let intersects: boolean = false;
         $(document).on("mousemove touchmove", (event: JQueryEventObject) => {
-            if (group.parents(".pagebuilder-content-type-hidden").length > 0) {
+            if (group.parents(hiddenClass).length > 0) {
                 return;
             }
 

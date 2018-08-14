@@ -6,11 +6,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
    */
 
   /**
+   * The class used when hiding a content type
+   * @type {string}
+   */
+  var hiddenClass = ".pagebuilder-content-type-hidden";
+  /**
    * Return the sortable options for an instance which requires sorting / dropping functionality
    *
    * @param {Preview} preview
    * @returns {JQueryUI.SortableOptions | any}
    */
+
   function getSortableOptions(preview) {
     return {
       cursor: "-webkit-grabbing",
@@ -125,7 +131,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
    */
 
   function onSort(preview, event, ui) {
-    if ((0, _jquery)(this).sortable("option", "disabled") || ui.placeholder.parents(".pagebuilder-content-type-hidden").length > 0) {
+    if ((0, _jquery)(this).sortable("option", "disabled") || ui.placeholder.parents(hiddenClass).length > 0) {
       ui.placeholder.hide();
     } else {
       ui.placeholder.show();
@@ -181,7 +187,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
     if (contentTypeConfig) {
       // If the sortable instance is disabled don't complete this operation
-      if ((0, _jquery)(this).sortable("option", "disabled") || (0, _jquery)(this).parents(".pagebuilder-content-type-hidden").length > 0) {
+      if ((0, _jquery)(this).sortable("option", "disabled") || (0, _jquery)(this).parents(hiddenClass).length > 0) {
         return;
       } // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
 
@@ -224,7 +230,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
   function onSortUpdate(preview, event, ui) {
     // If the sortable instance is disabled don't complete this operation
-    if ((0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(".pagebuilder-content-type-hidden").length > 0) {
+    if ((0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
       ui.item.remove();
       (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the parent
 
@@ -287,7 +293,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
   }
 
   return {
-    getSortableOptions: getSortableOptions
+    getSortableOptions: getSortableOptions,
+    hiddenClass: hiddenClass
   };
 });
 //# sourceMappingURL=sortable.js.map

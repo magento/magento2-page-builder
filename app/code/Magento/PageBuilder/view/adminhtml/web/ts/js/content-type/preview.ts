@@ -420,8 +420,8 @@ export default class Preview {
         if (this.parent.config.is_hideable) {
             options.hideShow = new HideShowOption({
                 preview: this,
-                icon: HideShowOption.SHOW_ICON,
-                title: HideShowOption.SHOW_TEXT,
+                icon: HideShowOption.showIcon,
+                title: HideShowOption.showText,
                 action: this.onOptionVisibilityToggle,
                 classes: ["hide-show-content-type"],
                 sort: 40,

@@ -32,21 +32,21 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
       var display = !!state.display;
 
       if (display) {
-        this.icon(HideShowOption.HIDE_ICON);
-        this.title(HideShowOption.HIDE_TEXT);
+        this.icon(HideShowOption.hideIcon);
+        this.title(HideShowOption.hideText);
       } else {
-        this.icon(HideShowOption.SHOW_ICON);
-        this.title(HideShowOption.SHOW_TEXT);
+        this.icon(HideShowOption.showText);
+        this.title(HideShowOption.showIcon);
       }
     };
 
     return HideShowOption;
   }(_option);
 
-  HideShowOption.SHOW_TEXT = (0, _translate)("Show");
-  HideShowOption.SHOW_ICON = "<i class='icon-pagebuilder-show'></i>";
-  HideShowOption.HIDE_TEXT = (0, _translate)("Hide");
-  HideShowOption.HIDE_ICON = "<i class='icon-pagebuilder-hide'></i>";
+  HideShowOption.showText = (0, _translate)("Show");
+  HideShowOption.showIcon = "<i class='icon-pagebuilder-show'></i>";
+  HideShowOption.hideText = (0, _translate)("Hide");
+  HideShowOption.hideIcon = "<i class='icon-pagebuilder-hide'></i>";
   return HideShowOption;
 });
 //# sourceMappingURL=hide-show-option.js.map

@@ -411,8 +411,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (this.parent.config.is_hideable) {
         options.hideShow = new _hideShowOption({
           preview: this,
-          icon: _hideShowOption.SHOW_ICON,
-          title: _hideShowOption.SHOW_TEXT,
+          icon: _hideShowOption.showIcon,
+          title: _hideShowOption.showText,
           action: this.onOptionVisibilityToggle,
           classes: ["hide-show-content-type"],
           sort: 40

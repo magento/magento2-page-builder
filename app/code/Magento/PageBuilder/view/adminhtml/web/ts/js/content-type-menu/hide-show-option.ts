@@ -10,11 +10,11 @@ import OptionInterface from "./option.d";
 
 export default class HideShowOption extends Option implements OptionInterface {
 
-    public static SHOW_TEXT = $t("Show");
-    public static SHOW_ICON = "<i class='icon-pagebuilder-show'></i>";
+    public static showText = $t("Show");
+    public static showIcon = "<i class='icon-pagebuilder-show'></i>";
 
-    public static HIDE_TEXT = $t("Hide");
-    public static HIDE_ICON = "<i class='icon-pagebuilder-hide'></i>";
+    public static hideText = $t("Hide");
+    public static hideIcon = "<i class='icon-pagebuilder-hide'></i>";
 
     /**
      * @param {OptionConfigInterface} options
@@ -39,11 +39,11 @@ export default class HideShowOption extends Option implements OptionInterface {
     private onDisplayChange(state: DataObject) {
         const display: boolean = !!state.display;
         if (display) {
-            this.icon(HideShowOption.HIDE_ICON);
-            this.title(HideShowOption.HIDE_TEXT);
+            this.icon(HideShowOption.hideIcon);
+            this.title(HideShowOption.hideText);
         } else {
-            this.icon(HideShowOption.SHOW_ICON);
-            this.title(HideShowOption.SHOW_TEXT);
+            this.icon(HideShowOption.showText);
+            this.title(HideShowOption.showIcon);
         }
     }
 }

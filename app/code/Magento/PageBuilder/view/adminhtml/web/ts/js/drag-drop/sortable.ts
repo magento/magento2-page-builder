@@ -17,6 +17,12 @@ import {moveContentType} from "./move-content-type";
 import {getDraggedContentTypeConfig, setDraggedContentTypeConfig} from "./registry";
 
 /**
+ * The class used when hiding a content type
+ * @type {string}
+ */
+export const hiddenClass = ".pagebuilder-content-type-hidden";
+
+/**
  * Return the sortable options for an instance which requires sorting / dropping functionality
  *
  * @param {Preview} preview
@@ -135,7 +141,7 @@ let placeholderContainer: Element;
  */
 function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     if ($(this).sortable("option", "disabled") ||
-        ui.placeholder.parents(".pagebuilder-content-type-hidden").length > 0
+        ui.placeholder.parents(hiddenClass).length > 0
     ) {
         ui.placeholder.hide();
     } else {
@@ -189,7 +195,7 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
     const contentTypeConfig = getDraggedContentTypeConfig();
     if (contentTypeConfig) {
         // If the sortable instance is disabled don't complete this operation
-        if ($(this).sortable("option", "disabled") || $(this).parents(".pagebuilder-content-type-hidden").length > 0) {
+        if ($(this).sortable("option", "disabled") || $(this).parents(hiddenClass).length > 0) {
             return;
         }
 
@@ -238,7 +244,7 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
  */
 function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     // If the sortable instance is disabled don't complete this operation
-    if ($(this).sortable("option", "disabled") || ui.item.parents(".pagebuilder-content-type-hidden").length > 0) {
+    if ($(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
         ui.item.remove();
         $(this).sortable("cancel");
 
