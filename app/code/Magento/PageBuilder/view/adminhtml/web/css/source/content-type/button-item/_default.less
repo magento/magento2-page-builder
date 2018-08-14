@@ -28,6 +28,7 @@
         }
         a[data-element='link'] {
             max-width: 100%;
+            position: relative;
             transition: min-width .5s ease;
             word-wrap: break-word;
             [data-element='link_text'] {
@@ -41,6 +42,7 @@
                 cursor: grab;
                 cursor: -moz-grab;
                 cursor: -webkit-grab;
+                left: 0;
                 position: absolute;
 
                 &:active {
@@ -54,7 +56,6 @@
                     content: @icon-gripper__content;
                     display: inline-block;
                     font-size: @pagebuilder-button__font-size;
-                    left: -(@pagebuilder-button__font-size);
                     line-height: @pagebuilder-button__line-height;
                     position: absolute;
                 }
