@@ -75,7 +75,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.addButton = function addButton() {
       var _this3 = this;
 
-      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.parent.parent, this.parent.stageId, {});
+      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.parent, this.parent.stageId, {});
       createButtonItemPromise.then(function (button) {
         _this3.parent.addChild(button);
 

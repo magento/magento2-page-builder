@@ -1,5 +1,7 @@
 /*eslint-disable */
 define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemoveOption, _previewCollection) {
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -32,7 +34,9 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "M
 
       delete options.move;
       delete options.title;
-      options.remove = new _conditionalRemoveOption(options.remove.config);
+      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
+        preview: this
+      }));
       return options;
     };
 

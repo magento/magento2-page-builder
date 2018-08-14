@@ -87,7 +87,10 @@ export default class Preview extends PreviewCollection {
      */
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        options.remove = new ConditionalRemoveOption(options.remove.config);
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
+        });
         return options;
     }
 

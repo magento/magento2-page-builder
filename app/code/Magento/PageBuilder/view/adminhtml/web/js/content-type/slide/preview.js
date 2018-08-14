@@ -144,7 +144,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
       delete options.move;
-      options.remove = new _conditionalRemoveOption(options.remove.config);
+      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
+        preview: this
+      }));
       return options;
     };
     /**

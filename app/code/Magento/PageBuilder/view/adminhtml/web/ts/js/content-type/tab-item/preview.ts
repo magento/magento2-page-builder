@@ -29,7 +29,10 @@ export default class Preview extends PreviewCollection {
         const options = super.retrieveOptions();
         delete options.move;
         delete options.title;
-        options.remove = new ConditionalRemoveOption(options.remove.config);
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
+        });
         return options;
     }
 }

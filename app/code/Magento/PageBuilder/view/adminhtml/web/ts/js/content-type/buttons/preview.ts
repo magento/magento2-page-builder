@@ -68,7 +68,7 @@ export default class Preview extends PreviewCollection {
     public addButton() {
         const createButtonItemPromise: Promise<ContentTypeInterface> = createContentType(
             Config.getContentTypeConfig("button-item"),
-            this.parent.parent,
+            this.parent,
             this.parent.stageId,
             {},
         );
