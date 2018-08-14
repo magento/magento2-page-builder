@@ -36,6 +36,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.data = {};
       this.displayLabel = void 0;
       this.wrapperElement = void 0;
+      this.display = _knockout.observable(true);
       this.previewData = {};
       this.previewStyle = void 0;
       this.fieldsToIgnoreOnRemove = [];

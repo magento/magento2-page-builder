@@ -39,6 +39,7 @@ export default class Preview {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
     public wrapperElement: Element;
+    public display: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
      * @deprecated
