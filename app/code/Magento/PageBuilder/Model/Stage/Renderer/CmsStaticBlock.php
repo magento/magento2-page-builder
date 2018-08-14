@@ -88,7 +88,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result = $this->removeScriptTags($directiveResult);
+            $result['content'] = $this->removeScriptTags($directiveResult['content']);
         } else {
             $result['error'] = __('Block disabled');
         }
@@ -99,16 +99,16 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     /**
      * Remove script tag from html
      *
-     * @param array $directiveResult
-     * @return array
+     * @param string $content
+     * @return string
      */
-    private function removeScriptTags(array $directiveResult): array
+    private function removeScriptTags(string $content): string
     {
         $dom = new \DOMDocument();
         try {
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
-            $dom->loadHTML($directiveResult['content']);
+            $dom->loadHTML($content);
         } catch (\Exception $e) {
             $this->loggerInterface->critical($e->getMessage());
         }
@@ -116,9 +116,6 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
         foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
             $item->parentNode->removeChild($item);
         }
-        return [
-            'content' => $dom->saveHTML(),
-            'error' => $directiveResult['error']
-        ];
+        return $dom->saveHTML();
     }
 }
