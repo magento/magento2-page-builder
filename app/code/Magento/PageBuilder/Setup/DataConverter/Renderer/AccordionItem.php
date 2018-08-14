@@ -61,8 +61,8 @@ class AccordionItem implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><div class="switch" data-role="trigger"><span>' . $eavData['title'] . '</span></div></div>'
-        . '<div data-content="true" class="item content">' . $eavData['textarea'] . '</div>';
+        $rootElementHtml .= '><div class="switch" data-role="trigger"><span>' . $eavData['title']
+            . '</span></div></div><div data-content="true" class="item content">' . $eavData['textarea'] . '</div>';
 
         return $rootElementHtml;
     }
