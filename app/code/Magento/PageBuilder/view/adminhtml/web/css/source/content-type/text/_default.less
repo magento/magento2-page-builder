@@ -7,9 +7,10 @@
 //  Default appearance styles
 //  _____________________________________________
 
-
 .pagebuilder-content-type {
     .pagebuilder-text {
+        min-height: 50px;
+
         ol {
             list-style: decimal;
             padding-left: @margin;
@@ -17,8 +18,26 @@
                 margin: 0 0 @margin 0;
             }
         }
-        p {
-            margin-bottom: @margin;
+        .mce-tinymce-inline {
+            left: -2px !important;
+            right: -2px;
+            top: -1px !important;
+        }
+        .placeholder-text {
+            left: 5px;
+            pointer-events: none;
+            position: absolute;
+            top: 5px;
+        }
+        > .mce-content-body {
+            min-height: 50px;
+            padding: 5px !important;
+        }
+        > .mce-edit-focus {
+            ~ .pagebuilder-options,
+            ~ .placeholder-text {
+                display: none;
+            }
         }
     }
 }

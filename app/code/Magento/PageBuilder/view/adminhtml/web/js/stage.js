@@ -169,12 +169,18 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
         }
       });
 
+      var interactionLevel = 0;
+
       _events.on("stage:interactionStart", function () {
-        return _this.interacting(true);
+        ++interactionLevel;
+
+        _this.interacting(true);
       });
 
       _events.on("stage:interactionStop", function () {
-        return _this.interacting(false);
+        if (--interactionLevel === 0) {
+          _this.interacting(false);
+        }
       });
 
       _events.on("stage:childFocusStart", function () {
