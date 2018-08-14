@@ -65,6 +65,7 @@ export default class Preview extends BasePreview {
 
         // set initial value of textarea based on data store
         this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, () => {
@@ -73,12 +74,11 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Adjust textarea's height based on scrollHeight and save current value of textarea in data store
+     * Save current value of textarea in data store
      */
     public onTextareaKeyUp()
     {
-        this.textarea.style.height = '';
-        $(this.textarea).height(this.textarea.scrollHeight);
+        this.adjustTextareaHeightBasedOnScrollHeight();
         this.parent.dataStore.update(this.textarea.value, "content");
     }
 
@@ -98,5 +98,14 @@ export default class Preview extends BasePreview {
     {
         $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
+    }
+
+    /**
+     * Adjust textarea's height based on scrollHeight
+     */
+    private adjustTextareaHeightBasedOnScrollHeight()
+    {
+        this.textarea.style.height = '';
+        $(this.textarea).height(this.textarea.scrollHeight);
     }
 }

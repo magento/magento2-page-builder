@@ -52,20 +52,20 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
 
       this.textarea = element; // set initial value of textarea based on data store
 
-      this.textarea.value = this.parent.dataStore.get("content"); // Update content in our stage preview textarea after its slideout counterpart gets updated
+      this.textarea.value = this.parent.dataStore.get("content");
+      this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
         _this3.textarea.value = _this3.parent.dataStore.get("content");
       });
     };
     /**
-     * Adjust textarea's height based on scrollHeight and save current value of textarea in data store
+     * Save current value of textarea in data store
      */
 
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
-      this.textarea.style.height = '';
-      (0, _jquery)(this.textarea).height(this.textarea.scrollHeight);
+      this.adjustTextareaHeightBasedOnScrollHeight();
       this.parent.dataStore.update(this.textarea.value, "content");
     };
     /**
@@ -87,6 +87,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");
+    };
+    /**
+     * Adjust textarea's height based on scrollHeight
+     */
+
+
+    _proto.adjustTextareaHeightBasedOnScrollHeight = function adjustTextareaHeightBasedOnScrollHeight() {
+      this.textarea.style.height = '';
+      (0, _jquery)(this.textarea).height(this.textarea.scrollHeight);
     };
 
     return Preview;
