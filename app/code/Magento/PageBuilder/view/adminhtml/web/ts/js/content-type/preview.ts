@@ -222,6 +222,7 @@ export default class Preview {
                     id: this.parent.id,
                 },
             );
+            this.disableImageUploadOnHide(element);
         }
     }
 
@@ -576,6 +577,21 @@ export default class Preview {
             return;
         });
         return hasDataChanges;
+    }
+
+    /**
+     * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
+     * all elements as underlying elements could still receive the events if a parent is hidden.
+     *
+     * @param {Element} element
+     */
+    private disableImageUploadOnHide(element: Element) {
+        $(element).on("drag dragstart dragend dragover dragenter dragleave drop", (event) => {
+            if (this.display() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
     }
 
     /**

@@ -205,6 +205,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           element: element,
           id: this.parent.id
         });
+
+        this.disableImageUploadOnHide(element);
       }
     };
     /**
@@ -572,6 +574,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       return hasDataChanges;
+    };
+    /**
+     * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
+     * all elements as underlying elements could still receive the events if a parent is hidden.
+     *
+     * @param {Element} element
+     */
+
+
+    _proto.disableImageUploadOnHide = function disableImageUploadOnHide(element) {
+      var _this7 = this;
+
+      (0, _jquery)(element).on("drag dragstart dragend dragover dragenter dragleave drop", function (event) {
+        if (_this7.display() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
     };
     /**
      * Update observables
