@@ -131,7 +131,7 @@
         <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="TextSaveEmptyTextContentType">
         <annotations>
@@ -554,28 +554,28 @@
         <seeElement selector="{{WYSIWYGOnPageBuilder.textColor}}" stepKey="seeTextColor"/>
         <seeElement selector="{{WYSIWYGOnPageBuilder.backgroundColor}}" stepKey="seeBackgroundColor"/>
 
-        <!--Verify FontSize-->
-        <click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>
-        <see userInput="10px" stepKey="see10px" />
-        <see userInput="12px" stepKey="see12px" />
-        <see userInput="14px" stepKey="see14px" />
-        <see userInput="16px" stepKey="see16px" />
-        <see userInput="18px" stepKey="see18px" />
-        <see userInput="20px" stepKey="see20px" />
-        <see userInput="24px" stepKey="see24px" />
-        <see userInput="26px" stepKey="see26px" />
-        <see userInput="28px" stepKey="see28px" />
-        <see userInput="32px" stepKey="see32px" />
-        <see userInput="34px" stepKey="see34px" />
-        <see userInput="36px" stepKey="see36px" />
-        <see userInput="38px" stepKey="see38px" />
-        <see userInput="40px" stepKey="see40px" />
-        <see userInput="42px" stepKey="see42px" />
-        <see userInput="48px" stepKey="see48px" />
-        <see userInput="52px" stepKey="see52px" />
-        <see userInput="56px" stepKey="see56px" />
-        <see userInput="64px" stepKey="see64px" />
-        <see userInput="72px" stepKey="see72px" />
+        <!--&lt;!&ndash;Verify FontSize&ndash;&gt;-->
+        <!--<click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>-->
+        <!--<see userInput="10px" stepKey="see10px" />-->
+        <!--<see userInput="12px" stepKey="see12px" />-->
+        <!--<see userInput="14px" stepKey="see14px" />-->
+        <!--<see userInput="16px" stepKey="see16px" />-->
+        <!--<see userInput="18px" stepKey="see18px" />-->
+        <!--<see userInput="20px" stepKey="see20px" />-->
+        <!--<see userInput="24px" stepKey="see24px" />-->
+        <!--<see userInput="26px" stepKey="see26px" />-->
+        <!--<see userInput="28px" stepKey="see28px" />-->
+        <!--<see userInput="32px" stepKey="see32px" />-->
+        <!--<see userInput="34px" stepKey="see34px" />-->
+        <!--<see userInput="36px" stepKey="see36px" />-->
+        <!--<see userInput="38px" stepKey="see38px" />-->
+        <!--<see userInput="40px" stepKey="see40px" />-->
+        <!--<see userInput="42px" stepKey="see42px" />-->
+        <!--<see userInput="48px" stepKey="see48px" />-->
+        <!--<see userInput="52px" stepKey="see52px" />-->
+        <!--<see userInput="56px" stepKey="see56px" />-->
+        <!--<see userInput="64px" stepKey="see64px" />-->
+        <!--<see userInput="72px" stepKey="see72px" />-->
 
         <!--Verify FontStyle on preview-->
         <executeJS function="tinyMCE.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextContentTypeDefault.value}}');" stepKey="executeJSFillContent"/>
@@ -1704,6 +1704,6 @@
         <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
 </tests>
