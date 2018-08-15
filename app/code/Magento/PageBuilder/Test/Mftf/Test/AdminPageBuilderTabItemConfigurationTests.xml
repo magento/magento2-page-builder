@@ -61,10 +61,10 @@
         <actionGroup ref="addTab" stepKey="addTab"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="Tab 2" stepKey="seeTab2DefaultTitleAdmin"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Default.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab2BackgroundAttributesWithNoImageOrColor">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
@@ -73,25 +73,9 @@
         <!-- View default Tabs with empty first Tab on stage -->
         <comment userInput="View default Tabs with empty first Tab on stage" stepKey="AC7"/>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleAdmin1"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
-            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab1BackgroundAttributesWithNoImageOrColor">
+            <argument name="section" value="TabOnStage"/>
         </actionGroup>
-        <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateColorSwatch">
-            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBackgroundColorPlaceholderText">
-            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
-            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage">
-            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
-        </actionGroup>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Default.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
         <!-- User sees tab default min height to be 300 px on stage -->
         <comment userInput="User sees tab default min height to be 300 px on stage" stepKey="AC8"/>
         <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
@@ -1019,7 +1003,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
             <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
@@ -1045,7 +1029,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
@@ -1397,7 +1381,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
             <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
             <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
@@ -1423,7 +1407,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
             <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
@@ -1543,7 +1527,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
             <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment1">
@@ -1569,7 +1553,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
@@ -1677,7 +1661,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
             <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
@@ -1703,7 +1687,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
             <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
@@ -1822,7 +1806,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment1">
             <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
             <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes1">
@@ -1848,7 +1832,7 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
             <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes2">
@@ -2146,6 +2130,7 @@
         </actionGroup>
         <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStorefront">
             <argument name="section" value="TabOnStorefront"/>
+            <argument name="pageNamePrefix" value="tab"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributes" stepKey="validateStorefront">
