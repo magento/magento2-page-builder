@@ -15,7 +15,8 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params.d";
 import PreviewCollection from "../preview-collection";
 
 /**
@@ -44,15 +45,16 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        events.on("buttons:renderAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            _.debounce(() => {
+        events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
+            if (eventData.contentType.id === this.parent.id) {
                 this.resizeChildButtons();
-            }, 500).call(this);
+            }
         });
-        events.on("button-item:renderAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            _.debounce(() => {
+
+        events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
+            if (eventData.contentType.parent.id === this.parent.id) {
                 this.resizeChildButtons();
-            }, 500).call(this);
+            }
         });
 
         events.on("stage:updateAfter", (eventData: StageUpdateAfterParamsInterface) => {
