@@ -70,6 +70,7 @@ export default class Preview extends BasePreview {
         // Update content in our stage preview textarea after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, () => {
             this.textarea.value = this.parent.dataStore.get("content") as string;
+            this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
 

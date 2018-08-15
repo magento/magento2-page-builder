@@ -57,6 +57,8 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
         _this3.textarea.value = _this3.parent.dataStore.get("content");
+
+        _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
     };
     /**
