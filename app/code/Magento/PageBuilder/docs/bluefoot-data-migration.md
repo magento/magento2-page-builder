@@ -74,7 +74,7 @@ During the migration, Magento converts old BlueFoot content to its PageBuilder e
 
 The following content types are deprecated in PageBuilder:
 
-* BlueFoot Slider - The BlueFoot Slider content type is deprecated. Slider and Advanced Slider conten types are now displayed and functional as Slider.
+* BlueFoot Slider - The BlueFoot Slider content type is deprecated. Slider and Advanced Slider content types are now displayed and functional as Slider.
 * BlueFoot Search - The content for the Search content block will be converted to HTML during migration.
 * BlueFoot Code - The content for the Code content block will be wrapped with the following tags:
     ```
