@@ -3,7 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import $t from "mage/translate";
+import _ from "underscore";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BasePreview from "../preview";
@@ -40,6 +42,29 @@ export default class Preview extends BasePreview {
             100,
         ));
         return newOptions;
+    }
+
+    /**
+     * Set state based on button click event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onButtonClick(context: Preview, event: Event): void {
+
+        // Ensure no other options panel and button drag handles are displayed
+        $(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
+        $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
+        const currentTarget = event.currentTarget;
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+
+        if (!$(currentTarget).hasClass("type-nested")) {
+            optionsMenu = optionsMenu.first();
+        }
+
+        optionsMenu.parent().addClass("pagebuilder-options-visible");
+
+        $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
     /**

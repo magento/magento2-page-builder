@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _option, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _option, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -46,6 +46,28 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
 
       newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
+    };
+    /**
+     * Set state based on button click event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onButtonClick = function onButtonClick(context, event) {
+      // Ensure no other options panel and button drag handles are displayed
+      (0, _jquery)(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
+      (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
+      var currentTarget = event.currentTarget;
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+
+      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = optionsMenu.first();
+      }
+
+      optionsMenu.parent().addClass("pagebuilder-options-visible");
+      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
      * Focus out of the element

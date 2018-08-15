@@ -211,8 +211,9 @@ export default class Preview extends PreviewCollection {
             /**
              * Logic for post sorting and removing the placeholderGhost
              */
-            stop() {
+            stop(event: Event, element: JQueryUI.SortableUIParams) {
                 placeholderGhost.remove();
+                element.item.find(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
                 events.trigger("stage:interactionStop");
             },
         };
