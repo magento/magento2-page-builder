@@ -41,6 +41,15 @@ export function urlToDirective(imageUrl: string) {
     const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getConfig("media_url"), imageUrl);
 
     const mediaPath = imageUrl.split(mediaUrl);
-    const directive = "{{media url=" + mediaPath[1] + "}}";
-    return "url(\'" + toDataUrl(directive) + "\')";
+    return "{{media url=" + mediaPath[1] + "}}";
+}
+
+/**
+ * Convert an image URL to a background image data uri
+ *
+ * @param {string} imageUrl
+ * @returns {string}
+ */
+export function imageToBackgroundImageDataUrl(imageUrl: string) {
+    return "url(\'" + toDataUrl(urlToDirective(imageUrl)) + "\')";
 }

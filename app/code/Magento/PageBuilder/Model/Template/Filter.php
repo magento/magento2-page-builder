@@ -197,7 +197,7 @@ class Filter
         $css = [];
         if (isset($images['desktop_image'])) {
             $css['.' . $elementClass] = [
-                'background-image' => $images['desktop_image'],
+                'background-image' => 'url(' . $images['desktop_image'] . ')',
             ];
         }
         if (isset($images['mobile_image'])) {
@@ -205,7 +205,7 @@ class Filter
             $maxWidth = 767;
             $mediaQuery = '@media only screen and (max-width: ' . $maxWidth . 'px)';
             $css[$mediaQuery]['.' . $elementClass] = [
-                'background-image' => $images['mobile_image'],
+                'background-image' => 'url(' . $images['mobile_image'] . ')',
             ];
         }
         return $this->cssFromArray($css);
@@ -227,13 +227,6 @@ class Filter
                 $output .= $this->cssFromArray($body);
                 $output .= "}\n";
             } else {
-                preg_match('/\'data:text\/magento-directive,({{(media)(\surl=.*)}})\'/', urldecode($body), $matches);
-                if (count($matches) === 4) {
-                    $fullMatch = $matches[0];
-                    array_shift($matches);
-                    $imageDir = $this->templateFilter->mediaDirective($matches);
-                    $body = str_replace($fullMatch, '\'' . $imageDir . '\'', urldecode($body));
-                }
                 $output .= $selector . ': ' . $body . ";\n";
             }
         }

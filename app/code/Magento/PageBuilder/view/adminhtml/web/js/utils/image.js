@@ -44,13 +44,24 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
   function urlToDirective(imageUrl) {
     var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getConfig("media_url"), imageUrl);
     var mediaPath = imageUrl.split(mediaUrl);
-    var directive = "{{media url=" + mediaPath[1] + "}}";
-    return "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";
+    return "{{media url=" + mediaPath[1] + "}}";
+  }
+  /**
+   * Convert an image URL to a background image data uri
+   *
+   * @param {string} imageUrl
+   * @returns {string}
+   */
+
+
+  function imageToBackgroundImageDataUrl(imageUrl) {
+    return "url(\'" + (0, _directives.toDataUrl)(urlToDirective(imageUrl)) + "\')";
   }
 
   return {
     decodeUrl: decodeUrl,
-    urlToDirective: urlToDirective
+    urlToDirective: urlToDirective,
+    imageToBackgroundImageDataUrl: imageToBackgroundImageDataUrl
   };
 });
 //# sourceMappingURL=image.js.map

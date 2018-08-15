@@ -3,11 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../../config";
 import {DataObject} from "../../data-store";
-import {toDataUrl} from "../../utils/directives";
-import {decodeUrl, urlToDirective} from "../../utils/image";
-import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
+import {decodeUrl, imageToBackgroundImageDataUrl} from "../../utils/image";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -40,6 +37,6 @@ export default class BackgroundImage implements ConverterInterface {
             return "";
         }
         const imageUrl = value[0].url;
-        return urlToDirective(imageUrl);
+        return imageToBackgroundImageDataUrl(imageUrl);
     }
 }

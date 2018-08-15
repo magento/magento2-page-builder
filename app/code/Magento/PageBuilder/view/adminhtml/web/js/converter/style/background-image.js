@@ -45,7 +45,7 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
       }
 
       var imageUrl = value[0].url;
-      return (0, _image.urlToDirective)(imageUrl);
+      return (0, _image.imageToBackgroundImageDataUrl)(imageUrl);
     };
 
     return BackgroundImage;
