@@ -2253,6 +2253,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -2364,8 +2366,9 @@
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnX('1')}}')).width)" stepKey="column1Width1"/>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnX('2')}}')).width)" stepKey="column2Width1"/>
         <executeJS function="return Math.round({$column1Width1}/{$column2Width1})" stepKey="columnSizeRatio"/>
+        <executeJS function="return {{PageBuilderGridSize.defaultGridSize}}-1" stepKey="expectedColumnSizeRatio"/>
         <assertEquals stepKey="assertColumnIsLarge">
-            <expectedResult type="string">11</expectedResult>
+            <expectedResult type="variable">$expectedColumnSizeRatio</expectedResult>
             <actualResult type="variable">$columnSizeRatio</actualResult>
         </assertEquals>
         <!-- Validate Stage: Large Column -->
@@ -2408,20 +2411,17 @@
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
         </assertLessThan>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop2"/>
-        <!-- Resize Column: Small -->
-        <comment userInput="Resize Column: Small" stepKey="commentResize2"/>
+        <!-- Move Buttons to Small Column -->
+        <comment userInput="Move Buttons to Small Column" stepKey="moveButtons"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
         <reloadPage stepKey="reloadPage3"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth2"/>
-        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth2" stepKey="dragColumn2"/>
-        <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnX('1')}}')).width)" stepKey="column1Width2"/>
-        <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnX('2')}}')).width)" stepKey="column2Width2"/>
-        <executeJS function="return Math.round({$column2Width2}/{$column1Width2})" stepKey="columnSizeRatio2"/>
-        <assertEquals stepKey="assertColumnIsSmall">
-            <expectedResult type="string">11</expectedResult>
-            <actualResult type="variable">$columnSizeRatio2</actualResult>
-        </assertEquals>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveButtonsToRightColumn">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
         <!-- Validate Stage: Small Column -->
         <comment userInput="Validate Stage: Small Column" stepKey="commentValidateStage3"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
@@ -2430,7 +2430,7 @@
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).width)" stepKey="buttonWidth3"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumn3">
-            <expectedResult type="variable">$column1Width2</expectedResult>
+            <expectedResult type="variable">$column2Width1</expectedResult>
             <actualResult type="variable">$buttonWidth3</actualResult>
         </assertLessThan>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
@@ -2442,7 +2442,7 @@
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('1')}}')).width)" stepKey="columnWidthStorefront3"/>
+        <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('2')}}')).width)" stepKey="columnWidthStorefront3"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront3"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefront3">
             <expectedResult type="variable">$columnWidthStorefront3</expectedResult>
@@ -2455,7 +2455,7 @@
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('1')}}')).width)" stepKey="columnWidthStorefrontMobile3"/>
+        <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('2')}}')).width)" stepKey="columnWidthStorefrontMobile3"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile3"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefrontMobile3">
             <expectedResult type="variable">$columnWidthStorefrontMobile</expectedResult>
@@ -2475,6 +2475,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
         </annotations>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType1">
             <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
@@ -2492,6 +2494,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
         </annotations>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonType1">
             <argument name="property" value="PageBuilderButtonItemType_Link"/>
@@ -2509,6 +2513,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
