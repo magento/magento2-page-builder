@@ -42,15 +42,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       _events.on("buttons:renderAfter", function (args) {
-        if (args.id === _this2.parent.id) {
+        _underscore.debounce(function () {
           _this2.resizeChildButtons();
-        }
+        }, 500).call(_this2);
       });
 
       _events.on("button-item:renderAfter", function (args) {
-        if (args.contentType.parent.id === _this2.parent.id) {
+        _underscore.debounce(function () {
           _this2.resizeChildButtons();
-        }
+        }, 500).call(_this2);
       });
 
       _events.on("stage:updateAfter", function (eventData) {
