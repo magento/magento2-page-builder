@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="ImageContentBlockDeleteImage">
         <annotations>
             <features value="PageBuilder"/>
@@ -1008,15 +1008,15 @@
         <dontSeeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
-    <test name="ImageCanUploadToHiddenImage">
+    <test name="ImageUploadIsHiddenWhenDisabled">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Image"/>
-            <title value="Add Image to hidden image"/>
-            <description value="A user can upload an image to a hidden image content type"/>
+            <title value="Cannot add image to hidden image"/>
+            <description value="A user cannot upload an image to a hidden image content type"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
-            <testCaseId value=""/>
+            <testCaseId value="MC-3714"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
             <group value="pagebuilder-hideShow"/>
@@ -1057,36 +1057,10 @@
             <argument name="section" value="ImageOnStage"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderStage.selectFromGalleryImageBtn}}" stepKey="clickSelectfromGallery"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
-            <argument name="ImageFolder" value="ImageFolder"/>
-        </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateImage" stepKey="validateImageStage">
-            <argument name="section" value="ImageOnStage"/>
-            <argument name="image" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-         <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="validateImage" stepKey="validateImageStageAfterSave">
-            <argument name="section" value="ImageOnStage"/>
-            <argument name="image" value="PageBuilderImageProperty_StageJPG"/>
-        </actionGroup>
-        <!-- Validate store front -->
-        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <waitForElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
-        <dontSeeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
-        <seeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="onMouseOverSliderStage"/>
+        <waitForElementNotVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="waitForGalleryButtonNotVisible"/>
+        <dontSeeElement selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="dontSeeSelectFromGallery"/>
+        <waitForElementNotVisible selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
+        <dontSeeElement selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
     </test>
 </tests>
