@@ -95,7 +95,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
 
     _proto.adjustTextareaHeightBasedOnScrollHeight = function adjustTextareaHeightBasedOnScrollHeight() {
       this.textarea.style.height = "";
-      (0, _jquery)(this.textarea).height(this.textarea.scrollHeight);
+      var scrollHeight = this.textarea.scrollHeight;
+      var minHeight = parseInt((0, _jquery)(this.textarea).css("min-height"), 10);
+
+      if (scrollHeight === minHeight) {
+        // leave height at 'auto'
+        return;
+      }
+
+      (0, _jquery)(this.textarea).height(scrollHeight);
     };
 
     return Preview;

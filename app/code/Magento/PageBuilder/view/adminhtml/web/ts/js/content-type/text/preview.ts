@@ -106,6 +106,14 @@ export default class Preview extends BasePreview {
     private adjustTextareaHeightBasedOnScrollHeight()
     {
         this.textarea.style.height = "";
-        $(this.textarea).height(this.textarea.scrollHeight);
+        
+        const scrollHeight = this.textarea.scrollHeight;
+        const minHeight = parseInt($(this.textarea).css("min-height"), 10);
+
+        if (scrollHeight === minHeight) { // leave height at 'auto'
+            return;
+        }
+
+        $(this.textarea).height(scrollHeight);
     }
 }
