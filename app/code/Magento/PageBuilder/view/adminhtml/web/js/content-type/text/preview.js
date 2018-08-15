@@ -94,7 +94,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
 
 
     _proto.adjustTextareaHeightBasedOnScrollHeight = function adjustTextareaHeightBasedOnScrollHeight() {
-      this.textarea.style.height = '';
+      this.textarea.style.height = "";
       (0, _jquery)(this.textarea).height(this.textarea.scrollHeight);
     };
 

@@ -105,7 +105,7 @@ export default class Preview extends BasePreview {
      */
     private adjustTextareaHeightBasedOnScrollHeight()
     {
-        this.textarea.style.height = '';
+        this.textarea.style.height = "";
         $(this.textarea).height(this.textarea.scrollHeight);
     }
 }
