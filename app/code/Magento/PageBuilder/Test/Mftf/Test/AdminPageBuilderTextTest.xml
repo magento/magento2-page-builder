@@ -128,7 +128,7 @@
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
+        <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
         <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
@@ -340,7 +340,7 @@
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="waitForVariableCountryStage1"/>
         <!--Select another variable-->
         <comment userInput="Select another variable" stepKey="selectAnotherVariable"/>
-        <doubleClick  selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
+        <doubleClick  selector="{{TextOnStage.directive('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="waitForVariable1"/>
         <checkOption selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="selectVariable"/>
@@ -408,7 +408,7 @@
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage1"/>
         <!--Verify widget edit page-->
         <comment userInput="Verify widget edit page" stepKey="commentVerifyEditWidget"/>
-        <doubleClick  selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
+        <doubleClick  selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType"/>
@@ -433,7 +433,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="TextVerifyTinyMCE4ToolbarOnPageBuilderStage">
         <annotations>
@@ -1701,7 +1701,7 @@
         <!--Verify Content Block on storefront-->
         <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
+        <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
         <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
