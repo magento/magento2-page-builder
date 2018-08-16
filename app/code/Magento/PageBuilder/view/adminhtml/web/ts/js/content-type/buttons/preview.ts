@@ -24,6 +24,7 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+    public currentMaxWidth: KnockoutObservable<number> = ko.observable(0);
     /**
      * Keeps track of number of button item to disable sortable if there is only 1.
      */
@@ -242,12 +243,16 @@ export default class Preview extends PreviewCollection {
                 if (buttonItems.length > 0) {
                     buttonItems.css("min-width", "");
                     const currentLargestButton = this.findLargestButton(buttonItems);
-                    buttonResizeValue = currentLargestButton.outerWidth();
+                    const currentLargestButtonWidth = currentLargestButton.outerWidth();
+                    if (currentLargestButtonWidth !== 0) {
+                        buttonResizeValue = currentLargestButtonWidth;
+                        this.currentMaxWidth(currentLargestButtonWidth);
+                    } else {
+                        buttonResizeValue = this.currentMaxWidth();
+                    }
                 }
             }
-            if (buttonResizeValue > 0) {
-                buttonItems.css("min-width", buttonResizeValue);
-            }
+            buttonItems.css("min-width", buttonResizeValue);
         }
     }
 

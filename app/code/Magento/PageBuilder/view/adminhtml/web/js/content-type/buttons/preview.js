@@ -17,7 +17,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.disableSorting = _knockout.computed(function () {
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.currentMaxWidth = _knockout.observable(0), _this.disableSorting = _knockout.computed(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
         if (_this.parent.children().length <= 1) {
@@ -252,13 +252,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           if (buttonItems.length > 0) {
             buttonItems.css("min-width", "");
             var currentLargestButton = this.findLargestButton(buttonItems);
-            buttonResizeValue = currentLargestButton.outerWidth();
+            var currentLargestButtonWidth = currentLargestButton.outerWidth();
+
+            if (currentLargestButtonWidth !== 0) {
+              buttonResizeValue = currentLargestButtonWidth;
+              this.currentMaxWidth(currentLargestButtonWidth);
+            } else {
+              buttonResizeValue = this.currentMaxWidth();
+            }
           }
         }
 
-        if (buttonResizeValue > 0) {
-          buttonItems.css("min-width", buttonResizeValue);
-        }
+        buttonItems.css("min-width", buttonResizeValue);
       }
     };
     /**
