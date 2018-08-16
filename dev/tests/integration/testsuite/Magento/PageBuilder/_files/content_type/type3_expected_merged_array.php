@@ -22,7 +22,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -57,7 +56,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],

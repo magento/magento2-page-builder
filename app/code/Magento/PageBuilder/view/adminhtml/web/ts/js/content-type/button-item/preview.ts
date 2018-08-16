@@ -21,6 +21,8 @@ export default class Preview extends BasePreview {
      */
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
+        delete options.title;
+        delete options.move;
         options.remove = new ConditionalRemoveOption({
             ...options.remove.config,
             preview: this,

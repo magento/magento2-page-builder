@@ -32,7 +32,7 @@ export default interface ContentTypeConfigInterface {
 }
 
 export interface ContentTypeConfigAppearanceInterface {
-    readers: string[];
+    reader: string;
     path: string;
     converters: ConverterInterface[];
     elements: {

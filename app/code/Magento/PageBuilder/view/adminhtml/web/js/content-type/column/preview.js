@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -248,39 +246,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
       this.element.addClass("column-width-" + roundedWidth);
-    };
-    /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
-     */
-
-
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.previewData.background_image && _typeof(this.previewData.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
-      } // If we have left and right margins we need to minus this from the total width
-
-
-      if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-        var margins = this.previewData.margins_and_padding().margin;
-        var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
-        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-      } // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-
-
-      if (styles.marginRight === "0px") {
-        styles.marginRight = "1px";
-      } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-
-
-      if (this.previewData.border && this.previewData.border() === "_default") {
-        styles.border = "none";
-      }
-
-      return styles;
     };
     /**
      * Fire the mount event for content types

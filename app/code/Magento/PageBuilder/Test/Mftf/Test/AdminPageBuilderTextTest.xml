@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TextAddWYSIWYGContentTypeToTabOnStage">
         <annotations>
             <features value="PageBuilder"/>
@@ -20,6 +20,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-tabs-content"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -144,6 +147,9 @@
             <testCaseId value="MC-3464"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -184,6 +190,9 @@
             <testCaseId value="MC-3465"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -238,6 +247,9 @@
             <testCaseId value="MC-3466"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -313,6 +325,9 @@
             <testCaseId value="MC-3467"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -378,6 +393,9 @@
             <testCaseId value="MC-3468"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageA" />
@@ -514,6 +532,7 @@
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
         <seeElement selector="{{TextOnStorefront.textInImportantStyle(PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnStorefront" />
     </test>
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TextAddTextWithCustomTinyMCE">
         <annotations>
             <features value="PageBuilder"/>
@@ -1218,6 +1237,9 @@
             <testCaseId value="MAGETWO-91076"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1384,6 +1406,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-customBeforeAfter"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1631,6 +1656,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-column-content"/>
+            <skip>
+                <issueId value="MC-3720"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />

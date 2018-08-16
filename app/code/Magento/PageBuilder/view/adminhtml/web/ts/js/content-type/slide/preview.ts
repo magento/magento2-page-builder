@@ -8,7 +8,6 @@ import events from "Magento_PageBuilder/js/events";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
-import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
@@ -41,6 +40,7 @@ export default class Preview extends BasePreview {
             borderRadius: "0px",
         };
     }
+
     /**
      * Get the slide wrapper attributes for the preview
      *
@@ -199,19 +199,15 @@ export default class Preview extends BasePreview {
         });
     }
 
-    protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        const data = this.previewData;
-        if (data.background_image() && typeof data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + data.background_image()[0].url + ")";
-        }
-        if (data.mobile_image()
-            && data.mobile_image() !== ""
-            && typeof data.mobile_image()[0] === "object"
-        ) {
-            styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
-        }
-        return styles;
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
+    private onImageUploaded(data: object[]) {
+        this.parent.dataStore.update(
+            data,
+            this.config.additional_data.uploaderConfig.dataScope,
+        );
     }
 }

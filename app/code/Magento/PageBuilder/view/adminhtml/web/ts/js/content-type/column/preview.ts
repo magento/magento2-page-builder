@@ -15,7 +15,6 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
@@ -279,39 +278,6 @@ export default class Preview extends PreviewCollection {
         const roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
 
         this.element.addClass("column-width-" + roundedWidth);
-    }
-
-    /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
-     */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.previewData.background_image && typeof this.previewData.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
-        }
-
-        // If we have left and right margins we need to minus this from the total width
-        if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-            const margins = this.previewData.margins_and_padding().margin;
-            const horizontalMargin = parseInt(margins.left || 0, 10) +
-                parseInt(margins.right || 0, 10);
-            styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-        }
-
-        // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-        if (styles.marginRight === "0px") {
-            styles.marginRight = "1px";
-        }
-
-        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-        if (this.previewData.border && this.previewData.border() === "_default") {
-            styles.border = "none";
-        }
-
-        return styles;
     }
 
     /**

@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _events, _conditionalRemoveOption, _preview, _uploader) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -197,21 +195,15 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
         }
       });
     };
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
 
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      var data = this.previewData;
 
-      if (data.background_image() && _typeof(data.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + data.background_image()[0].url + ")";
-      }
-
-      if (data.mobile_image() && data.mobile_image() !== "" && _typeof(data.mobile_image()[0]) === "object") {
-        styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
-      }
-
-      return styles;
+    _proto.onImageUploaded = function onImageUploaded(data) {
+      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

@@ -32,6 +32,8 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
+      delete options.title;
+      delete options.move;
       options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
         preview: this
       }));
