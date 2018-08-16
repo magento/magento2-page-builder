@@ -24,10 +24,10 @@
         <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
     <actionGroup name="addSlide">
-        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
-        <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <waitForElementVisible time="10" selector="{{SliderOnStage.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
+        <click stepKey="focusOnSlider" selector="{{SliderOnStage.sliderContainer}}"/>
         <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{SliderOnStage.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <waitForElementVisible time="5" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
         <moveMouseOver selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
