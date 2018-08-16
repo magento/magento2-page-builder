@@ -1,8 +1,11 @@
-<!--
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
--->
 
-<div attr="data.main.attributes" css="data.main.css" ko-style="data.main.style"></div>
+/**
+ * @api
+ */
+export default interface StageUpdateAfterParamsInterface {
+    stageId: string;
+}

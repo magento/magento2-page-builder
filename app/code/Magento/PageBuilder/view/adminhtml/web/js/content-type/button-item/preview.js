@@ -31,7 +31,7 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
+        return ["remove", "title", "move"].indexOf(option.code) === -1;
       });
       var removeClasses = ["remove-structural"];
       var removeFn = this.onOptionRemove;
