@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,7 +17,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.currentMaxWidth = _knockout.observable(0), _this.disableSorting = _knockout.computed(function () {
+        var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
+
+        if (_this.parent.children().length <= 1) {
+          sortableElement.sortable("disable");
+        } else {
+          sortableElement.sortable("enable");
+        }
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -31,6 +39,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
           _this2.addButton();
         }
+      });
+
+      _events.on("buttons:renderAfter", function (eventData) {
+        if (eventData.contentType.id === _this2.parent.id) {
+          _this2.resizeChildButtons();
+        }
+      });
+
+      _events.on("button-item:renderAfter", function (eventData) {
+        if (eventData.contentType.parent.id === _this2.parent.id) {
+          _this2.resizeChildButtons();
+        }
+      });
+
+      _events.on("stage:updateAfter", function (eventData) {
+        _underscore.debounce(function () {
+          _this2.resizeChildButtons();
+        }, 500).call(_this2);
       });
     };
     /**
@@ -78,6 +104,203 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }).catch(function (error) {
         console.error(error);
       });
+    };
+    /**
+     * Get the sortable options for the buttons sorting
+     *
+     * @param {string} orientation
+     * @param {string} tolerance
+     * @returns {JQueryUI.Sortable}
+     */
+
+
+    _proto.buttonsSortableOptions = function buttonsSortableOptions(orientation, tolerance) {
+      if (orientation === void 0) {
+        orientation = "width";
+      }
+
+      if (tolerance === void 0) {
+        tolerance = "intersect";
+      }
+
+      var placeholderGhost;
+      return {
+        handle: ".button-item-drag-handle",
+        items: ".pagebuilder-content-type-wrapper",
+        cursor: "grabbing",
+        containment: "parent",
+        tolerance: tolerance,
+        revert: 200,
+        cursorAt: {
+          left: 15,
+          top: 15
+        },
+        disabled: this.parent.children().length <= 1,
+
+        /**
+         * Provide custom helper element
+         *
+         * @param {Event} event
+         * @param {JQueryUI.Sortable} element
+         * @returns {Element}
+         */
+        helper: function helper(event, element) {
+          var helper = (0, _jquery)(element).clone().css({
+            opacity: "0.7",
+            width: "auto"
+          });
+          helper[0].querySelector(".pagebuilder-options").remove();
+          return helper[0];
+        },
+        placeholder: {
+          /**
+           * Provide custom placeholder element
+           *
+           * @param {JQuery} item
+           * @returns {JQuery}
+           */
+          element: function element(item) {
+            var placeholder = item.clone().css({
+              display: "inline-block",
+              opacity: 0,
+              width: item.width(),
+              height: item.height()
+            }).removeClass("focused").addClass("sortable-placeholder");
+            placeholder[0].querySelector(".pagebuilder-options").remove();
+            return placeholder[0];
+          },
+          update: function update() {
+            return;
+          }
+        },
+
+        /**
+         * Logic for starting the sorting and adding the placeholderGhost
+         *
+         * @param {Event} event
+         * @param {JQueryUI.SortableUIParams} element
+         */
+        start: function start(event, element) {
+          placeholderGhost = element.placeholder.clone().css({
+            opacity: 0.3,
+            position: "absolute",
+            left: element.placeholder.position().left,
+            top: element.placeholder.position().top
+          });
+          element.item.parent().append(placeholderGhost);
+
+          _events.trigger("stage:interactionStart");
+        },
+
+        /**
+         * Logic for changing element position
+         *
+         * Set the width and height of the moving placeholder animation
+         * and then add animation of placeholder ghost to the placeholder position.
+         *
+         * @param {Event} event
+         * @param {JQueryUI.SortableUIParams} element
+         */
+        change: function change(event, element) {
+          element.placeholder.stop(true, false);
+
+          if (orientation === "height") {
+            element.placeholder.css({
+              height: element.item.height() / 1.2
+            });
+            element.placeholder.animate({
+              height: element.item.height()
+            }, 200, "linear");
+          }
+
+          if (orientation === "width") {
+            element.placeholder.css({
+              width: element.item.width() / 1.2
+            });
+            element.placeholder.animate({
+              width: element.item.width()
+            }, 200, "linear");
+          }
+
+          placeholderGhost.stop(true, false).animate({
+            left: element.placeholder.position().left,
+            top: element.placeholder.position().top
+          }, 200);
+        },
+
+        /**
+         * Logic for post sorting and removing the placeholderGhost
+         */
+        stop: function stop() {
+          placeholderGhost.remove();
+
+          _events.trigger("stage:interactionStop");
+        }
+      };
+    };
+    /**
+     * Resize width of all child buttons. Dependently make them the same width if configured.
+     */
+
+
+    _proto.resizeChildButtons = function resizeChildButtons() {
+      if (this.wrapperElement) {
+        var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
+        var buttonResizeValue = "";
+
+        if (this.parent.dataStore.get("is_same_width") === "true") {
+          if (buttonItems.length > 0) {
+            buttonItems.css("min-width", "");
+            var currentLargestButton = this.findLargestButton(buttonItems);
+            var currentLargestButtonWidth = currentLargestButton.outerWidth();
+
+            if (currentLargestButtonWidth !== 0) {
+              buttonResizeValue = currentLargestButtonWidth;
+              this.currentMaxWidth(currentLargestButtonWidth);
+            } else {
+              buttonResizeValue = this.currentMaxWidth();
+            }
+          }
+        }
+
+        buttonItems.css("min-width", buttonResizeValue);
+      }
+    };
+    /**
+     * Find the largest button which will determine the button width we use for re-sizing.
+     *
+     * @param {JQuery} buttonItems
+     * @returns {JQuery}
+     */
+
+
+    _proto.findLargestButton = function findLargestButton(buttonItems) {
+      var _this4 = this;
+
+      var largestButton = null;
+      buttonItems.each(function (index, element) {
+        var buttonElement = (0, _jquery)(element);
+
+        if (largestButton === null || _this4.calculateButtonWidth(buttonElement) > _this4.calculateButtonWidth(largestButton)) {
+          largestButton = buttonElement;
+        }
+      });
+      return largestButton;
+    };
+    /**
+     * Manually calculate button width using content plus box widths (padding, border)
+     *
+     * @param {JQuery} buttonItem
+     * @returns {number}
+     */
+
+
+    _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
+      var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
+      var calculatedButtonWidth = widthProperties.reduce(function (accumulatedWidth, widthProperty) {
+        return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
+      }, buttonItem.find("[data-element='link_text']").width());
+      return calculatedButtonWidth;
     };
 
     return Preview;
