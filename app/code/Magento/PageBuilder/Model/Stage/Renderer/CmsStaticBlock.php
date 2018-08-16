@@ -64,7 +64,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
         ];
 
         // Short-circuit if needed fields aren't present
-        if (empty($params['directive']) || empty($params['block_id'])) {
+        if (empty($params['directive']) && empty($params['block_id'])) {
             return $result;
         }
 

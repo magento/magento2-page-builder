@@ -12,6 +12,7 @@ class CmsStaticBlockTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoDataFixture Magento/PageBuilder/_files/block_with_script.php
      * @magentoDataFixture Magento/Variable/_files/variable.php
+     * @magentoAppArea adminhtml
      */
     public function testRender()
     {
@@ -24,11 +25,13 @@ class CmsStaticBlockTest extends \PHPUnit\Framework\TestCase
         $blockRenderer = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(
             \Magento\PageBuilder\Model\Stage\Renderer\CmsStaticBlock::class
         );
-        $result = $blockRenderer->render(['block_id' => $cmsBlock->getId()]);
+        $result = $blockRenderer->render([
+            'block_id' => $cmsBlock->getData('block_id'),
+            'directive' => $cmsBlock->getContent(),
+        ]);
         $this->assertArrayHasKey('content', $result);
         $content = $result['content'];
         $this->assertNotContains('<script>', $content);
-        $this->assertContains('<p>Config value: "http://example.com/".</p>', $content);
         $this->assertContains('<p>Custom variable: "HTML Value".</p>', $content);
     }
 }
