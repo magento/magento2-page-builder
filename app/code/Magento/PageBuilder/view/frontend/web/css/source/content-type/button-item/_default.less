@@ -7,6 +7,14 @@
 //  Default appearance styles
 //  _____________________________________________
 
+[data-role='button-item'] {
+    max-width: 100%;
+    [data-element='link'] {
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+}
+
 a,
 button {
 
@@ -18,6 +26,8 @@ button {
         );
         .lib-css(font-weight, @font-weight__semibold);
         box-shadow: none;
+        box-sizing: border-box;
+        display: inline-block;
     }
 
     &.pagebuilder-button-primary {
