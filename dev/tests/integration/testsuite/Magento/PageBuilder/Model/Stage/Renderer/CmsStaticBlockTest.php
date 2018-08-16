@@ -26,8 +26,9 @@ class CmsStaticBlockTest extends \PHPUnit\Framework\TestCase
         );
         $result = $blockRenderer->render(['block_id' => $cmsBlock->getId()]);
         $this->assertArrayHasKey('content', $result);
-        $this->assertNotContains('<script>', $result['content']);
-        $this->assertContains('<p>Config value: "http://example.com/".</p>', $result['content']);
-        $this->assertContains('<p>Custom variable: "HTML Value".</p>', $result['content']);
+        $content = $result['content'];
+        $this->assertNotContains('<script>', $content);
+        $this->assertContains('<p>Config value: "http://example.com/".</p>', $content);
+        $this->assertContains('<p>Custom variable: "HTML Value".</p>', $content);
     }
 }
