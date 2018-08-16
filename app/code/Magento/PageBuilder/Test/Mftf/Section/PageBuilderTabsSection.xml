@@ -6,7 +6,7 @@
   */
 -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="TabsOnStage">
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
         <element name="tabsNavigation" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')])"/>
@@ -67,6 +67,7 @@
     </section>
     <section name="TabOnStorefront">
         <element name="base" type="button" selector="(//div[@class='tabs-content'])[{{arg1}}]" parameterized="true"/>
+        <element name="all" type="button" selector="[data-role=\'tab-item\']"/>
         <element name="tabHeader" type="button" selector="(//li[contains(@role, 'tab')])[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderItemActive" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'])/li[{{arg1}}][contains(@class, 'ui-state-active')]" parameterized="true"/>
         <element name="tabPanel" type="button" selector="(//div[@class='tabs-content']//div[@role='tabpanel'])[{{arg1}}]" parameterized="true"/>

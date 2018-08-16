@@ -127,12 +127,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $appearanceData,
             $this->convertAppearanceStyles($appearanceNode)
         );
-        $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
-        if ($readerNode && $readerNode->nodeValue) {
-            $appearanceData['readers'] = [$readerNode->nodeValue];
-        } else {
-            $appearanceData['readers'] = $this->convertAppearanceReaders($appearanceNode);
-        }
         $elementsNode = $appearanceNode->getElementsByTagName('elements')->item(0);
         if ($elementsNode) {
             $appearanceData['elements'] = $this->convertElements($elementsNode);
@@ -163,24 +157,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $data[$dataName] = $dataNode->nodeValue;
         }
         return $data;
-    }
-
-    /**
-     * Convert appearance readers
-     *
-     * @param \DOMElement $elementNode
-     * @return array
-     */
-    private function convertAppearanceReaders(\DOMElement $elementNode): array
-    {
-        $readersNode = $elementNode->getElementsByTagName('readers')->item(0);
-        $readers = [];
-        if ($readersNode) {
-            foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
-                $readers[] = $this->getAttributeValue($readerNode, 'component');
-            }
-        }
-        return $readers;
     }
 
     /**
@@ -351,7 +327,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $cssNode = $elementNode->getElementsByTagName('css')->item(0);
         if ($cssNode) {
             $cssData['var'] = $this->getAttributeValue($cssNode, 'name');
-            $cssData['converter'] = $this->getAttributeValue($cssNode, 'converter');
             $filterClasses = [];
             $filterNode = $cssNode->getElementsByTagName('filter')->item(0);
             if ($filterNode) {
