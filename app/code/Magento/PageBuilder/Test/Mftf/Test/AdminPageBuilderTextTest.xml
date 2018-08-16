@@ -44,19 +44,20 @@
         <!--Check min height of textarea-->
         <comment userInput="Check min height of textarea" stepKey="comment2"/>
         <executeJS function="return jQuery('.inline-wysiwyg-textarea').css('min-height');" stepKey="height"/>
-
-
+        <assertEquals stepKey="assertMinHeight">
+            <actualResult type="variable">height</actualResult>
+            <expectedResult type="string">50px</expectedResult>
+        </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify empty content type on storefront-->
         <comment userInput="Verify empty content type on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad" />
         <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
         <dontSeeElement selector="{{TextOnStorefront.empty('1')}}" stepKey="dontSeeEmptyTextContentTypeOnStorefront"/>
         <!--Check min height of textarea on Storefront-->
         <comment userInput="Check min height of textarea on Storefront" stepKey="comment3"/>
-
-
-        
+        <seeElementInDOM selector="{{TextOnStorefront.noCssClasses}}" stepKey="dontSeeCSSClassOnEmptyTextarea"/>
     </test>
     <test name="TextVerifyTextAreaOnTextContentType">
         <annotations>
@@ -166,17 +167,17 @@
         <!-- Verify inputed text is carried out to slideout -->
         <comment userInput="Verify inputed text is carried out to slideout" stepKey="comment1"/>
         <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
         <!-- Add variable to tinymce3 -->
         <comment userInput="Add variable to tinymce3" stepKey="comment2"/>
-        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent({{PageBuilderTextArea_VariableBaseURL.editPanelValue}});" stepKey="addVariable"/>
+        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}');" stepKey="addVariable"/>
         <!-- Add widget to tinymce3 -->
         <comment userInput="Add widget to tinymce3" stepKey="comment3"/>
-        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent({{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}});" stepKey="addWidget"/>
-        <switchToIFrame stepKey="exitIFrame1"/>
+        <executeJS function="tinymce.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue}}');" stepKey="addWidget"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetOnStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSHomepageLink.editPanelValue)}}" stepKey="waitForWidgetOnStage"/>
         <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_VariableBaseURL.editPanelValue)}}" stepKey="waitForVariableOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <amOnPage url="" stepKey="goToBaseURL"/>
