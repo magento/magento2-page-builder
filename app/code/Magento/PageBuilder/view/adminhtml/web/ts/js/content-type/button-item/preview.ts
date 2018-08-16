@@ -61,10 +61,27 @@ export default class Preview extends BasePreview {
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
         }
-
         optionsMenu.parent().addClass("pagebuilder-options-visible");
-
         $(currentTarget).addClass("pagebuilder-content-type-active");
+        $(currentTarget).find("[data-element='link_text']").focus();
+    }
+
+    /**
+     * Set state based on mouseout event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onMouseOut(context: Preview, event: Event) {
+        const currentTarget = event.currentTarget;
+        let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
+
+        if (!$(currentTarget).hasClass("type-nested")) {
+            optionsMenu = optionsMenu.first();
+        }
+
+        optionsMenu.parent().removeClass("pagebuilder-options-visible");
+        $(currentTarget).removeClass("pagebuilder-content-type-active");
     }
 
     /**

@@ -68,6 +68,26 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/op
 
       optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
+      (0, _jquery)(currentTarget).find("[data-element='link_text']").focus();
+    };
+    /**
+     * Set state based on mouseout event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onMouseOut = function onMouseOut(context, event) {
+      var currentTarget = event.currentTarget;
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+
+      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = optionsMenu.first();
+      }
+
+      optionsMenu.parent().removeClass("pagebuilder-options-visible");
+      (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
     };
     /**
      * Focus out of the element
