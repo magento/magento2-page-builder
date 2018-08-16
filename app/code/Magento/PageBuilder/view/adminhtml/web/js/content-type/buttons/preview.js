@@ -256,7 +256,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         }
 
-        buttonItems.css("min-width", buttonResizeValue);
+        if (buttonResizeValue > 0) {
+          buttonItems.css("min-width", buttonResizeValue);
+        }
       }
     };
     /**

@@ -245,7 +245,9 @@ export default class Preview extends PreviewCollection {
                     buttonResizeValue = currentLargestButton.outerWidth();
                 }
             }
-            buttonItems.css("min-width", buttonResizeValue);
+            if (buttonResizeValue > 0) {
+                buttonItems.css("min-width", buttonResizeValue);
+            }
         }
     }
 
