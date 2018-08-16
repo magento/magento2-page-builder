@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _containerAnimation, _sortable2, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _containerAnimation, _sortable2, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -10,10 +10,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   var Preview =
   /*#__PURE__*/
   function () {
-    /**
-     * @deprecated
-     */
-
     /**
      * @deprecated
      */
@@ -38,7 +34,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.wrapperElement = void 0;
       this.display = _knockout.observable(true);
       this.previewData = {};
-      this.previewStyle = void 0;
       this.fieldsToIgnoreOnRemove = [];
       this.edit = void 0;
       this.observableUpdater = void 0;
@@ -409,9 +404,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.setupDataFields = function setupDataFields() {
       var _this5 = this;
 
-      var styleAttributeMapper = new _styleAttributeMapper();
-      var styleAttributeFilter = new _styleAttributeFilter(); // Create an empty observable for all fields
-
+      // Create an empty observable for all fields
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {
           _this5.updateDataValue(key, "");
@@ -423,43 +416,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _underscore.forEach(data, function (value, key) {
           _this5.updateDataValue(key, value);
         });
-      }); // Calculate the preview style utilising the style attribute mapper & appearance system
-
-      this.previewStyle = _knockout.computed(function () {
-        var data = _underscore.mapObject(_this5.previewData, function (value) {
-          if (_knockout.isObservable(value)) {
-            return value();
-          }
-
-          return value;
-        });
-
-        if (typeof data.appearance !== "undefined" && typeof _this5.config.appearances !== "undefined" && typeof _this5.config.appearances[data.appearance] !== "undefined") {
-          _underscore.extend(data, _this5.config.appearances[data.appearance]);
-        } // Extract data values our of observable functions
-
-
-        return _this5.afterStyleMapped(styleAttributeMapper.toDom(styleAttributeFilter.filter(data)));
       });
-      Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
-        if (_knockout.isObservable(_this5.previewData[key])) {
-          _this5.previewData[key].subscribe(function () {
-            _this5.previewStyle.notifySubscribers();
-          });
-        }
-      });
-    };
-    /**
-     * Callback function to update the styles are mapped
-     *
-     * @param {StyleAttributeMapperResult} styles
-     * @returns {StyleAttributeMapperResult}
-     * @deprecated
-     */
-
-
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      return styles;
     };
     /**
      * Does the current instance have any children or values different from the default for it's type?

@@ -24,8 +24,6 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
 import {getSortableOptions} from "../drag-drop/sortable";
-import StyleAttributeFilter from "../master-format/style-attribute-filter";
-import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -45,10 +43,7 @@ export default class Preview {
      * @deprecated
      */
     public previewData: ObservableObject = {};
-    /**
-     * @deprecated
-     */
-    public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
@@ -56,6 +51,7 @@ export default class Preview {
      * @type {[string]}
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
+
     private edit: Edit;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
@@ -135,7 +131,7 @@ export default class Preview {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: Preview, event: Event) {
+    public onMouseOver(context: Preview, event: Event): void {
         if (this.mouseover) {
             return;
         }
@@ -452,9 +448,6 @@ export default class Preview {
      * @deprecated
      */
     protected setupDataFields() {
-        const styleAttributeMapper = new StyleAttributeMapper();
-        const styleAttributeFilter = new StyleAttributeFilter();
-
         // Create an empty observable for all fields
         if (this.config.fields) {
             _.keys(this.config.fields).forEach((key: string) => {
@@ -470,48 +463,6 @@ export default class Preview {
                 });
             },
         );
-
-        // Calculate the preview style utilising the style attribute mapper & appearance system
-        this.previewStyle = ko.computed(() => {
-            const data = _.mapObject(this.previewData, (value) => {
-                if (ko.isObservable(value)) {
-                    return value();
-                }
-                return value;
-            });
-
-            if (typeof data.appearance !== "undefined" &&
-                typeof this.config.appearances !== "undefined" &&
-                typeof this.config.appearances[data.appearance] !== "undefined") {
-                _.extend(data, this.config.appearances[data.appearance]);
-            }
-
-            // Extract data values our of observable functions
-            return this.afterStyleMapped(
-                styleAttributeMapper.toDom(
-                    styleAttributeFilter.filter(data),
-                ),
-            );
-        });
-
-        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
-            if (ko.isObservable(this.previewData[key])) {
-                this.previewData[key].subscribe(() => {
-                    this.previewStyle.notifySubscribers();
-                });
-            }
-        });
-    }
-
-    /**
-     * Callback function to update the styles are mapped
-     *
-     * @param {StyleAttributeMapperResult} styles
-     * @returns {StyleAttributeMapperResult}
-     * @deprecated
-     */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        return styles;
     }
 
     /**
