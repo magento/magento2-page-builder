@@ -880,7 +880,7 @@
             <actualResult type="variable">height</actualResult>
             <expectedResult type="string">10px</expectedResult>
         </assertGreaterThanOrEqual>
-        <seeElementInDOM selector="{{ImageOnStorefront.emptyImage}}" stepKey="seeThatEmptyImageExistsInDomOnStage"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStage"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnStage"/>
         <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
@@ -891,7 +891,7 @@
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <!--Verify block on the frontend-->
         <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.emptyImage}}" stepKey="seeThatEmptyImageExistsInDomOnStorefront"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStorefront"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnFrontend"/>
     </test>
 </tests>
