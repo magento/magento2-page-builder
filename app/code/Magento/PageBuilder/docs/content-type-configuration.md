@@ -29,6 +29,7 @@
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
     1. [Full width page layouts]
+    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
@@ -56,7 +57,7 @@
 [Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
-[Add image uploader to content type]: image-uploader.md
+[Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
@@ -546,120 +547,3 @@ define([], function () {
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- |
 |`fieldsToIgnoreOnRemove`| array containing field names to ignore when evaluating whether an element has been configured. The default value is an empty array. | `["tab_name"]` |
 
-
-## Add custom logic to content types
-
-You can customize PageBuilder content types by adding your own logic on the frontend.
-
-To add custom logic to content types:
-1. [Create a JavaScript widget](#create-a-javascript-widget).
-2. [Add XML configuration to load it on the frontend](#add-xml-configuration-to-load-it-on-the-frontend).
-
-### Create a JavaScript widget
-
-Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{content-type-name}/appearance/{appearance-name}/widget.js` file:
-
-``` javascript
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
-define([
-    'jquery',
-    'slick'
-], function ($) {
-    'use strict';
-
-    return function (config, sliderElement) {
-
-        var $element = $(sliderElement);
-
-        /**
-         * Prevent each slick slider from being initialized more than once which could throw an error.
-         */
-        if ($element.hasClass('slick-initialized')) {
-            $element.slick('unslick');
-        }
-
-        $element.slick({
-            autoplay: $element.data('autoplay') === 1,
-            autoplaySpeed: $element.data('autoplay-speed') || 0,
-            fade: $element.data('fade') === 1,
-            infinite: $element.data('is-infinite') === 1,
-            arrows: $element.data('show-arrows') === 1,
-            dots: $element.data('show-dots') === 1
-        });
-    };
-});
-
-``` 
-
-### Add XML configuration to load it on the frontend
-
-Add XML configuration to load it on the frontend, and on the stage, so that you can preview content inside both the block and dynamic block content types.
-
-Add the following configuration to the `etc/di.xml` file in your custom module directory:
-
-``` xml
-<type name="Magento\PageBuilder\Model\Config\ContentType\WidgetInitializer">
-    <arguments>
-        <argument name="config" xsi:type="array">
-            <item name="%content-type-name%" xsi:type="array">
-                <!-- Name is the appearance name -->
-                <item name="default" xsi:type="array">
-                    <!--required argument-->
-                    <item name="component" xsi:type="string">%{vendor-path}/js/content-type/{content-type-name}/appearance/{appearance-name}/widget%</item>
-                    <!--optional if you need provide some config for your widget-->
-                    <item name="config" xsi:type="array">
-                        <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
-                        <item name="showOverlay" xsi:type="string">hover</item>
-                    </item>
-                    <!--optional if you want load widget per appearance-->
-                    <item name="appearance" xsi:type="string">default</item>
-                </item>
-            </item>
-        </argument>
-    </arguments>
-</type>
-```
-
-## Rendering issues
-
-The master format can appear on the stage when PageBuilder content is embedded into a CMS block and the block is then added to a page via the block content type. This may cause rendering issues on the stage if your customizations do not support this behavior.
-
-You can easily avoid these potential rendering issues by either:
-* [Modifying your preview styles to support your master format.](#modify-preview-styles-to-support-master-format)
-* [Copying your master format styles to the preview styles.](#copy-master-format-styles-to-preview-styles)
-
-### Modify preview styles to support master format
-
-Depending on the complexity of your customizations, everything may render correctly without any modification to the preview styles to support your master format.
-
-### Copy master format styles to preview styles
-
-If you have a very complex content type with a substantially different preview and master formats, copying your master format styles to the preview styles is the best and most efficient option.
-
-If you are customizing a preview renderer that can contain PageBuilder content, such as the native block content type, you must invoke the widget initializer logic to cause the master format content to initialize correctly. To accomplish this, include the widget initializer in your component and invoke it with the configuration.
-
-**Example:**
-
-For a container that renders master format content, add an `afterRender` binding to initialize the widgets:
-
-``` html
-<div html="someVariable" afterRender="initializeWidgets"/>
-```
-
-Your component's `initializeWidgets` method would resemble:
-
-``` javascript
-define(["Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config"], function (widgetInitializer, config) {
-    return {
-        initializeWidgets: function initializeWidgets() {
-            widgetInitializer({
-                config: config.getConfig("widgets")
-            });
-        }
-    };
-});
-```
