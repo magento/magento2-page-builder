@@ -41,7 +41,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -76,7 +75,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => []
                             ]
                         ]
@@ -235,7 +233,6 @@ return [
                     'data3' => 'value3',
                     'preview_template' => 'Path/to/preview/custom/template',
                     'render_template' => 'Path/to/render/custom/template',
-                    'readers' => [],
                     'elements' => [
                         'first_element' => [
                             'style' => [
@@ -411,7 +408,6 @@ return [
                             ],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => 'Path/to/custom/converter',
                                 'filter' => [
                                     0 => 'class-name',
                                     1 => 'new-class'
@@ -443,7 +439,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => []
                             ]
                         ],
@@ -472,7 +467,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => []
                             ]
                         ]
@@ -509,7 +503,6 @@ return [
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -544,7 +537,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
@@ -557,7 +549,6 @@ return [
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'default' => 'false',
                     'converters' => [],
                     'reader' => 'Path/to/reader'
@@ -565,7 +556,6 @@ return [
                 'appearance3' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'converters' => [],
                     'default' => 'false',
                     'reader' => null
@@ -573,7 +563,6 @@ return [
                 'appearance4' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -608,7 +597,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
@@ -636,7 +624,6 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [],
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -671,7 +658,6 @@ return [
                             'html' => [],
                             'css' => [
                                 'var' => 'css_classes',
-                                'converter' => null,
                                 'filter' => [],
                             ],
                         ],
