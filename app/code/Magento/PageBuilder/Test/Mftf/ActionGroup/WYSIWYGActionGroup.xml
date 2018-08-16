@@ -40,7 +40,6 @@
         <arguments>
             <argument name="variable" defaultValue=""/>
         </arguments>
-        <comment userInput="Adding Variable To Tiny MCE" stepKey="commentAddVariableToTinyMCE"/>
         <waitForElementVisible selector="{{TextOnConfiguration.insertVariableButton}}" stepKey="waitForInsertVariable1"/>
         <click selector="{{TextOnConfiguration.insertVariableButton}}" stepKey="clickInsertVariable1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
@@ -98,7 +97,7 @@
         <click selector="{{moveToCE.SelectPageButton}}" stepKey="clickSelectPage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSelectPageModal"/>
         <waitForElementVisible selector="{{moveToCE.generalFilter('chooser_title')}}" stepKey="waitForGrid"/>
-        <fillField selector="{{moveToCE.generalFilter('chooser_title')}}" userInput="{{page}}" stepKey="enterPageName"/>
+        <fillField selector="{{moveToCE.generalFilter('chooser_identifier')}}" userInput="{{page}}" stepKey="enterPageName"/>
         <click selector="{{AdminProductGridFilterSection.applyFilters}}" stepKey="clickSearch"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
         <waitForElementVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForSearchResult"/>
