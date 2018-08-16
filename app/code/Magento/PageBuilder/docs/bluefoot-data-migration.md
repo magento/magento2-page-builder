@@ -76,6 +76,8 @@ The following content types are deprecated in PageBuilder:
 
 * BlueFoot Slider - The Slider content type will be migrated as Advanced Slider.
 * BlueFoot Search - The content for the Search content block will be converted to HTML during migration.
+* BlueFoot Anchor - The content for the Anchor content block will be converted to HTML during migration.
+* BlueFoot Accordion - The content for the Accordion content block will be converted to HTML during migration.
 * BlueFoot Code - The content for the Code content block will be wrapped with the following tags:
     ```
     <pre><code></code></pre>
@@ -196,7 +198,7 @@ class Heading implements RendererInterface
 
 #### Children content blocks
 
-Some BlueFoot content types, such as accordion and slider, can contain child content types.
+Some BlueFoot content types, such as slider, can contain child content types.
 This can result in trees with deeply nested content blocks.
 
 During rendering, content types are processed from the bottom of the tree to the top.
