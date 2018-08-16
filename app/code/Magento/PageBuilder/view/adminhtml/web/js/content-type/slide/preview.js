@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_knockout, _translate, _events, _option, _colorConverter, _numberConverter, _preview, _uploader) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _knockout, _translate, _events, _slick, _config, _option, _colorConverter, _numberConverter, _preview, _uploader, _wysiwyg) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -15,7 +15,35 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     _inheritsLoose(Preview, _BasePreview);
 
     /**
+     * Wysiwyg instance
+     */
+
+    /**
+     * The element the text content type is bound to
+     */
+
+    /**
      * Uploader instance
+     */
+
+    /**
+     * Slider transform
+     */
+
+    /**
+     * Slider selector
+     */
+
+    /**
+     * Slider content selector
+     */
+
+    /**
+     * Slide selector
+     */
+
+    /**
+     * Active slide selector
      */
 
     /**
@@ -30,7 +58,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      _this.wysiwyg = void 0;
+      _this.element = void 0;
       _this.uploader = void 0;
+      _this.sliderTransform = void 0;
+      _this.sliderSelector = ".slick-list";
+      _this.sliderContentSelector = ".slick-track";
+      _this.slideSelector = ".slick-slide";
+      _this.activeSlideSelector = ".slick-current";
       var slider = _this.parent.parent;
 
       _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
@@ -43,13 +78,31 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       return _this;
     }
     /**
+     * @param {HTMLElement} element
+     */
+
+
+    var _proto = Preview.prototype;
+
+    _proto.initWysiwyg = function initWysiwyg(element) {
+      if (!_config.getConfig("can_use_inline_editing_on_stage")) {
+        return;
+      } // TODO: Temporary solution, blocked by other team. Move configuration to correct place.
+
+
+      this.config.additional_data.wysiwygConfig.wysiwygConfigData.adapter.settings.fixed_toolbar_container = ".wysiwyg-container";
+      this.element = element;
+      element.id = this.parent.id + "-editor";
+      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore);
+      this.wysiwyg.onFocus(this.onFocus.bind(this));
+      this.wysiwyg.onBlur(this.onBlur.bind(this));
+    };
+    /**
      * Get the background wrapper attributes for the preview
      *
      * @returns {any}
      */
 
-
-    var _proto = Preview.prototype;
 
     _proto.getBackgroundStyles = function getBackgroundStyles() {
       var desktopStyles = this.data.desktop_image.style();
@@ -102,7 +155,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
         backgroundImage: backgroundImage,
         backgroundSize: previewData.background_size(),
         minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
-        overflow: "hidden",
         paddingBottom: this.data.desktop_image.style().paddingBottom || "",
         paddingLeft: this.data.desktop_image.style().paddingLeft || "",
         paddingRight: this.data.desktop_image.style().paddingRight || "",
@@ -440,6 +492,49 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       }
 
       return styles;
+    };
+    /**
+     * Event handler for wysiwyg focus
+     * Fixes z-index issues for tabs and column
+     */
+
+
+    _proto.onFocus = function onFocus() {
+      var $element = (0, _jquery)(this.element);
+      var $slider = (0, _jquery)($element.parents(this.sliderSelector));
+      var sliderContent = $element.parents(this.sliderContentSelector)[0];
+      var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
+
+      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
+        $element.closest(selector).css("z-index", 100);
+      });
+
+      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false, true);
+      $notActiveSlides.hide();
+      this.sliderTransform = sliderContent.style.transform;
+      sliderContent.style.transform = "";
+      $slider.css("overflow", "visible");
+    };
+    /**
+     * Event handler for wysiwyg blur
+     * Fixes z-index issues for tabs and column
+     */
+
+
+    _proto.onBlur = function onBlur() {
+      var $element = (0, _jquery)(this.element);
+      var $slider = (0, _jquery)($element.parents(this.sliderSelector));
+      var sliderContent = $element.parents(this.sliderContentSelector)[0];
+      var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
+
+      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
+        $element.closest(selector).css("z-index", "");
+      });
+
+      $slider.css("overflow", "hidden");
+      sliderContent.style.transform = this.sliderTransform;
+      $notActiveSlides.show();
+      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", true, true);
     };
 
     return Preview;

@@ -364,7 +364,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // We have our own dots implemented
         fade: data.fade === "true",
         infinite: data.is_infinite === "true",
-        waitForAnimate: false
+        waitForAnimate: false,
+        swipe: false
       };
     };
 

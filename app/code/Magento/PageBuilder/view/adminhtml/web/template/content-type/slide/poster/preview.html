@@ -19,12 +19,13 @@
             <scope args="getUploader().getUiComponent()">
                 <render />
             </scope>
-            <div class="pagebuilder-poster-content">
-                <div if="data.content.html()"
+            <div class="pagebuilder-poster-content wysiwyg-container">
+                <div class="inline-wysiwyg"
                      attr="data.content.attributes"
                      ko-style="data.content.style"
                      css="data.content.css"
-                     html="data.content.html">
+                     afterRender="initWysiwyg">
+                    <div html="data.content.html"></div>
                 </div>
                 <div ifnot="data.content.html()"
                      class="pagebuilder-empty-slide"

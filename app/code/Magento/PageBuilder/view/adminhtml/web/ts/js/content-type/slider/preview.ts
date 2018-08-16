@@ -362,6 +362,7 @@ export default class Preview extends PreviewCollection {
             fade: data.fade === "true",
             infinite: data.is_infinite === "true",
             waitForAnimate: false,
+            swipe: false,
         };
     }
 }

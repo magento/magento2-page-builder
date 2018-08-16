@@ -25,4 +25,46 @@
         opacity: 1;
         transition: all 500ms ease;
     }
+
+    .wysiwyg-container {
+        position: relative;
+
+        ol {
+            list-style: decimal;
+            padding-left: @margin;
+            li {
+                margin: 0 0 @margin 0;
+            }
+        }
+        .inline-wysiwyg {
+            min-height: 50px;
+        }
+        .mce-tinymce-inline {
+            left: -2px !important;
+            min-height: 50px;
+            padding: 5px !important;
+            right: -2px;
+            top: -1px !important;
+        }
+        .pagebuilder-empty-slide {
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            text-align: center;
+            top: 0;
+            width: 100%;
+        }
+        > .mce-edit-focus {
+            ~ .pagebuilder-options,
+            ~ .pagebuilder-empty-slide {
+                display: none;
+            }
+        }
+    }
+
+    &.pagebuilder-toolbar-active {
+        .inline-wysiwyg {
+            box-shadow: 0 0 0 1px rgb(153, 153, 153);
+        }
+    }
 }
