@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Renders a CMS Block for the stage
  *
@@ -26,18 +28,25 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $widgetDirectiveRenderer;
 
     /**
-     * Constructor
+     * @var LoggerInterface
+     */
+    private $loggerInterface;
+
+    /**
+     * CmsStaticBlock constructor.
      *
-     * @param WidgetDirective $widgetDirectiveRenderer
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
+     * @param WidgetDirective $widgetDirectiveRenderer
+     * @param LoggerInterface $loggerInterface
      */
     public function __construct(
+        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         WidgetDirective $widgetDirectiveRenderer,
-        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
+        LoggerInterface $loggerInterface
     ) {
-
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
+        $this->loggerInterface = $loggerInterface;
     }
 
     /**
@@ -55,7 +64,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
         ];
 
         // Short-circuit if needed fields aren't present
-        if (empty($params['directive']) || empty($params['block_id'])) {
+        if (empty($params['directive']) && empty($params['block_id'])) {
             return $result;
         }
 
@@ -79,12 +88,34 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $directiveResult['content'];
-            $result['error'] = $directiveResult['error'];
+            $result['content'] = $this->removeScriptTags($directiveResult['content']);
         } else {
             $result['error'] = __('Block disabled');
         }
 
         return $result;
+    }
+
+    /**
+     * Remove script tag from html
+     *
+     * @param string $content
+     * @return string
+     */
+    private function removeScriptTags(string $content): string
+    {
+        $dom = new \DOMDocument();
+        try {
+            //this code is required because of https://bugs.php.net/bug.php?id=60021
+            $previous = libxml_use_internal_errors(true);
+            $dom->loadHTML($content);
+        } catch (\Exception $e) {
+            $this->loggerInterface->critical($e->getMessage());
+        }
+        libxml_use_internal_errors($previous);
+        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
+            $item->parentNode->removeChild($item);
+        }
+        return $dom->saveHTML();
     }
 }
