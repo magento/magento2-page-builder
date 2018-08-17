@@ -37,7 +37,7 @@
 [Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
-[Add image uploader to content type]: image-uploader.md
+[Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 

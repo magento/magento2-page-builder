@@ -26,6 +26,7 @@
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
     1. [Full width page layouts]
+    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
@@ -53,7 +54,7 @@
 [Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
-[Add image uploader to content type]: image-uploader.md
+[Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
@@ -346,3 +347,43 @@ Config have the following methods
 | `setConfig`            | Method is used for initial initialization of the config, not expected to be used by developers. |
 | `getConfig`            | Returns the whole configuration as object.                                                      |
 | `getContentTypeConfig` | Retrieves configuration for specific content type.                                              |
+
+## Fix rendering issues on the stage
+
+The master format can appear on the stage when PageBuilder content is embedded into a CMS block and the block is then added to a page via the block content type. This may cause rendering issues on the stage if your customizations do not support this behavior.
+
+You can easily avoid these potential rendering issues by either:
+* [Modifying your preview styles to support your master format.](#modify-preview-styles-to-support-master-format)
+* [Copying your master format styles to the preview styles.](#copy-master-format-styles-to-preview-styles)
+
+### Modify preview styles to support master format
+
+Depending on the complexity of your customizations, everything may render correctly without any modification to the preview styles to support your master format.
+
+### Copy master format styles to preview styles
+
+If you have a very complex content type with a substantially different preview and master formats, copying your master format styles to the preview styles is the best and most efficient option.
+
+If you are customizing a preview renderer that can contain PageBuilder content, such as the native block content type, you must invoke the widget initializer logic to cause the master format content to initialize correctly. To accomplish this, include the widget initializer in your component and invoke it with the configuration.
+
+**Example:**
+
+For a container that renders master format content, add an `afterRender` binding to initialize the widgets:
+
+``` html
+<div html="someVariable" afterRender="initializeWidgets"/>
+```
+
+Your component's `initializeWidgets` method would resemble:
+
+``` javascript
+define(["Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config"], function (widgetInitializer, config) {
+    return {
+        initializeWidgets: function initializeWidgets() {
+            widgetInitializer({
+                config: config.getConfig("widgets")
+            });
+        }
+    };
+});
+```
