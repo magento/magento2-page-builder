@@ -36,43 +36,50 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
+        <!-- User adds tabs and sees 1st default tab item created by default -->
         <comment userInput="User adds tabs and sees 1st default tab item created by default" stepKey="AC1"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <!-- Open Tabs Panel -->
+        <!-- Tab option panel displayed on top of the new tab after adding it. -->
         <comment userInput="Tab option panel displayed on top of the new tab after adding it." stepKey="AC2"/>
         <waitForElement selector="{{TabOnStage.optionsMenu('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEditVisible"/>
+        <!-- A placeholder indicates that content can be added inside the tab -->
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC3"/>
         <see selector="{{TabOnStage.empty}}" userInput="Drag content types or columns here" stepKey="seeTabPlaceholder"/>
+        <!-- User sees the first tab to be active and focused. -->
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
+        <!-- User doesn't see the Tabs option panel -->
         <comment userInput="User doesn't see the Tabs option panel" stepKey="AC5"/>
         <dontSeeElement selector="{{TabsOnStage.tabsOptionsTitle}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
+        <!-- Add second tab and view on stage -->
         <comment userInput="Add second tab and view on stage" stepKey="AC6"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
         <actionGroup ref="addTab" stepKey="addTab"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="Tab 2" stepKey="seeTab2DefaultTitleAdmin"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentDefault.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab2BackgroundAttributesWithNoImageOrColor">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
+        <!-- View default Tabs with empty first Tab on stage -->
         <comment userInput="View default Tabs with empty first Tab on stage" stepKey="AC7"/>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentDefault.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab1BackgroundAttributesWithNoImageOrColor">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- User sees tab default min height to be 300 px on stage -->
         <comment userInput="User sees tab default min height to be 300 px on stage" stepKey="AC8"/>
         <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+        <!-- User sees tab preview takes 100% container width -->
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC9"/>
         <!--assert computed styles matching expected depends on MQE-818 -->
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC10"/>
@@ -84,69 +91,79 @@
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
+        <!-- Tab has default value Tab 1 for Tab Name -->
         <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC11"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
             <argument name="property" value="PageBuilderTabName1Default"/>
         </actionGroup>
+        <!-- Tab has default value empty for Background Image -->
         <comment userInput="Tab has default value empty for Background Image" stepKey="AC12"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
-        <comment userInput="Tab has default value empty for Background Mobile image - This feature is not yet available" stepKey="AC13"/>
+        <!-- Tab has default value empty for Background Mobile image -->
+        <comment userInput="Tab has default value empty for Background Mobile image" stepKey="AC13"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnBackgroundMobileImage"/>
+        <!-- Tab has default value empty for Background Color -->
         <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundColor_Hex_Grey.section, PageBuilderBackgroundColor_Hex_Grey.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
-        <comment userInput="Tab has default value Top Aligned for Background Position" stepKey="commentDefaultBackgroundPosition"/>
+        <!-- Tab has default value Top Left for Background Position -->
+        <comment userInput="Tab has default value Top Left for Background Position" stepKey="commentDefaultBackgroundPosition"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundPosition">
-            <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
+        <!-- Background Position has expected dropdown values -->
         <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
-        <assertEquals expected="{{PageBuilderTabBackgroundPositionDefault.optionsList}}" expectedType="array" actual="grabBackgroundPositionOptions" actualType="variable" message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
+        <assertEquals expected="{{PageBuilderBackgroundPosition_Default.optionsList}}" expectedType="array" actual="grabBackgroundPositionOptions" actualType="variable" message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions"/>
+        <!-- Tab has default value Cover for Background Size -->
         <comment userInput="Tab has default value Cover for Background Size" stepKey="commentDefaultBackgroundSize"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundSize">
-            <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
-        <comment userInput="Background Size has expected dropdown values" stepKey="commentDefaultBackgroundSizeValues"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
-        <assertEquals expected="{{PageBuilderTabBackgroundSizeDefault.optionsList}}" expectedType="array" actual="grabBackgroundSizeOptions" actualType="variable" message="Verify Background Size dropdown options" stepKey="assertBackgroundSizeOptions"/>
+        <!-- Tab has default value No for Background Repeat -->
         <comment userInput="Tab has default value No for Background Repeat" stepKey="commentDefaultBackgroundRepeat"/>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
+        <!-- Tab has default value Scroll for Background Attachment -->
         <comment userInput="Tab has default value Scroll for Background Attachment" stepKey="commentDefaultBackgroundAttachment"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
-        <assertEquals expected="{{PageBuilderTabBackgroundAttachmentDefault.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundAttachment_Default.section, PageBuilderBackgroundAttachment_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
+        <assertEquals expected="{{PageBuilderBackgroundAttachment_Default.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
         <!-- Validate Default Values in Edit Tabs -->
+        <comment userInput="Validate Default Values in Edit Tabs" stepKey="commentValidateDefaultValuesInEditTabs"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+        <!-- Tabs has default value Tab 1 for Default Active Tab -->
         <comment userInput="Tabs has default value Tab 1 for Default Active Tab" stepKey="commentDefaultActiveTab"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultActiveTab">
             <argument name="property" value="PageBuilderTabsDefaultActiveTab"/>
         </actionGroup>
+        <!-- Tabs has default value 300 for Minimum Height -->
         <comment userInput="Tabs has default value 300 for Minimum Height" stepKey="commentDefaultMinimumHeight"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultMinimumHeight">
             <argument name="property" value="PageBuilderTabsDefaultMinHeight"/>
         </actionGroup>
+        <!-- Tabs has default value Left for Tab Navigation Alignment -->
         <comment userInput="Tabs has default value Left for Tab Navigation Alignment" stepKey="commentDefaultTabNavigationAlignment"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultTabNavigationAlignment">
             <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Verify Default Values for Tabs on storefront -->
+        <!-- View default Tabs with empty Tab on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTabBackgroundRepeatNoStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+        </actionGroup>
     </test>
     <test name="TabItemValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -336,7 +353,7 @@
         </actionGroup>
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft1">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
@@ -369,7 +386,7 @@
             <argument name="to" value="2"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft2">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentRight">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder2">
@@ -412,15 +429,17 @@
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tab1ContentAdvancedStyles}}" stepKey="seeTabContentAdvancedStylesInStorefront1"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tab1ContentAdvancedClass}}" stepKey="seeTabContentClassInStorefront1"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('1', PageBuilderAdvancedAlignmentPropertyCenter.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft, PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft)}}" stepKey="seeTabContentAdvancedStylesInStorefront1"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('1', PageBuilderAdvancedBorderPropertySolid.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront1"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeTabContentClassInStorefront1"/>
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContent('2')}}" stepKey="seeNewTabContent"/>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tab2ContentAdvancedStyles}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tab2ContentAdvancedClass}}" stepKey="seeTabContentClassInStorefront2"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('2', PageBuilderAdvancedAlignmentPropertyRight.value, PageBuilderMarginsPropertyUnique.value, PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('2', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rbg, PageBuilderAdvancedBorderWidthProperty500.value, PageBuilderAdvancedBorderRadiusProperty500.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('2', PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="seeTabContentClassInStorefront2"/>
     </test>
     <test name="EditTabNameByClickingOnHeaderInStage">
         <annotations>
@@ -522,10 +541,10 @@
         </actionGroup>
         <comment userInput="I fill out color using Color Picker" stepKey="comment"/>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
-            <argument name="colorCode" value="PageBuilderTabBackgroundColorPink"/>
+            <argument name="colorCode" value="PageBuilderBackgroundColor_Pink"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField7">
-            <argument name="property" value="PageBuilderTabBackgroundColorPink"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Pink"/>
         </actionGroup>
         <comment userInput="User updates tab settings and saves configuration" stepKey="AC3"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
@@ -551,16 +570,16 @@
             <argument name="property" value="PageBuilderTabMinimumHeight600Property"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabBackgroundColor">
-            <argument name="property" value="PageBuilderTabBackgroundColorGreen"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
         <comment userInput="Tab 2 that was just edited is displayed on stage after edit panel save with custom name" stepKey="AC7"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <comment userInput="User sees Tab 2 Admin Preview updated with custom background color" stepKey="AC8"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundColor('2', PageBuilderTabBackgroundColorGreen.rgb)}}" stepKey="seeTabBackgroundColorAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTabBackgroundColorAdmin2"/>
         <comment userInput="User sees Tab 2 Admin Preview updated with custom minimum height" stepKey="AC9"/>
         <seeElement selector="{{TabOnStage.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTabMinHeightAdmin2"/>
         <comment userInput="Switch tabs and other tab becomes hidden" stepKey="AC10"/>
@@ -570,8 +589,8 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="User sees Tab 1 Admin Preview updated with custom background color" stepKey="AC11"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTabBackgroundColorAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundColor('1', PageBuilderBackgroundColor_Pink.rgb)}}" stepKey="seeTabBackgroundColorAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <comment userInput="User sees Tab 1 Admin Preview updated with custom minimum height" stepKey="AC12"/>
         <seeElement selector="{{TabOnStage.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
         <comment userInput="User navigates to the storefront and sees changes applied" stepKey="AC13"/>
@@ -587,7 +606,7 @@
         <comment userInput="User sees Tab 1 with background color and min height on Storefront" stepKey="AC14"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
+        <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderBackgroundColor_Pink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
@@ -596,7 +615,7 @@
         </actionGroup>
         <comment userInput="User sees Tab 2 with background color and min height on Storefront" stepKey="AC15"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundColor('2', PageBuilderTabBackgroundColorGreen.rgb)}}" stepKey="seeTab2BackgroundColor"/>
+        <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTab2BackgroundColor"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedNoBackgroundRepeat">
@@ -639,16 +658,16 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSize1">
-            <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -662,48 +681,48 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSize2">
-            <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImageProperty.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_JPG.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSize1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('1', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSize1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -711,11 +730,11 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImageProperty.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSize2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage_JPG.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSize2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatNo"/>
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedYesBackgroundRepeat">
         <annotations>
@@ -757,13 +776,13 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -777,42 +796,42 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -820,10 +839,10 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2BackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatYes"/>
     </test>
     <test name="AddTabsWithBackgroundJpgCenterCoverScrollFixedYesBackgroundRepeat">
         <annotations>
@@ -865,16 +884,16 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -888,45 +907,45 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -934,10 +953,10 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2BackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatYes"/>
     </test>
     <test name="AddTabsWithBackgroundJpgCenterAutoContainScrollFixedNoBackgroundRepeat">
         <annotations>
@@ -979,19 +998,19 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
-            <argument name="property" value="PageBuilderTabBackgroundSizeAuto"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -1005,51 +1024,51 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
-            <argument name="property" value="PageBuilderTabBackgroundSizeContain"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSize1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -1057,11 +1076,11 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSize2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatNo"/>
     </test>
     <test name="AddTabsWithBackgroundJpgCenterCoverScrollFixedNoBackgroundRepeat">
         <annotations>
@@ -1103,16 +1122,16 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
@@ -1128,44 +1147,44 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCentered2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tabs on stage after save" stepKey="checkAfterSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdminAfterSave">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
@@ -1173,20 +1192,20 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2AfterSave"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -1194,10 +1213,10 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatNo"/>
     </test>
     <test name="AddTabsWithBackgroundJpgBottomCoverScrollFixedNoBackgroundRepeat">
         <annotations>
@@ -1239,16 +1258,16 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionBottom"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -1262,45 +1281,45 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImage3Property"/>
+            <argument name="property" value="PageBuilderBackgroundImage3"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionBottom"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -1308,11 +1327,11 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSize2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage3.path,PageBuilderBackgroundImage3.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Cover.value)}}" stepKey="seeTabBackgroundSize2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatNo"/>
     </test>
     <test name="AddTabsWithBackgroundGifBottomAutoContainScrollFixedYesBackgroundRepeatAfterSave">
         <annotations>
@@ -1357,19 +1376,19 @@
             <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabImageGifProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionBottom"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
-            <argument name="property" value="PageBuilderTabBackgroundSizeAuto"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -1383,29 +1402,29 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabImageGifProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionBottom"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
-            <argument name="property" value="PageBuilderTabBackgroundSizeContain"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
@@ -1413,20 +1432,20 @@
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
         <seeElement selector="{{TabOnStage.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tabs on stage after save" stepKey="checkAfterSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdminAfterSave">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
@@ -1434,22 +1453,22 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2AfterSave"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSize1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -1457,11 +1476,11 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2BackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSize2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatYes"/>
     </test>
     <test name="AddTabsWithBackgroundGifCenterAutoContainFixedNoBackgroundRepeat">
         <annotations>
@@ -1503,19 +1522,19 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabImageGifProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
-            <argument name="property" value="PageBuilderTabBackgroundSizeAuto"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment1">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -1529,62 +1548,62 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabImageGifProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
-            <argument name="property" value="PageBuilderTabBackgroundSizeContain"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tabs on stage" stepKey="AC4"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin2">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tabs on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTab1BackgroundSize"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeat"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('1', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTab1BackgroundSize"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1BackgroundRepeat"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront2">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTab2BackgroundSize"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeat"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTab2BackgroundSize"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2BackgroundRepeat"/>
     </test>
     <test name="AddTabsWithBackgroundPngBottomAutoContainScrollNoBackgroundRepeatAfterSave">
         <annotations>
@@ -1607,10 +1626,10 @@
             <closeTab stepKey="closeTab"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{PageBuilderTabBackgroundImagePngProperty.path}}"/>
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_PNG.path}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="PageBuilderTabBackgroundImagePngProperty"/>
+                <argument name="Image" value="PageBuilderBackgroundImage_PNG"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -1634,19 +1653,19 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImagePngProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_PNG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionBottom"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachmentScroll">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
-            <argument name="property" value="PageBuilderTabBackgroundSizeContain"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -1660,49 +1679,49 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImagePngProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_PNG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionBottom"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomLeft"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
-            <argument name="property" value="PageBuilderTabBackgroundSizeAuto"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tabs on stage after save" stepKey="checkAfterSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeatAfterSave"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdminAfterSave">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="1"/>
@@ -1710,22 +1729,22 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2AfterSave"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <openNewTab stepKey="openNewTab"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSize1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab1BackgroundRepeatNo"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -1733,11 +1752,11 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSize2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Disabled.styleValue)}}" stepKey="seeTab2BackgroundRepeatNo"/>
     </test>
     <test name="AddTabsWithBackgroundPngTopAutoContainScrollFixedYesBackgroundRepeat">
         <annotations>
@@ -1779,19 +1798,19 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderTabBackgroundImagePngProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_PNG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition1">
-            <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment1">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize1">
-            <argument name="property" value="PageBuilderTabBackgroundSizeContain"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize1">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes1">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
@@ -1805,51 +1824,51 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile2">
-            <argument name="property" value="PageBuilderTabBackgroundImagePngProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_PNG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition2">
-            <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment2">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSize2">
-            <argument name="property" value="PageBuilderTabBackgroundSizeAuto"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeatYes2">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatYes"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeat"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2StageBackgroundRepeat"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeat"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1StageBackgroundRepeat"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab1BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize1"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeat"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeTabBackgroundSize1"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab1BackgroundRepeat"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -1857,10 +1876,286 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab2BackgroundPosition"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize2"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2BackgroundRepeat"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderBackgroundImage_PNG.path,PageBuilderBackgroundImage_PNG.extension)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundPosition('2', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTab2BackgroundPosition"/>
+        <seeElement selector="{{TabOnStorefront.backgroundAttachment('2', PageBuilderBackgroundAttachment_Fixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
+        <seeElement selector="{{TabOnStorefront.backgroundSize('2', PageBuilderBackgroundSize_Auto.value)}}" stepKey="seeTabBackgroundSize2"/>
+        <seeElement selector="{{TabOnStorefront.backgroundRepeat('2', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeTab2BackgroundRepeat"/>
+    </test>
+    <test name="TabItemValidateBackgroundSectionDefaultValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Item - Validate Background Configuration Default Values"/>
+            <description value="New tab has default values on Background section"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-913"/>
+            <testCaseId value="MC-3614"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!--Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate Default Background Values in Edit Panel -->
+        <comment userInput="Validate Default Background Values in Edit Panel" stepKey="commentValidateDefaultBackgroundValues"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateColorSwatch">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBackgroundColorPlaceholderText">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStageAfterSave">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateColorSwatch2">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBackgroundColorPlaceholderText2">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage2">
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage2">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateMobileBackgroundAttributesWithNoImageOrColor" stepKey="validateMobileStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="TabItemValidateBackgroundSectionUpdatedValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Item - Validate Background Configuration Updated Values"/>
+            <description value="Saved tab has updated values on Background section"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-913"/>
+            <testCaseId value="MC-3619"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsBackground-update"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!--Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Update Background Values in Edit Panel -->
+        <comment userInput="Update Default Background Values in Edit Panel" stepKey="commentUpdateBackgroundValues"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomRight"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageOnStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomRight"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageOnStageAfterSave">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStageAfterSave">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomRight"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_BottomRight"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="pageNamePrefix" value="tab"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributes" stepKey="validateStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_BottomRight"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateMobileBackgroundAttributes" stepKey="validateMobileBackgroundAttributesStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="mobileBackgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="mobileBackgroundPosition" value="PageBuilderBackgroundPosition_BottomRight"/>
+            <argument name="mobileBackgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="mobileBackgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="mobileBackgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
+        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="pageNamePrefix" value="tab"/>
+            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_JPG"/>
+        </actionGroup>
     </test>
 </tests>

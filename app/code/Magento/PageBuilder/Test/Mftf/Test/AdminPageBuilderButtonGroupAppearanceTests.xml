@@ -1887,7 +1887,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
-            <group value="pagebuilder-tabs"/>
+            <group value="ButtonGroupValidateSameSizeWithinTab"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
@@ -1899,7 +1899,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <!--<deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>-->
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
@@ -1968,6 +1968,9 @@
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonGroupIndex" value="2"/>
+            <argument name="firstButtonIndex" value="3"/>
+            <argument name="secondButtonIndex" value="4"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelectorAll('{{TabOnStorefront.all}}')[0]).width)" stepKey="tabWidthStorefrontMobile"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
