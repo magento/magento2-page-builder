@@ -18,7 +18,7 @@ define([], function () {
      * @param {Object} config
      */
     _proto.modify = function modify(contentTypeId, config) {
-      if (config["adapter_config"].mode === "inline") {
+      if (config.adapter_config.mode === "inline") {
         config.adapter.settings.fixed_toolbar_container = "#" + contentTypeId + " " + config.adapter.settings.fixed_toolbar_container;
       }
     };
