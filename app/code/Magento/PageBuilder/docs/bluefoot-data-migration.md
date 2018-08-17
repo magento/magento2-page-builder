@@ -78,6 +78,7 @@ The following content types are deprecated in PageBuilder:
 * BlueFoot Search - The content for the Search content block will be converted to HTML during migration.
 * BlueFoot Anchor - The content for the Anchor content block will be converted to HTML during migration.
 * BlueFoot Accordion - The content for the Accordion content block will be converted to HTML during migration.
+* BlueFoot Newsletter - The content for the Newsletter content block will be converted to HTML during migration.
 * BlueFoot Code - The content for the Code content block will be wrapped with the following tags:
     ```
     <pre><code></code></pre>
