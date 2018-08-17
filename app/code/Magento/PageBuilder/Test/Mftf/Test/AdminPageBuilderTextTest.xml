@@ -86,12 +86,12 @@
         <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURL"/>
-        <waitForElementVisible selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariablePlaceholder"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetValue"/>
-        <waitForElementVisible selector="{{TextOnStage.widgetPlaceholder('1')}}" stepKey="waitForWidgetPlaceholder"/>
+        <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURL"/>
+        <seeElement selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariablePlaceholder"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetValue"/>
+        <seeElement selector="{{TextOnStage.widgetPlaceholder('1')}}" stepKey="waitForWidgetPlaceholder"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
         <!-- Switch to TinyMCE3 -->
         <comment userInput="Switch to TinyMCE3" stepKey="comment6"/>
@@ -134,7 +134,7 @@
         <comment userInput="Verify data on TinyMCE4" stepKey="comment10"/>
         <reloadPage stepKey="reloadPage3"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_2"/>
-        <waitForElementVisible selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
+        <seeElement selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
     </test>
     <test name="TextAreaInitalStatus">
         <annotations>
