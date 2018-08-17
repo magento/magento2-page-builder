@@ -40,6 +40,11 @@ class Filter
     private $templateFilter;
 
     /**
+     * @var \Magento\Framework\View\ConfigInterface
+     */
+    private $viewConfig;
+
+    /**
      * Filter constructor.
      *
      * @param \Magento\PageBuilder\Model\Config $config
@@ -48,6 +53,7 @@ class Filter
      * @param \Magento\Framework\View\Layout $layout
      * @param \Magento\Framework\App\Cache\Type\Layout $layoutCache
      * @param \Magento\Cms\Model\Template\Filter $templateFilter
+     * @param \Magento\Framework\View\ConfigInterface $viewConfig
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config $config,
@@ -55,7 +61,8 @@ class Filter
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\Layout $layout,
         \Magento\Framework\App\Cache\Type\Layout $layoutCache,
-        \Magento\Cms\Model\Template\Filter $templateFilter
+        \Magento\Cms\Model\Template\Filter $templateFilter,
+        \Magento\Framework\View\ConfigInterface $viewConfig
     ) {
         $this->config = $config;
         $this->blockFactory = $blockFactory;
@@ -63,6 +70,7 @@ class Filter
         $this->layout = $layout;
         $this->layoutCache = $layoutCache;
         $this->templateFilter = $templateFilter;
+        $this->viewConfig = $viewConfig;
     }
 
     /**
@@ -200,10 +208,8 @@ class Filter
                 'background-image' => 'url(' . $images['desktop_image'] . ')',
             ];
         }
-        if (isset($images['mobile_image'])) {
-            // TODO: pull this from the LESS during static generation, or at another time
-            $maxWidth = 767;
-            $mediaQuery = '@media only screen and (max-width: ' . $maxWidth . 'px)';
+        if (isset($images['mobile_image']) && $this->getMobileBreakpoint()) {
+            $mediaQuery = '@media only screen and (max-width: ' . $this->getMobileBreakpoint() . ')';
             $css[$mediaQuery]['.' . $elementClass] = [
                 'background-image' => 'url(' . $images['mobile_image'] . ')',
             ];
@@ -231,5 +237,19 @@ class Filter
             }
         }
         return $output;
+    }
+
+    /**
+     * Retrieve the mobile breakpoint from the view configuration
+     *
+     * @return string
+     */
+    private function getMobileBreakpoint()
+    {
+        $breakpoints = $this->viewConfig->getViewConfig()->getVarValue('Magento_PageBuilder', 'breakpoints');
+        if (isset($breakpoints['mobile'])) {
+            return $breakpoints['mobile'];
+        }
+        return null;
     }
 }
