@@ -27,6 +27,8 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
