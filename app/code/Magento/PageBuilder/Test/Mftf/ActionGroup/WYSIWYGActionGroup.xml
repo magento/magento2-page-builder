@@ -143,4 +143,15 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
     </actionGroup>
+    <actionGroup name="assertTextareaContainsValue">
+        <arguments>
+            <argument name="selector" type="string"/>
+            <argument name="value" type="string"/>
+        </arguments>
+        <executeJS function="return Boolean(document.evaluate(&quot;{{selector}}&quot;, document.body).iterateNext().value.match(&apos;{{value}}&apos;))" stepKey="textareaValue"/>
+        <assertContains stepKey="assertTextareaContainsValue">
+            <expectedResult type="string">true</expectedResult>
+            <actualResult type="variable">textareaValue</actualResult>
+        </assertContains>
+    </actionGroup>
 </actionGroups>
