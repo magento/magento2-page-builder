@@ -5,7 +5,9 @@
  */
 -->
 
-<div attr="Object.assign({}, data.main.attributes(), { id: parent.id })" ko-style="data.main.style" css="data.main.css">
+<div attr="Object.assign({}, data.main.attributes(), { id: parent.id })"
+     ko-style="Object.assign(data.container.style(), data.main.style())"
+     css="data.main.css">
     <div class="pagebuilder-mobile-hidden" attr="data.desktop_image.attributes" ko-style="data.desktop_image.style" css="data.desktop_image.css">
         <render args="renderChildTemplate" />
     </div>
