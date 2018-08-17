@@ -923,7 +923,7 @@
         <!--Verify FontStyle on Storeview-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <seeElement selector="//div[contains(normalize-space(@class), 'cms-content-important') and not(text())]" stepKey="seeTextInImportantStyleOnStorefront" />
+        <seeElement selector="{{TextOnStorefront.emptyTextInImportantStyle('1')}}" stepKey="seeTextInImportantStyleOnStorefrontWithEmptyContent" />
     </test>
     <test name="TextAddTextWithTinyMCE">
         <annotations>

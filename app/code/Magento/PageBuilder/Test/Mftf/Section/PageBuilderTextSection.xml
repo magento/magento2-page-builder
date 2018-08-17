@@ -65,6 +65,7 @@
         <element name="empty" type="text" selector="//div[@data-role='text'][{{arg1}}][not(*)]" parameterized="true"/>
         <element name="image" type="text" selector="//div[@data-role='text'][{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="textInImportantStyle" type="text" selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='{{arg1}}']" parameterized="true"/>
+        <element name="emptyTextInImportantStyle" type="text" selector="//div[@data-role='text'][{{arg1}}]//div[@class='cms-content-important'][not(*)]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
