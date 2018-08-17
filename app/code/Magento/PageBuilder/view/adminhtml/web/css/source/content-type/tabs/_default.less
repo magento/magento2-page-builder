@@ -3,10 +3,13 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@color-gray: #ccc;
+
 //
 //  Default appearance styles
 //  _____________________________________________
 
+div[data-role='tabs'],
 .pagebuilder-content-type.pagebuilder-tabs {
     .tabs-navigation {
         border-bottom: 1px solid rgba(153, 153, 153, .3);
@@ -168,6 +171,19 @@
         }
     }
 }
+div[data-role='tabs'] {
+    .tabs-navigation {
+        border: none;
+
+        .tab-header:not(:first-child) {
+            margin-left: -1px !important;
+        }
+    }
+    .tabs-content {
+        border: 1px solid @color-gray;
+        border-top: none;
+    }
+}
 
 .pagebuilder-content-type-wrapper.ui-tabs-panel {
     margin-top: 0;
@@ -178,3 +194,4 @@
 .pagebuilder-stage.focus-child .pagebuilder-content-type.pagebuilder-tabs .tabs-content {
     z-index: auto;
 }
+

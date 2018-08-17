@@ -35,6 +35,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.placeholderCss = void 0;
       this.isPlaceholderVisible = _knockout.observable(true);
       this.isEmpty = _knockout.observable(true);
+      this.display = _knockout.observable(true);
       this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.edit = void 0;
