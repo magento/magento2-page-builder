@@ -317,11 +317,18 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage After Save -->
-        <executeJS function="return '{{TinyMCEWidgetCMSPageLink.stageValue}}{{TinyMCEVariableBaseURL.stageValue}}{{PageBuilderTextProperty.value}}'" stepKey="expectedData"/>
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
-        <assertContains stepKey="assertTextValue">
-            <expectedResult type="variable">expectedData</expectedResult>
+        <assertContains stepKey="assertVariable">
+            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
+            <actualResult type="variable">actualData</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertWidget">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
+            <actualResult type="variable">actualData</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertText">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
             <actualResult type="variable">actualData</actualResult>
         </assertContains>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
@@ -332,7 +339,9 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', '$grabBaseURL')}}" stepKey="waitForVariableStorefront"/>
+        <see userInput="{{PageBuilderTextProperty.value}}" stepKey="seeTextOnStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textAreaText('1', '$grabBaseURL')}}" stepKey="waitForVariableStorefront"/>
+        <see userInput="$$createCMSPageB.title$$" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="TextAddWYSIWYGContentTypeToTabOnStage">
         <annotations>
