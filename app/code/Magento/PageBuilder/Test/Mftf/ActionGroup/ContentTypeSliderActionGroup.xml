@@ -21,7 +21,7 @@
     <actionGroup name="unfocusSlideOptions">
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSlideContentType.role)}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
     <actionGroup name="addSlide">
         <waitForElementVisible time="10" selector="{{SliderOnStage.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />

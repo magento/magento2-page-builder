@@ -136,7 +136,6 @@
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
         </actionGroup>
@@ -203,9 +202,9 @@
         <seeElement selector="{{SlideOnFrontend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
         <seeElement selector="{{SlideOnFrontend.slideClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{SlideOnFrontend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{SlideOnFrontend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl(PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="seeLinkUrl"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="seeLinkUrl"/>
         <seeElement selector="{{SlideOnFrontend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{SlideOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
         <seeElement selector="{{SlideOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
@@ -224,7 +223,7 @@
         <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
         <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <click selector="{{SlideOnFrontend.linkUrl(PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="clickLinkUrl"/>
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <amOnPage url="{{PageBuilderSlideLinkExternalUrlProperty.value}}" stepKey="amOnLinkPage"/>
     </test>
     <test name="SlideCollageRightMobileWithMobileImageValues">
@@ -478,8 +477,8 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <moveMouseOver selector="{{SliderOnStage.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -565,9 +564,9 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOverlayBackend"/>
+        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
+        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -592,18 +591,18 @@
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend9"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontendMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontendMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend10"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
@@ -687,11 +686,11 @@
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
+        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
         <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOverlayBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
-        <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
+        <waitForElement time="2" selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -702,21 +701,21 @@
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend5"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextOnFrontend"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextOnFrontend"/>
         <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOverlayOnFrontend"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
+        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
         <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextOnFrontendMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextOnFrontendMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
+        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend6"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
@@ -879,7 +878,7 @@
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
-        <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeButtonTextBackend"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeButtonTextBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
         <waitForElement time="2" selector="{{SlideOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
         <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
@@ -894,7 +893,7 @@
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeButtonTextFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeButtonTextFrontend"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
         <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
         <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyseeOnHoverOverlayOnFrontend3"/>
@@ -992,12 +991,12 @@
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextBackend"/>
+        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
         <waitForElement time="2" selector="{{SlideOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
-        <waitForElement time="2" selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextBackend" />
+        <waitForElement time="2" selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextBackend" />
         <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
-        <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -1009,12 +1008,12 @@
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextFrontend"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextFrontend"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
         <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
+        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
         <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend4"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
         <!-- Validate settings on frontend mobile -->
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
@@ -1022,12 +1021,12 @@
         <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
         <reloadPage stepKey="reloadPage"/>
         <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverLayOnFrontendMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextFrontendMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextFrontendMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
         <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontendMobile" />
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
+        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
         <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
         <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend12"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
@@ -1074,9 +1073,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -1092,6 +1091,6 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
 </tests>
