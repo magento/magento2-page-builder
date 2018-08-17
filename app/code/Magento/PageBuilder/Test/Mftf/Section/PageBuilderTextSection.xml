@@ -11,8 +11,7 @@
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div" parameterized="true"/>
         <element name="textAreaText" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//div[.='{{arg2}}']" parameterized="true"/>
         <element name="textAreaTextContains" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//textarea[contains(@value,'{{arg2}}')]" parameterized="true"/>
-        <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div//*[contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="textString" type="text" selector="//*[contains(@class, 'pagebuilder-text')]//*[text()='{{agr}}']" parameterized="true"/>
+        <element name="text" type="text" selector="//*[contains(@class, 'pagebuilder-text')][{{arg}}]//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <element name="mcePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg1}}]/div//*[starts-with(@id, '{{arg2}}')]" parameterized="true"/>
         <element name="variablePlaceholder" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg}}]//*[@data-bind='html: data.main.html']//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
         <element name="widgetPlaceholder" selector="(//div[contains(@class,'pagebuilder-text')])[{{arg}}]//*[@data-bind='html: data.main.html']//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
