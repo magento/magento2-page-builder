@@ -449,7 +449,7 @@
         <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, '', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="TextSaveEmptyTextContentType">
         <annotations>
@@ -1997,6 +1997,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-column-content"/>
+            <group value="ira"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -2096,6 +2097,6 @@
         <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, '', $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL,  $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
 </tests>
