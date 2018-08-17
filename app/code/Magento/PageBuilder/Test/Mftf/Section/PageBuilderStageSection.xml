@@ -7,7 +7,7 @@
 -->
 
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="PageBuilderStage">
         <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="openFullScreen" type="button" selector="//i[@class='icon-pagebuilder-fullscreen']"/>
@@ -16,12 +16,12 @@
         <element name="stageWrapper" type="button" selector="//div[@class='pagebuilder-stage-wrapper']"/>
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
         <element name="stageWidthJS" type="button" selector="document.querySelector('div[class~=\'stage-container\']').clientWidth"/>
-        <element name="modal" type="text" selector='body._has-modal div.modals-wrapper aside.modal-popup.prompt._show'/>
-        <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
-        <element name="modalCancel" type="button" selector="//aside[contains(@class,'modal-popup')]//button[contains(@class,'action-dismiss')]//span[.='Cancel']"/>
-        <element name="modalX" type="button" selector=".modal-popup button.action-close"/>
+        <element name="modal" type="text" selector='aside.modal-popup._show'/>
+        <element name="modalOk" type="button" selector="aside.modal-popup._show button.action-primary.action-accept"/>
+        <element name="modalCancel" type="button" selector="aside.modal-popup._show button.action-secondary.action-dismiss"/>
+        <element name="modalX" type="button" selector="aside.modal-popup._show button.action-close"/>
         <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
-        <element name="modalDoNotShowThisAgain" type="input" selector=".modal-popup input[name='modal-dnsa'] + label"/>
+        <element name="modalDoNotShowThisAgain" type="input" selector="aside.modal-popup._show input[name='modal-dnsa'] + label"/>
         <element name="errorModal" type="button" selector="//div[@class='modal-content']//div[contains(text(), '{{arg1}}')]" parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector='(//div[contains(@class, "type-container") and contains(@class, "pagebuilder-row")])[1]//div[contains(@class,"pagebuilder-empty-container")][1]'/>
         <element name="dropZone" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-drop-indicator")][{{arg3}}]' parameterized="true"/>
@@ -43,6 +43,8 @@
         <element name="panelCollapsed" type="button" selector='(//div[contains(@class, "pagebuilder-stage") and contains(@class, "panel-collapsed")])'/>
         <element name="expandPanel" type="button" selector='//div[contains(@class, "expand")]//a'/>
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
+        <element name="allPanelGroups" type="button" selector="#pagebuilder-panel-groups .group-title"/>
+        <element name="allGroupContentTypes" type="button" selector="#pagebuilder-panel-groups #group-{{arg1}} .pagebuilder-draggable-content-type" parameterized="true"/>
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="layoutGroup" type="button" selector='//*[@id="group-layout"]' timeout="10"/>
@@ -61,7 +63,7 @@
         <element name="contentTypeWithIcon" type="button" selector="//ul[@class='pagebuilder-panel-groups']//span[@class='content-type-icon']//i[@class='icon-pagebuilder-{{arg2}}']/../following-sibling::span[text()='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="PageBuilderContentTypeOptionsMenu">
-        <element name="contentTypeOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options' parameterized="true"/>
+        <element name="contentTypeOptionsMenu" type="button" selector='(//div[contains(@class, "pagebuilder-{{arg1}}")]//div[contains(@class, "pagebuilder-options")])[1]' parameterized="true"/>
         <element name="contentTypeOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
         <element name="contentTypeMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
         <element name="contentTypeMoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>

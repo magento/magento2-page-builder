@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="DefaultTabItemStateOnAddingNewTab">
         <annotations>
             <features value="PageBuilder"/>
@@ -120,6 +120,7 @@
         <assertEquals expected="{{PageBuilderTabBackgroundAttachmentDefault.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
         <!-- Validate Default Values in Edit Tabs -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -598,6 +599,13 @@
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundColor('2', PageBuilderTabBackgroundColorGreen.rgb)}}" stepKey="seeTab2BackgroundColor"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
+        <comment userInput="User sees Tab 2 with height that equals to sum of min-height + paddingTop + paddingBottom" stepKey="verifyMinHeight"/>
+        <executeJS function="return {{PageBuilderTabMinimumHeight600Property.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tab2ExpectedHeight"/>
+        <executeJS function="return document.querySelector('{{TabOnStorefront.tabContent('2')}}').offsetHeight" stepKey="tab2Height"/>
+        <assertEquals stepKey="assertTabMinHeight">
+            <expectedResult type="variable">tab2ExpectedHeight</expectedResult>
+            <actualResult type="variable">tab2Height</actualResult>
+        </assertEquals>
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedNoBackgroundRepeat">
         <annotations>
