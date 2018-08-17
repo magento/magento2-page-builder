@@ -16,18 +16,16 @@
         <render args="previewChildTemplate" />
     </div>
     <div class="slider-controls focus-options">
-        <div if="$parent.children().length > 0"
-             class="slider-navigation"
+        <div class="slider-navigation"
              each="$parent.getChildren()"
-             data-bind="previewSortable: {handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: function () { onSortStart.apply($parent.preview, arguments); }, stop: function () { onSortStop.apply($parent.preview, arguments); } }">
+             data-bind="sortableChildren: { handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: onSortStart.bind($parent.preview), stop: onSortStop.bind($parent.preview) }">
             <div class="navigation-dot"
-                 attr="{id: 'navigation-' + parent.id, tabindex: $index}"
-                 css="{active: $parent.activeSlide() === $index()}"
-                 data-bind="hasFocusNoScroll: $parent.focusedSlide() === $index(), event: { focusin: function () { $parent.setFocusedSlide($index()) }, focusout: function () { $parent.setFocusedSlide(null) } }">
+                 event="focusin: $parent.setFocusedSlide.bind($parent, $index(), false), focusout: $parent.onFocusOut.bind($parent)"
+                 css="active: $parent.activeSlide() === $index(), focus: $parent.focusedSlide() === $index()">
+                <a class="navigation-dot-anchor" href="#" tabindex="0" click="$parent.onControlClick.bind($parent, $index())" hasFocus="$parent.focusedSlide() === $index()"/>
                 <with args="preview">
                     <render with="preview" args="getOptions().template" />
                 </with>
-                <a class="navigation-dot-anchor" href="#" data-bind="click: function () { $parent.navigateToSlide($index()); $parent.setFocusedSlide($index()); }"></a>
                 <span if="preview.previewData.slide_name() !== ''"
                       class="tooltip-content"
                       role="tooltip"

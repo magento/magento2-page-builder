@@ -177,6 +177,11 @@
                     }
                 }
 
+                .pagebuilder-options {
+                    visibility: visible;
+                    z-index: -1;
+                }
+
                 &.ui-sortable-helper .navigation-dot-anchor {
                     opacity: .65;
                 }
@@ -207,11 +212,13 @@
                     }
                 }
 
-                &:focus {
+                &.focus {
                     outline: 1px solid @color-blue-pure;
 
                     .pagebuilder-options {
                         .pagebuilder-options-visible;
+                        z-index: 30;
+
                     }
 
                     .tooltip-content {
