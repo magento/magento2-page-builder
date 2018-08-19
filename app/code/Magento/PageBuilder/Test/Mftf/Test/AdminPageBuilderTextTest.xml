@@ -500,7 +500,7 @@
         </actionGroup>
         <!--Assert Text placeholder-->
         <comment userInput="Assert Text placeholder" stepKey="assertTextPlaceholder"/>
-        <seeElement selector="{{TextOnStage.placeholder('1')}}" stepKey="seeTextPlaceholder"/>
+        <seeElement selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="seeTextPlaceholder"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify empty content type on storefront-->
         <comment userInput="Verify empty content type on storefront" stepKey="commentVerifyEmptyBlock"/>
@@ -1711,7 +1711,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValueAfterSaving"/>
+        <assertEquals stepKey="assertTextValueAfterSaving">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">textareaValueAfterSaving</actualResult>
+        </assertEquals>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
