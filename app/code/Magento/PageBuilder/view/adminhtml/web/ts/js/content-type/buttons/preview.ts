@@ -15,7 +15,8 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params.d";
 import PreviewCollection from "../preview-collection";
 
 /**
@@ -23,6 +24,7 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+    public currentMaxWidth: KnockoutObservable<number> = ko.observable(0);
     /**
      * Keeps track of number of button item to disable sortable if there is only 1.
      */
@@ -41,6 +43,18 @@ export default class Preview extends PreviewCollection {
         events.on("buttons:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
+            }
+        });
+
+        events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
+            if (eventData.contentType.id === this.parent.id) {
+                this.resizeChildButtons();
+            }
+        });
+
+        events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
+            if (eventData.contentType.parent.id === this.parent.id) {
+                this.resizeChildButtons();
             }
         });
 
@@ -230,7 +244,13 @@ export default class Preview extends PreviewCollection {
                 if (buttonItems.length > 0) {
                     buttonItems.css("min-width", "");
                     const currentLargestButton = this.findLargestButton(buttonItems);
-                    buttonResizeValue = currentLargestButton.outerWidth();
+                    const currentLargestButtonWidth = currentLargestButton.outerWidth();
+                    if (currentLargestButtonWidth !== 0) {
+                        buttonResizeValue = currentLargestButtonWidth;
+                        this.currentMaxWidth(currentLargestButtonWidth);
+                    } else {
+                        buttonResizeValue = this.currentMaxWidth();
+                    }
                 }
             }
             buttonItems.css("min-width", buttonResizeValue);
