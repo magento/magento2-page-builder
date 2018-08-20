@@ -1938,4 +1938,135 @@
         <seeElementInDOM selector="{{SlideOnBackend.emptyslide}}" stepKey="seeEmptySliderOnStage"/>
         <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
+    <test name="SlideInlineTextEditing">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline in WYSIWYG and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <!-- TODO: Write test -->
+            <testCaseId value="MC-3465"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{SlideOnBackend.tinymce('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inserted text on edit panel -->
+        <comment userInput="Verify inserted text on edit panel" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <switchToIFrame selector="{{SlideOnConfigurationPanel.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{SlideOnConfigurationPanel.textInIFrame(PageBuilderSlideItemContent1.value)}}" stepKey="waitForText"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Text Content Type on stage after saving cms page-->
+        <comment userInput="Verify text content type on storefront" stepKey="commentVerifyTextOnStage"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStage"/>
+        <!--Verify Text Content Type on storefront-->
+        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+    <test name="SlideInlineTextEditingAvailability">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline in WYSIWYG and check that other content types availability"/>
+            <description value="Verify that user are able to add other content types on Stage when inline edit enabled in Slide Content Type"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <!-- TODO: Write test -->
+            <testCaseId value="MC-3465"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Check that user can drag text when inline mode active -->
+        <comment userInput="Check that user can drag text when inline mode active" stepKey="commentDragTextIntoStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForText">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible1"/>
+        <!-- Check that user can drag column when inline mode active -->
+        <comment userInput="Check that user can drag column when inline mode active" stepKey="commentDragColumnIntoStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForColumn">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
+        <wait time="0.5" stepKey="waitForAnimation1" />
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible2"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible3"/>
+        <!-- Activate inline edit mode -->
+        <comment userInput="Activate inline edit mode" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea3"/>
+        <wait time="0.5" stepKey="waitForAnimation2" />
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible4"/>
+
+        <!-- Verify that content types options are hidden -->
+        <comment userInput="Verify that content types options are hidden" stepKey="commentOptionsHidden"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverSliderContentType"/>
+        <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="PageBuilderContentTypeOptionsMenuseeSlideOptionsPanelStillHidden"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="PageBuilderContentTypeOptionsMenuseeSliderOptionsPanelStillHidden"/>
+        <moveMouseOver selector="{{TextOnBackend.textInstance}}" x="10" y="10" stepKey="onMouseOverTextContentType"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderTextContentType.role, '1')}}" stepKey="PageBuilderContentTypeOptionsMenuseeTextOptionsPanelStillHidden"/>
+        <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" x="10" y="10" stepKey="onMouseOverFirstColumnContentType"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="PageBuilderContentTypeOptionsMenuseeColumnOptionsPanelStillHidden"/>
+        <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" x="10" y="10" stepKey="onMouseOverSecondColumnContentType"/>
+    </test>
 </tests>
