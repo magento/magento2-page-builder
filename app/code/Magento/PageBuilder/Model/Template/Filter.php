@@ -30,47 +30,23 @@ class Filter
     private $layout;
 
     /**
-     * @var \Magento\Framework\App\Cache\Type\Layout
-     */
-    private $layoutCache;
-
-    /**
-     * @var \Magento\Cms\Model\Template\Filter
-     */
-    private $templateFilter;
-
-    /**
-     * @var \Magento\Framework\View\ConfigInterface
-     */
-    private $viewConfig;
-
-    /**
      * Filter constructor.
      *
      * @param \Magento\PageBuilder\Model\Config $config
      * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\View\Layout $layout
-     * @param \Magento\Framework\App\Cache\Type\Layout $layoutCache
-     * @param \Magento\Cms\Model\Template\Filter $templateFilter
-     * @param \Magento\Framework\View\ConfigInterface $viewConfig
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config $config,
         \Magento\Framework\View\Element\BlockFactory $blockFactory,
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\View\Layout $layout,
-        \Magento\Framework\App\Cache\Type\Layout $layoutCache,
-        \Magento\Cms\Model\Template\Filter $templateFilter,
-        \Magento\Framework\View\ConfigInterface $viewConfig
+        \Magento\Framework\View\Layout $layout
     ) {
         $this->config = $config;
         $this->blockFactory = $blockFactory;
         $this->logger = $logger;
         $this->layout = $layout;
-        $this->layoutCache = $layoutCache;
-        $this->templateFilter = $templateFilter;
-        $this->viewConfig = $viewConfig;
     }
 
     /**
@@ -145,9 +121,6 @@ class Filter
             }
         }
 
-        // Generate CSS for background images
-        $this->generateBackgroundImageStyles($xpath);
-
         preg_match(
             '/<body id="' . $wrapperElementId . '">(.+)<\/body><\/html>$/si',
             mb_convert_encoding($domDocument->saveHTML(), 'UTF-8', 'HTML-ENTITIES'),
@@ -159,97 +132,5 @@ class Filter
             $replacements,
             !empty($matches) ? $matches[1] : ''
         );
-    }
-
-    /**
-     * Generate the CSS for any background images on the page
-     *
-     * @param \DOMXPath $xpath
-     */
-    private function generateBackgroundImageStyles(\DOMXPath $xpath)
-    {
-        $nodes = $xpath->query('//*[@data-background-images]');
-        foreach ($nodes as $node) {
-            /* @var \DOMNode $node */
-            $backgroundImages = $node->attributes->getNamedItem('data-background-images');
-            if ($backgroundImages->nodeValue !== '') {
-                $elementClass = uniqid('background-image-');
-                $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
-                $style = $xpath->document->createElement(
-                    'style',
-                    $this->generateCssFromImages($elementClass, $images)
-                );
-                $node->parentNode->appendChild($style);
-
-                // Append our new class to the DOM element
-                $classes = '';
-                if ($node->attributes->getNamedItem('class')) {
-                    $classes = $node->attributes->getNamedItem('class')->nodeValue . ' ';
-                }
-                $node->setAttribute('class', $classes . $elementClass);
-                $node->removeAttribute('data-background-images');
-            }
-        }
-    }
-
-    /**
-     * Generate CSS based on the images array from our attribute
-     *
-     * @param string $elementClass
-     * @param array $images
-     *
-     * @return string
-     */
-    private function generateCssFromImages(string $elementClass, array $images) : string
-    {
-        $css = [];
-        if (isset($images['desktop_image'])) {
-            $css['.' . $elementClass] = [
-                'background-image' => 'url(' . $images['desktop_image'] . ')',
-            ];
-        }
-        if (isset($images['mobile_image']) && $this->getMobileBreakpoint()) {
-            $mediaQuery = '@media only screen and (max-width: ' . $this->getMobileBreakpoint() . ')';
-            $css[$mediaQuery]['.' . $elementClass] = [
-                'background-image' => 'url(' . $images['mobile_image'] . ')',
-            ];
-        }
-        return $this->cssFromArray($css);
-    }
-
-    /**
-     * Generate a CSS string from an array
-     *
-     * @param array $css
-     *
-     * @return string
-     */
-    private function cssFromArray(array $css) : string
-    {
-        $output = "";
-        foreach ($css as $selector => $body) {
-            if (is_array($body)) {
-                $output .= $selector . " {\n";
-                $output .= $this->cssFromArray($body);
-                $output .= "}\n";
-            } else {
-                $output .= $selector . ': ' . $body . ";\n";
-            }
-        }
-        return $output;
-    }
-
-    /**
-     * Retrieve the mobile breakpoint from the view configuration
-     *
-     * @return string
-     */
-    private function getMobileBreakpoint()
-    {
-        $breakpoints = $this->viewConfig->getViewConfig()->getVarValue('Magento_PageBuilder', 'breakpoints');
-        if (isset($breakpoints['mobile'])) {
-            return $breakpoints['mobile'];
-        }
-        return null;
     }
 }
