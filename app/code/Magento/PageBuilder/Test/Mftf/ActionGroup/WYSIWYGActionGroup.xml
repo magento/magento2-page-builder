@@ -149,7 +149,7 @@
         </arguments>
         <executeJS function="return Boolean(document.evaluate(&quot;{{selector}}&quot;, document.body).iterateNext().value.match(&apos;{{value}}&apos;))" stepKey="textareaValue"/>
         <assertContains stepKey="assertTextareaContainsValue">
-            <expectedResult type="string">true</expectedResult>
+            <expectedResult type="bool">true</expectedResult>
             <actualResult type="variable">textareaValue</actualResult>
         </assertContains>
     </actionGroup>
