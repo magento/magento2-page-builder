@@ -10,28 +10,30 @@
 $uniqueIdentifier = uniqid();
 ?>
 
-<div class="block newsletter <?= $block->escapeHtmlAttr($block->getClasses()); ?>" style="<?= $block->escapeHtmlAttr($block->getStyles()); ?>">
-    <div class="title"><strong><?= $block->escapeHtml($block->getTitle()) ?></strong></div>
-    <div class="content">
-        <form class="form subscribe"
-              novalidate
-              action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
-              method="post"
-              data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
-            <div class="field newsletter">
-                <label class="label" for="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"><span><?= $block->escapeHtml($block->getLabelText()) ?></span></label>
-                <div class="control">
-                    <input name="email" type="email" id="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"
-                           placeholder="<?= $block->escapeHtml($block->getPlaceholder()) ?>"
-                           data-mage-init='{"mage/trim-input":{}}'
-                           data-validate="{required:true, 'validate-email':true}"/>
+<div class="<?= $block->escapeHtmlAttr($block->getClasses()); ?>" style="<?= $block->escapeHtmlAttr($block->getStyles()); ?>">
+    <div class="block newsletter">
+        <div class="title"><strong><?= $block->escapeHtml($block->getTitle()) ?></strong></div>
+        <div class="content">
+            <form class="form subscribe"
+                  novalidate
+                  action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
+                  method="post"
+                  data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
+                <div class="field newsletter">
+                    <label class="label" for="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"><span><?= $block->escapeHtml($block->getLabelText()) ?></span></label>
+                    <div class="control">
+                        <input name="email" type="email" id="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"
+                               placeholder="<?= $block->escapeHtml($block->getPlaceholder()) ?>"
+                               data-mage-init='{"mage/trim-input":{}}'
+                               data-validate="{required:true, 'validate-email':true}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="actions">
-                <button class="action subscribe primary" title="<?= $block->escapeHtmlAttr($block->getButtonText()) ?>" type="submit">
-                    <span><?= $block->escapeHtml($block->getButtonText()) ?></span>
-                </button>
-            </div>
-        </form>
+                <div class="actions">
+                    <button class="action subscribe primary" title="<?= $block->escapeHtmlAttr($block->getButtonText()) ?>" type="submit">
+                        <span><?= $block->escapeHtml($block->getButtonText()) ?></span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

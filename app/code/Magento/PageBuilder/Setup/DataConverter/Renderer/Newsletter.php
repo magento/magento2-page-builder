@@ -52,9 +52,20 @@ class Newsletter implements RendererInterface
 
         $newsletterStyles = '';
         if (isset($itemData['formData'])) {
+            $justifyContent = '';
+            if(isset($itemData['formData']['align'])) {
+                $convertAlignContent = [
+                    'left' => 'flex-start',
+                    'right' => 'flex-end',
+                    'center' => 'center'
+                ];
+                $itemData['formData']['display'] = 'flex';
+                $justifyContent = ' justify-content: ' . $convertAlignContent[$itemData['formData']['align']] . ';';
+                unset($itemData['formData']['align']);
+            }
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $newsletterStyles = $style;
+                $newsletterStyles = $style . $justifyContent;
             }
         }
 
@@ -73,4 +84,6 @@ class Newsletter implements RendererInterface
 
         return $rootElementHtml;
     }
+
+
 }
