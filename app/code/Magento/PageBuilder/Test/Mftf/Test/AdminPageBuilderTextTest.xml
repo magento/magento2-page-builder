@@ -1617,17 +1617,11 @@
         <after>
             <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
-                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
-                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
-            </actionGroup>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
-                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
-                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
+                <argument name="Image" value="ImageUpload3"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
