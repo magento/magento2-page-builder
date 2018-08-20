@@ -303,6 +303,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -362,7 +363,7 @@
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
         <!-- Validate Stage: No Overlay -->
         <comment userInput="Validate Stage: No Overlay" stepKey="commentValidateNoOverlayStage"/>
-        <moveMouseOver selector="{{SlideOnBackend.all}}" stepKey="moveMouseOverSlideStage"/>
+        <moveMouseOver selector="{{SlideOnBackend.base('1')}}" stepKey="moveMouseOverSlideStage"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStage3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -408,27 +409,51 @@
         <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefront"/>
-        <!-- Validate No Overlay -->
-        <comment userInput="Validate No Overlay" stepKey="commentValidateNoOverlayStorefront"/>
-        <moveMouseOver selector="{{SlideOnFrontend.all}}" stepKey="moveMouseOverSlideStorefront"/>
+        <!-- Validate Storefront: No Overlay -->
+        <comment userInput="Validate Storefront: No Overlay" stepKey="commentValidateNoOverlayStorefront"/>
+        <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefront"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefront2"/>
-        <!-- Validate Link -->
-        <comment userInput="Validate Link" stepKey="commentValidateLink"/>
+        <!-- Validate Storefront: Link -->
+        <comment userInput="Validate Storefront: Link" stepKey="commentValidateLink"/>
         <grabFromCurrentUrl stepKey="currentUrl"/>
-        <click selector="{{SlideOnFrontend.all}}" stepKey="clickSlide"/>
+        <click selector="{{SlideOnFrontend.base('1')}}" stepKey="clickSlide"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <grabFromCurrentUrl stepKey="newUrl"/>
         <assertEquals stepKey="assertUrlEquals">
             <expectedResult type="variable">newUrl</expectedResult>
             <actualResult type="variable">currentUrl</actualResult>
         </assertEquals>
+        <!-- Validate Storefront Mobile -->
+        <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
+        <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.mobileNoMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefrontMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.mobileNoMessageContent('1')}}" stepKey="dontSeeMessageContentStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkURL_Default.value)}}" stepKey="seeLinkStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileNoButton('1')}}" stepKey="seeNoButtonTextStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile"/>
+        <!-- Validate Storefront Mobile: No Overlay -->
+        <comment userInput="Validate Storefront Mobile: No Overlay" stepKey="commentValidateNoOverlayStorefrontMobile"/>
+        <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile2"/>
+        <!-- Validate Storefront Mobile: Link -->
+        <comment userInput="Validate Storefront Mobile: Link" stepKey="commentValidateLinkMobile"/>
+        <grabFromCurrentUrl stepKey="currentUrl2"/>
+        <clickWithLeftButton selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="clickSlideMobile"/>
+        <waitForPageLoad stepKey="waitForPageLoadMobile"/>
+        <grabFromCurrentUrl stepKey="newUrl2"/>
+        <assertEquals stepKey="assertUrlEqualsMobile">
+            <expectedResult type="variable">newUrl2</expectedResult>
+            <actualResult type="variable">currentUrl2</actualResult>
+        </assertEquals>
     </test>
-    <test name="SliderEmptySliderAdminPreview">
+    <test name="SliderVerifyEmptySlideDefaultState">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Verify Empty Slider default state on admin preview and storefront"/>
-            <description value="As a Content Manager I want to see empty content types preview on the stage so that I see their position and can access their settings"/>
+            <title value="Verify Empty Slide Default State"/>
+            <description value="Verify the state of empty slide item on Stage and Storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87085"/>
             <testCaseId value="MAGETWO-88767"/>
@@ -442,6 +467,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -456,142 +482,44 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible stepKey="wait2" selector="{{SlideOnBackend.emptySlide}}" time="10"/>
-        <grabTextFrom selector="{{SlideOnBackend.emptySlide}}" stepKey="grabNameFromEmptySlide"/>
-        <assertEquals stepKey="assertEditSlideOnEmptyPreview" message="Empty slide says Edit slide text on admin preview">
-            <expectedResult type="string">Edit Slide Text</expectedResult>
-            <actualResult type="variable">grabNameFromEmptySlide</actualResult>
-        </assertEquals>
-        <!-- Verify Poster overlay -->
-        <comment userInput="User sees Slider preview that contains first slide (poster)" stepKey="AC2"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.overlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="verifyEmptySlideTransparentAdmin"/>
-        <!-- Verify Add Slide on mouse over -->
-        <comment userInput="User sees dot that indicates first slide present and Add Slide button" stepKey="AC3"/>
-        <moveMouseOver selector="{{SliderOnStage.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
-        <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="seeDotForFirstSlide"/>
+        <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySlideStage"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStage"/>
+        <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideName"/>
+        <seeElement selector="{{SlideOnBackend.minimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeight"/>
+        <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStage"/>
+        <!-- Validate Stage: No Tooltip -->
+        <comment userInput="Validate Stage: No Tooltip" stepKey="commentNoTooltipStage"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
-        <!-- Empty slide min height -->
-        <comment userInput="User sees slider preview with min height is 300 px" stepKey="AC4"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.overlay}}" attribute="style" expectedValue="min-height: 300px;" stepKey="verifyMinHeight300OnAdmin"/>
-        <!-- Empty slide default margin and paddings -->
-        <comment userInput="User sees empty slide with margin to be 0 px and and paddings to be 40 px by default" stepKey="AC5"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.slideWrapper}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0px"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.overlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
-        <!-- Empty slide no border -->
-        <comment userInput="User sees no slide border by default" stepKey="AC6"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.slideWrapper}}" attribute="style" expectedValue="border-style: none;" stepKey="verifyBorderNone"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
-        <!-- Slide order in option panel -->
-        <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
-        <see userInput="Slide 1" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
-        <!-- Empty slide background defaults on admin preview -->
-        <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.overlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
-        <comment userInput="Verify slide defaults on admin: Background Position defaults to Top Aligned" stepKey="adminDefaultPosition"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.slideWrapper}}" attribute="style" expectedValue="background-position: left top" stepKey="verifyAdminTopAligned"/>
-        <comment userInput="Verify slide defaults on admin: Background Size defaults to Cover" stepKey="adminDefaultSize"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.slideWrapper}}" attribute="style" expectedValue="background-size: cover" stepKey="verifyAdminSizeCover"/>
-        <comment userInput="Verify slide defaults on admin: Background Attachment defaults to Scroll" stepKey="adminDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SlideOnBackend.slideWrapper}}" attribute="style" expectedValue="background-attachment: scroll" stepKey="verifyAdminScrollAttachment"/>
-        <!-- Validate Slider Edit Panel Defaults -->
-        <comment userInput="Validate Slider Edit Panel Defaults" stepKey="commentSliderEditPanel"/>
-        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
-        <click selector="{{SlideOnBackend.slideWrapper}}" stepKey="clickSliderInStage"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenu">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateAutoPlay">
-            <argument name="property" value="PageBuilderSliderAutoplay_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateAutoPlaySpeedDisabled">
-            <argument name="property" value="PageBuilderSliderAutoplaySpeed_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateAutoPlaySpeedValue">
-            <argument name="property" value="PageBuilderSliderAutoplaySpeed_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateFade">
-            <argument name="property" value="PageBuilderSliderFade_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop">
-            <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowArrows">
-            <argument name="property" value="PageBuilderSliderShowArrows_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateShowDots">
-            <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinimumHeight">
-            <argument name="property" value="PageBuilderSliderMinHeight_Default"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <wait time="1" stepKey="wait"/>
+        <dontSeeElementInDOM selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="dontSeeTooltip"/>
+        <!-- Validate Stage: Slide Title On Option Menu -->
+        <comment userInput="Validate Stage: Slide Title On Option Menu" stepKey="commentSlideTitleOptionMenuStage"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideDot"/>
+        <waitForElementVisible selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForOptionMenu"/>
+        <see userInput="Slide 1" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideTitleOnOptionsMenu"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Slider Edit Panel After Save -->
-        <comment userInput="Validate Slider Edit Panel After Save" stepKey="commentSliderEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenu2">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateAutoPlay2">
-            <argument name="property" value="PageBuilderSliderAutoplay_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateAutoPlaySpeedDisabled2">
-            <argument name="property" value="PageBuilderSliderAutoplaySpeed_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateAutoPlaySpeedValue2">
-            <argument name="property" value="PageBuilderSliderAutoplaySpeed_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateFade2">
-            <argument name="property" value="PageBuilderSliderFade_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateInfiniteLoop2">
-            <argument name="property" value="PageBuilderSliderInfiniteLoop_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowArrows2">
-            <argument name="property" value="PageBuilderSliderShowArrows_Disabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateShowDots2">
-            <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinimumHeight2">
-            <argument name="property" value="PageBuilderSliderMinHeight_Default"/>
-        </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible time="10" selector="{{SliderOnFrontend.all}}" stepKey="seeSliderOnPageBuilderPage"/>
-        <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
-        <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
-        <comment userInput="Verify slide defaults on storefront: User sees no slide border by default" stepKey="storefrontDefaultBorder"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="border-style: none" stepKey="verifyBorderNoneStorefront"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0Storefront"/>
-        <comment userInput="Verify slide defaults on storefront: Appearance defaults to Poster" stepKey="storefrontDefaultAppearance" />
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-appearance" expectedValue="poster" stepKey="slideStorefrontPoster"/>
-        <comment userInput="Verify slide defaults on storefront: Minimum Height defaults to 300" stepKey="storefrontDefaultMinHeight"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Color defaults to empty" stepKey="storefrontDefaultColor" />
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Position defaults to Top Aligned" stepKey="storefrontDefaultPosition"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-position: left top;" stepKey="slideStorefrontPosition"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Size defaults to Cover" stepKey="storefrontDefaultSize"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-size: cover;" stepKey="slideStorefrontSize"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Repeat defaults to No" stepKey="storefrontDefaultRepeat"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-repeat: no-repeat;" stepKey="slideStorefrontRepeat"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Attachment defaults to Scroll" stepKey="storefrontDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-attachment: scroll;" stepKey="slideStorefrontScroll"/>
-        <comment userInput="Slide Content WYSIWYG defaults to empty" stepKey="storefrontDefaultContent" />
-        <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeDummyTextInPageSource"/>
-        <comment userInput="Verify slide content defaults on storefront: Show Button defaults to Never Show" stepKey="storefrontDefaultShowButton"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-button" expectedValue="never" stepKey="slideStorefrontShowButton"/>
-        <comment userInput="Verify slide content defaults on storefront: Show Overlay defaults to Never Show" stepKey="storefrontDefaultOverlay"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-overlay" expectedValue="never" stepKey="slideStorefrontShowOverlay"/>
+        <!-- Validate Storefront: Slide Item Defaults -->
+        <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideNameStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefront"/>
+        <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSource"/>
+        <!-- Validate Storefront: Slide Item Defaults -->
+        <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefrontMobile"/>
+        <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideNameStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileMinimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
+        <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSourceMobile"/>
     </test>
     <test name="CanManageSlides">
+        <!--todo-->
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -621,7 +549,7 @@
         </actionGroup>
         <comment userInput="User sees Slide configuration opened with a delay." stepKey="AC2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
-        <seeElement selector="{{SlideOnBackend.emptySlide}}" stepKey="seeFirstSlideOnStage"/>
+        <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeFirstSlideOnStage"/>
 
         <comment userInput="Slide is focused, its option panel is displayed on top of the slider dot." stepKey="AC3"/>
         <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
@@ -689,9 +617,9 @@
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide name" stepKey="AC15"/>
         <click stepKey="unfocusNavigation" selector="{{SliderOnStage.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
-        <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip}}" stepKey="seeSlideName2InTooltip"/>
+        <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('2')}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
-        <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip}}" stepKey="seeSlideName1InTooltip"/>
+        <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
     </test>
     <test name="SliderDelete">
         <annotations>
@@ -1122,8 +1050,8 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.noAlignment('1')}}" stepKey="seeAlignmentStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.noAlignmentMobile('1')}}" stepKey="seeInDOMMobileAlignmentStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.noAlignmentMobile('1')}}" stepKey="dontSeeMobileAlignmentStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.mobileNoAlignment('1')}}" stepKey="seeInDOMMobileAlignmentStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.mobileNoAlignment('1')}}" stepKey="dontSeeMobileAlignmentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStorefront"/>
         <seeElement selector="{{SlideOnFrontend.noBorderColor('1')}}" stepKey="seeBorderColorStorefront"/>
         <seeElement selector="{{SlideOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStorefront"/>
@@ -1131,10 +1059,11 @@
         <seeElement selector="{{SlideOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesDefaultProperty.value)}}" stepKey="seeCSSClassesStorefront"/>
         <seeElement selector="{{SlideOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.paddingMobile('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.paddingMobile('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeMobilePaddingStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeMobilePaddingStorefront"/>
     </test>
     <test name="SlideHasEditButtonTextButtonStyledInAdminAndStorefront">
+        <!--todo-->
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1348,7 +1277,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <grabFromCurrentUrl stepKey="currentUrl"/>
-        <click selector="{{SlideOnBackend.all}}" stepKey="clickSlide"/>
+        <click selector="{{SlideOnBackend.base('1')}}" stepKey="clickSlide"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <grabFromCurrentUrl stepKey="newUrl"/>
         <assertEquals stepKey="assertUrlEquals">
@@ -1357,6 +1286,7 @@
         </assertEquals>
     </test>
     <test name="SlideCanAddImageToSlide">
+        <!--todo-->
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1714,6 +1644,7 @@
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInDOM" />
     </test>
     <test name="AddImageToSliderStage">
+        <!--todo-->
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1788,6 +1719,7 @@
         <waitForElement selector="{{PageBuilderStoreFront.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
+        <!--todo-->
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1912,7 +1844,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{SliderOnFrontend.all}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSliderOnPageBuilderPage"/>
         <executeJS function="{{SlideOnFrontend.computedBoxSizing}}" stepKey="actualBoxSizingStyle"/>
         <assertEquals stepKey="assertBoxSizingStyle">
             <expectedResult type="string">border-box</expectedResult>
@@ -2138,7 +2070,7 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
-        <seeElementInDOM selector="{{SlideOnBackend.emptySlide}}" stepKey="seeEmptySliderOnStage"/>
+        <seeElementInDOM selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySliderOnStage"/>
         <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
 </tests>
