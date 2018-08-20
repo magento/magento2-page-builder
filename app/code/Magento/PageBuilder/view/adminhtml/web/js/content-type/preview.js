@@ -32,6 +32,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.data = {};
       this.displayLabel = void 0;
       this.wrapperElement = void 0;
+      this.placeholderCss = void 0;
+      this.isPlaceholderVisible = _knockout.observable(true);
+      this.isEmpty = _knockout.observable(true);
+      this.display = _knockout.observable(true);
       this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.edit = void 0;
@@ -43,6 +47,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.edit = new _edit(this.parent, this.parent.dataStore);
       this.observableUpdater = observableUpdater;
       this.displayLabel = _knockout.observable(this.config.label);
+      this.placeholderCss = _knockout.observable({
+        "visible": this.isEmpty,
+        "empty-placeholder-background": this.isPlaceholderVisible
+      });
       this.setupDataFields();
       this.bindEvents();
     }
@@ -383,7 +391,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       this.parent.dataStore.subscribe(function (data) {
         _this4.updateObservables();
+
+        _this4.updatePlaceholderVisibility(data);
       });
+
+      if (this.parent.children) {
+        this.parent.children.subscribe(function (children) {
+          _this4.isEmpty(!children.length);
+        });
+      }
     };
     /**
      * After observables updated, allows to modify observables
@@ -476,6 +492,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("previewData:updateAfter", {
         preview: this
       });
+    };
+    /**
+     * Update placeholder background visibility base on height and padding
+     *
+     * @param {DataObject} data
+     */
+
+
+    _proto.updatePlaceholderVisibility = function updatePlaceholderVisibility(data) {
+      var minHeight = !_underscore.isEmpty(data.min_height) ? parseFloat(data.min_height) : 130;
+      var marginsAndPadding = _underscore.isString(data.margins_and_padding) && data.margins_and_padding ? JSON.parse(data.margins_and_padding) : data.margins_and_padding || {};
+      var padding = marginsAndPadding.padding || {};
+      var paddingBottom = parseFloat(padding.bottom) || 0;
+      var paddingTop = parseFloat(padding.top) || 0;
+      this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
     };
 
     _createClass(Preview, [{
