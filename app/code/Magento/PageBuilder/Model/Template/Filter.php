@@ -30,7 +30,7 @@ class Filter
     private $layout;
 
     /**
-     * Filter constructor.
+     * Constructor
      *
      * @param \Magento\PageBuilder\Model\Config $config
      * @param \Magento\Framework\View\Element\BlockFactory $blockFactory
@@ -90,43 +90,43 @@ class Filter
             }
         }
 
-        if (count($dynamicContentTypes) > 0) {
-            $conditions = [];
-            foreach ($dynamicContentTypes as $contentType) {
-                $conditions[] = '@data-role = "' . $contentType . '"';
-            }
-
-            $nodes = $xpath->query('//*[' . implode(' or ', $conditions) . ']');
-            $replacements = [];
-            foreach ($nodes as $node) {
-                $data = [];
-                foreach ($node->attributes as $attribute) {
-                    $attributeName = str_replace(['data-', '-'], ['', '_'], $attribute->nodeName);
-                    $data[$attributeName] = $attribute->nodeValue;
-                }
-                $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
-                $backendBlockTemplate = isset($contentTypes[$node->getAttribute('data-role')]['backend_template'])
-                    ? $contentTypes[$node->getAttribute('data-role')]['backend_template'] : false;
-                if ($backendBlockTemplate) {
-                    $data['template'] = $backendBlockTemplate;
-                }
-                $backendBlockInstance = $this->blockFactory->createBlock(
-                    $backendBlockClassName,
-                    ['data' => $data]
-                );
-                $this->layout->addBlock($backendBlockInstance);
-                $uniqueIdentifier = 'block-' . uniqid();
-                $replacements[$uniqueIdentifier] = $backendBlockInstance->toHtml();
-                $node->parentNode->replaceChild($domDocument->createTextNode($uniqueIdentifier), $node);
-            }
+        if (count($dynamicContentTypes) === 0) {
+            return $html;
         }
 
+        $conditions = [];
+        foreach ($dynamicContentTypes as $contentType) {
+            $conditions[] = '@data-role = "' . $contentType . '"';
+        }
+
+        $nodes = $xpath->query('//*[' . implode(' or ', $conditions) . ']');
+        $replacements = [];
+        foreach ($nodes as $node) {
+            $data = [];
+            foreach ($node->attributes as $attribute) {
+                $attributeName = str_replace(['data-', '-'], ['', '_'], $attribute->nodeName);
+                $data[$attributeName] = $attribute->nodeValue;
+            }
+            $backendBlockClassName = $contentTypes[$node->getAttribute('data-role')]['backend_block'];
+            $backendBlockTemplate = isset($contentTypes[$node->getAttribute('data-role')]['backend_template'])
+                ? $contentTypes[$node->getAttribute('data-role')]['backend_template'] : false;
+            if ($backendBlockTemplate) {
+                $data['template'] = $backendBlockTemplate;
+            }
+            $backendBlockInstance = $this->blockFactory->createBlock(
+                $backendBlockClassName,
+                ['data' => $data]
+            );
+            $this->layout->addBlock($backendBlockInstance);
+            $uniqueIdentifier = 'block-' . uniqid();
+            $replacements[$uniqueIdentifier] = $backendBlockInstance->toHtml();
+            $node->parentNode->replaceChild($domDocument->createTextNode($uniqueIdentifier), $node);
+        }
         preg_match(
             '/<body id="' . $wrapperElementId . '">(.+)<\/body><\/html>$/si',
             mb_convert_encoding($domDocument->saveHTML(), 'UTF-8', 'HTML-ENTITIES'),
             $matches
         );
-
         return str_replace(
             array_keys($replacements),
             $replacements,
