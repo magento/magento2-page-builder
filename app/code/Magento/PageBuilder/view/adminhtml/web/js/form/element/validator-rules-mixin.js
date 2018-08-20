@@ -5,8 +5,9 @@
 
 define([
     'jquery',
+    'underscore',
     'Magento_Ui/js/lib/validation/utils'
-], function ($, utils) {
+], function ($, _, utils) {
     'use strict';
 
     /**
@@ -44,23 +45,23 @@ define([
     }
 
     return function (validator) {
-        var requiredInputRuleHandler = validator.getRule('required-entry').handler;
+        var requiredInputRule = validator.getRule('required-entry');
 
         validator.addRule(
             'required-entry-location-name',
-            requiredInputRuleHandler,
+            requiredInputRule.handler,
             $.mage.__('Please enter the location name.')
         );
 
         validator.addRule(
             'required-entry-latitude',
-            requiredInputRuleHandler,
+            requiredInputRule.handler,
             $.mage.__('Enter latitude')
         );
 
         validator.addRule(
             'required-entry-longitude',
-            requiredInputRuleHandler,
+            requiredInputRule.handler,
             $.mage.__('Enter longitude')
         );
 
@@ -92,6 +93,17 @@ define([
                 return validateIsUrl(href) && (href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/));
             },
             $.mage.__('Please enter a valid video URL.')
+        );
+
+        validator.addRule(
+            'required-entry',
+            function (value) {
+                if (typeof value !== 'object') {
+                    return requiredInputRule.handler(value);
+                }
+                return !_.contains(_.flatten(_.map(value, _.values)), "");
+            },
+            $.mage.__(requiredInputRule.message)
         );
 
         return validator;
