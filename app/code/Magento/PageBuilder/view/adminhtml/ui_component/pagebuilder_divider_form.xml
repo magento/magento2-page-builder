@@ -87,7 +87,6 @@
                 <additionalClasses>
                     <class name="admin__field-medium">true</class>
                 </additionalClasses>
-                <notice translate="true">Example: #FF5733</notice>
                 <validation>
                     <rule name="validate-color" xsi:type="boolean">true</rule>
                 </validation>
@@ -110,6 +109,9 @@
             </argument>
             <settings>
                 <label translate="true">Line Thickness</label>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px</addAfter>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
@@ -124,9 +126,21 @@
             </argument>
             <settings>
                 <label translate="true">Line Width</label>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px or %</addAfter>
                 <notice translate="true">Example: 50px or 100%</notice>
             </settings>
+        </field>
+    </fieldset>
+    <fieldset name="advanced">
+        <field name="margins_and_padding">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">{"margin":{"bottom":"0","left":"0","right":"0","top":"0"},"padding":{"bottom":"10","left":"10","right":"10","top":"10"}}</item>
+                </item>
+            </argument>
         </field>
     </fieldset>
 </form>
