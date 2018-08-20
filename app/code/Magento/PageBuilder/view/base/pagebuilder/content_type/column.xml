@@ -34,7 +34,7 @@
                 <elements>
                     <element name="main">
                         <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
@@ -52,6 +52,7 @@
                         <static_style source="align_self" value="stretch"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -70,6 +71,13 @@
                             <item name="background_color_format" value="background_color_format"/>
                         </config>
                     </converter>
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
+                        <config>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
+                        </config>
+                    </converter>
                 </converters>
             </appearance>
             <appearance name="align-top"
@@ -79,7 +87,7 @@
                 <elements>
                     <element name="main">
                         <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
@@ -97,6 +105,7 @@
                         <static_style source="align_self" value="flex-start"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -115,6 +124,13 @@
                             <item name="background_color_format" value="background_color_format"/>
                         </config>
                     </converter>
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
+                        <config>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
+                        </config>
+                    </converter>
                 </converters>
             </appearance>
             <appearance name="align-center"
@@ -124,7 +140,7 @@
                 <elements>
                     <element name="main">
                         <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
@@ -142,6 +158,7 @@
                         <static_style source="align_self" value="center"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -160,6 +177,13 @@
                             <item name="background_color_format" value="background_color_format"/>
                         </config>
                     </converter>
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
+                        <config>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
+                        </config>
+                    </converter>
                 </converters>
             </appearance>
             <appearance name="align-bottom"
@@ -169,7 +193,7 @@
                 <elements>
                     <element name="main">
                         <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
@@ -187,6 +211,7 @@
                         <static_style source="align_self" value="flex-end"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -203,6 +228,13 @@
                     <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
                         <config>
                             <item name="background_color_format" value="background_color_format"/>
+                        </config>
+                    </converter>
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
+                        <config>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
                         </config>
                     </converter>
                 </converters>

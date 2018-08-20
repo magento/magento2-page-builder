@@ -85,19 +85,21 @@ class TemplatePlugin
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
                 $images = json_decode(stripslashes($backgroundImages->nodeValue), true);
-                $style = $xpath->document->createElement(
-                    'style',
-                    $this->generateCssFromImages($elementClass, $images)
-                );
-                $style->setAttribute("type", "text/css");
-                $node->parentNode->appendChild($style);
+                if (count($images) > 0) {
+                    $style = $xpath->document->createElement(
+                        'style',
+                        $this->generateCssFromImages($elementClass, $images)
+                    );
+                    $style->setAttribute("type", "text/css");
+                    $node->parentNode->appendChild($style);
 
-                // Append our new class to the DOM element
-                $classes = '';
-                if ($node->attributes->getNamedItem('class')) {
-                    $classes = $node->attributes->getNamedItem('class')->nodeValue . ' ';
+                    // Append our new class to the DOM element
+                    $classes = '';
+                    if ($node->attributes->getNamedItem('class')) {
+                        $classes = $node->attributes->getNamedItem('class')->nodeValue . ' ';
+                    }
+                    $node->setAttribute('class', $classes . $elementClass);
                 }
-                $node->setAttribute('class', $classes . $elementClass);
                 $node->removeAttribute(self:: DATA_BACKGROUND_IMAGE);
             }
         }
