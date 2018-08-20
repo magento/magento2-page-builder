@@ -8,6 +8,7 @@
     1. [Composer installation](#composer-installation)
     1. [GitHub installation](#github-installation)
     1. [Activation](#activation)
+    1. [Uninstall PageBuilder](#uninstall-pagebuilder)
     1. [Troubleshooting](#troubleshooting)
 3. [Contribution guide]
 4. [Developer documentation]
@@ -117,6 +118,40 @@ Follow these steps to activate PageBuilder in the Admin:
 3. In the **General** group on the page, select **Content Management**.
 4. Under **Advanced Content Tools**, select **Yes** for **Enable Page Builder**.
 5. Click **Save Config**
+
+## Uninstall PageBuilder
+
+Before you uninstall the PageBuilder module, we recommend deactivating the editor in the Admin and migrate content.
+The editor will be deactivated, but the module can continue to render the content while you migrate away from PageBuilder.
+
+The following side effects occur if you uninstall the PageBuilder module without migrating the content:
+
+* Content that uses JavaScript functionality provided by PageBuilder will not work
+* Pages with full width layout will display blank content
+
+### Steps for disabling and removing PageBuilder
+
+Follow these steps to disable the PageBuilder module and remove it from your system:
+
+1. Disable the PageBuilder module and update Magento using the following command:
+
+   ``` bash
+   php bin/magento module:disable Magento/PageBuilder
+   php bin/magento setup:upgrade
+   ```
+
+2. Use one of the following methods to remove the PageBuilder files from your system:
+
+    * If you used the manual GitHub installation method:
+  
+      ``` bash
+      cd app/code/Magento && rm -fr PageBuilder
+      ```
+    * If you installed PageBuilder using composer:
+
+      ``` bash
+      composer remove Magento/PageBuilder
+      ```
 
 ## Troubleshooting
 
