@@ -1441,7 +1441,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideMessageLongProperty.value)}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role, '1')}}" stepKey="slideNewHeightStage"/>
         <assertGreaterThan stepKey="assertSlideHeightGrewStage">
             <expectedResult type="variable">slideInitialHeightStage</expectedResult>
@@ -1451,7 +1451,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage 2 -->
         <comment userInput="Validate Stage 2" stepKey="commentValidateStage2"/>
-        <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide1ContentDisplayedAdminAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideMessageLongProperty.value)}}" stepKey="test"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role, '1')}}" stepKey="slideNewHeightStage2"/>
         <assertEquals stepKey="assertSlideHeightSameStage">
             <expectedResult type="variable">slideNewHeightStage</expectedResult>
@@ -1461,7 +1461,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
-        <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideMessageLongProperty.value)}}" stepKey="test2"/>
         <executeJS function="{{PageBuilderStoreFront.computedHeight(PageBuilderSliderContentType.role, '0')}}" stepKey="slideNewHeightStorefront"/>
         <assertGreaterThan stepKey="assertSlideHeightGrewStorefront">
             <expectedResult type="variable">slideInitialHeightStorefront</expectedResult>
@@ -2052,7 +2052,7 @@
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeStorage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
-        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageNameOnPreview1"/>
+        <dontSeeElementInDOM selector="{{SlideOnBackend.backgroundImage('1', PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="dontSeeImageNameOnPreview1"/>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="attachImageFile1">
@@ -2071,6 +2071,6 @@
         <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
         <seeElementInDOM selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySliderOnStage"/>
-        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
+        <dontSeeElementInDOM selector="{{SlideOnBackend.backgroundImage('1', PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
 </tests>

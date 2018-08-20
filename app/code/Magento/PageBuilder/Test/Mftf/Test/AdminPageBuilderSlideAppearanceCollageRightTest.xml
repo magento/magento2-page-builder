@@ -485,7 +485,7 @@
         <seeElement selector="{{SlideOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
         <seeElement selector="{{SlideOnBackend.collageAlignment}}" stepKey="verifyCollageAlignmentInAdmin"/>
     </test>
-    <test name="SlideCollageRightButtonNeverShow">
+    <test name="SlideCollageRightButtonNeverShow" extends="SlidePosterButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -498,117 +498,14 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <!-- fill button fields -->
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
-            <argument name="property" value="PageBuilderSlideButtonTypeSecondaryProperty"/>
-        </actionGroup>
-        <!-- disable button fields and check values -->
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonDefaultProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlPropertyValidate"/>
-        </actionGroup>
-        <actionGroup ref="seeSlideOutPanelFieldOpenInNewTab" stepKey="seeNewTabOnForm">
-            <argument name="property" value="PageBuilderSlideNewTabProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeSlideButtonTypeProperty">
-            <argument name="property" value="PageBuilderSlideButtonTypeSecondaryProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOverlayBackend"/>
-        <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
-            <argument name="section" value="SlideOnBackend"/>
-        </actionGroup>
-        <!-- Validate Edit Panel -->
-        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <dontSeeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm2">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlPropertyValidate"/>
-        </actionGroup>
-        <actionGroup ref="seeSlideOutPanelFieldOpenInNewTab" stepKey="seeNewTabOnForm2">
-            <argument name="property" value="PageBuilderSlideNewTabProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeSlideButtonTypeProperty2">
-            <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend9"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
-        <!-- Validate settings on frontend mobile -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontendMobile"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend10"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="SlideCollageRightButtonOnHover">
+    <test name="SlideCollageRightButtonOnHover" extends="SlidePosterButtonOnHover">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -621,107 +518,14 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideOverlayColor">
-            <argument name="property" value="PageBuilderSlideContentOverlayColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideOverlayTransparencyProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectSlideButtonShowOnHover">
-            <argument name="property" value="PageBuilderSlideShowButtonOnHoverProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideButtonTextPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideLinkUrlPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideNewTabDefaultIsDisabled">
-            <argument name="property" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideButtonTypePropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
-        <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOverlayBackend"/>
-        <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend5"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextOnFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOverlayOnFrontend"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontend"/>
-        <!-- Validate settings on frontend mobile -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextOnFrontendMobile"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextOnFrontendMobile"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend6"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="SlideCollageRightOverlayNeverShow">
+    <test name="SlideCollageRightOverlayNeverShow" extends="SlidePosterOverlayNeverShow">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -734,84 +538,14 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideOverlayNeverShow">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayNeverShowProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
-        <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyStillDontSeeOverlayBackend"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend9"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontend"/>
-        <!-- Validate settings on frontend mobile -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontendMobile"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyStillDontSeeOnHoverOverlayOnFrontendMobile"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend10"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="SlideCollageRightOverlayOnHover">
+    <test name="SlideCollageRightOverlayOnHover" extends="SlidePosterOverlayOnHover">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -824,95 +558,14 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideOverlayShowOnHover">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayOnHoverProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideOverlayColor">
-            <argument name="property" value="PageBuilderSlideContentOverlayColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideOverlayTransparencyProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeButtonTextBackend"/>
-        <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
-        <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend7"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeButtonTextFrontend"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
-        <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyseeOnHoverOverlayOnFrontend3"/>
-        <!-- Validate settings on frontend mobile -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontendMobile"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayOnFrontendMobile" />
-        <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend8"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="SlideCollageRightOverlayAndButtonOnHover">
+    <test name="SlideCollageRightOverlayAndButtonOnHover" extends="SlidePosterOverlayAndButtonOnHover">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -925,114 +578,14 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectSlideButtonShowOnHover">
-            <argument name="property" value="PageBuilderSlideShowButtonOnHoverProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideButtonTextPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideLinkUrlPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideNewTabDefaultIsDisabled">
-            <argument name="property" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideButtonTypePropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideOverlayShowOnHover">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayOnHoverProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideOverlayColor">
-            <argument name="property" value="PageBuilderSlideContentOverlayColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideOverlayTransparencyProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
-        <dontSeeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextBackend"/>
-        <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
-        <waitForElement time="2" selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextBackend" />
-        <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend11"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverlayOnFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextFrontend"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlide"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontend" />
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontend" />
-        <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontend4"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontend"/>
-        <!-- Validate settings on frontend mobile -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <reloadPage stepKey="reloadPage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifyDontSeeOnHoverOverLayOnFrontendMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextFrontendMobile"/>
-        <moveMouseOver selector="{{SlideOnFrontend.slide}}" stepKey="moveMouseOverFrontendSlideMobile"/>
-        <waitForElement time="2" selector="{{SlideOnFrontend.collageOverlay}}" stepKey="waitForOnHoverOverlayFrontendMobile" />
-        <waitForElement time="2" selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonTextFrontendMobile" />
-        <seeElement selector="{{SlideOnFrontend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayOnFrontendMobile"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextFrontendMobile"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend12"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageRight.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
     </test>
-    <test name="SliderCollageRightButtonsCanBeEditedInline">
+    <test name="SliderCollageRightButtonsCanBeEditedInline" extends="SliderPosterButtonsCanBeEditedInline">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -1045,52 +598,8 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterCollageRightAppearance">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
-            <argument name="section" value="SlideOnBackend"/>
-        </actionGroup>
-        <!-- Validate Edit Panel -->
-        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
 </tests>
