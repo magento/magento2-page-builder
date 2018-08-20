@@ -549,7 +549,9 @@
         <!--Verify Text Content Type on stage after saving cms page-->
         <comment userInput="Verify text content type on stage" stepKey="commentVerifyTextOnStage"/>
         <grabValueFrom selector="{{TextOnStage.tinymce('1')}}" stepKey="grabStageValue"/>
-        <assertEmpty stepKey="seeTextOnStage" actual="grabStageValue" actualType="variable"/>
+        <assertEmpty stepKey="seeTextOnStage">
+            <actualResult type="variable">grabStageValue</actualResult>
+        </assertEmpty>
         <!--Verify Text Content Type on storefront-->
         <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContentTypeOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
