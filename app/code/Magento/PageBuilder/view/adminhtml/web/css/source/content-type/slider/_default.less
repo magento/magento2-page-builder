@@ -7,11 +7,12 @@
 //  Default appearance styles
 //  _____________________________________________
 
+[data-role='slider'],
 .pagebuilder-content-type.pagebuilder-slider {
+    border: none;
     -moz-transition: none;
     -o-transition: none;
     -webkit-transition: none;
-    border: none;
     transition: none;
 
     .slider-container {
@@ -34,10 +35,10 @@
         }
 
         &:hover {
+            box-shadow: none;
             -moz-transition: none;
             -o-transition: none;
             -webkit-transition: none;
-            box-shadow: none;
             transition: none;
 
             .slider-container {
@@ -175,6 +176,11 @@
                     }
                 }
 
+                .pagebuilder-options {
+                    visibility: visible;
+                    z-index: -1;
+                }
+
                 &.ui-sortable-helper .navigation-dot-anchor {
                     opacity: .65;
                 }
@@ -205,11 +211,13 @@
                     }
                 }
 
-                &:focus {
+                &.focus {
                     outline: 1px solid @color-blue-pure;
 
                     .pagebuilder-options {
                         .pagebuilder-options-visible;
+                        z-index: 30;
+
                     }
 
                     .tooltip-content {
@@ -300,3 +308,58 @@
     visibility: visible;
 }
 
+[data-role='slider'] {
+    .slick-track .slick-slide {
+        display: block;
+    }
+    .slick-dots {
+        bottom: -30px;
+        display: block;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        width: 100%;
+        li {
+            cursor: pointer;
+            display: inline-block;
+            height: 14px;
+            margin: 0 5px;
+            padding: 0;
+            position: relative;
+            vertical-align: middle;
+            width: 14px;
+            button {
+                background: transparent;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                box-shadow: none;
+                cursor: pointer;
+                display: block;
+                height: 14px;
+                padding: 0;
+                text-indent: -99999px;
+                transition: .3s;
+                width: 14px;
+
+                &:hover {
+                    border: 1px solid #b3b3b3;
+                }
+
+                &:active,
+                &:focus,
+                &:not(.primary) {
+                    background: transparent;
+                    box-shadow: none;
+                }
+            }
+
+            &.slick-active {
+                button {
+                    background: #1c1918;
+                    border: none;
+                }
+            }
+        }
+    }
+}
