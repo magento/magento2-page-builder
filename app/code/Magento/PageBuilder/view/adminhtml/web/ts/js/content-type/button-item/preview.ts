@@ -55,24 +55,24 @@ export default class Preview extends BasePreview {
         // Ensure no other options panel and button drag handles are displayed
         $(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
         $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-        const currentTarget = event.currentTarget;
+        const currentTarget = $(event.currentTarget).closest("[data-element='main']")[0];
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
         }
         optionsMenu.parent().addClass("pagebuilder-options-visible");
-        $(currentTarget).addClass("pagebuilder-content-type-active");
         $(currentTarget).find("[data-element='link_text']").focus();
+        $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
     /**
-     * Set state based on mouseout event for the preview
+     * Set state based on blur event for the preview
      *
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOut(context: Preview, event: Event) {
+    public onBlur(context: Preview, event: Event) {
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 

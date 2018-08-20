@@ -59,7 +59,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/op
       // Ensure no other options panel and button drag handles are displayed
       (0, _jquery)(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
       (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-      var currentTarget = event.currentTarget;
+      var currentTarget = (0, _jquery)(event.currentTarget).closest("[data-element='main']")[0];
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
       if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
@@ -67,18 +67,18 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/op
       }
 
       optionsMenu.parent().addClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
       (0, _jquery)(currentTarget).find("[data-element='link_text']").focus();
+      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
-     * Set state based on mouseout event for the preview
+     * Set state based on blur event for the preview
      *
      * @param {Preview} context
      * @param {Event} event
      */
 
 
-    _proto.onMouseOut = function onMouseOut(context, event) {
+    _proto.onBlur = function onBlur(context, event) {
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
