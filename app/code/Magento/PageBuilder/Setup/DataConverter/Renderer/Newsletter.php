@@ -44,30 +44,32 @@ class Newsletter implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $rootElementAttributes = [
-            'data-element' => 'main',
-            'data-role' => 'newsletter',
-            'data-appearance' => 'default',
-            'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-button-text' => $eavData['button_text'] ?? '',
-            'data-label-text' => $eavData['label'] ?? '',
-            'data-title' => $eavData['title'] ?? '',
-            'data-placeholder' => $eavData['placeholder'] ?? '',
-        ];
+        $newsletterClasses = $eavData['css_classes'] ?? '';
+        $newsletterButtonText = $eavData['button_text'] ?? '';
+        $newsletterLabel = $eavData['label'] ?? '';
+        $newsletterTitle = $eavData['title'] ?? '';
+        $newsletterPlaceHolder = $eavData['placeholder'] ?? '';
 
+        $newsletterStyles = '';
         if (isset($itemData['formData'])) {
             $style = $this->styleExtractor->extractStyle($itemData['formData']);
             if ($style) {
-                $rootElementAttributes['style'] = $style;
+                $newsletterStyles = $style;
             }
         }
 
-        $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-        }
+        $newsletterHtml = "{{block class=\"Magento\Newsletter\Block\Subscribe\" " .
+            "template=\"Magento_PageBuilder::content_type/newsletter.phtml\" " .
+            "placeholder=\"$newsletterPlaceHolder\" " .
+            "classes=\"$newsletterClasses\" " .
+            "styles=\"$newsletterStyles\" " .
+            "button_text=\"$newsletterButtonText\" " .
+            "label_text=\"$newsletterLabel\" " .
+            "title=\"$newsletterTitle\"}}";
 
-        $rootElementHtml .= '></div>';
+        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml .= $newsletterHtml . '</div>';
+
 
         return $rootElementHtml;
     }
