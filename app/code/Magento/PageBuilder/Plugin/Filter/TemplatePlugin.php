@@ -160,9 +160,6 @@ class TemplatePlugin
     private function getMobileBreakpoint()
     {
         $breakpoints = $this->viewConfig->getViewConfig()->getVarValue('Magento_PageBuilder', 'breakpoints');
-        if (isset($breakpoints['mobile'])) {
-            return $breakpoints['mobile'];
-        }
-        return null;
+        return isset($breakpoints['mobile']) ? $breakpoints['mobile'] : null;
     }
 }
