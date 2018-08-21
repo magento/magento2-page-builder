@@ -98,10 +98,19 @@ define([
         validator.addRule(
             'required-entry',
             function (value) {
+                var allFilled = true;
+
                 if (typeof value !== 'object') {
                     return requiredInputRule.handler(value);
                 }
-                return !_.contains(_.flatten(_.map(value, _.values)), "");
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                   if (utils.isEmpty(val)) {
+                       return allFilled = false;
+                   }
+                });
+
+                return allFilled;
             },
             $.mage.__(requiredInputRule.message)
         );
