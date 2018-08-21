@@ -66,7 +66,7 @@
     </section>
     <section name="RowOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div" parameterized="true"/>
-        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=row] div')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=row] > div')[{{arg1}} - 1]" parameterized="true"/>
         <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=row]')).width)"/>
         <element name="rowStyle" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="rowWidthJS" type="text" selector="document.querySelectorAll('[data-appearance=\'{{arg1}}\']')[{{arg2}}].clientWidth" parameterized="true"/>
