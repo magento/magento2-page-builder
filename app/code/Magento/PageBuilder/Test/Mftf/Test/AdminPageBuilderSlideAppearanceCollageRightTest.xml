@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SlideCollageRightMobileWithMobileImageValues">
+    <test name="SlideCollageRightMobileWithMobileImageValues" extends="SlideCollageCenteredMobileWithMobileImageValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -21,77 +21,11 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeDefaultPaddingsInAdmin">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage"/>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithMobileImage2"/>
     </test>
-    <test name="SlideCollageRightMobileWithoutMobileImageValues">
+    <test name="SlideCollageRightMobileWithoutMobileImageValues" extends="SlideCollageCenteredMobileWithoutMobileImageValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -104,168 +38,9 @@
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageRight"/>
         </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeDefaultPaddingsInAdmin">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithoutMobileImage"/>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithoutMobileImage}}" stepKey="waitForCollageRightInFrontendMobileWithoutMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithoutMobileImage}}" stepKey="verifyCollageRightInFrontendMobileWithoutMobileImage"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="dontSeeCollageRightInFrontend"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend2"/>
-        <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend2"/>
-        <dontSeeElement selector="{{SlideOnFrontend.collageMobileWithoutMobileImage}}" stepKey="dontSeeCollageRightInFrontendMobileWithoutMobileImage2"/>
-    </test>
-    <test name="SlideCollageRightContentCanPreviewAdmin">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Slider"/>
-            <title value="Collage Right - Slide right collage can be previewed in admin"/>
-            <description value="A user should be able to preview content in admin for Slide"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-75774"/>
-            <testCaseId value="MAGETWO-89503"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderCollageRight"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="seeSlideLinkUrlPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideMinHeight">
-            <argument name="property" value="PageBuilderSlideMinimumHeightProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderSlideAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
-            <argument name="property" value="PageBuilderSlideMessageProperty"/>
-            <argument name="section" value="SlideOnConfigurationPanel"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <moveMouseOver selector="{{SliderOnStage.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
-        <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
-        <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
-        <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
-        <seeElement selector="{{SlideOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="verifyCollageAlignmentInAdmin"/>
     </test>
     <test name="SlideCollageRightButtonNeverShow" extends="SlidePosterButtonNeverShow">
         <annotations>
