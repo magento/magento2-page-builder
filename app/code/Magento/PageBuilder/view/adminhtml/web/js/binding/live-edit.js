@@ -150,6 +150,16 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
         }, 300).call(_this);
       };
       /**
+       * Prevent content from being dropped inside of inline edit area
+       *
+       * @param {DragEvent} event
+       */
+
+
+      var onDrop = function onDrop(event) {
+        event.preventDefault();
+      };
+      /**
        * Input event on element
        */
 
@@ -159,20 +169,21 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.innerText = viewModel.previewData[field]();
+      element.innerText = viewModel.parent.dataStore.get(field);
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("input", onInput);
+      element.addEventListener("drop", onDrop);
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
-      viewModel.previewData[field].subscribe(function (value) {
-        element.innerText = viewModel.previewData[field]();
+      viewModel.parent.dataStore.subscribe(function () {
+        element.innerText = viewModel.parent.dataStore.get(field);
         handlePlaceholderClass(element);
-      });
+      }, field);
     },
 
     /**
@@ -188,7 +199,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var _valueAccessor2 = valueAccessor(),
           field = _valueAccessor2.field;
 
-      element.innerText = viewModel.previewData[field]();
+      element.innerText = viewModel.parent.dataStore.get(field);
       handlePlaceholderClass(element);
     }
   };
