@@ -184,4 +184,12 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(contentType.role)}}" stepKey="seeOptionsRemove"/>
         <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
     </actionGroup>
+    <actionGroup name="unFocusOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickSearchPanel"/>
+        <waitForPageLoad stepKey="waitForAnimation"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="dontSeeOptionsMenu"/>
+    </actionGroup>
 </actionGroups>
