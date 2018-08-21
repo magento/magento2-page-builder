@@ -8,230 +8,6 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SlideCollageLeftValues">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Slider"/>
-            <title value="Collage Left - Check value of a collage left Slide"/>
-            <description value="Check value of a collage left Slide"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-75774"/>
-            <testCaseId value="MAGETWO-88768"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderCollageLeft"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Fill Out Edit Panel -->
-        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeDefaultPaddingsInAdmin">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
-            <argument name="property" value="PageBuilderSlideWhiteBackgroundColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
-            <argument name="property" value="PageBuilderSlideBackgroundPositionCenteredProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
-            <argument name="property" value="PageBuilderSlideBackgroundSizeProperty"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderSlideBackgroundRepeatDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
-            <argument name="property" value="PageBuilderSlideBackgroundAttachmentScrollProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideButtonTextPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideLinkUrlPropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideNewTabDefaultIsDisabled">
-            <argument name="property" value="PageBuilderSlideNewTabDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideButtonTypePropertyIsDisabled">
-            <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterSlideNewTab">
-            <argument name="property" value="PageBuilderSlideNewTabProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideMinHeight">
-            <argument name="property" value="PageBuilderSlideMinimumHeightProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderSlideAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
-            <argument name="property" value="PageBuilderSlideMessageProperty"/>
-            <argument name="section" value="SlideOnConfigurationPanel"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="2" selector="{{SlideOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
-        <seeElement selector="{{SlideOnBackend.collageLeft}}" stepKey="verifyCollageLeftInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageBackgroundColor}}" stepKey="verifyCollageBackgroundColorInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageBackgroundPosition}}" stepKey="verifyCollageBackgroundPositionInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageBackgroundSize}}" stepKey="verifyCollageBackgroundSizeInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageBackgroundRepeat}}" stepKey="verifyCollageBackgroundRepeatInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
-            <argument name="section" value="SlideOnBackend"/>
-        </actionGroup>
-        <!-- Validate Edit Panel -->
-        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlPropertyValidate"/>
-        </actionGroup>
-        <actionGroup ref="seeSlideOutPanelFieldOpenInNewTab" stepKey="seeNewTabOnForm">
-            <argument name="property" value="PageBuilderSlideNewTabProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeBackgroundColorFFFFFFOnForm">
-            <argument name="property" value="PageBuilderSlideWhiteBackgroundColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionCenteredOnForm">
-            <argument name="property" value="PageBuilderSlideBackgroundPositionCenteredProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeCoverOnForm">
-            <argument name="property" value="PageBuilderSlideBackgroundSizeProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeOnBackgroundRepeatOnForm">
-            <argument name="property" value="PageBuilderSlideBackgroundRepeatDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
-            <argument name="property" value="PageBuilderSlideBackgroundAttachmentScrollProperty"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
-            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
-        </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeDefaultPaddingsInAdmin2">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeSlideMinHeight">
-            <argument name="property" value="PageBuilderSlideMinimumHeightProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeUniqueMarginsInAdmin">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.slideClass(PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="verifyClassInFrontend"/>
-        <seeElement selector="{{SlideOnFrontend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <seeElement selector="{{SlideOnFrontend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="seeLinkUrl"/>
-        <seeElement selector="{{SlideOnFrontend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
-        <seeElement selector="{{SlideOnFrontend.collageMargin}}" stepKey="verifyCollageMargin"/>
-        <seeElement selector="{{SlideOnFrontend.collageAlignment}}" stepKey="verifyCollageAlignment"/>
-        <seeElement selector="{{SlideOnFrontend.collageBackgroundColor}}" stepKey="verifyFrontendCollageBackgroundColor"/>
-        <seeElement selector="{{SlideOnFrontend.collageBackgroundPosition}}" stepKey="verifyFrontendCollageBackgroundPosition"/>
-        <seeElement selector="{{SlideOnFrontend.collageBackgroundSize}}" stepKey="verifyFrontendCollageBackgroundSize"/>
-        <seeElement selector="{{SlideOnFrontend.collageBackgroundRepeat}}" stepKey="verifyFrontendCollageBackgroundRepeat"/>
-        <seeElement selector="{{SlideOnFrontend.collageBackgroundAttachment}}" stepKey="verifyFrontendCollageBackgroundAttachment"/>
-        <!-- Validate settings on frontend mobile -->
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="waitForCollageInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileWithMobileImage}}" stepKey="verifyCollageInFrontendMobileWithMobileImage"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundColor}}" stepKey="verifyFrontendCollageMobileBackgroundColor"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundPosition}}" stepKey="verifyFrontendCollageMobileBackgroundPosition"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundSize}}" stepKey="verifyFrontendCollageMobileBackgroundSize"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundRepeat}}" stepKey="verifyFrontendCollageMobileBackgroundRepeat"/>
-        <seeElement selector="{{SlideOnFrontend.collageMobileBackgroundAttachment}}" stepKey="verifyFrontendCollageMobileBackgroundAttachment"/>
-        <resizeWindow width="1000" height="1000" stepKey="resizeWindowToDesktop"/>
-        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="clickLinkUrl"/>
-        <amOnPage url="{{PageBuilderSlideLinkExternalUrlProperty.value}}" stepKey="amOnLinkPage"/>
-    </test>
     <test name="SlideCollageLeftMobileWithMobileImageValues">
         <annotations>
             <features value="PageBuilder"/>
@@ -489,7 +265,7 @@
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
-        <seeElement selector="{{SlideOnBackend.collageAlignment}}" stepKey="verifyCollageAlignmentInAdmin"/>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="verifyCollageAlignmentInAdmin"/>
     </test>
     <test name="SlideCollageLeftButtonNeverShow" extends="SlidePosterButtonNeverShow">
         <annotations>
@@ -607,5 +383,54 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
+    </test>
+    <test name="SlideItemCollageLeftUpdateAllAttributes" extends="SliderPosterUpdateAllAttributes">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Collage Left - Update All Attributes"/>
+            <description value="A user should be able to add a collage left slide with all attribute fields filled."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3230"/>
+            <testCaseId value="MC-2535"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderSlideCollageLeftPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="seeBorderColorStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
+        <seeElement selector="{{SlideOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideCollageLeftPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="seeBorderColorStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideCollageLeftPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderSlideCollageLeftPaddingPropertyUnique"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlideCollageLeftPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageLeft.value)}}" stepKey="seeMobileAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideCollageLeftPaddingPropertyUnique.mobileValue)}}" stepKey="seeMobilePaddingStorefront"/>
     </test>
 </tests>

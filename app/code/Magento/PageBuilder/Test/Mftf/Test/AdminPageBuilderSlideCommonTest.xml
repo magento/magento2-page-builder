@@ -8,6 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <!--todo: slider defaults-->
     <test name="SliderAllAttributes">
         <annotations>
             <features value="PageBuilder"/>
@@ -485,7 +486,7 @@
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySlideStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideName"/>
-        <seeElement selector="{{SlideOnBackend.minimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeight"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeight"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStage"/>
         <!-- Validate Stage: No Tooltip -->
         <comment userInput="Validate Stage: No Tooltip" stepKey="commentNoTooltipStage"/>
@@ -991,29 +992,29 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
+            <argument name="property" value="PageBuilderSlidePosterPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{SlideOnBackend.noAlignment('1')}}" stepKey="seeAlignmentStage"/>
-        <seeElement selector="{{SlideOnBackend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage"/>
-        <seeElement selector="{{SlideOnBackend.noBorderColor('1')}}" stepKey="seeBorderColorStage"/>
-        <seeElement selector="{{SlideOnBackend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage"/>
-        <seeElement selector="{{SlideOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage"/>
-        <seeElement selector="{{SlideOnBackend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{SlideOnBackend.posterNoAlignment('1')}}" stepKey="seeAlignmentStage"/>
+        <seeElement selector="{{SlideOnBackend.posterBorder('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage"/>
+        <seeElement selector="{{SlideOnBackend.posterNoBorderColor('1')}}" stepKey="seeBorderColorStage"/>
+        <seeElement selector="{{SlideOnBackend.posterBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage"/>
+        <seeElement selector="{{SlideOnBackend.posterBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage"/>
+        <seeElement selector="{{SlideOnBackend.posterMargins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage"/>
+        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlidePosterPaddingPropertyDefault.desktopValue)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{SlideOnBackend.noAlignment('1')}}" stepKey="seeAlignmentStage2"/>
-        <seeElement selector="{{SlideOnBackend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage2"/>
-        <seeElement selector="{{SlideOnBackend.noBorderColor('1')}}" stepKey="seeBorderColorStage2"/>
-        <seeElement selector="{{SlideOnBackend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage2"/>
-        <seeElement selector="{{SlideOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage2"/>
-        <seeElement selector="{{SlideOnBackend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterNoAlignment('1')}}" stepKey="seeAlignmentStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterBorder('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterNoBorderColor('1')}}" stepKey="seeBorderColorStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterMargins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlidePosterPaddingPropertyDefault.desktopValue)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
@@ -1042,7 +1043,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
+            <argument name="property" value="PageBuilderSlidePosterPaddingPropertyDefault"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -1058,9 +1059,9 @@
         <seeElement selector="{{SlideOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStorefront"/>
         <seeElement selector="{{SlideOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesDefaultProperty.value)}}" stepKey="seeCSSClassesStorefront"/>
         <seeElement selector="{{SlideOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePaddingStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeMobilePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlidePosterPaddingPropertyDefault.desktopValue)}}" stepKey="seePaddingStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlidePosterPaddingPropertyDefault.mobileValue)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlidePosterPaddingPropertyDefault.mobileValue)}}" stepKey="dontSeeMobilePaddingStorefront"/>
     </test>
     <test name="SlideHasEditButtonTextButtonStyledInAdminAndStorefront">
         <!--todo-->
