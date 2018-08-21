@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import {escape, unescape} from "underscore";
 import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
 
@@ -14,7 +15,7 @@ export default class TagEscaper implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return value.replace(/&amp;lt;/g, "<").replace(/&amp;gt;/g, ">");
+        return unescape(unescape(value));
     }
 
     /**
@@ -25,6 +26,6 @@ export default class TagEscaper implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return data[name].toString().replace(/</g, "&amp;lt;").replace(/>/g, "&amp;gt;");
+        return escape(escape(data[name].toString()));
     }
 }

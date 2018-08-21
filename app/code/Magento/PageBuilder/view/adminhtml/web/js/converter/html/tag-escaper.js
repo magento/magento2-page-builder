@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -18,7 +18,7 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return value.replace(/&amp;lt;/g, "<").replace(/&amp;gt;/g, ">");
+      return (0, _underscore.unescape)((0, _underscore.unescape)(value));
     };
     /**
      * Convert value to knockout format
@@ -30,7 +30,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name].toString().replace(/</g, "&amp;lt;").replace(/>/g, "&amp;gt;");
+      return (0, _underscore.escape)((0, _underscore.escape)(data[name].toString()));
     };
 
     return TagEscaper;
