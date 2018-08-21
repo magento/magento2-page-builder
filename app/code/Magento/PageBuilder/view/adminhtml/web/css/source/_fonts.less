@@ -25,8 +25,7 @@
     @font-style: normal
 );
 
-[class^='icon-pagebuilder-'],
-[class*=' icon-pagebuilder-'] {
+.pagebuilder-icon {
     /* Better Font Rendering =========== */
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -38,4 +37,9 @@
     line-height: 1;
     speak: none;
     text-transform: none;
+}
+
+[class^='icon-pagebuilder-'],
+[class*=' icon-pagebuilder-'] {
+    &:extend(.pagebuilder-icon all);
 }

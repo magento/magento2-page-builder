@@ -36,6 +36,8 @@
         <element name="slideNavigationDot" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]//div[contains(@class,'navigation-dot')][{{arg2}}]" parameterized="true"/>
         <element name="activeSlideNavigationDot" type="button" selector="div.navigation-dot.active"/>
         <element name="slideNavigationDotNameTooltip" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]//span[@role='tooltip']" parameterized="true"/>
+        <element name="slideNavigationDragHandle" type="button" selector="a.navigation-dot-anchor"/>
+        <element name="slideNavigationDragHandleByIndex" type="button" selector="((//div[@data-role='slider'])[{{arg1}}]//a[contains(@class,'navigation-dot-anchor')])[{{arg2}}]" parameterized="true"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
         <!-- Settings Configuration -->
         <element name="autoPlay" type="button" selector="(//div[@data-role='slider'])[{{arg1}}][@data-autoplay='{{arg2}}']" parameterized="true"/>
@@ -60,6 +62,7 @@
     <section name="SlideOnFrontend">
         <element name="all" type="text" selector="div[data-role=slide]"/>
         <element name="base" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
+        <element name="slickSlideIndex" type="text" selector="[data-slick-index='{{arg1}}']" parameterized="true"/>
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>

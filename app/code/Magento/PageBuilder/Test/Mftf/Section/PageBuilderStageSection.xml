@@ -63,7 +63,7 @@
         <element name="contentTypeWithIcon" type="button" selector="//ul[@class='pagebuilder-panel-groups']//span[@class='content-type-icon']//i[@class='icon-pagebuilder-{{arg2}}']/../following-sibling::span[text()='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="PageBuilderContentTypeOptionsMenu">
-        <element name="contentTypeOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type > div.pagebuilder-options' parameterized="true"/>
+        <element name="contentTypeOptionsMenu" type="button" selector='(//div[contains(@class, "pagebuilder-{{arg1}}")]//div[contains(@class, "pagebuilder-options")])[1]' parameterized="true"/>
         <element name="contentTypeOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
         <element name="contentTypeMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
         <element name="contentTypeMoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
