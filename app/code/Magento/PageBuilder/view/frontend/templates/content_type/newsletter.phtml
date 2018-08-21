@@ -12,7 +12,7 @@ $uniqueIdentifier = uniqid();
 
 <div class="<?= $block->escapeHtmlAttr($block->getClasses()); ?>" style="<?= $block->escapeHtmlAttr($block->getStyles()); ?>">
     <div class="block newsletter">
-        <div class="title"><strong><?= $block->escapeHtml($block->getTitle()) ?></strong></div>
+        <div class="title"><strong><?= $block->escapeHtml($block->getTitle() ?? __('Newsletter')) ?></strong></div>
         <div class="content">
             <form class="form subscribe"
                   novalidate
@@ -20,17 +20,17 @@ $uniqueIdentifier = uniqid();
                   method="post"
                   data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
                 <div class="field newsletter">
-                    <label class="label" for="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"><span><?= $block->escapeHtml($block->getLabelText()) ?></span></label>
+                    <label class="label" for="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"><span><?= $block->escapeHtml($block->getLabelText() ?? __('Sign Up for Our Newsletter:')) ?></span></label>
                     <div class="control">
                         <input name="email" type="email" id="newsletter-<?= /* @noEscape */ $uniqueIdentifier ?>"
-                               placeholder="<?= $block->escapeHtml($block->getPlaceholder()) ?>"
+                               placeholder="<?= $block->escapeHtml($block->getPlaceholder() ?? __('Enter your email address')) ?>"
                                data-mage-init='{"mage/trim-input":{}}'
                                data-validate="{required:true, 'validate-email':true}"/>
                     </div>
                 </div>
                 <div class="actions">
-                    <button class="action subscribe primary" title="<?= $block->escapeHtmlAttr($block->getButtonText()) ?>" type="submit">
-                        <span><?= $block->escapeHtml($block->getButtonText()) ?></span>
+                    <button class="action subscribe primary" title="<?= $block->escapeHtmlAttr($block->getButtonText() ?? __('Subscribe')) ?>" type="submit">
+                        <span><?= $block->escapeHtml($block->getButtonText() ?? __('Subscribe')) ?></span>
                     </button>
                 </div>
             </form>
