@@ -1,17 +1,14 @@
-# PageBuilder Module Documentation
-
-PageBuilder is a Content Management System(CMS) module for Magento 2.3 and above.
-It replaces the default WYSIWYG Editor in the Admin area with a highly configurable drag-and-drop editing system.
+# Custom Theme Integration
 
 ## Navigation
 
-1. **Introduction**
+1. [Introduction]
 2. [Installation guide]
 3. [Contribution guide]
 4. [Developer documentation]
     1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
-    1. [Custom theme integration]
+    1. **Custom theme integration**
     1. [Third-party content type migration]
     1. [Iconography]
     1. [Add image uploader to content type]
@@ -62,3 +59,30 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+
+## What's in this topic
+This topic describes Page Builder specifics for usage with custom themes.  
+
+## Responsive Mobile Images
+Within Page Builder we have dynamic style generation for our mobile background images for containers. This functionality requires the mobile breakpoint to be specified, if different from the modules configuration, within your theme.
+
+The module provides this configuration default within `Magento_PageBuilder/etc/view.xml`. We use the industry standard maximum width of 767px for the mobile image breakpoint.
+```xml
+<vars module="Magento_PageBuilder">
+    <var name="breakpoints">
+        <var name="mobile">767px</var>
+    </var>
+</vars>
+```
+
+If your theme utilises this breakpoint for your mobile layout no additional configuration is required.
+
+If your theme does have a different mobile breakpoint you'll need to configure this value within your theme. This can be done within your themes `view.xml` by including the following within the `<view />` node:
+```xml
+<vars module="Magento_PageBuilder">
+    <var name="breakpoints">
+        <var name="mobile">BREAKPOINTpx</var>
+    </var>
+</vars>
+```
+You need to replace `BREAKPOINT` with the integer value of your themes breakpoint.
