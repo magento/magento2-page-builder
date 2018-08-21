@@ -60,7 +60,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = html;
-        return tempDiv.innerText;
+        return tempDiv.textContent;
       };
       /**
        * Record the value on focus, only conduct an update when data changes
@@ -169,7 +169,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.innerText = viewModel.parent.dataStore.get(field);
+      element.textContent = viewModel.parent.dataStore.get(field);
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
@@ -181,7 +181,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
       viewModel.parent.dataStore.subscribe(function () {
-        element.innerText = viewModel.parent.dataStore.get(field);
+        element.textContent = viewModel.parent.dataStore.get(field);
         handlePlaceholderClass(element);
       }, field);
     },
@@ -199,7 +199,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var _valueAccessor2 = valueAccessor(),
           field = _valueAccessor2.field;
 
-      element.innerText = viewModel.parent.dataStore.get(field);
+      element.textContent = viewModel.parent.dataStore.get(field);
       handlePlaceholderClass(element);
     }
   };

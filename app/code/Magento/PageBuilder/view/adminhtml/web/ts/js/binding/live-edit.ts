@@ -48,7 +48,7 @@ ko.bindingHandlers.liveEdit = {
             const tempDiv = document.createElement("div");
 
             tempDiv.innerHTML = html;
-            return tempDiv.innerText;
+            return tempDiv.textContent;
         };
 
         /**
@@ -145,7 +145,7 @@ ko.bindingHandlers.liveEdit = {
             handlePlaceholderClass(element);
         };
         element.setAttribute("data-placeholder", placeholder);
-        element.innerText = viewModel.parent.dataStore.get(field);
+        element.textContent = viewModel.parent.dataStore.get(field);
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
@@ -159,7 +159,7 @@ ko.bindingHandlers.liveEdit = {
 
         // Create a subscription onto the original data to update the internal value
         viewModel.parent.dataStore.subscribe(() => {
-            element.innerText = viewModel.parent.dataStore.get(field);
+            element.textContent = viewModel.parent.dataStore.get(field);
             handlePlaceholderClass(element);
         }, field);
     },
@@ -176,7 +176,7 @@ ko.bindingHandlers.liveEdit = {
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field} = valueAccessor();
 
-        element.innerText = viewModel.parent.dataStore.get(field);
+        element.textContent = viewModel.parent.dataStore.get(field);
         handlePlaceholderClass(element);
     },
 };
