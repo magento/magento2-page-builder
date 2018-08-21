@@ -42,7 +42,6 @@ class InlineEditingSupportedAdapterList
      */
     public function isSupported(string $editorPath) : bool
     {
-
-        return !empty($this->wysiwygAdaptersSupportingInlineEditing[$editorPath]) && $this->wysiwygConfig->isEnabled() ?? false;
+        return !empty($this->wysiwygAdaptersSupportingInlineEditing[$editorPath]) && $this->wysiwygConfig->isEnabled();
     }
 }
