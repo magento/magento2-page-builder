@@ -116,8 +116,8 @@ define([
          *
          * @returns {String}
          */
-        getStatusLabel: function (field, enabledOption, disabledOption) {
-            return this.meta()[field] === '1' ? $t(enabledOption) : $t(disabledOption);
+        getStatusLabel: function () {
+            return this.meta()['is_active'] === '1' ? $t('Active') : $t('Inactive');
         }
     });
 });
