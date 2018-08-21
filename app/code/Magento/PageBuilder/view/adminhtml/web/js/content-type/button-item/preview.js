@@ -66,8 +66,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/op
         optionsMenu = optionsMenu.first();
       }
 
-      optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).find("[data-element='link_text']").focus();
+      optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**

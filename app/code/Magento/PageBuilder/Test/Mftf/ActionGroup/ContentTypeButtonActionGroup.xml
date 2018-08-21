@@ -14,6 +14,7 @@
         </arguments>
         <comment userInput="Adding Button" stepKey="comment"/>
         <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-button-item').length+1)" stepKey="initialNumberOfButtonsPlusOne"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonLiveEdit1"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderButtonsContentType.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForOptionsMenu"/>
@@ -25,7 +26,7 @@
             <expectedResult type="variable">initialNumberOfButtonsPlusOne</expectedResult>
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonLiveEdit2"/>
     </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>

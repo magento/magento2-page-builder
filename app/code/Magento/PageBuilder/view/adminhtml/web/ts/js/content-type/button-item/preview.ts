@@ -5,7 +5,6 @@
 
 import $ from "jquery";
 import $t from "mage/translate";
-import _ from "underscore";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BasePreview from "../preview";
@@ -61,8 +60,8 @@ export default class Preview extends BasePreview {
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
         }
-        optionsMenu.parent().addClass("pagebuilder-options-visible");
         $(currentTarget).find("[data-element='link_text']").focus();
+        optionsMenu.parent().addClass("pagebuilder-options-visible");
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
