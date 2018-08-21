@@ -85,7 +85,7 @@
         <element name="parallaxClass" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@class='jarallax']" parameterized="true"/>
         <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@data-parallax-speed='{{arg2}}']" parameterized="true"/>
-        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/div[contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
@@ -122,7 +122,7 @@
         <element name="parallaxClass" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@class='jarallax']" parameterized="true"/>
         <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
-        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
