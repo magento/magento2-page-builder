@@ -10,11 +10,11 @@
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
     <div class="pagebuilder-slide-wrapper"
-         ko-style="Object.assign(getBackgroundStyles(), data.main.style())"
+         ko-style="Object.assign(data.desktop_image.style(), data.main.style)"
          event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
         <div class="pagebuilder-poster-overlay"
              attr="data.overlay.attributes"
-             ko-style="Object.assign(data.desktop_image.style(), data.overlay.style(), getPaddingStyles())"
+             ko-style="data.overlay.style"
              css="data.overlay.css">
             <scope args="getUploader().getUiComponent()">
                 <render />
