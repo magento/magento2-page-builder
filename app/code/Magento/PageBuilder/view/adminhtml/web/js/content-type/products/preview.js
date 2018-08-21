@@ -81,7 +81,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.placeholderText(this.messages.LOADING);
 
       _jquery.ajax(url, requestConfig).done(function (response) {
-        if (_typeof(response.data) !== "object" || typeof response.data.content === "undefined") {
+        if (_typeof(response.data) !== "object" || !Boolean(response.data.content)) {
           _this3.placeholderText(_this3.messages.EMPTY);
 
           return;

@@ -66,6 +66,7 @@ export default class Preview extends BasePreview {
 
         if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
             this.placeholderText(this.messages.EMPTY);
+
             return;
         }
 
@@ -83,7 +84,7 @@ export default class Preview extends BasePreview {
 
         $.ajax(url, requestConfig)
             .done((response) => {
-                if (typeof response.data !== "object" || typeof response.data.content === "undefined") {
+                if (typeof response.data !== "object" || !Boolean(response.data.content)) {
                     this.placeholderText(this.messages.EMPTY);
 
                     return;
