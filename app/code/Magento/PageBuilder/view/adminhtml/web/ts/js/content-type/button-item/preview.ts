@@ -54,7 +54,7 @@ export default class Preview extends BasePreview {
         // Ensure no other options panel and button drag handles are displayed
         $(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
         $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-        const currentTarget = $(event.currentTarget).closest("[data-element='main']")[0];
+        const currentTarget = $(event.currentTarget);
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
         if (!$(currentTarget).hasClass("type-nested")) {

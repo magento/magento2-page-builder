@@ -59,7 +59,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/op
       // Ensure no other options panel and button drag handles are displayed
       (0, _jquery)(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
       (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-      var currentTarget = (0, _jquery)(event.currentTarget).closest("[data-element='main']")[0];
+      var currentTarget = (0, _jquery)(event.currentTarget);
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
       if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
