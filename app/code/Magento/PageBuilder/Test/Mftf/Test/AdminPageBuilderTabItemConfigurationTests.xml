@@ -582,7 +582,7 @@
         <comment userInput="User sees Tab 2 Admin Preview updated with custom background color" stepKey="AC8"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTabBackgroundColorAdmin2"/>
         <comment userInput="User sees Tab 2 Admin Preview updated with custom minimum height" stepKey="AC9"/>
-        <seeElement selector="{{TabOnStage.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTabMinHeightAdmin2"/>
+        <seeElement selector="{{TabOnStage.minHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTabMinHeightAdmin2"/>
         <comment userInput="Switch tabs and other tab becomes hidden" stepKey="AC10"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
             <argument name="section" value="TabOnStage"/>
@@ -593,7 +593,7 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundColor('1', PageBuilderBackgroundColor_Pink.rgb)}}" stepKey="seeTabBackgroundColorAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_TopLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <comment userInput="User sees Tab 1 Admin Preview updated with custom minimum height" stepKey="AC12"/>
-        <seeElement selector="{{TabOnStage.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+        <seeElement selector="{{TabOnStage.minHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
         <comment userInput="User navigates to the storefront and sees changes applied" stepKey="AC13"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
@@ -608,7 +608,7 @@
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderBackgroundColor_Pink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
-        <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
+        <seeElement selector="{{TabOnStorefront.minHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
@@ -617,7 +617,7 @@
         <comment userInput="User sees Tab 2 with background color and min height on Storefront" stepKey="AC15"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTab2BackgroundColor"/>
-        <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
+        <seeElement selector="{{TabOnStorefront.minHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
         <comment userInput="User sees Tab 2 with height that equals to sum of min-height + paddingTop + paddingBottom" stepKey="verifyMinHeight"/>
         <executeJS function="return {{PageBuilderTabMinimumHeight600Property.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tab2ExpectedHeight"/>
         <executeJS function="return document.querySelector('{{TabOnStorefront.tabContent('2')}}').offsetHeight" stepKey="tab2Height"/>
@@ -1439,7 +1439,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElement selector="{{TabOnStage.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+        <seeElement selector="{{TabOnStage.minHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
@@ -1471,7 +1471,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
+        <seeElement selector="{{TabOnStorefront.minHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderBackgroundImage_GIF.path,PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.backgroundPosition('1', PageBuilderBackgroundPosition_BottomLeft.styleValue)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.backgroundAttachment('1', PageBuilderBackgroundAttachment_Scroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>

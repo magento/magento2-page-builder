@@ -42,7 +42,6 @@ export default class Preview {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
-    public display: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
      * @deprecated
