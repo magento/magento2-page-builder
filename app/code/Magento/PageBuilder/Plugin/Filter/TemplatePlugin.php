@@ -19,9 +19,20 @@ class TemplatePlugin
      */
     private $viewConfig;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Framework\View\ConfigInterface $viewConfig
+     */
     public function __construct(
+        \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\View\ConfigInterface $viewConfig
     ) {
+        $this->logger = $logger;
         $this->viewConfig = $viewConfig;
     }
 
@@ -32,7 +43,7 @@ class TemplatePlugin
      * @return string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterFilter(\Magento\Framework\Filter\Template $subject, string $result)
+    public function afterFilter(\Magento\Framework\Filter\Template $subject, string $result) : string
     {
         // Validate if the filtered result requires background image processing
         if (strpos($result, self::DATA_BACKGROUND_IMAGE) !== false) {
@@ -66,7 +77,7 @@ class TemplatePlugin
                 $matches
             );
 
-            return !empty($matches) ? $matches[1] : '';
+            return !empty($matches) ? $matches[1] : $result;
         }
         return $result;
     }
@@ -76,11 +87,11 @@ class TemplatePlugin
      *
      * @param \DOMXPath $xpath
      */
-    private function generateBackgroundImageStyles(\DOMXPath $xpath)
+    private function generateBackgroundImageStyles(\DOMXPath $xpath) : void
     {
         $nodes = $xpath->query('//*[@' . self:: DATA_BACKGROUND_IMAGE . ']');
         foreach ($nodes as $node) {
-            /* @var \DOMNode $node */
+            /* @var \DOMElement $node */
             $backgroundImages = $node->attributes->getNamedItem(self:: DATA_BACKGROUND_IMAGE);
             if ($backgroundImages->nodeValue !== '') {
                 $elementClass = uniqid('background-image-');
@@ -100,7 +111,6 @@ class TemplatePlugin
                     }
                     $node->setAttribute('class', $classes . $elementClass);
                 }
-                $node->removeAttribute(self:: DATA_BACKGROUND_IMAGE);
             }
         }
     }
@@ -155,9 +165,9 @@ class TemplatePlugin
     /**
      * Retrieve the mobile breakpoint from the view configuration
      *
-     * @return string
+     * @return null|string
      */
-    private function getMobileBreakpoint()
+    private function getMobileBreakpoint() : ?string
     {
         $breakpoints = $this->viewConfig->getViewConfig()->getVarValue('Magento_PageBuilder', 'breakpoints');
         return isset($breakpoints['mobile']) ? $breakpoints['mobile'] : null;
