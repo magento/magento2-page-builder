@@ -8,6 +8,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
+import _ from "underscore";
 
 /**
  * Add or remove the placeholder-text class from the element based on its content
@@ -37,7 +38,6 @@ ko.bindingHandlers.liveEdit = {
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field, placeholder} = valueAccessor();
         let focusedValue = element.innerHTML;
-
         /**
          * Strip HTML and return text
          *
@@ -81,6 +81,7 @@ ko.bindingHandlers.liveEdit = {
          *
          * Prevent styling such as bold, italic, and underline using keyboard commands
          * Prevent multi-line entries
+         * Debounce the saving of the state to 1 second to ensure that on save without first unfocus will succeed
          *
          * @param {any} event
          */
@@ -100,6 +101,32 @@ ko.bindingHandlers.liveEdit = {
             if (key === "pageLeftKey" || key === "pageRightKey") {
                 event.stopPropagation();
             }
+
+            _.debounce(() => {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                const getCharPosition = (editableDiv: HTMLElement): number => {
+                    let charPosition = 0;
+
+                    if (window.getSelection) {
+                        if (selection.rangeCount) {
+                            if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
+                                charPosition = selection.getRangeAt(0).endOffset;
+                            }
+                        }
+                    }
+                    return charPosition;
+                };
+                const pos: number = getCharPosition(element);
+
+                if (focusedValue !== stripHtml(element.innerHTML)) {
+                    viewModel.updateData(field, stripHtml(element.innerHTML));
+                }
+                range.setStart(element.childNodes[0], pos);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }, 300).call(this);
         };
 
         /**
