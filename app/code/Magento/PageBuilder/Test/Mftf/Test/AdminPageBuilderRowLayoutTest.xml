@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="RowValidateLayoutSectionDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
@@ -270,6 +270,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowLayout"/>
+            <skip>
+                <issueId value="MC-3724"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -351,6 +354,7 @@
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyBottom"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsThirdColumn"/>
+        <scrollTo selector="{{PageBuilderPanel.searchPanel}}" stepKey="scrollToSearchPanel"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToThirdRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>

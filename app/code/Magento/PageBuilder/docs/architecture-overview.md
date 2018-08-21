@@ -26,6 +26,7 @@
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
     1. [Full width page layouts]
+    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
@@ -53,7 +54,7 @@
 [Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
-[Add image uploader to content type]: image-uploader.md
+[Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
@@ -85,7 +86,7 @@ Use the following steps to display PageBuilder content on a Magento storefront o
 
 1. Replace all Magento directives such as `{{image url=path/to/image.png}}`
 2. Add custom stylesheet to provide the base styles that user can't edit.
-   This includes styles for the content types such as `slider`, `tabs`, `accordion`, etc.
+   This includes styles for the content types such as `slider`, `tabs`, etc.
 3. After the content renders, load and initialze the widgets and libraries on the frontend that need initalization, such as slider, tabs, etc.
 
 ## Integration with Magento and custom modules
@@ -179,7 +180,7 @@ Appearances allow you to make the following customization on existing content ty
 | Styles                   | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name`               |
 
 **Note:**
-*We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like slider, tabs, accordion, etc.*
+*We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like slider, tabs, etc.*
 
 [TypeScript]: https://www.typescriptlang.org/
 [master format]: master-format.md

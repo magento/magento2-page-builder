@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="DefaultSystemBordersAppearInAdmin">
         <annotations>
             <features value="PageBuilder"/>
@@ -38,9 +38,6 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionIntoStage">
-            <argument name="contentType" value="PageBuilderAccordionContentType"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -61,9 +58,6 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragNewsletterIntoStage">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragAnchorIntoStage">
-            <argument name="contentType" value="PageBuilderAnchorContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
@@ -1228,6 +1222,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
             <group value="pagebuilder-urlInput"/>
+            <skip>
+                <issueId value="MC-3623"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1406,7 +1403,7 @@
         <!--Switch to iFrame 1-->
         <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
         <switchToIFrame stepKey="exitIFrame1"/>
         <!--Add variable into Text content-->
         <comment userInput="Add widget into Text content" stepKey="addWidgetIntoTextContent"/>

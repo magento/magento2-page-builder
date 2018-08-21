@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
             <argument name="contentType"/>
@@ -41,6 +41,19 @@
         <waitForElementVisible selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentType.name}}" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
         <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
+    </actionGroup>
+    <actionGroup name="openOptionsMenu">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="null" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="null" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanelSmallByIndex">
         <arguments>

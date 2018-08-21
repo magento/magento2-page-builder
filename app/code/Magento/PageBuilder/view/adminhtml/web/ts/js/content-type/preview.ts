@@ -24,8 +24,6 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
 import {getSortableOptions} from "../drag-drop/sortable";
-import StyleAttributeFilter from "../master-format/style-attribute-filter";
-import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -39,15 +37,16 @@ export default class Preview {
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
     public wrapperElement: Element;
+    public placeholderCss: KnockoutObservable<object>;
+    public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
+    public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
+    public display: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
      * @deprecated
      */
     public previewData: ObservableObject = {};
-    /**
-     * @deprecated
-     */
-    public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
@@ -55,6 +54,7 @@ export default class Preview {
      * @type {[string]}
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
+
     private edit: Edit;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
@@ -75,6 +75,10 @@ export default class Preview {
         this.edit = new Edit(this.parent, this.parent.dataStore);
         this.observableUpdater = observableUpdater;
         this.displayLabel = ko.observable(this.config.label);
+        this.placeholderCss = ko.observable({
+            "visible": this.isEmpty,
+            "empty-placeholder-background": this.isPlaceholderVisible,
+        });
         this.setupDataFields();
         this.bindEvents();
     }
@@ -134,7 +138,7 @@ export default class Preview {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: Preview, event: Event) {
+    public onMouseOver(context: Preview, event: Event): void {
         if (this.mouseover) {
             return;
         }
@@ -434,8 +438,16 @@ export default class Preview {
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
+                this.updatePlaceholderVisibility(data);
             },
         );
+        if (this.parent.children) {
+            this.parent.children.subscribe(
+                (children: any[]) => {
+                    this.isEmpty(!children.length);
+                },
+            );
+        }
     }
 
     /**
@@ -451,9 +463,6 @@ export default class Preview {
      * @deprecated
      */
     protected setupDataFields() {
-        const styleAttributeMapper = new StyleAttributeMapper();
-        const styleAttributeFilter = new StyleAttributeFilter();
-
         // Create an empty observable for all fields
         if (this.config.fields) {
             _.keys(this.config.fields).forEach((key: string) => {
@@ -469,48 +478,6 @@ export default class Preview {
                 });
             },
         );
-
-        // Calculate the preview style utilising the style attribute mapper & appearance system
-        this.previewStyle = ko.computed(() => {
-            const data = _.mapObject(this.previewData, (value) => {
-                if (ko.isObservable(value)) {
-                    return value();
-                }
-                return value;
-            });
-
-            if (typeof data.appearance !== "undefined" &&
-                typeof this.config.appearances !== "undefined" &&
-                typeof this.config.appearances[data.appearance] !== "undefined") {
-                _.extend(data, this.config.appearances[data.appearance]);
-            }
-
-            // Extract data values our of observable functions
-            return this.afterStyleMapped(
-                styleAttributeMapper.toDom(
-                    styleAttributeFilter.filter(data),
-                ),
-            );
-        });
-
-        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
-            if (ko.isObservable(this.previewData[key])) {
-                this.previewData[key].subscribe(() => {
-                    this.previewStyle.notifySubscribers();
-                });
-            }
-        });
-    }
-
-    /**
-     * Callback function to update the styles are mapped
-     *
-     * @param {StyleAttributeMapperResult} styles
-     * @returns {StyleAttributeMapperResult}
-     * @deprecated
-     */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        return styles;
     }
 
     /**
@@ -560,5 +527,22 @@ export default class Preview {
         );
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});
+    }
+
+    /**
+     * Update placeholder background visibility base on height and padding
+     *
+     * @param {DataObject} data
+     */
+    private updatePlaceholderVisibility(data: DataObject): void {
+        const minHeight = !_.isEmpty(data.min_height) ? parseFloat(data.min_height as string) : 130;
+        const marginsAndPadding = _.isString(data.margins_and_padding) && data.margins_and_padding ?
+            JSON.parse(data.margins_and_padding as string) :
+            data.margins_and_padding || {};
+        const padding = marginsAndPadding.padding || {};
+        const paddingBottom = parseFloat(padding.bottom) || 0;
+        const paddingTop = parseFloat(padding.top) || 0;
+
+        this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
     }
 }

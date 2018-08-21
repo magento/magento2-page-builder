@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="InitialStatusBlock">
         <annotations>
             <features value="PageBuilder"/>
@@ -27,7 +27,6 @@
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
         </after>
@@ -728,5 +727,170 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
+    </test>
+    <test name="AddBlockWithTabToCmsPage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Add Block with Tab to CMS Page"/>
+            <description value="Verify that admin are able to add a block instance type with tab content to Block Content Block and see it on frontend"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-3742"/>
+            <useCaseId value="MC-1405"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- User sees tabs displayed with 1st default tab item created by default -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <comment userInput="User configures custom tab name, min height, color for first tab" stepKey="AC2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
+            <argument name="property" value="PageBuilderTabNameRandom1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabMinHeight">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+        <comment userInput="I fill out color using Color Picker" stepKey="fillOutColorOnTab"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderTabBackgroundColorPink"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField7">
+            <argument name="property" value="PageBuilderTabBackgroundColorPink"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <comment userInput="User updates tab settings and saves configuration" stepKey="saveBlock"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
+        <waitForPageLoad stepKey="waitForPageToLoad"/>
+        <!--User goes to created CMS page-->
+        <comment userInput="User goes to created CMS page" stepKey="NavigateToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!--Check that tab was rendered on the stage-->
+        <comment userInput="Check that tab was rendered on the stage" stepKey="commentCheckingThatTabAreRenderedOnTHeStage"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront2"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor2"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStage.overlay}}" stepKey="seeOverlayOnBlock"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Verify block on the frontend-->
+        <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage1"/>
+    </test>
+    <test name="AddBlockWithEmptyImageToCmsPage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Add Block with Empty Image to CMS Page"/>
+            <description value="Verify that admin are able to add a block instance type with empty image to Block Content Block and see it on frontend and on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-3740"/>
+            <useCaseId value="MC-1405"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Add Image to block-->
+        <comment userInput="Adding image to block" stepKey="commentAddingImageToBlock"/>
+        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
+        <waitForPageLoad stepKey="waitForPageToLoad"/>
+        <!--User goes to created CMS page-->
+        <comment userInput="User goes to created CMS page" stepKey="NavigateToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!--Check that image was not rendered on the stage-->
+        <comment userInput="Check that image was not rendered on the stage" stepKey="commentCheckingThatImageIsNotRenderedOnTheStage"/>
+        <executeJS function="return jQuery('.pagebuilder-block').css('height');" stepKey="height"/>
+        <assertGreaterThanOrEqual stepKey="assertElementHight">
+            <actualResult type="variable">height</actualResult>
+            <expectedResult type="string">10px</expectedResult>
+        </assertGreaterThanOrEqual>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStage"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnStage"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStage.overlay}}" stepKey="seeOverlayOnBlock"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <!--Verify block on the frontend-->
+        <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStorefront"/>
+        <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnFrontend"/>
     </test>
 </tests>
