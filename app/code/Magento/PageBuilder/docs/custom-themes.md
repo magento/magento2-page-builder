@@ -66,11 +66,11 @@ This topic describes Page Builder specifics for usage with custom themes.
 ## Responsive Mobile Images
 Within Page Builder we have dynamic style generation for our mobile background images for containers. This functionality requires the mobile breakpoint to be specified, if different from the modules configuration, within your theme.
 
-The module provides this configuration default within `Magento_PageBuilder/etc/view.xml`. We use the industry standard maximum width of 767px for the mobile image breakpoint.
+The module provides this configuration default within `Magento_PageBuilder/etc/view.xml`. We use the industry standard maximum width of 768px for the mobile image breakpoint.
 ```xml
 <vars module="Magento_PageBuilder">
     <var name="breakpoints">
-        <var name="mobile">767px</var>
+        <var name="mobile">768px</var>
     </var>
 </vars>
 ```
