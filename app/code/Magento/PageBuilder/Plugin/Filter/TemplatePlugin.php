@@ -131,9 +131,8 @@ class TemplatePlugin
                 'background-image' => 'url(' . $images['desktop_image'] . ')',
             ];
         }
-        if (isset($images['mobile_image']) && $this->getMobileBreakpoint()) {
-            $mediaQuery = '@media only screen and (max-width: ' . $this->getMobileBreakpoint() . ')';
-            $css[$mediaQuery]['.' . $elementClass] = [
+        if (isset($images['mobile_image']) && $this->getMobileMediaQuery()) {
+            $css[$this->getMobileMediaQuery()]['.' . $elementClass] = [
                 'background-image' => 'url(' . $images['mobile_image'] . ')',
             ];
         }
@@ -163,13 +162,23 @@ class TemplatePlugin
     }
 
     /**
-     * Retrieve the mobile breakpoint from the view configuration
+     * Generate the mobile media query from view configuration
      *
      * @return null|string
      */
-    private function getMobileBreakpoint() : ?string
+    private function getMobileMediaQuery() : ?string
     {
-        $breakpoints = $this->viewConfig->getViewConfig()->getVarValue('Magento_PageBuilder', 'breakpoints');
-        return isset($breakpoints['mobile']) ? $breakpoints['mobile'] : null;
+        $breakpoints = $this->viewConfig->getViewConfig()->getVarValue(
+            'Magento_PageBuilder',
+            'breakpoints/mobile/conditions'
+        );
+        if ($breakpoints && count($breakpoints) > 0) {
+            $mobileBreakpoint = "@media only screen ";
+            foreach ($breakpoints as $key => $value) {
+                $mobileBreakpoint .= "and (" . $key . ": " . $value . ") ";
+            }
+            return rtrim($mobileBreakpoint);
+        }
+        return null;
     }
 }
