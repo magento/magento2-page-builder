@@ -144,6 +144,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.focusedSlide(slideIndex);
     };
     /**
+     * Unset focused slide on focusout event.
+     *
+     * @param {PreviewCollection} data
+     * @param {JQueryEventObject} event
+     */
+
+
+    _proto.onFocusOut = function onFocusOut(data, event) {
+      if (_underscore.isNull(event.relatedTarget) || event.relatedTarget && !_jquery.contains(event.currentTarget, event.relatedTarget)) {
+        this.setFocusedSlide(null);
+      }
+    };
+    /**
      * Navigate to a slide
      *
      * @param {number} slideIndex
@@ -200,9 +213,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.onSortStop = function onSortStop() {
+    _proto.onSortStop = function onSortStop(event, params) {
       if (this.activeSlide() !== this.focusedSlide()) {
         this.setFocusedSlide(this.activeSlide(), true);
+      }
+
+      if (params.item.index() !== -1) {
+        _underscore.defer(this.focusElement.bind(this, event, params.item.index()));
       }
     };
     /**
@@ -240,6 +257,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return false;
     };
     /**
+     * Slider navigation click handler.
+     *
+     * @param {number} index
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onControlClick = function onControlClick(index, context, event) {
+      (0, _jquery)(event.target).focus();
+      this.navigateToSlide(index);
+      this.setFocusedSlide(index);
+    };
+    /**
      * Bind events
      */
 
@@ -264,6 +295,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 
           _this3.setActiveSlide(args.newPosition);
+
+          _underscore.defer(_this3.focusElement.bind(_this3, args.event, args.newPosition));
         }
       }); // When a slide content type is removed
       // we need to force update the content of the slider due to KO rendering issues
@@ -341,6 +374,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         }
       });
+    };
+    /**
+     * Take dropped element on focus.
+     *
+     * @param {JQueryEventObject} event
+     * @param {number} index
+     */
+
+
+    _proto.focusElement = function focusElement(event, index) {
+      var handleClassName = (0, _jquery)(event.target).data("sortable").options.handle;
+      (0, _jquery)((0, _jquery)(event.target).find(handleClassName)[index]).focus();
     };
     /**
      * To ensure smooth animations we need to lock the container height

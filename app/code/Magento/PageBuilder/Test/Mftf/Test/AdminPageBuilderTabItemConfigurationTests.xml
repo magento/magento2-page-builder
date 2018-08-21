@@ -135,6 +135,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
         <!-- Validate Default Values in Edit Tabs -->
         <comment userInput="Validate Default Values in Edit Tabs" stepKey="commentValidateDefaultValuesInEditTabs"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -617,6 +618,13 @@
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTab2BackgroundColor"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
+        <comment userInput="User sees Tab 2 with height that equals to sum of min-height + paddingTop + paddingBottom" stepKey="verifyMinHeight"/>
+        <executeJS function="return {{PageBuilderTabMinimumHeight600Property.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tab2ExpectedHeight"/>
+        <executeJS function="return document.querySelector('{{TabOnStorefront.tabContent('2')}}').offsetHeight" stepKey="tab2Height"/>
+        <assertEquals stepKey="assertTabMinHeight">
+            <expectedResult type="variable">tab2ExpectedHeight</expectedResult>
+            <actualResult type="variable">tab2Height</actualResult>
+        </assertEquals>
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedNoBackgroundRepeat">
         <annotations>

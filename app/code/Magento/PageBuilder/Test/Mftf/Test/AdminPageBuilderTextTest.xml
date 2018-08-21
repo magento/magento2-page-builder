@@ -20,9 +20,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-tabs-content"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -131,10 +128,10 @@
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
+        <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="TextSaveEmptyTextContentType">
         <annotations>
@@ -147,9 +144,6 @@
             <testCaseId value="MC-3464"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -190,9 +184,6 @@
             <testCaseId value="MC-3465"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -229,12 +220,13 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!--Verify Text Content Type on stage after saving cms page-->
-        <comment userInput="Verify text content type on storefront" stepKey="commentVerifyTextOnStage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStage"/>
+        <comment userInput="Verify text content type on stage" stepKey="commentVerifyTextOnStage"/>
+        <grabValueFrom selector="{{TextOnStage.tinymce('1')}}" stepKey="grabStageValue"/>
+        <assertEmpty stepKey="seeTextOnStage" actual="grabStageValue" actualType="variable"/>
         <!--Verify Text Content Type on storefront-->
         <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextOnStorefront"/>
+        <dontSeeElement selector="{{TextOnStorefront.base('1')}}" stepKey="doneSeeTextOnStorefront"/>
     </test>
     <test name="TextInlineImageEditing">
         <annotations>
@@ -247,9 +239,6 @@
             <testCaseId value="MC-3466"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -325,9 +314,6 @@
             <testCaseId value="MC-3467"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -354,7 +340,7 @@
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="waitForVariableCountryStage1"/>
         <!--Select another variable-->
         <comment userInput="Select another variable" stepKey="selectAnotherVariable"/>
-        <doubleClick  selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
+        <doubleClick  selector="{{TextOnStage.directive('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="doubleClickOnVariablePlaceholder"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="waitForVariable1"/>
         <checkOption selector="{{VariableSection.Radio(TinyMCEVariableBaseURL.variableName)}}" stepKey="selectVariable"/>
@@ -393,9 +379,6 @@
             <testCaseId value="MC-3468"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPageA" />
@@ -425,7 +408,7 @@
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage1"/>
         <!--Verify widget edit page-->
         <comment userInput="Verify widget edit page" stepKey="commentVerifyEditWidget"/>
-        <doubleClick  selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
+        <doubleClick  selector="{{TextOnStage.directive('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="doubleClickOnWidgetPlaceholder"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{WidgetSection.CancelBtnEnabled}}" stepKey="waitForWidgetType"/>
@@ -450,7 +433,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Verify Widget Content Type on storefront" stepKey="commentVerifyWidgetOnStorefront"/>
         <amOnPage url="$$createCMSPageA.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}/$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}$$createCMSPageB.identifier$$']" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="TextVerifyTinyMCE4ToolbarOnPageBuilderStage">
         <annotations>
@@ -532,7 +515,6 @@
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
         <seeElement selector="{{TextOnStorefront.textInImportantStyle(PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnStorefront" />
     </test>
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TextAddTextWithCustomTinyMCE">
         <annotations>
             <features value="PageBuilder"/>
@@ -571,29 +553,6 @@
         <seeElement selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="seeFontsize"/>
         <seeElement selector="{{WYSIWYGOnPageBuilder.textColor}}" stepKey="seeTextColor"/>
         <seeElement selector="{{WYSIWYGOnPageBuilder.backgroundColor}}" stepKey="seeBackgroundColor"/>
-
-        <!--Verify FontSize-->
-        <click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>
-        <see userInput="10px" stepKey="see10px" />
-        <see userInput="12px" stepKey="see12px" />
-        <see userInput="14px" stepKey="see14px" />
-        <see userInput="16px" stepKey="see16px" />
-        <see userInput="18px" stepKey="see18px" />
-        <see userInput="20px" stepKey="see20px" />
-        <see userInput="24px" stepKey="see24px" />
-        <see userInput="26px" stepKey="see26px" />
-        <see userInput="28px" stepKey="see28px" />
-        <see userInput="32px" stepKey="see32px" />
-        <see userInput="34px" stepKey="see34px" />
-        <see userInput="36px" stepKey="see36px" />
-        <see userInput="38px" stepKey="see38px" />
-        <see userInput="40px" stepKey="see40px" />
-        <see userInput="42px" stepKey="see42px" />
-        <see userInput="48px" stepKey="see48px" />
-        <see userInput="52px" stepKey="see52px" />
-        <see userInput="56px" stepKey="see56px" />
-        <see userInput="64px" stepKey="see64px" />
-        <see userInput="72px" stepKey="see72px" />
 
         <!--Verify FontStyle on preview-->
         <executeJS function="tinyMCE.get('pagebuilder_text_form_content').setContent('{{PageBuilderTextContentTypeDefault.value}}');" stepKey="executeJSFillContent"/>
@@ -1237,9 +1196,6 @@
             <testCaseId value="MAGETWO-91076"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1406,9 +1362,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-customBeforeAfter"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1469,7 +1422,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{TextOnStorefront.textAreaWidget('1', '{{_ENV.MAGENTO_BASE_URL}}', PageBuilderPageTitle.pageName)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, 'text', PageBuilderPageTitle.pageName)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextDisabledWYSIWYGAddVariable">
         <annotations>
@@ -1656,9 +1609,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-column-content"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1755,10 +1705,10 @@
         <!--Verify Content Block on storefront-->
         <comment userInput="Verify empty Content Block on storefront" stepKey="commentVerifyEmptyBlock"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <see userInput="{{PageBuilderTextContentTypeDefault.value}}" stepKey="seeTextContentType"/>
+        <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textAreaWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="ValidateShowHideOnTextDefaultState">
         <annotations>

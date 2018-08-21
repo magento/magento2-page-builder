@@ -46,7 +46,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       }).on("sortstop", function (event, ui) {
         _events.default.trigger("childContentType:sortStop", {
           instance: instance,
-          ui: ui
+          ui: ui,
+          originalPosition: originalPosition
         });
       }).on("sortupdate", function (event, ui) {
         if (this === ui.item.parent()[0]) {
@@ -67,7 +68,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
               instance: instance,
               newPosition: index,
               originalPosition: originalPosition,
-              ui: ui
+              ui: ui,
+              event: event
             });
           }
         }

@@ -1327,9 +1327,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
             <group value="pagebuilder-urlInput"/>
-            <skip>
-                <issueId value="MC-3720"/>
-            </skip>
         </annotations>
         <before>
             <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
@@ -1406,7 +1403,7 @@
         <!--Switch to iFrame 1-->
         <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableBaseURL.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
         <switchToIFrame stepKey="exitIFrame1"/>
         <!--Add variable into Text content-->
         <comment userInput="Add widget into Text content" stepKey="addWidgetIntoTextContent"/>

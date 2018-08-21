@@ -23,17 +23,25 @@ class WidgetInitializer extends Template
     private $jsonSerializer;
 
     /**
+     * @var \Magento\PageBuilder\Model\WidgetInitializerConfig
+     */
+    private $config;
+
+    /**
      * WidgetInitializer constructor.
      * @param Template\Context $context
      * @param \Magento\Framework\Serialize\Serializer\Json $jsonEncoder
+     * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $config
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Serialize\Serializer\Json $jsonEncoder,
+        \Magento\PageBuilder\Model\WidgetInitializerConfig $config,
         array $data = []
     ) {
         $this->jsonSerializer = $jsonEncoder;
+        $this->config = $config;
         parent::__construct($context, $data);
     }
 
@@ -44,21 +52,6 @@ class WidgetInitializer extends Template
      */
     public function getConfig() : string
     {
-        $widgetsConfig = $this->getData('config');
-        $resultConfig = [];
-        foreach ($widgetsConfig as $contentTypeName => $config) {
-            $selector = sprintf('div[data-role="%s"]', $contentTypeName);
-            foreach ($config as $item) {
-                if (!isset($item['component'])) {
-                    continue;
-                }
-                if (isset($item['appearance'])) {
-                    $selector .= sprintf('[data-appearance="%s"]', $item['appearance']);
-                }
-                $componentConfig = isset($item['config']) ? $item['config'] : '{}';
-                $resultConfig[$selector] = [$item['component'] => $componentConfig];
-            }
-        }
-        return $this->jsonSerializer->serialize($resultConfig);
+        return $this->jsonSerializer->serialize($this->config->getConfig());
     }
 }

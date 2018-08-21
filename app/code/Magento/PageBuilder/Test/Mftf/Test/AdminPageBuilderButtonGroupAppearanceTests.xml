@@ -1956,7 +1956,7 @@
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle(document.querySelectorAll('{{TabOnStorefront.all}}')[0]).width)" stepKey="tabWidthStorefront"/>
+        <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefront"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront"/>
         <assertLessThan stepKey="assertButtonSmallerThanTabStorefront">
             <expectedResult type="variable">$tabWidthStorefront</expectedResult>
@@ -1972,7 +1972,7 @@
             <argument name="firstButtonIndex" value="3"/>
             <argument name="secondButtonIndex" value="4"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle(document.querySelectorAll('{{TabOnStorefront.all}}')[0]).width)" stepKey="tabWidthStorefrontMobile"/>
+        <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefrontMobile"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
         <assertLessThan stepKey="assertButtonSmallerThanTabStorefrontMobile">
             <expectedResult type="variable">$tabWidthStorefrontMobile</expectedResult>
