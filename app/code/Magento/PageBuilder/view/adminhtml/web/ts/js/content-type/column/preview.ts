@@ -53,6 +53,7 @@ export default class Preview extends PreviewCollection {
         // Update the width label for the column
         this.parent.dataStore.subscribe(this.updateColumnWidthClass.bind(this), "width");
         this.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
+        this.parent.dataStore.subscribe(this.triggerChildren.bind(this), "width");
         this.parent.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
     }
 
@@ -297,5 +298,16 @@ export default class Preview extends PreviewCollection {
             events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
             events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
         });
+    }
+
+    /**
+     * Delegate trigger call on children elements.
+     */
+    private triggerChildren() {
+        if (this.parent.parent.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.parent.dataStore.get("width").toString());
+
+            this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
+        }
     }
 }

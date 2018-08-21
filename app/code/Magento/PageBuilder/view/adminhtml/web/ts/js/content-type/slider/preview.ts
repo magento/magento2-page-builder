@@ -37,9 +37,13 @@ import {default as SliderPreview} from "../slider/preview";
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
+    protected events: DataObject = {
+        columnWidthChangeAfter: "onColumnResize",
+    };
     private element: Element;
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
+
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
@@ -407,5 +411,16 @@ export default class Preview extends PreviewCollection {
             waitForAnimate: false,
             swipe: false,
         };
+    }
+
+    /**
+     * Fit slider in column container
+     *
+     * @param params
+     */
+    private onColumnResize(params: any) {
+        setTimeout(() => {
+            $(this.element).slick("setPosition");
+        }, 250);
     }
 }

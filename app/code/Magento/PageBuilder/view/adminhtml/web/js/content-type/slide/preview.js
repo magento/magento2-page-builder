@@ -310,6 +310,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     /**
      * Event handler for wysiwyg focus
      * Fixes z-index issues for tabs and column
+     * Fixes slider
      */
 
 
@@ -321,7 +322,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
         $element.closest(selector).css("z-index", 100);
-      });
+      }); // Disable slider keyboard events and fix problem with overflow hidden issue
+
 
       (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false, true);
       $notActiveSlides.hide();
@@ -332,6 +334,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     /**
      * Event handler for wysiwyg blur
      * Fixes z-index issues for tabs and column
+     * Fixes slider
      */
 
 
@@ -343,7 +346,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
         $element.closest(selector).css("z-index", "");
-      });
+      }); // Enable slider keyboard events and revert changes made in onFocus
+
 
       $slider.css("overflow", "hidden");
       sliderContent.style.transform = this.sliderTransform;

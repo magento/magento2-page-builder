@@ -54,6 +54,7 @@ export default class Preview {
      * @type {[string]}
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
+    protected events: DataObject = {};
 
     private edit: Edit;
     private observableUpdater: ObservableUpdater;
@@ -91,6 +92,40 @@ export default class Preview {
     get previewTemplate(): string {
         const appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
         return appearanceConfig(this.config.name, appearance).preview_template;
+    }
+
+    /**
+     * Calls methods by event name.
+     *
+     * @param {string}  eventName
+     * @param {any} params
+     */
+    public trigger(eventName: string, params: any): void {
+        if (this.events[eventName]) {
+            const methods = this.events[eventName] as string;
+
+            _.each(methods.split(" "), (methodName) => {
+                const method = (this as any)[methodName];
+
+                if (method) {
+                    method.call(this, params);
+                }
+            }, this);
+        }
+    }
+
+    /**
+     * Tries to call specified method of a current content type.
+     *
+     * @param args
+     */
+    public delegate(...args: any[]) {
+        const methodName = args.slice(0, 1)[0];
+        const method = (this as any)[methodName];
+
+        if (method) {
+            method.apply(this, args.slice(1, args.length));
+        }
     }
 
     /**

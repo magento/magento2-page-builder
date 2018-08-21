@@ -328,8 +328,8 @@ export default class Preview extends BasePreview {
     /**
      * Event handler for wysiwyg focus
      * Fixes z-index issues for tabs and column
+     * Fixes slider
      */
-
     private onFocus() {
         const $element = $(this.element);
         const $slider = $($element.parents(this.sliderSelector));
@@ -340,6 +340,7 @@ export default class Preview extends BasePreview {
             $element.closest(selector as string).css("z-index", 100);
         });
 
+        // Disable slider keyboard events and fix problem with overflow hidden issue
         $($slider.parent()).slick("slickSetOption", "accessibility", false, true);
         $notActiveSlides.hide();
         this.sliderTransform = sliderContent.style.transform;
@@ -350,6 +351,7 @@ export default class Preview extends BasePreview {
     /**
      * Event handler for wysiwyg blur
      * Fixes z-index issues for tabs and column
+     * Fixes slider
      */
     private onBlur() {
         const $element = $(this.element);
@@ -361,6 +363,7 @@ export default class Preview extends BasePreview {
             $element.closest(selector as string).css("z-index", "");
         });
 
+        // Enable slider keyboard events and revert changes made in onFocus
         $slider.css("overflow", "hidden");
         sliderContent.style.transform = this.sliderTransform;
         $notActiveSlides.show();
