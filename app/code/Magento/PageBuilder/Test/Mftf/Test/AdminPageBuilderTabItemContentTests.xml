@@ -465,25 +465,25 @@
         <!-- Edit First Slide -->
         <comment userInput="Edit First Slide" stepKey="EditFirstSlide"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemName1"/>
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
-            <argument name="property" value="PageBuilderSlideItemContent1"/>
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL1">
-            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideItemShowButton_Always">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
-            <argument name="property" value="PageBuilderSlideItemButtonText1"/>
+            <argument name="property" value="PageBuilderSlideItemButtonText_Slide1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -493,9 +493,9 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSliderOnPageBuilderPage"/>
-        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent1.value)}}" stepKey="seeSlide1ContentDisplayed"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText1.value)}}" stepKey="seeSlide1ButtonTextDisplayed"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayed"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayed"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeSlide1LinkURL"/>
         <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColor"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
     </test>

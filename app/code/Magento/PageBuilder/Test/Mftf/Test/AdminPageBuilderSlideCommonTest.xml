@@ -42,7 +42,7 @@
         <!-- Fill Out Slide Item Edit Panel -->
         <comment userInput="Fill Out Slide Item Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
-            <argument name="property" value="PageBuilderSlideItemContent1"/>
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
@@ -106,7 +106,7 @@
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE2">
-            <argument name="property" value="PageBuilderSlideItemContent2"/>
+            <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
@@ -133,11 +133,11 @@
         <!-- Validate Stage: Slide 1 -->
         <comment userInput="Validate Stage: Slide 1" stepKey="commentValidateSlide1Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Stage"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent1.value)}}" stepKey="seeSlide1ContentStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
         <!-- Validate Stage: Slide 2 -->
         <comment userInput="Validate Stage: Slide 2" stepKey="commentValidateSlide2Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Stage"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent2.value)}}" stepKey="seeSlide2ContentStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -162,11 +162,11 @@
         <!-- Validate Storefront: Slide 1 -->
         <comment userInput="Validate Storefront: Slide 1" stepKey="commentValidateSlide1Storefront"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Storefront"/>
-        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent1.value)}}" stepKey="seeSlide1ContentStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStorefront"/>
         <!-- Validate Storefront: Slide 2 -->
         <comment userInput="Validate Storefront: Slide 2" stepKey="commentValidateSlide2Storefront"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Storefront"/>
-        <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent2.value)}}" stepKey="seeSlide2ContentStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStorefront"/>
     </test>
     <test name="SlideAppearanceSectionDefaults">
         <annotations>
@@ -201,21 +201,21 @@
         <!-- Verify default and available values on Appearance section of Add Slide form -->
         <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
         <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
-            <argument name="property1" value="PageBuilderSlideAppearanceDefaultProperty"/>
-            <argument name="property2" value="PageBuilderSlideCollageLeftProperty"/>
-            <argument name="property3" value="PageBuilderSlideCollageCenteredProperty"/>
-            <argument name="property4" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property1" value="PageBuilderAppearance_Poster"/>
+            <argument name="property2" value="PageBuilderAppearance_CollageLeft"/>
+            <argument name="property3" value="PageBuilderAppearance_CollageCentered"/>
+            <argument name="property4" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
         <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
         <dontSeeElement selector="//li[@name='advanced content']" stepKey="advancedContentAppearanceNotPresent"/>
         <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemSlideName_Slide1.section, PageBuilderSlideItemSlideName_Slide1.fieldName)}}" stepKey="grabNameDefaultValue"/>
         <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
             <actualResult type="variable">grabNameDefaultValue</actualResult>
         </assertEmpty>
         <comment userInput="Minimum Height: input defaults to 300" stepKey="AC4"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinHeightDefault300">
-            <argument name="property" value="PageBuilderSlideMinHeight"/>
+            <argument name="property" value="PageBuilderSlideItemMinimumHeight_300"/>
         </actionGroup>
     </test>
     <test name="SlideBackgroundSectionDefaults">
@@ -319,48 +319,48 @@
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="validateTextInTinyMCE" stepKey="seeMessageText">
-            <argument name="property" value="PageBuilderSlideMessage_Default"/>
+            <argument name="property" value="PageBuilderSlideItemMessage_Empty"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="seeLink">
-            <argument name="property" value="PageBuilderSlideLinkURL_Default"/>
+            <argument name="property" value="PageBuilderSlideItemLinkURL_Empty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeShowButton">
-            <argument name="property" value="PageBuilderSlideShowButtonDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemShowButton_Never"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText">
-            <argument name="property" value="PageBuilderSlideButtonText_Default"/>
+            <argument name="property" value="PageBuilderSlideItemButtonText_Empty"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeButtonType">
-            <argument name="property" value="PageBuilderSlideButtonTypeDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeShowOverlay">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemShowOverlay_Never"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
-            <argument name="property" value="PageBuilderSlideContentOverlayColorProperty"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_HexWhite"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideOverlayTransparencyDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_0"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.noMessageContent('1')}}" stepKey="seeMessageContentStage"/>
-        <seeElement selector="{{SlideOnBackend.showButton('1', PageBuilderSlideShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStage"/>
+        <seeElement selector="{{SlideOnBackend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStage"/>
         <seeElement selector="{{SlideOnBackend.noButton('1')}}" stepKey="seeNoButtonStage"/>
-        <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStage"/>
+        <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStage"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SlideOnBackend.noMessageContent('1')}}" stepKey="seeMessageContentStage2"/>
-        <seeElement selector="{{SlideOnBackend.showButton('1', PageBuilderSlideShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStage2"/>
+        <seeElement selector="{{SlideOnBackend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStage2"/>
         <seeElement selector="{{SlideOnBackend.noButton('1')}}" stepKey="seeNoButtonStage2"/>
-        <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStage2"/>
+        <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStage2"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
         <!-- Validate Stage: No Overlay -->
         <comment userInput="Validate Stage: No Overlay" stepKey="commentValidateNoOverlayStage"/>
@@ -372,31 +372,31 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="validateTextInTinyMCE" stepKey="seeMessageText2">
-            <argument name="property" value="PageBuilderSlideMessage_Default"/>
+            <argument name="property" value="PageBuilderSlideItemMessage_Empty"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="seeLink2">
-            <argument name="property" value="PageBuilderSlideLinkURL_Default"/>
+            <argument name="property" value="PageBuilderSlideItemLinkURL_Empty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeShowButton2">
-            <argument name="property" value="PageBuilderSlideShowButtonDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemShowButton_Never"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText2">
-            <argument name="property" value="PageBuilderSlideButtonText_Default"/>
+            <argument name="property" value="PageBuilderSlideItemButtonText_Empty"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeButtonType2">
-            <argument name="property" value="PageBuilderSlideButtonTypeDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeShowOverlay2">
-            <argument name="property" value="PageBuilderSlideShowContentOverlayDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemShowOverlay_Never"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor2">
-            <argument name="property" value="PageBuilderSlideOverlayColor_Default"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Empty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayTransparency2">
-            <argument name="property" value="PageBuilderSlideOverlayTransparencyDefaultProperty"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_0"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -405,10 +405,10 @@
         </actionGroup>
         <seeElementInDOM selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefront"/>
         <dontSeeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="dontSeeMessageContentStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkURL_Default.value)}}" stepKey="seeLinkStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefront"/>
         <!-- Validate Storefront: No Overlay -->
         <comment userInput="Validate Storefront: No Overlay" stepKey="commentValidateNoOverlayStorefront"/>
@@ -429,10 +429,10 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElementInDOM selector="{{SlideOnFrontend.mobileNoMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefrontMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.mobileNoMessageContent('1')}}" stepKey="dontSeeMessageContentStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkURL_Default.value)}}" stepKey="seeLinkStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileNoButton('1')}}" stepKey="seeNoButtonTextStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile"/>
         <!-- Validate Storefront Mobile: No Overlay -->
         <comment userInput="Validate Storefront Mobile: No Overlay" stepKey="commentValidateNoOverlayStorefrontMobile"/>
@@ -484,9 +484,9 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeEmptySlideStage"/>
-        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStage"/>
-        <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideName"/>
-        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeight"/>
+        <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStage"/>
+        <seeElement selector="{{SlideOnBackend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideName"/>
+        <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeight"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStage"/>
         <!-- Validate Stage: No Tooltip -->
         <comment userInput="Validate Stage: No Tooltip" stepKey="commentNoTooltipStage"/>
@@ -505,17 +505,17 @@
         </actionGroup>
         <!-- Validate Storefront: Slide Item Defaults -->
         <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideNameStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeightStorefront"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefront"/>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSource"/>
         <!-- Validate Storefront: Slide Item Defaults -->
         <comment userInput="Validate Storefront: Slide Item Defaults" stepKey="commentValidateSlideItemStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderSlideAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemName_Empty.value)}}" stepKey="seeSlideNameStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileMinimumHeight('1', PageBuilderSlideMinimumHeightDefaultProperty.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileMinimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSourceMobile"/>
     </test>
@@ -564,7 +564,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText1">
-            <argument name="property" value="PageBuilderSlideItemName1"/>
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
@@ -611,16 +611,16 @@
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
-            <argument name="property" value="PageBuilderSlideItemName2"/>
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
 
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide name" stepKey="AC15"/>
         <click stepKey="unfocusNavigation" selector="{{SliderOnStage.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
-        <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('2')}}" stepKey="seeSlideName2InTooltip"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('2')}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
-        <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
     </test>
     <test name="SliderDelete">
         <annotations>
@@ -1150,7 +1150,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderSlidePosterPaddingPropertyDefault"/>
+            <argument name="property" value="PageBuilderSlideItemPosterPadding_Default"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -1161,7 +1161,7 @@
         <seeElement selector="{{SlideOnBackend.posterBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage"/>
         <seeElement selector="{{SlideOnBackend.posterBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{SlideOnBackend.posterMargins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlidePosterPaddingPropertyDefault.desktopValue)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.desktopValue)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -1172,7 +1172,7 @@
         <seeElement selector="{{SlideOnBackend.posterBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStage2"/>
         <seeElement selector="{{SlideOnBackend.posterBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{SlideOnBackend.posterMargins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlidePosterPaddingPropertyDefault.desktopValue)}}" stepKey="seePaddingStage2"/>
+        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.desktopValue)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
@@ -1201,7 +1201,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderSlidePosterPaddingPropertyDefault"/>
+            <argument name="property" value="PageBuilderSlideItemPosterPadding_Default"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -1217,9 +1217,9 @@
         <seeElement selector="{{SlideOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeBorderRadiusStorefront"/>
         <seeElement selector="{{SlideOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesDefaultProperty.value)}}" stepKey="seeCSSClassesStorefront"/>
         <seeElement selector="{{SlideOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlidePosterPaddingPropertyDefault.desktopValue)}}" stepKey="seePaddingStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlidePosterPaddingPropertyDefault.mobileValue)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlidePosterPaddingPropertyDefault.mobileValue)}}" stepKey="dontSeeMobilePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlideItemPosterPadding_Default.desktopValue)}}" stepKey="seePaddingStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideItemPosterPadding_Default.mobileValue)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideItemPosterPadding_Default.mobileValue)}}" stepKey="dontSeeMobilePaddingStorefront"/>
     </test>
     <test name="SlideHasEditButtonTextButtonStyledInAdminAndStorefront">
         <annotations>
@@ -1261,13 +1261,13 @@
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonType">
-            <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
+            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterButtonText">
-            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
+            <argument name="property" value="PageBuilderSlideItemButtonText_Common"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1276,8 +1276,8 @@
         <comment userInput="Validate Stage: Primary" stepKey="commentValidateStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonStage"/>
-        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideButtonTypePrimaryProperty.value)}}" stepKey="seeButtonTypeStage"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="seeButtonTextStage"/>
+        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Primary.value)}}" stepKey="seeButtonTypeStage"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage"/>
         <!-- Validate Storefront: Primary -->
         <comment userInput="Validate Storefront: Primary" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openNewTab"/>
@@ -1286,8 +1286,8 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideButtonTypePrimaryProperty.value)}}" stepKey="seeButtonTypeStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Primary.value)}}" stepKey="seeButtonTypeStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront"/>
         <!-- Change button type value to secondary -->
         <comment userInput="Change button type value to secondary" stepKey="commentSecondary"/>
         <!-- Change button type value to secondary -->
@@ -1300,7 +1300,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonType2">
-            <argument name="property" value="PageBuilderSlideButtonTypeSecondaryProperty"/>
+            <argument name="property" value="PageBuilderSlideItemButtonType_Secondary"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
@@ -1309,8 +1309,8 @@
         <comment userInput="Validate Stage: Secondary" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonStage2"/>
-        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStage2"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="seeButtonTextStage2"/>
+        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStage2"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage2"/>
         <!-- Validate Storefront: Secondary -->
         <comment userInput="Validate Storefront: Secondary" stepKey="commentValidateStorefront2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -1318,8 +1318,8 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront2"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonStorefront2"/>
-        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStorefront2"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront2"/>
+        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStorefront2"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront2"/>
         <!-- Change button type value to link -->
         <comment userInput="Change button type value to link" stepKey="commentLink"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
@@ -1330,7 +1330,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonType3">
-            <argument name="property" value="PageBuilderSlideButtonTypeLinkProperty"/>
+            <argument name="property" value="PageBuilderSlideItemButtonType_Link"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
@@ -1339,8 +1339,8 @@
         <comment userInput="Validate Stage: Link" stepKey="commentValidateStage3"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStage3"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonStage3"/>
-        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideButtonTypeLinkProperty.value)}}" stepKey="seeButtonTypeStage3"/>
-        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="seeButtonTextStage3"/>
+        <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Link.value)}}" stepKey="seeButtonTypeStage3"/>
+        <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage3"/>
         <!-- Validate Storefront: Link -->
         <comment userInput="Validate Storefront: Link" stepKey="commentValidateStorefront3"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
@@ -1348,8 +1348,8 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront3"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonStorefront3"/>
-        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideButtonTypeLinkProperty.value)}}" stepKey="seeButtonTypeStorefront3"/>
-        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideButtonTextProperty.value)}}" stepKey="seeButtonTextStorefront3"/>
+        <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Link.value)}}" stepKey="seeButtonTypeStorefront3"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront3"/>
     </test>
     <test name="SlideLinkURLFunctions">
         <annotations>
@@ -1385,9 +1385,9 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabProperty"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_True"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1396,11 +1396,11 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeLinkUrlInDom"/>
         <seeElementInDOM selector="{{SlideOnFrontend.openInNewTab('1')}}" stepKey="verifyLinkOpensNewWindow"/>
-        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideLinkExternalUrlProperty.value)}}" stepKey="clickLinkUrl"/>
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrl"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <seeCurrentUrlEquals url="{{PageBuilderSlideLinkExternalUrlProperty.value}}" stepKey="seeCurrentUrlEquals"/>
+        <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeCurrentUrlEquals"/>
     </test>
     <test name="SlideDoesNotNavigateInPreview">
         <annotations>
@@ -1432,9 +1432,9 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
-            <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -1491,7 +1491,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideName1">
-            <argument name="property" value="PageBuilderSlideItemName1"/>
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <fillField selector="{{TextOnSlider.textArea}}" userInput="Text from Slide" stepKey="addTextToEditor"/>
 
@@ -1598,13 +1598,13 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
-            <argument name="property" value="PageBuilderSlideMessageLongProperty"/>
+            <argument name="property" value="PageBuilderSlideItemMessage_Long"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideMessageLongProperty.value)}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemMessage_Long.value)}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role, '1')}}" stepKey="slideNewHeightStage"/>
         <assertGreaterThan stepKey="assertSlideHeightGrewStage">
             <expectedResult type="variable">slideInitialHeightStage</expectedResult>
@@ -1614,7 +1614,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage 2 -->
         <comment userInput="Validate Stage 2" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideMessageLongProperty.value)}}" stepKey="test"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemMessage_Long.value)}}" stepKey="test"/>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role, '1')}}" stepKey="slideNewHeightStage2"/>
         <assertEquals stepKey="assertSlideHeightSameStage">
             <expectedResult type="variable">slideNewHeightStage</expectedResult>
@@ -1624,7 +1624,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
-        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideMessageLongProperty.value)}}" stepKey="test2"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemMessage_Long.value)}}" stepKey="test2"/>
         <executeJS function="{{PageBuilderStoreFront.computedHeight(PageBuilderSliderContentType.role, '0')}}" stepKey="slideNewHeightStorefront"/>
         <assertGreaterThan stepKey="assertSlideHeightGrewStorefront">
             <expectedResult type="variable">slideInitialHeightStorefront</expectedResult>
@@ -1916,7 +1916,7 @@
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Left-->
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty1">
-            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <click selector="{{SlideOnBackend.slideWrapper}}" stepKey="clickSliderInStage1"/>
@@ -1930,7 +1930,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty2">
-            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <click selector="{{SlideOnBackend.slideWrapper}}" stepKey="clickSliderInStage2"/>
@@ -1944,7 +1944,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty3">
-            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageRight"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!--Verify there are 2 buttons when hovering-->

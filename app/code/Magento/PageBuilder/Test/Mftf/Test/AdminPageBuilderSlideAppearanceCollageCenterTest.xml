@@ -55,7 +55,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -131,7 +131,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -296,7 +296,7 @@
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderSlideCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderSlideItemCollageCenterPadding_Unique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
         <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
@@ -304,9 +304,9 @@
         <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage"/>
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderSlideCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderSlideItemCollageCenterPadding_Unique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
         <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
@@ -314,11 +314,11 @@
         <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage2"/>
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage2"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStage2"/>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderSlideCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderSlideItemCollageCenterPadding_Unique"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStorefront"/>
     </test>
     <test name="SlideItemCollageCenterUpdateAllAttributes" extends="SliderPosterUpdateAllAttributes">
         <annotations>
@@ -337,10 +337,10 @@
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderSlideCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderSlideItemCollageCenterPadding_Unique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage"/>
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage"/>
         <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
         <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
         <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="seeBorderColorStage"/>
@@ -348,25 +348,25 @@
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{SlideOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStage"/>
         <seeElement selector="{{SlideOnBackend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStage2"/>
-        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <seeElement selector="{{SlideOnBackend.collageMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage2"/>
         <seeElement selector="{{SlideOnBackend.collageAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
         <seeElement selector="{{SlideOnBackend.collageBorder('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
         <seeElement selector="{{SlideOnBackend.collageBorderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="seeBorderColorStage2"/>
         <seeElement selector="{{SlideOnBackend.collageBorderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStage2"/>
         <seeElement selector="{{SlideOnBackend.collageBorderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{SlideOnBackend.collageMargins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage2"/>
+        <seeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStage2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearance">
             <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderSlideCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderSlideItemCollageCenterPadding_Unique"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.padding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeMobileAppearanceStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideCollageCenterPaddingPropertyUnique.mobileValue)}}" stepKey="seeMobilePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.mobileValue)}}" stepKey="seeMobilePaddingStorefront"/>
     </test>
 </tests>
