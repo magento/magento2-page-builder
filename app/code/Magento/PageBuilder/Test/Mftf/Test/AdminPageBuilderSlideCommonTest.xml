@@ -321,21 +321,19 @@
         <comment userInput="Background Image: mediaUpload defaults to empty" stepKey="AC1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
         <comment userInput="Background Position: dropdown defaults to Top Aligned" stepKey="AC2"/>
-        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="{{PageBuilderBackgroundPositionDefault.value}}" stepKey="seeTopAlignedPositionDefault"/>
-        <comment userInput="Background Position: available values Top Aligned, Centered, Bottom Aligned" stepKey="AC3"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <comment userInput="Background Position: available values Top Left, Top Center, Top Right, Center Left, Center, Center Right, Bottom Left, Bottom Center, Bottom Right" stepKey="AC3"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
         <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
-            <expectedResult type="array">[Top Aligned, Centered, Bottom Aligned]</expectedResult>
+            <expectedResult type="array">[Top Left, Top Center, Top Right, Center Left, Center, Center Right, Bottom Left, Bottom Center, Bottom Right]</expectedResult>
             <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
         </assertEquals>
         <comment userInput="Background Size: dropdown defaults to Cover" stepKey="AC4"/>
-        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="{{PageBuilderSlideBackgroundSizeDefault.value}}" stepKey="seeBackgroundSizeDefault"/>
-        <comment userInput="Background Size: available values Auto, Cover, Contain" stepKey="AC5"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeDropdownValues"/>
-        <assertEquals stepKey="assertBackgroundSizeDropdown" message="Background sizes in dropdown">
-            <expectedResult type="array">[Auto, Cover, Contain]</expectedResult>
-            <actualResult type="variable">grabBackgroundSizeDropdownValues</actualResult>
-        </assertEquals>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
         <comment userInput="Background Repeat: switch defaults to No" stepKey="AC6"/>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeBackgroundRepeatPropertyDefaultNo">
             <argument name="property" value="PageBuilderBackgroundRepeatOff"/>
@@ -419,9 +417,9 @@
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
         </assertEquals>
-        <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
+        <comment userInput="Overlay Color: input defaults to empty." stepKey="AC10"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
-            <argument name="property" value="PageBuilderSlideWhiteOverlayColorProperty"/>
+            <argument name="property" value="PageBuilderSlideOverlayColorProperty_Empty"/>
         </actionGroup>
         <comment userInput="Overlay Color: Field is disabled by default due to Never Show default on Show Overlay." stepKey="AC11"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateOverlayColorDisabled">
