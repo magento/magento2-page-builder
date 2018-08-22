@@ -7,7 +7,344 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TextDataConsistencyBetweenTextEditor">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Data consistency between TextArea, TinyMCE4, TinyMCE4 in PageBuilder stage"/>
+            <description value="Verify data consistent when switching between TinyMCE versions and TextArea"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value="MC-3741"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="ImageUpload3"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textareaPlaceholder('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTextarea"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Text Content Type on stage after saving cms page-->
+        <comment userInput="Verify text content type on stage" stepKey="commentVerifyTextOnStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textArea('1')}}" stepKey="waitForTextStage2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValueAfterSaving"/>
+        <assertEquals stepKey="assertTextValueAfterSaving">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">textareaValueAfterSaving</actualResult>
+        </assertEquals>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add widget to TextArea -->
+        <comment userInput="Add widget to TextArea" stepKey="comment2"/>
+        <actionGroup ref="addPageLinkWidgetWYSIWYGDisabled" stepKey="addPageLinkWidgetWYSIWYGDisabled">
+            <argument name="widget" value="PageBuilderTextArea_WidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <!-- Add variable to TextArea -->
+        <comment userInput="Add variable to TextArea" stepKey="comment3"/>
+        <actionGroup ref="addPageLinkVariableWYSIWYGDisabled" stepKey="addPageLinkVariableWYSIWYGDisabled">
+            <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
+        </actionGroup>
+        <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="expectedData"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
+        <!-- Switch to TinyMCE4 -->
+        <comment userInput="Switch to TinyMCE4 " stepKey="comment4"/>
+        <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
+        <!-- Verify data on TinyMCE4 -->
+        <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
+        <reloadPage stepKey="reloadPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariabBaseURL"/>
+        <seeElement selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariablePlaceholder"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetValue"/>
+        <seeElement selector="{{TextOnStage.widgetPlaceholder('1')}}" stepKey="waitForWidgetPlaceholder"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+        <!-- Switch to TinyMCE3 -->
+        <comment userInput="Switch to TinyMCE3" stepKey="comment6"/>
+        <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
+        <assertEquals stepKey="assertTextValue">
+            <expectedResult type="variable">expectedData</expectedResult>
+            <actualResult type="variable">actualData</actualResult>
+        </assertEquals>
+        <!-- Switch to Textarea -->
+        <comment userInput="Switch to Textarea" stepKey="comment7"/>
+        <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="" stepKey="clearTextContent"/>
+        <!-- Add image to TextArea -->
+        <comment userInput="Add image to TextArea" stepKey="comment8"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
+        <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
+        <click stepKey="clickStorageRoot" selector="{{MediaGallerySection.StorageRootArrow}}" />
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+        <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage1">
+        <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage5"/>
+        <!-- Switch to TinyMCE4 -->
+        <comment userInput="Switch to TinyMCE4 " stepKey="comment9"/>
+        <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+        <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_2"/>
+        <!-- Verify image on TinyMCE4 -->
+        <comment userInput="Verify data on TinyMCE4" stepKey="comment10"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_2"/>
+        <seeElement selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
+    </test>
+    <test name="TextAreaInitalStatus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Initial textarea editor in Text Content Type"/>
+            <description value="Verify that user see Textarea on PageBuilder stage of TextContent type and verify initial status of Textarea"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value="MC-3666"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG1"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Assert Text placeholder and inline edit-->
+        <comment userInput="Assert Text placeholder and inline edit" stepKey="comment1"/>
+        <seeElement selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="seeTextareaPlaceholder"/>
+        <!--Check min height of textarea-->
+        <comment userInput="Check min height of textarea" stepKey="comment2"/>
+        <executeJS function="return jQuery('.inline-wysiwyg-textarea').css('min-height');" stepKey="height"/>
+        <assertEquals stepKey="assertMinHeight">
+            <actualResult type="variable">height</actualResult>
+            <expectedResult type="string">{{PageBuilderTextProperty.minHeight}}</expectedResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!--Verify empty content type on storefront-->
+        <comment userInput="Verify empty content type on storefront" stepKey="commentVerifyEmptyBlock"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad" />
+        <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
+        <dontSeeElement selector="{{TextOnStorefront.empty('1')}}" stepKey="dontSeeEmptyTextContentTypeOnStorefront"/>
+        <!--Check min height of textarea on Storefront-->
+        <comment userInput="Check min height of textarea on Storefront" stepKey="comment3"/>
+        <seeElementInDOM selector="{{TextOnStorefront.noCssClasses('1')}}" stepKey="dontSeeCSSClassOnEmptyTextarea"/>
+    </test>
+    <test name="TextVerifyTextAreaOnTextContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Textarea editor inline Text Content Type"/>
+            <description value="Verify that user are able to add text into Textarea of Text Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value="MC-3667"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG1"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Input text into textarea on stage-->
+        <comment userInput="Input text into textarea on stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{TextOnStage.textareaPlaceholder('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTextarea"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textArea('1')}}" stepKey="waitForTextStage1"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue"/>
+        <assertEquals stepKey="assertTextValue">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">textareaValue</actualResult>
+        </assertEquals>
+        <!--Verify inputed text on slideout-->
+        <comment userInput="Verify inputed text on slideout" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
+        <assertContains stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">getText</actualResult>
+        </assertContains>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Text Content Type on stage after saving cms page-->
+        <comment userInput="Verify text content type on stage" stepKey="commentVerifyTextOnStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textArea('1')}}" stepKey="waitForTextStage2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValueAfterSaving"/>
+        <assertEquals stepKey="assertTextValueAfterSaving">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">textareaValueAfterSaving</actualResult>
+        </assertEquals>
+        <!--Verify Text Content Type on storefront-->
+        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContentTypeOnStorefront"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStorefront"/>
+    </test>
+    <test name="TextTinyMCE3OnTextContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="TinyMCE3 on Text Content Type"/>
+            <description value="Verify that user are able to add text, variable, widget, image to TinyMCE3 editor and see it on Storefront"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value="MC-3669"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Verify Textarea on stage-->
+        <comment userInput="Verify Textarea on stage" stepKey="comment"/>
+        <waitForElementVisible selector="{{TextOnStage.textArea('1')}}" stepKey="waitForTextOnEditPanel"/>
+        <fillField selector="{{TextOnStage.textArea('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextField"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <!-- Validate Edit Panel display TinyMCE3-->
+        <comment userInput="Validate Edit Panel display TinyMCE3" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCE3WidgetBtn}}" stepKey="waitForTinyMCE3"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <!-- Verify inputed text is carried out to slideout -->
+        <comment userInput="Verify inputed text is carried out to slideout" stepKey="comment1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <!-- Add widget to tinymce3 -->
+        <actionGroup ref="addPageLinkWidgetToTinyMCE3" stepKey="addPageLinkWidgetToTinyMCE3">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="addVariableToTinyMCE3" stepKey="addVariableToTinyMCE3">
+            <argument name="variable" value="TinyMCEVariableBaseURL"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
+        <assertContains stepKey="assertVariable">
+            <expectedResult type="string">{{TinyMCEVariableBaseURL.stageValue}}</expectedResult>
+            <actualResult type="variable">actualData</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertWidget">
+            <expectedResult type="string">{{TinyMCEWidgetCMSPageLink.stageValue}}</expectedResult>
+            <actualResult type="variable">actualData</actualResult>
+        </assertContains>
+        <assertContains stepKey="assertText">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">actualData</actualResult>
+        </assertContains>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <amOnPage url="" stepKey="goToBaseURL"/>
+        <grabFromCurrentUrl stepKey="grabBaseURL"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <see userInput="{{PageBuilderTextProperty.value}}" stepKey="seeTextOnStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textAreaText('1', '$grabBaseURL')}}" stepKey="waitForVariableStorefront"/>
+        <see userInput="$$createCMSPageB.title$$" stepKey="waitForWidgetStorefront"/>
+    </test>
     <test name="TextAddWYSIWYGContentTypeToTabOnStage">
         <annotations>
             <features value="PageBuilder"/>
@@ -165,7 +502,7 @@
         </actionGroup>
         <!--Assert Text placeholder-->
         <comment userInput="Assert Text placeholder" stepKey="assertTextPlaceholder"/>
-        <seeElement selector="{{TextOnStage.placeholder('1')}}" stepKey="seeTextPlaceholder"/>
+        <seeElement selector="{{TextOnStage.textPlaceholder('1')}}" stepKey="seeTextPlaceholder"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify empty content type on storefront-->
         <comment userInput="Verify empty content type on storefront" stepKey="commentVerifyEmptyBlock"/>
@@ -222,9 +559,11 @@
         <!--Verify Text Content Type on stage after saving cms page-->
         <comment userInput="Verify text content type on stage" stepKey="commentVerifyTextOnStage"/>
         <grabValueFrom selector="{{TextOnStage.tinymce('1')}}" stepKey="grabStageValue"/>
-        <assertEmpty stepKey="seeTextOnStage" actual="grabStageValue" actualType="variable"/>
+        <assertEmpty stepKey="seeTextOnStage">
+            <actualResult type="variable">grabStageValue</actualResult>
+        </assertEmpty>
         <!--Verify Text Content Type on storefront-->
-        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContenTypeOnStorefront"/>
+        <comment userInput="Verify Text Content Type on storefront" stepKey="commentVerifyTextContentTypeOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <dontSeeElement selector="{{TextOnStorefront.base('1')}}" stepKey="doneSeeTextOnStorefront"/>
     </test>
@@ -567,7 +906,7 @@
         <!--Verify FontStyle on Storeview-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <seeElement selector="//div[contains(normalize-space(@class), 'cms-content-important') and not(text())]" stepKey="seeTextInImportantStyleOnStorefront" />
+        <seeElement selector="{{TextOnStorefront.emptyTextInImportantStyle('1')}}" stepKey="seeTextInImportantStyleOnStorefrontWithEmptyContent" />
     </test>
     <test name="TextAddTextWithTinyMCE">
         <annotations>
@@ -1281,6 +1620,81 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
     </test>
+    <test name="TextDisabledWYSIWYGAddImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Disabled WYSIWYG - Update Textarea With Image"/>
+            <description value="Validate that textarea works for Image with WYSIWYG disabled."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-1438"/>
+            <testCaseId value="MC-3670"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG1"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+                <argument name="contentType" value="PageBuilderTextContentType"/>
+            </actionGroup>
+            <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG1"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="ImageUpload3"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
+        <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <click stepKey="clickStorageRoot" selector="{{MediaGallerySection.StorageRootArrow}}" />
+        <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImage1">
+            <argument name="Image" value="ImageUpload3"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="insertImage"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaValueBeforeSave">
+            <argument name="value" value="{{ImageUpload3.value}}"/>
+            <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="assertTextareaContainsValue" stepKey="assertTextareaValueAfterSave">
+            <argument name="value" value="{{ImageUpload3.value}}"/>
+            <argument name="selector" value="{{TextOnStage.textArea('1')}}"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStorefront.image('1', ImageUpload3.fileName)}}" stepKey="waitForImageStorefront"/>
+    </test>
     <test name="TextDisabledWYSIWYGAddText">
         <annotations>
             <features value="PageBuilder"/>
@@ -1322,7 +1736,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValueAfterSaving"/>
+        <assertEquals stepKey="assertTextValueAfterSaving">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">textareaValueAfterSaving</actualResult>
+        </assertEquals>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -1335,7 +1753,11 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValueAfterSaving1"/>
+        <assertEquals stepKey="assertTextValueAfterSaving1">
+            <expectedResult type="string">{{PageBuilderTextProperty.value}}</expectedResult>
+            <actualResult type="variable">textareaValueAfterSaving1</actualResult>
+        </assertEquals>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -1394,7 +1816,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSPageLink.editPanelValue)}}" stepKey="waitForTextStage"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue"/>
+        <assertContains stepKey="assertTextareaContainsValue">
+            <expectedResult type="string">{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}</expectedResult>
+            <actualResult type="variable">textareaValue</actualResult>
+        </assertContains>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -1408,7 +1834,11 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_WidgetCMSPageLink.editPanelValue)}}" stepKey="waitForTextStage2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue2"/>
+        <assertContains stepKey="assertTextareaContainsValue2">
+            <expectedResult type="string">{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}</expectedResult>
+            <actualResult type="variable">textareaValue2</actualResult>
+        </assertContains>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -1467,7 +1897,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_VariableBaseURL.editPanelValue)}}" stepKey="waitForTextStage"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue1"/>
+        <assertContains stepKey="assertTextareaContainsValue1">
+            <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
+            <actualResult type="variable">textareaValue1</actualResult>
+        </assertContains>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -1481,7 +1915,11 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaTextContains('1', PageBuilderTextArea_VariableBaseURL.editPanelValue)}}" stepKey="waitForTextStage2"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="textareaValue2"/>
+        <assertContains stepKey="assertTextareaContainsValue2">
+            <expectedResult type="string">{{PageBuilderTextArea_VariableBaseURL.editPanelValue}}</expectedResult>
+            <actualResult type="variable">textareaValue2</actualResult>
+        </assertContains>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -1708,7 +2146,7 @@
         <seeElementInDOM selector="{{TextOnStorefront.emptyText}}" stepKey="seeTextContentType"/>
         <seeElement selector="{{StorefrontCMSPageSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSource"/>
         <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL,  $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
     </test>
     <test name="ValidateShowHideOnTextDefaultState">
         <annotations>
