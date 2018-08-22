@@ -85,6 +85,8 @@ class Config
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
      * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\PageBuilder\Model\ConfigInterface $config,
