@@ -139,6 +139,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToDesktopImageFolder">
                 <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
@@ -271,6 +272,5 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
             <argument name="pageNamePrefix" value="column"/>
         </actionGroup>
-        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
 </tests>
