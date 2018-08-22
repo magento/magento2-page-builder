@@ -1252,7 +1252,7 @@
         <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.panelFieldValidationErrorMessage(PageBuilderTextContentTypeEmptyError.section, PageBuilderTextContentTypeEmptyError.errorMessage)}}" stepKey="waitForErrorMessage"/>
+        <seeElement selector="{{TextOnConfiguration.panelFieldValidationErrorMessage(PageBuilderTextContentTypeEmpty.section, PageBuilderTextContentTypeEmpty.errorMessage)}}" stepKey="seeElementErrorMessage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
     </test>
     <test name="TextDisabledWYSIWYGAddText">
