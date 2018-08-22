@@ -82,10 +82,20 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
        */
 
 
-      var onClick = function onClick(event) {
+      var onClick = function onClick() {
         if (element.innerHTML !== "") {
           document.execCommand("selectAll", false, null);
         }
+      };
+      /**
+       * Mousedown event on element
+       *
+       * @param {Event} event
+       */
+
+
+      var onMouseDown = function onMouseDown(event) {
+        event.stopPropagation();
       };
       /**
        * Key down event on element
@@ -130,9 +140,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
-      element.addEventListener("mousedown", function (event) {
-        return event.stopPropagation();
-      });
+      element.addEventListener("mousedown", onMouseDown);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("input", onInput);
       (0, _jquery.default)(element).parent().css("cursor", "text");
