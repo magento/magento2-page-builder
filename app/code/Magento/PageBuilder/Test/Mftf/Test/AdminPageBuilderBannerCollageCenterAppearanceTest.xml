@@ -8,6 +8,52 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerCollageCenterCanInlineEditContent" extends="BannerPosterCanInlineEditContent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Center - Can Inline Edit Banner Content"/>
+            <description value="Verify that users are able to inline edit a collage center Banner's content from the stage"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-521"/>
+            <testCaseId value="MC-3836"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+        </annotations>
+        <!-- Change Appearance -->
+        <comment userInput="Change Appearance" stepKey="commentChangeAppearanceExtended"/>
+        <actionGroup ref="openPageBuilderEditPanel" after="dragContentTypeIntoContainer" stepKey="openEditMenuOnStageExtended">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
+    </test>
+    <test name="BannerCollageCenterCanInlineEditContentWhenInSmallColumn" extends="BannerPosterCanInlineEditContentWhenInSmallColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Center - Can Inline Edit Banner Content When In Small Column"/>
+            <description value="Verify that users are able to inline edit a collage center Banner's content from the stage when the banner is in a small column"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-521"/>
+            <testCaseId value="MC-3834"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+        </annotations>
+        <!-- Change Appearance -->
+        <comment userInput="Change Appearance" stepKey="commentChangeAppearanceExtended"/>
+        <actionGroup ref="openPageBuilderEditPanel" after="dragContentTypeIntoContainer2" stepKey="openEditMenuOnStageExtended">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" after="openEditMenuOnStageExtended" stepKey="enterAppearancePropertyExtended">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterAppearancePropertyExtended" stepKey="saveEditPanelSettingsExtended"/>
+    </test>
     <test name="BannerCollageCenterMobileWithMobileImageValues">
         <annotations>
             <features value="PageBuilder"/>

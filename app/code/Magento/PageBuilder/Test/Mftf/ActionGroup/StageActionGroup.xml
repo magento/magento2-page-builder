@@ -78,4 +78,15 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{PageBuilderStage.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>
+    <actionGroup name="inlineEditWYSIWYGFromStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanel"/>
+        <fillField selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+    </actionGroup>
 </actionGroups>
