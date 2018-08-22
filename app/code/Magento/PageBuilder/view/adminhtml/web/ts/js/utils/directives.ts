@@ -86,6 +86,9 @@ export function getImageUrl(image: any[]) {
  * @api
  */
 export function removeQuotesInMediaDirectives(html: string): string {
+    if (!html) {
+        return "";
+    }
     const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
     const urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
     const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
@@ -109,6 +112,9 @@ export function removeQuotesInMediaDirectives(html: string): string {
  * @api
  */
 export function convertMediaDirectivesToUrls(html: string): string {
+    if (!html) {
+        return "";
+    }
     const mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
     const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
     if (mediaDirectiveMatches) {

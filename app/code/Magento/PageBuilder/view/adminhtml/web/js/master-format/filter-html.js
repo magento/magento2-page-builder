@@ -20,13 +20,13 @@ define(["jquery"], function (_jquery) {
       (0, _jquery)(value).removeAttr("data-bind");
     });
     element.contents().filter(isWhiteSpaceOrComment).remove();
-    element.find("*").each(function (index, value) {
-      var isIframe = value.tagName === "IFRAME";
-      var isBeingBypassedByThisFilter = !!(0, _jquery)(value).closest(".bypass-html-filter").length;
-
-      if (!isIframe && !isBeingBypassedByThisFilter) {
-        (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
-      }
+    element.find("*").filter(function (index, descendentEl) {
+      // filter out elements that are iframes or have .bypass-html-filter ancestor
+      var isIframe = descendentEl.tagName === "IFRAME";
+      var isBeingBypassedByThisFilter = !!(0, _jquery)(descendentEl).closest(".bypass-html-filter").length;
+      return !isIframe && !isBeingBypassedByThisFilter;
+    }).each(function (index, descendentEl) {
+      (0, _jquery)(descendentEl).contents().filter(isWhiteSpaceOrComment).remove();
     });
     element.find("[data-wrapper]").each(function (index, value) {
       (0, _jquery)(value).parent().append((0, _jquery)(value).children());
