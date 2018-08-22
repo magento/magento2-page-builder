@@ -44,7 +44,7 @@ class ScriptFilter
         try {
             //this code is required because of https://bugs.php.net/bug.php?id=60021
             $previous = libxml_use_internal_errors(true);
-            $dom->loadHTML($content);
+            $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         } catch (\Exception $e) {
             $this->loggerInterface->critical($e->getMessage());
         }
