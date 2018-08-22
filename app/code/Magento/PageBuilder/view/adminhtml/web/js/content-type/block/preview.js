@@ -52,8 +52,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.processBlockData = function processBlockData(data) {
       // Only load if something changed
-      this.displayPreviewPlaceholder(data, "banner_ids");
-      this.processRequest(data, "banner_ids", "name");
+      this.displayPreviewPlaceholder(data, "block_id");
+      this.processRequest(data, "block_id", "title");
     };
     /**
      * @inheritdoc

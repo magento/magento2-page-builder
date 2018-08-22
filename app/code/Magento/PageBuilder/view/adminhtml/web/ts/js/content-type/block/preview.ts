@@ -53,13 +53,13 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     *
+     * Updates the view state using the data provided
      * @param {DataObject} data
      */
     public processBlockData(data: DataObject): void {
         // Only load if something changed
-        this.displayPreviewPlaceholder(data, "banner_ids");
-        this.processRequest(data, "banner_ids", "name");
+        this.displayPreviewPlaceholder(data, "block_id");
+        this.processRequest(data, "block_id", "title");
     }
 
     /**
@@ -91,7 +91,7 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Displsay preview placeholder
+     * Display preview placeholder
      *
      * @param {DataObject} data
      * @param {string} identifierName
