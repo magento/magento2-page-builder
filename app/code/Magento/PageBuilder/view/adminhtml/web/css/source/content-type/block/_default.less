@@ -8,6 +8,9 @@
 //  _____________________________________________
 
 .pagebuilder-content-type .pagebuilder-block {
+    &:before {
+        content: '';
+    }
     .pagebuilder-block-placeholder {
         align-items: center;
         background-color: @color-gray98;
@@ -48,7 +51,7 @@
     }
 }
 
-.pagebuilder-content-type-hidden {
+:not(.pagebuilder-content-type-hidden) {
     > .pagebuilder-block.pagebuilder-content-type {
         &:before {
             content: '';
