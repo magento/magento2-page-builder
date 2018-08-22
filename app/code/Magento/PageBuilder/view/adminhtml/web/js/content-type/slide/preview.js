@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg"], function (_jquery, _translate, _events, _slick, _config, _option, _preview, _uploader, _wysiwyg) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _slick, _config, _option, _preview, _uploader, _factory) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -17,31 +17,15 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
      */
 
     /**
+     * The textarea element in disabled mode
+     */
+
+    /**
      * The element the text content type is bound to
      */
 
     /**
      * Uploader instance
-     */
-
-    /**
-     * Slider transform
-     */
-
-    /**
-     * Slider selector
-     */
-
-    /**
-     * Slider content selector
-     */
-
-    /**
-     * Slide selector
-     */
-
-    /**
-     * Active slide selector
      */
 
     /**
@@ -55,13 +39,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       _this.wysiwyg = void 0;
+      _this.textarea = void 0;
       _this.element = void 0;
       _this.uploader = void 0;
-      _this.sliderTransform = void 0;
-      _this.sliderSelector = ".slick-list";
-      _this.sliderContentSelector = ".slick-track";
-      _this.slideSelector = ".slick-slide";
-      _this.activeSlideSelector = ".slick-current";
       var slider = _this.parent.parent;
 
       _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
@@ -81,17 +61,13 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     var _proto = Preview.prototype;
 
     _proto.initWysiwyg = function initWysiwyg(element) {
-      if (!_config.getConfig("can_use_inline_editing_on_stage")) {
-        return;
-      } // TODO: Temporary solution, blocked by other team. Move configuration override to correct place.
+      var _this2 = this;
 
-
-      this.config.additional_data.wysiwygConfig.wysiwygConfigData.adapter.settings.fixed_toolbar_container = ".wysiwyg-container";
       this.element = element;
       element.id = this.parent.id + "-editor";
-      this.wysiwyg = new _wysiwyg(this.parent.id, element.id, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore);
-      this.wysiwyg.onFocus(this.onFocus.bind(this));
-      this.wysiwyg.onBlur(this.onBlur.bind(this));
+      (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
+        _this2.wysiwyg = wysiwyg;
+      });
     };
     /**
      * Get the background wrapper attributes for the preview
@@ -240,7 +216,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var _this2 = this;
+      var _this3 = this;
 
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
@@ -250,14 +226,14 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       var removeClasses = ["remove-structural"];
 
       var removeFn = function removeFn() {
-        var index = _this2.parent.parent.getChildren().indexOf(_this2.parent);
+        var index = _this3.parent.parent.getChildren().indexOf(_this3.parent);
 
-        _this2.onOptionRemove(); // Invoking methods on slider
+        _this3.onOptionRemove(); // Invoking methods on slider
 
 
-        _this2.parent.parent.onAfterRender();
+        _this3.parent.parent.onAfterRender();
 
-        _this2.parent.parent.setFocusedSlide(index - 1);
+        _this3.parent.parent.setFocusedSlide(index - 1);
       };
 
       if (this.parent.parent.children().length <= 1) {
@@ -272,29 +248,99 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       return newOptions;
     };
     /**
+     * Makes WYSIWYG active
+     */
+
+
+    _proto.activateEditor = function activateEditor() {
+      if (this.element) {
+        this.element.focus();
+      }
+
+      if (this.textarea) {
+        this.textarea.focus();
+      }
+    };
+    /**
+     * @returns {Boolean}
+     */
+
+
+    _proto.isWysiwygSupported = function isWysiwygSupported() {
+      return _config.getConfig("can_use_inline_editing_on_stage");
+    };
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+
+
+    _proto.initTextarea = function initTextarea(element) {
+      var _this4 = this;
+
+      this.textarea = element; // set initial value of textarea based on data store
+
+      this.textarea.value = this.parent.dataStore.get("content");
+      this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
+
+      _events.on("form:" + this.parent.id + ":saveAfter", function () {
+        _this4.textarea.value = _this4.parent.dataStore.get("content");
+
+        _this4.adjustTextareaHeightBasedOnScrollHeight();
+      });
+    };
+    /**
+     * Save current value of textarea in data store
+     */
+
+
+    _proto.onTextareaKeyUp = function onTextareaKeyUp() {
+      this.adjustTextareaHeightBasedOnScrollHeight();
+      this.parent.dataStore.update(this.textarea.value, "content");
+    };
+    /**
+     * Start stage interaction on textarea blur
+     */
+
+
+    _proto.onTextareaFocus = function onTextareaFocus() {
+      (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
+      _events.trigger("stage:interactionStart");
+    };
+    /**
+     * Stop stage interaction on textarea blur
+     */
+
+
+    _proto.onTextareaBlur = function onTextareaBlur() {
+      (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+
+      _events.trigger("stage:interactionStop");
+    };
+    /**
      * @inheritDoc
      */
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this3 = this;
+      var _this5 = this;
 
       _BasePreview.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this3.parent.dataStore.get();
+        var dataStore = _this5.parent.dataStore.get();
 
-        var imageObject = dataStore[_this3.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this3.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
       });
 
       _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this3.parent.dataStore.get();
+        var dataStore = _this5.parent.dataStore.get();
 
-        var initialImageValue = dataStore[_this3.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+        var initialImageValue = dataStore[_this5.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this3.uploader = new _uploader("imageuploader_" + _this3.parent.id, _this3.config.additional_data.uploaderConfig, _this3.parent.id, _this3.parent.dataStore, initialImageValue);
+        _this5.uploader = new _uploader("imageuploader_" + _this5.parent.id, _this5.config.additional_data.uploaderConfig, _this5.parent.id, _this5.parent.dataStore, initialImageValue);
       });
     };
     /**
@@ -308,51 +354,21 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     };
     /**
-     * Event handler for wysiwyg focus
-     * Fixes z-index issues for tabs and column
-     * Fixes slider
+     * Adjust textarea's height based on scrollHeight
      */
 
 
-    _proto.onFocus = function onFocus() {
-      var $element = (0, _jquery)(this.element);
-      var $slider = (0, _jquery)($element.parents(this.sliderSelector));
-      var sliderContent = $element.parents(this.sliderContentSelector)[0];
-      var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
+    _proto.adjustTextareaHeightBasedOnScrollHeight = function adjustTextareaHeightBasedOnScrollHeight() {
+      this.textarea.style.height = "";
+      var scrollHeight = this.textarea.scrollHeight;
+      var minHeight = parseInt((0, _jquery)(this.textarea).css("min-height"), 10);
 
-      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
-        $element.closest(selector).css("z-index", 100);
-      }); // Disable slider keyboard events and fix problem with overflow hidden issue
+      if (scrollHeight === minHeight) {
+        // leave height at 'auto'
+        return;
+      }
 
-
-      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false, true);
-      $notActiveSlides.hide();
-      this.sliderTransform = sliderContent.style.transform;
-      sliderContent.style.transform = "";
-      $slider.css("overflow", "visible");
-    };
-    /**
-     * Event handler for wysiwyg blur
-     * Fixes z-index issues for tabs and column
-     * Fixes slider
-     */
-
-
-    _proto.onBlur = function onBlur() {
-      var $element = (0, _jquery)(this.element);
-      var $slider = (0, _jquery)($element.parents(this.sliderSelector));
-      var sliderContent = $element.parents(this.sliderContentSelector)[0];
-      var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
-
-      _jquery.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, function (i, selector) {
-        $element.closest(selector).css("z-index", "");
-      }); // Enable slider keyboard events and revert changes made in onFocus
-
-
-      $slider.css("overflow", "hidden");
-      sliderContent.style.transform = this.sliderTransform;
-      $notActiveSlides.show();
-      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", true, true);
+      (0, _jquery)(this.textarea).height(scrollHeight);
     };
 
     return Preview;

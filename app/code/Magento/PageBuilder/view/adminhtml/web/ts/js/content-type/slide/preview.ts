@@ -18,7 +18,8 @@ import {DataObject} from "../../data-store";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
-import Wysiwyg from "../wysiwyg";
+import WysiwygFactory from "../wysiwyg/factory";
+import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**
  * @api
@@ -28,7 +29,12 @@ export default class Preview extends BasePreview {
     /**
      * Wysiwyg instance
      */
-    private wysiwyg: Wysiwyg;
+    private wysiwyg: WysiwygInterface;
+
+    /**
+     * The textarea element in disabled mode
+     */
+    private textarea: HTMLTextAreaElement;
 
     /**
      * The element the text content type is bound to
@@ -39,31 +45,6 @@ export default class Preview extends BasePreview {
      * Uploader instance
      */
     private uploader: Uploader;
-
-    /**
-     * Slider transform
-     */
-    private sliderTransform: string;
-
-    /**
-     * Slider selector
-     */
-    private sliderSelector: string = ".slick-list";
-
-    /**
-     * Slider content selector
-     */
-    private sliderContentSelector: string = ".slick-track";
-
-    /**
-     * Slide selector
-     */
-    private slideSelector: string = ".slick-slide";
-
-    /**
-     * Active slide selector
-     */
-    private activeSlideSelector: string = ".slick-current";
 
     /**
      * @param {ContentTypeInterface} parent
@@ -88,26 +69,19 @@ export default class Preview extends BasePreview {
      * @param {HTMLElement} element
      */
     public initWysiwyg(element: HTMLElement) {
-        if (!Config.getConfig("can_use_inline_editing_on_stage")) {
-            return;
-        }
-
-        // TODO: Temporary solution, blocked by other team. Move configuration override to correct place.
-        this.config.additional_data.wysiwygConfig
-            .wysiwygConfigData.adapter.settings.fixed_toolbar_container = ".wysiwyg-container";
         this.element = element;
-
         element.id = this.parent.id + "-editor";
 
-        this.wysiwyg = new Wysiwyg(
+        WysiwygFactory(
             this.parent.id,
             element.id,
+            this.config.name,
             this.config.additional_data.wysiwygConfig.wysiwygConfigData,
             this.parent.dataStore,
-        );
-
-        this.wysiwyg.onFocus(this.onFocus.bind(this));
-        this.wysiwyg.onBlur(this.onBlur.bind(this));
+            "content",
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
+        });
     }
 
     /**
@@ -287,6 +261,71 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Makes WYSIWYG active
+     */
+    public activateEditor() {
+        if (this.element) {
+            this.element.focus();
+        }
+
+        if (this.textarea) {
+            this.textarea.focus();
+        }
+    }
+
+    /**
+     * @returns {Boolean}
+     */
+    public isWysiwygSupported(): boolean {
+        return Config.getConfig("can_use_inline_editing_on_stage");
+    }
+
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+    public initTextarea(element: HTMLTextAreaElement)
+    {
+        this.textarea = element;
+
+        // set initial value of textarea based on data store
+        this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.adjustTextareaHeightBasedOnScrollHeight();
+
+        // Update content in our stage preview textarea after its slideout counterpart gets updated
+        events.on(`form:${this.parent.id}:saveAfter`, () => {
+            this.textarea.value = this.parent.dataStore.get("content") as string;
+            this.adjustTextareaHeightBasedOnScrollHeight();
+        });
+    }
+
+    /**
+     * Save current value of textarea in data store
+     */
+    public onTextareaKeyUp()
+    {
+        this.adjustTextareaHeightBasedOnScrollHeight();
+        this.parent.dataStore.update(this.textarea.value, "content");
+    }
+
+    /**
+     * Start stage interaction on textarea blur
+     */
+    public onTextareaFocus()
+    {
+        $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStart");
+    }
+
+    /**
+     * Stop stage interaction on textarea blur
+     */
+    public onTextareaBlur()
+    {
+        $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStop");
+    }
+
+    /**
      * @inheritDoc
      */
     protected bindEvents() {
@@ -326,48 +365,18 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Event handler for wysiwyg focus
-     * Fixes z-index issues for tabs and column
-     * Fixes slider
+     * Adjust textarea's height based on scrollHeight
      */
-    private onFocus() {
-        const $element = $(this.element);
-        const $slider = $($element.parents(this.sliderSelector));
-        const sliderContent = $element.parents(this.sliderContentSelector)[0];
-        const $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
+    private adjustTextareaHeightBasedOnScrollHeight()
+    {
+        this.textarea.style.height = "";
+        const scrollHeight = this.textarea.scrollHeight;
+        const minHeight = parseInt($(this.textarea).css("min-height"), 10);
 
-        $.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, (i, selector) => {
-            $element.closest(selector as string).css("z-index", 100);
-        });
+        if (scrollHeight === minHeight) { // leave height at 'auto'
+            return;
+        }
 
-        // Disable slider keyboard events and fix problem with overflow hidden issue
-        $($slider.parent()).slick("slickSetOption", "accessibility", false, true);
-        $notActiveSlides.hide();
-        this.sliderTransform = sliderContent.style.transform;
-        sliderContent.style.transform = "";
-        $slider.css("overflow", "visible");
-    }
-
-    /**
-     * Event handler for wysiwyg blur
-     * Fixes z-index issues for tabs and column
-     * Fixes slider
-     */
-    private onBlur() {
-        const $element = $(this.element);
-        const $slider = $($element.parents(this.sliderSelector));
-        const sliderContent = $element.parents(this.sliderContentSelector)[0];
-        const $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
-
-        $.each(this.config.additional_data.wysiwygConfig.parentSelectorsToUnderlay, (i, selector) => {
-            $element.closest(selector as string).css("z-index", "");
-        });
-
-        // Enable slider keyboard events and revert changes made in onFocus
-        $slider.css("overflow", "hidden");
-        sliderContent.style.transform = this.sliderTransform;
-        $notActiveSlides.show();
-        $($slider.parent()).slick("slickSetOption", "accessibility", true, true);
-
+        $(this.textarea).height(scrollHeight);
     }
 }
