@@ -1584,7 +1584,13 @@
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{TextOnConfiguration.panelFieldValidationErrorMessage(PageBuilderTextContentTypeEmpty.section, PageBuilderTextContentTypeEmpty.errorMessage)}}" stepKey="seeElementErrorMessage"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate User Can Recover From Error -->
+        <comment userInput="Validate User Can Recover From Error" stepKey="commentValidateRecovery"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
     </test>
     <test name="TextDisabledWYSIWYGAddImage">
         <annotations>
