@@ -19,7 +19,7 @@ interface WysiwygInstanceInterface {
     setContent(content: string): void
 }
 
-declare var WysiwygSetupInterface: {
+declare var WysiwygSetup: {
     prototype: WysiwygSetupInterface;
     new (id: string, config: object): WysiwygSetupInterface;
 };
@@ -30,7 +30,7 @@ declare var WysiwygInstanceInterface: {
 };
 
 declare module "mage/adminhtml/wysiwyg/tiny_mce/setup" {
-    export = WysiwygSetupInterface;
+    export = WysiwygSetup;
 }
 
 declare module "wysiwygAdapter" {

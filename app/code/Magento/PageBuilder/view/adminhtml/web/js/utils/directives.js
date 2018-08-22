@@ -88,6 +88,10 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
 
   function removeQuotesInMediaDirectives(html) {
+    if (!html) {
+      return "";
+    }
+
     var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*(.*?)\s*\}\}/g;
     var urlRegExp = /\{\{\s*media\s+url\s*=\s*(.*)\s*\}\}/;
     var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
@@ -115,6 +119,10 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
 
 
   function convertMediaDirectivesToUrls(html) {
+    if (!html) {
+      return "";
+    }
+
     var mediaDirectiveRegExp = /\{\{\s*media\s+url\s*=\s*"?[^"\s\}]+"?\s*\}\}/g;
     var mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
 
