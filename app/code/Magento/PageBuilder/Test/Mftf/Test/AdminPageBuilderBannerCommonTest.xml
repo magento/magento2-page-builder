@@ -1981,6 +1981,62 @@
         <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder2"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
+    <test name="BannerWYSIWYGDisabledNoInlineEdit">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner - Cannot Inline Edit With WYSIWYG Disabled"/>
+            <description value="Verify that a user cannot inline edit Banner content when WYSIWYG is disabled and that content can still be added through Edit Panel"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3841"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="dh"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeIntoContainer">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+         <!--Validate Stage: Empty Banner -->
+        <comment userInput="Validate Stage: Empty Banner" stepKey="commentValidateStage"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent"/>
+        <!--todo: validate see empty content-->
+        <!-- Verify Cannot Inline Edit -->
+        <comment userInput="Verify Cannot Inline Edit" stepKey="commentCannotInlineEdit"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="dontSeeEditorPanel"/>
+        <!-- Edit Banner Content From Edit Panel -->
+        <comment userInput="Edit Banner Content From Edit Panel" stepKey="commentEditBanner"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BannerOnConfigurationPanel.textArea}}" stepKey="waitForTextAreaOnEditPanel"/>
+        <seeInField selector="{{BannerOnConfigurationPanel.textArea}}" userInput="a" stepKey="verifyTextAreaEmpty"/>
+        <fillField selector="{{BannerOnConfigurationPanel.textArea}}" userInput="{{PageBuilderBannerMessageProperty.value}}" stepKey="fillTextArea"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage: Content Edited -->
+        <comment userInput="Validate Stage: Content Edited" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{BannerOnBackend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStage"/>
+    </test>
     <test name="BannerInlineEditStaysFocusedWhileDraggingAndDropping">
         <annotations>
             <features value="PageBuilder"/>
