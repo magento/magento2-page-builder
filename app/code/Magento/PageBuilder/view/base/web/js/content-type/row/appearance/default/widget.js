@@ -11,8 +11,8 @@ define([
     return function (config, element) {
         var $element = $(element);
 
-        if ($element.data('appearance') === "contained") {
-            $element = $(element).find("[data-element='inner']");
+        if ($element.data('appearance') === 'contained') {
+            $element = $(element).find('[data-element="inner"]');
         }
 
         if ($element.data('enableParallax') !== 1) {
