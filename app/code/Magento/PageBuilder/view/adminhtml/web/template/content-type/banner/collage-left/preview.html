@@ -8,13 +8,25 @@
 <div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
     <div class="pagebuilder-banner-wrapper" attr="data.desktop_image.attributes" ko-style="Object.assign({}, data.desktop_image.style(), {paddingRight: 'calc(50% + ' + data.desktop_image.style().paddingRight + ')'})" css="data.desktop_image.css" event="{ mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper }">
-        <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
+        <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style" event="{ mousedown: focusTextEditor }">
             <scope args="getUploader().getUiComponent()">
                 <render />
             </scope>
             <div class="pagebuilder-collage-content">
-                <div if="data.content.html()" css="data.content.css" html="data.content.html" attr="data.content.attributes" ko-style="data.content.style"></div>
-                <div ifnot="data.content.html()" class="pagebuilder-empty-banner" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" translate="'Edit Banner Text'"></div>
+                <div class="pagebuilder-banner-text-content">
+                    <div if="isWysiwygSupported()" class="inline-wysiwyg" ko-style="data.content.style" css="data.content.css" attr="data.content.attributes" afterRender="initWysiwyg">
+                        <div html="data.content.html" />
+                    </div>
+                    <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
+
+                    <div ifnot="isWysiwygSupported()">
+                    <textarea
+                            class="inline-wysiwyg-textarea"
+                            afterRender="initTextarea"
+                            event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur}"
+                            data-bind="attr: { placeholder: $t('Edit Banner Text') }" />
+                    </div>
+                </div>
                 <button if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"
                    class="pagebuilder-banner-button"

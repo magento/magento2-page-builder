@@ -12,9 +12,21 @@
             <scope args="getUploader().getUiComponent()">
                 <render />
             </scope>
-            <div class="pagebuilder-poster-content">
-                <div if="data.content.html()" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
-                <div ifnot="data.content.html()" class="pagebuilder-empty-banner" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" translate="'Edit Banner Text'"></div>
+            <div class="pagebuilder-poster-content" event="{mousedown: focusTextEditor}">
+                <div class="pagebuilder-banner-text-content">
+                    <div if="isWysiwygSupported()" class="inline-wysiwyg" ko-style="data.content.style" css="data.content.css" attr="data.content.attributes" afterRender="initWysiwyg">
+                        <div html="data.content.html" />
+                    </div>
+                    <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
+
+                    <div ifnot="isWysiwygSupported()">
+                    <textarea
+                            class="inline-wysiwyg-textarea"
+                            afterRender="initTextarea"
+                            event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur}"
+                            data-bind="attr: { placeholder: $t('Edit Banner Text') }" />
+                    </div>
+                </div>
                 <button if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"
                    class="pagebuilder-banner-button"

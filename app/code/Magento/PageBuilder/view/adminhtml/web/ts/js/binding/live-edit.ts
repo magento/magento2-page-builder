@@ -70,7 +70,7 @@ ko.bindingHandlers.liveEdit = {
         /**
          * Click event on element
          */
-        const onClick = () => {
+        const onClick = (event: Event) => {
             if (element.innerHTML !== "") {
                 document.execCommand("selectAll", false, null);
             }
@@ -114,6 +114,7 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
+        element.addEventListener("mousedown", (event: Event) => event.stopPropagation());
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("input", onInput);
 

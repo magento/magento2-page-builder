@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_translate, _events, _preview, _uploader) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _preview, _uploader, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -17,7 +17,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.uploader = void 0, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _this.textarea = void 0, _this.uploader = void 0, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -29,6 +29,20 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
      */
     _proto.getUploader = function getUploader() {
       return this.uploader;
+    };
+    /**
+     * Binding element to focus on text editor
+     */
+
+
+    _proto.focusTextEditor = function focusTextEditor() {
+      if (this.element) {
+        this.element.focus();
+      }
+
+      if (this.textarea) {
+        this.textarea.focus();
+      }
     };
     /**
      * Set state based on overlay mouseover event for the preview
@@ -72,30 +86,119 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
       }
     };
     /**
+     * @returns {Boolean}
+     */
+
+
+    _proto.isWysiwygSupported = function isWysiwygSupported() {
+      return _config.getConfig("can_use_inline_editing_on_stage");
+    };
+    /**
+     * @param {HTMLElement} element
+     */
+
+
+    _proto.initWysiwyg = function initWysiwyg(element) {
+      var _this2 = this;
+
+      this.element = element;
+      element.id = this.parent.id + "-editor";
+      var config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+      config.adapter.settings.fixed_toolbar_container = ".pagebuilder-banner-text-content";
+      (0, _factory)(this.parent.id, element.id, this.config.name, config, this.parent.dataStore, "message").then(function (wysiwyg) {
+        _this2.wysiwyg = wysiwyg;
+      });
+    };
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+
+
+    _proto.initTextarea = function initTextarea(element) {
+      var _this3 = this;
+
+      this.textarea = element; // set initial value of textarea based on data store
+
+      this.textarea.value = this.parent.dataStore.get("content");
+      this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
+
+      _events.on("form:" + this.parent.id + ":saveAfter", function () {
+        _this3.textarea.value = _this3.parent.dataStore.get("content");
+
+        _this3.adjustTextareaHeightBasedOnScrollHeight();
+      });
+    };
+    /**
+     * Save current value of textarea in data store
+     */
+
+
+    _proto.onTextareaKeyUp = function onTextareaKeyUp() {
+      this.adjustTextareaHeightBasedOnScrollHeight();
+      this.parent.dataStore.update(this.textarea.value, "content");
+    };
+    /**
+     * Start stage interaction on textarea blur
+     */
+
+
+    _proto.onTextareaFocus = function onTextareaFocus() {
+      (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+
+      _events.trigger("stage:interactionStart");
+    };
+    /**
+     * Stop stage interaction on textarea blur
+     */
+
+
+    _proto.onTextareaBlur = function onTextareaBlur() {
+      (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+
+      _events.trigger("stage:interactionStop");
+    };
+    /**
      * @inheritDoc
      */
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this4 = this;
 
       _BasePreview.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this4.parent.dataStore.get();
 
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
       });
 
       _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this4.parent.dataStore.get();
 
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+        var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this2.uploader = new _uploader("imageuploader_" + _this2.parent.id, _this2.config.additional_data.uploaderConfig, _this2.parent.id, _this2.parent.dataStore, initialImageValue);
+        _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue);
       });
+    };
+    /**
+     * Adjust textarea's height based on scrollHeight
+     */
+
+
+    _proto.adjustTextareaHeightBasedOnScrollHeight = function adjustTextareaHeightBasedOnScrollHeight() {
+      this.textarea.style.height = "";
+      var scrollHeight = this.textarea.scrollHeight;
+      var minHeight = parseInt((0, _jquery)(this.textarea).css("min-height"), 10);
+
+      if (scrollHeight === minHeight) {
+        // leave height at 'auto'
+        return;
+      }
+
+      (0, _jquery)(this.textarea).height(scrollHeight);
     };
 
     return Preview;
