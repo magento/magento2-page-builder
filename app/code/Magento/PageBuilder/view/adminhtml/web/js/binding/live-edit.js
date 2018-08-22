@@ -93,9 +93,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       /**
        * Key down event on element
        *
-       * Prevent styling such as bold, italic, and underline using keyboard commands
-       * Prevent multi-line entries
-       * Debounce the saving of the state to 1 second to ensure that on save without first unfocus will succeed
+       * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
        *
        * @param {any} event
        */
@@ -119,36 +117,42 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
           event.stopPropagation();
         }
 
-        _underscore.default.debounce(function () {
-          var selection = window.getSelection();
-          var range = document.createRange();
+        debouncedUpdateHandler.call(_this);
+      };
+      /**
+       * Debounce the saving of the state to ensure that on save without first unfocusing will succeed
+       */
 
-          var getCharPosition = function getCharPosition(editableDiv) {
-            var charPosition = 0;
 
-            if (window.getSelection) {
-              if (selection.rangeCount) {
-                if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
-                  charPosition = selection.getRangeAt(0).endOffset;
-                }
+      var debouncedUpdateHandler = _underscore.default.debounce(function () {
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        var getCharPosition = function getCharPosition(editableDiv) {
+          var charPosition = 0;
+
+          if (window.getSelection) {
+            if (selection.rangeCount) {
+              if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
+                charPosition = selection.getRangeAt(0).endOffset;
               }
             }
-
-            return charPosition;
-          };
-
-          var pos = getCharPosition(element);
-
-          if (focusedValue !== stripHtml(element.innerHTML)) {
-            viewModel.updateData(field, stripHtml(element.innerHTML));
           }
 
-          range.setStart(element.childNodes[0], pos);
-          range.collapse(true);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }, 300).call(_this);
-      };
+          return charPosition;
+        };
+
+        var pos = getCharPosition(element);
+
+        if (focusedValue !== stripHtml(element.innerHTML)) {
+          viewModel.updateData(field, stripHtml(element.innerHTML));
+        }
+
+        range.setStart(element.childNodes[0], pos);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }, 300);
       /**
        * Prevent content from being dropped inside of inline edit area
        *

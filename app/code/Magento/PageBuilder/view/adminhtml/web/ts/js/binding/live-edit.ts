@@ -79,9 +79,7 @@ ko.bindingHandlers.liveEdit = {
         /**
          * Key down event on element
          *
-         * Prevent styling such as bold, italic, and underline using keyboard commands
-         * Prevent multi-line entries
-         * Debounce the saving of the state to 1 second to ensure that on save without first unfocus will succeed
+         * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
          *
          * @param {any} event
          */
@@ -102,32 +100,37 @@ ko.bindingHandlers.liveEdit = {
                 event.stopPropagation();
             }
 
-            _.debounce(() => {
-                const selection = window.getSelection();
-                const range = document.createRange();
-                const getCharPosition = (editableDiv: HTMLElement): number => {
-                    let charPosition = 0;
+            debouncedUpdateHandler.call(this);
+        };
 
-                    if (window.getSelection) {
-                        if (selection.rangeCount) {
-                            if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
-                                charPosition = selection.getRangeAt(0).endOffset;
-                            }
+        /**
+         * Debounce the saving of the state to ensure that on save without first unfocusing will succeed
+         */
+        const debouncedUpdateHandler = _.debounce(() => {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            const getCharPosition = (editableDiv: HTMLElement): number => {
+                let charPosition = 0;
+
+                if (window.getSelection) {
+                    if (selection.rangeCount) {
+                        if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
+                            charPosition = selection.getRangeAt(0).endOffset;
                         }
                     }
-                    return charPosition;
-                };
-                const pos: number = getCharPosition(element);
-
-                if (focusedValue !== stripHtml(element.innerHTML)) {
-                    viewModel.updateData(field, stripHtml(element.innerHTML));
                 }
-                range.setStart(element.childNodes[0], pos);
-                range.collapse(true);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            }, 300).call(this);
-        };
+                return charPosition;
+            };
+            const pos: number = getCharPosition(element);
+
+            if (focusedValue !== stripHtml(element.innerHTML)) {
+                viewModel.updateData(field, stripHtml(element.innerHTML));
+            }
+            range.setStart(element.childNodes[0], pos);
+            range.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }, 300);
 
         /**
          * Prevent content from being dropped inside of inline edit area
