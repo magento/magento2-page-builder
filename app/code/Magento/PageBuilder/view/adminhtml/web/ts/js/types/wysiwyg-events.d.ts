@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-declare var wysiwygEvents: {
+declare var WysiwygEvents: {
     afterInitialization: 'afterInitialization',
     afterChangeContent: 'afterChangeContent',
     afterUndo: 'afterUndo',
@@ -18,5 +18,5 @@ declare var wysiwygEvents: {
 };
 
 declare module "mage/adminhtml/wysiwyg/events" {
-    export = wysiwygEvents;
+    export = WysiwygEvents;
 }

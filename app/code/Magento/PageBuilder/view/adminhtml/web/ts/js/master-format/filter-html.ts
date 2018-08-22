@@ -19,13 +19,14 @@ export default function filterHtml(element: JQuery): JQuery {
     };
     element.find("[data-bind]").each((index, value) => { $(value).removeAttr("data-bind"); });
     element.contents().filter(isWhiteSpaceOrComment).remove();
-    element.find("*").each(
-        (index, value) => {
-            const isIframe = value.tagName === "IFRAME";
-            const isBeingBypassedByThisFilter = !!$(value).closest(".bypass-html-filter").length;
-            if (!isIframe && !isBeingBypassedByThisFilter) {
-                $(value).contents().filter(isWhiteSpaceOrComment).remove();
-            }
+    element.find("*").filter((index, descendentEl) => {
+        // filter out elements that are iframes or have .bypass-html-filter ancestor
+        const isIframe = descendentEl.tagName === "IFRAME";
+        const isBeingBypassedByThisFilter = !!$(descendentEl).closest(".bypass-html-filter").length;
+        return !isIframe && !isBeingBypassedByThisFilter;
+    }).each(
+        (index, descendentEl) => {
+            $(descendentEl).contents().filter(isWhiteSpaceOrComment).remove();
         },
     );
     element.find("[data-wrapper]").each((index, value) => {
