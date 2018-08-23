@@ -18,14 +18,7 @@
                         <div html="data.content.html" />
                     </div>
                     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
-
-                    <div ifnot="isWysiwygSupported()">
-                    <textarea
-                            class="inline-wysiwyg-textarea"
-                            afterRender="initTextarea"
-                            event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur}"
-                            data-bind="attr: { placeholder: $t('Edit Banner Text') }" />
-                    </div>
+                    <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur}" attr="placeholder: $t('Edit Banner Text')"/>
                 </div>
                 <button if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"
