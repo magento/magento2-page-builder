@@ -85,6 +85,8 @@ class Config
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
      * @param array $data
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\PageBuilder\Model\ConfigInterface $config,
@@ -161,22 +163,24 @@ class Config
     }
 
     /**
-     * Flatten the content type data
+     * Flatten the content type
      *
-     * @param $name
-     * @param $contentType
+     * @param string $name
+     * @param array $contentType
      *
      * @return array
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function flattenContentTypeData($name, $contentType)
+    private function flattenContentTypeData(string $name, array $contentType)
     {
         return [
             'name' => $name,
             'label' => $contentType['label'],
             'icon' => $contentType['icon'],
             'form' => $contentType['form'],
+            'is_hideable' =>
+                isset($contentType['is_hideable']) && $contentType['is_hideable'] === 'false' ? false : true,
             'contentType' => '',
             'group' => $contentType['group'] ?? 'general',
             'fields' => $this->uiComponentConfig->getFields($contentType['form']),

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _containerAnimation, _sortable2, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _hideShowOption, _option, _titleOption, _containerAnimation, _sortable2, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -30,23 +30,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.parent = void 0;
       this.config = void 0;
       this.data = {};
-      this.displayLabel = void 0;
+      this.displayLabel = _knockout.observable();
+      this.display = _knockout.observable(true);
       this.wrapperElement = void 0;
       this.placeholderCss = void 0;
       this.isPlaceholderVisible = _knockout.observable(true);
       this.isEmpty = _knockout.observable(true);
-      this.display = _knockout.observable(true);
       this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.edit = void 0;
+      this.optionsMenu = void 0;
       this.observableUpdater = void 0;
       this.mouseover = false;
       this.mouseoverContext = void 0;
       this.parent = parent;
       this.config = config;
       this.edit = new _edit(this.parent, this.parent.dataStore);
+      this.optionsMenu = new _contentTypeMenu(this, this.retrieveOptions());
       this.observableUpdater = observableUpdater;
-      this.displayLabel = _knockout.observable(this.config.label);
+      this.displayLabel(this.config.label);
       this.placeholderCss = _knockout.observable({
         "visible": this.isEmpty,
         "empty-placeholder-background": this.isPlaceholderVisible
@@ -205,6 +207,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           element: element,
           id: this.parent.id
         });
+
+        this.disableImageUploadOnHide(element);
       }
     };
     /**
@@ -215,7 +219,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.getOptions = function getOptions() {
-      return new _contentTypeMenu(this, this.retrieveOptions());
+      return this.optionsMenu;
     };
     /**
      * Handle user editing an instance
@@ -224,6 +228,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.onOptionEdit = function onOptionEdit() {
       this.openEdit();
+    };
+    /**
+     * Reverse the display data currently in the data store
+     */
+
+
+    _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
+      var display = this.parent.dataStore.get("display");
+      this.parent.dataStore.update(!display, "display");
     };
     /**
      * Handle duplicate of items
@@ -354,12 +367,63 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      return [new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title(this, this.config.label, 20), new _option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-content-type"], 30), new _option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
+      var options = {
+        move: new _option({
+          preview: this,
+          icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+          title: (0, _translate)("Move"),
+          classes: ["move-structural"],
+          sort: 10
+        }),
+        title: new _titleOption({
+          preview: this,
+          title: this.config.label,
+          template: "Magento_PageBuilder/content-type/title",
+          sort: 20
+        }),
+        edit: new _option({
+          preview: this,
+          icon: "<i class='icon-admin-pagebuilder-systems'></i>",
+          title: (0, _translate)("Edit"),
+          action: this.onOptionEdit,
+          classes: ["edit-content-type"],
+          sort: 30
+        }),
+        duplicate: new _option({
+          preview: this,
+          icon: "<i class='icon-pagebuilder-copy'></i>",
+          title: (0, _translate)("Duplicate"),
+          action: this.onOptionDuplicate,
+          classes: ["duplicate-structural"],
+          sort: 50
+        }),
+        remove: new _option({
+          preview: this,
+          icon: "<i class='icon-admin-pagebuilder-remove'></i>",
+          title: (0, _translate)("Remove"),
+          action: this.onOptionRemove,
+          classes: ["remove-structural"],
+          sort: 60
+        })
+      }; // If the content type is is_hideable show the hide / show option
+
+      if (this.parent.config.is_hideable) {
+        options.hideShow = new _hideShowOption({
+          preview: this,
+          icon: _hideShowOption.showIcon,
+          title: _hideShowOption.showText,
+          action: this.onOptionVisibilityToggle,
+          classes: ["hide-show-content-type"],
+          sort: 40
+        });
+      }
+
+      return options;
     };
     /**
      * Dispatch content type clone events
@@ -392,7 +456,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.parent.dataStore.subscribe(function (data) {
         _this4.updateObservables();
 
-        _this4.updatePlaceholderVisibility(data);
+        _this4.updatePlaceholderVisibility(data); // Keep a reference to the display state in an observable for adding classes to the wrapper
+
+
+        _this4.display(!!data.display);
       });
 
       if (this.parent.children) {
@@ -479,6 +546,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       return hasDataChanges;
+    };
+    /**
+     * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
+     * all elements as underlying elements could still receive the events if a parent is hidden.
+     *
+     * @param {Element} element
+     */
+
+
+    _proto.disableImageUploadOnHide = function disableImageUploadOnHide(element) {
+      var _this7 = this;
+
+      (0, _jquery)(element).on("drag dragstart dragend dragover dragenter dragleave drop", function (event) {
+        if (_this7.display() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
     };
     /**
      * Update observables

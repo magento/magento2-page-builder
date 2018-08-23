@@ -16,7 +16,7 @@ import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
@@ -42,14 +42,23 @@ export default class Preview extends PreviewCollection {
      */
     private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
         if (this.element && this.element.children.length > 0) {
+            const focusedTab = this.focusedTab();
             try {
                 $(this.element).tabs("destroy");
             } catch (e) {
                 // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
             }
             $(this.element).tabs({
-                create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setFocusedTab(activeTabIndex || 0);
+                create: () => {
+                    // Ensure focus tab is restored after a rebuild cycle
+                    if (focusedTab) {
+                        this.setFocusedTab(focusedTab, true);
+                    } else {
+                        this.setFocusedTab(null);
+                        if (activeTabIndex) {
+                            this.setActiveTab(activeTabIndex);
+                        }
+                    }
                 },
             });
         }
@@ -104,6 +113,16 @@ export default class Preview extends PreviewCollection {
                 this.updateData("default_active", newDefaultActiveTab);
             }
         });
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedTab.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
     }
 
     /**
@@ -180,21 +199,18 @@ export default class Preview extends PreviewCollection {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        options.push(
-            new Option(
-                this,
-                "add",
-                "<i class='icon-pagebuilder-add'></i>",
-                $t("Add"),
-                this.addTab,
-                ["add-child"],
-                10,
-            ),
-        );
+        options.add = new Option({
+            preview: this,
+            icon: "<i class='icon-pagebuilder-add'></i>",
+            title: $t("Add"),
+            action: this.addTab,
+            classes: ["add-child"],
+            sort: 10,
+        });
         return options;
     }
 
@@ -381,7 +397,6 @@ export default class Preview extends PreviewCollection {
                 duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
             }
-            this.buildTabs(args.index);
         });
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {

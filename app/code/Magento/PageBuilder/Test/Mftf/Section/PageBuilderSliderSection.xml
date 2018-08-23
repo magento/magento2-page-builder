@@ -9,7 +9,11 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="SliderOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="SliderDisplay" type="button" selector="div[data-role='slider']"/>
+        <element name="SliderEmpty" type="button" selector="div[data-role='slider'].slider-empty"/>
         <element name="Autoplay" type="button" selector="div[data-role='slider'][data-autoplay='{{arg1}}']" parameterized="true"/>
         <element name="AutoplaySpeed" type="button" selector=".pagebuilder-slider[data-autoplay-speed='{{arg1}}']" parameterized="true"/>
         <element name="Fade" type="button" selector="div[data-role='slider'][data-fade='{{arg1}}']" parameterized="true"/>
@@ -27,6 +31,9 @@
         <element name="buttonText" type="text" selector="//button[text()='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="SliderInAdmin">
+        <element name="base" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][(contains(@style, 'border-style: {{arg2}}')) and contains(@style, 'border-radius: {{arg3}}px') and contains(@style, 'margin: {{arg4}}px') and contains(@style, 'padding: {{arg5}}px') and contains(@style, 'min-height: {{arg6}}px')]" parameterized="true"/>
         <element name="slide" type="button" selector=".pagebuilder-slide"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
@@ -52,6 +59,7 @@
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay"/>
     </section>
     <section name="SlideOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="slideWithArg" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="slideName" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden.pagebuilder-slide-wrapper div div h3" parameterized="true"/>
         <element name="slideContent" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden.pagebuilder-slide-wrapper div div div p" parameterized="true"/>
@@ -108,6 +116,7 @@
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
     </section>
     <section name="SlideOnBackend">
+        <element name="base" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="all" type="button" selector=".pagebuilder-slide"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]" parameterized="true"/>

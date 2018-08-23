@@ -73,8 +73,10 @@
     <actionGroup name="uploadImageToContentTypeFromStage">
         <arguments>
             <argument name="property"/>
+            <argument name="section" defaultValue="PageBuilderStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <attachFile userInput="{{property.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachImageFromLocalToStage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{PageBuilderStage.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>

@@ -3,10 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import $t from "mage/translate";
-import Options from "../../content-type-menu";
-import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import PreviewCollection from "../preview-collection";
 
 /**
@@ -25,40 +23,16 @@ export default class Preview extends PreviewCollection {
     /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
-    public getOptions(): Options {
-        const options = super.getOptions();
-        options.removeOption("move");
-        options.removeOption("title");
-        return options;
-    }
-
-    /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
-     */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
+        delete options.move;
+        delete options.title;
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
         });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length <= 1) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
-        }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
+        return options;
     }
 }
