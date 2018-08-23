@@ -49,7 +49,6 @@
         <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage"/>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderImageContentType"/>
-            <argument name="section" value="ImageOnStage"/>
         </actionGroup>
         <!--Delete image A-->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
@@ -91,7 +90,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderStage.selectFromGalleryImageBtn}}" stepKey="clickSelectfromGallery"/>
+        <click selector="{{EditPanelForm.selectFromGalleryBtn(PageBuilderImageProperty_StageJPG.section, PageBuilderImageProperty_StageJPG.fieldName)}}" stepKey="clickSelectfromGallery"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
@@ -1058,8 +1057,8 @@
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="onMouseOverSliderStage"/>
-        <waitForElementNotVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="waitForGalleryButtonNotVisible"/>
-        <dontSeeElement selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="dontSeeSelectFromGallery"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderImageContentType.role, '1')}}" stepKey="waitForGalleryButtonNotVisible"/>
+        <dontSeeElement selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderImageContentType.role, '1')}}" stepKey="dontSeeSelectFromGallery"/>
         <waitForElementNotVisible selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
         <dontSeeElement selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
     </test>

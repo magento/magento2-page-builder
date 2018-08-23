@@ -33,8 +33,8 @@
         <element name="computedHeightOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).height)" parameterized="true"/>
         <element name="computedWidthOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).width)" parameterized="true"/>
         <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
-        <element name="uploadNewImageBtn" type="button" selector="//label[text()='Upload Image']" />
-        <element name="selectFromGalleryImageBtn" type="button" selector="//ul[contains(@class,'pagebuilder-options-links')]//label[text()='Select from Gallery']"/>
+        <element name="onHoverUploadImageButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//label[text()='Upload Image']" parameterized="true"/>
+        <element name="onHoverSelectFromGalleryButton" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-{{arg1}}')])[{{arg2}}]//ul[contains(@class,'pagebuilder-options-links')]//label[text()='Select from Gallery']" parameterized="true"/>
         <element name="inlineWYSIWYGEditor" type="text" selector="(//div[@data-role='{{arg1}}'])[{{arg2}}]//div[contains(@class,'inline-wysiwyg')]" parameterized="true"/>
         <element name="inlineWYSIWYGEditorPanel" type="button" selector="(//div[@data-role='{{arg1}}'])[{{arg2}}]//div[contains(@class,'mce-tinymce-inline')]" parameterized="true"/>
     </section>

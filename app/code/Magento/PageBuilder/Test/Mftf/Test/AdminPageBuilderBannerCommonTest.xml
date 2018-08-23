@@ -59,7 +59,7 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
             <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -795,7 +795,7 @@
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
             <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -969,7 +969,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
-        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
@@ -1071,110 +1071,25 @@
             <actualResult type="variable">currentUrl</actualResult>
         </assertEquals>
     </test>
-    <test name="BannerCanAddImageToBanner">
+    <test name="BannerUploadImageFromStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Add an image content type into banner"/>
-            <description value="A user should be able to add an image into a banner."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-86533"/>
-            <testCaseId value="MAGETWO-89582"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCommon"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
-            </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <!-- Upload image from local machine using image placeholder button -->
-        <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload"/>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource400"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed100"/>
-        <!-- Remove uploaded image by TrashBin icon -->
-        <comment userInput="Remove uploaded image by TrashBin icon" stepKey="commentRemove"/>
-        <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
-        <!-- Upload image from local machine using image placeholder button -->
-        <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload2"/>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile2">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
-        <!-- Overwrite uploaded image by selecting image from Media Gallery Storage -->
-        <comment userInput="Overwrite uploaded image by selecting image from Media Gallery Storage" stepKey="commentOverwrite"/>
-        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
-            <argument name="ImageFolder" value="ImageFolder"/>
-        </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
-        </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{ImageOnStorefront.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
-    </test>
-    <test name="AddImageToBannerStage">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Banner"/>
-            <title value="Add image into Banner from the Stage"/>
-            <description value="A user should be able to add image to Banner stage."/>
-            <severity value="CRITICAL"/>
+            <title value="Upload Image From Stage"/>
+            <description value="A user should be able to use the on hover upload buttons for Banner on the stage."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-1434"/>
             <testCaseId value="MC-2415"/>
-            <useCaseId value="MAGETWO-75104"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+                <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
@@ -1187,86 +1102,80 @@
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <!--Verify there are 2 buttons when hovering-->
-        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
-        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
+        <!-- Verify On Hover Upload Button Work-->
+        <comment userInput="Verify On Hover Upload Buttons Work" stepKey="commentVerifyButtons"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
-        <!--Upload image from local machine -->
-        <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadImageInput('1')}}" stepKey="attachImageFromLocalToStage"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="waitForMainImageSource1"/>
-        <!--Upload image from Media Gallery Storage -->
-        <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
-        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
-            <argument name="ImageFolder" value="ImageFolder"/>
+        <attachFile selector="{{PageBuilderStage.uploadImageInput('1')}}" userInput="{{PageBuilderImageProperty_JPG.value}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStage">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="attachImageFile1">
-            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+        <actionGroup ref="verifySelectFromGalleryButtonWorks" stepKey="verifySelectFromGalleryButtonWorks">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeImageInDOM"/>
-        <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
-        <!--Verify uploaded image is displayed on slide-out-->
-        <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
+        <!-- Verify Edit Panel -->
+        <comment userInput="Verify Edit Panel" stepKey="commentVerifyEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
-        <waitForPageLoad stepKey="waitForPageLoad3" />
-        <waitForElement selector="{{PageBuilderStoreFront.imageSourceOnFrontEnd(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
     </test>
-    <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
+    <test name="BannerVerifyStageUploadImageButtonsForEachAppearance">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Add image into Banner from the Stage For Different Appearances"/>
-            <description value="A user should be able to add image to Banner stage when switching between appearance type"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-75104"/>
+            <title value="Verify Each Appearance Has Stage Upload Image Buttons"/>
+            <description value="A user should be able to add image to Banner stage when switching between appearance types"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-1434"/>
             <testCaseId value="MC-2416"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+                <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
+        <!-- Add Banner -->
+        <comment userInput="Add Banner" stepKey="commentAddBanner"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <!--Verify there are 2 buttons display when user select appearance Left-->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -1274,12 +1183,14 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
-        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
+        <!-- Collage Left: Verify On Hover Upload Buttons -->
+        <comment userInput="Collage Left: Verify On Hover Upload Buttons" stepKey="commentVerifyButtons1"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
-        <!--Verify there are 2 buttons display when user select appearance Center-->
+        <actionGroup ref="verifySelectFromGalleryButtonWorks" stepKey="verifySelectFromGalleryButtonWorks">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -1287,12 +1198,15 @@
             <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
-        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
+        <!-- Collage Center: Verify On Hover Upload Buttons -->
+        <comment userInput="Collage Center: Verify On Hover Upload Buttons" stepKey="commentVerifyButtons2"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
-        <!--Verify there are 2 buttons display when user select appearance Right-->
+        <actionGroup ref="verifySelectFromGalleryButtonWorks" stepKey="verifySelectFromGalleryButtonWorks2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -1300,10 +1214,14 @@
             <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
-        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
+        <!-- Collage Right: Verify On Hover Upload Buttons -->
+        <comment userInput="Collage Right: Verify On Hover Upload Buttons" stepKey="commentVerifyButtons3"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="PageBuilderStage"/>
+        </actionGroup>
+        <actionGroup ref="verifySelectFromGalleryButtonWorks" stepKey="verifySelectFromGalleryButtonWorks3">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
     </test>
     <test name="BannerCannotAddToStage">
@@ -1374,7 +1292,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragBannerOntoColumn">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="User sees Banner displayed in column on Stage" stepKey="confirmBannerOnStage"/>
@@ -1442,7 +1360,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
             <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
@@ -1458,7 +1376,7 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragBannerToColumn">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
+            <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
@@ -1995,7 +1913,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeOpenedTab" />
+            <closeTab stepKey="closeOpenedTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -2022,21 +1940,21 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
-        <seeElement selector="{{BannerOnBackend.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{BannerOnBackend.hidden('1')}}" stepKey="waitForContentTypeHidden"/>
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
-        <openNewTab stepKey="openNewTab" />
+        <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
-        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentType" />
-        <seeElementInDOM selector="{{BannerOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible"/>
+        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentType"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement"/>
         <!-- Set content to visible in admin -->
         <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
-        <switchToNextTab stepKey="switchBackToAdmin" />
-        <reloadPage stepKey="reloadPage" />
-        <waitForPageLoad stepKey="waitForAdminReload" />
+        <switchToNextTab stepKey="switchBackToAdmin"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForAdminReload"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="showContentType" stepKey="showContentType">
             <argument name="section" value="BannerOnBackend"/>
@@ -2045,11 +1963,11 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <!-- Validate Content Is Shown Storefront -->
         <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
-        <switchToNextTab stepKey="switchBackToStorefront" />
-        <reloadPage stepKey="reloadStorefront" />
-        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <switchToNextTab stepKey="switchBackToStorefront"/>
+        <reloadPage stepKey="reloadStorefront"/>
+        <waitForPageLoad stepKey="waitForStorefrontReload"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
-        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible"/>
     </test>
     <test name="BannerContentBlockDeleteImage">
         <annotations>
@@ -2092,9 +2010,8 @@
         </actionGroup>
         <!-- Go to Media Storage from stage -->
         <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage1"/>
-        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
