@@ -303,7 +303,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Configure Heading Back To Default -->
         <comment userInput="Configure Heading Back To Default" stepKey="commentEditHeading2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -532,7 +532,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Click Remove Then Cancel In Modal -->
         <comment userInput="Click Remove Then Cancel In Modal" stepKey="commentCancel"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
@@ -546,7 +546,7 @@
         <waitForElementNotVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
         <!-- Verify Heading Still Exists -->
         <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
     </test>
     <test name="XOnRemovalConfirmationModal">
         <annotations>
@@ -592,7 +592,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Click Remove Then X In Modal -->
         <comment userInput="Click Remove Then X In Modal" stepKey="commentX"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
@@ -606,7 +606,7 @@
         <waitForElementNotVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
         <!-- Verify Heading Still Exists -->
         <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
     </test>
     <test name="LoginCycleResetsRemoveConfirmationDismissal">
         <annotations>
