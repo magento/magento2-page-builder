@@ -148,12 +148,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.textarea.value = this.parent.dataStore.get("message") as string;
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, () => {
-            this.textarea.value = this.parent.dataStore.get("content") as string;
+            this.textarea.value = this.parent.dataStore.get("message") as string;
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -164,7 +164,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.parent.dataStore.update(this.textarea.value, "content");
+        this.parent.dataStore.update(this.textarea.value, "message");
     }
 
     /**
@@ -172,7 +172,7 @@ export default class Preview extends BasePreview {
      */
     public onTextareaFocus()
     {
-        $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+        $(this.textarea).closest(".pagebuilder-banner-text-content").addClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStart");
     }
 
@@ -181,7 +181,7 @@ export default class Preview extends BasePreview {
      */
     public onTextareaBlur()
     {
-        $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+        $(this.textarea).closest(".pagebuilder-banner-text-content").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
     }
 

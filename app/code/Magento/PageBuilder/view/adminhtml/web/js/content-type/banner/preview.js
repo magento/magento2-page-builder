@@ -119,11 +119,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       this.textarea = element; // set initial value of textarea based on data store
 
-      this.textarea.value = this.parent.dataStore.get("content");
+      this.textarea.value = this.parent.dataStore.get("message");
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.parent.dataStore.get("content");
+        _this3.textarea.value = _this3.parent.dataStore.get("message");
 
         _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
@@ -135,7 +135,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.parent.dataStore.update(this.textarea.value, "content");
+      this.parent.dataStore.update(this.textarea.value, "message");
     };
     /**
      * Start stage interaction on textarea blur
@@ -143,7 +143,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.onTextareaFocus = function onTextareaFocus() {
-      (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+      (0, _jquery)(this.textarea).closest(".pagebuilder-banner-text-content").addClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStart");
     };
@@ -153,7 +153,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.onTextareaBlur = function onTextareaBlur() {
-      (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+      (0, _jquery)(this.textarea).closest(".pagebuilder-banner-text-content").removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");
     };
