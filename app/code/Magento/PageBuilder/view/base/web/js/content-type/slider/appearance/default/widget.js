@@ -10,7 +10,6 @@ define([
     'use strict';
 
     return function (config, sliderElement) {
-
         var $element = $(sliderElement);
 
         /**

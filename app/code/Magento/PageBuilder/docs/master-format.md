@@ -255,6 +255,9 @@ Inline styles
 13. padding
 14. align-self
 15. min-height
+16. justify-content
+17. display
+18. flex-direction
 
 ## Text
 

@@ -210,6 +210,17 @@ The following is an example of a content type configuration in `view/adminhtml/p
 
 ## Configuration reference
 
+| Attribute           | Description                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`             | Label displayed on the menu and stage.                                                                                                      |
+| `icon`              | Icon displayed on the menu.                                                                                                                 |
+| `component`         | View model responsible for rendering the preview and master format.                                                                         |
+| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
+| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `form`              | UI component form used for editing the content type                                                                                         |
+| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `is_hideable`       | Boolean that enables content types to be shown and hidden. Default is true. Set to false to prevent hiding of content type.                 |
+
 ### `form`
 
 The `form` element specifies the name of the UiComponent form used to configure content types. All forms should extend the `pagebuilder_base_form`, which contains boilerplate form configuration and the global Advanced Configuration section.

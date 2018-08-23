@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_translate, _option, _previewCollection) {
+define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemoveOption, _previewCollection) {
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -25,41 +27,17 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
     /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
-    _proto.getOptions = function getOptions() {
-      var options = _PreviewCollection.prototype.getOptions.call(this);
-
-      options.removeOption("move");
-      options.removeOption("title");
-      return options;
-    };
-    /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
-     */
-
-
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
-      });
-      var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
-
-      if (this.parent.parent.children().length <= 1) {
-        removeFn = function removeFn() {
-          return;
-        };
-
-        removeClasses.push("disabled");
-      }
-
-      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
-      return newOptions;
+      delete options.move;
+      delete options.title;
+      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
+        preview: this
+      }));
+      return options;
     };
 
     return Preview;

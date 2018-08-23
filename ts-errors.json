@@ -77,50 +77,39 @@
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts",
-      "line": "9",
+      "line": "10",
       "column": "22",
-      "errorCode": "TS2420",
-      "message": "Class 'Display' incorrectly implements interface 'ConverterInterface'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(9,22): error TS2420: Class 'Display' incorrectly implements interface 'ConverterInterface'.\n  Types of property 'toDom' are incompatible.\n    Type '(name: string, data: DataObject) => string | void' is not assignable to type '(name: string, data: DataObject) => string | object'.\n      Type 'string | void' is not assignable to type 'string | object'.\n        Type 'void' is not assignable to type 'string | object'.",
-      "rawSnippet": "9 export default class Display implements ConverterInterface {\n                       ~~~~~~~"
+      "errorCode": "TS2415",
+      "message": "Class 'Display' incorrectly extends base class 'Display'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(10,22): error TS2415: Class 'Display' incorrectly extends base class 'Display'.\n  Types of property 'fromDom' are incompatible.\n    Type '(value: string) => void' is not assignable to type '(value: string) => boolean'.\n      Type 'void' is not assignable to type 'boolean'.",
+      "rawSnippet": "10 export default class Display extends BaseDisplay implements ConverterInterface {\n                        ~~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts",
-      "line": "30",
+      "line": "31",
       "column": "38",
       "errorCode": "TS2339",
       "message": "Property 'length' does not exist on type 'string | number | boolean | any[]'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(30,38): error TS2339: Property 'length' does not exist on type 'string | number | boolean | any[]'.\n  Property 'length' does not exist on type 'number'.",
-      "rawSnippet": "30             && data.background_image.length === 0\n                                        ~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(31,38): error TS2339: Property 'length' does not exist on type 'string | number | boolean | any[]'.\n  Property 'length' does not exist on type 'number'.",
+      "rawSnippet": "31             && data.background_image.length === 0\n                                        ~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts",
-      "line": "31",
+      "line": "32",
       "column": "50",
       "errorCode": "TS2339",
       "message": "Property 'default' does not exist on type 'string | number | boolean | any[]'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(31,50): error TS2339: Property 'default' does not exist on type 'string | number | boolean | any[]'.\n  Property 'default' does not exist on type 'string'.",
-      "rawSnippet": "31             && (!data.link_url || !data.link_url.default || data.link_url.default === \"\")\n                                                    ~~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(32,50): error TS2339: Property 'default' does not exist on type 'string | number | boolean | any[]'.\n  Property 'default' does not exist on type 'string'.",
+      "rawSnippet": "32             && (!data.link_url || !data.link_url.default || data.link_url.default === \"\")\n                                                    ~~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts",
-      "line": "31",
+      "line": "32",
       "column": "75",
       "errorCode": "TS2339",
       "message": "Property 'default' does not exist on type 'string | number | boolean | any[]'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(31,75): error TS2339: Property 'default' does not exist on type 'string | number | boolean | any[]'.\n  Property 'default' does not exist on type 'string'.",
-      "rawSnippet": "31             && (!data.link_url || !data.link_url.default || data.link_url.default === \"\")\n                                                                             ~~~~~~~"
-    }
-  ],
-  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/preview/display.ts": [
-    {
-      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/preview/display.ts",
-      "line": "9",
-      "column": "22",
-      "errorCode": "TS2420",
-      "message": "Class 'Display' incorrectly implements interface 'ConverterInterface'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/preview/display.ts(9,22): error TS2420: Class 'Display' incorrectly implements interface 'ConverterInterface'.\n  Types of property 'toDom' are incompatible.\n    Type '(name: string, data: DataObject) => void' is not assignable to type '(name: string, data: DataObject) => string | object'.\n      Type 'void' is not assignable to type 'string | object'.",
-      "rawSnippet": "9 export default class Display implements ConverterInterface {\n                       ~~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/converter/style/display.ts(32,75): error TS2339: Property 'default' does not exist on type 'string | number | boolean | any[]'.\n  Property 'default' does not exist on type 'string'.",
+      "rawSnippet": "32             && (!data.link_url || !data.link_url.default || data.link_url.default === \"\")\n                                                                             ~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/preview.ts": [
@@ -688,21 +677,21 @@
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts",
-      "line": "73",
+      "line": "76",
       "column": "9",
       "errorCode": "TS2322",
       "message": "Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(73,9): error TS2322: Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawSnippet": "73         this.parent = parent;\n           ~~~~~~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(76,9): error TS2322: Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "76         this.parent = parent;\n           ~~~~~~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts",
-      "line": "75",
+      "line": "78",
       "column": "30",
       "errorCode": "TS2345",
       "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentType'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(75,30): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentType'.\n  Property 'data' is missing in type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawSnippet": "75         this.edit = new Edit(this.parent, this.parent.dataStore);\n                                ~~~~~~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(78,30): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentType'.\n  Property 'data' is missing in type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "78         this.edit = new Edit(this.parent, this.parent.dataStore);\n                                ~~~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/products/mass-converter/widget-directive.ts": [
@@ -900,6 +889,53 @@
       "message": "Property 'padding' does not exist on type 'string | number | boolean | any[]'.",
       "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/converter/style/paddings.ts(39,65): error TS2339: Property 'padding' does not exist on type 'string | number | boolean | any[]'.\n  Property 'padding' does not exist on type 'string'.",
       "rawSnippet": "39             result.paddingBottom = value.padding.bottom ? value.padding.bottom + \"px\" : \"\";\n                                                                   ~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts",
+      "line": "10",
+      "column": "22",
+      "errorCode": "TS2415",
+      "message": "Class 'Display' incorrectly extends base class 'Display'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts(10,22): error TS2415: Class 'Display' incorrectly extends base class 'Display'.\n  Types of property 'toDom' are incompatible.\n    Type '(name: string, data: DataObject) => string | void' is not assignable to type '(name: string, data: DataObject) => string'.\n      Type 'string | void' is not assignable to type 'string'.\n        Type 'void' is not assignable to type 'string'.",
+      "rawSnippet": "10 export default class Display extends BaseDisplay implements ConverterInterface {\n                        ~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts",
+      "line": "10",
+      "column": "22",
+      "errorCode": "TS2420",
+      "message": "Class 'Display' incorrectly implements interface 'ConverterInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts(10,22): error TS2420: Class 'Display' incorrectly implements interface 'ConverterInterface'.\n  Types of property 'toDom' are incompatible.\n    Type '(name: string, data: DataObject) => string | void' is not assignable to type '(name: string, data: DataObject) => string | object'.\n      Type 'string | void' is not assignable to type 'string | object'.\n        Type 'void' is not assignable to type 'string | object'.",
+      "rawSnippet": "10 export default class Display extends BaseDisplay implements ConverterInterface {\n                        ~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts",
+      "line": "31",
+      "column": "38",
+      "errorCode": "TS2339",
+      "message": "Property 'length' does not exist on type 'string | number | boolean | any[]'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts(31,38): error TS2339: Property 'length' does not exist on type 'string | number | boolean | any[]'.\n  Property 'length' does not exist on type 'number'.",
+      "rawSnippet": "31             && data.background_image.length === 0\n                                        ~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts",
+      "line": "32",
+      "column": "50",
+      "errorCode": "TS2339",
+      "message": "Property 'default' does not exist on type 'string | number | boolean | any[]'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts(32,50): error TS2339: Property 'default' does not exist on type 'string | number | boolean | any[]'.\n  Property 'default' does not exist on type 'string'.",
+      "rawSnippet": "32             && (!data.link_url || !data.link_url.default || data.link_url.default === \"\")\n                                                    ~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts",
+      "line": "32",
+      "column": "75",
+      "errorCode": "TS2339",
+      "message": "Property 'default' does not exist on type 'string | number | boolean | any[]'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/display.ts(32,75): error TS2339: Property 'default' does not exist on type 'string | number | boolean | any[]'.\n  Property 'default' does not exist on type 'string'.",
+      "rawSnippet": "32             && (!data.link_url || !data.link_url.default || data.link_url.default === \"\")\n                                                                             ~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/attribute/overlay-color-transparency.ts": [
@@ -2630,21 +2666,21 @@
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts",
-      "line": "105",
+      "line": "112",
       "column": "9",
       "errorCode": "TS2322",
       "message": "Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(105,9): error TS2322: Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Type 'Stage' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawSnippet": "105         child.parent = this;\n            ~~~~~~~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(112,9): error TS2322: Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Type 'Stage' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "112         child.parent = this;\n            ~~~~~~~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts",
-      "line": "160",
+      "line": "167",
       "column": "41",
       "errorCode": "TS7006",
       "message": "Parameter 'args' implicitly has an 'any' type.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(160,41): error TS7006: Parameter 'args' implicitly has an 'any' type.",
-      "rawSnippet": "160         events.on(\"stage:updateAfter\", (args) => {\n                                            ~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(167,41): error TS7006: Parameter 'args' implicitly has an 'any' type.",
+      "rawSnippet": "167         events.on(\"stage:updateAfter\", (args) => {\n                                            ~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/types/jarallax.d.ts": [
