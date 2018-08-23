@@ -675,57 +675,6 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
-    <test name="BannerCollageLeftEmptyBannerTakeNoSpaceOnStoreFrontValidation">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Banner"/>
-            <title value="Collage Left - Validate empty banner collage left does not take up space on store front"/>
-            <description value="Validate empty banner collage left does not take up space on store fronts"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-407"/>
-            <testCaseId value="MC-2426"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCollageLeft"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEdit">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageLeftProperty">
-            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageLeft"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageWithCollageLeftBanner"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent"/>
-        <waitForElementVisible selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageLeftPaddingPropertyDefault.desktopValue)}}" stepKey="waitForCollageLeft"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForBannerOnStoreFront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeBannerOnStoreFront"/>
-    </test>
     <test name="BannerCollageLeftUpdateAdvancedConfigurationValues">
         <annotations>
             <features value="PageBuilder"/>

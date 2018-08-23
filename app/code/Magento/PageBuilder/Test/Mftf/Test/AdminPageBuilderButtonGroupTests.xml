@@ -189,11 +189,33 @@
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ButtonGroupOnStage"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonGroup"/>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonGroupAfterDuplicate"/>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{ButtonGroupOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{ButtonGroupOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="ButtonGroupOnStage"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="ButtonGroupOnStage"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonGroupAfterShow"/>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
             <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
@@ -284,6 +306,10 @@
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
+        <!-- Validate content type is enabled after save -->
+        <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
+        <waitForElementVisible selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
+        <waitForElementVisible selector="{{ButtonGroupOnStage.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="ButtonGroupOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -316,6 +342,10 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{ButtonGroupOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{ButtonGroupOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
@@ -921,5 +951,138 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="1"/>
         </actionGroup>
+    </test>
+    <test name="ValidateShowHideOnButtonsDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Buttons is shown by default"/>
+            <description value="Button Group - Button is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3546"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Add Buttons to Stage -->
+        <comment userInput="Add Buttons to Stage" stepKey="commentAddButtonsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{ButtonGroupOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ButtonGroupOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Buttons has hide show capabilities"/>
+            <description value="A user is able to hide and show the buttons successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3527"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ButtonGroupOnStage"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{ButtonGroupOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{ButtonItemOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenButtonItem" />
+        <!-- Verify we cannot interact with the internal button after save -->
+        <comment userInput="Verify we cannot interact with the internal button after save" stepKey="commentVerifyButtonItemIsDisabledAfterSave"/>
+        <seeElementInDOM selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="seeDomButtonItemOptionsMenu"/>
+        <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="dontSeeButtonItemOptionsMenu"/>
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonGroup" />
+        <seeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <waitForElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemNotVisible" />
+        <dontSeeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="dontSeeButtonItem" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="ButtonGroupOnStage"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible" />
+        <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible" />
     </test>
 </tests>

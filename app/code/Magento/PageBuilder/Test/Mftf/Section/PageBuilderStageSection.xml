@@ -32,7 +32,7 @@
         <element name="contentTypePreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type" parameterized="true"/>
         <element name="computedHeightOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).height)" parameterized="true"/>
         <element name="computedWidthOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).width)" parameterized="true"/>
-        <element name="uploadLocalImageBtn" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
+        <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
         <element name="uploadNewImageBtn" type="button" selector="//label[text()='Upload Image']" />
         <element name="selectFromGalleryImageBtn" type="button" selector="//ul[contains(@class,'pagebuilder-options-links')]//label[text()='Select from Gallery']"/>
         <element name="inlineWYSIWYGEditor" type="text" selector="(//div[@data-role='{{arg1}}'])[{{arg2}}]//div[contains(@class,'inline-wysiwyg')]" parameterized="true"/>
@@ -72,6 +72,8 @@
         <element name="contentTypeAdd" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.add-child"  parameterized="true"/>
         <element name="contentTypeEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-content-type"  parameterized="true"/>
         <element name="contentTypeEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//descendant::*[@class="edit-content-type"]' parameterized="true"/>
+        <element name="contentTypeHide" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Hide"]'  parameterized="true"/>
+        <element name="contentTypeShow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Show"]'  parameterized="true"/>
         <element name="contentTypeDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Duplicate"]' parameterized="true"/>
         <element name="contentTypeRemove" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.remove-structural" parameterized="true"/>
         <element name="contentTypeRemoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Remove"]' parameterized="true"/>

@@ -489,6 +489,11 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
         </actionGroup>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
+            <expectedResult type="array">{{PageBuilderBackgroundPosition_Default.optionsList}}</expectedResult>
+            <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
+        </assertEquals>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
         </actionGroup>
@@ -768,23 +773,14 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.noAlignment('1')}}" stepKey="seeInDOMAlignmentStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.noAlignment('1')}}" stepKey="dontSeeAlignmentStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.noAlignmentMobile('1')}}" stepKey="seeInDOMMobileAlignmentStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.noAlignmentMobile('1')}}" stepKey="dontSeeMobileAlignmentStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeInDOMBorderStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="dontSeeBorderStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.noBorderColor('1')}}" stepKey="seeInDOMBorderColorStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.noBorderColor('1')}}" stepKey="dontSeeBorderColorStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeInDOMBorderWidthStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="dontSeeBorderWidthStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeInDOMBorderRadiusStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="dontSeeBorderRadiusStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.noCssClasses('1')}}" stepKey="seeInDOMCSSClassesStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.noCssClasses('1')}}" stepKey="dontSeeCSSClassesStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeInDOMMarginsStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="dontSeeMarginsStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMPaddingStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeePaddingStorefront"/>
     </test>
     <test name="BannerHasButtonStyled">
         <annotations>
@@ -1208,7 +1204,7 @@
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadImageInput('1')}}" stepKey="attachImageFromLocalToStage"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="waitForMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
@@ -1668,10 +1664,29 @@
             <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
         <!-- Duplicate and Verify Stage -->
         <comment userInput="Duplicate and Verify Stage" stepKey="commentDuplicateAndVerifyStage"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{BannerOnBackend.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage"/>
         <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage"/>
@@ -1709,6 +1724,10 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <seeElement selector="{{BannerOnBackend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStage2"/>
         <seeElement selector="{{BannerOnBackend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStage2"/>
+        <!-- Validate content type is enabled after save -->
+        <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
+        <waitForElementVisible selector="{{BannerOnBackend.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage2">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1829,6 +1848,10 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('2', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('2', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMinimumHeightStorefront"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{BannerOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{BannerOnFrontend.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
@@ -1897,6 +1920,136 @@
         <click selector="{{BannerOnFrontend.linkUrl('2', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="seeCurrentUrlEquals"/>
+    </test>
+    <test name="ValidateShowHideOnBannerDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner is shown by default"/>
+            <description value="Banner is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3552"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Add Banner to Stage -->
+        <comment userInput="Add Banner to Stage" stepKey="commentAddBannerToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{BannerOnBackend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{BannerOnBackend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <seeElement selector="{{BannerOnFrontend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnBanner">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner has hide show capabilities"/>
+            <description value="A user is able to hide and show the banner successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3533"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{BannerOnBackend.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{BannerOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
     <test name="BannerContentBlockDeleteImage">
         <annotations>

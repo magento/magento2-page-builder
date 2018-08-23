@@ -18,7 +18,7 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
 
 

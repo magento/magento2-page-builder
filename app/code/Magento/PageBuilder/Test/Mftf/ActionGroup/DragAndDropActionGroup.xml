@@ -55,6 +55,22 @@
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage" />
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
+    <actionGroup name="dragContentTypeToHiddenContainer">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocus"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementNotVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeNotOnStage" />
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElementInContainer" />
+    </actionGroup>
     <actionGroup name="dragContentTypeToContainerAndExpectEditPanel">
         <arguments>
             <argument name="contentType"/>
@@ -126,6 +142,7 @@
             <argument name="containerOffsetXCoordinate" defaultValue="null" type="string"/>
             <argument name="containerOffsetYCoordinate" defaultValue="null" type="string"/>
         </arguments>
+        <comment userInput="moveContentTypeToContainer" stepKey="comment"/>
         <waitForElementVisible time="20" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
@@ -134,6 +151,13 @@
         <dragAndDrop selector1="{{PageBuilderContentTypeOptionsMenu.contentTypeMoveByIndex(contentType.role, contentTypeIndex)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}"  x="{{containerOffsetXCoordinate}}" y="{{containerOffsetYCoordinate}}" stepKey="moveContentTypeIntoContainer"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
+    </actionGroup>
+    <actionGroup name="cannotMoveContentTypeToContainer" extends="moveContentTypeToContainer">
+        <arguments>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="cannotMoveContentTypeToContainer" stepKey="comment"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer" after="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="dragContentTypeNextToExistingContentType">
         <arguments>
