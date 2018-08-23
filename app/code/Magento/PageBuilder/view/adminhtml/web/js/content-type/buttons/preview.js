@@ -138,10 +138,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         containment: "parent",
         tolerance: tolerance,
         revert: 200,
-        cursorAt: {
-          left: 15,
-          top: 15
-        },
         disabled: this.parent.children().length <= 1,
 
         /**
