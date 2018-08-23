@@ -153,6 +153,15 @@ div[data-role='tabs'],
         > .element-children {
             min-height: inherit;
             padding: 0;
+
+            //  Display the first tab item on initialize and reset style for every subsequent element with this class that come after the first
+            > .pagebuilder-content-type-wrapper {
+                display: block;
+
+                ~ .pagebuilder-content-type-wrapper {
+                    display: none;
+                }
+            }
         }
     }
 
