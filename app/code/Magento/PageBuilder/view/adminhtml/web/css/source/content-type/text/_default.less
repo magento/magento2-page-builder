@@ -9,6 +9,7 @@
 
 .pagebuilder-content-type {
     .pagebuilder-text {
+        border-width: 0;
         min-height: 50px;
 
         ol {
@@ -19,25 +20,38 @@
             }
         }
         .mce-tinymce-inline {
-            left: -2px !important;
-            right: -2px;
-            top: -1px !important;
+            left: -1px !important;
+            right: -1px;
             z-index: 20;
-        }
-        .placeholder-text {
-            left: 5px;
-            pointer-events: none;
-            position: absolute;
-            top: 5px;
         }
         > .mce-content-body {
             min-height: 50px;
             padding: 5px !important;
+
+            + .placeholder-text {
+                left: 5px;
+                pointer-events: none;
+                position: absolute;
+                top: 5px;
+            }
         }
         > .mce-edit-focus {
             ~ .pagebuilder-options,
             ~ .placeholder-text {
                 display: none;
+            }
+        }
+
+        .inline-wysiwyg-textarea {
+            border: 0;
+            margin: 2px 0;
+            min-height: 50px;
+            min-width: 100%;
+            padding: 5px;
+            resize: none;
+
+            &:focus {
+                resize: vertical;
             }
         }
     }

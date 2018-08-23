@@ -40,7 +40,7 @@ export default class Color implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string {
-        return data[name].toString();
+        return data[name] ? data[name].toString() : "";
     }
 
     /**
