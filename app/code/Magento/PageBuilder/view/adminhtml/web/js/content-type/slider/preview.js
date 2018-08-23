@@ -87,7 +87,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
@@ -96,7 +96,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      options.push(new _option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addSlide, ["add-child"], 10));
+      options.add = new _option({
+        preview: this,
+        icon: "<i class='icon-pagebuilder-add'></i>",
+        title: (0, _translate)("Add"),
+        action: this.addSlide,
+        classes: ["add-child"],
+        sort: 10
+      });
       return options;
     };
     /**

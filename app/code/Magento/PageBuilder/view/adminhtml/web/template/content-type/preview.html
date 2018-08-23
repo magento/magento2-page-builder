@@ -19,7 +19,7 @@
          data-bind="sortable: getSortableOptions()"
          afterRender="afterRenderDeferred.resolve">
         <div class="pagebuilder-drop-indicator"></div>
-        <div class="pagebuilder-content-type-wrapper" attr="id: id" template="{ name: preview.previewTemplate, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }"></div>
+        <div class="pagebuilder-content-type-wrapper" attr="id: id" template="{ name: preview.previewTemplate, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" css="{'pagebuilder-content-type-hidden': !preview.display()}"></div>
         <div class="pagebuilder-drop-indicator"></div>
     </div>
 </div>
