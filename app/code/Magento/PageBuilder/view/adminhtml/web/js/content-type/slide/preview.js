@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _slick, _config, _option, _preview, _uploader, _factory) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _conditionalRemoveOption, _preview, _uploader, _factory) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -12,54 +12,21 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
   function (_BasePreview) {
     _inheritsLoose(Preview, _BasePreview);
 
-    /**
-     * Wysiwyg instance
-     */
+    function Preview() {
+      var _temp, _this;
 
-    /**
-     * The textarea element in disabled mode
-     */
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-    /**
-     * The element the text content type is bound to
-     */
-
-    /**
-     * Uploader instance
-     */
-
-    /**
-     * @param {ContentTypeInterface} parent
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
-     */
-    function Preview(parent, config, observableUpdater) {
-      var _this;
-
-      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
-      _this.wysiwyg = void 0;
-      _this.textarea = void 0;
-      _this.element = void 0;
-      _this.uploader = void 0;
-      var slider = _this.parent.parent;
-
-      _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
-
-      slider.children.subscribe(function (children) {
-        var index = children.indexOf(_this.parent);
-
-        _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
-      });
-      return _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.uploader = void 0, _temp) || _this;
     }
-    /**
-     * @param {HTMLElement} element
-     */
-
 
     var _proto = Preview.prototype;
 
+    /**
+     * @param {HTMLElement} element
+     */
     _proto.initWysiwyg = function initWysiwyg(element) {
       var _this2 = this;
 
@@ -178,24 +145,19 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       }
     };
     /**
-     * Extract data values our of observable functions
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @param {StyleAttributeMapperResult} styles
-     * @returns {StyleAttributeMapperResult}
-     */
-
-    /**
      * Get the options instance
      *
-     * @returns {Options}
+     * @returns {OptionsInterface}
      */
 
 
-    _proto.getOptions = function getOptions() {
-      var options = _BasePreview.prototype.getOptions.call(this);
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _BasePreview.prototype.retrieveOptions.call(this);
 
-      options.removeOption("move");
+      delete options.move;
+      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
+        preview: this
+      }));
       return options;
     };
     /**
@@ -207,45 +169,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
     _proto.getUploader = function getUploader() {
       return this.uploader;
-    };
-    /**
-     * Return an array of options
-     *
-     * @returns {Array<Option>}
-     */
-
-
-    _proto.retrieveOptions = function retrieveOptions() {
-      var _this3 = this;
-
-      var options = _BasePreview.prototype.retrieveOptions.call(this);
-
-      var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
-      });
-      var removeClasses = ["remove-structural"];
-
-      var removeFn = function removeFn() {
-        var index = _this3.parent.parent.getChildren().indexOf(_this3.parent);
-
-        _this3.onOptionRemove(); // Invoking methods on slider
-
-
-        _this3.parent.parent.onAfterRender();
-
-        _this3.parent.parent.setFocusedSlide(index - 1);
-      };
-
-      if (this.parent.parent.children().length <= 1) {
-        removeFn = function removeFn() {
-          return;
-        };
-
-        removeClasses.push("disabled");
-      }
-
-      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
-      return newOptions;
     };
     /**
      * Makes WYSIWYG active
@@ -275,7 +198,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -283,9 +206,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this4.textarea.value = _this4.parent.dataStore.get("content");
+        _this3.textarea.value = _this3.parent.dataStore.get("content");
 
-        _this4.adjustTextareaHeightBasedOnScrollHeight();
+        _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
     };
     /**
@@ -323,24 +246,36 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this5 = this;
+      var _this4 = this;
 
       _BasePreview.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this5.parent.dataStore.get();
+        var dataStore = _this4.parent.dataStore.get();
 
-        var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
       });
 
-      _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this5.parent.dataStore.get();
+      _events.on(this.config.name + ":mountAfter", function (args) {
+        if (args.id === _this4.parent.id) {
+          var dataStore = _this4.parent.dataStore.get();
 
-        var initialImageValue = dataStore[_this5.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+          var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this5.uploader = new _uploader("imageuploader_" + _this5.parent.id, _this5.config.additional_data.uploaderConfig, _this5.parent.id, _this5.parent.dataStore, initialImageValue);
+          _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue); // Update the display label for the slide
+
+          var slider = _this4.parent.parent;
+
+          _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
+
+          slider.children.subscribe(function (children) {
+            var index = children.indexOf(_this4.parent);
+
+            _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
+          });
+        }
       });
     };
     /**

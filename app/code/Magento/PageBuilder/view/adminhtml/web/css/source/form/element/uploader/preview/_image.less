@@ -181,3 +181,15 @@
 .pagebuilder-image .pagebuilder-image-uploader-container {
     visibility: visible;
 }
+.pagebuilder-content-type-hidden .pagebuilder-content-type-active .pagebuilder-image-uploader-container .pagebuilder-options {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+.pagebuilder-content-type-hidden .pagebuilder-image-uploader-container {
+    &.dragging .pagebuilder-image-uploader-container-dropzone-overlay {
+        display: none;
+    }
+    &.dragging .file-uploader {
+        visibility: visible;
+    }
+}

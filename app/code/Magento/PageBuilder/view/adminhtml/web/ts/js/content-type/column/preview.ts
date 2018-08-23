@@ -13,7 +13,7 @@ import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
@@ -96,25 +96,18 @@ export default class Preview extends PreviewCollection {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "move");
+        options.move = new Option({
+            preview: this,
+            icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+            title: $t("Move"),
+            classes: ["move-column"],
+            sort: 10,
         });
-        newOptions.unshift(
-            new Option(
-                this,
-                "move",
-                "<i class='icon-admin-pagebuilder-handle'></i>",
-                $t("Move"),
-                null,
-                ["move-column"],
-                10,
-            ),
-        );
-        return newOptions;
+        return options;
     }
 
     /**

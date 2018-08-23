@@ -87,18 +87,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "move";
+      options.move = new _option({
+        preview: this,
+        icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+        title: (0, _translate)("Move"),
+        classes: ["move-column"],
+        sort: 10
       });
-      newOptions.unshift(new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
-      return newOptions;
+      return options;
     };
     /**
      * Init the resize handle for the resizing functionality
