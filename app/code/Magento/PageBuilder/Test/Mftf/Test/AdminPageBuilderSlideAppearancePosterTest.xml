@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="SlidePosterButtonNeverShow">
+    <test name="SlideItemPosterButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -79,7 +79,7 @@
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <dontSeeElementInDOM selector="{{SlideOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefrontMobile"/>
     </test>
-    <test name="SlidePosterButtonOnHover">
+    <test name="SlideItemPosterButtonOnHover">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -153,7 +153,7 @@
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
     </test>
-    <test name="SlidePosterOverlayNeverShow">
+    <test name="SlideItemPosterOverlayNeverShow">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -224,7 +224,7 @@
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparentOverlayOnHoverStorefrontMobile"/>
     </test>
-    <test name="SlidePosterOverlayOnHover">
+    <test name="SlideItemPosterOverlayOnHover">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -300,7 +300,7 @@
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
     </test>
-    <test name="SlidePosterOverlayAndButtonOnHover">
+    <test name="SlideItemPosterOverlayAndButtonOnHover">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -389,7 +389,7 @@
         <seeElement selector="{{SlideOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
     </test>
-    <test name="SliderPosterButtonsCanBeEditedInline">
+    <test name="SliderItemPosterButtonsCanBeEditedInline">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
@@ -666,7 +666,7 @@
         <!-- Fill Out Edit Panel: Background -->
         <comment userInput="Fill Out Edit Panel: Background" stepKey="commentFillEditPanel2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderBackgroundColor_CenterColorPicker"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -674,14 +674,11 @@
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachMobileImage">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <!--<actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize">-->
-            <!--<argument name="property" value="PageBuilderBackgroundSize_Contain"/>-->
-        <!--</actionGroup>-->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPosition">
             <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment">
-            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="selectBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
@@ -750,14 +747,11 @@
         <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage"/>
         <!-- Validate Stage: Background -->
         <comment userInput="Validate Stage: Background" stepKey="commentValidateBackgroundStage"/>
-        <!--<actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage">-->
-            <!--<argument name="section" value="SlideOnBackend"/>-->
-            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_CenterColorPicker"/>-->
-            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
-            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>-->
-            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
-            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>-->
-        <!--</actionGroup>-->
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStage"/>
+        <seeElement selector="{{SlideOnBackend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeBackgroundImageStage"/>
+        <seeElement selector="{{SlideOnBackend.backgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeBackgroundSizeStage"/>
+        <seeElement selector="{{SlideOnBackend.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeBackgroundPositionStage"/>
+        <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatStage"/>
         <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
@@ -789,14 +783,11 @@
         <seeElement selector="{{SlideOnBackend.posterMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStage2"/>
         <!-- Validate Stage After Save: Background -->
         <comment userInput="Validate Stage After Save: Background" stepKey="commentValidateBackgroundStage2"/>
-        <!--<actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStage2">-->
-            <!--<argument name="section" value="SlideOnBackend"/>-->
-            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_CenterColorPicker"/>-->
-            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
-            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>-->
-            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
-            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>-->
-        <!--</actionGroup>-->
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStage2"/>
+        <seeElement selector="{{SlideOnBackend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeBackgroundImageStage2"/>
+        <seeElement selector="{{SlideOnBackend.backgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeBackgroundSizeStage2"/>
+        <seeElement selector="{{SlideOnBackend.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeBackgroundPositionStage2"/>
+        <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatStage2"/>
         <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage2">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
@@ -834,7 +825,7 @@
             <argument name="property" value="PageBuilderSlideItemMinimumHeight_500"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColor">
-            <argument name="property" value="PageBuilderBackgroundColor_CenterColorPicker"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeBackgroundImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -842,14 +833,11 @@
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeBackgroundMobileImage">
             <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <!--<actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundSize">-->
-            <!--<argument name="property" value="PageBuilderBackgroundSize_Contain"/>-->
-        <!--</actionGroup>-->
-        <!--<actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPosition">-->
-            <!--<argument name="property" value="PageBuilderBackgroundPosition_Center"/>-->
-        <!--</actionGroup>-->
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachment">
-            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
@@ -869,9 +857,9 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText">
             <argument name="property" value="PageBuilderSlideItemButtonText_Common"/>
         </actionGroup>
-        <!--<actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeButtonType">-->
-            <!--<argument name="property" value="PageBuilderSlideItemButtonType_Secondary"/>-->
-        <!--</actionGroup>-->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeButtonType">
+            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
+        </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeShowOverlay">
             <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
         </actionGroup>
@@ -911,22 +899,25 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
+        <!-- Validate Storefront: Appearance -->
+        <comment userInput="Validate Storefront: Appearance" stepKey="commentValidateAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeSlideNameStorefront"/>
         <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMinimumHeightStorefront"/>
-        <!--<actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateBackgroundAttributesStorefront">-->
-            <!--<argument name="section" value="SlideOnFrontend"/>-->
-            <!--<argument name="backgroundColor" value="PageBuilderBackgroundColor_CenterColorPicker"/>-->
-            <!--<argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
-            <!--<argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>-->
-            <!--<argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
-            <!--<argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>-->
-        <!--</actionGroup>-->
+        <!-- Validate Storefront: Background -->
+        <comment userInput="Validate Storefront: Background" stepKey="commentValidateBackgroundStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeBackgroundImageStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeBackgroundSizeStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeBackgroundPositionStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatStorefront"/>
         <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
+        <!-- Validate Storefront: Content -->
+        <comment userInput="Validate Storefront: Content" stepKey="commentValidateContentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeLinkUrl"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Always.value)}}" stepKey="seeButtonStateStorefront"/>
@@ -934,6 +925,8 @@
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStorefront"/>
+        <!-- Validate Storefront: Advanced -->
+        <comment userInput="Validate Storefront: Advanced" stepKey="commentValidateAdvancedStorefront"/>
         <seeElement selector="{{SlideOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStorefront"/>
         <seeElement selector="{{SlideOnFrontend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="seeBorderColorStorefront"/>
@@ -945,23 +938,28 @@
          <!--Validate Storefront Mobile-->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
+        <!-- Validate Storefront Mobile: Appearance -->
+        <comment userInput="Validate Storefront Mobile: Appearance" stepKey="commentValidateAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeMobileAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Slide1.value)}}" stepKey="seeMobileSlideNameStorefront"/>
         <seeElement selector="{{SlideOnFrontend.mobileMinimumHeight('1', PageBuilderSlideItemMinimumHeight_500.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
-        <!--<actionGroup ref="validateMobileBackgroundAttributes" stepKey="validateMobileBackgroundAttributesStorefront">-->
-            <!--<argument name="section" value="SlideOnFrontend"/>-->
-            <!--<argument name="mobileBackgroundColor" value="PageBuilderBackgroundColor_CenterColorPicker"/>-->
-            <!--<argument name="mobileBackgroundPosition" value="PageBuilderBackgroundPosition_Center"/>-->
-            <!--<argument name="mobileBackgroundSize" value="PageBuilderBackgroundSize_Contain"/>-->
-            <!--<argument name="mobileBackgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>-->
-            <!--<argument name="mobileBackgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>-->
-        <!--</actionGroup>-->
+        <!-- Validate Storefront Mobile: Background -->
+        <comment userInput="Validate Storefront Mobile Background" stepKey="commentValidateBackgroundStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileBackgroundImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="seeBackgroundImageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileBackgroundSize('1', PageBuilderBackgroundSize_Contain.value)}}" stepKey="seeBackgroundSizeStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileBackgroundPosition('1', PageBuilderBackgroundPosition_Center.styleValue)}}" stepKey="seeBackgroundPositionStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.mobileBackgroundRepeat('1', PageBuilderBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatStorefrontMobile"/>
+        <!-- Validate Storefront Mobile: Content -->
+        <comment userInput="Validate Storefront Mobile: Content" stepKey="commentValidateContentStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileMessageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMobileMessageContentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Always.value)}}" stepKey="seeMobileButtonStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.mobileButtonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeMobileButtonTypeStorefront"/>
         <seeElement selector="{{SlideOnFrontend.mobileButtonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeMobileButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeMobileOverlayStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeMobileOverlayColorAndTransparencyStorefront"/>
+        <!-- Validate Storefront Mobile: Advanced -->
+        <comment userInput="Validate Storefront Mobile: Advanced" stepKey="commentValidateAdvancedStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeMobileAlignmentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeMobileBorderStorefront"/>
         <seeElement selector="{{SlideOnFrontend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="seeMobileBorderColorStorefront"/>
