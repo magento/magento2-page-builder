@@ -34,19 +34,19 @@ export default class ContentTypeCollection extends ContentType implements Conten
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
-    public getChildren(): KnockoutObservableArray<ContentTypeInterface> {
+    public getChildren(): KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface> {
         return this.collection.getChildren();
     }
 
     /**
      * Add a child into the observable array
      *
-     * @param child
-     * @param index
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} child
+     * @param {number} index
      */
-    public addChild(child: ContentTypeInterface, index?: number): void {
+    public addChild(child: ContentTypeInterface | ContentTypeCollectionInterface, index?: number): void {
         child.parent = this;
         this.collection.addChild(child, index);
 
@@ -71,11 +71,11 @@ export default class ContentTypeCollection extends ContentType implements Conten
      *
      * @param children
      */
-    public setChildren(children: KnockoutObservableArray<ContentTypeInterface>) {
+    public setChildren(children: KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>) {
         this.collection.setChildren(children);
     }
 
-    get children() {
+    get children(): KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface> {
         return this.collection.getChildren();
     }
 }

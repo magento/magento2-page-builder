@@ -15,7 +15,7 @@ interface ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    fromDom(value: string): string | object | void;
+    fromDom(value: string): string | object | void | boolean;
 
     /**
      * Convert value to knockout format

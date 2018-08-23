@@ -32,16 +32,16 @@
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
-                <argument name="FolderName" value="{{PageBuilderSlideBackgroundImageProperty1.path}}"/>
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
-                <argument name="Image" value="PageBuilderSlideBackgroundImageProperty1"/>
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
             </actionGroup>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
-                <argument name="FolderName" value="{{PageBuilderSlideBackgroundImageProperty2.path}}"/>
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_GIF.path}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
-                <argument name="Image" value="PageBuilderSlideBackgroundImageProperty2"/>
+                <argument name="Image" value="PageBuilderBackgroundImage_GIF"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -60,7 +60,7 @@
             <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToLink">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
@@ -92,8 +92,10 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterAutoplayYes">
             <argument name="property" value="PageBuilderSliderAutoplay_Enabled"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoplaySpeed5000">
-            <argument name="property" value="PageBuilderSliderAutoplaySpeed_5000"/>
+        <!-- Enter high autoplay speed so the slider won't autoplay during the test -->
+        <comment userInput="Enter high autoplay speed so the slider won't autoplay during the test" stepKey="commentHighAutoplay"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAutoplaySpeed50000">
+            <argument name="property" value="PageBuilderSliderAutoplaySpeed_50000"/>
         </actionGroup>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFadeYes">
             <argument name="property" value="PageBuilderSliderFade_Enabled"/>
@@ -153,7 +155,7 @@
             <argument name="property" value="PageBuilderSlideItemName2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile2">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty2"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE2">
             <argument name="property" value="PageBuilderSlideItemContent2"/>
@@ -188,7 +190,7 @@
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
-        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="seeSlide1BackgroundAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderBackgroundImage_JPG.path, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <click selector="{{SliderInAdmin.nextSlide}}" stepKey="clickNextSlideOnSliderAdmin"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlide2Admin" />
         <comment userInput="Validate slide 2 on stage" stepKey="commentValidateSlide2Stage"/>
@@ -197,7 +199,7 @@
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnBackend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
-        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.extension)}}" stepKey="seeSlide2BackgroundAdmin"/>
+        <seeElement selector="{{SlideOnBackend.slideBackgroundImage('1',PageBuilderBackgroundImage_GIF.path, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeSlide2BackgroundAdmin"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -205,7 +207,7 @@
         <comment userInput="Validate Slider settings on Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplay_Enabled.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
-        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed_5000.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
+        <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed_50000.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
         <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderSliderFade_Enabled.value)}}" stepKey="seeSliderFadeSetting"/>
         <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderInfinite_Enabled.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrows_Enabled.value)}}" stepKey="seeSliderShowArrowsSetting"/>
@@ -219,7 +221,7 @@
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
-        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="seeSlide1Background"/>
+        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderBackgroundImage_JPG.path, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeSlide1Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
@@ -228,7 +230,7 @@
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnFrontend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
-        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.extension)}}" stepKey="seeSlide2Background"/>
+        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderBackgroundImage_GIF.path, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="seeSlide2Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearanceOnStorefront"/>
     </test>
     <test name="SlideAppearanceSectionDefaults">
@@ -313,38 +315,22 @@
         </actionGroup>
         <!-- Verify default and available values on background section of Add Slide form -->
         <comment userInput="Background Color: input defaults to empty" stepKey="AC0" />
-        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" stepKey="grabColorDefaultValue"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="grabColorDefaultValue"/>
         <assertEmpty stepKey="assertEmptyBackgroundColor" message="Background Color has text: $grabColorDefaultValue">
             <actualResult type="variable">grabColorDefaultValue</actualResult>
         </assertEmpty>
         <comment userInput="Background Image: mediaUpload defaults to empty" stepKey="AC1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
-        <comment userInput="Background Position: dropdown defaults to Top Aligned" stepKey="AC2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
-            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
-        </actionGroup>
-        <comment userInput="Background Position: available values Top Left, Top Center, Top Right, Center Left, Center, Center Right, Bottom Left, Bottom Center, Bottom Right" stepKey="AC3"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
-        <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
-            <expectedResult type="array">[Top Left, Top Center, Top Right, Center Left, Center, Center Right, Bottom Left, Bottom Center, Bottom Right]</expectedResult>
-            <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
-        </assertEquals>
-        <comment userInput="Background Size: dropdown defaults to Cover" stepKey="AC4"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+        <comment userInput="Background Position: dropdown defaults to Top Left" stepKey="AC2"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundPosition_Default.section, PageBuilderBackgroundPosition_Default.fieldName)}}" userInput="{{PageBuilderBackgroundPosition_Default.value}}" stepKey="seeTopAlignedPositionDefault"/>
+        <comment userInput="Background Size: defaults to Cover" stepKey="AC4"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundSize">
             <argument name="property" value="PageBuilderBackgroundSize_Default"/>
         </actionGroup>
         <comment userInput="Background Repeat: switch defaults to No" stepKey="AC6"/>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeBackgroundRepeatPropertyDefaultNo">
-            <argument name="property" value="PageBuilderBackgroundRepeatOff"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
-        <comment userInput="Background Attachment: dropdown defaults to Scroll" stepKey="AC7"/>
-        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="Scroll" stepKey="seeBackgroundAttachmentDefault"/>
-        <comment userInput="Background Attachment: available values Scroll, Fixed" stepKey="AC8"/>
-        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentDropdownValues"/>
-        <assertEquals stepKey="assertBackgroundAttachmentDropdown" message="Background sizes in dropdown">
-            <expectedResult type="array">[Scroll, Fixed]</expectedResult>
-            <actualResult type="variable">grabBackgroundAttachmentDropdownValues</actualResult>
-        </assertEquals>
     </test>
     <test name="SlideContentSectionDefaults">
         <annotations>
@@ -496,8 +482,6 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-position: left top" stepKey="verifyAdminTopAligned"/>
         <comment userInput="Verify slide defaults on admin: Background Size defaults to Cover" stepKey="adminDefaultSize"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-size: cover" stepKey="verifyAdminSizeCover"/>
-        <comment userInput="Verify slide defaults on admin: Background Attachment defaults to Scroll" stepKey="adminDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-attachment: scroll" stepKey="verifyAdminScrollAttachment"/>
         <!-- Validate Slider Edit Panel Defaults -->
         <comment userInput="Validate Slider Edit Panel Defaults" stepKey="commentSliderEditPanel"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
@@ -566,7 +550,6 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible time="10" selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
@@ -577,17 +560,15 @@
         <comment userInput="Verify slide defaults on storefront: Appearance defaults to Poster" stepKey="storefrontDefaultAppearance" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-appearance" expectedValue="poster" stepKey="slideStorefrontPoster"/>
         <comment userInput="Verify slide defaults on storefront: Minimum Height defaults to 300" stepKey="storefrontDefaultMinHeight"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
         <comment userInput="Verify slide background defaults on storefront: Background Color defaults to empty" stepKey="storefrontDefaultColor" />
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper .pagebuilder-overlay" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
         <comment userInput="Verify slide background defaults on storefront: Background Position defaults to Top Aligned" stepKey="storefrontDefaultPosition"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-position: left top;" stepKey="slideStorefrontPosition"/>
         <comment userInput="Verify slide background defaults on storefront: Background Size defaults to Cover" stepKey="storefrontDefaultSize"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-size: cover;" stepKey="slideStorefrontSize"/>
         <comment userInput="Verify slide background defaults on storefront: Background Repeat defaults to No" stepKey="storefrontDefaultRepeat"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-repeat: no-repeat;" stepKey="slideStorefrontRepeat"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Attachment defaults to Scroll" stepKey="storefrontDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-attachment: scroll;" stepKey="slideStorefrontScroll"/>
         <comment userInput="Slide Content WYSIWYG defaults to empty" stepKey="storefrontDefaultContent" />
         <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeDummyTextInPageSource"/>
         <comment userInput="Verify slide content defaults on storefront: Show Button defaults to Never Show" stepKey="storefrontDefaultShowButton"/>
@@ -696,6 +677,90 @@
         <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
         <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName1InTooltip"/>
+    </test>
+    <test name="SliderDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Duplicate Slider"/>
+            <description value="A user should be able to duplicate Slider content type. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3599"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider to Stage -->
+        <comment userInput="Add Slider to Stage" stepKey="commentAddSliderToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideMessageProperty"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <waitForPageLoad stepKey="waitForOptionsHide"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="SliderInAdmin"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{SliderInAdmin.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{SliderInAdmin.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{SliderInAdmin.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
+        <waitForElementVisible selector="{{SliderInAdmin.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
+        <!-- Reset Stage and Verify Settings -->
+        <comment userInput="Reset stage and verify settings" stepKey="CommentResetStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentTypeFirstSlider">
+            <argument name="section" value="SliderInAdmin"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentTypeSecondSlider">
+            <argument name="section" value="SliderInAdmin"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SliderInAdmin.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
+        <waitForElementVisible selector="{{SliderInAdmin.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
     </test>
     <test name="SliderDelete">
         <annotations>
@@ -953,10 +1018,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -1075,7 +1140,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToShowButton">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -1137,10 +1202,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -1209,11 +1274,11 @@
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource1"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Remove uploaded image by TrashBin icon-->
@@ -1222,16 +1287,16 @@
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile2">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderSlideBackgroundImageProperty1.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="seeImageNameOnPreview2"/>
 
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource2"/>
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
@@ -1241,7 +1306,7 @@
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton"/>
@@ -1254,9 +1319,8 @@
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="goToCategoryFrontPage"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-
         <!--Verify image on Storefront-->
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource4"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
     <test name="SlideWithDefaultMinHeightAdjustsToContentHeight">
         <annotations>
@@ -1545,7 +1609,7 @@
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadImageInput('1')}}" stepKey="attachImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForPageLoad4" />
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="waitForMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
@@ -1559,17 +1623,17 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="attachImageFile1">
-            <argument name="Image" value="PageBuilderSliderBackgroundImageProperty"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeImageInDOM"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
-            <argument name="property" value="PageBuilderSliderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1577,7 +1641,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <waitForElement selector="{{PageBuilderStoreFront.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderStoreFront.imageSourceOnFrontEnd(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
         <annotations>
@@ -1694,6 +1758,9 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="pickColorSwatchCell" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
@@ -1852,12 +1919,185 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
+    </test>
+    <test name="ValidateShowHideOnSliderDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider is shown by default"/>
+            <description value="Slider is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3553"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider to Stage -->
+        <comment userInput="Add Slider to Stage" stepKey="commentAddSliderToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideMessageProperty"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <waitForPageLoad stepKey="waitForOptionsHide"/>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{SliderInAdmin.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{SliderInAdmin.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SliderOnFrontend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnSlider">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider has hide show capabilities"/>
+            <description value="A user is able to hide and show the slider successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3529"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideMessageProperty"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <waitForPageLoad stepKey="waitForOptionsHide"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="SliderInAdmin"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{SliderInAdmin.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{SliderOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{SliderOnFrontend.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{SliderOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <waitForElement selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSlideNotVisible" />
+        <dontSeeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="dontSeeSlide" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="SliderInAdmin"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{SliderOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{SliderOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSlideVisible" />
+    </test>
+    <test name="ValidateSlideNotHideable">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate slide has no hide / show capabilities"/>
+            <description value="Validate slide has no hide / show capabilities"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3531"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <click selector="{{SlideOnBackend.openOptionsMenu('1')}}" stepKey="openSlideOptionsMenu"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="dontSeeHideOption" />
     </test>
     <test name="SliderContentBlockDeleteImage">
         <annotations>
@@ -1896,26 +2136,26 @@
         <!--Upload image from local machine using image placeholder button-->
         <comment userInput="Upload image from local machine using image placeholder button on slide out" stepKey="commentUploadImage"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachSlideImageFile1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <!-- Delete image B -->
         <comment stepKey="deleteImageB" userInput="Delete image B"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
-            <argument name="Image" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeStorage"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
-        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageNameOnPreview1"/>
+        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderBackgroundImage_JPG.path, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="dontSeeImageNameOnPreview1"/>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -1924,13 +2164,13 @@
         <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
-            <argument name="Image" value="PageBuilderSlideBackgroundImageProperty2"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
         <seeElementInDOM selector="{{SlideOnBackend.emptyslide}}" stepKey="seeEmptySliderOnStage"/>
-        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
+        <dontSeeElementInDOM selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderBackgroundImage_GIF.path, PageBuilderBackgroundImage_GIF.extension)}}" stepKey="dontSeeImageInrMainImageSource1"/>
     </test>
     <test name="SliderSorting">
         <annotations>
