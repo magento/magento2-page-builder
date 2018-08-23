@@ -3,8 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import {DataObject} from "../../data-store";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
 

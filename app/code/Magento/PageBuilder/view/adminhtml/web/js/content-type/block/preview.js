@@ -186,9 +186,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.showBlockPreview = function showBlockPreview(isShow) {
-      this.displayingBlockPreview(isShow); // preview is hidden only if block is shown
-
-      this.display(!isShow);
+      this.displayingBlockPreview(isShow);
     };
 
     return Preview;
