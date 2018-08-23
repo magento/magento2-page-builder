@@ -23,6 +23,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.placeholderText = void 0;
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
+        NO_RESULTS: (0, _translate)("No products were found matching your condition"),
         LOADING: (0, _translate)("Loading..."),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
       };
@@ -82,7 +83,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _jquery.ajax(url, requestConfig).done(function (response) {
         if (_typeof(response.data) !== "object" || !Boolean(response.data.content)) {
-          _this3.placeholderText(_this3.messages.EMPTY);
+          _this3.placeholderText(_this3.messages.NO_RESULTS);
 
           return;
         }
