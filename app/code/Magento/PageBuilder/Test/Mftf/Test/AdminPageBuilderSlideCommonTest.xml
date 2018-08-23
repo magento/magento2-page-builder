@@ -2183,8 +2183,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Edit slide text inline in textarea and see on storefront"/>
-            <description value="Verify that user are able to add text into Slide Content Type and see it on storefront"/>
+            <title value="Edit slide text inline in textarea when WYSIWYG disabled and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type when WYSIWYG disabled using textarea and see it on storefront"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-937"/>
             <testCaseId value="MC-3813"/>
@@ -2193,11 +2193,12 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
