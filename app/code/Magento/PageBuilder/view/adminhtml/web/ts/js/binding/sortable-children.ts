@@ -33,7 +33,7 @@ ko.bindingHandlers.sortableChildren = {
         $(element).sortable(options)
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 originalPosition = ui.item.index();
-                draggedContentType = instance.children()[originalPosition];
+                draggedContentType = instance.children()[originalPosition] as ContentTypeCollectionInterface;
                 events.trigger("childContentType:sortStart", {
                     instance,
                     originalPosition,

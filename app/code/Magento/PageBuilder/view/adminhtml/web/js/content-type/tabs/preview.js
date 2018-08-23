@@ -36,14 +36,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
 
         if (_this.element && _this.element.children.length > 0) {
+          var focusedTab = _this.focusedTab();
+
           try {
             (0, _jquery)(_this.element).tabs("destroy");
           } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
           }
 
           (0, _jquery)(_this.element).tabs({
-            create: function create(event, ui) {
-              _this.setFocusedTab(activeTabIndex || 0);
+            create: function create() {
+              // Ensure focus tab is restored after a rebuild cycle
+              if (focusedTab) {
+                _this.setFocusedTab(focusedTab, true);
+              } else {
+                _this.setFocusedTab(null);
+
+                if (activeTabIndex) {
+                  _this.setActiveTab(activeTabIndex);
+                }
+              }
             }
           });
         }
@@ -93,7 +104,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this.updateData("default_active", newDefaultActiveTab);
         }
-      });
+      }); // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+
+
+      _this.focusedTab.subscribe(_underscore.debounce(function (index) {
+        if (index !== null) {
+          _events.trigger("stage:interactionStart");
+        } else {
+          // We have to force the stop as the event firing is inconsistent for certain operations
+          _events.trigger("stage:interactionStop", {
+            force: true
+          });
+        }
+      }, 1));
 
       return _this;
     }
@@ -185,14 +208,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      options.push(new _option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addTab, ["add-child"], 10));
+      options.add = new _option({
+        preview: this,
+        icon: "<i class='icon-pagebuilder-add'></i>",
+        title: (0, _translate)("Add"),
+        action: this.addTab,
+        classes: ["add-child"],
+        sort: 10
+      });
       return options;
     };
     /**
@@ -386,8 +416,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
         }
-
-        _this3.buildTabs(args.index);
       });
 
       _events.on("tab-item:mountAfter", function (args) {

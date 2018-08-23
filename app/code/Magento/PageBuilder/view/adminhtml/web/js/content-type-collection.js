@@ -33,7 +33,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
 
 
@@ -45,8 +45,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     /**
      * Add a child into the observable array
      *
-     * @param child
-     * @param index
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} child
+     * @param {number} index
      */
 
 
