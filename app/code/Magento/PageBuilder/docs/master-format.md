@@ -82,8 +82,7 @@ Contained:
 Attributes
 1. data-enable-parallax [1, 0]
 2. data-parallax-speed [0-1]
-3. data-background-color-format [hex, rgb, hsl, hsv, name, none]
-4. class
+3. class
 
 Full Width:
 ```
@@ -105,8 +104,7 @@ Attributes
 3. data-appearance [full-width, full-bleed]
 4. data-enable-parallax [1, 0]
 5. data-parallax-speed [0-1]
-6. data-background-color-format [hex, rgb, hsl, hsv, name, none]
-7. class
+6. class
 
 Inline styles
 1. background-color
