@@ -79,11 +79,17 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageStage">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStageAfterSave">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageStage1">
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
@@ -140,7 +146,7 @@
             <stories value="Tabs"/>
             <title value="Tab Item - Validate Background Configuration Updated Values"/>
             <description value="Saved tab has updated values on Background section"/>
-            <severity value="AVERAGE"/>
+            <severity value="CRITICAL"/>
             <useCaseId value="MC-913"/>
             <testCaseId value="MC-3619"/>
             <group value="pagebuilder"/>

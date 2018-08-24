@@ -35,6 +35,7 @@
     </section>
     <section name="TabOnStage">
         <element name="base" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=tab-item]')[{{arg1}} - 1]" parameterized="true"/>
         <element name="all" type="button" selector=".pagebuilder-tab-item"/>
         <element name="tabHeader" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderEditableTitle" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]//span[contains(@contenteditable, 'true')]" parameterized="true"/>
