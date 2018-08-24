@@ -49,15 +49,36 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Binding element to focus on text editor
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
      */
-    public focusTextEditor() {
-        if (this.element) {
-            this.element.focus();
+    public activateEditor(preview: Preview, event: JQueryEventObject) {
+        const element = this.element || this.textarea;
+
+        if (event.currentTarget !== event.target &&
+            event.target !== element &&
+            !element.contains(event.target)
+        ) {
+            return false;
         }
-        if (this.textarea) {
-            this.textarea.focus();
-        }
+
+        element.focus();
+    }
+
+    /**
+     * Stop event to prevent execution of action when editing textarea.
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public stopEvent(preview: Preview, event: JQueryEventObject) {
+        event.stopPropagation();
+
+        return true;
     }
 
     /**

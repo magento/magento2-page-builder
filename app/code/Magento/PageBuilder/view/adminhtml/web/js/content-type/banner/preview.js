@@ -31,18 +31,35 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       return this.uploader;
     };
     /**
-     * Binding element to focus on text editor
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
      */
 
 
-    _proto.focusTextEditor = function focusTextEditor() {
-      if (this.element) {
-        this.element.focus();
+    _proto.activateEditor = function activateEditor(preview, event) {
+      var element = this.element || this.textarea;
+
+      if (event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
+        return false;
       }
 
-      if (this.textarea) {
-        this.textarea.focus();
-      }
+      element.focus();
+    };
+    /**
+     * Stop event to prevent execution of action when editing textarea.
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+
+
+    _proto.stopEvent = function stopEvent(preview, event) {
+      event.stopPropagation();
+      return true;
     };
     /**
      * Set state based on overlay mouseover event for the preview
