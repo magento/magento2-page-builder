@@ -1575,16 +1575,17 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementNotVisible selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextStorefront"/>
     </test>
-    <test name="TextRequiredAttributes">
+    <test name="TextHasNoRequired">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Validate Required Attributes"/>
-            <description value="Validate that required attributes are required for text."/>
+            <title value="Text has no required fields in edit form"/>
+            <description value="Check there are no required fields in text edit form"/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
             <testCaseId value="MAGETWO-91077"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-me"/>
             <group value="pagebuilder-text"/>
         </annotations>
         <before>
@@ -1604,20 +1605,16 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!-- Validate Cannot Save Edit Panel -->
-        <comment userInput="Validate Cannot Save Edit Panel" stepKey="commentValidateCannotSave"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElement selector="{{TextOnConfiguration.panelFieldValidationErrorMessage(PageBuilderTextContentTypeEmpty.section, PageBuilderTextContentTypeEmpty.errorMessage)}}" stepKey="seeElementErrorMessage"/>
-        <!-- Validate User Can Recover From Error -->
-        <comment userInput="Validate User Can Recover From Error" stepKey="commentValidateRecovery"/>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextProperty"/>
+        <!-- Clear Fields -->
+        <comment userInput="Clear Fields" stepKey="commentClearFields"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="clearText">
+            <argument name="property" value="PageBuilderTextContentTypeEmpty"/>
         </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
     <test name="TextDisabledWYSIWYGAddImage">
         <annotations>
