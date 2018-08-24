@@ -53,7 +53,7 @@ class Newsletter implements RendererInterface
         $newsletterStyles = '';
         if (isset($itemData['formData'])) {
             $justifyContent = '';
-            if(isset($itemData['formData']['align'])) {
+            if (isset($itemData['formData']['align'])) {
                 $convertAlignContent = [
                     'left' => 'flex-start',
                     'right' => 'flex-end',
@@ -81,9 +81,6 @@ class Newsletter implements RendererInterface
         $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
         $rootElementHtml .= $newsletterHtml . '</div>';
 
-
         return $rootElementHtml;
     }
-
-
 }
