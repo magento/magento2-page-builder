@@ -14,7 +14,7 @@
         </arguments>
         <comment userInput="Adding Slide" stepKey="comment"/>
         <executeJS function="return document.getElementsByClassName('pagebuilder-slide').length+1" stepKey="initialNumberOfSlidesPlusOne"/>
-        <click selector="{{SlideOnBackend.slideWrapper}}" stepKey="focusOnSlider"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, slideGroupIndex)}}" stepKey="mouseOverSlider"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="waitForOptionsMenu"/>
