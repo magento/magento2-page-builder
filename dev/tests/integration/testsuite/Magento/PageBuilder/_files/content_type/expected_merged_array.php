@@ -218,8 +218,6 @@ return [
             'icon' => 'pagebuilder-type2-custom-icon',
             'component' => 'Path/to/custom/component',
             'preview_component' => 'Path/to/preview/custom/component',
-            'backend_block' => 'Path/to/custom/backend/block',
-            'backend_template' => 'Path/to/custom/backend/template',
             'is_visible' => 'false',
             'form' => 'pagebuilder_type2_custom_form',
             'group' => 'group2',
