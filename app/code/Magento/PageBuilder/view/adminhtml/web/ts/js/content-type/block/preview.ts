@@ -59,7 +59,7 @@ export default class Preview extends BasePreview {
     public processBlockData(data: DataObject): void {
         // Only load if something changed
         this.displayPreviewPlaceholder(data, "block_id");
-        if (data.block_id && data.template.length != 0) {
+        if (data.block_id && data.template.length !== 0) {
             this.processRequest(data, "block_id", "title");
         }
     }
