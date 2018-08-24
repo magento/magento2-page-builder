@@ -73,7 +73,7 @@ class TemplatePlugin
             // Match the contents of the body from our generated document
             preg_match(
                 '/<body id="' . $wrapperElementId . '">(.+)<\/body><\/html>$/si',
-                mb_convert_encoding($domDocument->saveHTML(), 'UTF-8', 'HTML-ENTITIES'),
+                $domDocument->saveHTML(),
                 $matches
             );
 
