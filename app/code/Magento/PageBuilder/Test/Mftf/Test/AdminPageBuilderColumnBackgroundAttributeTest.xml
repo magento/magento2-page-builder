@@ -27,6 +27,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -76,6 +77,9 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
             <argument name="section" value="ColumnOnBackend"/>
         </actionGroup>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageStage">
+            <argument name="section" value="ColumnOnBackend"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -85,6 +89,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageStage1">
+            <argument name="section" value="ColumnOnBackend"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -117,6 +124,13 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageDesktop">
+            <argument name="section" value="ColumnOnFrontend"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageMobile">
             <argument name="section" value="ColumnOnFrontend"/>
         </actionGroup>
     </test>
