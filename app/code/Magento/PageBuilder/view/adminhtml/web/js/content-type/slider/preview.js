@@ -184,7 +184,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * After child render record element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
 
 
@@ -192,6 +192,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.afterChildrenRender.call(this, element);
 
       this.element = element;
+      this.checkWidth();
     };
     /**
      * On sort start force the container height, also focus to that slide
@@ -435,7 +436,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       setTimeout(function () {
         (0, _jquery)(_this4.element).slick("setPosition");
+
+        _this4.checkWidth();
       }, 250);
+    };
+    /**
+     * Check width and add class that marks element as small
+     */
+
+
+    _proto.checkWidth = function checkWidth() {
+      if (this.element.offsetWidth < 410) {
+        this.element.classList.add("slider-small-width");
+      } else {
+        this.element.classList.remove("slider-small-width");
+      }
     };
 
     return Preview;

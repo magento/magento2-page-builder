@@ -40,7 +40,7 @@ export default class Preview extends PreviewCollection {
     protected events: DataObject = {
         columnWidthChangeAfter: "onColumnResize",
     };
-    private element: Element;
+    private element: HTMLElement;
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
 
@@ -177,7 +177,7 @@ export default class Preview extends PreviewCollection {
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
         if (_.isNull(event.relatedTarget) ||
-            event.relatedTarget && !$.contains(event.currentTarget as Element, event.relatedTarget)
+            event.relatedTarget && !$.contains(event.currentTarget as HTMLElement, event.relatedTarget)
         ) {
             this.setFocusedSlide(null);
         }
@@ -199,11 +199,12 @@ export default class Preview extends PreviewCollection {
     /**
      * After child render record element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
-    public afterChildrenRender(element: Element): void {
+    public afterChildrenRender(element: HTMLElement): void {
         super.afterChildrenRender(element);
         this.element = element;
+        this.checkWidth();
     }
 
     /**
@@ -418,6 +419,18 @@ export default class Preview extends PreviewCollection {
     private onColumnResize(params: any) {
         setTimeout(() => {
             $(this.element).slick("setPosition");
+            this.checkWidth();
         }, 250);
+    }
+
+    /**
+     * Check width and add class that marks element as small
+     */
+    private checkWidth() {
+        if (this.element.offsetWidth < 410) {
+            this.element.classList.add("slider-small-width");
+        } else {
+            this.element.classList.remove("slider-small-width");
+        }
     }
 }
