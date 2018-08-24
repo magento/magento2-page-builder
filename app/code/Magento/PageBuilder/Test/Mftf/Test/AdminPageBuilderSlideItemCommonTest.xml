@@ -538,15 +538,15 @@
         <seeElementInDOM selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideItemPosterPadding_Default.mobileValue)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
         <dontSeeElement selector="{{SlideOnFrontend.mobilePadding('1', PageBuilderSlideItemPosterPadding_Default.mobileValue)}}" stepKey="dontSeeMobilePaddingStorefront"/>
     </test>
-    <test name="SlideItemCannotDeleteLastSlide">
+    <test name="SlideItemMoveSlideItemsToRearrange">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Slide Item - Cannot Delete Last Slide"/>
-            <description value="A user should not be able to delete the last slide from a slider."/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-87095"/>
-            <testCaseId value="MC-2870"/>
+            <title value="Slide Item - Can Move Slides To Change Order By Dragging and Dropping"/>
+            <description value="A user should be able to rearrange the order of slides by dragging and dropping"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3314"/>
+            <testCaseId value="MC-2957"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCommon"/>
@@ -562,44 +562,122 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <!-- Add Slider -->
-        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
-        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage1"/>
-        <!-- Attempt To Remove -->
-        <comment userInput="Attempt To Remove" stepKey="commentAttemptToRemove"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage1">
-            <argument name="section" value="SlideOnBackend"/>
-            <argument name="targetIndex" value="1"/>
+        <!-- Edit Slide 1 -->
+        <comment userInput="Edit Slide 1" stepKey="commentEditSlide1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText1">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
-        <!-- Verify Slide Still Exists -->
-        <comment userInput="Verify Button Still Exists" stepKey="commentVerifyButton"/>
-        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage2"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+        <!-- Add Slide 2 -->
+        <comment userInput="Add Slide 2" stepKey="commentAddSlide"/>
+        <actionGroup ref="addSlide" stepKey="addSlide2"/>
+        <!-- Edit Slide 2 -->
+        <comment userInput="Edit Slide 2" stepKey="commentEditSlide2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide2"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCESlide2">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage3"/>
-        <!-- Attempt To Remove After Page Save -->
-        <comment userInput="Attempt To Remove After Page Save" stepKey="commentAttemptToRemove2"/>
-        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage2">
-            <argument name="section" value="SlideOnBackend"/>
-            <argument name="targetIndex" value="1"/>
-        </actionGroup>
-        <!-- Verify Slide Still Exists After Page Save-->
-        <comment userInput="Verify Slide Still Exists After Page Save" stepKey="commentVerifySlide2"/>
-        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage4"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide1AfterSave"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave"/>
+        <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltipAfterSave"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDot"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentAfterSave"/>
+        <!-- Change Slide Order -->
+        <comment userInput="Change Slide Order" stepKey="commentSortingSlides"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.slideNavigationDragHandle}}')[0].clientWidth / 4" stepKey="xCoordinateToMoveTo"/>
+        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
+        <executeJS function="return document.querySelectorAll('{{SliderOnStage.slideNavigationDragHandle}}')[0].clientHeight / 2" stepKey="yCoordinateToMoveTo"/>
+        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlideDot"/>
+        <dragAndDrop selector1="{{SliderOnStage.slideNavigationDragHandleByIndex('1', '2')}}" selector2="{{SliderOnStage.slideNavigationDot('1', '1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
+        <!-- Validate Stage After Sorting -->
+        <comment userInput="Validate Stage After Sorting" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide1ContentAfterSort"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSort"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSort"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltipAfterSort"/>
+        <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDot"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSort"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDotAfterSort"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide2ContentAfterSort"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Saving -->
+        <comment userInput=" Validate Stage After Saving" stepKey="commentValidateStage3"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentAfterSave2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave2"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSave"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltipAfterSave2"/>
+        <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave2"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave2"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDot2"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave2"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{SlideOnFrontend.all}}" userInput="1" stepKey="seeSlideStorefront"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="waitForSlide1"/>
+        <see userInput="{{PageBuilderSlideItemContent_Slide2.value}}" selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="seeSlide1ContentDisplayed"/>
+        <click selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="clickNextSlideOnSlider"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="waitForSlide2"/>
+        <see userInput="{{PageBuilderSlideItemContent_Slide1.value}}" selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="seeSlide2ContentDisplayed"/>
     </test>
+    <test name="SlideItemValidateSlideCannotBeHidden">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Validate slide has no hide / show capabilities"/>
+            <description value="Validate slide has no hide / show capabilities"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3531"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <click selector="{{SlideOnBackend.openOptionsMenu('1')}}" stepKey="openSlideOptionsMenu"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="dontSeeHideOption" />
+    </test>
+    <!--todo: add slide item duplicate-->
     <test name="SlideItemDeleteSlideItem">
         <annotations>
             <features value="PageBuilder"/>
@@ -667,6 +745,68 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{SlideOnFrontend.all}}" userInput="1" stepKey="seeSlidesStorefront"/>
+    </test>
+    <test name="SlideItemCannotDeleteLastSlide">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Item - Cannot Delete Last Slide"/>
+            <description value="A user should not be able to delete the last slide from a slider."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-87095"/>
+            <testCaseId value="MC-2870"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage1"/>
+        <!-- Attempt To Remove -->
+        <comment userInput="Attempt To Remove" stepKey="commentAttemptToRemove"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage1">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify Slide Still Exists -->
+        <comment userInput="Verify Button Still Exists" stepKey="commentVerifyButton"/>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage3"/>
+        <!-- Attempt To Remove After Page Save -->
+        <comment userInput="Attempt To Remove After Page Save" stepKey="commentAttemptToRemove2"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!-- Verify Slide Still Exists After Page Save-->
+        <comment userInput="Verify Slide Still Exists After Page Save" stepKey="commentVerifySlide2"/>
+        <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage4"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{SlideOnFrontend.all}}" userInput="1" stepKey="seeSlideStorefront"/>
     </test>
     <test name="SlideItemHasEditButtonTextButtonStyledInAdminAndStorefront">
         <annotations>
@@ -1027,6 +1167,7 @@
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
         <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
         <waitForPageLoad stepKey="waitForPageLoad2" />
@@ -1092,6 +1233,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverContentTypeStage1"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -1106,6 +1248,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverContentTypeStage2"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -1121,6 +1264,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!--Verify there are 2 buttons when hovering-->
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverContentTypeStage3"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -1259,38 +1403,5 @@
             <expectedResult type="string">border-box</expectedResult>
             <actualResult type="variable">actualBoxSizingStyle</actualResult>
         </assertEquals>
-    </test>
-    <test name="SlideItemValidateSlideCannotBeHidden">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Slider"/>
-            <title value="Slide Item - Validate slide has no hide / show capabilities"/>
-            <description value="Validate slide has no hide / show capabilities"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-965"/>
-            <testCaseId value="MC-3531"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-slide"/>
-            <group value="pagebuilder-slideItemCommon"/>
-            <group value="pagebuilder-hideShow"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <click selector="{{SlideOnBackend.openOptionsMenu('1')}}" stepKey="openSlideOptionsMenu"/>
-        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderSlideContentType.role, '1')}}" stepKey="dontSeeHideOption" />
     </test>
 </tests>
