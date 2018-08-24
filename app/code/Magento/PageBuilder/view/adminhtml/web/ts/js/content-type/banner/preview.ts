@@ -147,7 +147,7 @@ export default class Preview extends BasePreview {
         element.id = this.parent.id + "-editor";
 
         const config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        config.adapter.settings.fixed_toolbar_container = ".pagebuilder-banner-text-content";
+        config.adapter.settings.fixed_toolbar_container = "#" + this.parent.id + " .pagebuilder-banner-text-content";
 
         WysiwygFactory(
             this.parent.id,
