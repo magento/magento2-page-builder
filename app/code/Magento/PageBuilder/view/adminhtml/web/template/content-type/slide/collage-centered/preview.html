@@ -35,7 +35,7 @@
             <div ifnot="isWysiwygSupported()">
                 <textarea class="inline-wysiwyg-textarea"
                           afterRender="initTextarea"
-                          event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur}"
+                          event="keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent"
                           data-bind="attr: { placeholder: $t('Edit Slide Text') }" />
             </div>
             <a if="data.main.attributes()['data-show-button'] !== 'never'"
