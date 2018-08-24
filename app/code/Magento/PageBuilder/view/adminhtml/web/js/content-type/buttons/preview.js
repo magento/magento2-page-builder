@@ -76,14 +76,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      options.push(new _option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add Button"), this.addButton, ["add-child"], 20));
+      options.add = new _option({
+        preview: this,
+        icon: "<i class='icon-pagebuilder-add'></i>",
+        title: (0, _translate)("Add Button"),
+        action: this.addButton,
+        classes: ["add-child"],
+        sort: 10
+      });
       return options;
     };
     /**
@@ -94,7 +101,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.addButton = function addButton() {
       var _this3 = this;
 
-      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.parent.parent, this.parent.stageId, {});
+      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.parent, this.parent.stageId, {});
       createButtonItemPromise.then(function (button) {
         _this3.parent.addChild(button);
 

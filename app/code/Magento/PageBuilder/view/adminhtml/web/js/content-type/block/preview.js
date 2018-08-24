@@ -54,7 +54,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       // Only load if something changed
       this.displayPreviewPlaceholder(data, "block_id");
 
-      if (data.block_id && data.template.length != 0) {
+      if (data.block_id && data.template.length !== 0) {
         this.processRequest(data, "block_id", "title");
       }
     };
@@ -186,9 +186,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.showBlockPreview = function showBlockPreview(isShow) {
-      this.displayingBlockPreview(isShow); // preview is hidden only if block is shown
-
-      this.display(!isShow);
+      this.displayingBlockPreview(isShow);
     };
 
     return Preview;

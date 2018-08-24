@@ -3,16 +3,19 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@ccc: #ccc;
+@b3: #b3b3b3;
+
 //
 //  Default appearance styles
 //  _____________________________________________
 
 [data-role='slider'],
 .pagebuilder-content-type.pagebuilder-slider {
-    border: none;
     -moz-transition: none;
     -o-transition: none;
     -webkit-transition: none;
+    border: none;
     transition: none;
 
     .slider-container {
@@ -37,10 +40,10 @@
         }
 
         &:hover {
-            box-shadow: none;
             -moz-transition: none;
             -o-transition: none;
             -webkit-transition: none;
+            box-shadow: none;
             transition: none;
 
             .slider-container {
@@ -219,7 +222,6 @@
                     .pagebuilder-options {
                         .pagebuilder-options-visible;
                         z-index: 30;
-
                     }
 
                     .tooltip-content {
@@ -310,6 +312,10 @@
     visibility: visible;
 }
 
+.pagebuilder-content-type-hidden .pagebuilder-content-type.pagebuilder-slider.pagebuilder-content-type-active:hover .slider-container {
+    z-index: 10;
+}
+
 [data-role='slider'] {
     .slick-track .slick-slide {
         display: block;
@@ -333,7 +339,7 @@
             width: 14px;
             button {
                 background: transparent;
-                border: 1px solid #ccc;
+                border: 1px solid @color-gray;
                 border-radius: 10px;
                 box-shadow: none;
                 cursor: pointer;
@@ -345,7 +351,7 @@
                 width: 14px;
 
                 &:hover {
-                    border: 1px solid #b3b3b3;
+                    border: 1px solid @b3;
                 }
 
                 &:active,
@@ -358,7 +364,7 @@
 
             &.slick-active {
                 button {
-                    background: #1c1918;
+                    background: @color-pagebuilder-darkest-gray;
                     border: none;
                 }
             }

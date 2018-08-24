@@ -4,6 +4,10 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Display =
   /*#__PURE__*/
   function () {
@@ -15,22 +19,23 @@ define([], function () {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {void}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return;
+      return !(value === "none");
     };
     /**
-     * Convert value to knockout format
+     * Convert value to knockout format, we only provide a none property if we intend for the content type to be hidden,
+     * otherwise we let the original display property handle the display of the content type.
      *
-     * @param name string
-     * @param data Object
-     * @returns {string | void}
+     * @param {string} name
+     * @param {DataObject} data
+     * @returns {string}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      if (data.background_color === "" && data.background_image.length === 0 && (!data.link_url || !data.link_url.default || data.link_url.default === "") && data.message === "" && data.show_button === "never" && data.show_overlay === "never") {
+      if (typeof data[name] !== "undefined" && data[name] === false) {
         return "none";
       }
 

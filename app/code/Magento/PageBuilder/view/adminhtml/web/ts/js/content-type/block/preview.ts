@@ -181,8 +181,5 @@ export default class Preview extends BasePreview {
      */
     private showBlockPreview(isShow: boolean) {
         this.displayingBlockPreview(isShow);
-
-        // preview is hidden only if block is shown
-        this.display(!isShow);
     }
 }
