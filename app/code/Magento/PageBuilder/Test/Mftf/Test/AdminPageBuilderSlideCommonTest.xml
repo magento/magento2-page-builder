@@ -464,12 +464,12 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="min-height: 300px;" stepKey="verifyMinHeight300OnAdmin"/>
         <!-- Empty slide default margin and paddings -->
         <comment userInput="User sees empty slide with margin to be 0 px and and paddings to be 40 px by default" stepKey="AC5"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.slide}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0px"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0px"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
         <!-- Empty slide no border -->
         <comment userInput="User sees no slide border by default" stepKey="AC6"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.slide}}" attribute="style" expectedValue="border-style: none;" stepKey="verifyBorderNone"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.slide}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-style: none;" stepKey="verifyBorderNone"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
         <!-- Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
@@ -552,7 +552,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper .pagebuilder-poster-overlay" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: User sees no slide border by default" stepKey="storefrontDefaultBorder"/>
