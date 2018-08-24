@@ -1,10 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], function (_jquery, _knockout, _keyCodes, _underscore) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
   _keyCodes = _interopRequireDefault(_keyCodes);
+  _underscore = _interopRequireDefault(_underscore);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42,6 +43,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
      * @param {KnockoutBindingContext} bindingContext
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
+      var _this = this;
+
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
           placeholder = _valueAccessor.placeholder;
@@ -57,7 +60,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = html;
-        return tempDiv.innerText;
+        return tempDiv.textContent;
       };
       /**
        * Record the value on focus, only conduct an update when data changes
@@ -90,8 +93,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       /**
        * Key down event on element
        *
-       * Prevent styling such as bold, italic, and underline using keyboard commands
-       * Prevent multi-line entries
+       * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
        *
        * @param {any} event
        */
@@ -114,6 +116,52 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
         if (key === "pageLeftKey" || key === "pageRightKey") {
           event.stopPropagation();
         }
+
+        debouncedUpdateHandler.call(_this);
+      };
+      /**
+       * Debounce the saving of the state to ensure that on save without first unfocusing will succeed
+       */
+
+
+      var debouncedUpdateHandler = _underscore.default.debounce(function () {
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        var getCharPosition = function getCharPosition(editableDiv) {
+          var charPosition = 0;
+
+          if (window.getSelection) {
+            if (selection.rangeCount) {
+              if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
+                charPosition = selection.getRangeAt(0).endOffset;
+              }
+            }
+          }
+
+          return charPosition;
+        };
+
+        var pos = getCharPosition(element);
+
+        if (focusedValue !== stripHtml(element.innerHTML)) {
+          viewModel.updateData(field, stripHtml(element.innerHTML));
+        }
+
+        range.setStart(element.childNodes[0], pos);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }, 300);
+      /**
+       * Prevent content from being dropped inside of inline edit area
+       *
+       * @param {DragEvent} event
+       */
+
+
+      var onDrop = function onDrop(event) {
+        event.preventDefault();
       };
       /**
        * Input event on element
@@ -125,20 +173,21 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.innerText = viewModel.previewData[field]();
+      element.textContent = viewModel.parent.dataStore.get(field);
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("input", onInput);
+      element.addEventListener("drop", onDrop);
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
-      viewModel.previewData[field].subscribe(function (value) {
-        element.innerText = viewModel.previewData[field]();
+      viewModel.parent.dataStore.subscribe(function () {
+        element.textContent = viewModel.parent.dataStore.get(field);
         handlePlaceholderClass(element);
-      });
+      }, field);
     },
 
     /**
@@ -154,7 +203,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       var _valueAccessor2 = valueAccessor(),
           field = _valueAccessor2.field;
 
-      element.innerText = viewModel.previewData[field]();
+      element.textContent = viewModel.parent.dataStore.get(field);
       handlePlaceholderClass(element);
     }
   };
