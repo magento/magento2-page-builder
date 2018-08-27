@@ -273,6 +273,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return;
       }
 
+      _events.trigger("tabs:beforeSetFocused", {
+        index: index,
+        contentType: this
+      });
+
       this.setFocusedTab(index);
     };
     /**

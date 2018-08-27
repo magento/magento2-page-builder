@@ -18,13 +18,13 @@ import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import PreviewCollection from "../preview-collection";
+import BeforeSetFocusedEventInterface from "../tabs/before-set-focused-event";
 
 /**
  * @api
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
-    public currentMaxWidth: KnockoutObservable<number> = ko.observable(0);
     /**
      * Keeps track of number of button item to disable sortable if there is only 1.
      */
@@ -62,6 +62,10 @@ export default class Preview extends PreviewCollection {
             _.debounce(() => {
                 this.resizeChildButtons();
             }, 500).call(this);
+        });
+
+        events.on("tabs:beforeSetFocused", (eventData: BeforeSetFocusedEventInterface) => {
+            this.resizeChildButtons();
         });
     }
 
@@ -235,40 +239,27 @@ export default class Preview extends PreviewCollection {
     private resizeChildButtons() {
         if (this.wrapperElement) {
             const buttonItems: JQuery = $(this.wrapperElement).find(".pagebuilder-button-item > a");
-            let buttonResizeValue: string|number = "";
+            let buttonResizeValue: string|number = "0";
             if (this.parent.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
-                    buttonItems.css("min-width", "");
-                    const currentLargestButton = this.findLargestButton(buttonItems);
-                    const currentLargestButtonWidth = currentLargestButton.outerWidth();
-                    if (currentLargestButtonWidth !== 0) {
-                        buttonResizeValue = currentLargestButtonWidth;
-                        this.currentMaxWidth(currentLargestButtonWidth);
-                    } else {
-                        buttonResizeValue = this.currentMaxWidth();
-                    }
+                    const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
+                    const parentWrapperWidth = $(this.wrapperElement).width();
+                    buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
                 }
             }
+
             buttonItems.css("min-width", buttonResizeValue);
         }
     }
 
     /**
-     * Find the largest button which will determine the button width we use for re-sizing.
+     * Find the largest button width for calculating same size value.
      *
      * @param {JQuery} buttonItems
-     * @returns {JQuery}
+     * @returns {number}
      */
-    private findLargestButton(buttonItems: JQuery): JQuery {
-        let largestButton: JQuery|null = null;
-        buttonItems.each((index, element) => {
-            const buttonElement = $(element);
-            if (largestButton === null
-                || this.calculateButtonWidth(buttonElement) > this.calculateButtonWidth(largestButton)) {
-                largestButton = buttonElement;
-            }
-        });
-        return largestButton;
+    private findLargestButtonWidth(buttonItems: JQuery): number {
+        return _.max(_.map(buttonItems, (buttonItem) => this.calculateButtonWidth($(buttonItem))));
     }
 
     /**
@@ -279,9 +270,8 @@ export default class Preview extends PreviewCollection {
      */
     private calculateButtonWidth(buttonItem: JQuery): number {
         const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
-        const calculatedButtonWidth: number = widthProperties.reduce((accumulatedWidth, widthProperty): number => {
+        return widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
         }, buttonItem.find("[data-element='link_text']").width());
-        return calculatedButtonWidth;
     }
 }

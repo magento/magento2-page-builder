@@ -17,7 +17,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.currentMaxWidth = _knockout.observable(0), _this.disableSorting = _knockout.computed(function () {
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.disableSorting = _knockout.computed(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
         if (_this.parent.children().length <= 1) {
@@ -57,6 +57,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _underscore.debounce(function () {
           _this2.resizeChildButtons();
         }, 500).call(_this2);
+      });
+
+      _events.on("tabs:beforeSetFocused", function (eventData) {
+        _this2.resizeChildButtons();
       });
     };
     /**
@@ -253,20 +257,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.resizeChildButtons = function resizeChildButtons() {
       if (this.wrapperElement) {
         var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
-        var buttonResizeValue = "";
+        var buttonResizeValue = "0";
 
         if (this.parent.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
-            buttonItems.css("min-width", "");
-            var currentLargestButton = this.findLargestButton(buttonItems);
-            var currentLargestButtonWidth = currentLargestButton.outerWidth();
-
-            if (currentLargestButtonWidth !== 0) {
-              buttonResizeValue = currentLargestButtonWidth;
-              this.currentMaxWidth(currentLargestButtonWidth);
-            } else {
-              buttonResizeValue = this.currentMaxWidth();
-            }
+            var currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
+            var parentWrapperWidth = (0, _jquery)(this.wrapperElement).width();
+            buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
           }
         }
 
@@ -274,25 +271,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     };
     /**
-     * Find the largest button which will determine the button width we use for re-sizing.
+     * Find the largest button width for calculating same size value.
      *
      * @param {JQuery} buttonItems
-     * @returns {JQuery}
+     * @returns {number}
      */
 
 
-    _proto.findLargestButton = function findLargestButton(buttonItems) {
+    _proto.findLargestButtonWidth = function findLargestButtonWidth(buttonItems) {
       var _this4 = this;
 
-      var largestButton = null;
-      buttonItems.each(function (index, element) {
-        var buttonElement = (0, _jquery)(element);
-
-        if (largestButton === null || _this4.calculateButtonWidth(buttonElement) > _this4.calculateButtonWidth(largestButton)) {
-          largestButton = buttonElement;
-        }
-      });
-      return largestButton;
+      return _underscore.max(_underscore.map(buttonItems, function (buttonItem) {
+        return _this4.calculateButtonWidth((0, _jquery)(buttonItem));
+      }));
     };
     /**
      * Manually calculate button width using content plus box widths (padding, border)
@@ -304,10 +295,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
       var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
-      var calculatedButtonWidth = widthProperties.reduce(function (accumulatedWidth, widthProperty) {
+      return widthProperties.reduce(function (accumulatedWidth, widthProperty) {
         return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
       }, buttonItem.find("[data-element='link_text']").width());
-      return calculatedButtonWidth;
     };
 
     return Preview;
