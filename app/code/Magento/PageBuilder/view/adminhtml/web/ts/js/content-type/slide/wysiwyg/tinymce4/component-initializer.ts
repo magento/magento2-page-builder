@@ -74,7 +74,7 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         });
 
         // Disable slider keyboard events and fix problem with overflow hidden issue
-        $($slider.parent()).slick("slickSetOption", "accessibility", false, true);
+        $($slider.parent()).slick("slickSetOption", "accessibility", false);
         $notActiveSlides.hide();
         this.sliderTransform = sliderContent.style.transform;
         sliderContent.style.transform = "";
@@ -99,7 +99,6 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         $slider.css("overflow", "hidden");
         sliderContent.style.transform = this.sliderTransform;
         $notActiveSlides.show();
-        $($slider.parent()).slick("slickSetOption", "accessibility", true, true);
-
+        $($slider.parent()).slick("slickSetOption", "accessibility", true);
     }
 }
