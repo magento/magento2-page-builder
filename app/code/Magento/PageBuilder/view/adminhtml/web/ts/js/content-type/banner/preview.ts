@@ -53,7 +53,6 @@ export default class Preview extends BasePreview {
      *
      * @param {Preview} preview
      * @param {JQueryEventObject} event
-     * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
         const element = this.element || this.textarea;
@@ -62,7 +61,7 @@ export default class Preview extends BasePreview {
             event.target !== element &&
             !element.contains(event.target)
         ) {
-            return false;
+            return;
         }
 
         element.focus();

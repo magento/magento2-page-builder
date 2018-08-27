@@ -35,7 +35,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
      *
      * @param {Preview} preview
      * @param {JQueryEventObject} event
-     * @returns {Boolean}
      */
 
 
@@ -43,7 +42,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       var element = this.element || this.textarea;
 
       if (event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
-        return false;
+        return;
       }
 
       element.focus();
