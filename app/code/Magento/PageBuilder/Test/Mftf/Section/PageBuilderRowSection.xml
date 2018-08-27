@@ -39,7 +39,7 @@
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}') and contains(@style,'{{arg3}}&quot;);')]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-image:'))]" parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundSize" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
@@ -68,6 +68,7 @@
     </section>
     <section name="RowOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=row] > div')[{{arg1}} - 1]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=row]')).width)"/>
@@ -78,7 +79,7 @@
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/div[contains(@style,"background-image: url(&apos;") and contains(@style,"/{{arg2}}_") and contains(@style,".{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="noBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][not(contains(@style,"background-image:"))]' parameterized="true"/>
         <element name="backgroundPosition" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundSize" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
@@ -88,7 +89,7 @@
         <element name="parallaxClass" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@class='jarallax']" parameterized="true"/>
         <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[@data-parallax-speed='{{arg2}}']" parameterized="true"/>
-        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/div[contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
@@ -125,7 +126,7 @@
         <element name="parallaxClass" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@class='jarallax']" parameterized="true"/>
         <element name="parallaxState" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-enable-parallax='{{arg2}}']" parameterized="true"/>
         <element name="parallaxSpeed" type="button" selector="(//div[@data-role='row'])[{{arg1}}][@data-parallax-speed='{{arg2}}']" parameterized="true"/>
-        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}][contains(@data-jarallax-original-styles,"background-image: url(&apos;") and contains(@data-jarallax-original-styles,"{{arg2}}") and contains(@data-jarallax-original-styles,"{{arg3}}&apos;);")]' parameterized="true"/>
+        <element name="parallaxBackgroundImage" type="button" selector='(//div[@data-role="row"])[{{arg1}}]/descendant::div[contains(@id,"jarallax-container")]/div[contains(@style,"background-image: url(") and contains(@style,"{{arg2}}") and contains(@style,"{{arg3}}")]' parameterized="true"/>
         <!-- Layout Configuration -->
         <element name="minHeight" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'min-height: {{arg2}}px;')]" parameterized="true"/>
         <element name="verticalAlignContainer" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
