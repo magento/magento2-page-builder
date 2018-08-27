@@ -44,12 +44,26 @@ class Newsletter implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $newsletterClasses = $eavData['css_classes'] ?? '';
-        $newsletterButtonText = $eavData['button_text'] ?? '';
-        $newsletterLabel = $eavData['label'] ?? '';
-        $newsletterTitle = $eavData['title'] ?? '';
-        $newsletterPlaceHolder = $eavData['placeholder'] ?? '';
+        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml .= $this->getNewsletterHtml($itemData, $eavData) . '</div>';
 
+        return $rootElementHtml;
+    }
+
+    /**
+     * get the html for the newsletter
+     *
+     * @param array $itemData
+     * @param array $eavData
+     * @return string
+     */
+    private function getNewsletterHtml(array $itemData, array $eavData): string
+    {
+        $newsletterButtonText = $eavData['button_text'] ?? __('Subscribe');
+        $newsletterLabel = $eavData['label'] ?? __('Sign Up for Our Newsletter:');
+        $newsletterTitle = $eavData['title'] ?? __('Newsletter');
+        $newsletterPlaceHolder = $eavData['placeholder'] ?? __('Enter your email address');
+        $newsletterClasses = $eavData['css_classes'] ?? '';
         $newsletterStyles = '';
         if (isset($itemData['formData'])) {
             $justifyContent = '';
@@ -69,18 +83,29 @@ class Newsletter implements RendererInterface
             }
         }
 
-        $newsletterHtml = "{{block class=\"Magento\Newsletter\Block\Subscribe\" " .
-            "template=\"Magento_PageBuilder::content_type/newsletter.phtml\" " .
-            "placeholder=\"$newsletterPlaceHolder\" " .
-            "classes=\"$newsletterClasses\" " .
-            "styles=\"$newsletterStyles\" " .
-            "button_text=\"$newsletterButtonText\" " .
-            "label_text=\"$newsletterLabel\" " .
-            "title=\"$newsletterTitle\"}}";
+        $newsletterHtml = '<div class="' . $newsletterClasses . '" style="' . $newsletterStyles . '">' .
+            '<div class="block newsletter"><div class="title"><strong>' . $newsletterTitle . '</strong></div>' .
+            '<div class="content">' .
+            '<form class="form subscribe" novalidate method="post" ' .
+                   'action="{{store direct_url=\'newsletter/subscriber/new\' _secure=1}}" ' .
+                   'data-mage-init=\'{"validation": {"errorClass": "mage-error"}}\'>' .
+            '<div class="field newsletter">' .
+            '<label class="label" for="newsletter-' . $itemData['entityId'] . '">' .
+            '<span>' . $newsletterLabel . '</span>'.
+            '</label>' .
+            '<div class="control">' .
+            '<input name="email" type="email" id="newsletter-' . $itemData['entityId'] . '" '.
+                    'placeholder="' . $newsletterPlaceHolder . '" ' .
+                    'data-mage-init=\'{"mage/trim-input":{}}\' ' .
+                    'data-validate="{required:true, \'validate-email\':true}"/>' .
+            '</div></div>' .
+            '<div class="actions">' .
+            '<button class="action subscribe primary" title="' . $newsletterButtonText . '" type="submit">' .
+            '<span>' . $newsletterButtonText . '</span>' .
+            '</button>' .
+            '</div></form></div></div></div>';
 
-        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
-        $rootElementHtml .= $newsletterHtml . '</div>';
 
-        return $rootElementHtml;
+        return $newsletterHtml;
     }
 }
