@@ -6,6 +6,7 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
@@ -206,9 +207,10 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const element = this.element || this.textarea;
+        const element = this.wysiwyg && this.element || this.textarea;
 
-        if (event.currentTarget !== event.target &&
+        if (!element ||
+            event.currentTarget !== event.target &&
             event.target !== element &&
             !element.contains(event.target)
         ) {
@@ -293,6 +295,13 @@ export default class Preview extends BasePreview {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+        });
+
+        // Remove wysiwyg before assign new instance.
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.parent.parent.id) {
+               this.wysiwyg = null;
+            }
         });
 
         events.on(`${this.config.name}:mountAfter`, (args: ContentTypeMountEventParamsInterface) => {

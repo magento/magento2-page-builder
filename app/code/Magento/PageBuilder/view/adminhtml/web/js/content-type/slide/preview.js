@@ -180,9 +180,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var element = this.element || this.textarea;
+      var element = this.wysiwyg && this.element || this.textarea;
 
-      if (event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
+      if (!element || event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
         return false;
       }
 
@@ -273,6 +273,13 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
+      }); // Remove wysiwyg before assign new instance.
+
+
+      _events.on("childContentType:sortUpdate", function (args) {
+        if (args.instance.id === _this4.parent.parent.id) {
+          _this4.wysiwyg = null;
+        }
       });
 
       _events.on(this.config.name + ":mountAfter", function (args) {
