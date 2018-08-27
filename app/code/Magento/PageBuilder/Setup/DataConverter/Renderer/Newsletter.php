@@ -51,7 +51,7 @@ class Newsletter implements RendererInterface
     }
 
     /**
-     * get the html for the newsletter
+     * Get the html for the newsletter
      *
      * @param array $itemData
      * @param array $eavData
@@ -104,7 +104,6 @@ class Newsletter implements RendererInterface
             '<span>' . $newsletterButtonText . '</span>' .
             '</button>' .
             '</div></form></div></div></div>';
-
 
         return $newsletterHtml;
     }
