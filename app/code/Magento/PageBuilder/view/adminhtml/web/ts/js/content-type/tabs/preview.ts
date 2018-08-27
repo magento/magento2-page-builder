@@ -80,6 +80,11 @@ export default class Preview extends PreviewCollection {
                 this.refreshTabs();
             }
         });
+        events.on("tab-item:renderAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (this.element && args.contentType.parent.id === this.parent.id) {
+                this.refreshTabs();
+            }
+        });
         // Set the active tab to the new position of the sorted tab
         events.on("tab-item:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {

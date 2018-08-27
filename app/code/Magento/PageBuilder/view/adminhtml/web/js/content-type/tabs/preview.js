@@ -64,6 +64,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (_this.element && args.contentType.parent.id === _this.parent.id) {
           _this.refreshTabs();
         }
+      });
+
+      _events.on("tab-item:renderAfter", function (args) {
+        if (_this.element && args.contentType.parent.id === _this.parent.id) {
+          _this.refreshTabs();
+        }
       }); // Set the active tab to the new position of the sorted tab
 
 
