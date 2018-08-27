@@ -43,7 +43,8 @@ define([
                 }
             },
             listens: {
-                id: 'updateFromServer'
+                id: 'updateFromServer',
+                '${ $.provider }:data.reset': 'reset'
             }
         },
 
@@ -53,6 +54,15 @@ define([
         initObservable: function () {
             return this._super()
                 .observe('id meta errorMessage displayMetadata');
+        },
+
+        /**
+         * Resets metadata
+         *
+         * @returns void
+         */
+        reset: function () {
+            this.meta({});
         },
 
         /**
