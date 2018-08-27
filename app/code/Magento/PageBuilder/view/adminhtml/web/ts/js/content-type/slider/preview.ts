@@ -233,6 +233,12 @@ export default class Preview extends PreviewCollection {
         if (params.item.index() !== -1) {
             _.defer(this.focusElement.bind(this, event, params.item.index()));
         }
+        _.defer(() => {
+            $(this.element).css({
+                height: "",
+                overflow: "",
+            });
+        });
     }
 
     /**
