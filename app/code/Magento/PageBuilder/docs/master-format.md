@@ -1024,6 +1024,25 @@ Inline styles
 6. margin
 7. padding
 
+## Dynamic Block
+
+```
+<div data-role="dynamic_block" data-appearance="default">{{widget type="Magento\Banner\Block\Widget\Banner" display_mode="fixed" rotate="" template="widget/block.phtml" banner_ids="54" unique_id="54" type_name="Dynamic Blocks Rotator"}</div>
+```
+
+Attributes
+1. data-role [dynamic_block]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border
+3. border_color
+4. border_width
+5. border_radius
+6. margins
+7. padding
+
 ## Products
 
 ```
