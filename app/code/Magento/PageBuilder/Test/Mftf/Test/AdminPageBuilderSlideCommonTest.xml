@@ -1618,8 +1618,8 @@
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
         <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
-        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderSliderContentType.role, '1')}}" stepKey="seeSelectFromGalleryBtn2" />
+        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderSliderContentType.role, '1')}}" stepKey="clickSelectFromGallery" />
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
@@ -2163,7 +2163,6 @@
         </actionGroup>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="section" value="ImageOnStage"/>
         </actionGroup>
         <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>

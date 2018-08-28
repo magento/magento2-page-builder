@@ -9,11 +9,6 @@
 
 .pagebuilder-banner {
     background-color: @color-gray98;
-    .pagebuilder-empty-banner {
-        color: @color-gray65-lighten;
-        font-size: 20px;
-        font-weight: lighter;
-    }
 
     .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
@@ -27,8 +22,59 @@
         -o-transition: all 500ms ease;
         -webkit-transition: all 500ms ease;
         cursor: default;
-        margin-top: @margin;
+        margin: @margin;
         opacity: 1;
         transition: all 500ms ease;
+    }
+
+    [data-element='content'] {
+        word-wrap: break-word;
+    }
+
+    .pagebuilder-banner-text-content {
+        padding: 0 20px;
+        position: relative;
+
+        &.pagebuilder-toolbar-active {
+            border: 1px solid @color-gray80;
+        }
+        .mce-tinymce-inline {
+            left: 0;
+            right: 0;
+            z-index: 20;
+        }
+        > .mce-content-body {
+            min-height: 50px;
+            padding: 5px 0 !important;
+
+            + .placeholder-text {
+                font-size: 14px;
+                height: 0;
+                pointer-events: none;
+                position: relative;
+                top: -45px;
+            }
+        }
+        > .mce-edit-focus {
+            ~ .placeholder-text {
+                display: none;
+            }
+        }
+
+        .inline-wysiwyg-textarea {
+            background-color: transparent;
+            border: 0;
+            margin: 2px 0;
+            min-height: 50px;
+            min-width: 100%;
+            padding: 5px;
+            resize: none;
+            text-align: inherit;
+
+            &:focus {
+                background-color: @color-white;
+                resize: vertical;
+            }
+        }
     }
 }

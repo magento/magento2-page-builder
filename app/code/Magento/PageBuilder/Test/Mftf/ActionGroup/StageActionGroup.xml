@@ -60,15 +60,33 @@
     <actionGroup name="goToMediaStorageFromStage">
         <arguments>
             <argument name="contentType"/>
-            <argument name="section"/>
-            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
-            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
         </arguments>
         <comment userInput="Hover over content type in stage and click Select From Gallery button" stepKey="commentHover"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverImageContentTypeStage"/>
-        <waitForElementVisible selector="{{section.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
-        <click selector="{{section.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGalleryBtn1" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverImageContentTypeStage"/>
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryBtn2" />
+        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGalleryBtn1" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="verifySelectFromGalleryButtonWorks">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="verifySelectFromGalleryButtonWorks" stepKey="comment"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="mouseOverContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="waitForSelectFromGallery"/>
+        <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGallery"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{MediaGallerySection.InsertFile}}" stepKey="waitForAddSelectedFilesButton"/>
+        <seeElement selector="{{MediaGallerySection.InsertFile}}" stepKey="seeAddSelectedFilesButton"/>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="uploadImageToContentTypeFromStage">
         <arguments>
@@ -79,5 +97,41 @@
         <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachImageFromLocalToStage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{PageBuilderStage.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
+    </actionGroup>
+    <actionGroup name="inlineEditWYSIWYGFromStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanel"/>
+        <fillField selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+    </actionGroup>
+    <actionGroup name="inlineEditTextAreaFromStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderStage.inlineTextAreaEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <fillField selector="{{PageBuilderStage.inlineTextAreaEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+    </actionGroup>
+    <actionGroup name="verifyUploadImageButtons">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="section" defaultValue="PageBuilderStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="Verify Upload Image and Select From Gallery buttons appear on hover" stepKey="comment"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, index)}}" x="{{x}}" y="{{y}}" stepKey="mouseOverContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{section.onHoverUploadImageButton(contentType.role, index)}}" stepKey="seeUploadImageButton" />
+        <seeElement selector="{{section.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="seeSelectFromGalleryButton"/>
     </actionGroup>
 </actionGroups>
