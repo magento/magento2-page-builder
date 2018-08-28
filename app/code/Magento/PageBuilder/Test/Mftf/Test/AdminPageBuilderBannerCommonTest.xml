@@ -99,14 +99,11 @@
         <!-- Validate Storefront: Poster -->
         <comment userInput="Validate Storefront: Poster" stepKey="commentValidateStorefront"/>
         <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend1"/>
-        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="verifyBannerInFrontend1"/>
         <seeElementInDOM selector="{{BannerOnFrontend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeInDOMPosterInFrontEnd"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeePosterMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend1"/>
         <seeElementInDOM selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeInDOMOverlayInFrontend1"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayInFrontend1"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend1"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayOnHoverInFrontend1"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend1"/>
         <!-- Go back to cms page and change configuration to collage left -->
         <comment userInput="Go back to cms page and change configuration to collage left" stepKey="commentCollageLeft"/>
@@ -140,14 +137,10 @@
         <!-- Validate Storefront: Collage Left -->
         <comment userInput="Validate Storefront: Collage Left" stepKey="commentValidateStorefront2"/>
         <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend2"/>
-        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="verifyBannerInFrontend2"/>
         <seeElementInDOM selector="{{BannerOnFrontend.collagePadding('1', PageBuilderBannerCollageLeftPaddingPropertyDefault.desktopValue)}}" stepKey="seeInDOMCollageLeftInFrontEnd"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend2"/>
         <seeElementInDOM selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeInDOMOverlayInInFrontend2"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayInInFrontend2"/>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend2"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayOnHoverInFrontend2"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend2"/>
         <!-- Go back to cms page and change configuration to collage centered -->
         <comment userInput="Go back to cms page and change configuration to collage centered" stepKey="commentCollageCenter"/>
@@ -169,26 +162,20 @@
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent3"/>
         <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyDefault.desktopValue)}}" stepKey="waitForCollageCenter"/>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay3"/>
-        <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButton3"/>
         <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner2"/>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlayOnHover2"/>
         <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStageOnHover2"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover2"/>
-        <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButtonOnHover2"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
         <reloadPage stepKey="reloadPage3"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <!-- Validate Storefront: Collage Center -->
         <comment userInput="Validate Storefront: Collage Center" stepKey="commentValidateStorefront3"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend3"/>
-        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="verifyBannerInFrontend3"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend3"/>
         <seeElementInDOM selector="{{BannerOnFrontend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyDefault.desktopValue)}}" stepKey="seeInDOMCollageCenterInFrontEnd"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageCenterMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend3"/>
         <seeElementInDOM selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeInDOMOverlayInFrontend3"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayInFrontend3"/>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend3"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayOnHoverInFrontend3"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend3"/>
         <!-- Go back to cms page and change configuration to collage right -->
         <comment userInput="Go back to cms page and change configuration to collage right" stepKey="commentCollageRight"/>
@@ -210,26 +197,20 @@
         <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeEmptyBannerContent4"/>
         <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageRightPaddingPropertyDefault.desktopValue)}}" stepKey="waitForCollageRight"/>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay4"/>
-        <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButton4"/>
         <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner3"/>
         <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlayOnHover3"/>
         <seeElement selector="{{BannerOnBackend.showButton('1', PageBuilderBannerShowButtonDefaultProperty.value)}}" stepKey="seeButtonStateStageOnHover3"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeOverlayStateStageOnHover3"/>
-        <dontSeeElement selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="dontSeeButtonOnHover3"/>
         <switchToNextTab stepKey="switchToNextTab3"/>
         <reloadPage stepKey="reloadPage5"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <!-- Validate Storefront: Collage Right -->
         <comment userInput="Validate Storefront: Collage Right" stepKey="commentValidateStorefront4"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend4"/>
-        <dontSeeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="verifyBannerInFrontend4"/>
+        <seeElement selector="{{BannerOnFrontend.base('1')}}" stepKey="seeInDOMBannerInFrontend4"/>
         <seeElementInDOM selector="{{BannerOnFrontend.collagePadding('1', PageBuilderBannerCollageRightPaddingPropertyDefault.desktopValue)}}" stepKey="seeInDOMCollageRightInFrontEnd"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageRightMessageInFrontend"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonInFrontend4"/>
         <seeElementInDOM selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="seeInDOMOverlayInFrontend4"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayInFrontend4"/>
-        <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerFrontend4"/>
-        <dontSeeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayDefaultProperty.value)}}" stepKey="dontSeeOverlayOnHoverInFrontend4"/>
         <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeInDOMButtonOnHoverInFrontend4"/>
     </test>
     <test name="BannerDelete">
