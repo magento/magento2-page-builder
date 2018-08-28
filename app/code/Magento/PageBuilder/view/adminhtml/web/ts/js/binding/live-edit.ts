@@ -68,15 +68,6 @@ ko.bindingHandlers.liveEdit = {
         };
 
         /**
-         * Click event on element
-         */
-        const onClick = () => {
-            if (element.innerHTML !== "") {
-                document.execCommand("selectAll", false, null);
-            }
-        };
-
-        /**
          * Key down event on element
          *
          * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
@@ -152,7 +143,6 @@ ko.bindingHandlers.liveEdit = {
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
-        element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);
