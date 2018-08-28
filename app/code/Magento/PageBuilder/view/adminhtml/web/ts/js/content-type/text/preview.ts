@@ -41,14 +41,25 @@ export default class Preview extends BasePreview {
      */
     public initWysiwyg(element: HTMLElement) {
         this.element = element;
+        element.innerHTML = this.data.main.html();
 
         element.id = this.parent.id + "-editor";
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        /**
+         * Don't include content_css within the inline mode of TinyMCE, if any stylesheets are included here they're
+         * appended to the head of the main page, and thus cause other styles to be modified.
+         *
+         * The styles for typography in the inline editor are scoped within _typography.less
+         */
+        wysiwygConfig.adapter.tinymce4.content_css = [];
 
         WysiwygFactory(
             this.parent.id,
             element.id,
             this.config.name,
-            this.config.additional_data.wysiwygConfig.wysiwygConfigData,
+            wysiwygConfig,
             this.parent.dataStore,
             "content",
         ).then((wysiwyg: WysiwygInterface): void => {

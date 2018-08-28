@@ -6,9 +6,7 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-text" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div if="isWysiwygSupported()" class="inline-wysiwyg" ko-style="data.main.style" css="data.main.css" attr="data.main.attributes" afterRender="initWysiwyg">
-        <div html="data.main.html" />
-    </div>
+    <div if="isWysiwygSupported()" class="inline-wysiwyg" ko-style="data.main.style" css="data.main.css" attr="data.main.attributes" afterRender="initWysiwyg" />
     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.main.html" translate="'Edit Text'"></div>
 
     <div ifnot="isWysiwygSupported()">
