@@ -18,6 +18,7 @@ define([
         meta: {},
         errorMessage: null,
         displayMetadata: true,
+        initialValue: {},
         messages: {
             UNKOWN_ERROR: $t('Sorry, there was an error getting requested content. ' +
                 'Please contact the store owner.'),
@@ -49,11 +50,46 @@ define([
         },
 
         /**
+         * Invokes initialize method of parent class,
+         * contains initialization logic
+         */
+        initialize: function () {
+            _.bindAll(this, 'reset');
+
+            this._super()
+                .setInitialValue();
+
+            return this;
+        },
+
+        /**
+         * Sets initial value of the element and subscribes to it's changes.
+         *
+         * @returns {Abstract} Chainable.
+         */
+        setInitialValue: function () {
+            if (this.id()) {
+                this.initialValue(false);
+            }
+            return this;
+        },
+
+        /**
          * @inheritdoc
          */
         initObservable: function () {
             return this._super()
-                .observe('id meta errorMessage displayMetadata');
+                .observe('id meta errorMessage displayMetadata initialValue');
+        },
+
+        /**
+         * Resets metadata
+         *
+         * @returns void
+         */
+        reset: function () {
+            this.meta(this.initialValue());
+            this.errorMessage(null);
         },
 
         /**
@@ -100,6 +136,9 @@ define([
                     }
 
                     this.meta(response);
+                    if (this.initialValue() === false) {
+                        this.initialValue(response)
+                    }
                 }.bind(this))
                 .fail(function () {
                     this.meta({});
