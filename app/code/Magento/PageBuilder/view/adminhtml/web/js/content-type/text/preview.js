@@ -48,6 +48,11 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
        */
 
       wysiwygConfig.adapter.tinymce4.content_css = [];
+
+      if (this.parent.dropped) {
+        wysiwygConfig.adapter.settings.auto_focus = element.id;
+      }
+
       (0, _factory)(this.parent.id, element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });

@@ -5,7 +5,10 @@
 
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
+import {Settings} from "tinymce";
 import Config from "../../config";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import WysiwygFactory from "../wysiwyg/factory";
 import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
@@ -14,6 +17,7 @@ import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
  * @api
  */
 export default class Preview extends BasePreview {
+
     /**
      * Wysiwyg instance
      */
@@ -54,6 +58,10 @@ export default class Preview extends BasePreview {
          * The styles for typography in the inline editor are scoped within _typography.less
          */
         wysiwygConfig.adapter.tinymce4.content_css = [];
+
+        if (this.parent.dropped) {
+            wysiwygConfig.adapter.settings.auto_focus = element.id;
+        }
 
         WysiwygFactory(
             this.parent.id,

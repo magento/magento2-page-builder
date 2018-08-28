@@ -8,12 +8,13 @@ interface EventBusInterface {
 }
 
 interface WysiwygSetupInterface {
-    wysiwygInstance: WysiwygInstanceInterface;
     eventBus: EventBusInterface;
+    wysiwygInstance: WysiwygInstanceInterface;
     setup(mode: string): void;
 }
 
 interface WysiwygInstanceInterface {
+    id: string;
     eventBus: EventBusInterface;
     getContent(): string;
     setContent(content: string): void;

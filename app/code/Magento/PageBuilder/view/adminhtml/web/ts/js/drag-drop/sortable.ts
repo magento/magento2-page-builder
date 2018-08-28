@@ -215,6 +215,9 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
         // Create the new content type and insert it into the parent
         createContentType(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview))
             .then((contentType: ContentTypeInterface) => {
+                // Set the content type instance as "dropped", as it was dropped from the left panel
+                contentType.dropped = true;
+
                 // Prepare the event handler to animate the container height on render
                 bindAfterRenderForAnimation(containerLocked, contentType, parentContainerElement);
 
