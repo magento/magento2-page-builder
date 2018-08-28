@@ -1898,7 +1898,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <!--<deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>-->
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
@@ -2001,7 +2001,7 @@
             </actionGroup>
         </before>
         <after>
-            <!--<deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>-->
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
@@ -2038,11 +2038,9 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Duplicate Tab -->
-        <click selector="{{TabOnStage.tabHeader('1')}}" stepKey="clickActiveTab1"/>
-        <waitForElementVisible selector="{{TabOnStage.optionsMenu('1')}}" stepKey="waitForTabOptionsPanel"/>
-        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'duplicate-structural')}}" stepKey="seeTabOptionsEdit1"/>
-        <click selector="{{TabOnStage.optionsMenuButton('1', 'duplicate-structural')}}" stepKey="clickDuplicateTabButton"/>
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeNewTabActive1"/>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <!-- Validate Tab 2 Buttons On Stage -->
         <comment userInput="Validate Stage: Tab 2 Buttons" stepKey="commentValidateStage1"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
@@ -2061,9 +2059,7 @@
             <argument name="buttonItemPage" value="ButtonItemOnStage"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContentTabForPage"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskOfStagingSection"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Tab 1 Buttons On Stage After Save -->
         <comment userInput="Validate Stage After Save: Tab 1 Buttons" stepKey="commentValidateStage3"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
