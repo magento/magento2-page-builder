@@ -2077,5 +2077,22 @@
             <argument name="firstButtonIndex" value="3"/>
             <argument name="secondButtonIndex" value="4"/>
         </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront1"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="goToStorefront1"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="clickActiveTabStorefront"/>
+        <waitForElementVisible time="30" selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeNewTabActiveStorefront"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonGroupIndex" value="3"/>
+            <argument name="firstButtonIndex" value="5"/>
+            <argument name="secondButtonIndex" value="6"/>
+        </actionGroup>
     </test>
 </tests>

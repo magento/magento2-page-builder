@@ -273,12 +273,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         return;
       }
 
-      _events.trigger("tabs:beforeSetFocused", {
-        index: index,
+      this.setFocusedTab(index);
+
+      _events.trigger("contentType:redrawAfter", {
+        id: this.parent.id,
         contentType: this
       });
-
-      this.setFocusedTab(index);
     };
     /**
      * Copy over border styles to the tab headers

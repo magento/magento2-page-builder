@@ -260,11 +260,13 @@ export default class Preview extends PreviewCollection {
         if ($(event.target).parents(".pagebuilder-options").length > 0) {
             return;
         }
-        events.trigger("tabs:beforeSetFocused", {
-            index,
+
+        this.setFocusedTab(index);
+
+        events.trigger("contentType:redrawAfter", {
+            id: this.parent.id,
             contentType: this,
         });
-        this.setFocusedTab(index);
     }
 
     /**

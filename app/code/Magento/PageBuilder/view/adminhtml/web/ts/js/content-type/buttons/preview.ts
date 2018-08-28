@@ -17,14 +17,15 @@ import {OptionsInterface} from "../../content-type-menu/option.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
 import PreviewCollection from "../preview-collection";
-import BeforeSetFocusedEventInterface from "../tabs/before-set-focused-event";
 
 /**
  * @api
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+
     /**
      * Keeps track of number of button item to disable sortable if there is only 1.
      */
@@ -37,6 +38,10 @@ export default class Preview extends PreviewCollection {
         }
     });
 
+    private debouncedResizeHandler = _.debounce(() => {
+        this.resizeChildButtons();
+    }, 350);
+
     public bindEvents() {
         super.bindEvents();
 
@@ -48,24 +53,22 @@ export default class Preview extends PreviewCollection {
 
         events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
             if (eventData.contentType.id === this.parent.id) {
-                this.resizeChildButtons();
+                this.debouncedResizeHandler();
             }
         });
 
         events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
             if (eventData.contentType.parent.id === this.parent.id) {
-                this.resizeChildButtons();
+                this.debouncedResizeHandler();
             }
         });
 
         events.on("stage:updateAfter", (eventData: StageUpdateAfterParamsInterface) => {
-            _.debounce(() => {
-                this.resizeChildButtons();
-            }, 500).call(this);
+            this.debouncedResizeHandler();
         });
 
-        events.on("tabs:beforeSetFocused", (eventData: BeforeSetFocusedEventInterface) => {
-            this.resizeChildButtons();
+        events.on("contentType:redrawAfter", (eventData: ContentTypeRedrawAfterEventParamsInterface) => {
+            this.debouncedResizeHandler();
         });
     }
 
@@ -239,7 +242,7 @@ export default class Preview extends PreviewCollection {
     private resizeChildButtons() {
         if (this.wrapperElement) {
             const buttonItems: JQuery = $(this.wrapperElement).find(".pagebuilder-button-item > a");
-            let buttonResizeValue: string|number = "0";
+            let buttonResizeValue: number = 0;
             if (this.parent.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
                     const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);

@@ -25,7 +25,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           sortableElement.sortable("enable");
         }
-      }), _temp) || _this;
+      }), _this.debouncedResizeHandler = _underscore.debounce(function () {
+        _this.resizeChildButtons();
+      }, 350), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -43,24 +45,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("buttons:renderAfter", function (eventData) {
         if (eventData.contentType.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
+          _this2.debouncedResizeHandler();
         }
       });
 
       _events.on("button-item:renderAfter", function (eventData) {
         if (eventData.contentType.parent.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
+          _this2.debouncedResizeHandler();
         }
       });
 
       _events.on("stage:updateAfter", function (eventData) {
-        _underscore.debounce(function () {
-          _this2.resizeChildButtons();
-        }, 500).call(_this2);
+        _this2.debouncedResizeHandler();
       });
 
-      _events.on("tabs:beforeSetFocused", function (eventData) {
-        _this2.resizeChildButtons();
+      _events.on("contentType:redrawAfter", function (eventData) {
+        _this2.debouncedResizeHandler();
       });
     };
     /**
@@ -257,7 +257,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.resizeChildButtons = function resizeChildButtons() {
       if (this.wrapperElement) {
         var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
-        var buttonResizeValue = "0";
+        var buttonResizeValue = 0;
 
         if (this.parent.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
