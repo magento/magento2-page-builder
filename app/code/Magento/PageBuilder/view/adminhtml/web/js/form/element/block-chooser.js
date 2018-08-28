@@ -18,7 +18,6 @@ define([
         meta: {},
         errorMessage: null,
         displayMetadata: true,
-        initialValue: {},
         messages: {
             UNKOWN_ERROR: $t('Sorry, there was an error getting requested content. ' +
                 'Please contact the store owner.'),
@@ -44,34 +43,8 @@ define([
                 }
             },
             listens: {
-                id: 'updateFromServer',
-                '${ $.provider }:data.reset': 'reset'
+                id: 'updateFromServer'
             }
-        },
-
-        /**
-         * Invokes initialize method of parent class,
-         * contains initialization logic
-         */
-        initialize: function () {
-            _.bindAll(this, 'reset');
-
-            this._super()
-                .setInitialValue();
-
-            return this;
-        },
-
-        /**
-         * Sets initial value of the element and subscribes to it's changes.
-         *
-         * @returns {Abstract} Chainable.
-         */
-        setInitialValue: function () {
-            if (this.id()) {
-                this.initialValue(false);
-            }
-            return this;
         },
 
         /**
@@ -79,26 +52,7 @@ define([
          */
         initObservable: function () {
             return this._super()
-                .observe('id meta errorMessage displayMetadata initialValue');
-        },
-
-        /**
-         * Resets metadata
-         *
-         * @returns void
-         */
-        reset: function () {
-            this.meta(this.initialValue());
-            this.errorMessage(null);
-        },
-
-        /**
-         * Resets metadata
-         *
-         * @returns void
-         */
-        reset: function () {
-            this.meta({});
+                .observe('id meta errorMessage displayMetadata');
         },
 
         /**
@@ -111,6 +65,7 @@ define([
 
             // The component hasn't be configured yet. Nothing to do.
             if (!this.id() || !this.requestParameter || !this.dataUrlConfigPath) {
+                this.meta({});
                 return;
             }
 
@@ -136,9 +91,6 @@ define([
                     }
 
                     this.meta(response);
-                    if (this.initialValue() === false) {
-                        this.initialValue(response)
-                    }
                 }.bind(this))
                 .fail(function () {
                     this.meta({});
