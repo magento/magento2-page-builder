@@ -56,6 +56,17 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       this.fieldName = fieldName;
       this.config = config;
       this.dataStore = dataStore;
+
+      if (this.config.adapter_config.mode === "inline") {
+        /**
+         * Don't include content_css within the inline mode of TinyMCE, if any stylesheets are included here they're
+         * appended to the head of the main page, and thus cause other styles to be modified.
+         *
+         * The styles for typography in the inline editor are scoped within _typography.less
+         */
+        this.config.adapter.tinymce4.content_css = [];
+      }
+
       var wysiwygSetup = new _setup(this.elementId, this.config.adapter);
       wysiwygSetup.setup(this.config.adapter_config.mode);
       this.wysiwygAdapter = wysiwygSetup.wysiwygInstance;

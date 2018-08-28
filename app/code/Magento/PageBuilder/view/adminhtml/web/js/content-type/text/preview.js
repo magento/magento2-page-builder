@@ -40,14 +40,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       element.innerHTML = this.data.main.html();
       element.id = this.parent.id + "-editor";
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      /**
-       * Don't include content_css within the inline mode of TinyMCE, if any stylesheets are included here they're
-       * appended to the head of the main page, and thus cause other styles to be modified.
-       *
-       * The styles for typography in the inline editor are scoped within _typography.less
-       */
-
-      wysiwygConfig.adapter.tinymce4.content_css = [];
 
       if (this.parent.dropped) {
         wysiwygConfig.adapter.settings.auto_focus = element.id;
