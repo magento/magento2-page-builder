@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import Config from "../../config";
 import BasePreview from "../preview";
 import WysiwygFactory from "../wysiwyg/factory";
@@ -106,6 +107,28 @@ export default class Preview extends BasePreview {
     {
         $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
+    }
+
+    /**
+     * Retrieve the margin & padding styles for the placeholder
+     *
+     * @returns {any}
+     */
+    public getPlaceholderStyle()
+    {
+        const keys = [
+            "marginBottom",
+            "marginLeft",
+            "marginRight",
+            "marginTop",
+            "paddingBottom",
+            "paddingLeft",
+            "paddingRight",
+            "paddingTop",
+        ];
+        return _.pick(this.data.main.style(), (style: string, key: string) => {
+            return keys.indexOf(key) !== -1;
+        });
     }
 
     /**

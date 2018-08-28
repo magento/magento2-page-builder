@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _events, _config, _preview, _factory) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _events, _underscore, _config, _preview, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -96,6 +96,19 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");
+    };
+    /**
+     * Retrieve the margin & padding styles for the placeholder
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getPlaceholderStyle = function getPlaceholderStyle() {
+      var keys = ["marginBottom", "marginLeft", "marginRight", "marginTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop"];
+      return _underscore.pick(this.data.main.style(), function (style, key) {
+        return keys.indexOf(key) !== -1;
+      });
     };
     /**
      * Adjust textarea's height based on scrollHeight
