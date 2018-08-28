@@ -5,10 +5,7 @@
 
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
-import {Editor, Settings} from "tinymce";
 import Config from "../../config";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import WysiwygFactory from "../wysiwyg/factory";
 import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
