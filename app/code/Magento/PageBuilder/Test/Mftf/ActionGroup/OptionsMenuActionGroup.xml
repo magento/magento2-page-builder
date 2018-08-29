@@ -286,4 +286,12 @@
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible" />
         <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden" />
     </actionGroup>
+    <actionGroup name="unFocusOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickSearchPanel"/>
+        <waitForPageLoad stepKey="waitForAnimation"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="dontSeeOptionsMenu"/>
+    </actionGroup>
 </actionGroups>
