@@ -91,7 +91,7 @@ export default class Preview extends PreviewCollection {
                 }
             });
         }
-    }, 10);
+    }, 500);
 
     /**
      * @param {ContentTypeInterface} parent

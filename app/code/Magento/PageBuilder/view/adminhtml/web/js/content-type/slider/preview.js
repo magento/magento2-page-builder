@@ -68,7 +68,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             }
           });
         }
-      }, 10);
+      }, 500);
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
       _this.parent.dataStore.subscribe(_this.buildSlick); // Set the stage to interacting when a slide is focused
