@@ -224,6 +224,7 @@
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderBackgroundImage_JPG.path, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeSlide1Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
         <comment userInput="Validate Slide 2 on Storefront" stepKey="commentValidateSlide2Storefront"/>
         <dontSee userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SlideOnFrontend.slideName('1')}}" stepKey="dontSeeSlide2NameDisplayed"/>
@@ -829,7 +830,7 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
         <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickNavigationDot"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeContentTypeOptionsMenu"/>
         <click selector="{{SlideOnBackend.optionsMenuButton('1', 'remove')}}" stepKey="clickRemoveContentType"/>
         <comment userInput="Verify cannot remove last slide" stepKey="cantRemoveLastSlide"/>
@@ -1056,6 +1057,7 @@
         <comment userInput="Change Button Type to Secondary in admin" stepKey="secondary"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
             <argument name="section" value="SlideOnBackend"/>
@@ -1084,6 +1086,7 @@
         <comment userInput="Change Button Type to Link in admin" stepKey="link"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
         <reloadPage stepKey="reloadPage1" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
             <argument name="section" value="SlideOnBackend"/>
@@ -1300,6 +1303,8 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -1621,6 +1626,8 @@
         <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -2263,6 +2270,7 @@
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave"/>
         <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName2InTooltipAfterSave"/>
         <click selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="clickSecondNavigationDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSecondSlideContentAfterSave"/>
 
         <!-- Drag and drop second slide to first position -->
@@ -2272,6 +2280,7 @@
         <executeJS function="return document.querySelectorAll('{{SliderInAdmin.slideNavigationDragHandle}}')[0].clientHeight / 2" stepKey="yCoordinateToMoveTo"/>
         <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
         <click selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <dragAndDrop selector1="{{SliderInAdmin.slideNavigationDragHandleByIndex('2')}}" selector2="{{SliderInAdmin.slideNavigationDot('1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
 
         <!-- Validate content after sorting -->
@@ -2301,6 +2310,7 @@
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave2"/>
         <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName1InTooltipAfterSave2"/>
         <click selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="clickSecondNavigationDot2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlideContentAfterSave2"/>
 
         <!-- Validate Storefront -->
@@ -2312,7 +2322,8 @@
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <click selector="{{SliderOnFrontend.slideNavigator('2')}}" stepKey="clickNextSlideOnSlider"/>
-        <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForElementVisible time="2" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="waitForSlide2" />
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayed"/>
     </test>
 </tests>
