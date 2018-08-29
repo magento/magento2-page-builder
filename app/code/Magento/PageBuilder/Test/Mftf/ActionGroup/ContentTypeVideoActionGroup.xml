@@ -15,6 +15,7 @@
             <argument name="url" defaultValue=""/>
             <argument name="width" defaultValue=""/>
         </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>
