@@ -366,7 +366,6 @@
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <click selector="{{MediaGallerySection.WysiwygArrow}}" stepKey="openWYSIWYGFolder"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
@@ -1043,7 +1042,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1096,7 +1094,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -1171,7 +1168,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -1217,7 +1213,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1264,7 +1259,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -1346,7 +1340,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1420,7 +1413,6 @@
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE1">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1476,7 +1468,6 @@
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE2">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1583,12 +1574,12 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementNotVisible selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextStorefront"/>
     </test>
-    <test name="TextRequiredAttributes">
+    <test name="TextHasNoRequired">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Validate Required Attributes"/>
-            <description value="Validate that required attributes are required for text."/>
+            <title value="Text has no required fields in edit form"/>
+            <description value="Check there are no required fields in text edit form"/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
             <testCaseId value="MAGETWO-91077"/>
@@ -1612,13 +1603,16 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!-- Validate Cannot Save Edit Panel -->
-        <comment userInput="Validate Cannot Save Edit Panel" stepKey="commentValidateCannotSave"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Clear Fields -->
+        <comment userInput="Clear Fields" stepKey="commentClearFields"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="clearText">
+            <argument name="property" value="PageBuilderTextContentTypeEmpty"/>
+        </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
     <test name="TextDisabledWYSIWYGAddImage">
         <annotations>

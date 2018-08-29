@@ -116,7 +116,6 @@
             <argument name="property" value="PageBuilderSliderMinHeight_500"/>
         </actionGroup>
         <comment userInput="Edit Advanced settings for slider" stepKey="EditSliderAdvanced"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -403,9 +402,9 @@
             <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
             <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
         </assertEquals>
-        <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
+        <comment userInput="Overlay Color: input defaults to empty." stepKey="AC10"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
-            <argument name="property" value="PageBuilderSlideWhiteOverlayColorProperty"/>
+            <argument name="property" value="PageBuilderSlideOverlayColorProperty_Empty"/>
         </actionGroup>
         <comment userInput="Overlay Color: Field is disabled by default due to Never Show default on Show Overlay." stepKey="AC11"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateOverlayColorDisabled">
@@ -552,12 +551,12 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper .pagebuilder-poster-overlay" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: User sees no slide border by default" stepKey="storefrontDefaultBorder"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="border-style: none" stepKey="verifyBorderNoneStorefront"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0Storefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="border-style: none" stepKey="verifyBorderNoneStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0Storefront"/>
         <comment userInput="Verify slide defaults on storefront: Appearance defaults to Poster" stepKey="storefrontDefaultAppearance" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-appearance" expectedValue="poster" stepKey="slideStorefrontPoster"/>
         <comment userInput="Verify slide defaults on storefront: Minimum Height defaults to 300" stepKey="storefrontDefaultMinHeight"/>
@@ -900,7 +899,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -957,7 +955,6 @@
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -998,8 +995,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1061,6 +1056,8 @@
         <!-- Change button type value to secondary -->
         <comment userInput="Change Button Type to Secondary in admin" stepKey="secondary"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -1069,7 +1066,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Validate Stage 2 -->
         <comment userInput="Validate Stage 2" stepKey="commentValidateStage2"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.poster}}" stepKey="waitForPosterInAdmin3" />
@@ -1087,6 +1084,8 @@
         <!-- Change button type value to link -->
         <comment userInput="Change Button Type to Link in admin" stepKey="link"/>
         <switchToPreviousTab stepKey="switchToPreviousTab2"/>
+        <reloadPage stepKey="reloadPage1" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage5"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -1095,7 +1094,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
         <!-- Validate Stage 3 -->
         <comment userInput="Validate Stage 3" stepKey="commentValidateStage3"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.poster}}" stepKey="waitForPosterInAdmin5" />
@@ -1754,7 +1753,6 @@
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Edit Advanced settings for slider" stepKey="EditSliderAdvanced"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
