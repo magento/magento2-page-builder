@@ -63,7 +63,8 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
             'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_column_form.xml' => 'pagebuilder_base_form_with_background_attributes',
             'pagebuilder_slide_form.xml' => 'pagebuilder_base_form_with_background_attributes',
-            'pagebuilder_tab_item_form.xml' => 'pagebuilder_base_form_with_background_attributes'
+            'pagebuilder_tab_item_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_row_form.xml' => 'pagebuilder_base_form_with_background_attributes',
         ];
         $componentRegistrar = new ComponentRegistrar();
         $modulePath = $componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_PageBuilder');
