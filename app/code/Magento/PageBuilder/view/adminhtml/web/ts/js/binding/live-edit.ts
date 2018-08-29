@@ -36,7 +36,7 @@ ko.bindingHandlers.liveEdit = {
      * @param {KnockoutBindingContext} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const {field, placeholder} = valueAccessor();
+        const {field, placeholder, selectAll = false} = valueAccessor();
         let focusedValue = element.innerHTML;
         /**
          * Strip HTML and return text
@@ -64,6 +64,15 @@ ko.bindingHandlers.liveEdit = {
         const onBlur = () => {
             if (focusedValue !== stripHtml(element.innerHTML)) {
                 viewModel.updateData(field, stripHtml(element.innerHTML));
+            }
+        };
+
+        /**
+         * Click event on element
+         */
+        const onClick = () => {
+            if (selectAll && element.innerHTML !== "") {
+                document.execCommand("selectAll", false, null);
             }
         };
 
@@ -143,6 +152,7 @@ ko.bindingHandlers.liveEdit = {
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
+        element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);
