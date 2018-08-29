@@ -61,6 +61,7 @@ class ProductConditions extends Template
                 [
                     'form_namespace' => $formNamespace,
                     'prefix' => $attribute,
+                    'js_object_name' => $jsObjectName,
                 ]
             ),
             'jsObjectName' => $jsObjectName,
