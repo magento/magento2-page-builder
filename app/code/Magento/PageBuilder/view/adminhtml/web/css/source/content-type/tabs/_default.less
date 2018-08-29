@@ -182,6 +182,19 @@ div[data-role='tabs'] {
     .tabs-content {
         border: 1px solid @color-gray;
         border-top: none;
+
+        [data-role='tab-item'] {
+            box-sizing: content-box;
+            min-height: inherit;
+
+            &:not(:first-child) {
+                display: none;
+            }
+
+            > * {
+                min-height: inherit;
+            }
+        }
     }
 }
 
