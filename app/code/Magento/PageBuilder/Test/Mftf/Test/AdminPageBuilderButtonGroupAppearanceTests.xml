@@ -1292,7 +1292,6 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
@@ -1331,7 +1330,6 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{PageBuilderPaddingProperty40.paddingLeft}}" stepKey="enterLeftPadding"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Validate Stage: Updated Padding Left -->
@@ -1368,7 +1366,6 @@
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{PageBuilderPaddingProperty40.paddingRight}}" stepKey="enterRightPadding"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Validate Stage: Updated Padding Right -->
@@ -1899,7 +1896,7 @@
         </before>
         <after>
             <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-            <!--<deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>-->
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Button Group To Tab -->
@@ -1968,9 +1965,6 @@
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
             <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
-            <argument name="buttonGroupIndex" value="2"/>
-            <argument name="firstButtonIndex" value="3"/>
-            <argument name="secondButtonIndex" value="4"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefrontMobile"/>
         <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
