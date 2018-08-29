@@ -33,12 +33,8 @@
     }
 
     .pagebuilder-banner-text-content {
-        padding: 0 20px;
         position: relative;
 
-        &.pagebuilder-toolbar-active {
-            box-shadow: 0 0 0 1px @color-gray80;
-        }
         .mce-tinymce-inline {
             left: 0;
             right: 0;
@@ -46,7 +42,7 @@
         }
         > .mce-content-body {
             min-height: 50px;
-            padding: 5px 0 !important;
+            padding: 5px 20px !important;
 
             + .placeholder-text {
                 font-size: 14px;
@@ -63,7 +59,6 @@
         }
 
         .inline-wysiwyg-textarea {
-            background-color: transparent;
             border: 0;
             margin: 2px 0;
             min-height: 50px;
@@ -75,6 +70,13 @@
             &:focus {
                 background-color: @color-white;
                 resize: vertical;
+            }
+        }
+
+        &.pagebuilder-toolbar-active {
+            .inline-wysiwyg,
+            .inline-wysiwyg-textarea {
+                box-shadow: 0 0 0 1px @color-gray80;
             }
         }
     }
