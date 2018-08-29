@@ -1411,15 +1411,14 @@
         </actionGroup>
     </test>
     <test name="SliderCanManageSlides">
-        <!--todo-->
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Slider - Can add slides and see tooltip and slide name when clicking navigation dots"/>
+            <title value="Slider - Validate Active Navigation Dots And Tooltips"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83933"/>
-            <testCaseId value="MAGETWO-87949"/>
+            <testCaseId value="MC-2562"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -1435,22 +1434,20 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <comment userInput="User adds Slider into the content, user sees first Slide to be displayed inside the slider" stepKey="AC1"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <comment userInput="User sees Slide configuration opened with a delay." stepKey="AC2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
+        <!-- Validate Slide 1 Is Shown -->
+        <comment userInput="Validate Slide 1 Is Shown" stepKey="commentValidateStage1"/>
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeFirstSlideOnStage"/>
-
-        <comment userInput="Slide is focused, its option panel is displayed on top of the slider dot." stepKey="AC3"/>
-        <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
-        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsPanel"/>
-
-        <comment userInput="User sees Slide 1 default name in the Slide Option Panel." stepKey="AC4"/>
-        <see userInput="Slide 1" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
-
-        <comment userInput="User updates settings of first slide and saves configuration." stepKey="AC5"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu"/>
+        <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" stepKey="assertFirstDotActive">
+            <expectedResult type="string">active</expectedResult>
+        </assertElementContainsAttribute>
+        <see selector="{{SlideOnBackend.optionsMenu('1')}}" userInput="Slide 1" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
+        <!-- Update Slide 1 -->
+        <comment userInput="Update Slide 1" stepKey="commentUpdateSlide1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
@@ -1458,46 +1455,36 @@
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
-
-        <comment userInput="Slide option panel is displayed" stepKey="AC6"/>
-        <waitForElementVisible time="5" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
-
-        <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
-        <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverContentTypeStage1"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <!-- User Still Sees Slide Item Option Menu If Hovering Over Slider -->
+        <comment userInput="User Still Sees Slide Item Option Menu If Hovering Over Slider" stepKey="commentHoverSlider"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu2"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu3"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="dontSeeSliderOptionsMenu"/>
+        <!-- User Sees Slider Option Menu After Unfocusing Slide Item -->
+        <comment userInput="User Sees Slider Option Menu After Unfocusing Slide Item" stepKey="commentHoverSlider2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverContentTypeStage2"/>
-
-        <waitForElementVisible time="5" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
-        <moveMouseOver selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
-
-        <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
-        <waitForElementNotVisible time="5" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForSlideOptionsPanelNotVisible" />
-        <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsPanelStillHidden"/>
-
-        <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
-        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="seeAddNewSlideChild"/>
-        <assertElementContainsAttribute selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideName"/>
-
-        <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="waitForContentTypeOptionsMenu"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="seeOptionsMenu"/>
+        <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="dontSeeSlideOptionsMenu"/>
+        <!-- Add 2nd Slide -->
+        <comment userInput="Add 2nd Slide" stepKey="commentAddSlide"/>
         <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
-
-        <comment userInput="User sees slide configuration opened with a delay." stepKey="AC11"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation2" />
-        <waitForElementVisible stepKey="waitForNewSlide2" selector="{{EditPanelForm.editFormClose}}" time="10"/>
-        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeEditSlide2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel2"/>
-
-        <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC12"/>
-        <waitForElementVisible selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="assertSecondDotAdded"/>
-        <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" expectedValue="active" stepKey="assertSecondDotActive"/>
-        <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsPanel2"/>
-
-        <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC13"/>
+        <!-- Validate Slide 2 Is Shown -->
+        <comment userInput="Validate Slide 2 Is Shown" stepKey="commentValidateStage2"/>
+        <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
+        <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsMenu4"/>
+        <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" stepKey="assertSecondDotActive">
+            <expectedResult type="string">active</expectedResult>
+        </assertElementContainsAttribute>
         <see userInput="Slide 2" selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
-        <click stepKey="focusOutsideStage" selector="{{PageBuilderPanel.searchPanel}}"/>
-        <comment userInput="User updates settings of second slide and saves configuration." stepKey="AC14"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
+        <!-- Update Slide 2 -->
+        <comment userInput="Update Slide 2" stepKey="commentUpdateSlide2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -1505,13 +1492,15 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
             <argument name="property" value="PageBuilderSlideItemSlideName_Slide2"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
-
-        <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide name" stepKey="AC15"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide2"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate On Hover Tooltips -->
+        <comment userInput="Validate On Hover Tooltips" stepKey="commentValidateTooltips"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
     </test>
     <test name="SliderCanBeNavigatedQuickly">
