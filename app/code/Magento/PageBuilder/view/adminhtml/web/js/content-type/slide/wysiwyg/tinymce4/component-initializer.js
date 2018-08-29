@@ -15,6 +15,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       this.sliderContentSelector = ".slick-track";
       this.slideSelector = ".slick-slide";
       this.activeSlideSelector = ".slick-current";
+      this.autoplay = void 0;
     }
 
     var _proto = ComponentInitializer.prototype;
@@ -51,6 +52,12 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
 
 
       (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false);
+      this.autoplay = (0, _jquery)($slider.parent()).slick("slickGetOption", "autoplay");
+
+      if (this.autoplay) {
+        (0, _jquery)($slider.parent()).slick("slickPause");
+      }
+
       $notActiveSlides.hide();
       this.sliderTransform = sliderContent.style.transform;
       sliderContent.style.transform = "";
@@ -79,6 +86,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       sliderContent.style.transform = this.sliderTransform;
       $notActiveSlides.show();
       (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", true);
+
+      if (this.autoplay) {
+        (0, _jquery)($slider.parent()).slick("slickPlay");
+      }
     };
 
     return ComponentInitializer;

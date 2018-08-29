@@ -13,6 +13,7 @@ import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
+import SliderPreview from "../slider/preview";
 import Uploader from "../uploader";
 import WysiwygFactory from "../wysiwyg/factory";
 import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
@@ -41,6 +42,11 @@ export default class Preview extends BasePreview {
      * Uploader instance
      */
     private uploader: Uploader;
+
+    /**
+     * Slide flag
+     */
+    private slideChanged: boolean = true;
 
     /**
      * @param {HTMLElement} element
@@ -210,6 +216,7 @@ export default class Preview extends BasePreview {
         const element = this.wysiwyg && this.element || this.textarea;
 
         if (!element ||
+            !this.slideChanged ||
             event.currentTarget !== event.target &&
             event.target !== element &&
             !element.contains(event.target)
@@ -324,6 +331,19 @@ export default class Preview extends BasePreview {
                 slider.children.subscribe((children) => {
                     const index = children.indexOf(this.parent);
                     this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
+                });
+            }
+        });
+
+        events.on(`${this.config.name}:renderAfter`, (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.parent.id) {
+                const slider = this.parent.parent;
+
+                $((slider.preview as SliderPreview).element).on("beforeChange", () => {
+                    this.slideChanged = false;
+                });
+                $((slider.preview as SliderPreview).element).on("afterChange", () => {
+                    this.slideChanged = true;
                 });
             }
         });

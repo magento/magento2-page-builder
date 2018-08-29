@@ -27,10 +27,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
+      _this.element = void 0;
       _this.events = {
         columnWidthChangeAfter: "onColumnResize"
       };
-      _this.element = void 0;
       _this.childSubscribe = void 0;
       _this.contentTypeHeightReset = void 0;
       _this.buildSlick = _underscore.debounce(function () {

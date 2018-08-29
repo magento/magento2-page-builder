@@ -46,6 +46,11 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
     private activeSlideSelector: string = ".slick-current";
 
     /**
+     * Slider autoplay
+     */
+    private autoplay: boolean;
+
+    /**
      * Initialize the instance
      *
      * @param {Wysiwyg} wysiwyg
@@ -75,6 +80,11 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
 
         // Disable slider keyboard events and fix problem with overflow hidden issue
         $($slider.parent()).slick("slickSetOption", "accessibility", false);
+        this.autoplay = $($slider.parent()).slick("slickGetOption", "autoplay") as boolean;
+
+        if (this.autoplay) {
+            $($slider.parent()).slick("slickPause");
+        }
         $notActiveSlides.hide();
         this.sliderTransform = sliderContent.style.transform;
         sliderContent.style.transform = "";
@@ -100,5 +110,8 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         sliderContent.style.transform = this.sliderTransform;
         $notActiveSlides.show();
         $($slider.parent()).slick("slickSetOption", "accessibility", true);
+        if (this.autoplay) {
+            $($slider.parent()).slick("slickPlay");
+        }
     }
 }

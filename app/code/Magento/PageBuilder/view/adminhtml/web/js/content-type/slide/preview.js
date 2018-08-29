@@ -19,7 +19,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.uploader = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.uploader = void 0, _this.slideChanged = true, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -182,7 +182,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     _proto.activateEditor = function activateEditor(preview, event) {
       var element = this.wysiwyg && this.element || this.textarea;
 
-      if (!element || event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
+      if (!element || !this.slideChanged || event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
         return false;
       }
 
@@ -298,6 +298,18 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
             var index = children.indexOf(_this4.parent);
 
             _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
+          });
+        }
+      });
+
+      _events.on(this.config.name + ":renderAfter", function (args) {
+        if (args.id === _this4.parent.id) {
+          var slider = _this4.parent.parent;
+          (0, _jquery)(slider.preview.element).on("beforeChange", function () {
+            _this4.slideChanged = false;
+          });
+          (0, _jquery)(slider.preview.element).on("afterChange", function () {
+            _this4.slideChanged = true;
           });
         }
       });

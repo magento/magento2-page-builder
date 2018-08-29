@@ -37,10 +37,10 @@ import {default as SliderPreview} from "../slider/preview";
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
+    public element: HTMLElement;
     protected events: DataObject = {
         columnWidthChangeAfter: "onColumnResize",
     };
-    private element: HTMLElement;
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
 
