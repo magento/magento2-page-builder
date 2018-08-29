@@ -247,6 +247,9 @@ export default class Preview extends PreviewCollection {
                 if (buttonItems.length > 0) {
                     const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
                     const parentWrapperWidth = $(this.wrapperElement).width();
+                    if (currentLargestButtonWidth === 0) {
+                        return;
+                    }
                     buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
                 }
             }
@@ -272,6 +275,9 @@ export default class Preview extends PreviewCollection {
      * @returns {number}
      */
     private calculateButtonWidth(buttonItem: JQuery): number {
+        if (buttonItem.is(":visible") === false) {
+            return 0;
+        }
         const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
         return widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);

@@ -263,6 +263,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           if (buttonItems.length > 0) {
             var currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
             var parentWrapperWidth = (0, _jquery)(this.wrapperElement).width();
+
+            if (currentLargestButtonWidth === 0) {
+              return;
+            }
+
             buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
           }
         }
@@ -294,6 +299,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
+      if (buttonItem.is(":visible") === false) {
+        return 0;
+      }
+
       var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
       return widthProperties.reduce(function (accumulatedWidth, widthProperty) {
         return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);

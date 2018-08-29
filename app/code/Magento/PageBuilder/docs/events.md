@@ -271,6 +271,8 @@ All events starting with `contentType:` can also be called for specific content 
 
 ### `contentType:redrawAfter`
 
+#### Backend
+
 **Triggers**
 
 * `Tabs.Preview::onTabClick`
@@ -281,6 +283,20 @@ All events starting with `contentType:` can also be called for specific content 
 {
     id: string,
     contentType: ContentTypeInterface & ContentTypeCollectionInterface
+}
+```
+
+#### Frontend
+
+**Triggers**
+
+* `Tabs.widget.ui.tabs::activate`
+
+**Params**
+
+``` js
+{
+    element: HTMLElement
 }
 ```
 
