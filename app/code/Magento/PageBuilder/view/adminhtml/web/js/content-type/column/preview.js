@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -32,6 +30,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.resizing = _knockout.observable(false);
       _this.element = void 0;
       _this.fieldsToIgnoreOnRemove = ["width"];
+
+      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_this), "width");
 
       _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
@@ -74,6 +74,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
+      this.updateColumnWidthClass();
 
       _events.trigger("column:initializeAfter", {
         column: this.parent,
@@ -84,18 +85,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
 
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "move";
+      options.move = new _option({
+        preview: this,
+        icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+        title: (0, _translate)("Move"),
+        classes: ["move-column"],
+        sort: 10
       });
-      newOptions.unshift(new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
-      return newOptions;
+      return options;
     };
     /**
      * Init the resize handle for the resizing functionality
@@ -224,37 +228,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     };
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
+     * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
      */
 
 
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.previewData.background_image && _typeof(this.previewData.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
-      } // If we have left and right margins we need to minus this from the total width
-
-
-      if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-        var margins = this.previewData.margins_and_padding().margin;
-        var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
-        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-      } // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-
-
-      if (styles.marginRight === "0px") {
-        styles.marginRight = "1px";
-      } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-
-
-      if (this.previewData.border && this.previewData.border() === "_default") {
-        styles.border = "none";
+    _proto.updateColumnWidthClass = function updateColumnWidthClass() {
+      // Only update once instantiated
+      if (!this.element) {
+        return;
       }
 
-      return styles;
+      var currentClass = this.element.attr("class").match(/(?:^|\s)(column-width-\d{1,3})(?:$|\s)/);
+
+      if (currentClass !== null) {
+        this.element.removeClass(currentClass[1]);
+      }
+
+      var roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
+      this.element.addClass("column-width-" + roundedWidth);
     };
     /**
      * Fire the mount event for content types

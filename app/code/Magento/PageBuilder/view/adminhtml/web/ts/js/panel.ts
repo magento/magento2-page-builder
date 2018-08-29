@@ -26,6 +26,8 @@ export default class Panel implements PanelInterface {
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isCollapsed: KnockoutObservable<boolean> = ko.observable(false);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
+    public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
+    public isStickyTop: KnockoutObservable<boolean> = ko.observable(false);
     public searching: KnockoutObservable<boolean> = ko.observable(false);
     public searchValue: KnockoutObservable<string> = ko.observable("");
     public searchPlaceholder: string = $t("Find items");
@@ -34,6 +36,7 @@ export default class Panel implements PanelInterface {
     public searchTitle: string = $t("Clear Search");
     public parent: PageBuilder;
     public id: string;
+    private element: Element;
     private template: string = "Magento_PageBuilder/panel";
 
     constructor(parent: PageBuilder) {
@@ -43,11 +46,21 @@ export default class Panel implements PanelInterface {
     }
 
     /**
+     * On render init the panel
+     *
+     * @param {Element} element
+     */
+    public afterRender(element: Element): void {
+        this.element = element;
+    }
+
+    /**
      * Init listeners
      */
     public initListeners(): void {
         events.on("stage:" + this.id + ":readyAfter", () => {
             this.populateContentTypes();
+            this.onScroll();
             this.isVisible(true);
         });
     }
@@ -112,6 +125,51 @@ export default class Panel implements PanelInterface {
     public clearSearch(): void {
         this.searchValue("");
         this.searching(false);
+    }
+
+    /**
+     * Toggle stickiness of panel based on browser scroll position and height of panel
+     * Enable panel stickiness if panel and stage are available
+     * Only stick when panel height is smaller than stage height
+     * Stick panel to top when scroll reaches top position of stage
+     * Stick panel to bottom when scroll reaches bottom position of stage
+     */
+    public onScroll(): void {
+        const self = this;
+        const pageActions = $(".page-actions");
+        const panel = $(this.element);
+        const stage = panel.siblings(".pagebuilder-stage");
+        $(window).scroll(function() {
+            const panelOffsetTop = panel.offset().top;
+            const stageOffsetTop = stage.offset().top;
+            const panelHeight = panel.outerHeight();
+            const stageHeight = stage.outerHeight();
+            const currentPanelBottom = Math.round(panelOffsetTop + panel.outerHeight(true) - $(this).scrollTop());
+            const currentStageBottom = Math.round(stageOffsetTop + stage.outerHeight(true) - $(this).scrollTop());
+            const currentPanelTop = Math.round(panelOffsetTop - $(this).scrollTop());
+            const currentStageTop = Math.round(stageOffsetTop - $(this).scrollTop());
+            // When panel height is less than stage, begin stickiness
+            if (panelHeight <= stageHeight && pageActions.hasClass("_fixed")) {
+                const pageActionsHeight = pageActions.outerHeight() + 15;
+                // When scroll reaches top of stage, stick panel to top
+                if (currentStageTop <= pageActionsHeight) {
+                    // When panel reaches bottom of stage, stick panel to bottom of stage
+                    if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
+                        self.isStickyBottom(true);
+                        self.isStickyTop(false);
+                    } else {
+                        self.isStickyBottom(false);
+                        self.isStickyTop(true);
+                    }
+                } else {
+                    self.isStickyBottom(false);
+                    self.isStickyTop(false);
+                }
+            } else {
+                self.isStickyBottom(false);
+                self.isStickyTop(false);
+            }
+        });
     }
 
     /**

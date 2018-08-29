@@ -4,7 +4,8 @@
  */
 
 import ko from "knockout";
-import OptionInterface from "./content-type-menu/option.d";
+import _ from "underscore";
+import OptionInterface, {OptionsInterface} from "./content-type-menu/option.d";
 import Preview from "./content-type/preview";
 
 /**
@@ -20,9 +21,13 @@ export default class ContentTypeMenu {
      * @param parent
      * @param options
      */
-    constructor(parent: Preview, options: OptionInterface[]) {
+    constructor(parent: Preview, options: OptionsInterface) {
         this.parent = parent;
-        this.options(options);
+        const codes = _.keys(options);
+        _.values(options).forEach((option, index) => {
+            option.code = codes[index];
+            this.options.push(option);
+        });
         this.sort();
     }
 
@@ -31,34 +36,12 @@ export default class ContentTypeMenu {
     }
 
     /**
-     * Add an option into the options array
-     *
-     * @param option
-     */
-    public addOption(option: OptionInterface) {
-        this.options.push(option);
-        this.sort();
-    }
-
-    /**
-     * Remove an option
-     *
-     * @param code
-     */
-    public removeOption(code: string) {
-        this.options(this.options().filter((option: OptionInterface) => {
-            return (option.code !== code);
-        }));
-        this.sort();
-    }
-
-    /**
      * Get an option from the options array
      *
      * @param {string} code
-     * @returns {(OptionInterface | undefined) & (OptionInterface[] | undefined)}
+     * @returns {OptionInterface}
      */
-    public getOption(code: string) {
+    public getOption(code: string): OptionInterface {
         return this.options().find((option: OptionInterface) => {
             return (option.code === code);
         });

@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TabsRemoveLastTabByDeletingTabsContentType">
         <annotations>
             <features value="PageBuilder"/>
@@ -93,6 +93,7 @@
         </actionGroup>
 
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -148,6 +149,7 @@
         </after>
         <comment userInput="Given I have added a second Tab on the stage and customized it" stepKey="AC1"/>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -163,13 +165,13 @@
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCentered">
-            <argument name="property" value="PageBuilderTabBackgroundPositionCentered"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachment">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentFixed"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderTabBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
 
@@ -368,9 +370,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTabsContentType"/>
-        </actionGroup>
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -381,7 +381,7 @@
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderTabBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForPageLoad stepKey="waitForNewTab" time="30"/>
@@ -422,6 +422,9 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoRows"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingOntoNewRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>

@@ -33,20 +33,21 @@ ko.bindingHandlers.sortableChildren = {
         $(element).sortable(options)
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 originalPosition = ui.item.index();
-                draggedContentType = instance.children()[originalPosition];
+                draggedContentType = instance.children()[originalPosition] as ContentTypeCollectionInterface;
                 events.trigger("childContentType:sortStart", {
                     instance,
                     originalPosition,
                     ui,
                 });
             })
-            .on("sortstop", (event: Event, ui: JQueryUI.SortableUIParams) => {
+            .on("sortstop", (event: JQueryEventObject, ui: JQueryUI.SortableUIParams) => {
                 events.trigger("childContentType:sortStop", {
                     instance,
                     ui,
+                    originalPosition,
                 });
             })
-            .on("sortupdate", function(event: Event, ui: JQueryUI.SortableUIParams) {
+            .on("sortupdate", function(event: JQueryEventObject, ui: JQueryUI.SortableUIParams) {
                 if (this === ui.item.parent()[0]) {
                     const index = ui.item.index();
                     const targetParent = ko.dataFor(ui.item.parent()[0]).parent;
@@ -62,6 +63,7 @@ ko.bindingHandlers.sortableChildren = {
                             newPosition: index,
                             originalPosition,
                             ui,
+                            event,
                         });
                     }
                 }
@@ -74,4 +76,5 @@ export interface PreviewSortableSortUpdateEventParams {
     newPosition: number;
     originalPosition: number;
     ui: JQueryUI.SortableUIParams;
+    event: JQueryEventObject;
 }

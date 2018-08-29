@@ -53,25 +53,26 @@
         }
 
         &.empty-placeholder {
+            left: 0;
+            text-align: center;
+            z-index: 1;
+        }
+
+        &.empty-placeholder-background {
             -moz-transition: .3s;
             -webkit-transition: .3s;
             background: url('@{baseDir}Magento_PageBuilder/css/images/cms-empty-row.svg') no-repeat center center;
             background-size: 505px 97px;
             height: 170px;
-            left: 0;
             padding-top: 130px;
             position: absolute;
-            text-align: center;
             transition: .3s;
-            width: 100%;
-            z-index: 1;
         }
     }
 
     .element-children {
         font-size: 0;
         position: relative;
-        z-index: 10;
     }
 
     &.children-min-height {
@@ -154,6 +155,30 @@
         }
     }
 
+    &:before {
+        &:extend(.pagebuilder-icon all);
+        -moz-transition: opacity 200ms, top 200ms, visibility 200ms;
+        -o-transition: opacity 200ms, top 200ms, visibility 200ms;
+        -webkit-transition: opacity 200ms, top 200ms, visibility 200ms;
+        align-items: center;
+        background: rgba(238, 238, 238, .7);
+        color: @color-gray65;
+        content: @icon-pagebuilder-hide__content;
+        display: flex;
+        font-size: 3.5em;
+        height: 100%;
+        justify-content: center;
+        left: 0;
+        line-height: 0;
+        opacity: 0;
+        position: absolute;
+        text-shadow: 0 0 25px rgba(238, 238, 238, .7);
+        top: 0;
+        transition: opacity 200ms, top 200ms, visibility 200ms;
+        visibility: hidden;
+        width: 100%;
+        z-index: 15;
+    }
 }
 
 .no-user-select {
@@ -203,7 +228,6 @@
     box-sizing: border-box;
     position: relative;
     transition: box-shadow 200ms ease 200ms;
-    z-index: 10;
 }
 .pagebuilder-system-border-hover {
     -moz-transition: box-shadow 200ms ease 200ms;
@@ -211,7 +235,6 @@
     -webkit-transition: box-shadow 200ms ease 200ms;
     box-shadow: 0 0 0 1px rgb(153, 153, 153);
     transition: box-shadow 200ms ease 200ms;
-    z-index: 25;
 
     &.type-container {
         box-shadow: 0 0 0 1px rgb(153, 153, 153);
@@ -281,7 +304,6 @@
 
 .pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-content-type-active:hover {
     box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
-    z-index: 10;
 
     &.type-container {
         box-shadow: 0 0 0 1px rgba(153, 153, 153, .3);
@@ -495,18 +517,6 @@
 }
 
 //
-//  When we're focusing a child within the stage force containers to have auto z-index
-//  __________________________________________________________________
-
-.pagebuilder-stage.focus-child .pagebuilder-content-type {
-    z-index: auto;
-
-    .element-children {
-        z-index: auto;
-    }
-}
-
-//
 //  Live Edit
 //  _____________________________________________
 
@@ -575,5 +585,23 @@
                 }
             }
         }
+    }
+}
+
+.pagebuilder-content-type-hidden {
+    .pagebuilder-system-border-hover {
+        z-index: 10;
+    }
+    .pagebuilder-display-label {
+        z-index: 12;
+    }
+    > .pagebuilder-content-type:before {
+        opacity: 1;
+        visibility: visible;
+    }
+    .pagebuilder-drop-indicator,
+    .pagebuilder-content-type.type-container.empty-container > .content-type-container:before {
+        opacity: 0 !important;
+        visibility: hidden !important;
     }
 }

@@ -67,6 +67,37 @@
         display: none;
     }
 
+    ._compact-ui .file-uploader-area,
+    ._micro-ui .file-uploader-area {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        > span {
+            display: none;
+        }
+        .image-upload-instructions {
+            margin-bottom: 5px;
+        }
+        .file-uploader-button {
+            display: block;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 15px;
+            max-width: 180px;
+            width: 100%;
+        }
+    }
+    ._micro-ui .file-uploader-area {
+        .file-uploader-button {
+            padding: .6rem 0;
+        }
+        .image-upload-requirements {
+            display: none;
+        }
+    }
+
     .pagebuilder-image-uploader-container-dropzone-overlay {
         display: none;
         height: 100%;
@@ -154,4 +185,16 @@
 .pagebuilder-content-type-active .pagebuilder-image-uploader-container .pagebuilder-options,
 .pagebuilder-image .pagebuilder-image-uploader-container {
     visibility: visible;
+}
+.pagebuilder-content-type-hidden .pagebuilder-content-type-active .pagebuilder-image-uploader-container .pagebuilder-options {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+.pagebuilder-content-type-hidden .pagebuilder-image-uploader-container {
+    &.dragging .pagebuilder-image-uploader-container-dropzone-overlay {
+        display: none;
+    }
+    &.dragging .file-uploader {
+        visibility: visible;
+    }
 }

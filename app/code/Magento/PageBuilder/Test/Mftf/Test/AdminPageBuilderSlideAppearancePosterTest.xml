@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="SlidePosterButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
@@ -41,10 +41,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <!-- fill button fields -->
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
@@ -161,10 +161,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectSlideButtonShowOnHover">
             <argument name="property" value="PageBuilderSlideShowButtonOnHoverProperty"/>
@@ -271,10 +271,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -358,10 +358,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -456,10 +456,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderSlideMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectSlideButtonShowOnHover">
             <argument name="property" value="PageBuilderSlideShowButtonOnHoverProperty"/>
@@ -600,5 +600,22 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderPosterHtmlValueInButtons" extends="SliderCollageCenterHtmlValueInButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Poster - HTML Value In Buttons Does Not Render As HTML"/>
+            <description value="Validate that html can be entered into the button and that the html doesn't render on stage and storefront."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-849"/>
+            <testCaseId value="MC-3662"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderPoster"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderSlidePosterProperty"/>
+        </actionGroup>
     </test>
 </tests>

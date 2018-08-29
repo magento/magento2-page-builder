@@ -16,7 +16,7 @@ import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
@@ -121,21 +121,18 @@ export default class Preview extends PreviewCollection {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        options.push(
-            new Option(
-                this,
-                "add",
-                "<i class='icon-pagebuilder-add'></i>",
-                $t("Add"),
-                this.addSlide,
-                ["add-child"],
-                10,
-            ),
-        );
+        options.add = new Option({
+            preview: this,
+            icon: "<i class='icon-pagebuilder-add'></i>",
+            title: $t("Add"),
+            action: this.addSlide,
+            classes: ["add-child"],
+            sort: 10,
+        });
         return options;
     }
 
@@ -166,6 +163,20 @@ export default class Preview extends PreviewCollection {
             this.focusedSlide(null);
         }
         this.focusedSlide(slideIndex);
+    }
+
+    /**
+     * Unset focused slide on focusout event.
+     *
+     * @param {PreviewCollection} data
+     * @param {JQueryEventObject} event
+     */
+    public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
+        if (_.isNull(event.relatedTarget) ||
+            event.relatedTarget && !$.contains(event.currentTarget as Element, event.relatedTarget)
+        ) {
+            this.setFocusedSlide(null);
+        }
     }
 
     /**
@@ -210,9 +221,12 @@ export default class Preview extends PreviewCollection {
      * On sort stop ensure the focused slide and the active slide are in sync, as the focus can be lost in this
      * operation
      */
-    public onSortStop(): void {
+    public onSortStop(event: JQueryEventObject, params: JQueryUI.SortableUIParams): void {
         if (this.activeSlide() !== this.focusedSlide()) {
             this.setFocusedSlide(this.activeSlide(), true);
+        }
+        if (params.item.index() !== -1) {
+            _.defer(this.focusElement.bind(this, event, params.item.index()));
         }
     }
 
@@ -248,6 +262,19 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Slider navigation click handler.
+     *
+     * @param {number} index
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onControlClick(index: number, context: Preview, event: Event) {
+        $(event.target).focus();
+        this.navigateToSlide(index);
+        this.setFocusedSlide(index);
+    }
+
+    /**
      * Bind events
      */
     protected bindEvents() {
@@ -265,6 +292,7 @@ export default class Preview extends PreviewCollection {
             if (args.instance.id === this.parent.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
+                _.defer(this.focusElement.bind(this, args.event, args.newPosition));
             }
         });
 
@@ -334,6 +362,18 @@ export default class Preview extends PreviewCollection {
                 });
             }
         });
+    }
+
+    /**
+     * Take dropped element on focus.
+     *
+     * @param {JQueryEventObject} event
+     * @param {number} index
+     */
+    private focusElement(event: JQueryEventObject, index: number) {
+        const handleClassName = $(event.target).data("sortable").options.handle;
+
+        $($(event.target).find(handleClassName)[index]).focus();
     }
 
     /**

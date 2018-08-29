@@ -9,7 +9,7 @@
      attr="data.main.attributes"
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <div ko-style="Object.assign(data.main.style(), data.desktop_image.style(), getPaddingStyles())"
+    <div ko-style="Object.assign(data.main.style(), data.desktop_image.style(), {paddingLeft: 'calc(25% + ' + data.desktop_image.style().paddingLeft + ')', paddingRight: 'calc(25% + ' + data.desktop_image.style().paddingRight + ')'})"
          event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
         <div class="pagebuilder-collage-overlay" ko-style="data.overlay.style()">
             <scope args="getUploader().getUiComponent()">

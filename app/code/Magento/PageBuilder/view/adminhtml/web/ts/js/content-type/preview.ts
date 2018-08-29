@@ -17,15 +17,14 @@ import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
+import HideShowOption from "../content-type-menu/hide-show-option";
 import Option from "../content-type-menu/option";
-import OptionInterface from "../content-type-menu/option.d";
-import TitleOption from "../content-type-menu/title";
+import {OptionsInterface} from "../content-type-menu/option.d";
+import TitleOption from "../content-type-menu/title-option";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
 import {getSortableOptions} from "../drag-drop/sortable";
-import StyleAttributeFilter from "../master-format/style-attribute-filter";
-import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -37,17 +36,18 @@ export default class Preview {
     public parent: ContentTypeCollectionInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
-    public displayLabel: KnockoutObservable<string>;
+    public displayLabel: KnockoutObservable<string> = ko.observable();
+    public display: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperElement: Element;
+    public placeholderCss: KnockoutObservable<object>;
+    public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
+    public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
 
     /**
      * @deprecated
      */
     public previewData: ObservableObject = {};
-    /**
-     * @deprecated
-     */
-    public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
@@ -55,7 +55,9 @@ export default class Preview {
      * @type {[string]}
      */
     protected fieldsToIgnoreOnRemove: string[] = [];
+
     private edit: Edit;
+    private optionsMenu: ContentTypeMenu;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
     private mouseoverContext: Preview;
@@ -73,8 +75,13 @@ export default class Preview {
         this.parent = parent;
         this.config = config;
         this.edit = new Edit(this.parent, this.parent.dataStore);
+        this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
         this.observableUpdater = observableUpdater;
-        this.displayLabel = ko.observable(this.config.label);
+        this.displayLabel(this.config.label);
+        this.placeholderCss = ko.observable({
+            "visible": this.isEmpty,
+            "empty-placeholder-background": this.isPlaceholderVisible,
+        });
         this.setupDataFields();
         this.bindEvents();
     }
@@ -134,7 +141,7 @@ export default class Preview {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: Preview, event: Event) {
+    public onMouseOver(context: Preview, event: Event): void {
         if (this.mouseover) {
             return;
         }
@@ -218,6 +225,7 @@ export default class Preview {
                     id: this.parent.id,
                 },
             );
+            this.disableImageUploadOnHide(element);
         }
     }
 
@@ -227,7 +235,7 @@ export default class Preview {
      * @returns {ContentTypeMenu}
      */
     public getOptions(): ContentTypeMenu {
-        return new ContentTypeMenu(this, this.retrieveOptions());
+        return this.optionsMenu;
     }
 
     /**
@@ -235,6 +243,14 @@ export default class Preview {
      */
     public onOptionEdit(): void {
         this.openEdit();
+    }
+
+    /**
+     * Reverse the display data currently in the data store
+     */
+    public onOptionVisibilityToggle(): void {
+        const display = this.parent.dataStore.get("display");
+        this.parent.dataStore.update(!display, "display");
     }
 
     /**
@@ -361,48 +377,62 @@ export default class Preview {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    protected retrieveOptions(): OptionInterface[] {
-        return [
-            new Option(
-                this,
-                "move",
-                "<i class='icon-admin-pagebuilder-handle'></i>",
-                $t("Move"),
-                null,
-                ["move-structural"],
-                10,
-            ),
-            new TitleOption(this, this.config.label, 20),
-            new Option(
-                this,
-                "edit",
-                "<i class='icon-admin-pagebuilder-systems'></i>",
-                $t("Edit"),
-                this.onOptionEdit,
-                ["edit-content-type"],
-                30,
-            ),
-            new Option(
-                this,
-                "duplicate",
-                "<i class='icon-pagebuilder-copy'></i>",
-                $t("Duplicate"),
-                this.onOptionDuplicate,
-                ["duplicate-structural"],
-                40,
-            ),
-            new Option(
-                this,
-                "remove",
-                "<i class='icon-admin-pagebuilder-remove'></i>",
-                $t("Remove"),
-                this.onOptionRemove,
-                ["remove-structural"],
-                50,
-            ),
-        ];
+    protected retrieveOptions(): OptionsInterface {
+        const options: OptionsInterface = {
+            move: new Option({
+                preview: this,
+                icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+                title: $t("Move"),
+                classes: ["move-structural"],
+                sort: 10,
+            }),
+            title: new TitleOption({
+                preview: this,
+                title: this.config.label,
+                template: "Magento_PageBuilder/content-type/title",
+                sort: 20,
+            }),
+            edit: new Option({
+                preview: this,
+                icon: "<i class='icon-admin-pagebuilder-systems'></i>",
+                title: $t("Edit"),
+                action: this.onOptionEdit,
+                classes: ["edit-content-type"],
+                sort: 30,
+            }),
+            duplicate: new Option({
+                preview: this,
+                icon: "<i class='icon-pagebuilder-copy'></i>",
+                title: $t("Duplicate"),
+                action: this.onOptionDuplicate,
+                classes: ["duplicate-structural"],
+                sort: 50,
+            }),
+            remove: new Option({
+                preview: this,
+                icon: "<i class='icon-admin-pagebuilder-remove'></i>",
+                title: $t("Remove"),
+                action: this.onOptionRemove,
+                classes: ["remove-structural"],
+                sort: 60,
+            }),
+        };
+
+        // If the content type is is_hideable show the hide / show option
+        if (this.parent.config.is_hideable) {
+            options.hideShow = new HideShowOption({
+                preview: this,
+                icon: HideShowOption.showIcon,
+                title: HideShowOption.showText,
+                action: this.onOptionVisibilityToggle,
+                classes: ["hide-show-content-type"],
+                sort: 40,
+            });
+        }
+
+        return options;
     }
 
     /**
@@ -434,8 +464,18 @@ export default class Preview {
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
+                this.updatePlaceholderVisibility(data);
+                // Keep a reference to the display state in an observable for adding classes to the wrapper
+                this.display(!!data.display);
             },
         );
+        if (this.parent.children) {
+            this.parent.children.subscribe(
+                (children: any[]) => {
+                    this.isEmpty(!children.length);
+                },
+            );
+        }
     }
 
     /**
@@ -451,9 +491,6 @@ export default class Preview {
      * @deprecated
      */
     protected setupDataFields() {
-        const styleAttributeMapper = new StyleAttributeMapper();
-        const styleAttributeFilter = new StyleAttributeFilter();
-
         // Create an empty observable for all fields
         if (this.config.fields) {
             _.keys(this.config.fields).forEach((key: string) => {
@@ -469,48 +506,6 @@ export default class Preview {
                 });
             },
         );
-
-        // Calculate the preview style utilising the style attribute mapper & appearance system
-        this.previewStyle = ko.computed(() => {
-            const data = _.mapObject(this.previewData, (value) => {
-                if (ko.isObservable(value)) {
-                    return value();
-                }
-                return value;
-            });
-
-            if (typeof data.appearance !== "undefined" &&
-                typeof this.config.appearances !== "undefined" &&
-                typeof this.config.appearances[data.appearance] !== "undefined") {
-                _.extend(data, this.config.appearances[data.appearance]);
-            }
-
-            // Extract data values our of observable functions
-            return this.afterStyleMapped(
-                styleAttributeMapper.toDom(
-                    styleAttributeFilter.filter(data),
-                ),
-            );
-        });
-
-        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
-            if (ko.isObservable(this.previewData[key])) {
-                this.previewData[key].subscribe(() => {
-                    this.previewStyle.notifySubscribers();
-                });
-            }
-        });
-    }
-
-    /**
-     * Callback function to update the styles are mapped
-     *
-     * @param {StyleAttributeMapperResult} styles
-     * @returns {StyleAttributeMapperResult}
-     * @deprecated
-     */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        return styles;
     }
 
     /**
@@ -551,6 +546,21 @@ export default class Preview {
     }
 
     /**
+     * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
+     * all elements as underlying elements could still receive the events if a parent is hidden.
+     *
+     * @param {Element} element
+     */
+    private disableImageUploadOnHide(element: Element) {
+        $(element).on("drag dragstart dragend dragover dragenter dragleave drop", (event) => {
+            if (this.display() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+    }
+
+    /**
      * Update observables
      */
     private updateObservables(): void {
@@ -560,5 +570,22 @@ export default class Preview {
         );
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});
+    }
+
+    /**
+     * Update placeholder background visibility base on height and padding
+     *
+     * @param {DataObject} data
+     */
+    private updatePlaceholderVisibility(data: DataObject): void {
+        const minHeight = !_.isEmpty(data.min_height) ? parseFloat(data.min_height as string) : 130;
+        const marginsAndPadding = _.isString(data.margins_and_padding) && data.margins_and_padding ?
+            JSON.parse(data.margins_and_padding as string) :
+            data.margins_and_padding || {};
+        const padding = marginsAndPadding.padding || {};
+        const paddingBottom = parseFloat(padding.bottom) || 0;
+        const paddingTop = parseFloat(padding.top) || 0;
+
+        this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
     }
 }

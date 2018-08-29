@@ -7,7 +7,7 @@
 -->
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
     <!-- Background Color -->
     <entity name="PageBuilderBackgroundColor_Default" type="pagebuilder_background_color_property">
         <data key="name">Background Color</data>
@@ -23,6 +23,24 @@
         <data key="section">background</data>
         <data key="fieldName">background_color</data>
         <data key="value"/>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_Hex_Grey" type="pagebuilder_row_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">#cccccc</data>
+        <data key="rgb">rgb(204, 204, 204)</data>
+        <data key="hex">#cccccc</data>
+        <data key="editPanelValue">#cccccc</data>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_Pink" type="pagebuilder_row_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">#ffc0cb</data>
+        <data key="rgb">rgb(255, 192, 203)</data>
+        <data key="hex">#ffc0cb</data>
+        <data key="editPanelValue">#ffc0cb</data>
     </entity>
     <entity name="PageBuilderBackgroundColor_Plaintext_Green" type="pagebuilder_background_color_property">
         <data key="name">Background Color</data>
@@ -56,9 +74,9 @@
         <data key="section">background</data>
         <data key="fieldName">background_color</data>
         <data key="value">rgba(0, 0, 254, 0.92)</data>
-        <data key="rgb">rgb(0, 0, 254)</data>
-        <data key="hex">#0000fe</data>
-        <data key="editPanelValue">#0000fe</data>
+        <data key="rgb">rgba(0, 0, 254, 0.92)</data>
+        <data key="hex">rgba(0, 0, 254, 0.92)</data>
+        <data key="editPanelValue">rgba(0, 0, 254, 0.92)</data>
     </entity>
     <entity name="PageBuilderBackgroundColor_HSL_Orange" type="pagebuilder_background_color_property">
         <data key="name">Background Color</data>
@@ -69,6 +87,15 @@
         <data key="hex">#ff8400</data>
         <data key="editPanelValue">#ff8400</data>
     </entity>
+    <entity name="PageBuilderBackgroundColor_HSLa_Orange" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">hsla(31, 100%, 50%, .3)</data>
+        <data key="rgb">rgba(255, 132, 0, 0.3)</data>
+        <data key="hex">#ff8400</data>
+        <data key="editPanelValue">rgba(255, 132, 0, 0.3)</data>
+    </entity>
     <entity name="PageBuilderBackgroundColor_HSV_Orange" type="pagebuilder_background_color_property">
         <data key="name">Background Color</data>
         <data key="section">background</data>
@@ -77,6 +104,15 @@
         <data key="rgb">rgb(169, 104, 54)</data>
         <data key="hex">#a96836</data>
         <data key="editPanelValue">#a96836</data>
+    </entity>
+    <entity name="PageBuilderBackgroundColor_HSVa_Orange" type="pagebuilder_background_color_property">
+        <data key="name">Background Color</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_color</data>
+        <data key="value">hsva(26.09, 68.05, 66.27, .4)</data>
+        <data key="rgb">rgba(169, 104, 54, 0.4)</data>
+        <data key="hex">#a96836</data>
+        <data key="editPanelValue">rgba(169, 104, 54, 0.4)</data>
     </entity>
     <entity name="PageBuilderBackgroundColor_CenterColorPicker" type="pagebuilder_background_color_property">
         <data key="name">Background Color</data>
@@ -115,6 +151,15 @@
         <data key="fieldName">background_image</data>
         <data key="value">magento.jpg</data>
         <data key="fileName">magento</data>
+        <data key="extension">jpg</data>
+        <data key="path">wysiwyg</data>
+    </entity>
+    <entity name="PageBuilderBackgroundImage3" type="pagebuilder_background_image_property">
+        <data key="name">Background Image</data>
+        <data key="section">background</data>
+        <data key="fieldName">background_image</data>
+        <data key="value">magento3.jpg</data>
+        <data key="fileName">magento3</data>
         <data key="extension">jpg</data>
         <data key="path">wysiwyg</data>
     </entity>
@@ -251,6 +296,7 @@
         <data key="fieldName">background_position</data>
         <data key="value">Top Left</data>
         <data key="styleValue">left top</data>
+        <data key="optionsList">[Top Left, Top Center, Top Right, Center Left, Center, Center Right, Bottom Left, Bottom Center, Bottom Right]</data>
     </entity>
     <entity name="PageBuilderBackgroundPosition_TopLeft" type="pagebuilder_background_position_property">
         <data key="name">Background Position</data>
@@ -368,6 +414,7 @@
         <data key="section">background</data>
         <data key="fieldName">background_attachment</data>
         <data key="value">scroll</data>
+        <data key="optionsList">[Scroll, Fixed]</data>
     </entity>
     <entity name="PageBuilderBackgroundAttachment_Scroll" type="pagebuilder_background_attachment_property">
         <data key="name">Background Attachment</data>

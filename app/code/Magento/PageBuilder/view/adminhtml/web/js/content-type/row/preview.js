@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _jarallax, _ResizeObserver, _underscore, _option, _previewCollection) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _events, _jarallax, _ResizeObserver, _underscore, _conditionalRemoveOption, _previewCollection) {
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -66,9 +68,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _this;
     }
     /**
-     * Return an array of options
+     * Use the conditional remove to disable the option when the parent has a single child
      *
-     * @returns {Array<Option>}
+     * @returns {OptionsInterface}
      */
 
 
@@ -77,22 +79,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
-      });
-      var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
-
-      if (this.parent.parent.children().length < 2) {
-        removeFn = function removeFn() {
-          return;
-        };
-
-        removeClasses.push("disabled");
-      }
-
-      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
-      return newOptions;
+      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
+        preview: this
+      }));
+      return options;
     };
     /**
      * Init the parallax element
@@ -105,14 +95,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this2 = this;
 
       this.element = element;
-      this.buildJarallax(); // Observe for resizes of the element and force jarallax to display correctly
 
-      if ((0, _jquery)(this.element).hasClass("jarallax")) {
-        new _ResizeObserver(function () {
+      _underscore.defer(function () {
+        _this2.buildJarallax();
+      });
+
+      new _ResizeObserver(function () {
+        // Observe for resizes of the element and force jarallax to display correctly
+        if ((0, _jquery)(_this2.element).hasClass("jarallax")) {
           jarallax(_this2.element, "onResize");
           jarallax(_this2.element, "onScroll");
-        }).observe(this.element);
-      }
+        }
+      }).observe(this.element);
     };
 
     return Preview;

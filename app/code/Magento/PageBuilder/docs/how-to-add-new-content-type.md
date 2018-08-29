@@ -10,21 +10,25 @@
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. [Iconography]
-    2. [Add image uploader to content type]
+    1. [Add image uploader to content type]
     1. [Module integration]
     1. [Additional data configuration]
     1. [Content type configuration]
     1. **How to add a new content type**
-    1. [Bindings]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
     1. [Use the block chooser UI component]
+    1. [Use the inline text editing component]
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
+    1. [Full width page layouts]
+    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -39,18 +43,20 @@
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
-[Bindings]: bindings.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
-[Render a backend content type preview]: content-type-preview.md
 [Use the block chooser UI component]: block-chooser-component.md
+[Use the inline text editing component]: inline-editing-component.md
+[Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
-[Roadmap and known issues]: roadmap.md
-
-
+[Full width page layouts]: full-width-page-layouts.md
+[Add custom logic to content types]: add-custom-logic.md
+[Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## Configuration
 
@@ -59,47 +65,39 @@ Adding new content type starts with [configuration](content-type-configuration.m
 To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_type.xsd">
-    <content_types>
-        <type name="simple"
-              label="Simple"
-              component="Vendor_ModuleName/js/content-type"
-              form="modulename_simple_form"
-              group="general"
-              icon="icon-modulename-simple"
-              sortOrder="35"
-              translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-            </allowed_parents>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview"
-                            render_template="Vendor_ModuleNameCustom/content-type/simple/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main" path=".">
-                                <style_properties>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="simple"
+          label="Simple"
+          component="Vendor_ModuleName/js/content-type"
+          form="modulename_simple_form"
+          group="layout"
+          icon="icon-modulename-simple"
+          sortOrder="35"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="row" policy="allow"/>
+        </parents>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview"
+                        render_template="Vendor_ModuleNameCustom/content-type/simple/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>
 ```
 
@@ -261,66 +259,41 @@ Now, let's add content type that can contain other content types. Create configu
 
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="complex"
-              label="Complex"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/preview-collection"
-              master_component="Magento_PageBuilder/js/content-type/content-collection"
-              form="vendorname_complex_form"
-              group="general"
-              icon="icon-vendorname-complex"
-              sortOrder="35"
-              translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-            </allowed_parents>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Vendor_ModuleName/content-type/complex/default/preview"
-                            render_template="Vendor_ModuleName/content-type/complex/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main" path=".">
-                                <style_properties>
-                                    <property name="text_align" source="text_align"/>
-                                    <property name="border" source="border_style"/>
-                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                                </style_properties>
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                </attributes>
-                                <css name="css_classes"/>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
-</config>
-```
-
-Now we need to specify which content types can be inserted into our new content type. To allow default content type Heading be inserted into our Complex content type, add the following configuration.
-
-`Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\heading.xml`
-
-``` XML
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="heading">
-            <allowed_parents>
-                <parent name="complex"/>
-            </allowed_parents>
-        </type>
-    </content_types>
+    <type name="complex"
+          label="Complex"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/preview-collection"
+          master_component="Magento_PageBuilder/js/content-type/content-collection"
+          form="vendorname_complex_form"
+          group="layout"
+          icon="icon-vendorname-complex"
+          sortOrder="35"
+          translate="label">
+        <children default_policy="deny">
+            <child name="heading" policy="allow"/>
+        </children>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Vendor_ModuleName/content-type/complex/default/preview"
+                        render_template="Vendor_ModuleName/content-type/complex/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <style name="text_align" source="text_align"/>
+                        <style name="border" source="border_style"/>
+                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <attribute name="name" source="data-role"/>
+                        <css name="css_classes"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>
 ```
 
@@ -374,3 +347,43 @@ Config have the following methods
 | `setConfig`            | Method is used for initial initialization of the config, not expected to be used by developers. |
 | `getConfig`            | Returns the whole configuration as object.                                                      |
 | `getContentTypeConfig` | Retrieves configuration for specific content type.                                              |
+
+## Fix rendering issues on the stage
+
+The master format can appear on the stage when PageBuilder content is embedded into a CMS block and the block is then added to a page via the block content type. This may cause rendering issues on the stage if your customizations do not support this behavior.
+
+You can easily avoid these potential rendering issues by either:
+* [Modifying your preview styles to support your master format.](#modify-preview-styles-to-support-master-format)
+* [Copying your master format styles to the preview styles.](#copy-master-format-styles-to-preview-styles)
+
+### Modify preview styles to support master format
+
+Depending on the complexity of your customizations, everything may render correctly without any modification to the preview styles to support your master format.
+
+### Copy master format styles to preview styles
+
+If you have a very complex content type with a substantially different preview and master formats, copying your master format styles to the preview styles is the best and most efficient option.
+
+If you are customizing a preview renderer that can contain PageBuilder content, such as the native block content type, you must invoke the widget initializer logic to cause the master format content to initialize correctly. To accomplish this, include the widget initializer in your component and invoke it with the configuration.
+
+**Example:**
+
+For a container that renders master format content, add an `afterRender` binding to initialize the widgets:
+
+``` html
+<div html="someVariable" afterRender="initializeWidgets"/>
+```
+
+Your component's `initializeWidgets` method would resemble:
+
+``` javascript
+define(["Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config"], function (widgetInitializer, config) {
+    return {
+        initializeWidgets: function initializeWidgets() {
+            widgetInitializer({
+                config: config.getConfig("widgets")
+            });
+        }
+    };
+});
+```

@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="RowHasParallaxDefaultSettings">
         <annotations>
             <features value="PageBuilder"/>
@@ -34,9 +34,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeEnableParallaxProperty">
             <argument name="property" value="PageBuilderRowParallax_Default"/>
@@ -72,6 +69,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowParallax"/>
+            <skip>
+                <issueId value="MC-3686"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -86,9 +86,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxEnabledProperty">
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>

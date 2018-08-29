@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="MapCommonCaseHeightPx">
         <annotations>
             <features value="PageBuilder"/>
@@ -20,6 +20,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -32,7 +34,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
@@ -111,6 +113,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -123,7 +127,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -196,6 +200,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -205,7 +211,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -248,6 +254,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -260,7 +268,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -331,6 +339,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapMapSettings"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -343,7 +353,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">

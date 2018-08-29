@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="verifyHeadingInStage">
         <arguments>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
@@ -51,12 +51,9 @@
             <argument name="headingAlignment" defaultValue="PageBuilderHeadingAlignmentProperty_left"/>
         </arguments>
         <comment userInput="Click outside heading editable area" stepKey="commentClickOutside"/>
-        <waitForPageLoad stepKey="waitForAnimation1" time="30"/>
-        <seeElement selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="seeHeadingTypeToolbar"/>
-        <seeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="seeHeadingAlignmentToolbar"/>
         <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
-        <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
+        <waitForPageLoad stepKey="waitForAnimation2"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="dontSeeHeadingTypeToolbar"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="dontSeeHeadingAlignmentToolbar"/>
     </actionGroup>
@@ -111,7 +108,7 @@
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{page.base(headingType.value, index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="waitForElementVisible"/>
         <waitForElementVisible selector="{{page.noAlignment(headingType.value, index)}}" stepKey="waitForAlignmentVisible"/>
         <waitForElementVisible selector="{{page.border(headingType.value, index, border.value)}}" stepKey="waitForBorderVisible"/>
         <waitForElementVisible selector="{{page.noBorderColor(headingType.value, index)}}" stepKey="waitForBorderColorVisible"/>
@@ -135,7 +132,7 @@
             <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{page.base(headingType.value, index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="waitForElementVisible"/>
         <waitForElementVisible selector="{{page.alignment(headingType.value, index, alignment.value)}}" stepKey="waitForAlignmentVisible"/>
         <waitForElementVisible selector="{{page.border(headingType.value, index, border.value)}}" stepKey="waitForBorderVisible"/>
         <waitForElementVisible selector="{{page.borderColor(headingType.value, index, borderColor.rbg)}}" stepKey="waitForBorderColorVisible"/>
@@ -154,8 +151,8 @@
             <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(headingType.value, index)}}" stepKey="waitForElement"/>
-        <dontSeeElement selector="{{page.base(headingType.value, index)}}" stepKey="dontSeeElement"/>
+        <waitForElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="waitForElement"/>
+        <dontSeeElement selector="{{page.baseByTagName(headingType.value, index)}}" stepKey="dontSeeElement"/>
         <waitForElement selector="{{page.noAlignment(headingType.value, index)}}" stepKey="waitForAlignment"/>
         <dontSeeElement selector="{{page.noAlignment(headingType.value, index)}}" stepKey="dontSeeAlignment"/>
         <waitForElement selector="{{page.border(headingType.value, index, border.value)}}" stepKey="waitForBorder"/>

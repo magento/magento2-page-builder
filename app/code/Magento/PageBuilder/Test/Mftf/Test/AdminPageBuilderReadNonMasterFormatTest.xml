@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="ReadText">
         <annotations>
             <features value="PageBuilder"/>
@@ -49,7 +49,7 @@
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="WaitForPageLoaded"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waitForPageBuilderDisplay1" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waitForPageBuilderDisplay1" />
         <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
         <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>

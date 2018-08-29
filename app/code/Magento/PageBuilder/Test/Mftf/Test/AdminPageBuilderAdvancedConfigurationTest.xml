@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="AdvancedConfigurationEditPanelVisual">
         <annotations>
             <features value="PageBuilder"/>
@@ -28,6 +28,9 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -37,7 +40,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Check Field Labels -->
         <comment userInput="Check Field Labels" stepKey="commentFieldLabels"/>
         <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
@@ -181,6 +183,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -192,9 +197,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -212,9 +216,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -232,9 +235,8 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -252,9 +254,8 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentRight">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -358,6 +359,9 @@
             <testCaseId value="MAGETWO-89332"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
+            <skip>
+                <issueId value="MC-3723"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -401,6 +405,9 @@
         </actionGroup>
         <!-- Add Border: None -->
         <comment userInput="Add Border: None" stepKey="commentAddBorderNone"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -412,9 +419,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
@@ -432,9 +438,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
@@ -452,9 +457,8 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
@@ -472,9 +476,8 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDashed"/>
         </actionGroup>
@@ -492,9 +495,8 @@
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -512,9 +514,8 @@
             <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder6">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
@@ -532,9 +533,8 @@
             <argument name="contentTypeIndex" value="7"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText7">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection7"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder7">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyGroove"/>
         </actionGroup>
@@ -552,9 +552,8 @@
             <argument name="contentTypeIndex" value="8"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText8">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection8"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder8">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyRidge"/>
         </actionGroup>
@@ -572,9 +571,8 @@
             <argument name="contentTypeIndex" value="9"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText9">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection9"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder9">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyInset"/>
         </actionGroup>
@@ -592,9 +590,8 @@
             <argument name="contentTypeIndex" value="10"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText10">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection10"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder10">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyOutset"/>
         </actionGroup>
@@ -853,6 +850,9 @@
         </actionGroup>
         <!-- Add Border Color: Empty -->
         <comment userInput="Add Border Color: Empty" stepKey="commentAddBorderColorEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -864,9 +864,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -887,9 +886,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -910,9 +908,8 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -933,9 +930,8 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -956,9 +952,8 @@
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -1086,6 +1081,9 @@
             <testCaseId value="MAGETWO-89355"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
+            <skip>
+                <issueId value="MC-3723"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1109,11 +1107,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
         <!-- Add Border Width: Empty -->
         <comment userInput="Add Border Width: Empty" stepKey="commentAddBorderWidthEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1125,9 +1123,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -1148,9 +1145,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -1171,9 +1167,8 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
@@ -1181,8 +1176,8 @@
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <!-- Add Border Width: 500 -->
-        <comment userInput="Add Border Width: 500" stepKey="commentAddBorderWidth500"/>
+        <!-- Add Border Width: Invalid -->
+        <comment userInput="Add Border Width: Invalid" stepKey="commentAddBorderWidthInvalid"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1194,39 +1189,15 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth4">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty500"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <!-- Add Border Width: Invalid -->
-        <comment userInput="Add Border Width: Invalid" stepKey="commentAddBorderWidthInvalid"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentTypeIndex" value="5"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="contentTypeIndex" value="5"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth5">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyInvalid"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Stage: Check Border Width: Empty -->
         <comment userInput="Stage: Check Border Width: Empty" stepKey="commentStageCheckEmpty"/>
         <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageEmpty">
@@ -1250,20 +1221,12 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Border Width: 500 -->
-        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Border Width: Invalid -->
         <comment userInput="Stage: Check Border Width: Invalid" stepKey="commentStageCheckInvalid"/>
         <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageInvalid">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1291,20 +1254,12 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Border Width: 500 -->
-        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Border Width: Invalid -->
         <comment userInput="Stage: Check Border Width: Invalid" stepKey="commentStageCheckInvalid2"/>
         <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageInvalid2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -1332,20 +1287,92 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
+        <!-- Storefront: Check Border Width: Invalid -->
+        <comment userInput="Storefront: Check Border Width: Invalid" stepKey="commentStorefrontCheckInvalid"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStorefrontInvalid">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
+    </test>
+    <test name="AdvancedConfigurationFunctionalBorderWidth500">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Large Border Width"/>
+            <description value="Tests that the large Border Width attribute functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-3417"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Border Width: 500 -->
+        <comment userInput="Add Border Width: 500" stepKey="commentAddBorderWidth500"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Border Width: 500 -->
+        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Border Width: 500 -->
+        <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck5002"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <!-- Storefront: Check Border Width: 500 -->
         <comment userInput="Storefront: Check Border Width: 500" stepKey="commentStorefrontCheck500"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
-        <!-- Storefront: Check Border Width: Invalid -->
-        <comment userInput="Storefront: Check Border Width: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStorefrontInvalid">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="1"/>
         </actionGroup>
     </test>
     <test name="AdvancedConfigurationFunctionalBorderRadius">
@@ -1359,6 +1386,9 @@
             <testCaseId value="MAGETWO-89356"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
+            <skip>
+                <issueId value="MC-3723"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1387,6 +1417,9 @@
         </actionGroup>
         <!-- Add Border Radius: Empty -->
         <comment userInput="Add Border Radius: Empty" stepKey="commentAddBorderRadiusEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1398,9 +1431,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
@@ -1418,9 +1450,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
@@ -1438,9 +1469,8 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius3">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
         </actionGroup>
@@ -1458,9 +1488,8 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius4">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty500"/>
         </actionGroup>
@@ -1478,9 +1507,8 @@
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius5">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusPropertyInvalid"/>
         </actionGroup>
@@ -1506,7 +1534,7 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 500 -->
-        <comment userInput="Stage: Check Border Radius: 1" stepKey="commentStageCheck500"/>
+        <comment userInput="Stage: Check Border Radius: 500" stepKey="commentStageCheck500"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
             <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
@@ -1542,7 +1570,7 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 500 -->
-        <comment userInput="Stage: Check Border Radius: 1" stepKey="commentStageCheck5002"/>
+        <comment userInput="Stage: Check Border Radius: 500" stepKey="commentStageCheck5002"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
             <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
@@ -1624,6 +1652,9 @@
         </actionGroup>
         <!-- Add CSS Classes: Empty -->
         <comment userInput="Add CSS Classes: Empty" stepKey="commentAddCSSClassesEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1635,9 +1666,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearCSSClasses">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
@@ -1655,9 +1685,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterCSSClasses2">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
         </actionGroup>
@@ -1675,9 +1704,8 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterCSSClasses3">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
@@ -1760,6 +1788,9 @@
             <testCaseId value="MAGETWO-89358"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
+            <skip>
+                <issueId value="MC-3723"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1786,11 +1817,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
         <!-- Add Margins: Empty -->
         <comment userInput="Add Margins: Empty" stepKey="commentAddMarginsEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1802,9 +1833,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldMargins" stepKey="clearMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -1822,9 +1852,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
@@ -1842,15 +1871,14 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins3">
             <argument name="property" value="PageBuilderMarginsProperty1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <!-- Add Margins: 500 -->
-        <comment userInput="Add Margins: 500" stepKey="commentAddMargins500"/>
+        <!-- Add Margins: Unique -->
+        <comment userInput="Add Margins: Unique" stepKey="commentAddMarginsUnique"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1862,15 +1890,14 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins4">
-            <argument name="property" value="PageBuilderMarginsProperty500"/>
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <!-- Add Margins: Unique -->
-        <comment userInput="Add Margins: Unique" stepKey="commentAddMarginsUnique"/>
+        <!-- Add Margins: Invalid -->
+        <comment userInput="Add Margins: Invalid" stepKey="commentAddMarginsInvalid"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1882,33 +1909,12 @@
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins5">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
-        <!-- Add Margins: Invalid -->
-        <comment userInput="Add Margins: Invalid" stepKey="commentAddMarginsInvalid"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage6">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="6"/>
-            <argument name="contentTypeIndex" value="6"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="contentTypeIndex" value="6"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
-            <argument name="property" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
-        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins6">
             <argument name="property" value="PageBuilderMarginsPropertyInvalid"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Margins: Empty -->
         <comment userInput="Stage: Check Margins: Empty" stepKey="commentStageCheckEmpty"/>
         <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStageEmpty">
@@ -1929,25 +1935,18 @@
             <argument name="margin" value="PageBuilderMarginsProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Margins: 500 -->
-        <comment userInput="Stage: Check Margins: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="margin" value="PageBuilderMarginsProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Margins: Unique -->
         <comment userInput="Stage: Check Margins: Unique" stepKey="commentStageCheckUnique"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique">
             <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Margins: Invalid -->
         <comment userInput="Stage: Check Margins: Invalid" stepKey="commentStageCheckInvalid"/>
         <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStageInvalid">
             <argument name="page" value="TextOnStage"/>
-            <argument name="index" value="6"/>
+            <argument name="index" value="5"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1972,25 +1971,18 @@
             <argument name="margin" value="PageBuilderMarginsProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Margins: 500 -->
-        <comment userInput="Stage: Check Margins: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="margin" value="PageBuilderMarginsProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Margins: Unique -->
         <comment userInput="Stage: Check Margins: Unique" stepKey="commentStageCheckUnique2"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique2">
             <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Margins: Invalid -->
         <comment userInput="Stage: Check Margins: Invalid" stepKey="commentStageCheckInvalid2"/>
         <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStageInvalid2">
             <argument name="page" value="TextOnStage"/>
-            <argument name="index" value="6"/>
+            <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -2015,25 +2007,92 @@
             <argument name="margin" value="PageBuilderMarginsProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Storefront: Check Margins: 500 -->
-        <comment userInput="Storefront: Check Margins: 500" stepKey="commentStorefrontCheck500"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="margin" value="PageBuilderMarginsProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Storefront: Check Margins: Unique -->
         <comment userInput="Storefront: Check Margins: Unique" stepKey="commentStorefrontCheckUnique"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontUnique">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Margins: Invalid -->
         <comment userInput="Storefront: Check Margins: Invalid" stepKey="commentStorefrontCheckInvalid"/>
         <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="index" value="6"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+    </test>
+    <test name="AdvancedConfigurationFunctionalMargins500">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Large Margins"/>
+            <description value="Tests that large Margin attributes functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-3418"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Margins: 500 -->
+        <comment userInput="Add Margins: 500" stepKey="commentAddMargins500"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsProperty500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Stage: Check Margins: 500 -->
+        <comment userInput="Stage: Check Margins: 500" stepKey="commentStageCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="margin" value="PageBuilderMarginsProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Margins: 500 -->
+        <comment userInput="Stage: Check Margins: 500" stepKey="commentStageCheck5002"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="margin" value="PageBuilderMarginsProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Storefront: Check Margins: 500 -->
+        <comment userInput="Storefront: Check Margins: 500" stepKey="commentStorefrontCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="margin" value="PageBuilderMarginsProperty500"/>
+            <argument name="index" value="1"/>
         </actionGroup>
     </test>
     <test name="AdvancedConfigurationFunctionalPadding">
@@ -2047,6 +2106,9 @@
             <testCaseId value="MAGETWO-89359"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
+            <skip>
+                <issueId value="MC-3723"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -2073,11 +2135,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
         <!-- Add Padding: Empty -->
         <comment userInput="Add Padding: Empty" stepKey="commentAddPaddingEmpty"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -2089,9 +2151,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldPadding" stepKey="clearPadding">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
@@ -2109,9 +2170,8 @@
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding2">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
@@ -2129,15 +2189,14 @@
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding3">
             <argument name="property" value="PageBuilderPaddingProperty1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <!-- Add Padding: 500 -->
-        <comment userInput="Add Padding: 500" stepKey="commentAddPadding500"/>
+        <!-- Add Padding: Unique -->
+        <comment userInput="Add Padding: Unique" stepKey="commentAddPaddingUnique"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -2149,15 +2208,14 @@
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding4">
-            <argument name="property" value="PageBuilderPaddingProperty500"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <!-- Add Padding: Unique -->
-        <comment userInput="Add Padding: Unique" stepKey="commentAddPaddingUnique"/>
+        <!-- Add Padding: Invalid -->
+        <comment userInput="Add Padding: Invalid" stepKey="commentAddPaddingInvalid"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -2169,33 +2227,12 @@
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding5">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
-        <!-- Add Padding: Invalid -->
-        <comment userInput="Add Padding: Invalid" stepKey="commentAddPaddingInvalid"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage6">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="6"/>
-            <argument name="contentTypeIndex" value="6"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="contentTypeIndex" value="6"/>
-        </actionGroup>
-        <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
-            <argument name="property" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
-        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding6">
             <argument name="property" value="PageBuilderPaddingPropertyInvalid"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Padding: Empty -->
         <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty"/>
         <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageEmpty">
@@ -2216,25 +2253,18 @@
             <argument name="padding" value="PageBuilderPaddingProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Padding: 500 -->
-        <comment userInput="Stage: Check Padding: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="padding" value="PageBuilderPaddingProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Padding: Unique -->
         <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique">
             <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Padding: Invalid -->
         <comment userInput="Stage: Check Padding: Invalid" stepKey="commentStageCheckInvalid"/>
         <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageInvalid">
             <argument name="page" value="TextOnStage"/>
-            <argument name="index" value="6"/>
+            <argument name="index" value="5"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -2259,25 +2289,18 @@
             <argument name="padding" value="PageBuilderPaddingProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Stage: Check Padding: 500 -->
-        <comment userInput="Stage: Check Padding: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="padding" value="PageBuilderPaddingProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Stage: Check Padding: Unique -->
         <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique2"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique2">
             <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Padding: Invalid -->
         <comment userInput="Stage: Check Padding: Invalid" stepKey="commentStageCheckInvalid2"/>
         <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageInvalid2">
             <argument name="page" value="TextOnStage"/>
-            <argument name="index" value="6"/>
+            <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -2302,25 +2325,92 @@
             <argument name="padding" value="PageBuilderPaddingProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <!-- Storefront: Check Padding: 500 -->
-        <comment userInput="Storefront: Check Padding: 500" stepKey="commentStorefrontCheck500"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty500"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
         <!-- Storefront: Check Padding: Unique -->
         <comment userInput="Storefront: Check Padding: Unique" stepKey="commentStorefrontCheckUnique"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontUnique">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-            <argument name="index" value="5"/>
+            <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Padding: Invalid -->
         <comment userInput="Storefront: Check Padding: Invalid" stepKey="commentStorefrontCheckInvalid"/>
         <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="index" value="6"/>
+            <argument name="index" value="5"/>
+        </actionGroup>
+    </test>
+    <test name="AdvancedConfigurationFunctionalPadding500">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Functional - Padding 500"/>
+            <description value="Tests that the large Padding attributes functions as expected on Stage and Storefront for Text"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-3419"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Padding: 500 -->
+        <comment userInput="Add Padding: 500" stepKey="commentAddPadding500"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding4">
+            <argument name="property" value="PageBuilderPaddingProperty500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Padding: 500 -->
+        <comment userInput="Stage: Check Padding: 500" stepKey="commentStageCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="padding" value="PageBuilderPaddingProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Padding: 500 -->
+        <comment userInput="Stage: Check Padding: 500" stepKey="commentStageCheck5002"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="padding" value="PageBuilderPaddingProperty500"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Storefront: Check Padding: 500 -->
+        <comment userInput="Storefront: Check Padding: 500" stepKey="commentStorefrontCheck500"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="padding" value="PageBuilderPaddingProperty500"/>
+            <argument name="index" value="1"/>
         </actionGroup>
     </test>
     <test name="AdvancedConfigurationFunctionalAllAttributes">
@@ -2348,6 +2438,9 @@
         </actionGroup>
         <!-- Add Text To Stage -->
         <comment userInput="Add Text To Stage" stepKey="commentAddText"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -2359,9 +2452,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -2458,6 +2550,9 @@
         </actionGroup>
         <!-- Add Text To Stage -->
         <comment userInput="Add Text To Stage" stepKey="commentAddText"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -2469,9 +2564,8 @@
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentType"/>
+            <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -2505,7 +2599,6 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>

@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="DefaultSystemBordersAppearInAdmin">
         <annotations>
             <features value="PageBuilder"/>
@@ -32,11 +32,17 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add all content types to stage-->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -44,52 +50,45 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragDividerIntoStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionIntoStage">
-            <argument name="contentType" value="PageBuilderAccordionContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragNewsletterIntoStage">
             <argument name="contentType" value="PageBuilderNewsletterContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupMedia">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragAnchorIntoStage">
-            <argument name="contentType" value="PageBuilderAnchorContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragHtmlIntoStage">
-            <argument name="contentType" value="PageBuilderHtmlContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- See row and column system border on default - Depends on MQE-818 -->
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('outline')" stepKey="getDefaultRowOutlineStyle"/>
@@ -117,6 +116,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -163,6 +165,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -215,6 +220,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -274,6 +282,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToStage2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -292,7 +303,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Configure Heading Back To Default -->
         <comment userInput="Configure Heading Back To Default" stepKey="commentEditHeading2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -348,6 +359,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -422,6 +436,9 @@
         </actionGroup>
 
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -494,6 +511,9 @@
         </after>
         <!-- Add Heading -->
         <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -512,7 +532,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Click Remove Then Cancel In Modal -->
         <comment userInput="Click Remove Then Cancel In Modal" stepKey="commentCancel"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
@@ -526,7 +546,7 @@
         <waitForElementNotVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
         <!-- Verify Heading Still Exists -->
         <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
     </test>
     <test name="XOnRemovalConfirmationModal">
         <annotations>
@@ -551,6 +571,9 @@
         </after>
         <!-- Add Heading -->
         <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -569,7 +592,7 @@
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Click Remove Then X In Modal -->
         <comment userInput="Click Remove Then X In Modal" stepKey="commentX"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
@@ -583,7 +606,7 @@
         <waitForElementNotVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalGone"/>
         <!-- Verify Heading Still Exists -->
         <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
-        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+        <waitForElementVisible selector="{{HeadingOnStage.baseByTagName(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
     </test>
     <test name="LoginCycleResetsRemoveConfirmationDismissal">
         <annotations>
@@ -607,6 +630,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -666,6 +692,9 @@
 
         <!-- Add a single header into the first row -->
         <comment userInput="Add a heading to the stage" stepKey="commentAddHeading"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragThirdHeaderIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -770,7 +799,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
             <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_RGBa_Blue.section, PageBuilderBackgroundColor_RGBa_Blue.fieldName, PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForColorSwatchColor"/>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
         <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
             <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
         </actionGroup>
@@ -784,6 +815,39 @@
         </actionGroup>
         <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSL">
             <argument name="color" value="{{PageBuilderBackgroundColor_HSL_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSLa -->
+        <comment userInput="Input: HSLa" stepKey="commentHSLa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSLa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSLa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSLa_Orange.rgb}}"/>
+        </actionGroup>
+        <!-- Input: HSV -->
+        <comment userInput="Input: HSV" stepKey="commentHSV"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSV">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSV">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSV_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSVa -->
+        <comment userInput="Input: HSVa" stepKey="commentHSVa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSVa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSVa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSVa_Orange.rgb}}"/>
         </actionGroup>
     </test>
     <test name="EditPanelColorPickerWindowFunctionality">
@@ -907,7 +971,9 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
             <argument name="section" value="ButtonItemOnStage"/>
@@ -996,7 +1062,9 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
@@ -1102,7 +1170,9 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
 
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
@@ -1187,6 +1257,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
             <group value="pagebuilder-urlInput"/>
+            <skip>
+                <issueId value="MC-3623"/>
+            </skip>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -1203,7 +1276,9 @@
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
 
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
 
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
@@ -1274,5 +1349,241 @@
             <actualResult type="variable">textFromDropDown3</actualResult>
         </assertRegExp>
         <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
+    </test>
+    <test name="AdminPageBuilderProductDirectivesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Product"/>
+            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Product Page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-1364"/>
+            <testCaseId value="MC-3174 "/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_newDefaultProduct" stepKey="createPreReqProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
+            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+            <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct" />
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Go to Product Page-->
+        <comment userInput="Go to Product Page" stepKey="goToProductPage"/>
+        <amOnPage url="{{AdminProductEditPage.url($$createPreReqProduct.id$$)}}" stepKey="goToEditPage"/>
+        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
+        <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <!--Click enable PageBuilder button-->
+        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
+        <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
+        <!--Add button into PageBuilder-->
+        <comment userInput="Add button into PageBuilder" stepKey="addButtonIntoPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!--Choose cms page link type-->
+        <comment userInput="Choose cms page link type" stepKey="commentChooseCmsPageLinkType"/>
+        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
+            <argument name="fieldName" value="button_link"/>
+            <argument name="linkName" value="ExternalLink.page"/>
+            <argument name="searchString" value="ExternalLinkSearch.page"/>
+            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!--Add image into PageBuilder-->
+        <comment userInput="Add image into PageBuilder" stepKey="addImageIntoPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Add variable into Text content-->
+        <comment userInput="Add variable into Text content" stepKey="addVariableIntoTextContent"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableCountry"/>
+        </actionGroup>
+        <!--Switch to iFrame 1-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <!--Add variable into Text content-->
+        <comment userInput="Add widget into Text content" stepKey="addWidgetIntoTextContent"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <!--Switch to iFrame-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
+        <!--Go to storefront to verify Product Link-->
+        <comment userInput="Verify directives on store front" stepKey="commentVerifyDirectivesOnSlideout"/>
+        <amOnPage url="$$createPreReqProduct.name$$.html" stepKey="navigateToProductPage"/>
+        <comment userInput="Verify directive link on Storefront" stepKey="verifyDirectiveLinkOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <scrollTo selector="{{StorefrontProductInfoDetailsSection.detailsTab}}" stepKey="scrollToDetailsTab"/>
+        <see userInput="US" stepKey="verifyCountryVariableName" />
+        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
+            <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="AdminPageBuilderCategoryDirectivesTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Magento Directives - Always render Magento Directives on Magento Storefront for Category"/>
+            <description value="Admin are able to add CMS Page link, image, variable, widget into PageBuilder content and see it Category Page"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-3173"/>
+            <useCaseId value="MC-1364"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/country_id US" stepKey="setValueForCountryVariable"/>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <createData entity="simpleCmsPage" stepKey="createCMSPageA" />
+            <createData entity="simpleCmsPage" stepKey="createCMSPageB" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/country_id none" stepKey="setBackToDefaultValue"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+            <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCmsPageA" />
+            <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCmsPageB" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!--Go to Category Page-->
+        <comment userInput="Go to Category Page" stepKey="goToCategoryPage"/>
+        <amOnPage url="{{AdminCategoryEditPage.url($$createPreReqCategory.id$$)}}" stepKey="goToCategoryEditPage"/>
+        <waitForPageLoad stepKey="waitForProductPageBeLoaded"/>
+        <click selector="{{AdminCategoryContentSection.sectionHeader}}" stepKey="clickContentTab"/>
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
+        <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
+        <!--Click enable PageBuilder button-->
+        <comment userInput="Click enable PageBuilder button" stepKey="clickEnablePageBuilderBtn"/>
+        <actionGroup ref="openPageBuilderOnCatalog" stepKey="enablePageBuilderOnCatalog"/>
+        <!--Add button to PageBuilder-->
+        <comment userInput="Add button to PageBuilder" stepKey="addButtonToPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonIntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <!--Choose cms page link type-->
+        <comment stepKey="commentChooseCmsPageLinkType" userInput="Choose cms page link type"/>
+        <actionGroup ref="fillOutUrlInput" stepKey="choosePageLink">
+            <argument name="fieldName" value="button_link"/>
+            <argument name="linkName" value="ExternalLink.page"/>
+            <argument name="searchString" value="ExternalLinkSearch.page"/>
+            <argument name="searchResult" value="$$createCMSPageA.title$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <!--Add image to PageBuilder-->
+        <comment userInput="Add image to PageBuilder" stepKey="addImageToPageBuilder"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Add variable to PageBuilder-->
+        <comment userInput="Add variable to PageBuilder" stepKey="addVariableToPageBuilder"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableCountry"/>
+        </actionGroup>
+        <!--Switch to iFrame 1-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame1"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame1"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(TinyMCEVariableCountry.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
+        <switchToIFrame stepKey="exitIFrame1"/>
+        <!--Add widget to PageBuilder-->
+        <comment userInput="Add widget to PageBuilder" stepKey="addWidgetToPageBuilder"/>
+        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+            <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
+            <argument name="page" value="$$createCMSPageB.identifier$$"/>
+        </actionGroup>
+        <!--Switch to iFrame-->
+        <comment userInput="Switch to iFrame" stepKey="commentSwitchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(TinyMCEWidgetCMSPageLink.editPanelValue, '1')}}" stepKey="waitForWidget"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <!--Go to storefront to verify Category Link-->
+        <comment userInput="Verify directives on category store front" stepKey="commentVerifyDirectivesOnStorefront"/>
+        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToProductPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <see userInput="US" stepKey="verifyCountryVariableName" />
+        <see userInput="$$createCMSPageB.title$$" stepKey="verifyWidget" />
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
+        <actionGroup ref="verifyCmsPageLinkOnFrontend" stepKey="checkButtonOnStoreFront">
+            <argument name="CMSPage" value="$$createCMSPageA$$"/>
+            <argument name="index" value="1"/>
+            <argument name="section" value="ButtonItemOnStorefront"/>
+        </actionGroup>
     </test>
 </tests>

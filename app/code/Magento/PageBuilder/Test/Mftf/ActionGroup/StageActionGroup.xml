@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateContentTypeHeightOnStage">
         <arguments>
             <argument name="contentType"/>
@@ -45,5 +45,39 @@
             <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
+    </actionGroup>
+    <actionGroup name="validateContentTypeNotInsideContainerStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(containerTargetType.role, containerTargetIndex)}}" stepKey="waitForContentTypeStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="dontSeeContentTypeInContainer"/>
+    </actionGroup>
+    <actionGroup name="goToMediaStorageFromStage">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="section"/>
+            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+        </arguments>
+        <comment userInput="Hover over content type in stage and click Select From Gallery button" stepKey="commentHover"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverImageContentTypeStage"/>
+        <waitForElementVisible selector="{{section.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
+        <click selector="{{section.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGalleryBtn1" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="uploadImageToContentTypeFromStage">
+        <arguments>
+            <argument name="property"/>
+            <argument name="section" defaultValue="PageBuilderStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{PageBuilderStage.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>
 </actionGroups>

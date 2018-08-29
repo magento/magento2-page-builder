@@ -1,0 +1,21 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height"
+     attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="Object.assign(data.main.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1})"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
+     afterRender="initParallax">
+    <render args="getOptions().template"/>
+    <render args="previewChildTemplate"/>
+    <div class="pagebuilder-display-label"
+         text="function () { return displayLabel().toUpperCase(); }()"></div>
+    <div class="pagebuilder-empty-container empty-placeholder"
+         css="placeholderCss()"
+         translate="'Drag content types or columns here'"/>
+</div>

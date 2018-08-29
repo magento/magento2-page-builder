@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="BackgroundColorEmpty">
         <annotations>
             <features value="PageBuilder"/>
@@ -735,7 +735,7 @@
         <waitForElementVisible selector="{{BannerOnBackend.backgroundImage('1', PageBuilderBackgroundImageRoot_JPG.fileName)}}" stepKey="waitForBackgroundImage"/>
         <grabAttributeFrom selector="{{BannerOnBackend.backgroundImage('1', PageBuilderBackgroundImageRoot_JPG.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
         <!-- Return the string value of background-image -->
-        <executeJS function="return '$contentTypeStyle'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
+        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
         <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
             <expectedResult type="string">/\/pub\/media\/{{PageBuilderBackgroundImageRoot_JPG.fileName}}(_\d+)?\.{{PageBuilderBackgroundImageRoot_JPG.extension}}/</expectedResult>
             <actualResult type="variable">$backgroundImageValue</actualResult>

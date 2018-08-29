@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _containerAnimation, _moveContentType, _registry, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _containerAnimation, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -62,6 +62,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.groupPositionCache = void 0;
       _this.resizeUtils = void 0;
       _this.gridSizeHistory = new Map();
+      _this.interactionLevel = 0;
 
       _this.onDocumentClick = function (event) {
         // Verify the click event wasn't within our form
@@ -272,10 +273,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         _this3.resizeColumnInstance = column;
         _this3.resizeColumnWidths = _this3.resizeUtils.determineColumnWidths(_this3.resizeColumnInstance, groupPosition);
-        _this3.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this3.resizeColumnWidths); // Set a flag of the columns which are currently being resized
-
-        _this3.setColumnsAsResizing(column, (0, _resize.getAdjacentColumn)(column, "+1")); // Force the cursor to resizing
-
+        _this3.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this3.resizeColumnWidths); // Force the cursor to resizing
 
         (0, _jquery)("body").css("cursor", "col-resize"); // Reset the resize history
 
@@ -285,6 +283,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         };
         _this3.resizeLastPosition = null;
         _this3.resizeMouseDown = true;
+        ++_this3.interactionLevel;
 
         _events.trigger("stage:interactionStart", {
           stageId: _this3.parent.stageId
@@ -512,9 +511,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.endAllInteractions = function endAllInteractions() {
       if (this.resizing() === true) {
-        _events.trigger("stage:interactionStop", {
-          stageId: this.parent.stageId
-        });
+        for (; this.interactionLevel > 0; this.interactionLevel--) {
+          _events.trigger("stage:interactionStop", {
+            stageId: this.parent.stageId
+          });
+        }
       }
 
       this.resizing(false);
@@ -542,6 +543,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
+        if (group.parents(_sortable.hiddenClass).length > 0) {
+          return;
+        }
+
         var groupPosition = _this7.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
 
@@ -724,7 +729,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
               this.recordResizeHistory(usedHistory, direction, _adjustedColumn, _modifyColumnInPair);
               this.resizeLastPosition = newColumnWidth.position;
-              this.resizeLastColumnInPair = _modifyColumnInPair;
+              this.resizeLastColumnInPair = _modifyColumnInPair; // Ensure the adjusted column is marked as resizing to animate correctly
+
+              this.setColumnsAsResizing(mainColumn, _adjustedColumn);
               this.onColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {

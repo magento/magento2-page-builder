@@ -104,6 +104,7 @@ class ProductList implements RendererInterface
             "products_count=\"$productsCount\" conditions_encoded=\"$conditionsEncoded\"}}";
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'products',
             'data-appearance' => 'grid',
             'class' => $itemData['formData']['css_classes'] ?? '',

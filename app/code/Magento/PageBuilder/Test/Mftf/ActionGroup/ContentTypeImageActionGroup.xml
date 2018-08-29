@@ -6,7 +6,7 @@
   */
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addImageToStage">
         <arguments>
             <argument name="property"/>
@@ -33,8 +33,32 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImage"/>
+        <comment userInput="Verify image display on preview of slide-out" stepKey="commentVerifyImage"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="seeMainImageSource"/>
+    </actionGroup>
+    <actionGroup name="validateImage">
+        <arguments>
+            <argument name="section"/>
+            <argument name="pageNamePrefix" defaultValue="admin" type="string"/>
+            <argument name="image"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateImage" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.imageSourceByIndex(index, image.fileName)}}" stepKey="waitForImage"/>
+        <grabAttributeFrom selector="{{section.imageSourceByIndex(index, image.fileName)}}" userInput="src" stepKey="contentTypeSrc"/>
+        <!-- Grab base URL -->
+        <comment userInput="Grab base URL" stepKey="commentGrabBaseUrl"/>
+        <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
+        <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <comment userInput="Convert all characters in string variables to regex friendly strings" stepKey="commentConvert"/>
+        <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
+        <executeJS function="return '{{image.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertImageContainsFileInformation">
+            <expectedResult type="string">/{$regexBaseURL}\/pub\/media.*{$regexFilePath}.*\/{{image.fileName}}(_\d+)?\.{{image.extension}}/</expectedResult>
+            <actualResult type="variable">$contentTypeSrc</actualResult>
+        </assertRegExp>
     </actionGroup>
 </actionGroups>

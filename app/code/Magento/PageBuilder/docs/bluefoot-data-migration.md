@@ -1,4 +1,5 @@
 # BlueFoot to PageBuilder data migration
+
 ## Navigation
 
 1. [Introduction]
@@ -9,21 +10,25 @@
     1. **BlueFoot to PageBuilder data migration**
     1. [Third-party content type migration]
     1. [Iconography]
-    2. [Add image uploader to content type]
+    1. [Add image uploader to content type]
     1. [Module integration]
     1. [Additional data configuration]
     1. [Content type configuration]
     1. [How to add a new content type]
-    1. [Bindings]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
     1. [Use the block chooser UI component]
+    1. [Use the inline text editing component]
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
+    1. [Full width page layouts]
+    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -38,16 +43,21 @@
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
-[Bindings]: bindings.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
-[Render a backend content type preview]: content-type-preview.md
 [Use the block chooser UI component]: block-chooser-component.md
+[Use the inline text editing component]: inline-editing-component.md
+[Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
-[Roadmap and known issues]: roadmap.md
+[Full width page layouts]: full-width-page-layouts.md
+[Add custom logic to content types]: add-custom-logic.md
+[Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+
 
 ## Overview
 
@@ -65,8 +75,10 @@ During the migration, Magento converts old BlueFoot content to its PageBuilder e
 
 The following content types are deprecated in PageBuilder:
 
-* BlueFoot Slider - The Slider content type will be migrated as Advanced Slider.
+* BlueFoot Slider - The BlueFoot Slider content type is deprecated. Slider and Advanced Slider content types are now displayed and functional as Slider.
 * BlueFoot Search - The content for the Search content block will be converted to HTML during migration.
+* BlueFoot Anchor - The content for the Anchor content block will be converted to HTML during migration.
+* BlueFoot Accordion - The content for the Accordion content block will be converted to HTML during migration.
 * BlueFoot Code - The content for the Code content block will be wrapped with the following tags:
     ```
     <pre><code></code></pre>
@@ -187,7 +199,7 @@ class Heading implements RendererInterface
 
 #### Children content blocks
 
-Some BlueFoot content types, such as accordion and slider, can contain child content types.
+Some BlueFoot content types, such as slider, can contain child content types.
 This can result in trees with deeply nested content blocks.
 
 During rendering, content types are processed from the bottom of the tree to the top.

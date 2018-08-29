@@ -19,16 +19,71 @@
 }
 
 .pagebuilder-stage-wrapper {
+    position: relative;
+
     &.stage-full-screen {
         background: @color-white;
         height: 100%;
         left: 0;
         overflow: scroll;
-        padding: 10px;
+        padding: 0;
         position: fixed;
         top: 0;
         width: 100%;
         z-index: 800;
+
+        .pagebuilder-header {
+            background: rgba(255,255,255,.8);
+            padding: 0;
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: auto;
+            z-index: 101;
+
+            .action-close {
+                background-color: transparent;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                display: block;
+                margin: 0;
+                padding: 15px 20px;
+            }
+        }
+
+        .pagebuilder-panel-wrapper {
+            position: fixed;
+            top: 0;
+
+            .pagebuilder-panel {
+                height: 100vh;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                    width: 5px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: darkgrey;
+                }
+
+                .pagebuilder-panel-groups {
+                    padding-bottom: 41px;
+                }
+
+                .panel-controls {
+                    background-color: @color-very-dark-grayish-orange;
+                    bottom: 0;
+                    position: absolute;
+                    width: 100%;
+                }
+            }
+        }
+
+        .pagebuilder-stage {
+            margin-left: 150px;
+        }
     }
 }
 

@@ -5,7 +5,7 @@
  * See COPYING.txt for license details.
  */
 -->
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form_with_background_attributes">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">pagebuilder_tab_item_form.pagebuilder_tab_item_form_data_source</item>
@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -84,175 +84,43 @@
                 </validation>
             </settings>
         </field>
-        <field name="min_height" sortOrder="30" formElement="input">
-            <settings>
-                <label translate="true">Minimum Height</label>
-                <additionalClasses>
-                    <class name="admin__field-x-small">true</class>
-                </additionalClasses>
-                <addAfter>px</addAfter>
-                <dataType>text</dataType>
-                <dataScope>min_height</dataScope>
-                <validation>
-                    <rule name="validate-number" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-        </field>
     </fieldset>
-    <fieldset name="background" sortOrder="30">
+    <fieldset name="background" sortOrder="30"/>
+    <fieldset name="layout" sortOrder="40">
         <settings>
-            <label translate="true">Background</label>
+            <label translate="true">Layout</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="background_color" sortOrder="10" formElement="colorPicker">
+        <field name="min_height" sortOrder="10" formElement="input">
             <settings>
-                <label translate="true">Background Color</label>
-                <componentType>colorPicker</componentType>
-                <placeholder>No Color</placeholder>
-                <validation>
-                    <rule name="validate-color" xsi:type="boolean">true</rule>
-                </validation>
-                <dataScope>background_color</dataScope>
+                <label translate="true">Minimum Height</label>
+                <addAfter translate="true">px</addAfter>
                 <additionalClasses>
-                    <class name="admin__field-medium">true</class>
+                    <class name="admin__field-small">true</class>
                 </additionalClasses>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
+                </validation>
             </settings>
-            <formElements>
-                <colorPicker>
-                    <settings>
-                        <colorPickerMode>full</colorPickerMode>
-                        <colorFormat>hex</colorFormat>
-                    </settings>
-                </colorPicker>
-            </formElements>
         </field>
-        <field name="background_image" sortOrder="20" formElement="imageUploader">
-            <settings>
-                <label translate="true">Background Image</label>
-                <componentType>imageUploader</componentType>
-            </settings>
-            <formElements>
-                <imageUploader>
-                    <settings>
-                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
-                        <maxFileSize>2097152</maxFileSize>
-                        <uploaderConfig>
-                            <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
-                        </uploaderConfig>
-                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview</previewTmpl>
-                    </settings>
-                </imageUploader>
-            </formElements>
-        </field>
-        <field name="background_position" sortOrder="30" formElement="select">
+        <field name="justify_content" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">left top</item>
+                    <item name="default" xsi:type="string">flex-start</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Background Position</label>
+                <label translate="true">Vertical Alignment</label>
+                <notice translate="true">Vertical alignment controls how the child blocks of this container will be positioned. Set minimum height in order to use vertical alignment.</notice>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
             </settings>
             <formElements>
                 <select>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">left top</item>
-                                <item name="label" xsi:type="string" translate="true">Top Aligned</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">center center</item>
-                                <item name="label" xsi:type="string" translate="true">Centered</item>
-                            </option>
-                            <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">left bottom</item>
-                                <item name="label" xsi:type="string" translate="true">Bottom Aligned</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="background_size" sortOrder="40" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">cover</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Background Size</label>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">auto</item>
-                                <item name="label" xsi:type="string" translate="true">Auto</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">cover</item>
-                                <item name="label" xsi:type="string" translate="true">Cover</item>
-                            </option>
-                            <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">contain</item>
-                                <item name="label" xsi:type="string" translate="true">Contain</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="background_repeat" sortOrder="50" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">no-repeat</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>boolean</dataType>
-                <label translate="true">Background Repeat</label>
-                <dataScope>background_repeat</dataScope>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="string">no-repeat</map>
-                            <map name="true" xsi:type="string">repeat</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>
-        <field name="background_attachment" sortOrder="60" formElement="select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">scroll</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Background Attachment</label>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">scroll</item>
-                                <item name="label" xsi:type="string" translate="true">Scroll</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">fixed</item>
-                                <item name="label" xsi:type="string" translate="true">Fixed</item>
-                            </option>
-                        </options>
+                        <options class="Magento\PageBuilder\Model\Source\VerticalAlignment"/>
                     </settings>
                 </select>
             </formElements>

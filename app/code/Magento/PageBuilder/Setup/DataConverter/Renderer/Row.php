@@ -30,26 +30,67 @@ class Row implements RendererInterface
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
-        $rootElementAttributes = [
-            'data-role' => 'row',
-            'data-appearance' => 'default',
-            'class' => $itemData['formData']['css_classes'] ?? '',
-        ];
-
         $formData = $itemData['formData'] ?? [];
 
         $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $rootElementAttributes['style'] = $style;
+
+        $childrenHtml = (isset($additionalData['children']) ? $additionalData['children'] : '');
+
+        // Return an altered appearance for full width
+        if (isset($formData['template']) && $formData['template'] === 'full-width.phtml') {
+            return $this->renderElementWithAttributes(
+                [
+                    'data-element' => 'main',
+                    'data-role' => 'row',
+                    'data-appearance' => 'full-width',
+                    'class' => $itemData['formData']['css_classes'] ?? '',
+                    'style' => $style ?? null
+                ],
+                $this->renderElementWithAttributes(
+                    [
+                        'data-element' => 'inner',
+                        'class' => 'row-full-width-inner',
+                    ],
+                    $childrenHtml
+                )
+            );
         }
 
+        // All other rows default to our new default of contained
+        return $this->renderElementWithAttributes(
+            [
+                'data-element' => 'main',
+                'data-role' => 'row',
+                'data-appearance' => 'contained',
+            ],
+            $this->renderElementWithAttributes(
+                [
+                    'data-element' => 'inner',
+                    'class' => $itemData['formData']['css_classes'] ?? '',
+                    'style' => $style ?? null
+                ],
+                $childrenHtml
+            )
+        );
+    }
+
+    /**
+     * Render an element with an attributes array
+     *
+     * @param array $attributes
+     * @param string $childrenHtml
+     * @return string
+     */
+    private function renderElementWithAttributes(array $attributes, string $childrenHtml = '') : string
+    {
         $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+        foreach ($attributes as $attributeName => $attributeValue) {
             $attributeValue = trim($attributeValue);
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            if ($attributeValue) {
+                $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            }
         }
-        $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
-
+        $rootElementHtml .= '>' . $childrenHtml . '</div>';
         return $rootElementHtml;
     }
 }

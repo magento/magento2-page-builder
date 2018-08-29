@@ -60,11 +60,10 @@ class Accordion implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'accordion',
-            'data-appearance' => 'default',
             'data-mage-init' => $this->getMageInitValue($itemData),
             'class' => 'pagebuilder-accordion ' . ($eavData['css_classes'] ?? '')
         ];
+
         $rootElementAttributes['class'] = rtrim($rootElementAttributes['class']);
 
         if (isset($itemData['formData'])) {
@@ -74,11 +73,14 @@ class Accordion implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<div';
+        $accordionHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            $accordionHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
+        $accordionHtml .= '>' . (isset($additionalData['children']) ? $additionalData['children'] : '') . '</div>';
+
+        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml .= $accordionHtml . '</div>';
 
         return $rootElementHtml;
     }

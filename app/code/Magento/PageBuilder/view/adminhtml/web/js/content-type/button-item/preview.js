@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _option, _preview) {
+define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _conditionalRemoveOption, _preview) {
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -23,29 +25,19 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
     var _proto = Preview.prototype;
 
     /**
-     * Return an array of options
+     * Use the conditional remove to disable the option when the parent has a single child
      *
-     * @returns {Array<Option>}
+     * @returns {OptionsInterface}
      */
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
-      var newOptions = options.filter(function (option) {
-        return option.code !== "remove";
-      });
-      var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
-
-      if (this.parent.parent.children().length < 2) {
-        removeFn = function removeFn() {
-          return;
-        };
-
-        removeClasses.push("disabled");
-      }
-
-      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
-      return newOptions;
+      delete options.title;
+      delete options.move;
+      options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
+        preview: this
+      }));
+      return options;
     };
     /**
      * Focus out of the element
@@ -54,6 +46,32 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Ma
 
     _proto.onFocusOut = function onFocusOut() {
       this.parent.parent.preview.isLiveEditing(null);
+    };
+    /**
+     * If the button is displayed we need to show the options menu on hover
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onButtonMouseOver = function onButtonMouseOver(context, event) {
+      if (this.display() === false) {
+        this.onMouseOver(context, event);
+      }
+    };
+    /**
+     * If the button is displayed we need to hide the options menu on mouse out
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onButtonMouseOut = function onButtonMouseOut(context, event) {
+      if (this.display() === false) {
+        this.onMouseOut(context, event);
+      }
     };
 
     return Preview;

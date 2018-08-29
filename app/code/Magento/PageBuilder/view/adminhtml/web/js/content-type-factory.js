@@ -57,14 +57,16 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
   /**
    * Merge defaults and content type data
    *
-   * @param {Config} config
+   * @param {ContentTypeConfigInterface} config
    * @param {object} data
    * @returns {any}
    */
 
 
   function prepareData(config, data) {
-    var defaults = {};
+    var defaults = {
+      display: true
+    };
 
     if (config.fields) {
       _underscore.each(config.fields, function (field, key) {
@@ -72,7 +74,9 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
       });
     }
 
-    return _underscore.extend(defaults, data);
+    return _underscore.extend(defaults, data, {
+      name: config.name
+    });
   }
   /**
    * A content type is ready once all of its children have mounted

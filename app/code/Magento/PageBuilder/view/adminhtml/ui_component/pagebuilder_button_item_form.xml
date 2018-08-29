@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -125,6 +125,13 @@
         </urlInput>
     </fieldset>
     <fieldset name="advanced">
+        <field name="text_align">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">center</item>
+                </item>
+            </argument>
+        </field>
         <field name="border">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -138,6 +145,11 @@
                     <item name="default" xsi:type="null" />
                 </item>
             </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+            </settings>
         </field>
         <field name="border_radius">
             <argument name="data" xsi:type="array">
@@ -145,6 +157,11 @@
                     <item name="default" xsi:type="null" />
                 </item>
             </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+            </settings>
         </field>
         <field name="margins_and_padding">
             <argument name="data" xsi:type="array">

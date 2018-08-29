@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="validateVideo">
         <arguments>
             <argument name="page" defaultValue=""/>
@@ -15,6 +15,7 @@
             <argument name="url" defaultValue=""/>
             <argument name="width" defaultValue=""/>
         </arguments>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>

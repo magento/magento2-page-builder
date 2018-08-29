@@ -12,6 +12,9 @@ use Magento\Framework\Component\ComponentRegistrar;
 
 class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * Verify the XML files extend the expected base form.
+     */
     public function testXmlFiles()
     {
         $invoker = new \Magento\Framework\App\Utility\AggregateInvoker($this);
@@ -42,6 +45,11 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * Return XML files that are expected to be extended.
+     *
+     * @return array
+     */
     private function getXmlFiles(): array
     {
         $data = [];
@@ -53,6 +61,10 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
             'pagebuilder_base_form.xml' => '',
             'pagebuilder_map_location_form.xml' => '',
             'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_column_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_slide_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_tab_item_form.xml' => 'pagebuilder_base_form_with_background_attributes',
+            'pagebuilder_row_form.xml' => 'pagebuilder_base_form_with_background_attributes',
         ];
         $componentRegistrar = new ComponentRegistrar();
         $modulePath = $componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_PageBuilder');

@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TabsAddToColumnAndHeightAdjusts">
         <annotations>
             <features value="PageBuilder"/>
@@ -33,7 +33,6 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -104,7 +103,6 @@
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
         </assertGreaterThanOrEqual>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -172,7 +170,6 @@
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
         </assertGreaterThanOrEqual>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -193,79 +190,6 @@
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>
         </assertGreaterThanOrEqual>
-    </test>
-    <test name="MapAddToColumn">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Column"/>
-            <title value="Add Map to Column container and view on Admin and Storefront"/>
-            <description value="As a Content Manager I want column to be a container so that I can add Map inside"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-964"/>
-            <testCaseId value="MAGETWO-89961"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-column"/>
-            <group value="pagebuilder-map"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragMapOntoColumnAndExpectEditPanel">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="2" />
-        </actionGroup>
-        <!-- Update Edit Panel -->
-        <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
-        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Add Fill Required Fields -->
-        <comment userInput="Add Fill Required Fields" stepKey="commentAddFillRequiredFields"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
-            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
-        </actionGroup>
-        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage -->
-        <comment userInput="User sees map displayed in column on Stage" stepKey="confirmMapOnStage"/>
-        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-            <argument name="containerTargetIndex" value="2"/>
-        </actionGroup>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStage">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <comment userInput="View Map inside column on storefront" stepKey="viewMapOnStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-            <argument name="containerTargetIndex" value="2"/>
-        </actionGroup>
-        <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
-            <argument name="page" value="MapOnStorefront"/>
-            <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
-        </actionGroup>
     </test>
     <test name="ColumnsMoveContentBetweenColumns">
         <annotations>
@@ -291,6 +215,11 @@
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Stage -->
+        <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -390,9 +319,9 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeTwoColumnsFirstGroup"/>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('2')}}" userInput="2" stepKey="seeTwoColumnsSecondGroup"/>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="4" stepKey="validateColumnGroupAdded"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeTwoColumnsFirstGroup"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('2')}}" userInput="2" stepKey="seeTwoColumnsSecondGroup"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="4" stepKey="validateColumnGroupAdded"/>
         <comment userInput="Drag new column onto first group" stepKey="commentDragColumnToFirstColumnGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoFirstColumnGroup">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -400,8 +329,11 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="3" stepKey="seeThreeColumnsFirstGroup"/>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="5" stepKey="validateFiveTotalColumns"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="3" stepKey="seeThreeColumnsFirstGroup"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="5" stepKey="validateFiveTotalColumns"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -424,9 +356,9 @@
             <argument name="contentTypeIndex" value="3"/>
             <argument name="containerTargetIndex" value="5"/>
         </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="5" stepKey="validateSameNumberOfColumns"/>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeTwoColumnsFirstGroupAgain"/>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('2')}}" userInput="3" stepKey="seeThreeColumnsSecondGroup"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="5" stepKey="validateSameNumberOfColumns"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeTwoColumnsFirstGroupAgain"/>
+        <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('2')}}" userInput="3" stepKey="seeThreeColumnsSecondGroup"/>
         <seeNumberOfElements selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" userInput="1" stepKey="validateOnlySingleHeadingAfterMove" />
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="confirmHeadingInMovedColumn">
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -459,6 +391,9 @@
         </after>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragFirstColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -516,6 +451,112 @@
             <argument name="positionInContainer" value="1"/>
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="ColumnValidateBackgroundSectionDefaultValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Validate Background Section Default Values in Column"/>
+            <description value="Validate the default values for every attribute in the Background section for Column. Validate Stage and Storefront as well."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-952"/>
+            <testCaseId value="MC-3033"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateColorSwatch">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBackgroundColorPlaceholderText">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
+            <argument name="section" value="ColumnOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
+            <argument name="section" value="ColumnOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage2">
+            <argument name="property" value="PageBuilderBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundMobileImage2">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="ColumnOnFrontend"/>
         </actionGroup>
     </test>
 </tests>

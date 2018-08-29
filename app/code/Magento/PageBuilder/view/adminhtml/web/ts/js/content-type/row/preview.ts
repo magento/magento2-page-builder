@@ -5,14 +5,13 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
@@ -82,31 +81,17 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Return an array of options
+     * Use the conditional remove to disable the option when the parent has a single child
      *
-     * @returns {Array<Option>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "remove");
+        options.remove = new ConditionalRemoveOption({
+            ...options.remove.config,
+            preview: this,
         });
-        const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
-        if (this.parent.parent.children().length < 2) {
-            removeFn = () => { return; };
-            removeClasses.push("disabled");
-        }
-        newOptions.push(new Option(
-            this,
-            "remove",
-            "<i class='icon-admin-pagebuilder-remove'></i>",
-            $t("Remove"),
-            removeFn,
-            removeClasses,
-            100,
-        ));
-        return newOptions;
+        return options;
     }
 
     /**
@@ -116,14 +101,16 @@ export default class Preview extends PreviewCollection {
      */
     public initParallax(element: Element) {
         this.element = element;
-        this.buildJarallax();
+        _.defer(() => {
+            this.buildJarallax();
+        });
 
-        // Observe for resizes of the element and force jarallax to display correctly
-        if ($(this.element).hasClass("jarallax")) {
-            new ResizeObserver(() => {
+        new ResizeObserver(() => {
+            // Observe for resizes of the element and force jarallax to display correctly
+            if ($(this.element).hasClass("jarallax")) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");
-            }).observe(this.element);
-        }
+            }
+        }).observe(this.element);
     }
 }

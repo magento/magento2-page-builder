@@ -6,41 +6,39 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <content_types>
-        <type name="column-group"
-              label="Column Group"
-              component="Magento_PageBuilder/js/content-type-collection"
-              preview_component="Magento_PageBuilder/js/content-type/column-group/preview"
-              master_component="Magento_PageBuilder/js/content-type/master-collection"
-              form=""
-              group="general"
-              icon="icon-pagebuilder-column"
-              sortOrder="10"
-              translate="label">
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
-            <is_visible>false</is_visible>
-            <appearances>
-                <appearance default="true"
-                            name="default"
-                            preview_template="Magento_PageBuilder/content-type/column-group/default/preview"
-                            render_template="Magento_PageBuilder/content-type/column-group/default/master"
-                            reader="Magento_PageBuilder/js/master-format/read/configurable">
-                    <data_mapping>
-                        <elements>
-                            <element name="main" path=".">
-                                <attributes>
-                                    <attribute name="name" source="data-role"/>
-                                    <attribute name="appearance" source="data-appearance"/>
-                                    <attribute name="grid_size" source="data-grid-size"/>
-                                </attributes>
-                            </element>
-                        </elements>
-                    </data_mapping>
-                </appearance>
-            </appearances>
-        </type>
-    </content_types>
+    <type name="column-group"
+          label="Column Group"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/column-group/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form=""
+          group="layout"
+          icon="icon-pagebuilder-column"
+          sortOrder="10"
+          translate="label"
+          is_hideable="false">
+        <parents default_policy="deny">
+            <parent name="row" policy="allow"/>
+            <parent name="tab-item" policy="allow"/>
+        </parents>
+        <children default_policy="deny">
+            <child name="column" policy="allow"/>
+        </children>
+        <is_visible>false</is_visible>
+        <appearances>
+            <appearance default="true"
+                        name="default"
+                        preview_template="Magento_PageBuilder/content-type/column-group/default/preview"
+                        render_template="Magento_PageBuilder/content-type/column-group/default/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="name" source="data-role"/>
+                        <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="grid_size" source="data-grid-size"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
 </config>

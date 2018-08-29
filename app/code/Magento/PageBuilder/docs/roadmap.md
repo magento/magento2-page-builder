@@ -10,20 +10,36 @@
    1. [Overview](#overview)
    1. [Planned features and functionality](#planned-features-and-functionality)
    1. [Known issues](#known-issues)
+6. [How to create custom PageBuilder content type container]
 
 
 [Introduction]: README.md
-[Installation guide]: install.md
 [Contribution guide]: CONTRIBUTING.md
+[Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
+[Add image uploader to content type]: image-uploader.md
 [Module integration]: module-integration.md
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
-[Roadmap and known issues]: roadmap.md
+[Events]: events.md
+[Bindings]: bindings.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
+[Use the block chooser UI component]: block-chooser-component.md
+[Use the inline text editing component]: inline-editing-component.md
+[Render a backend content type preview]: content-type-preview.md
+[Custom Toolbar]: toolbar.md
+[Full width page layouts]: full-width-page-layouts.md
+[Add custom logic to content types]: add-custom-logic.md
+[Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 ## Overview
 
@@ -44,16 +60,6 @@ This page lists the upcoming functionality and known issues for the PageBuilder 
   * Text block enhancements will make it easier to see the content block and access its settings on the stage. <!-- MAGETWO-87070 -->
   * Edit text content on the stage. <!--MAGETWO-86724-->
 
-### Accordion content block
-
-  * Ability to add content inside Accordion items. <!-- MAGETWO-66514 -->
-  * Ability to add additional items to Accordion content and configure it within the stage. <!-- MAGETWO-87046 -->
-  * Ability to configure Accordion behavior. <!-- MAGETWO-87098 -->
-  * Ability to see newly-dragged Accordion content block on the stage. <!-- MAGETWO-87089 -->
-  * Ability to delete AccordionSection from the Stage. <!-- MAGETWO-87053 -->
-  * Ability to rearrange AccordionSection containers inside an Accordion on the stage. <!-- MAGETWO-87051 -->
-  * Ability to duplicate AccordionSection containers. <!-- MAGETWO-88857 -->
-
 ### Map content block
 
   * Google Map API integration with the Map content block. <!-- MAGETWO-88225 -->
@@ -66,8 +72,6 @@ This page lists the upcoming functionality and known issues for the PageBuilder 
   * Documentation on how to create custom appearances for PageBuilder blocks and containers. <!-- MAGETWO-86522 -->
   * Static test - investigate why existing test for LESS coding styles doesn't work for PageBuilder code. <!-- MAGETWO-87592 -->
   * Remove the dependency on Column from the Row migration renderer. <!-- MAGETWO-88772 -->
-  * PageBuilder data separation for accordion. <!--MAGETWO-89188-->
-  * Cleanup master format for accordion. <!--MAGETWO-89226-->
   * Stabilize PageBuilder tests related to EE functionality. <!--MAGETWO-87898-->
   * Generate translation for PageBuilder module. <!--MAGETWO-88456-->
   * Set TinyMCE v3.5.8 WYSIWYG as a deprecated module. <!--MAGETWO-89695-->

@@ -125,15 +125,15 @@ class Product implements RendererInterface
             ],
         ];
 
-        $productsCount = $eavData['product_display'] ?? 5;
         $conditionsEncoded = $this->conditionsHelper->encode($conditions);
         $widgetString = "{{widget type=\"Magento\CatalogWidget\Block\Product\ProductsList\" " .
             "template=\"Magento_CatalogWidget::product/widget/content/grid.phtml\" " .
             "type_name=\"Catalog Products List\" anchor_text=\"\" id_path=\"\" show_pager=\"0\" " .
-            "products_count=\"$productsCount\" conditions_encoded=\"$conditionsEncoded\"}}";
+            "products_count=\"1\" conditions_encoded=\"$conditionsEncoded\"}}";
 
         $rootElementAttributes = [
-            'data-role' => 'product',
+            'data-element' => 'main',
+            'data-role' => 'products',
             'data-appearance' => 'grid',
             'class' => $eavData['css_classes'] ?? '',
         ];

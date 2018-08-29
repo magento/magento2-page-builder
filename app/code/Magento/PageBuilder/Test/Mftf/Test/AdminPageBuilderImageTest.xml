@@ -7,7 +7,119 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="ImageContentBlockDeleteImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image from Image Content Block get wiped out after delete image from Media Storage"/>
+            <description value="Image from Image Content Block get wiped out after delete image from Media Storage"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-2294"/>
+            <testCaseId value="MC-3494"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <skip>
+                <issueId value="MC-3348"/>
+            </skip>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Attach image A to PageBuilder stage -->
+        <comment userInput="Attach image A to PageBuilder stage" stepKey="attachImageToStage"/>
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Go to Media Storage from stage-->
+        <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage"/>
+        <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="section" value="ImageOnStage"/>
+        </actionGroup>
+        <!--Delete image A-->
+        <comment stepKey="deleteImageA" userInput="Delete image A"/>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
+        <!-- Assert don't see deleted image on stage -->
+        <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
+        <!-- Attach image C to Image slideout form -->
+        <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout1">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Delete image C-->
+        <comment stepKey="deleteImageC" userInput="Delete image C"/>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut3"/>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage2"/>
+        <!-- Attach image B to Image slideout form from Media Storage -->
+        <comment userInput="Attach image B to Image slideout form from Media Storage" stepKey="attachImageBToSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderStage.selectFromGalleryImageBtn}}" stepKey="clickSelectfromGallery"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout2">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Delete image B -->
+        <comment stepKey="deleteImageB" userInput="Delete image B"/>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut2">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage1">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!-- Assert not to see image on stage -->
+        <comment userInput="Assert not to see image on stage" stepKey="commentVerifyImageStage" />
+        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
+    </test>
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>
             <features value="PageBuilder"/>
@@ -224,6 +336,81 @@
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnStorefront.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefrontMobile"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </test>
+    <test name="ImageDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Duplicate Image"/>
+            <description value="A user should be able to duplicate Image content type. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3598"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Add Image to Stage -->
+        <comment userInput="Add Image to Stage" stepKey="commentAddImageToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{ImageOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
+        <waitForElementVisible selector="{{ImageOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
+        <!-- Reset Stage and Verify Settings -->
+        <comment userInput="Reset stage and verify settings" stepKey="CommentResetStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentTypeFirstImage">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentTypeSecondImage">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ImageOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
+        <waitForElementVisible selector="{{ImageOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+    </test>
     <test name="ImageRemoveImageFromStage">
         <annotations>
             <features value="PageBuilder"/>
@@ -257,6 +444,55 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderImageContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
+    <test name="ImageHasNoRequired">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image has no required fields in edit form"/>
+            <description value="Check there are no required fields in image edit form"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-912"/>
+            <testCaseId value="MC-3827"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Clear Fields -->
+        <comment userInput="Clear Fields" stepKey="commentClearFields"/>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearImageCaption">
+            <argument name="property" value="PageBuilderImageCaptionProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearAltText">
+            <argument name="property" value="PageBuilderImageAltTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearTitleAttr">
+            <argument name="property" value="PageBuilderImageTitleAttributeProperty"/>
+        </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
+    </test>
     <test name="ImageValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
@@ -289,7 +525,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!--<scrollTo selector="{{EditPanelForm.editPanelSectionName(AdvancedForm.dataIndex)}}" stepKey="scrollToAdvancedSection" />-->
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
@@ -343,7 +578,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -418,7 +652,6 @@
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderImageProperty_JPG"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -463,7 +696,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -510,7 +742,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -594,5 +825,286 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="dontSeeMainImageSource"/>
+    </test>
+    <test name="ImageCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Cannot add Image to Stage"/>
+            <description value="If user drags Image to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3125"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ImageOnStage.base('1')}}" stepKey="dontSeeImage"/>
+    </test>
+    <test name="ImageCanAddToColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Add Image to Column container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want column to be a container so that I can add Image inside"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3126"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-image"/>
+            <group value="pagebuilder-addToColumn"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Image to Stage -->
+        <comment userInput="Add Image to Stage" stepKey="addImageToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragImageOntoColumn">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="User sees Image displayed in column on Stage" stepKey="confirmImageOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateImageOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="View Image inside column on storefront" stepKey="viewImageOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="ValidateShowHideOnImageDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image is shown by default"/>
+            <description value="Image is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3550"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Add Image to Stage -->
+        <comment userInput="Add Image to Stage" stepKey="commentAddImageToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{ImageOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{ImageOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ImageOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Image has hide show capabilities"/>
+            <description value="A user is able to hide and show the image successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3517"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{ImageOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{ImageOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+    </test>
+    <test name="ImageUploadIsHiddenWhenDisabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Image"/>
+            <title value="Cannot add image to hidden image"/>
+            <description value="A user cannot upload an image to a hidden image content type"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3714"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Add Image To stage -->
+        <comment userInput="Add Image to Stage" stepKey="addImageContentTypeToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <!-- Upload image from stage -->
+        <comment userInput="Upload image from stage" stepKey="uploadImageFromStage"/>
+        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+            <argument name="section" value="ImageOnStage"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ImageOnStage"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="onMouseOverSliderStage"/>
+        <waitForElementNotVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="waitForGalleryButtonNotVisible"/>
+        <dontSeeElement selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="dontSeeSelectFromGallery"/>
+        <waitForElementNotVisible selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
+        <dontSeeElement selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
     </test>
 </tests>

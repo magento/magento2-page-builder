@@ -16,7 +16,7 @@ import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
@@ -31,7 +31,6 @@ import PreviewCollection from "../preview-collection";
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public static focusOperationTime: number;
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private disableInteracting: boolean;
     private element: Element;
@@ -43,14 +42,23 @@ export default class Preview extends PreviewCollection {
      */
     private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
         if (this.element && this.element.children.length > 0) {
+            const focusedTab = this.focusedTab();
             try {
                 $(this.element).tabs("destroy");
             } catch (e) {
                 // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
             }
             $(this.element).tabs({
-                create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setFocusedTab(activeTabIndex || 0);
+                create: () => {
+                    // Ensure focus tab is restored after a rebuild cycle
+                    if (focusedTab) {
+                        this.setFocusedTab(focusedTab, true);
+                    } else {
+                        this.setFocusedTab(null);
+                        if (activeTabIndex) {
+                            this.setActiveTab(activeTabIndex);
+                        }
+                    }
                 },
             });
         }
@@ -105,6 +113,16 @@ export default class Preview extends PreviewCollection {
                 this.updateData("default_active", newDefaultActiveTab);
             }
         });
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedTab.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
     }
 
     /**
@@ -163,64 +181,36 @@ export default class Preview extends PreviewCollection {
                 (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
             }
             _.defer(() => {
-                if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
-                    document.execCommand("selectAll", false, null);
+                const $focusedElement = $(":focus");
+
+                if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
+                    // Selection alternative to execCommand to workaround issues with tinymce
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+
+                    range.selectNodeContents($focusedElement.get(0));
+                    selection.removeAllRanges();
+                    selection.addRange(range);
                 }
             });
         }
-
-        /**
-         * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
-         * interaction has started after.
-         */
-        const focusTime = new Date().getTime();
-        Preview.focusOperationTime = focusTime;
-
-        /**
-         * Keep a reference of the state of the interaction state on the stage to check if the interaction has
-         * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
-         * an interaction during the delay period.
-         */
-        let interactionState: boolean = false;
-        events.on("stage:interactionStart", () => {
-            interactionState = true;
-        });
-        events.on("stage:interactionStop", () => {
-            interactionState = false;
-        });
-
-        // Add a 200ms delay after a null set to allow for clicks to be captured
-        _.delay(() => {
-            if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
-                if (index !== null) {
-                    events.trigger("stage:interactionStart");
-                } else {
-                    if (interactionState !== true) {
-                        events.trigger("stage:interactionStop");
-                    }
-                }
-            }
-        }, ((index === null) ? 200 : 0));
     }
 
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        options.push(
-            new Option(
-                this,
-                "add",
-                "<i class='icon-pagebuilder-add'></i>",
-                $t("Add"),
-                this.addTab,
-                ["add-child"],
-                10,
-            ),
-        );
+        options.add = new Option({
+            preview: this,
+            icon: "<i class='icon-pagebuilder-add'></i>",
+            title: $t("Add"),
+            action: this.addTab,
+            classes: ["add-child"],
+            sort: 10,
+        });
         return options;
     }
 
@@ -407,7 +397,6 @@ export default class Preview extends PreviewCollection {
                 duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
             }
-            this.buildTabs(args.index);
         });
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {

@@ -10,21 +10,25 @@
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. [Iconography]
-    2. [Add image uploader to content type]
+    1. [Add image uploader to content type]
     1. [Module integration]
     1. [Additional data configuration]
     1. [Content type configuration]
     1. [How to add a new content type]
-    1. [Bindings]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
     1. [Reuse product conditions in content types]
     1. [Store component master format as widget directive]
     1. [Use the block chooser UI component]
+    1. [Use the inline text editing component]
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
+    1. [Full width page layouts]
+    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
+6. [How to create custom PageBuilder content type container]
 
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
@@ -39,16 +43,21 @@
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
-[Bindings]: bindings.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
 [Store component master format as widget directive]: widget-directive.md
-[Render a backend content type preview]: content-type-preview.md
 [Use the block chooser UI component]: block-chooser-component.md
+[Use the inline text editing component]: inline-editing-component.md
+[Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
-[Roadmap and known issues]: roadmap.md
+[Full width page layouts]: full-width-page-layouts.md
+[Add custom logic to content types]: add-custom-logic.md
+[Roadmap and Known Issues]: roadmap.md
+[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+
 
 ## What is PageBuilder?
 
@@ -77,7 +86,7 @@ Use the following steps to display PageBuilder content on a Magento storefront o
 
 1. Replace all Magento directives such as `{{image url=path/to/image.png}}`
 2. Add custom stylesheet to provide the base styles that user can't edit.
-   This includes styles for the content types such as `slider`, `tabs`, `accordion`, etc.
+   This includes styles for the content types such as `slider`, `tabs`, etc.
 3. After the content renders, load and initialze the widgets and libraries on the frontend that need initalization, such as slider, tabs, etc.
 
 ## Integration with Magento and custom modules
@@ -171,7 +180,7 @@ Appearances allow you to make the following customization on existing content ty
 | Styles                   | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name`               |
 
 **Note:**
-*We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like slider, tabs, accordion, etc.*
+*We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like slider, tabs, etc.*
 
 [TypeScript]: https://www.typescriptlang.org/
 [master format]: master-format.md

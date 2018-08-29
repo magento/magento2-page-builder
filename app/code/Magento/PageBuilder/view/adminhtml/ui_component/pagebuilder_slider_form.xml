@@ -44,7 +44,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -107,6 +107,9 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Autoplay Speed</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">ms</addAfter>
                 <dataScope>autoplay_speed</dataScope>
                 <notice translate="true">Delay in milliseconds between each slide</notice>
@@ -211,6 +214,9 @@
             </argument>
             <settings>
                 <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <addAfter translate="true">px</addAfter>
                 <validation>
                     <rule name="validate-number" xsi:type="boolean">true</rule>

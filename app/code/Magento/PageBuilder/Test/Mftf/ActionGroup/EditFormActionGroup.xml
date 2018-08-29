@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="closeEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.editFormClose}}" stepKey="waitForCloseButton"/>
@@ -50,11 +50,13 @@
         <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
         <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <waitForPageLoad stepKey="waitForSavePanelClose"/>
     </actionGroup>
     <actionGroup name="expandConfigurationSection">
         <arguments>
             <argument name="section" defaultValue="AdvancedForm"/>
         </arguments>
+        <waitForPageLoad stepKey="waitForPageToFinishLoading"/>
         <waitForElementVisible selector="{{EditPanelForm.editPanelSectionName(section.dataIndex)}}" stepKey="waitForSectionVisible"/>
         <conditionalClick selector="{{EditPanelForm.editPanelSectionName(section.dataIndex)}}" dependentSelector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" visible="false" stepKey="expandSection"/>
         <waitForElementVisible selector="{{EditPanelForm.editPanelSectionExpanded(section.dataIndex)}}" stepKey="waitForSectionExpanded"/>

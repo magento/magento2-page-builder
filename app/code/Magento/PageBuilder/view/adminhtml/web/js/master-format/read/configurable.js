@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string) {
+define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   /**
@@ -22,7 +22,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
       var _this = this;
 
       var role = element.getAttribute("data-role");
-      var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
+      var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance"));
       var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
       return new Promise(function (resolve) {
         Promise.all(componentsPromise).then(function (loadedComponents) {
@@ -35,35 +35,31 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
           for (var _i = 0; _i < _arr.length; _i++) {
             var elementName = _arr[_i];
-            var elementConfig = config.elements[elementName]; // Do not read if path is optional
+            var elementConfig = config.elements[elementName];
+            var currentElement = element.getAttribute("data-element") === elementName ? element : element.querySelector("[data-element = '" + elementName + "']");
 
-            if (elementConfig.path !== "") {
-              var xpathResult = document.evaluate(elementConfig.path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-              var currentElement = xpathResult.singleNodeValue;
+            if (currentElement === null || currentElement === undefined) {
+              continue;
+            }
 
-              if (currentElement === null || currentElement === undefined) {
-                continue;
-              }
+            if (elementConfig.style.length) {
+              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
+            }
 
-              if (elementConfig.style.length) {
-                data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
-              }
+            if (elementConfig.attributes.length) {
+              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
+            }
 
-              if (elementConfig.attributes.length) {
-                data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
-              }
+            if (undefined !== elementConfig.html.var) {
+              data = _this.readHtml(elementConfig, currentElement, data, converterPool);
+            }
 
-              if (undefined !== elementConfig.html.var) {
-                data = _this.readHtml(elementConfig, currentElement, data, converterPool);
-              }
+            if (undefined !== elementConfig.tag.var) {
+              data = _this.readHtmlTag(elementConfig, currentElement, data);
+            }
 
-              if (undefined !== elementConfig.tag.var) {
-                data = _this.readHtmlTag(elementConfig, currentElement, data);
-              }
-
-              if (undefined !== elementConfig.css.var) {
-                data = _this.readCss(elementConfig, currentElement, data);
-              }
+            if (undefined !== elementConfig.css.var) {
+              data = _this.readCss(elementConfig, currentElement, data);
             }
           }
 
@@ -103,11 +99,11 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var _attributeConfig = _ref;
 
-        if (true === !!_attributeConfig.virtual) {
+        if ("write" === _attributeConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!_attributeConfig.complex ? propertyReaderPool.get(_attributeConfig.reader).read(element) : element.getAttribute(_attributeConfig.name);
+        var value = !!_attributeConfig.static ? _attributeConfig.value : propertyReaderPool.get(_attributeConfig.reader).read(element, _attributeConfig.name);
 
         if (converterPool.get(_attributeConfig.converter)) {
           value = converterPool.get(_attributeConfig.converter).fromDom(value);
@@ -151,11 +147,11 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var _propertyConfig = _ref2;
 
-        if (true === !!_propertyConfig.virtual) {
+        if ("write" === _propertyConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!_propertyConfig.complex ? propertyReaderPool.get(_propertyConfig.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)];
+        var value = !!_propertyConfig.static ? _propertyConfig.value : propertyReaderPool.get(_propertyConfig.reader).read(element, _propertyConfig.name);
 
         if (converterPool.get(_propertyConfig.converter)) {
           value = converterPool.get(_propertyConfig.converter).fromDom(value);

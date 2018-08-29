@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="MapInvalidAPIKeyWarningMessage">
         <annotations>
             <features value="PageBuilder"/>
@@ -34,7 +34,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -83,6 +83,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -99,7 +101,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -172,7 +174,7 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -212,7 +214,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -249,6 +251,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -265,7 +269,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -348,7 +352,7 @@
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -370,6 +374,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -386,7 +392,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -484,6 +490,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -500,7 +508,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -576,6 +584,9 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsStyle"/>
+            <skip>
+                <issueId value="MC-3413" />
+            </skip>
         </annotations>
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
@@ -590,7 +601,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -694,7 +705,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">

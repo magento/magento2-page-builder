@@ -9,6 +9,7 @@ import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
+import "./binding/sortable";
 import Collection from "./collection";
 import ContentTypeConfigInterface from "./content-type-config";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
@@ -19,6 +20,8 @@ import {getSortableOptions} from "./drag-drop/sortable";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";
+import deferred from "./utils/promise-deferred";
+import DeferredInterface from "./utils/promise-deferred.d";
 
 export default class Stage {
     public parent: PageBuilderInterface;
@@ -37,6 +40,7 @@ export default class Stage {
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public dataStore: DataStore = new DataStore();
+    public afterRenderDeferred: DeferredInterface = deferred();
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render = new Render();
     private collection: Collection = new Collection();
@@ -48,7 +52,10 @@ export default class Stage {
         this.parent = parent;
         this.id = parent.id;
         this.initListeners();
-        buildStage(this, parent.initialValue).then(this.ready.bind(this));
+        Promise.all([
+            buildStage(this, parent.initialValue),
+            this.afterRenderDeferred.promise,
+        ]).then(this.ready.bind(this));
         generateAllowedParents();
     }
 
@@ -168,9 +175,21 @@ export default class Stage {
             }
         });
 
-        events.on("stage:interactionStart", () => this.interacting(true));
-        events.on("stage:interactionStop", () => this.interacting(false));
+        let interactionLevel = 0;
 
+        events.on("stage:interactionStart", () => {
+            ++interactionLevel;
+            this.interacting(true);
+        });
+        events.on("stage:interactionStop", (args: {force: boolean}) => {
+            const forced = (_.isObject(args) && args.force === true);
+            if (--interactionLevel === 0 || forced) {
+                this.interacting(false);
+                if (forced) {
+                    interactionLevel = 0;
+                }
+            }
+        });
         events.on("stage:childFocusStart", () => this.focusChild(true));
         events.on("stage:childFocusStop", () => this.focusChild(false));
     }

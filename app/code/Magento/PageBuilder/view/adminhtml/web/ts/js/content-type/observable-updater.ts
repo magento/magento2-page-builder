@@ -41,13 +41,14 @@ export default class ObservableUpdater {
         const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
         const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
         if (undefined === appearanceConfiguration
-            || undefined === appearanceConfiguration.data_mapping
-            || undefined === appearanceConfiguration.data_mapping.elements
+            || undefined === appearanceConfiguration.elements
         ) {
             return;
         }
 
-        const config = appearanceConfiguration.data_mapping.elements;
+        const config = appearanceConfiguration.elements;
+
+        data = this.convertData(data, appearanceConfiguration.converters);
 
         for (const elementName of Object.keys(config)) {
             if (viewModel.data[elementName] === undefined) {
@@ -59,13 +60,14 @@ export default class ObservableUpdater {
                 };
             }
 
-            data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
-
             if (config[elementName].style !== undefined) {
                 viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
             }
             if (config[elementName].attributes !== undefined) {
-                viewModel.data[elementName].attributes(this.convertAttributes(config[elementName], data));
+                const attributeData = this.convertAttributes(config[elementName], data);
+
+                attributeData["data-element"] = elementName;
+                viewModel.data[elementName].attributes(attributeData);
             }
             if (config[elementName].html !== undefined) {
                 viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
@@ -96,20 +98,31 @@ export default class ObservableUpdater {
     }
 
     /**
+     * Process data for elements before its converted to knockout format
+     *
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
+     * @deprecated
+     */
+    public convertData(data: object, convertersConfig: object) {
+        for (const converterConfig of convertersConfig) {
+            data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
+        }
+        return data;
+    }
+
+    /**
      * Convert attributes
      *
      * @param {object} config
      * @param {DataObject} data
      * @returns {object}
-     * @deprecated
      */
-    public convertAttributes(config: any, data: DataObject) {
-        const result = {};
+    private convertAttributes(config: any, data: DataObject) {
+        const result: any = {};
         for (const attributeConfig of config.attributes) {
-            if (undefined !== attributeConfig.persist
-                && null !== attributeConfig.persist
-                && "false" === attributeConfig.persist
-            ) {
+            if ("read" === attributeConfig.persistence_mode) {
                 continue;
             }
             let value = data[attributeConfig.var];
@@ -119,6 +132,7 @@ export default class ObservableUpdater {
             }
             result[attributeConfig.name] = value;
         }
+
         return result;
     }
 
@@ -128,16 +142,12 @@ export default class ObservableUpdater {
      * @param {object}config
      * @param {object}data
      * @returns {object}
-     * @deprecated
      */
-    public convertStyle(config: any, data: any) {
+    private convertStyle(config: any, data: any) {
         const result = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
-                if (undefined !== propertyConfig.persist
-                    && null !== propertyConfig.persist
-                    && "false" === propertyConfig.persist
-                ) {
+                if ("read" === propertyConfig.persistence_mode) {
                     continue;
                 }
                 let value = "";
@@ -166,9 +176,8 @@ export default class ObservableUpdater {
      * @param {object} config
      * @param {DataObject} data
      * @returns {string}
-     * @deprecated
      */
-    public convertHtml(config: any, data: DataObject) {
+    private convertHtml(config: any, data: DataObject) {
         let value = data[config.html.var] || config.html.placeholder;
         const converter = this.converterResolver(config.html);
         if (this.converterPool.get(converter)) {
@@ -179,20 +188,5 @@ export default class ObservableUpdater {
             value = config.html.placeholder;
         }
         return value;
-    }
-
-    /**
-     * Process data for elements before its converted to knockout format
-     *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
-     */
-    public convertData(data: object, convertersConfig: object) {
-        for (const converterConfig of convertersConfig) {
-            data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
-        }
-        return data;
     }
 }

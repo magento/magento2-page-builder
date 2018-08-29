@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="CanCreatePageBuilderProductAttribute">
         <annotations>
             <features value="PageBuilder"/>
@@ -74,8 +74,8 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.label$$)}}" stepKey="seePagebuilderBtn"/>
         <click selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.label$$)}}" stepKey="enablePageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible" />
         <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -85,7 +85,7 @@
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
-        <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>
@@ -313,10 +313,13 @@
         <click selector="{{AdminProductFormSection.attributeTab}}" stepKey="expandAttributeTab"/>
         <waitForElementVisible selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="waitForAttributeVisbile" />
         <click selector="{{PageBuilderProductAttribute.PageBuilderBtn(ProductAttributeFrontendLabel.label)}}" stepKey="enablePageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
+        <seeElement selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible" />
         <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -324,7 +327,7 @@
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Product Page From PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
-        <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
             <argument name="product" value="SimpleProduct"/>
         </actionGroup>

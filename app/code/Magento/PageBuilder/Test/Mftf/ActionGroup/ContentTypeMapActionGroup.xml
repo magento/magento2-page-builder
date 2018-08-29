@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="clickAddLocationButton">
         <comment userInput="clickAddLocationButton" stepKey="comment"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
@@ -194,7 +194,7 @@
         <waitForElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
         <executeJS function="return Math.round({{index}}-1)" stepKey="jSIndex"/>
-        <executeJS function="return {{MapOnStorefront.baseJS('${jSIndex}')}}.clientHeight" stepKey="mapHeight"/>
+        <executeJS function="return {{MapOnStorefront.baseJS('{$jSIndex}')}}.clientHeight" stepKey="mapHeight"/>
         <assertEquals stepKey="assertMapHeightIsZero">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">$mapHeight</actualResult>

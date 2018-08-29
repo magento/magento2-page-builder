@@ -45,8 +45,6 @@ class Anchor implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'anchor',
-            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
             'id' => $eavData['anchor_id']
         ];
@@ -58,11 +56,14 @@ class Anchor implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<div';
+        $anchorHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+            $anchorHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></div>';
+        $anchorHtml .= '></div>';
+
+        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml .= $anchorHtml . '</div>';
 
         return $rootElementHtml;
     }

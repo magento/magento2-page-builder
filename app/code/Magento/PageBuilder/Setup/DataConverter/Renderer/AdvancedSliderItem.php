@@ -48,6 +48,7 @@ class AdvancedSliderItem implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'slide',
             'data-appearance' => 'poster',
             'class' => $eavData['css_classes'] ?? ''
@@ -67,6 +68,7 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         $wrapperDivElementAttributes = [
+            'data-element' => 'mobile_image',
             'class' => 'pagebuilder-slide-wrapper pagebuilder-mobile-only'
         ];
         $style = $this->styleExtractor->extractStyle($formData);
@@ -74,9 +76,9 @@ class AdvancedSliderItem implements RendererInterface
             $wrapperDivElementAttributes['style'] = $style;
         }
 
+        $overlayDivElementAttributes['data-element'] = 'overlay';
         $overlayDivElementAttributes['class'] = 'pagebuilder-overlay pagebuilder-poster-overlay';
         $style = $this->styleExtractor->extractStyle($formData, ['padding']);
-
         $overlayColor = 'transparent';
         if (isset($eavData['has_overlay']) && $eavData['has_overlay'] == 1) {
             $overlayColor = 'rgba(0,0,0,0.5)';
@@ -93,29 +95,31 @@ class AdvancedSliderItem implements RendererInterface
         $buttonElementHtml = '';
         // Advanced slider item only requires link text, slider item requires both
         if (isset($eavData['link_text']) || (isset($eavData['link_url']) && isset($eavData['title_tag']))) {
-            $buttonElementHtml =  '<button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" ';
+            $buttonElementHtml = '<button data-element="button" ';
+            $buttonElementHtml .= 'type="button" class="pagebuilder-slide-button pagebuilder-button-primary" ';
             $buttonElementHtml .= 'style="opacity: 1; visibility: visible;">';
             $buttonElementHtml .= ($eavData['link_text'] ??  $eavData['title_tag'] ?? '');
             $buttonElementHtml .= '</button>';
         }
 
         // mobile wrapper div
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
-        $rootElementHtml .= '><a';
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '><a data-element="link"';
         $rootElementHtml .= isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '">' : '>';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
             . '><div'
             . $this->printAttributes($overlayDivElementAttributes)
             . '><div class="pagebuilder-poster-content">'
+            . '<div data-element="content">'
             . '<h3>'
             . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3>'
-            . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
+            . '<div>' . ($eavData['textarea'] ?? '') . '</div></div>'
             . $buttonElementHtml
             . '</div></div></div>';
 
         // non-mobile wrapper div
+        $wrapperDivElementAttributes['data-element'] = 'desktop_image';
         $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper ' .
             'pagebuilder-mobile-hidden';
         $rootElementHtml .= '<div'
@@ -123,10 +127,10 @@ class AdvancedSliderItem implements RendererInterface
             . '><div'
             . $this->printAttributes($overlayDivElementAttributes)
             . '><div class="pagebuilder-poster-content">'
-            . '<h3>'
+            . '<div data-element="content"><h3>'
             . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3>'
-            . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
+            . '<div>' . ($eavData['textarea'] ?? '') . '</div></div>'
             . $buttonElementHtml
             . '</div></div></div>';
 

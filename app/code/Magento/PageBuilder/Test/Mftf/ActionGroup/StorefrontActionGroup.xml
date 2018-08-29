@@ -7,7 +7,7 @@
 -->
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="navigateToStoreFront">
         <arguments>
             <argument name="contentType"/>
@@ -23,5 +23,14 @@
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
+    </actionGroup>
+    <actionGroup name="validateContentTypeInsideContainerStorefrontInDOM">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement time="30" selector="{{PageBuilderStoreFront.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
 </actionGroups>

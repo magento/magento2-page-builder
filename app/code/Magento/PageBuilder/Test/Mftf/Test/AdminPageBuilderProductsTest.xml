@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="AdminPageBuilderProductsDoesNotAppearOnFrontendWhenNotConfigured">
         <annotations>
             <features value="PageBuilder"/>
@@ -41,7 +41,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
@@ -94,7 +94,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
@@ -162,7 +162,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
@@ -230,7 +230,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
@@ -310,7 +310,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
@@ -335,6 +335,98 @@
         <grabMultiple selector="{{ProductsOnStage.product('1')}}" stepKey="grabStorefrontProducts"/>
         <assertGreaterThanOrEqual expected="2" expectedType="int" actualType="variable" actual="grabStorefrontProducts" stepKey="assertStorefrontCountIsAtLeast2" />
     </test>
+    <test name="ProductsDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Duplicate Products"/>
+            <description value="A user should be able to duplicate Products content type. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3601"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Add Products to Stage -->
+        <comment userInput="Add Products to Stage" stepKey="commentAddProductsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="category" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.productsCountInput}}" stepKey="waitForProductCountToBeVisible"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForConditionsToLoad"/>
+        <fillField selector="{{ProductsContentTypeForm.productsCountInput}}" userInput="1" stepKey="fillProductsCountField"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ProductsOnStage"/>
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{ProductsOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{ProductsOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{ProductsOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
+        <waitForElementVisible selector="{{ProductsOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
+        <!-- Reset Stage and Verify Settings -->
+        <comment userInput="Reset stage and verify settings" stepKey="CommentResetStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentTypeFirstProducts">
+            <argument name="section" value="ProductsOnStage"/>
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentTypeSecondProducts">
+            <argument name="section" value="ProductsOnStage"/>
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ProductsOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
+        <waitForElementVisible selector="{{ProductsOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{ProductsOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{ProductsOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+    </test>
     <test name="ProductsDelete">
         <annotations>
             <features value="PageBuilder"/>
@@ -355,7 +447,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
@@ -396,7 +488,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
@@ -407,7 +499,6 @@
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -460,7 +551,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -540,7 +630,6 @@
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -585,7 +674,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -632,7 +720,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -756,5 +843,252 @@
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="1"/>
         </actionGroup>
+    </test>
+    <test name="ProductsCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Cannot add Products to Stage"/>
+            <description value="If user drags Products to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3130"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{ProductsOnStage.base('1')}}" stepKey="dontSeeProducts"/>
+    </test>
+    <test name="ProductsCanAddToColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Add Products to Column container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want column to be a container so that I can add Products inside"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3129"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-addToColumn"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Products to Stage -->
+        <comment userInput="Add Products to Stage" stepKey="addProductsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragProductsOntoColumn">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="User sees Products displayed in column on Stage" stepKey="confirmProductsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateProductsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="View Products inside column on storefront" stepKey="viewProductsOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="ValidateShowHideOnProductsDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Products is shown by default"/>
+            <description value="Products is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3555"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Add Products to Stage -->
+        <comment userInput="Add Products to Stage" stepKey="commentAddProductsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="category" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.productsCountInput}}" stepKey="waitForProductCountToBeVisible"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForConditionsToLoad"/>
+        <fillField selector="{{ProductsContentTypeForm.productsCountInput}}" userInput="1" stepKey="fillProductsCountField"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{ProductsOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{ProductsOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{ProductsOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnProducts">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Products has hide show capabilities"/>
+            <description value="A user is able to hide and show the video successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3522"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab" />
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="category" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ProductsContentTypeForm.productsCountInput}}" stepKey="waitForProductCountToBeVisible"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForConditionsToLoad"/>
+        <fillField selector="{{ProductsContentTypeForm.productsCountInput}}" userInput="1" stepKey="fillProductsCountField"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="ProductsOnStage"/>
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{ProductsOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{ProductsOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{ProductsOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{ProductsOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="ProductsOnStage"/>
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{ProductsOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{ProductsOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
 </tests>

@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="TabsValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
@@ -33,6 +33,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -44,7 +45,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="validateTextAlignment" stepKey="validateAlignment">
@@ -100,6 +100,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -154,6 +155,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -208,6 +210,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -265,6 +268,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -323,6 +327,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -336,7 +341,6 @@
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
         <!-- Fill All Advanced Fields -->
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterTextAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -373,6 +377,83 @@
         <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsAlignment('center')}}" stepKey="seeTabAlignCenterInStorefront"/>
     </test>
+    <test name="TabsDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Duplicate Tabs"/>
+            <description value="A user should be able to duplicate Tabs content type. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3596"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions"/>
+        <waitForPageLoad stepKey="waitForOptionsHide"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="TabsOnStage"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Validate content type is disabled -->
+        <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{TabsOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{TabsOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{TabsOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
+        <waitForElementVisible selector="{{TabsOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
+        <!-- Reset Stage and Verify Settings -->
+        <comment userInput="Reset stage and verify settings" stepKey="CommentResetStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentTypeFirstTabs">
+            <argument name="section" value="TabsOnStage"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="showContentType" stepKey="showContentTypeSecondTabs">
+            <argument name="section" value="TabsOnStage"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabsOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
+        <waitForElementVisible selector="{{TabsOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+    </test>
     <test name="TabsDuplicateDefaultEmptyStateTab">
         <annotations>
             <features value="PageBuilder"/>
@@ -400,6 +481,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -449,6 +531,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -461,7 +544,7 @@
             <argument name="targetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderTabBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
@@ -479,7 +562,7 @@
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColorProperty">
-            <argument name="property" value="PageBuilderTabBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinimumHeightProperty">
             <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
@@ -496,8 +579,8 @@
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentBackgroundColor('2', 'rgb(204, 204, 204)')}}" stepKey="validateBackgroundColor"/>
-        <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('2', '200')}}" stepKey="validateMinHeightInStorefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.backgroundColor('2', 'rgb(204, 204, 204)')}}" stepKey="validateBackgroundColor"/>
+        <seeElement selector="{{TabOnStorefront.minHeight('2', '200')}}" stepKey="validateMinHeightInStorefront"/>
         <see userInput="{{PageBuilderTabNameRandom1.value}} copy" selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="validateCopiedTabInStorefront"/>
     </test>
     <test name="TabsDuplicateTabWithCustomizedTabContent">
@@ -525,33 +608,569 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="TextOnStage"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
         <comment userInput="Tabs duplicate with custom content" stepKey="AC3"/>
         <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions"/>
+        <!-- Validate content type is disabled on duplicate -->
+        <comment userInput="Validate content type is disabled on duplicate" stepKey="commentValidateHiddenStage"/>
+        <waitForElementVisible selector="{{TextOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <!-- Show duplicated content type -->
+        <comment userInput="Show duplicate content type" stepKey="commentShowContentType"/>
+        <actionGroup ref="showContentType" stepKey="showContentType2">
+            <argument name="section" value="TextOnStage"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <actionGroup ref="switchTabs" stepKey="switchTabsStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="2"/>
+            <argument name="to" value="1"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions2"/>
+        <actionGroup ref="showContentType" stepKey="showContentType1">
+            <argument name="section" value="TextOnStage"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <!-- Validate content type is enabled in Storefront -->
+        <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <seeElement selector="{{TabOnStorefront.tabContentText('1')}}" stepKey="seeTextElementInTabContent"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent"/>
+        <waitForElementVisible selector="{{TextOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+        <seeElement selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent2"/>
+    </test>
+    <test name="TabsCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Group - Cannot add Tabs to Stage"/>
+            <description value="If user drags Tabs to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3141"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{TabOnStage.all}}" stepKey="dontSeeTabItem"/>
+        <dontSeeElementInDOM selector="{{TabsOnStage.tabsContainer}}" stepKey="dontSeeTabsGroup"/>
+    </test>
+    <test name="TabsCanAddToColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Group - Add Tabs to Column container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want column to be a container so that I can add Tabs inside"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3203"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-addToColumn"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupLayout">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsOntoColumn">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="User sees Tabs displayed in column on Stage" stepKey="confirmTabsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateTabsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="View Tabs inside column on storefront" stepKey="viewTabsOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+    </test>
+    <test name="ValidateShowHideOnTabsDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs is shown by default"/>
+            <description value="Tabs is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3542"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <seeElement selector="{{TabsOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{TabsOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{TabsOnFrontend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateShowHideOnTabs">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tabs has hide show capabilities"/>
+            <description value="A user is able to hide and show the tabs successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3524"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions"/>
+        <waitForPageLoad stepKey="waitForOptionsHide"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandHeadingPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToTabItem">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="TabsOnStage"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{TabsOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Verify we cannot interact with the internal heading after save -->
+        <comment userInput="Verify we cannot interact with the internal heading after save" stepKey="commentVerifyHeadingIsDisabledAfterSave"/>
+        <actionGroup ref="validateOnHoverNoOptionMenu" stepKey="verifyHeadingHasNoOptionMenuAfterSave">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Verify we cannot drop content types into hidden containers -->
+        <comment userInput="Verify we cannot drop content types into hidden containers" stepKey="commentDropIntoContainer"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToHiddenContainer" stepKey="dragHeaderToTabs2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{TabsOnFrontend.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{TabsOnFrontend.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{TabsOnFrontend.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <waitForElement selector="{{TabOnStorefront.base('1')}}" stepKey="waitForTabNotVisible" />
+        <dontSeeElement selector="{{TabOnStorefront.base('1')}}" stepKey="dontSeeTabNotVisible" />
+        <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingNotVisible" />
+        <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeHeadingNotVisible" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForPageLoad stepKey="waitForOptionsHide1"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="TabsOnStage"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{TabsOnFrontend.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{TabsOnFrontend.base('1')}}" stepKey="waitForContentTypeVisible" />
+        <seeElement selector="{{TabOnStorefront.base('1')}}" stepKey="waitForTabVisible" />
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForHeadingVisible" />
+    </test>
+    <test name="ValidateTabItemNotHideable">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Validate tab has no hide / show capabilities"/>
+            <description value="Validate tab has no hide / show capabilities"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3525"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabOnStage.openOptionsMenu('1')}}" stepKey="openTabOptionMenu"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderTabContentType.role, '1')}}" stepKey="waitForHideOptionNotVisible" />
+        <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderTabContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
+    </test>
+    <test name="ValidateShowHideOnTabChildDefaultState">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs"/>
+            <title value="Tab Child is shown by default"/>
+            <description value="Tab Child is shown by default in stage and storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3543"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <comment userInput="Add Tabs to Stage" stepKey="commentAddTabsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Tab -->
+        <comment userInput="Add Heading to Tab" stepKey="commentAddHeadingToTab"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupHeading">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Stage: Validate Default Show/Hide State - Before Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
+        <waitForElementVisible selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <!-- Stage: Validate Default Show/Hide State - After Save -->
+        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{HeadingOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <!-- Storefront: Validate Default Show/Hide State -->
+        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+    </test>
+    <test name="ValidateTabChildHideShow">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Column"/>
+            <title value="Validate children of tab can be hidden"/>
+            <description value="Validate a heading within a tab can be shown / hidden successfully"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3526"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeOpenedTab" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupColumn">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupHeading">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="index" value="1"/>
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+            <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
+            <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <!-- Validate content type remains disabled after save -->
+        <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
+        <seeElement selector="{{HeadingOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <!-- Validate store front -->
+        <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
+        <openNewTab stepKey="openNewTab" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <waitForElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeNotVisible" />
+        <dontSeeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="dontSeeContentType" />
+        <seeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
+        <!-- Set content to visible in admin -->
+        <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
+        <switchToNextTab stepKey="switchBackToAdmin" />
+        <reloadPage stepKey="reloadPage" />
+        <waitForPageLoad stepKey="waitForAdminReload" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="HeadingOnStage"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Validate Content Is Shown Storefront -->
+        <comment userInput="Validate Content Is Shown Storefront" stepKey="commentValidateContentIsShownStorefront"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <reloadPage stepKey="reloadStorefront" />
+        <waitForPageLoad stepKey="waitForStorefrontReload" />
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
+        <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+    </test>
+    <test name="ValidateCannotMoveContentTypeIntoHiddenTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tab"/>
+            <title value="Tab whilst hidden doesnt receive drop events"/>
+            <description value="A user isn't able to move existing content types into a hidden tab item"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-965"/>
+            <testCaseId value="MC-3734"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-tab"/>
+            <group value="pagebuilder-tabGroup"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="TabsOnStage"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotMoveContentTypeToContainer" stepKey="cannotMoveHeadingToHidden">
+            <argument name="contentType" value="PageBuilderHeadingContentType" />
+            <argument name="containerTargetType" value="PageBuilderTabContentType" />
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
     </test>
 </tests>

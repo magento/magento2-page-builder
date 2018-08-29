@@ -45,7 +45,7 @@
                 <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">grid</item>
@@ -98,6 +98,9 @@
             <settings>
                 <dataType>number</dataType>
                 <label translate="true">Number of Products to Display</label>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <notice translate="true">Defaults to 5.</notice>
                 <dataScope>products_count</dataScope>
             </settings>

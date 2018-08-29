@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="HeadingInlineEditToolbar">
         <annotations>
             <features value="PageBuilder"/>
@@ -28,6 +28,9 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -108,6 +111,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -200,7 +206,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -217,7 +222,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -234,7 +238,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -251,7 +254,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H1"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -346,6 +348,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -438,7 +443,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -455,7 +459,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -472,7 +475,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -489,7 +491,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -584,6 +585,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -676,7 +680,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -693,7 +696,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -710,7 +712,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -727,7 +728,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -822,6 +822,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -914,7 +917,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -931,7 +933,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -948,7 +949,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -965,7 +965,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H4"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -1060,6 +1059,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1152,7 +1154,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -1169,7 +1170,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -1186,7 +1186,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1203,7 +1202,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H5"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -1298,6 +1296,9 @@
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1391,7 +1392,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType1">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment1">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -1408,7 +1408,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType2">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -1425,7 +1424,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType3">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1442,7 +1440,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingType4">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H6"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateAlignment4">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
@@ -1532,6 +1529,9 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="3"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeading1ToFirstColumn">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>

@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="StoreConfigurationGridSettingsValidationInSystemConfig">
         <annotations>
             <features value="PageBuilder"/>
@@ -154,6 +154,77 @@
         <click selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" stepKey="restoreDefaultMaxGridSize" />
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration6"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage3"/>
+    </test>
+    <test name="ValidateOddDefaultGridSizeIsSplitCorrectly">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Verify that the initial two column split is correct when the default grid size is odd."/>
+            <description value="Verify that the initial two column split is correct when the default grid size is odd."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2309"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSizeConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+            <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
+            <!-- Enter Odd Default Grid Size -->
+            <comment userInput="Enter Odd Default Grid Size" stepKey="comment1"/>
+            <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
+                <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
+            </actionGroup>
+            <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+            <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
+    </test>
+    <test name="ValidateTooltipMessage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Column grid panel tooltip updates with max column size."/>
+            <description value="Verify that the tooltip for grid size updates to reflect the max column size."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2313"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSizeConfig"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 4" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 5" stepKey="setMaxGridSize"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <click selector="{{ColumnOnBackend.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
     </test>
     <test name="StoreConfigurationDefaultColumnGridSizeFieldAppearance">
         <annotations>

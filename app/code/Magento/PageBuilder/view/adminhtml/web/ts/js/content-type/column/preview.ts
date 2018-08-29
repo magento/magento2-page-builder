@@ -13,9 +13,8 @@ import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
-import OptionInterface from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
@@ -52,6 +51,7 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
 
         // Update the width label for the column
+        this.parent.dataStore.subscribe(this.updateColumnWidthClass.bind(this), "width");
         this.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
         this.parent.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
     }
@@ -84,6 +84,7 @@ export default class Preview extends PreviewCollection {
      */
     public initColumn(element: Element) {
         this.element = $(element);
+        this.updateColumnWidthClass();
         events.trigger("column:initializeAfter", {
             column: this.parent,
             element: $(element),
@@ -94,25 +95,18 @@ export default class Preview extends PreviewCollection {
     /**
      * Return an array of options
      *
-     * @returns {Array<OptionInterface>}
+     * @returns {OptionsInterface}
      */
-    public retrieveOptions(): OptionInterface[] {
+    public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
-        const newOptions = options.filter((option) => {
-            return (option.code !== "move");
+        options.move = new Option({
+            preview: this,
+            icon: "<i class='icon-admin-pagebuilder-handle'></i>",
+            title: $t("Move"),
+            classes: ["move-column"],
+            sort: 10,
         });
-        newOptions.unshift(
-            new Option(
-                this,
-                "move",
-                "<i class='icon-admin-pagebuilder-handle'></i>",
-                $t("Move"),
-                null,
-                ["move-column"],
-                10,
-            ),
-        );
-        return newOptions;
+        return options;
     }
 
     /**
@@ -267,36 +261,23 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
+     * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
      */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.previewData.background_image && typeof this.previewData.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
+    public updateColumnWidthClass() {
+        // Only update once instantiated
+        if (!this.element) {
+            return;
         }
 
-        // If we have left and right margins we need to minus this from the total width
-        if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-            const margins = this.previewData.margins_and_padding().margin;
-            const horizontalMargin = parseInt(margins.left || 0, 10) +
-                parseInt(margins.right || 0, 10);
-            styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
+        const currentClass = this.element.attr("class").match(/(?:^|\s)(column-width-\d{1,3})(?:$|\s)/);
+
+        if (currentClass !== null) {
+            this.element.removeClass(currentClass[1]);
         }
 
-        // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-        if (styles.marginRight === "0px") {
-            styles.marginRight = "1px";
-        }
+        const roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
 
-        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-        if (this.previewData.border && this.previewData.border() === "_default") {
-            styles.border = "none";
-        }
-
-        return styles;
+        this.element.addClass("column-width-" + roundedWidth);
     }
 
     /**

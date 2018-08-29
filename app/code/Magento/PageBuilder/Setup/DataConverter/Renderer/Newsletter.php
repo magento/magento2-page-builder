@@ -45,6 +45,7 @@ class Newsletter implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
+            'data-element' => 'main',
             'data-role' => 'newsletter',
             'data-appearance' => 'default',
             'class' => $itemData['formData']['css_classes'] ?? '',

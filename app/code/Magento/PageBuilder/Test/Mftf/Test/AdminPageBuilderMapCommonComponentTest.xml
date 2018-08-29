@@ -7,7 +7,7 @@
 -->
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="MapDefaultState">
         <annotations>
             <features value="PageBuilder"/>
@@ -20,6 +20,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -32,7 +34,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Map -->
@@ -210,7 +212,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -245,13 +247,12 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -304,7 +305,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -356,6 +356,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -384,7 +386,6 @@
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -427,7 +428,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -474,7 +474,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -531,6 +530,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -543,7 +544,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -652,7 +653,6 @@
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -909,7 +909,6 @@
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section -->
         <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -999,6 +998,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1011,7 +1012,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -1098,7 +1099,6 @@
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1325,7 +1325,6 @@
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section -->
         <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1547,7 +1546,6 @@
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section After Save -->
         <comment userInput="Edit Panel: Verify Advanced Section After Save" stepKey="commentVerifyAdvancedSectionAfterSave"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1643,7 +1641,7 @@
             <features value="PageBuilder"/>
             <stories value="Map"/>
             <title value="Delete Map"/>
-            <description value="A user should be able to delete a map content type. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to delete a map content type. Verify on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
             <testCaseId value="MAGETWO-88897"/>
@@ -1662,7 +1660,9 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+        <!-- Add Map and Save Page -->
+        <comment userInput="Add Map and Save Page" stepKey="commentAddMap"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
             <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
@@ -1670,18 +1670,269 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Delete Map -->
+        <comment userInput="Delete Map" stepKey="commentDeleteMap"/>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <!-- Verify Map Not In Stage -->
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderMapContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderMapContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <!-- Verify Map Not In Storefront -->
         <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
+    </test>
+    <test name="MapCannotAddToStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Cannot add Map to Stage"/>
+            <description value="If user drags Map to Stage, it should have no effect"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-515"/>
+            <testCaseId value="MC-3139"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapCommon"/>
+            <group value="pagebuilder-cannotAddToStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="cannotDragContentTypeToTarget" stepKey="dragMapIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{MapOnStage.base('1')}}" stepKey="dontSeeMap"/>
+    </test>
+    <test name="MapAddToColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Add Map to Column container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want column to be a container so that I can add Map inside"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-964"/>
+            <testCaseId value="MAGETWO-89961"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-map"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Map to Stage -->
+        <comment userInput="Add Map to Stage" stepKey="addMapToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragMapOntoColumnAndExpectEditPanel">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Add Fill Required Fields -->
+        <comment userInput="Add Fill Required Fields" stepKey="commentAddFillRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="User sees map displayed in column on Stage" stepKey="confirmMapOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="User sees map displayed in column on Stage" stepKey="confirmMapOnStage2"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="View Map inside column on storefront" stepKey="viewMapOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="checkContentTypeInContainerStorefront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
+        </actionGroup>
+    </test>
+    <test name="MapMoveMap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Move Map Between Columns"/>
+            <description value="Verify that moving a map content type on the stage will update the storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3233"/>
+            <testCaseId value="MC-3365"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-column"/>
+            <!-- Skipped due to Maps API Key MC-3413 -->
+            <group value="skip"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Stage -->
+        <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Map to Stage -->
+        <comment userInput="Add Map to Stage" stepKey="commentAddMapToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragMapToColumn">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Update Edit Panel -->
+        <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Fill Required Fields -->
+        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateMapStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Move Map -->
+        <comment userInput="Move Map" stepKey="commentMoveMap"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveMapToLeftColumn">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateMapStage2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="validateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateHeadingStorefront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateMapStorefront">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
     </test>
 </tests>

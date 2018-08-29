@@ -7,9 +7,13 @@
 -->
 
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="SliderOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="SliderDisplay" type="button" selector="div[data-role='slider']"/>
+        <element name="SliderEmpty" type="button" selector="div[data-role='slider'].slider-empty"/>
         <element name="Autoplay" type="button" selector="div[data-role='slider'][data-autoplay='{{arg1}}']" parameterized="true"/>
         <element name="AutoplaySpeed" type="button" selector=".pagebuilder-slider[data-autoplay-speed='{{arg1}}']" parameterized="true"/>
         <element name="Fade" type="button" selector="div[data-role='slider'][data-fade='{{arg1}}']" parameterized="true"/>
@@ -27,11 +31,16 @@
         <element name="buttonText" type="text" selector="//button[text()='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="SliderInAdmin">
+        <element name="base" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
+        <element name="hidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][(contains(@style, 'border-style: {{arg2}}')) and contains(@style, 'border-radius: {{arg3}}px') and contains(@style, 'margin: {{arg4}}px') and contains(@style, 'padding: {{arg5}}px') and contains(@style, 'min-height: {{arg6}}px')]" parameterized="true"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
         <element name="firstSlideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[1]"/>
         <element name="activeSlideTooltip" type="button" selector="//div[contains(@class, 'navigation-dot')]//span[contains(@role, 'tooltip')]"/>
         <element name="slideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[{{arg1}}]" parameterized="true"/>
+        <element name="slideNavigationDragHandle" type="button" selector="a.navigation-dot-anchor"/>
+        <element name="slideNavigationDragHandleByIndex" type="button" selector="(//a[contains(@class, 'navigation-dot-anchor')])[{{arg1}}]" parameterized="true"/>
         <element name="allNavigationDots" type="button" selector="(//div[contains(@class, 'navigation-dot')])"/>
         <element name="activeSlideNavigationDot" type="button" selector="//div[contains(@class, 'navigation-dot active')]"/>
         <element name="slideNavigationDotNameTooltip" type="button" selector="(//span[contains(@class, 'tooltip-content')])"/>
@@ -49,6 +58,7 @@
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay"/>
     </section>
     <section name="SlideOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="slideWithArg" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="slideName" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden.pagebuilder-slide-wrapper div div h3" parameterized="true"/>
         <element name="slideContent" type="text" selector="[data-slick-index='{{arg1}}'] div.pagebuilder-mobile-hidden.pagebuilder-slide-wrapper div div div p" parameterized="true"/>
@@ -78,23 +88,11 @@
         <element name="openInNewTab" type="button" selector="//a[contains(@target, '_blank')]"/>
         <element name="slide" type="button" selector="div[data-role='slide']" />
         <element name="poster" type="button" selector="div[data-role='slide'] div.pagebuilder-mobile-hidden div.pagebuilder-poster-overlay"/>
-        <element name="posterBackgroundColor" type="button" selector="div[data-role='slide'] div.pagebuilder-mobile-hidden .pagebuilder-poster-overlay[style*='background-color: rgb(255, 255, 255);']"/>
-        <element name="posterBackgroundPosition" type="button" selector="div[data-role='slide'] div.pagebuilder-mobile-hidden .pagebuilder-poster-overlay[style*='background-position: center center;']"/>
-        <element name="posterBackgroundSize" type="button" selector="div[data-role='slide'] div.pagebuilder-mobile-hidden .pagebuilder-poster-overlay[style*='background-size: cover;']"/>
-        <element name="posterBackgroundRepeat" type="button" selector="div[data-role='slide'] div.pagebuilder-mobile-hidden .pagebuilder-poster-overlay[style*='background-repeat: repeat;']"/>
-        <element name="posterBackgroundAttachment" type="button" selector="div[data-role='slide'] div.pagebuilder-mobile-hidden .pagebuilder-poster-overlay[style*='background-attachment: scroll;']"/>
         <element name="posterMobileBackgroundColor" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='background-color: rgb(255, 255, 255);']"/>
-        <element name="posterMobileBackgroundPosition" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='background-position: center center;']"/>
-        <element name="posterMobileBackgroundSize" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='background-size: cover;']"/>
-        <element name="posterMobileBackgroundRepeat" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='background-repeat: repeat;']"/>
-        <element name="posterMobileBackgroundAttachment" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='background-attachment: scroll;']"/>
-        <element name="emptyCollageLeft" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px']"/>
-        <element name="emptyCollageCentered" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)']"/>
-        <element name="emptyCollageRight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)']"/>
         <element name="collageLeft" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
         <element name="collageCentered" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)'][style*='magento']"/>
         <element name="collageRight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
-        <element name="collageMargin" type="button" selector="div[data-role='slide'] .pagebuilder-slide-wrapper[style*='margin: 1px 2px 3px 4px']"/>
+        <element name="collageMargin" type="button" selector="div[data-role='slide'][style*='margin: 1px 2px 3px 4px']"/>
         <element name="collageMinHeight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageAlignment" type="button" selector="div[data-role='slide'] .pagebuilder-slide-wrapper[style*='text-align: center']"/>
         <element name="collageMobileWithoutMobileImage" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='magento']"/>
@@ -103,23 +101,21 @@
         <element name="collageBackgroundPosition" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='magento'][style*='background-position: center center;']"/>
         <element name="collageBackgroundSize" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='magento'][style*='background-size: cover;']"/>
         <element name="collageBackgroundRepeat" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='magento'][style*='background-repeat: repeat;']"/>
-        <element name="collageBackgroundAttachment" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='magento'][style*='background-attachment: scroll;']"/>
         <element name="collageMobileBackgroundColor" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='m-logo'][style*='background-color: rgb(255, 255, 255);']"/>
         <element name="collageMobileBackgroundPosition" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='m-logo'][style*='background-position: center center;']"/>
         <element name="collageMobileBackgroundSize" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='m-logo'][style*='background-size: cover;']"/>
         <element name="collageMobileBackgroundRepeat" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='m-logo'][style*='background-repeat: repeat;']"/>
-        <element name="collageMobileBackgroundAttachment" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='m-logo'][style*='background-attachment: scroll;']"/>
-        <element name="posterMobileWithoutMobileImage" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='magento']"/>
         <element name="posterMobileWithMobileImage" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='m-logo']"/>
         <element name="collageMinHeightMobile" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
-        <element name="slideBorderStyle" type="button" selector="div[data-role='slide'][style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
-        <element name="slideBorderRadiusStyle" type="button" selector="div[data-role='slide'][style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="slideBorderStyle" type="button" selector="div[data-role='slide'] div[style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
+        <element name="slideBorderRadiusStyle" type="button" selector="div[data-role='slide'] div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="slideClass" type="button" selector="div[data-role='slide'][class*='{{arg1}}']" parameterized="true"/>
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
     </section>
     <section name="SlideOnBackend">
+        <element name="base" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="all" type="button" selector=".pagebuilder-slide"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]" parameterized="true"/>
@@ -147,7 +143,6 @@
         <element name="linkUrl" type="button" selector="[href*='{{arg1}}']" parameterized="true"/>
         <element name="editButton" type="button" selector="//a[contains(@class, '{{arg1}}')]" parameterized="true"/>
         <element name="requiredField" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')] //div[contains(@class, 'admin__field _required')]" />
-        <element name="errorField" type="text" selector="//label[contains(@class, 'admin__field-error')]" />
         <element name="appearanceSelect" type="button" selector="[name='appearance']"/>
         <element name="paddingTopInput" type="button" selector="[name='paddingTop']"/>
         <element name="paddingLeftInput" type="button" selector="[name='paddingLeft']"/>
@@ -157,14 +152,6 @@
         <element name="emptyPoster" type="button" selector=".pagebuilder-slide-wrapper"/>
         <element name="poster" type="button" selector=".pagebuilder-poster-overlay"/>
         <element name="backgroundColorOnStage" type="button" selector=".pagebuilder-slide-wrapper[style*='background-color: {{var1}};']" parameterized="true"/>
-        <element name="posterBackgroundColor" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-color: rgb(255, 255, 255);']"/>
-        <element name="posterBackgroundPosition" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-position: center center;']"/>
-        <element name="posterBackgroundSize" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-size: cover;']"/>
-        <element name="posterBackgroundRepeat" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-repeat: repeat;']"/>
-        <element name="posterBackgroundAttachment" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-attachment: scroll;']"/>
-        <element name="emptyCollageLeft" type="button" selector="div[style*='40px calc(50% + 40px) 40px 40px']"/>
-        <element name="emptyCollageCentered" type="button" selector="div[style*='40px calc(25% + 40px)']"/>
-        <element name="emptyCollageRight" type="button" selector="div[style*='40px 40px 40px calc(50% + 40px)']"/>
         <element name="collageLeft" type="button" selector="div[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
         <element name="collageCentered" type="button" selector="div[style*='40px calc(25% + 40px)'][style*='magento']"/>
         <element name="collageRight" type="button" selector="div[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
@@ -173,7 +160,6 @@
         <element name="collageBackgroundPosition" type="button" selector="div[style*='magento'][style*='background-position: center center;']"/>
         <element name="collageBackgroundSize" type="button" selector="div[style*='magento'][style*='background-size: cover;']"/>
         <element name="collageBackgroundRepeat" type="button" selector="div[style*='magento'][style*='background-repeat: repeat;']"/>
-        <element name="collageBackgroundAttachment" type="button" selector="div[style*='magento'][style*='background-attachment: scroll;']"/>
         <element name="collageMargin" type="button" selector="div[style*='1px 2px 3px 4px'][style*='magento']"/>
         <element name="collageMinHeight" type="button" selector="div[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageAlignment" type="button" selector="div[style*='text-align: center'][style*='magento']"/>
