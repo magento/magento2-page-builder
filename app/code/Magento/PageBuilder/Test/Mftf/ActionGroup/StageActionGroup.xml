@@ -83,8 +83,10 @@
         <waitForElementVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="waitForSelectFromGallery"/>
         <click selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(contentType.role, index)}}" stepKey="clickSelectFromGallery"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <waitForElementVisible selector="{{MediaGallerySection.InsertFile}}" stepKey="waitForAddSelectedFilesButton"/>
-        <seeElement selector="{{MediaGallerySection.InsertFile}}" stepKey="seeAddSelectedFilesButton"/>
+        <waitForElementVisible selector="{{MediaGallerySection.CreateFolder}}" stepKey="waitForAddSelectedFilesButton"/>
+        <seeElement selector="{{MediaGallerySection.CreateFolder}}" stepKey="seeAddSelectedFilesButton"/>
+        <waitForElementVisible selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="waitForStorageRootArrow"/>
+        <seeElement selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="seeStorageRootArrow"/>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="clickCancelButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
