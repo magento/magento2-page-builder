@@ -34,15 +34,15 @@
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_color" source="background_color"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
                         <style name="background_attachment" source="background_attachment"/>
                         <style name="text_align" source="text_align"/>
                         <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_color" source="border_color"/>
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="justify_content" source="justify_content" persistence_mode="read"/>
@@ -53,6 +53,7 @@
                         <static_style source="align_self" value="stretch"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -66,9 +67,11 @@
                     </element>
                 </elements>
                 <converters>
-                    <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
                         <config>
-                            <item name="background_color_format" value="background_color_format"/>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
                         </config>
                     </converter>
                 </converters>
@@ -79,15 +82,15 @@
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_color" source="background_color"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
                         <style name="background_attachment" source="background_attachment"/>
                         <style name="text_align" source="text_align"/>
                         <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_color" source="border_color"/>
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="justify_content" source="justify_content" persistence_mode="read"/>
@@ -98,6 +101,7 @@
                         <static_style source="align_self" value="flex-start"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -111,9 +115,11 @@
                     </element>
                 </elements>
                 <converters>
-                    <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
                         <config>
-                            <item name="background_color_format" value="background_color_format"/>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
                         </config>
                     </converter>
                 </converters>
@@ -124,15 +130,15 @@
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_color" source="background_color"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
                         <style name="background_attachment" source="background_attachment"/>
                         <style name="text_align" source="text_align"/>
                         <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_color" source="border_color"/>
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="justify_content" source="justify_content" persistence_mode="read"/>
@@ -143,6 +149,7 @@
                         <static_style source="align_self" value="center"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -156,9 +163,11 @@
                     </element>
                 </elements>
                 <converters>
-                    <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
                         <config>
-                            <item name="background_color_format" value="background_color_format"/>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
                         </config>
                     </converter>
                 </converters>
@@ -169,15 +178,15 @@
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                        <style name="background_color" source="background_color"/>
+                        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
                         <style name="background_attachment" source="background_attachment"/>
                         <style name="text_align" source="text_align"/>
                         <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                        <style name="border_color" source="border_color"/>
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="justify_content" source="justify_content" persistence_mode="read"/>
@@ -188,6 +197,7 @@
                         <static_style source="align_self" value="flex-end"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
+                        <attribute name="background_images" source="data-background-images"/>
                         <css name="css_classes">
                             <filter>
                                 <class source="pagebuilder-column"/>
@@ -201,9 +211,11 @@
                     </element>
                 </elements>
                 <converters>
-                    <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                    <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
                         <config>
-                            <item name="background_color_format" value="background_color_format"/>
+                            <item name="attribute_name" value="background_images"/>
+                            <item name="desktop_image_variable" value="background_image"/>
+                            <item name="mobile_image_variable" value="mobile_image"/>
                         </config>
                     </converter>
                 </converters>

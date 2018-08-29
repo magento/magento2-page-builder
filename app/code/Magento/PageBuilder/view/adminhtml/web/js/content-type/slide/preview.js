@@ -25,74 +25,8 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     var _proto = Preview.prototype;
 
     /**
-     * Get the background wrapper attributes for the preview
-     *
-     * @returns {any}
-     */
-    _proto.getBackgroundStyles = function getBackgroundStyles() {
-      var desktopStyles = this.data.desktop_image.style();
-      return _extends({}, desktopStyles, {
-        paddingBottom: "",
-        paddingLeft: "",
-        paddingRight: "",
-        paddingTop: "",
-        borderStyle: "none",
-        borderRadius: "0px"
-      });
-    };
-    /**
-     * Get the slide wrapper attributes for the preview
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getPaddingStyles = function getPaddingStyles() {
-      var previewData = this.previewData;
-      var appearance = this.data.main.attributes()["data-appearance"];
-      var paddingData = {};
-
-      switch (appearance) {
-        case "collage-centered":
-          paddingData.paddingLeft = "calc(25% + " + this.data.desktop_image.style().paddingLeft + ")";
-          paddingData.paddingRight = "calc(25% + " + this.data.desktop_image.style().paddingRight + ")";
-          break;
-
-        case "collage-left":
-          paddingData.paddingRight = "calc(50% + " + this.data.desktop_image.style().paddingRight + ")";
-          break;
-
-        case "collage-right":
-          paddingData.paddingLeft = "calc(50% + " + this.data.desktop_image.style().paddingLeft + ")";
-          break;
-
-        default:
-          break;
-      }
-
-      var backgroundImage = "none";
-
-      if (previewData.background_image() && previewData.background_image() !== "" && previewData.background_image() !== undefined && previewData.background_image()[0] !== undefined) {
-        backgroundImage = "url(" + previewData.background_image()[0].url + ")";
-      }
-
-      var styles = {
-        backgroundImage: backgroundImage,
-        backgroundSize: previewData.background_size(),
-        minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
-        overflow: "hidden",
-        paddingBottom: this.data.desktop_image.style().paddingBottom || "",
-        paddingLeft: this.data.desktop_image.style().paddingLeft || "",
-        paddingRight: this.data.desktop_image.style().paddingRight || "",
-        paddingTop: this.data.desktop_image.style().paddingTop || ""
-      };
-      return _extends({}, styles, paddingData);
-    };
-    /**
      * Set state based on overlay mouseover event for the preview
      */
-
-
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       // Triggers the visibility of the overlay content to show
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {

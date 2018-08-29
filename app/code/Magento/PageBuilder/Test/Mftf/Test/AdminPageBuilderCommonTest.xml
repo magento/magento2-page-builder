@@ -799,7 +799,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
             <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_RGBa_Blue.section, PageBuilderBackgroundColor_RGBa_Blue.fieldName, PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForColorSwatchColor"/>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
         <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
             <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
         </actionGroup>
@@ -813,6 +815,39 @@
         </actionGroup>
         <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSL">
             <argument name="color" value="{{PageBuilderBackgroundColor_HSL_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSLa -->
+        <comment userInput="Input: HSLa" stepKey="commentHSLa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSLa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSLa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSLa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSLa_Orange.rgb}}"/>
+        </actionGroup>
+        <!-- Input: HSV -->
+        <comment userInput="Input: HSV" stepKey="commentHSV"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSV">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSV_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSV">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSV_Orange.hex}}"/>
+        </actionGroup>
+        <!-- Input: HSVa -->
+        <comment userInput="Input: HSVa" stepKey="commentHSVa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSVa">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSVaColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSVa_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSVa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSVa_Orange.rgb}}"/>
         </actionGroup>
     </test>
     <test name="EditPanelColorPickerWindowFunctionality">
