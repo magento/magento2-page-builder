@@ -109,11 +109,11 @@
         <element name="generalFilter" type="input" selector="input.admin__control-text[name='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="WYSIWYGOnPageBuilder">
-        <element name="undo" type="button" selector="div[aria-label='Undo']"/>
-        <element name="redo" type="button" selector="div[aria-label='Redo']"/>
-        <element name="fontSize" type="button" selector="div[aria-label='Font Sizes']"/>
-        <element name="textColor" type="button" selector="div[aria-label='Text color']"/>
-        <element name="backgroundColor" type="button" selector="div[aria-label='Background color']"/>
-        <element name="formatSelector" type="button" selector="//span[text()='Formats']"/>
+        <element name="undo" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Undo']"/>
+        <element name="redo" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Redo']"/>
+        <element name="fontSize" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Font Sizes']"/>
+        <element name="textColor" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Text color']"/>
+        <element name="backgroundColor" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Background color']"/>
+        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce') and not(contains(@class, 'mce-tinymce-inline'))]//span[text()='Formats']"/>
     </section>
 </sections>

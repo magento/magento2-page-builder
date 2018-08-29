@@ -48,9 +48,7 @@ export default class Preview extends BasePreview {
         element.id = this.parent.id + "-editor";
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        if (this.parent.dropped) {
-            wysiwygConfig.adapter.settings.auto_focus = element.id;
-        }
+        wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
 
         WysiwygFactory(
             this.parent.id,
