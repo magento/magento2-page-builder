@@ -238,8 +238,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         /**
          * Logic for post sorting and removing the placeholderGhost
          */
-        stop: function stop() {
+        stop: function stop(event, element) {
           placeholderGhost.remove();
+          element.item.find(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
 
           _events.trigger("stage:interactionStop");
         }
