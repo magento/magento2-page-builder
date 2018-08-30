@@ -96,6 +96,7 @@
         <!-- Content Configuration -->
         <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content'][not(*)]" parameterized="true"/>
+        <element name="messageContentTextArea" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
         <element name="linkUrl" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='link'][contains(@href,'{{arg2}}')]" parameterized="true"/>
         <element name="openInNewTab" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]/a[contains(@target,'_blank')]" parameterized="true"/>
         <element name="button" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//button[@data-element='button']" parameterized="true"/>
@@ -191,11 +192,9 @@
         <element name="collageMargins" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="posterPadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'padding: {{arg2}};')]" parameterized="true"/>
         <element name="collagePadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]/div[contains(@style,'padding: {{arg2}};')]" parameterized="true"/>
-        <element name="tinymce" type="button" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
-        <element name="tinymcePanel" type="button" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]//div[contains(@class, 'mce-tinymce-inline')]" parameterized="true"/>
-        <element name="textareaPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]//textarea[contains(@class, 'inline-wysiwyg-textarea') and contains(@placeholder,'Edit Slide Text')]" parameterized="true"/>
     </section>
     <section name="SlideOnConfigurationPanel">
+        <element name="textArea" type="text" selector="#pagebuilder_slide_form_content"/>
         <element name="tinyMCEIFrame" type="text" selector="pagebuilder_slide_form_content_ifr"/>
         <element name="textInIFrame" type="text" selector="//body//p[.='{{arg1}}']" parameterized="true"/>
     </section>
