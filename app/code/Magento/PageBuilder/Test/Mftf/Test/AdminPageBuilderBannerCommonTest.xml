@@ -585,6 +585,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
@@ -700,6 +701,7 @@
             <argument name="property" value="PageBuilderPaddingProperty40"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.noAlignment('1')}}" stepKey="seeAlignmentStage"/>
@@ -1042,6 +1044,7 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <grabFromCurrentUrl stepKey="currentUrl"/>
@@ -1368,9 +1371,7 @@
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Unfocus Banner Live Edit -->
-        <comment userInput="Unfocus Banner Live Edit" stepKey="commentUnfocusBannerLiveEdit"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusBannerLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage">
@@ -1562,6 +1563,7 @@
             <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="contentType" value="PageBuilderBannerContentType"/>
@@ -1858,6 +1860,7 @@
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Stage: Validate Default Show/Hide State - Before Save -->
         <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
         <seeElement selector="{{BannerOnBackend.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
@@ -1911,6 +1914,7 @@
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
             <argument name="section" value="BannerOnBackend"/>
             <argument name="contentType" value="PageBuilderBannerContentType"/>
@@ -2025,6 +2029,7 @@
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Verify image is removed from Banner stage -->
         <comment userInput="Verify image is removed from Banner stage" stepKey="commentVerifyBannerStage"/>
         <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder2"/>

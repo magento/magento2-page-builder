@@ -1457,9 +1457,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!-- User Still Sees Slide Item Option Menu If Hovering Over Slider -->
         <comment userInput="User Still Sees Slide Item Option Menu If Hovering Over Slider" stepKey="commentHoverSlider"/>
+        <waitForElementVisible selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForSlideOptionsMenu"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu2"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu3"/>
         <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="dontSeeSliderOptionsMenu"/>
         <!-- User Sees Slider Option Menu After Unfocusing Slide Item -->
@@ -1496,11 +1497,12 @@
         <!-- Validate On Hover Tooltips -->
         <comment userInput="Validate On Hover Tooltips" stepKey="commentValidateTooltips"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
-        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
-        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
     </test>
     <test name="SliderCanBeNavigatedQuickly">
