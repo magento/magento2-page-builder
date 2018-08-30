@@ -35,6 +35,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
+      _this.parent.dataStore.subscribe(_this.triggerChildren.bind(_this), "width");
+
       _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "grid_size");
 
       return _this;
@@ -270,6 +272,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           contentType: contentType
         });
       });
+    };
+    /**
+     * Delegate trigger call on children elements.
+     */
+
+
+    _proto.triggerChildren = function triggerChildren() {
+      if (this.parent.parent.preview instanceof _preview) {
+        var newWidth = parseFloat(this.parent.dataStore.get("width").toString());
+        this.delegate("trigger", "columnWidthChangeAfter", {
+          width: newWidth
+        });
+      }
     };
 
     return Preview;
