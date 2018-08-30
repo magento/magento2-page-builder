@@ -64,7 +64,7 @@ define([
             var requestData = $.extend(true, {}, this.requestData);
 
             // The component hasn't be configured yet. Nothing to do.
-            if (!this.id() || !this.requestParameter || !this.dataUrlConfigPath) {
+            if (!this.id().length || !this.requestParameter || !this.dataUrlConfigPath) {
                 return;
             }
 

@@ -87,7 +87,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.placeholderText("");
       }
 
-      if (!data.block_id || data.template.length === 0) {
+      if (!data.block_id || data.block_id && data.block_id.length === 0 || data.template.length === 0) {
         this.showBlockPreview(false);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
