@@ -117,18 +117,24 @@
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
         <element name="cssClasses" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'padding: {{arg2}}')]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="posterPadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}')]" parameterized="true"/>
+        <element name="collagePadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'padding: {{arg2}}')]" parameterized="true"/>
         <element name="mobileAlignment" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="mobileNoAlignment" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="mobileMargins" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="mobilePadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'padding: {{arg2}}')]" parameterized="true"/>
+        <element name="mobileBorder" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="mobileBorderColor" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="mobileNoBorderColor" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="mobileBorderWidth" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="mobileBorderRadius" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="mobilePosterPadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}')]" parameterized="true"/>
+        <element name="mobileCollagePadding" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'padding: {{arg2}}')]" parameterized="true"/>
     </section>
     <section name="SlideOnBackend">
         <element name="all" type="button" selector=".pagebuilder-slide"/>
