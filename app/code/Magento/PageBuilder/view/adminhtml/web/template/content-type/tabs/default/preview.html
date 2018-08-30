@@ -9,7 +9,7 @@
     <div visible="focusedTab() === null">
         <render args="getOptions().template" />
     </div>
-    <div class="tabs-container" afterRender="function (element) { onContainerRender.call($data, element); }">
+    <div class="tabs-container" afterRender="function (element) { onContainerRender.call(this, element); }">
         <ul role="tablist" class="tabs-navigation" each="parent.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css" data-bind="sortableChildren: getSortableOptions()">
             <with args="preview">
                 <li role="tab" class="tab-header"

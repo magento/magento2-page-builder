@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "tabs", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _tabs, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "tabs", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _tabs, _underscore, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -13,52 +13,39 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
-     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-
-    /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
+
       _this.focusedTab = _knockout.observable();
       _this.disableInteracting = void 0;
       _this.element = void 0;
-      _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
-        if (activeTabIndex === void 0) {
-          activeTabIndex = _this.previewData.default_active();
+      _this.ready = void 0;
+      _this.onContainerRenderDeferred = (0, _promiseDeferred)();
+      _this.mountAfterDeferred = (0, _promiseDeferred)();
+      Promise.all([_this.onContainerRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
+        var element = _ref[0],
+            expectedChildren = _ref[1];
+        // Wait until all children's DOM elements are present before building the tabs instance
+        (0, _delayUntil)(function () {
+          _this.element = element;
+
+          _this.buildTabs();
+        }, function () {
+          return (0, _jquery)(element).find(".pagebuilder-tab-item").length === expectedChildren;
+        });
+      }); // Resolve our deferred when the tabs item mounts with expect children
+
+      _events.on("tabs:mountAfter", function (args) {
+        if (args.contentType.id === _this.parent.id && args.expectChildren !== undefined) {
+          _this.mountAfterDeferred.resolve(args.expectChildren);
         }
-
-        if (_this.element && _this.element.children.length > 0) {
-          var focusedTab = _this.focusedTab();
-
-          try {
-            (0, _jquery)(_this.element).tabs("destroy");
-          } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
-          }
-
-          (0, _jquery)(_this.element).tabs({
-            create: function create() {
-              // Ensure focus tab is restored after a rebuild cycle
-              if (focusedTab) {
-                _this.setFocusedTab(focusedTab, true);
-              } else {
-                _this.setFocusedTab(null);
-
-                if (activeTabIndex) {
-                  _this.setActiveTab(activeTabIndex);
-                }
-              }
-            }
-          });
-        }
-      }, 10);
+      });
 
       _events.on("tab-item:mountAfter", function (args) {
         if (_this.element && args.contentType.parent.id === _this.parent.id) {
@@ -140,7 +127,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Preview.prototype;
 
     _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
-      if (this.element) {
+      if (this.ready) {
         (0, _jquery)(this.element).tabs("refresh");
 
         if (focusIndex >= 0) {
@@ -194,7 +181,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       this.focusedTab(index);
 
-      if (this.element && index !== null) {
+      if (this.ready && index !== null) {
         if (this.element.getElementsByClassName("tab-name")[index]) {
           this.element.getElementsByClassName("tab-name")[index].focus();
         }
@@ -264,8 +251,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onContainerRender = function onContainerRender(element) {
-      this.element = element;
-      this.buildTabs();
+      this.onContainerRenderDeferred.resolve(element);
     };
     /**
      * Handle clicking on a tab
@@ -458,6 +444,47 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         });
       });
       this.parent.dataStore.update(activeOptions, "_default_active_options");
+    };
+    /**
+     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+
+
+    _proto.buildTabs = function buildTabs(activeTabIndex) {
+      var _this4 = this;
+
+      if (activeTabIndex === void 0) {
+        activeTabIndex = this.previewData.default_active() || 0;
+      }
+
+      this.ready = false;
+
+      if (this.element && this.element.children.length > 0) {
+        var focusedTab = this.focusedTab();
+
+        try {
+          (0, _jquery)(this.element).tabs("destroy");
+        } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
+        }
+
+        (0, _jquery)(this.element).tabs({
+          create: function create() {
+            _this4.ready = true; // Ensure focus tab is restored after a rebuild cycle
+
+            if (focusedTab) {
+              _this4.setFocusedTab(focusedTab, true);
+            } else {
+              _this4.setFocusedTab(null);
+
+              if (activeTabIndex !== false) {
+                _this4.setActiveTab(activeTabIndex);
+              }
+            }
+          }
+        });
+      }
     };
 
     return Preview;
