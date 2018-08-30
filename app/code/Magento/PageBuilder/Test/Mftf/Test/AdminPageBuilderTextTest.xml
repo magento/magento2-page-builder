@@ -86,6 +86,7 @@
         <!-- Verify data on TinyMCE4 -->
         <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
@@ -98,6 +99,7 @@
         <comment userInput="Switch to TinyMCE3" stepKey="comment6"/>
         <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
         <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageToBeLoaded1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
         <assertEquals stepKey="assertTextValue">
@@ -109,6 +111,7 @@
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
         <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
         <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageToBeLoaded2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_1"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -118,7 +121,9 @@
         <comment userInput="Add image to TextArea" stepKey="comment8"/>
         <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
         <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
-        <click stepKey="clickStorageRoot" selector="{{MediaGallerySection.StorageRootArrow}}" />
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
         <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -135,6 +140,7 @@
         <!-- Verify image on TinyMCE4 -->
         <comment userInput="Verify data on TinyMCE4" stepKey="comment10"/>
         <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageToBeLoaded3"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_2"/>
         <seeElement selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
     </test>
@@ -366,7 +372,6 @@
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <click selector="{{MediaGallerySection.WysiwygArrow}}" stepKey="openWYSIWYGFolder"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
@@ -452,6 +457,8 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -590,7 +597,6 @@
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <click selector="{{MediaGallerySection.WysiwygArrow}}" stepKey="openWYSIWYGFolder"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
@@ -614,6 +620,8 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -1048,7 +1056,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1083,7 +1090,7 @@
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
-            <argument name="index" value="1"/>            
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1101,7 +1108,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -1177,7 +1183,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -1223,7 +1228,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1270,7 +1274,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -1353,7 +1356,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1427,7 +1429,6 @@
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE1">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1483,7 +1484,6 @@
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE2">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1591,12 +1591,12 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementNotVisible selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextStorefront"/>
     </test>
-    <test name="TextRequiredAttributes">
+    <test name="TextHasNoRequired">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Validate Required Attributes"/>
-            <description value="Validate that required attributes are required for text."/>
+            <title value="Text has no required fields in edit form"/>
+            <description value="Check there are no required fields in text edit form"/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
             <testCaseId value="MAGETWO-91077"/>
@@ -1621,13 +1621,16 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!-- Validate Cannot Save Edit Panel -->
-        <comment userInput="Validate Cannot Save Edit Panel" stepKey="commentValidateCannotSave"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Clear Fields -->
+        <comment userInput="Clear Fields" stepKey="commentClearFields"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="clearText">
+            <argument name="property" value="PageBuilderTextContentTypeEmpty"/>
+        </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
     <test name="TextDisabledWYSIWYGAddImage">
         <annotations>
@@ -1674,7 +1677,8 @@
         <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
         <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <click stepKey="clickStorageRoot" selector="{{MediaGallerySection.StorageRootArrow}}" />
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -2138,6 +2142,8 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>

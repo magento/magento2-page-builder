@@ -92,7 +92,7 @@
         <element name="collageLeft" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
         <element name="collageCentered" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)'][style*='magento']"/>
         <element name="collageRight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
-        <element name="collageMargin" type="button" selector="div[data-role='slide'] .pagebuilder-slide-wrapper[style*='margin: 1px 2px 3px 4px']"/>
+        <element name="collageMargin" type="button" selector="div[data-role='slide'][style*='margin: 1px 2px 3px 4px']"/>
         <element name="collageMinHeight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageAlignment" type="button" selector="div[data-role='slide'] .pagebuilder-slide-wrapper[style*='text-align: center']"/>
         <element name="collageMobileWithoutMobileImage" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='magento']"/>
@@ -109,8 +109,8 @@
         <element name="collageMinHeightMobile" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
-        <element name="slideBorderStyle" type="button" selector="div[data-role='slide'][style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
-        <element name="slideBorderRadiusStyle" type="button" selector="div[data-role='slide'][style*='border-radius: {{arg1}}']" parameterized="true"/>
+        <element name="slideBorderStyle" type="button" selector="div[data-role='slide'] div[style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
+        <element name="slideBorderRadiusStyle" type="button" selector="div[data-role='slide'] div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="slideClass" type="button" selector="div[data-role='slide'][class*='{{arg1}}']" parameterized="true"/>
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
     </section>
@@ -169,6 +169,9 @@
         <element name="slideBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
+        <element name="tinymce" type="button" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
+        <element name="tinymcePanel" type="button" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]//div[contains(@class, 'mce-tinymce-inline')]" parameterized="true"/>
+        <element name="textareaPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]//textarea[contains(@class, 'inline-wysiwyg-textarea') and contains(@placeholder,'Edit Slide Text')]" parameterized="true"/>
     </section>
     <section name="SlideOnConfigurationPanel">
         <element name="tinyMCEIFrame" type="text" selector="pagebuilder_slide_form_content_ifr"/>

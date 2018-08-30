@@ -37,9 +37,13 @@ import {default as SliderPreview} from "../slider/preview";
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
-    private element: Element;
+    public element: HTMLElement;
+    protected events: DataObject = {
+        columnWidthChangeAfter: "onColumnResize",
+    };
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
+
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
@@ -173,7 +177,7 @@ export default class Preview extends PreviewCollection {
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
         if (_.isNull(event.relatedTarget) ||
-            event.relatedTarget && !$.contains(event.currentTarget as Element, event.relatedTarget)
+            event.relatedTarget && !$.contains(event.currentTarget as HTMLElement, event.relatedTarget)
         ) {
             this.setFocusedSlide(null);
         }
@@ -195,11 +199,12 @@ export default class Preview extends PreviewCollection {
     /**
      * After child render record element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
-    public afterChildrenRender(element: Element): void {
+    public afterChildrenRender(element: HTMLElement): void {
         super.afterChildrenRender(element);
         this.element = element;
+        this.checkWidth();
     }
 
     /**
@@ -228,6 +233,12 @@ export default class Preview extends PreviewCollection {
         if (params.item.index() !== -1) {
             _.defer(this.focusElement.bind(this, event, params.item.index()));
         }
+        _.defer(() => {
+            $(this.element).css({
+                height: "",
+                overflow: "",
+            });
+        });
     }
 
     /**
@@ -402,6 +413,30 @@ export default class Preview extends PreviewCollection {
             fade: data.fade === "true",
             infinite: data.is_infinite === "true",
             waitForAnimate: false,
+            swipe: false,
         };
+    }
+
+    /**
+     * Fit slider in column container
+     *
+     * @param params
+     */
+    private onColumnResize(params: any) {
+        setTimeout(() => {
+            $(this.element).slick("setPosition");
+            this.checkWidth();
+        }, 250);
+    }
+
+    /**
+     * Check width and add class that marks element as small
+     */
+    private checkWidth() {
+        if (this.element.offsetWidth < 410) {
+            this.element.classList.add("slider-small-width");
+        } else {
+            this.element.classList.remove("slider-small-width");
+        }
     }
 }
