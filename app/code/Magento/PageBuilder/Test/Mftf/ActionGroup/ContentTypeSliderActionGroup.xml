@@ -42,4 +42,7 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
+    <actionGroup name="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumns" extends="inlineEditWYSIWYGFromStage">
+        <click selector="{{SlideOnBackend.base(index)}}" stepKey="focusOnEditorArea"/>
+    </actionGroup>
 </actionGroups>
