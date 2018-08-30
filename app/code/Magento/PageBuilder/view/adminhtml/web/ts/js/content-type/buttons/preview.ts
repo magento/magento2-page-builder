@@ -135,7 +135,6 @@ export default class Preview extends PreviewCollection {
             containment: "parent",
             tolerance,
             revert: 200,
-            cursorAt: { left: 15, top: 15 },
             disabled: this.parent.children().length <= 1,
             /**
              * Provide custom helper element
