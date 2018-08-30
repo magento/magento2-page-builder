@@ -15,23 +15,33 @@
         <div class="pagebuilder-poster-overlay"
              attr="data.overlay.attributes"
              ko-style="data.overlay.style"
-             css="data.overlay.css">
+             css="data.overlay.css"
+             event="mousedown: activateEditor">
             <scope args="getUploader().getUiComponent()">
                 <render />
             </scope>
-            <div class="pagebuilder-poster-content">
-                <div if="data.content.html()"
+            <div class="pagebuilder-poster-content wysiwyg-container">
+                <div class="inline-wysiwyg"
+                     if="isWysiwygSupported()"
                      attr="data.content.attributes"
                      ko-style="data.content.style"
                      css="data.content.css"
-                     html="data.content.html">
+                     event="mousedown: stopEvent"
+                     afterRender="initWysiwyg">
+                    <div html="data.content.html"></div>
                 </div>
-                <div ifnot="data.content.html()"
+                <div if="!data.content.html() && isWysiwygSupported()"
                      class="pagebuilder-empty-slide"
                      attr="data.content.attributes"
                      ko-style="data.content.style"
                      css="data.content.css"
                      translate="'Edit Slide Text'">
+                </div>
+                <div ifnot="isWysiwygSupported()">
+                    <textarea class="inline-wysiwyg-textarea"
+                              afterRender="initTextarea"
+                              event="keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent"
+                              data-bind="attr: { placeholder: $t('Edit Slide Text') }" />
                 </div>
                 <a if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"

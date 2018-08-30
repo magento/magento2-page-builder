@@ -1412,4 +1412,372 @@
             <actualResult type="variable">actualBoxSizingStyle</actualResult>
         </assertEquals>
     </test>
+    <test name="SlideInlineTextEditing">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline in WYSIWYG and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3813"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{SlideOnBackend.tinymce('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inserted text on edit panel -->
+        <comment userInput="Verify inserted text on edit panel" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateTextInTinyMCE" stepKey="seeMessageText">
+            <argument name="property" value="PageBuilderSlideItemContent1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Slide Content Type on stage after saving cms page-->
+        <comment userInput="Verify text in slide content type on stage" stepKey="commentVerifySlideOnStage"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeSlideWithTextOnStage"/>
+        <!--Verify Slide Content Type on storefront-->
+        <comment userInput="Verify text in Slide Content Type on storefront" stepKey="commentVerifySlideContenTypeOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+    <test name="SlideInlineTextEditingCollageLeft">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline with collage left appearance in WYSIWYG and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type with collage left appearance and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3846"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{SlideOnBackend.tinymce('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inserted text on edit panel -->
+        <comment userInput="Verify inserted text on edit panel" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateTextInTinyMCE" stepKey="seeMessageText">
+            <argument name="property" value="PageBuilderSlideItemContent1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Slide Content Type on stage after saving cms page-->
+        <comment userInput="Verify text in slide content type on stage" stepKey="commentVerifySlideOnStage"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeSlideWithTextOnStage"/>
+        <!--Verify Slide Content Type on storefront-->
+        <comment userInput="Verify text in Slide Content Type on storefront" stepKey="commentVerifySlideContenTypeOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+    <test name="SlideInlineTextEditingCollageCenter">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline with collage center appearance in WYSIWYG and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type with collage center appearance and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3849"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{SlideOnBackend.tinymce('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inserted text on edit panel -->
+        <comment userInput="Verify inserted text on edit panel" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateTextInTinyMCE" stepKey="seeMessageText">
+            <argument name="property" value="PageBuilderSlideItemContent1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Slide Content Type on stage after saving cms page-->
+        <comment userInput="Verify text in slide content type on stage" stepKey="commentVerifySlideOnStage"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeSlideWithTextOnStage"/>
+        <!--Verify Slide Content Type on storefront-->
+        <comment userInput="Verify text in Slide Content Type on storefront" stepKey="commentVerifySlideContenTypeOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+    <test name="SlideInlineTextEditingCollageRight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline with collage right appearance in WYSIWYG and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type with collage right appearance and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3850"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{SlideOnBackend.tinymce('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inserted text on edit panel -->
+        <comment userInput="Verify inserted text on edit panel" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateTextInTinyMCE" stepKey="seeMessageText">
+            <argument name="property" value="PageBuilderSlideItemContent1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Slide Content Type on stage after saving cms page-->
+        <comment userInput="Verify text in slide content type on stage" stepKey="commentVerifySlideOnStage"/>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeSlideWithTextOnStage"/>
+        <!--Verify Slide Content Type on storefront-->
+        <comment userInput="Verify text in Slide Content Type on storefront" stepKey="commentVerifySlideContenTypeOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+    <test name="SlideInlineTextEditingWithDisabledWYSIWYG">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline in textarea when WYSIWYG disabled and see on storefront"/>
+            <description value="Verify that user are able to add text into Slide Content Type when WYSIWYG disabled using textarea and see it on storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3813"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.textareaPlaceholder('1')}}" stepKey="focusOnEditorArea"/>
+        <fillField selector="{{SlideOnBackend.textareaPlaceholder('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="fillTextToTextArea"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <!--Verify inserted text on edit panel -->
+        <comment userInput="Verify inserted text on edit panel" stepKey="commentVerifyTextOnSlideout"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{SlideOnBackend.textareaPlaceholder('1')}}" stepKey="textareaVisible"/>
+        <seeInField selector="{{SlideOnBackend.textareaPlaceholder('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeInField"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Verify Slide Content Type on stage after saving cms page-->
+        <comment userInput="Verify text in slide content type on stage" stepKey="commentVerifySlideOnStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.textareaPlaceholder('1')}}" stepKey="textareaVisible1"/>
+        <seeInField selector="{{SlideOnBackend.textareaPlaceholder('1')}}" userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeInField1"/>
+        <!--Verify Slide Content Type on storefront-->
+        <comment userInput="Verify text in Slide Content Type on storefront" stepKey="commentVerifySlideContenTypeOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <see userInput="{{PageBuilderSlideItemContent1.value}}" stepKey="seeTextOnStorefront"/>
+    </test>
+    <test name="SlideInlineTextEditingAvailability">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Edit slide text inline in WYSIWYG and check that other content types availability"/>
+            <description value="Verify that user are able to add other content types on Stage when inline edit enabled in Slide Content Type"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-937"/>
+            <testCaseId value="MC-3814"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Check that user can drag text when inline mode active -->
+        <comment userInput="Check that user can drag text when inline mode active" stepKey="commentDragTextIntoStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForText">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <waitForElementVisible selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible1"/>
+        <!-- Check that user can drag column when inline mode active -->
+        <comment userInput="Check that user can drag column when inline mode active" stepKey="commentDragColumnIntoStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForColumn">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
+        <waitForElementVisible selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible2"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible3"/>
+        <!-- Activate inline edit mode -->
+        <comment userInput="Activate inline edit mode" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea3"/>
+        <waitForElementVisible selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible4"/>
+
+        <!-- Verify that content types options are hidden -->
+        <comment userInput="Verify that content types options are hidden" stepKey="commentOptionsHidden"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverSliderContentType"/>
+        <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="PageBuilderContentTypeOptionsMenuseeSlideOptionsPanelStillHidden"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="PageBuilderContentTypeOptionsMenuseeSliderOptionsPanelStillHidden"/>
+        <moveMouseOver selector="{{TextOnBackend.textInstance}}" x="10" y="10" stepKey="onMouseOverTextContentType"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderTextContentType.role, '1')}}" stepKey="PageBuilderContentTypeOptionsMenuseeTextOptionsPanelStillHidden"/>
+        <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" x="10" y="10" stepKey="onMouseOverFirstColumnContentType"/>
+        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="PageBuilderContentTypeOptionsMenuseeColumnOptionsPanelStillHidden"/>
+        <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" x="10" y="10" stepKey="onMouseOverSecondColumnContentType"/>
+    </test>
 </tests>

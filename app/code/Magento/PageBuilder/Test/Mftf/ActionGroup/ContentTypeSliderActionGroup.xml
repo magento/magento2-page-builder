@@ -27,4 +27,19 @@
             <actualResult type="variable">numberOfSlidesAfterAdd</actualResult>
         </assertEquals>
     </actionGroup>
+    <actionGroup name="switchSlide">
+        <arguments>
+            <argument name="section" defaultValue="SliderOnFrontend"/>
+            <argument name="index" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="waitForSliderButton"/>
+        <click selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="clickSliderButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
+    </actionGroup>
+    <actionGroup name="unfocusSlideOptions">
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
+    </actionGroup>
 </actionGroups>
