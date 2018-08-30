@@ -13,6 +13,7 @@ import ContentTypeInterface from "../../content-type.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
+
 /**
  * @api
  */
