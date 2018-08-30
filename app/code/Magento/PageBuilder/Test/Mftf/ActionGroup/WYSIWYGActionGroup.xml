@@ -36,6 +36,10 @@
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
     </actionGroup>
+    <actionGroup name="addVariableToTinyMCEInline" extends="addVariableToTinyMCE">
+        <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
+    </actionGroup>
     <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
         <arguments>
             <argument name="variable" defaultValue=""/>
@@ -89,6 +93,10 @@
         <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
+    </actionGroup>
+    <actionGroup name="addPageLinkWidgetToTinyMCEInline" extends="addPageLinkWidgetToTinyMCE">
+        <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE">
         <arguments>

@@ -420,7 +420,7 @@
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
@@ -437,7 +437,7 @@
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
@@ -682,7 +682,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="waitForVariableCountryStage1"/>
@@ -749,7 +749,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
@@ -816,14 +816,14 @@
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4"/>
         <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntities"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.undo}}" stepKey="seeUndo"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.redo}}" stepKey="seeRedo"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="seeFontsize"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.textColor}}" stepKey="seeTextColor"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.backgroundColor}}" stepKey="seeBackgroundColor"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.undo}}" stepKey="seeUndo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.redo}}" stepKey="seeRedo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.fontSize}}" stepKey="seeFontsize"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.textColor}}" stepKey="seeTextColor"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.backgroundColor}}" stepKey="seeBackgroundColor"/>
         <!--Verify FontSize-->
         <comment userInput="Verify FontSize" stepKey="commentVerifyFontSize"/>
-        <click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.fontSize}}" stepKey="clickOnFontSize"/>
         <see userInput="10px" stepKey="see10px" />
         <see userInput="12px" stepKey="see12px" />
         <see userInput="14px" stepKey="see14px" />
@@ -848,7 +848,7 @@
         <comment userInput="Verify FontStyle on preview" stepKey="commentVerifyFontsizeOnPreview"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTinyMCE4"/>
-        <click selector="{{WYSIWYGOnPageBuilder.formatSelector}}" stepKey="expandFormatList"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.formatSelector}}" stepKey="expandFormatList"/>
         <see userInput="Important" stepKey="seeImportantStyle"/>
         <click selector="{{TextOnStage.importantStyle('1')}}" stepKey="selectFormatStyle" />
         <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnPreview1" />
@@ -2105,7 +2105,7 @@
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
@@ -2122,7 +2122,7 @@
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
