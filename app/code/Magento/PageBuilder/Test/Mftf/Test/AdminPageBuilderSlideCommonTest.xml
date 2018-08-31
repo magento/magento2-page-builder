@@ -624,7 +624,7 @@
             <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
-
+        <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickFirstSlideNavigationDot"/>
         <comment userInput="Slide option panel is displayed" stepKey="AC6"/>
         <waitForElementVisible time="5" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
 
@@ -672,7 +672,7 @@
             <argument name="property" value="PageBuilderSlideItemName2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
-
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickSearchPanel2"/>
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide name" stepKey="AC15"/>
         <click stepKey="unfocusNavigation" selector="{{PageBuilderPanel.searchPanel}}"/>
         <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>

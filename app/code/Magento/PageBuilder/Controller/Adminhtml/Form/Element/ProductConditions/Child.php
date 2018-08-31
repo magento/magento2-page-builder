@@ -39,6 +39,7 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
     {
         $id = $this->getRequest()->getParam('id');
         $formName = $this->getRequest()->getParam('form_namespace');
+        $jsObjectName = $this->getRequest()->getParam('js_object_name');
 
         $typeData = explode('|', str_replace('-', '/', $this->getRequest()->getParam('type')));
         $className = $typeData[0];
@@ -55,7 +56,7 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
 
         $result = '';
         if ($model instanceof AbstractCondition) {
-            $model->setJsFormObject($formName);
+            $model->setJsFormObject($jsObjectName);
             $model->setFormName($formName);
             $result = $model->asHtmlRecursive();
         }

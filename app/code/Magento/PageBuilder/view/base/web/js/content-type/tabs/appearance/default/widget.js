@@ -12,6 +12,11 @@ define([
     return function (config, element) {
         var $element = $(element);
 
+        // Ignore stage builder preview tabs
+        if ($element.is('.pagebuilder-tabs')) {
+            return;
+        }
+
         // Disambiguate between the mage/tabs component which is loaded randomly depending on requirejs order.
         $.ui.tabs({
             active: $element.data('activeTab') || 0,
