@@ -13,7 +13,6 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
    * @param {DataStore} dataStore The datastore to store the content in.
    * @param {String} fieldName The key in the provided datastore to set the data.
    * @returns {Wysiwyg}
-   * @api
    */
   function create(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName) {
     config = _jquery.extend(true, {}, config);
