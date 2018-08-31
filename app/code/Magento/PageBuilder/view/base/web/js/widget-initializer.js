@@ -25,10 +25,18 @@ define([
         });
     }
 
-    return function (data) {
+    return function (data, contextElement) {
         _.each(data.config, function (componentConfiguration, elementPath) {
             $(elementPath).each(function (index, element) {
-                initializeWidget(element, componentConfiguration);
+                var $element = $(element);
+
+                if (contextElement) {
+                    $element = $(contextElement).find(element);
+                }
+
+                if ($element.length) {
+                    initializeWidget($element, componentConfiguration);
+                }
             });
         });
     };
