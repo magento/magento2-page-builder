@@ -3,8 +3,9 @@
  * See COPYING.txt for license details.
  */
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'Magento_PageBuilder/js/events'
+], function ($, events) {
     'use strict';
 
     /**
@@ -33,6 +34,11 @@ define([
             equalizeButtonWidth($element.find('[data-element="link"]'));
             $(window).resize(function () {
                 equalizeButtonWidth($element.find('[data-element="link"]'));
+            });
+            events.on('contentType:redrawAfter', function (eventData) {
+                if ($element.closest(eventData.element).length > 0) {
+                    equalizeButtonWidth($element.find('[data-element="link"]'));
+                }
             });
         }
     };
