@@ -129,57 +129,6 @@
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage"/>
     </test>
-    <test name="CanAddNewsletterToTab">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs"/>
-            <title value="Tabs Content - Add Newsletter to Tabs container and view on Admin and Storefront"/>
-            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89966"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-tabs-content"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <!-- Add Tabs to Stage -->
-        <comment userInput="Add Tabs to Stage" stepKey="addTabsToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-        </actionGroup>
-        <!-- Validate Tabs default state On Stage -->
-        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
-        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
-        <!-- Add Newsletter to Tab -->
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupElements">
-            <argument name="group" value="PageBuilderNewsletterContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewsletterOntoTab">
-            <argument name="contentType" value="PageBuilderNewsletterContentType"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
-            <argument name="containerTargetIndex" value="1" />
-        </actionGroup>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Verify Newsletter in Tab on storefront -->
-        <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{NewsletterOnStorefront.form('1')}}" stepKey="seeNewsletterForm"/>
-    </test>
     <test name="CanAddButtonToTab">
         <annotations>
             <features value="PageBuilder"/>
@@ -435,6 +384,7 @@
             <testCaseId value="MAGETWO-89960"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-slide"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -455,57 +405,50 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <!-- Validate Tabs default state On Stage -->
-        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
-        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
-        <!-- Add Slider to Tab -->
-        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
-        <see userInput="Slider" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup2">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoTab">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <!--Edit First Slide -->
-        <comment userInput="First Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimationOnFirstSlide" />
-        <waitForElementVisible selector="{{EditPanelForm.editFormTitle}}" stepKey="waitForEditSlide" />
-        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeEditSlide"/>
+        <!-- Edit First Slide -->
+        <comment userInput="Edit First Slide" stepKey="EditFirstSlide"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemName1"/>
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide1"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
-        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
-        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation1"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL1">
-            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
-            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
-            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideItemShowButton_Always">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText1">
-            <argument name="property" value="PageBuilderSlideItemButtonText1"/>
+            <argument name="property" value="PageBuilderSlideItemButtonText_Slide1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Slider in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="waitForSliderElementVisable"/>
-        <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
-        <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
-        <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
-        <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
-        <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
-        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderBackgroundImage_JPG.path, PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeSlide1Background"/>
-        <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayed"/>
+        <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayed"/>
+        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="seeSlide1LinkURL"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColor"/>
+        <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
     </test>
     <test name="CanAddMapToTab">
         <annotations>

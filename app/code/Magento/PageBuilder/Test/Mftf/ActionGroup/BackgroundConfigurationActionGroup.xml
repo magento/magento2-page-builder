@@ -141,7 +141,6 @@
     <actionGroup name="validateBackgroundImage">
         <arguments>
             <argument name="section"/>
-            <argument name="pageNamePrefix" defaultValue="admin" type="string"/>
             <argument name="backgroundImage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -149,18 +148,37 @@
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
         <grabAttributeFrom selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
-        <!-- Grab base URL -->
-        <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
-        <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
         <!-- Return the string value of background-image -->
         <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
         <!-- Convert all characters in string variables to regex friendly strings  -->
-        <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
         <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
         <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
-            <expectedResult type="string">/{$regexBaseURL}\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundImage.fileName}}(_\d+)?\.{{backgroundImage.extension}}/</expectedResult>
+            <expectedResult type="string">/.*\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundImage.fileName}}(_\d+)?\.{{backgroundImage.extension}}/</expectedResult>
             <actualResult type="variable">$backgroundImageValue</actualResult>
         </assertRegExp>
+    </actionGroup>
+    <actionGroup name="validateBackgroundMobileImage">
+        <arguments>
+            <argument name="section"/>
+            <argument name="backgroundMobileImage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateBackgroundMobileImage" stepKey="comment"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElement selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImage"/>
+        <dontSeeElement selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="dontSeeBackgroundMobileImage"/>
+        <grabAttributeFrom selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
+        <!-- Return the string value of background-image -->
+        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundMobileImageValue"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '{{backgroundMobileImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertBackgroundMobileImageContainsFileInformation">
+            <expectedResult type="string">/.*\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundMobileImage.fileName}}(_\d+)?\.{{backgroundMobileImage.extension}}/</expectedResult>
+            <actualResult type="variable">$backgroundMobileImageValue</actualResult>
+        </assertRegExp>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <waitForElementVisible selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImageVisible"/>
+        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
     <actionGroup name="validateNoBackgroundImage">
         <arguments>
@@ -197,33 +215,5 @@
             <expectedResult type="string">/{$regexBaseURL}\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundImage.fileName}}(_\d+)?\.{{backgroundImage.extension}}/</expectedResult>
             <actualResult type="variable">$backgroundImageValue</actualResult>
         </assertRegExp>
-    </actionGroup>
-    <actionGroup name="validateBackgroundMobileImage">
-        <arguments>
-            <argument name="section"/>
-            <argument name="pageNamePrefix" type="string"/>
-            <argument name="backgroundMobileImage"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <comment userInput="validateBackgroundMobileImage" stepKey="comment"/>
-        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
-        <waitForElement selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImage"/>
-        <dontSeeElement selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="dontSeeBackgroundMobileImage"/>
-        <grabAttributeFrom selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
-        <!-- Grab base URL -->
-        <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
-        <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
-        <!-- Return the string value of background-image -->
-        <executeJS function="return '{$contentTypeStyle}'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundMobileImageValue"/>
-        <!-- Convert all characters in string variables to regex friendly strings  -->
-        <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
-        <executeJS function="return '{{backgroundMobileImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
-        <assertRegExp stepKey="assertBackgroundMobileImageContainsFileInformation">
-            <expectedResult type="string">/{$regexBaseURL}\/(pub\/|\/)?media.*{$regexFilePath}\/{{backgroundMobileImage.fileName}}(_\d+)?\.{{backgroundMobileImage.extension}}/</expectedResult>
-            <actualResult type="variable">$backgroundMobileImageValue</actualResult>
-        </assertRegExp>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <waitForElementVisible selector="{{section.backgroundMobileImage(index, backgroundMobileImage.fileName)}}" stepKey="waitForBackgroundMobileImageVisible"/>
-        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
     </actionGroup>
 </actionGroups>
