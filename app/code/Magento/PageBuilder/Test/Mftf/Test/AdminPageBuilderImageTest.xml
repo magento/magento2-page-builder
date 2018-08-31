@@ -93,6 +93,8 @@
         </actionGroup>
         <click selector="{{PageBuilderStage.selectFromGalleryImageBtn}}" stepKey="clickSelectfromGallery"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -280,6 +282,8 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
             <argument name="property" value="PageBuilderImageProperty_JPG2"/>
         </actionGroup>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
