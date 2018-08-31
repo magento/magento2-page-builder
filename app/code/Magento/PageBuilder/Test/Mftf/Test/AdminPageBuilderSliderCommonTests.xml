@@ -1457,7 +1457,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!-- User Still Sees Slide Item Option Menu If Hovering Over Slider -->
         <comment userInput="User Still Sees Slide Item Option Menu If Hovering Over Slider" stepKey="commentHoverSlider"/>
-        <waitForElementVisible selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForSlideOptionsMenu"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu2"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>

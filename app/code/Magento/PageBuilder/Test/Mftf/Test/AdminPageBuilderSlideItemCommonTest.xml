@@ -1085,6 +1085,7 @@
         <executeJS function="{{PageBuilderStoreFront.computedHeight(PageBuilderSliderContentType.role, '0')}}" stepKey="slideInitialHeightStorefront"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Edit Slide Content -->
         <comment userInput="Edit Slide Content" stepKey="commentEditSlide"/>
@@ -1118,6 +1119,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemMessage_Long.value)}}" stepKey="seeSlide1ContentStorefront"/>
         <executeJS function="{{PageBuilderStoreFront.computedHeight(PageBuilderSliderContentType.role, '0')}}" stepKey="slideNewHeightStorefront"/>
         <assertGreaterThan stepKey="assertSlideHeightGrewStorefront">
