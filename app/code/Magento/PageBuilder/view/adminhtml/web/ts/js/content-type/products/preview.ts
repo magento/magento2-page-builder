@@ -23,6 +23,7 @@ export default class Preview extends BasePreview {
     public placeholderText: KnockoutObservable<string>;
     private messages = {
         EMPTY: $t("Empty Products"),
+        NO_RESULTS: $t("No products were found matching your condition"),
         LOADING: $t("Loading..."),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
@@ -66,6 +67,7 @@ export default class Preview extends BasePreview {
 
         if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
             this.placeholderText(this.messages.EMPTY);
+
             return;
         }
 
@@ -83,8 +85,8 @@ export default class Preview extends BasePreview {
 
         $.ajax(url, requestConfig)
             .done((response) => {
-                if (typeof response.data !== "object" || typeof response.data.content === "undefined") {
-                    this.placeholderText(this.messages.EMPTY);
+                if (typeof response.data !== "object" || !Boolean(response.data.content)) {
+                    this.placeholderText(this.messages.NO_RESULTS);
 
                     return;
                 }
