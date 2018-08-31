@@ -32,6 +32,7 @@ define([
                     $element.find('.tabs-navigation li:not(:first-child)').css('marginLeft', -borderWidth);
                 },
             activate:
+
                 /**
                  * Trigger redraw event since new content is being displayed
                  */
