@@ -2526,6 +2526,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
         <seeElement selector="{{SlideOnBackend.tinymcePanel('1')}}" stepKey="panelVisible1"/>
         <!-- Check that user can drag column when inline mode active -->
         <comment userInput="Check that user can drag column when inline mode active" stepKey="commentDragColumnIntoStage"/>
