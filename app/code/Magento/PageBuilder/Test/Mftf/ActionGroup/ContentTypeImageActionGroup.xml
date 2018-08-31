@@ -17,18 +17,6 @@
         <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
         <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage(property.fileName)}}" stepKey="waitForImageSource"/>
     </actionGroup>
-    <actionGroup name="verifyUploadImageButtons">
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="section"/>
-            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
-            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
-        </arguments>
-        <comment userInput="Hover uploaded image to check Upload New Image button and Select From Gallery button" stepKey="commentHover"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverBannerContentTypeStage"/>
-        <waitForElementVisible selector="{{section.uploadNewImageBtn}}" stepKey="waitForUploadNewImageBtn" />
-        <waitForElementVisible selector="{{section.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
-    </actionGroup>
     <actionGroup name="verifyImageOnSlideout">
         <arguments>
             <argument name="property"/>
