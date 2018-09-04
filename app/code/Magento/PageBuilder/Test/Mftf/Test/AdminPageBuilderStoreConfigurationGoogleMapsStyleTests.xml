@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="GoogleMapsStyleFieldAppearance">
+    <test name="StoreConfigurationGoogleMapsStyleFieldAppearance">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Store Configuration - Google Maps Style"/>
@@ -16,7 +16,7 @@
             <description value="Tests the following for Google Maps Style field: 1) Global config key, 2) Helper text, 3) Correct Create Map Style link."/>
             <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92729"/>
+            <testCaseId value="MC-2859"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
@@ -45,7 +45,7 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="https://mapstyle.withgoogle.com/" stepKey="validateURL"/>
     </test>
-    <test name="GoogleMapsCanSaveEmptyStyle">
+    <test name="StoreConfigurationGoogleMapsCanSaveEmptyStyle">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Store Configuration - Google Maps Style"/>
@@ -53,7 +53,7 @@
             <description value="Tests that a user can save empty Google Maps Style."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92730"/>
+            <testCaseId value="MC-2699"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
@@ -76,7 +76,7 @@
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.empty}}" stepKey="seeStyle"/>
     </test>
-    <test name="GoogleMapsCanSaveValidStyle">
+    <test name="StoreConfigurationGoogleMapsCanSaveValidStyle">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Store Configuration - Google Maps Style"/>
@@ -84,7 +84,7 @@
             <description value="Tests that a user can save a valid Google Maps Style."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92731"/>
+            <testCaseId value="MC-2534"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
@@ -116,7 +116,7 @@
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{googleMapsStyle.validNoContent}}" stepKey="seeStyle2"/>
     </test>
-    <test name="GoogleMapsCannotSaveInvalidStyle">
+    <test name="StoreConfigurationGoogleMapsCannotSaveInvalidStyle">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Store Configuration - Google Maps Style"/>
@@ -124,7 +124,7 @@
             <description value="Tests that a user cannot save invalid Google Maps Style."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92732"/>
+            <testCaseId value="MC-2851"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-googleMapsStyle"/>
         </annotations>
