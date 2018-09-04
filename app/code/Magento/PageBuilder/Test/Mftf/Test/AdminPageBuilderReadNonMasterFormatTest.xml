@@ -161,8 +161,6 @@
             <group value="pagebuilder-html"/>
             <group value="pagebuilder-wysiwygConversion"/>
             <group value="pagebuilder-customBeforeAfter"/>
-            <!-- MAGETWO-88779 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -191,8 +189,6 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
-        <waitForElement time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForElement" />
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForHeaderVisible" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible time="1" selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="waitForContentTypeInStage" />
         <seeElement selector="{{PageBuilderStage.contentTypeInStage('html')}}" stepKey="seeContentTypeInStage"/>
