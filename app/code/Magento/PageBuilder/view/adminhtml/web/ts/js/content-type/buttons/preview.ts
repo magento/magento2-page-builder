@@ -17,6 +17,7 @@ import {OptionsInterface} from "../../content-type-menu/option.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
 import PreviewCollection from "../preview-collection";
 
 /**
@@ -24,7 +25,7 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
-    public currentMaxWidth: KnockoutObservable<number> = ko.observable(0);
+
     /**
      * Keeps track of number of button item to disable sortable if there is only 1.
      */
@@ -37,6 +38,10 @@ export default class Preview extends PreviewCollection {
         }
     });
 
+    private debouncedResizeHandler = _.debounce(() => {
+        this.resizeChildButtons();
+    }, 350);
+
     public bindEvents() {
         super.bindEvents();
 
@@ -48,20 +53,22 @@ export default class Preview extends PreviewCollection {
 
         events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
             if (eventData.contentType.id === this.parent.id) {
-                this.resizeChildButtons();
+                this.debouncedResizeHandler();
             }
         });
 
         events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
             if (eventData.contentType.parent.id === this.parent.id) {
-                this.resizeChildButtons();
+                this.debouncedResizeHandler();
             }
         });
 
         events.on("stage:updateAfter", (eventData: StageUpdateAfterParamsInterface) => {
-            _.debounce(() => {
-                this.resizeChildButtons();
-            }, 500).call(this);
+            this.debouncedResizeHandler();
+        });
+
+        events.on("contentType:redrawAfter", (eventData: ContentTypeRedrawAfterEventParamsInterface) => {
+            this.debouncedResizeHandler();
         });
     }
 
@@ -135,7 +142,6 @@ export default class Preview extends PreviewCollection {
             containment: "parent",
             tolerance,
             revert: 200,
-            cursorAt: { left: 15, top: 15 },
             disabled: this.parent.children().length <= 1,
             /**
              * Provide custom helper element
@@ -222,8 +228,9 @@ export default class Preview extends PreviewCollection {
             /**
              * Logic for post sorting and removing the placeholderGhost
              */
-            stop() {
+            stop(event: Event, element: JQueryUI.SortableUIParams) {
                 placeholderGhost.remove();
+                element.item.find(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
                 events.trigger("stage:interactionStop");
             },
         };
@@ -235,40 +242,30 @@ export default class Preview extends PreviewCollection {
     private resizeChildButtons() {
         if (this.wrapperElement) {
             const buttonItems: JQuery = $(this.wrapperElement).find(".pagebuilder-button-item > a");
-            let buttonResizeValue: string|number = "";
+            let buttonResizeValue: number = 0;
             if (this.parent.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
-                    buttonItems.css("min-width", "");
-                    const currentLargestButton = this.findLargestButton(buttonItems);
-                    const currentLargestButtonWidth = currentLargestButton.outerWidth();
-                    if (currentLargestButtonWidth !== 0) {
-                        buttonResizeValue = currentLargestButtonWidth;
-                        this.currentMaxWidth(currentLargestButtonWidth);
-                    } else {
-                        buttonResizeValue = this.currentMaxWidth();
+                    const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
+                    const parentWrapperWidth = $(this.wrapperElement).width();
+                    if (currentLargestButtonWidth === 0) {
+                        return;
                     }
+                    buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
                 }
             }
+
             buttonItems.css("min-width", buttonResizeValue);
         }
     }
 
     /**
-     * Find the largest button which will determine the button width we use for re-sizing.
+     * Find the largest button width for calculating same size value.
      *
      * @param {JQuery} buttonItems
-     * @returns {JQuery}
+     * @returns {number}
      */
-    private findLargestButton(buttonItems: JQuery): JQuery {
-        let largestButton: JQuery|null = null;
-        buttonItems.each((index, element) => {
-            const buttonElement = $(element);
-            if (largestButton === null
-                || this.calculateButtonWidth(buttonElement) > this.calculateButtonWidth(largestButton)) {
-                largestButton = buttonElement;
-            }
-        });
-        return largestButton;
+    private findLargestButtonWidth(buttonItems: JQuery): number {
+        return _.max(_.map(buttonItems, (buttonItem) => this.calculateButtonWidth($(buttonItem))));
     }
 
     /**
@@ -278,10 +275,12 @@ export default class Preview extends PreviewCollection {
      * @returns {number}
      */
     private calculateButtonWidth(buttonItem: JQuery): number {
+        if (buttonItem.is(":visible") === false) {
+            return 0;
+        }
         const widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
-        const calculatedButtonWidth: number = widthProperties.reduce((accumulatedWidth, widthProperty): number => {
+        return widthProperties.reduce((accumulatedWidth, widthProperty): number => {
             return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
         }, buttonItem.find("[data-element='link_text']").width());
-        return calculatedButtonWidth;
     }
 }

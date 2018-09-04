@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _conditionalRemoveOption, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _conditionalRemoveOption, _preview) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -38,6 +38,48 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-
         preview: this
       }));
       return options;
+    };
+    /**
+     * Set state based on button click event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onButtonClick = function onButtonClick(context, event) {
+      // Ensure no other options panel and button drag handles are displayed
+      (0, _jquery)(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
+      (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
+      var currentTarget = (0, _jquery)(event.currentTarget);
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+
+      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = optionsMenu.first();
+      }
+
+      (0, _jquery)(currentTarget).find("[data-element='link_text']").focus();
+      optionsMenu.parent().addClass("pagebuilder-options-visible");
+      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
+    };
+    /**
+     * Set state based on blur event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onBlur = function onBlur(context, event) {
+      var currentTarget = event.currentTarget;
+      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+
+      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
+        optionsMenu = optionsMenu.first();
+      }
+
+      optionsMenu.parent().removeClass("pagebuilder-options-visible");
+      (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
     };
     /**
      * Focus out of the element

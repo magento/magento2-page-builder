@@ -87,22 +87,13 @@
     <xs:complexType name="elements">
         <xs:sequence>
             <xs:element type="element" name="element" minOccurs="1" maxOccurs="unbounded">
-                <xs:unique name="uniqueStyleName">
+                <xs:unique name="uniqueNames">
                     <xs:annotation>
                         <xs:documentation>
-                            Style name must be unique
+                            Attribute and Style names must be unique
                         </xs:documentation>
                     </xs:annotation>
-                    <xs:selector xpath="style"/>
-                    <xs:field xpath="@name"/>
-                </xs:unique>
-                <xs:unique name="uniqueAttributeName">
-                    <xs:annotation>
-                        <xs:documentation>
-                            Attribute name must be unique
-                        </xs:documentation>
-                    </xs:annotation>
-                    <xs:selector xpath="attribute"/>
+                    <xs:selector xpath="attribute|style"/>
                     <xs:field xpath="@name"/>
                 </xs:unique>
             </xs:element>
