@@ -4,8 +4,9 @@
  */
 define([
     'jquery',
+    'Magento_PageBuilder/js/events',
     'jquery/ui'
-], function ($) {
+], function ($, events) {
     'use strict';
 
     return function (config, element) {
@@ -29,6 +30,16 @@ define([
 
                     $element.find('.tabs-navigation').css('marginBottom', -borderWidth);
                     $element.find('.tabs-navigation li:not(:first-child)').css('marginLeft', -borderWidth);
+                },
+            activate:
+
+                /**
+                 * Trigger redraw event since new content is being displayed
+                 */
+                function () {
+                    events.trigger('contentType:redrawAfter', {
+                        element: element
+                    });
                 }
         }, element);
     };

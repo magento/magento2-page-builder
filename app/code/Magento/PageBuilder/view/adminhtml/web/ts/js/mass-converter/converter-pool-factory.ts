@@ -9,7 +9,6 @@ import ConverterPool from "./converter-pool";
 
 /**
  * Create a new instance of converter pool
- * @api
  */
 export default function create(contentType: string): Promise<typeof ConverterPool> {
     const config = Config.getContentTypeConfig(contentType);
