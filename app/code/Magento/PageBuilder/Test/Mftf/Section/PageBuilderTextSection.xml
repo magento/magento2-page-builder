@@ -55,7 +55,6 @@
         <element name="tinyMCE3" type="text" selector="#pagebuilder_text_form_content_tbl"/>
         <element name="tinyMCE3VariableBtn" type="text" selector="#pagebuilder_text_form_content_magentovariable"/>
         <element name="tinyMCE3WidgetBtn" type="text" selector="#pagebuilder_text_form_content_magentowidget"/>
-        <element name="panelFieldValidationErrorMessage" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__control-wysiwig')]//..//../label[.='{{arg2}}']" parameterized="true"/>
         <!-- WYSIWYG Disabled -->
         <element name="textArea" type="text" selector="#pagebuilder_text_form_content"/>
         <element name="textAreaId" type="text" selector="pagebuilder_text_form_content"/>
@@ -96,35 +95,9 @@
         <element name="noPadding" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'padding:'))]" parameterized="true"/>
         <element name="emptyText" type="text" selector="//div[@data-role='text']/p[not(text())]"/>
     </section>
-    <section name="TextOnBackend">
-        <element name="textInstance" type="button" selector='//div[contains(@class, "pagebuilder-text")][1]/div[1]'/>
-        <element name="textArea" type="text" selector='#pagebuilder_text_form_content'/>
-        <element name="triggerValidation" type="button" selector='div.modal-content div.mce-edit-area'/>
-    </section>
-    <section name="TextOnSlider">
-        <element name="textArea" type="text" selector="#pagebuilder_slide_form_content"/>
-    </section>
     <!-- Move the below elements to CE after code freeze -->
     <section name="moveToCE">
         <element name="SelectPageButton" type="button" selector="//button[@title='Select Page...']"/>
         <element name="generalFilter" type="input" selector="input.admin__control-text[name='{{arg1}}']" parameterized="true"/>
-    </section>
-    <section name="WYSIWYGOnPageBuilder">
-        <element name="undo" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Undo']"/>
-        <element name="redo" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Redo']"/>
-        <element name="fontSize" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Font Sizes']"/>
-        <element name="lineHeight" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Line Height']"/>
-        <element name="textColor" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Text color']"/>
-        <element name="backgroundColor" type="button" selector=".mce-tinymce:not(.mce-tinymce-inline) div[aria-label='Background color']"/>
-        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce') and not(contains(@class, 'mce-tinymce-inline'))]//span[text()='Formats']"/>
-    </section>
-    <section name="WYSIWYGOnPageBuilderInline">
-        <element name="undo" type="button" selector=".mce-tinymce-inline div[aria-label='Undo']"/>
-        <element name="redo" type="button" selector=".mce-tinymce-inline div[aria-label='Redo']"/>
-        <element name="fontSize" type="button" selector=".mce-tinymce-inline div[aria-label='Font Sizes']"/>
-        <element name="lineHeight" type="button" selector=".mce-tinymce-inline div[aria-label='Line Height']"/>
-        <element name="textColor" type="button" selector=".mce-tinymce-inline div[aria-label='Text color']"/>
-        <element name="backgroundColor" type="button" selector=".mce-tinymce-inline div[aria-label='Background color']"/>
-        <element name="formatSelector" type="button" selector="//div[contains(@class, 'mce-tinymce')]//span[text()='Formats']"/>
     </section>
 </sections>
