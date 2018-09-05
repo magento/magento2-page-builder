@@ -14,4 +14,30 @@
         margin-bottom: 15px;
         margin-top: 15px;
     }
+
+    .admin__field {
+        &._error {
+            .admin__field-control > .admin__field-design-options > .layout-onion {
+                border: 1px solid @field-error-control__border-color;
+                overflow: hidden;
+            }
+        }
+    }
+
+    ._required {
+        > .admin__field-label {
+            > label:after {
+                color: @color-tomato-brick;
+                content: '*';
+                display: inline-block;
+                font-size: 1.6rem;
+                font-weight: 500;
+                line-height: 1;
+                margin-left: 10px;
+                margin-top: .2rem;
+                position: absolute;
+                z-index: 1;
+            }
+        }
+    }
 }

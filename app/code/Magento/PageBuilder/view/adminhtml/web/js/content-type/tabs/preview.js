@@ -268,6 +268,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       this.setFocusedTab(index);
+
+      _events.trigger("contentType:redrawAfter", {
+        id: this.parent.id,
+        contentType: this
+      });
     };
     /**
      * Copy over border styles to the tab headers

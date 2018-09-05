@@ -298,34 +298,33 @@
         </after>
         <!-- Validate Layout group-->
         <comment userInput="Validate layout group" stepKey="commentValidatePanel1"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '1', 'Row')}}" stepKey="validateContentType1"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '2', 'Column')}}" stepKey="validateContentType2"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentType3"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '1', 'Row')}}" stepKey="validateContentTypeRow"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '2', 'Column')}}" stepKey="validateContentTypeColumn"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('1', 'Layout', '3', 'Tabs')}}" stepKey="validateContentTypeTabs"/>
         <click selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="closeLayoutGroup"/>
         <!-- Validate Elements group -->
         <comment userInput="Validate elements group" stepKey="commentValidatePanel2"/>
         <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="openElementGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '1', 'Text')}}" stepKey="validateContentType5"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '2', 'Heading')}}" stepKey="validateContentType6"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '3', 'Buttons')}}" stepKey="validateContentType7"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '4', 'Divider')}}" stepKey="validateContentType8"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '5', 'Newsletter')}}" stepKey="validateContentType9"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '6', 'HTML Code')}}" stepKey="validateContentType11"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '1', 'Text')}}" stepKey="validateContentTypeText"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '2', 'Heading')}}" stepKey="validateContentTypeHeading"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '3', 'Buttons')}}" stepKey="validateContentTypeButtons"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '4', 'Divider')}}" stepKey="validateContentTypeDivider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('2', 'Elements', '5', 'HTML Code')}}" stepKey="validateContentTypeHTML"/>
         <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="closeElementGroup"/>
         <!-- Validate Media Group -->
         <comment userInput="Validate media group" stepKey="commentValidatePanel3"/>
         <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="openMediaGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '1', 'Image')}}" stepKey="validateContentType12"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '2', 'Video')}}" stepKey="validateContentType13"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '3', 'Banner')}}" stepKey="validateContentType14"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '4', 'Slider')}}" stepKey="validateContentType15"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '5', 'Map')}}" stepKey="validateContentType16"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '1', 'Image')}}" stepKey="validateContentTypeImage"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '2', 'Video')}}" stepKey="validateContentTypeVideo"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '3', 'Banner')}}" stepKey="validateContentTypeBanner"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '4', 'Slider')}}" stepKey="validateContentTypeSlider"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('3', 'Media', '5', 'Map')}}" stepKey="validateContentTypeMap"/>
         <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="closeMediaGroup"/>
         <!-- Validate Add Content Group -->
         <comment userInput="Validate add content group" stepKey="commentValidatePanel4"/>
         <click selector="{{PageBuilderPanel.panelGroup('Add Content')}}" stepKey="openAddContentGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('4', 'Add Content', '1', 'Block')}}" stepKey="validateContentType17"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentType18"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('4', 'Add Content', '1', 'Block')}}" stepKey="validateContentTypeBlock"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeInGroup('4', 'Add Content', '2', 'Products')}}" stepKey="validateContentTypeProducts"/>
         <click selector="{{PageBuilderPanel.panelGroup('Add Content')}}" stepKey="closeAddContentGroup"/>
     </test>
     <test name="ValidatePanelDefaultState">
@@ -375,34 +374,33 @@
         </after>
         <!-- Validate Layout Icons -->
         <comment userInput="Validate layout icons" stepKey="commentValidatePanel1"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('row','Row')}}" stepKey="validateIcon1"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('column','Column')}}" stepKey="validateIcon2"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('tabs','Tabs')}}" stepKey="validateIcon3"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('row','Row')}}" stepKey="validateRowIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('column','Column')}}" stepKey="validateColumnIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('tabs','Tabs')}}" stepKey="validateTabsIcon"/>
         <click selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="closeLayoutGroup"/>
         <!-- Validate Elements Icons -->
         <comment userInput="Validate elements icons" stepKey="commentValidatePanel2"/>
         <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="openElementsGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('text','Text')}}" stepKey="validateIcon5"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('heading','Heading')}}" stepKey="validateIcon6"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('button','Buttons')}}" stepKey="validateIcon7"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('divider','Divider')}}" stepKey="validateIcon8"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('newsletter','Newsletter')}}" stepKey="validateIcon9"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('code','HTML Code')}}" stepKey="validateIcon10"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('text','Text')}}" stepKey="validateTextIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('heading','Heading')}}" stepKey="validateHeadingIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('button','Buttons')}}" stepKey="validateButtonsIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('divider','Divider')}}" stepKey="validateDividerIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('code','HTML Code')}}" stepKey="validateHTMLIcon"/>
         <click selector="{{PageBuilderPanel.panelGroup('Elements')}}" stepKey="closeElementsGroup"/>
         <!-- Validate Media Icons -->
         <comment userInput="Validate media icons" stepKey="commentValidatePanel3"/>
         <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="openMediaGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('image','Image')}}" stepKey="validateIcon12"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('video','Video')}}" stepKey="validateIcon13"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('banner','Banner')}}" stepKey="validateIcon14"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('slider','Slider')}}" stepKey="validateIcon15"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('map','Map')}}" stepKey="validateIcon16"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('image','Image')}}" stepKey="validateImageIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('video','Video')}}" stepKey="validateVideoIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('banner','Banner')}}" stepKey="validateBannerIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('slider','Slider')}}" stepKey="validateSliderIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('map','Map')}}" stepKey="validateMapIcon"/>
         <click selector="{{PageBuilderPanel.panelGroup('Media')}}" stepKey="closeMediaGroup"/>
         <!-- Validate Add Content Icons -->
         <comment userInput="Validate add content icons" stepKey="commentValidatePanel4"/>
         <click selector="{{PageBuilderPanel.panelGroup('Add Content')}}" stepKey="openAddContentGroup"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('block','Block')}}" stepKey="validateIcon17"/>
-        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('products','Products')}}" stepKey="validateIcon18"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('block','Block')}}" stepKey="validateBlockIcon"/>
+        <seeElement selector="{{PageBuilderPanel.contentTypeWithIcon('products','Products')}}" stepKey="validateProductsIcon"/>
     </test>
     <test name="HeaderFixedInFullScreen">
         <annotations>

@@ -7,8 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="type2" translate="label" label="Type 2" icon="pagebuilder-type2-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type2_form" group="group1">
-        <backend_block>Path/to/backend/block</backend_block>
-        <backend_template>Path/to/backend/template</backend_template>
         <is_visible>true</is_visible>
         <parents default_policy="deny">
             <parent name="stage" policy="allow"/>
@@ -31,9 +29,9 @@
                         <attribute name="name" source="data-role"/>
                         <attribute name="attribute_change" source="data-change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" persistence_mode="read"/>
                         <attribute name="attribute_add" source="attribute_add"/>
-                        <attribute name="original_complex" reader="Path/to/reader"/>
-                        <attribute name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" reader="Path/to/reader" persistence_mode="read"/>
-                        <attribute name="complex_style_attributes_add" reader="Path/to/reader"/>
+                        <attribute name="original_complex_attribute" reader="Path/to/reader"/>
+                        <attribute name="complex_attribute_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" reader="Path/to/reader" persistence_mode="read"/>
+                        <attribute name="complex_attribute_add" reader="Path/to/reader"/>
                         <static_attribute source="original_static" value="original_value"/>
                         <static_attribute source="static_attribute_change" value="value"/>
                         <tag name="tag" converter="Path/to/converter"/>

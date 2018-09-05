@@ -7,8 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="type2" translate="label" sortOrder="2" label="Type 2 Label" icon="pagebuilder-type2-custom-icon" component="Path/to/custom/component" preview_component="Path/to/preview/custom/component" form="pagebuilder_type2_custom_form" group="group2">
-        <backend_block>Path/to/custom/backend/block</backend_block>
-        <backend_template>Path/to/custom/backend/template</backend_template>
         <is_visible>false</is_visible>
         <parents>
             <parent name="stage" policy="deny"/>
@@ -34,9 +32,9 @@
                         <attribute name="attribute_change" source="data-custom" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
                         <attribute name="attribute_add" source="attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
                         <attribute name="new_attribute" source="data-new" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persistence_mode="write"/>
-                        <attribute name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
-                        <attribute name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
-                        <attribute name="new_complex" reader="Path/to/reader"/>
+                        <attribute name="complex_attribute_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <attribute name="complex_attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" reader="Path/to/custom/reader" persistence_mode="write"/>
+                        <attribute name="new_complex_attribute" reader="Path/to/reader"/>
                         <static_attribute source="static_attribute_change" value="custom_value"/>
                         <static_attribute source="new_static" value="new-value"/>
                         <tag name="tag" converter="Path/to/custom/converter"/>

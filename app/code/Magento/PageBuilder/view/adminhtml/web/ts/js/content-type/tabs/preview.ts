@@ -267,7 +267,13 @@ export default class Preview extends PreviewCollection {
         if ($(event.target).parents(".pagebuilder-options").length > 0) {
             return;
         }
+
         this.setFocusedTab(index);
+
+        events.trigger("contentType:redrawAfter", {
+            id: this.parent.id,
+            contentType: this,
+        });
     }
 
     /**

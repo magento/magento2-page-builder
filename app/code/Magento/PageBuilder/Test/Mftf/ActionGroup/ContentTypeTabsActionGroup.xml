@@ -9,9 +9,13 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addTab">
+        <arguments>
+            <argument name="x" defaultValue="10" type="string"/>
+            <argument name="y" defaultValue="0" type="string"/>
+        </arguments>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderTabsContentType.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderTabsContentType.role)}}" stepKey="clickAddContentType"/>
@@ -21,10 +25,12 @@
         <arguments>
             <argument name="from" defaultValue="1" type="string"/>
             <argument name="to" defaultValue="2" type="string"/>
+            <argument name="x" defaultValue="10" type="string"/>
+            <argument name="y" defaultValue="0" type="string"/>
         </arguments>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForMouseOverAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderTabsContentType.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderTabsContentType.role)}}" stepKey="clickAddContentType"/>
