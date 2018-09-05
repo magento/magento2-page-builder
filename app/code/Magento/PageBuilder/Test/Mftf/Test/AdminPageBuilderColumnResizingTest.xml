@@ -271,7 +271,7 @@
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize1v4And2v1">
+    <test name="ColumnResize4to1to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
@@ -282,8 +282,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
-            <!-- MC-2434 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -299,18 +297,21 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Grab grid guide width (-8 due to how picky the guide is) -->
+        <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('8')}}').clientWidth-8" stepKey="guideWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 4:1:1 Ratio -->
         <comment userInput="Change Columns To 4:1:1 Ratio" stepKey="context1"/>
-        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToFour"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToEight"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
