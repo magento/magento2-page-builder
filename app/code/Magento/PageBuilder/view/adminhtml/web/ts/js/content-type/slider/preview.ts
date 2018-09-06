@@ -319,6 +319,10 @@ export default class Preview extends PreviewCollection {
                 const data = this.parent.children().slice(0);
                 this.parent.children([]);
                 this.parent.children(data);
+
+                _.defer(() => {
+                    this.buildSlick();
+                });
             }
         });
 
