@@ -22,7 +22,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
-      _this.focusedTab = _knockout.observable();
+      _this.focusedTab = _knockout.observable(null);
       _this.disableInteracting = void 0;
       _this.element = void 0;
       _this.ready = void 0;
@@ -31,7 +31,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       Promise.all([_this.onContainerRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];
-        // Wait until all children's DOM elements are present before building the tabs instance
+        // We always create 1 tab when dropping tabs into the instance
+        expectedChildren = expectedChildren || 1; // Wait until all children's DOM elements are present before building the tabs instance
+
         (0, _delayUntil)(function () {
           _this.element = element;
 
@@ -478,7 +480,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           create: function create() {
             _this4.ready = true; // Ensure focus tab is restored after a rebuild cycle
 
-            if (focusedTab) {
+            if (focusedTab !== null) {
               _this4.setFocusedTab(focusedTab, true);
             } else {
               _this4.setFocusedTab(null);

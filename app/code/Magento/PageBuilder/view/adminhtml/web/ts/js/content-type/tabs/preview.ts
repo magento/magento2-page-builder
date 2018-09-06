@@ -35,7 +35,7 @@ import PreviewCollection from "../preview-collection";
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public focusedTab: KnockoutObservable<number> = ko.observable();
+    public focusedTab: KnockoutObservable<number> = ko.observable(null);
     private disableInteracting: boolean;
     private element: Element;
     private ready: boolean;
@@ -59,6 +59,8 @@ export default class Preview extends PreviewCollection {
             this.onContainerRenderDeferred.promise,
             this.mountAfterDeferred.promise,
         ]).then(([element, expectedChildren]) => {
+            // We always create 1 tab when dropping tabs into the instance
+            expectedChildren = expectedChildren || 1;
             // Wait until all children's DOM elements are present before building the tabs instance
             delayUntil(
                 () => {
@@ -463,7 +465,7 @@ export default class Preview extends PreviewCollection {
                 create: () => {
                     this.ready = true;
                     // Ensure focus tab is restored after a rebuild cycle
-                    if (focusedTab) {
+                    if (focusedTab !== null) {
                         this.setFocusedTab(focusedTab, true);
                     } else {
                         this.setFocusedTab(null);
