@@ -17,13 +17,14 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
+import delayUntil from "../../utils/delay-until";
+import deferred from "../../utils/promise-deferred";
+import DeferredInterface from "../../utils/promise-deferred.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
@@ -43,13 +44,17 @@ export default class Preview extends PreviewCollection {
     };
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
+    private ready: boolean;
+    private onAfterRenderDeferred: DeferredInterface = deferred();
+    private mountAfterDeferred: DeferredInterface = deferred();
 
     /**
-     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
+     * Initialize Slick after DOM has updated
      *
      * @type {(() => any) & _.Cancelable}
      */
-    private buildSlick = _.debounce(() => {
+    private buildSlick = () => {
+        this.ready = false;
         if (this.element && this.element.children.length > 0) {
             try {
                 $(this.element).slick("unslick");
@@ -78,6 +83,7 @@ export default class Preview extends PreviewCollection {
                     this.buildSlickConfig(),
                 ),
             );
+            this.ready = true;
 
             // Update our KO pointer to the active slide on change
             $(this.element).on(
@@ -95,22 +101,19 @@ export default class Preview extends PreviewCollection {
                 }
             });
         }
-    }, 500);
+    }
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
-
-        this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-        this.parent.dataStore.subscribe(this.buildSlick);
 
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
@@ -119,6 +122,25 @@ export default class Preview extends PreviewCollection {
             } else {
                 events.trigger("stage:interactionStop");
             }
+        });
+
+        // Wait for the tabs instance to mount and the container to be ready
+        Promise.all([
+            this.onAfterRenderDeferred.promise,
+            this.mountAfterDeferred.promise,
+        ]).then(([element, expectedChildren]) => {
+            // We always create 1 slide when dropping slider into the instance
+            expectedChildren = expectedChildren || 1;
+            // Wait until all children's DOM elements are present before building the Slick instance
+            delayUntil(
+                () => {
+                    this.element = element as HTMLElement;
+                    this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
+                    this.parent.dataStore.subscribe(this.buildSlick);
+                    this.buildSlick();
+                },
+                () => $(element).find(".pagebuilder-slider").length === expectedChildren,
+            );
         });
     }
 
@@ -142,9 +164,11 @@ export default class Preview extends PreviewCollection {
 
     /**
      * Capture an after render event
+     *
+     * @param {HTMLElement} element
      */
-    public onAfterRender(): void {
-        this.buildSlick();
+    public onAfterRender(element: HTMLElement): void {
+        this.onAfterRenderDeferred.resolve(element);
     }
 
     /**
@@ -291,10 +315,9 @@ export default class Preview extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         // We only start forcing the containers height once the slider is ready
-        let sliderReady: boolean = false;
-        events.on("slider:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
-                sliderReady = true;
+        events.on("slider:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.parent.id && args.expectChildren !== undefined) {
+                this.mountAfterDeferred.resolve(args.expectChildren);
             }
         });
 
@@ -343,7 +366,7 @@ export default class Preview extends PreviewCollection {
 
         // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
         events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
+            if (this.element && this.ready && args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });

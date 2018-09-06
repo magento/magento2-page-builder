@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -11,20 +11,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
-     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
+     * Initialize Slick after DOM has updated
      *
      * @type {(() => any) & _.Cancelable}
      */
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Set the stage to interacting when a slide is focused
+
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
@@ -33,7 +34,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       };
       _this.childSubscribe = void 0;
       _this.contentTypeHeightReset = void 0;
-      _this.buildSlick = _underscore.debounce(function () {
+      _this.ready = void 0;
+      _this.onAfterRenderDeferred = (0, _promiseDeferred)();
+      _this.mountAfterDeferred = (0, _promiseDeferred)();
+
+      _this.buildSlick = function () {
+        _this.ready = false;
+
         if (_this.element && _this.element.children.length > 0) {
           try {
             (0, _jquery)(_this.element).slick("unslick");
@@ -57,7 +64,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           (0, _jquery)(_this.element).slick(Object.assign({
             initialSlide: _this.activeSlide() || 0
-          }, _this.buildSlickConfig())); // Update our KO pointer to the active slide on change
+          }, _this.buildSlickConfig()));
+          _this.ready = true; // Update our KO pointer to the active slide on change
 
           (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
             _this.setActiveSlide(nextSlide);
@@ -71,11 +79,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             }
           });
         }
-      }, 500);
-      _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
-
-      _this.parent.dataStore.subscribe(_this.buildSlick); // Set the stage to interacting when a slide is focused
-
+      };
 
       _this.focusedSlide.subscribe(function (value) {
         if (value !== null) {
@@ -83,8 +87,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           _events.trigger("stage:interactionStop");
         }
-      });
+      }); // Wait for the tabs instance to mount and the container to be ready
 
+
+      Promise.all([_this.onAfterRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
+        var element = _ref[0],
+            expectedChildren = _ref[1];
+        // We always create 1 slide when dropping slider into the instance
+        expectedChildren = expectedChildren || 1; // Wait until all children's DOM elements are present before building the Slick instance
+
+        (0, _delayUntil)(function () {
+          _this.element = element;
+          _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
+
+          _this.parent.dataStore.subscribe(_this.buildSlick);
+
+          _this.buildSlick();
+        }, function () {
+          return (0, _jquery)(element).find(".pagebuilder-slider").length === expectedChildren;
+        });
+      });
       return _this;
     }
     /**
@@ -111,11 +133,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     };
     /**
      * Capture an after render event
+     *
+     * @param {HTMLElement} element
      */
 
 
-    _proto.onAfterRender = function onAfterRender() {
-      this.buildSlick();
+    _proto.onAfterRender = function onAfterRender(element) {
+      this.onAfterRenderDeferred.resolve(element);
     };
     /**
      * Set an active slide for navigation dot
@@ -294,11 +318,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.bindEvents.call(this); // We only start forcing the containers height once the slider is ready
 
 
-      var sliderReady = false;
-
       _events.on("slider:mountAfter", function (args) {
-        if (args.id === _this4.parent.id) {
-          sliderReady = true;
+        if (args.id === _this4.parent.id && args.expectChildren !== undefined) {
+          _this4.mountAfterDeferred.resolve(args.expectChildren);
         }
       }); // Set the active slide to the new position of the sorted slide
 
@@ -354,7 +376,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
       _events.on("slide:createAfter", function (args) {
-        if (_this4.element && sliderReady && args.contentType.parent.id === _this4.parent.id) {
+        if (_this4.element && _this4.ready && args.contentType.parent.id === _this4.parent.id) {
           _this4.forceContainerHeight();
         }
       }); // ContentType being mounted onto container
