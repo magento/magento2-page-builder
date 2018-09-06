@@ -16,7 +16,7 @@
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Tabs."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86999"/>
-            <testCaseId value="MAGETWO-89441"/>
+            <testCaseId value="MC-2551"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -83,7 +83,7 @@
             <description value="Configure Tabs navigation alignment to center and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86999"/>
-            <testCaseId value="MAGETWO-89993"/>
+            <testCaseId value="MC-2519"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -138,7 +138,7 @@
             <description value="Configure Tabs navigation alignment to right and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86999"/>
-            <testCaseId value="MAGETWO-90082"/>
+            <testCaseId value="MC-2879"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -193,7 +193,7 @@
             <description value="Configure Tabs Default Active Tab to second tab and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86999"/>
-            <testCaseId value="MAGETWO-90083"/>
+            <testCaseId value="MC-2903"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -251,7 +251,7 @@
             <description value="Configure Tabs minimum height and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86999"/>
-            <testCaseId value="MAGETWO-90084"/>
+            <testCaseId value="MC-2697"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -310,7 +310,7 @@
             <description value="Configure Tabs advanced settings and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86999"/>
-            <testCaseId value="MAGETWO-89997"/>
+            <testCaseId value="MC-2876"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -462,12 +462,13 @@
             <description value="Tabs should duplicate empty state"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88855"/>
-            <testCaseId value="MAGETWO-90678"/>
+            <testCaseId value="MC-3014"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
-            <!-- MC-2335 -->
-            <group value="skip"/>
+            <skip>
+                <issueId value="MC-2335"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -514,7 +515,7 @@
             <description value="Tabs should duplicate configured tab"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88855"/>
-            <testCaseId value="MAGETWO-90679"/>
+            <testCaseId value="MC-2811"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -591,7 +592,7 @@
             <description value="Tab should duplicate with text content inside tab container"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88855"/>
-            <testCaseId value="MAGETWO-90680"/>
+            <testCaseId value="MC-2907"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabGroup"/>
@@ -623,6 +624,7 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>

@@ -36,7 +36,7 @@ ko.bindingHandlers.liveEdit = {
      * @param {KnockoutBindingContext} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const {field, placeholder} = valueAccessor();
+        const {field, placeholder, selectAll = false} = valueAccessor();
         let focusedValue = element.innerHTML;
         /**
          * Strip HTML and return text
@@ -71,7 +71,7 @@ ko.bindingHandlers.liveEdit = {
          * Click event on element
          */
         const onClick = () => {
-            if (element.innerHTML !== "") {
+            if (selectAll && element.innerHTML !== "") {
                 document.execCommand("selectAll", false, null);
             }
         };
