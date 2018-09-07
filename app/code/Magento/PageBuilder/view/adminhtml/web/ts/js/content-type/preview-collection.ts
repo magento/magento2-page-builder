@@ -69,6 +69,19 @@ export default class PreviewCollection extends Preview {
     }
 
     /**
+     * Tries to call specified method of a current content type,
+     * and delegates attempt to its' children.
+     * @param args
+     */
+    public delegate(...args: any[]) {
+        super.delegate(...args);
+
+        this.parent.getChildren().each((elem: ContentTypeInterface) => {
+            elem.preview.delegate.apply(elem.preview, args);
+        });
+    }
+
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}

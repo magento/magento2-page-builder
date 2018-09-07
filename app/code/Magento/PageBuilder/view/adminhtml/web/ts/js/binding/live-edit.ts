@@ -77,6 +77,15 @@ ko.bindingHandlers.liveEdit = {
         };
 
         /**
+         * Mousedown event on element
+         *
+         * @param {Event} event
+         */
+        const onMouseDown = (event: Event) => {
+            event.stopPropagation();
+        };
+
+        /**
          * Key down event on element
          *
          * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
@@ -153,6 +162,7 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
+        element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);

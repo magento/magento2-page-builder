@@ -45,7 +45,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="validateTextAlignment" stepKey="validateAlignment">
@@ -342,7 +341,6 @@
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
         <!-- Fill All Advanced Fields -->
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterTextAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -673,19 +671,18 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <!-- Validate content type is enabled in Storefront -->
         <comment userInput="Validate content type is enabled in Storefront" stepKey="commentValidateShownStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
+        <seeElement selector="{{TabOnStorefront.tabContentText('1')}}" stepKey="seeTextElementInTabContent"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <!-- Due to background images on tabs we must check the 3rd element for the second tab on desktop -->
-        <waitForElementVisible selector="{{TextOnStorefront.notHidden('3')}}" stepKey="waitForContentTypeShownStorefront2"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent"/>
+        <waitForElementVisible selector="{{TextOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
+        <seeElement selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent2"/>
     </test>
     <test name="TabsCannotAddToStage">
         <annotations>

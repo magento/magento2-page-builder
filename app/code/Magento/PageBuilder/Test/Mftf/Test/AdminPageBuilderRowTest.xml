@@ -310,7 +310,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
-            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-slide"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -379,7 +379,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -432,7 +431,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -499,7 +497,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -548,7 +545,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -595,7 +591,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -767,9 +762,6 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundAttachment">
             <argument name="property" value="PageBuilderRowBackgroundAttachment_Default"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackground">
-            <argument name="section" value="ParallaxBackgroundForm"/>
-        </actionGroup>
         <!-- Validate Parallax Background Fields Not Required -->
         <comment userInput="Validate Parallax Background Fields Not Required" stepKey="commentParallaxBackground"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackground">
@@ -814,25 +806,25 @@
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
-            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty1">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPosition">
-            <argument name="property" value="PageBuilderRowBackgroundPosition_Centered"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty2">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundSize">
-            <argument name="property" value="PageBuilderRowBackgroundSize_Contain"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enableBackgroundRepeat">
-            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachment">
-            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="setBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackgroundSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="setBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enableParallaxBackground">
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>
@@ -846,7 +838,6 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterVerticalAlignmentCenterProperty">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -900,14 +891,14 @@
         </actionGroup>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateBackgroundOnStage">
-            <argument name="page" value="RowOnStage"/>
+            <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
-            <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
-            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Centered"/>
-            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Contain"/>
-            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStage">
             <argument name="page" value="RowOnStage"/>
@@ -943,26 +934,26 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
-            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
-            <argument name="property" value="PageBuilderRowBackgroundPosition_Centered"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeBackgroundMobileImage">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
-            <argument name="property" value="PageBuilderRowBackgroundSize_Contain"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPosition">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
-            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeBackgroundRepeat">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
-            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackgroundSection2">
-            <argument name="section" value="ParallaxBackgroundForm"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachment">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateParallaxBackgroundEnabled">
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>
@@ -976,7 +967,6 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateVerticalAlignContent">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1010,15 +1000,15 @@
         <comment userInput="Validate content type is enabled after save" stepKey="commentValidateShownOnStage"/>
         <waitForElementVisible selector="{{RowOnStage.notHidden('1')}}" stepKey="waitForContentTypeShown1"/>
         <waitForElementVisible selector="{{RowOnStage.notHidden('2')}}" stepKey="waitForContentTypeShown2"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateBackgroundOnStage2">
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateBackgroundAttributesDuplicate">
             <argument name="page" value="RowOnStage"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
-            <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
-            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Centered"/>
-            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Contain"/>
-            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStage2">
             <argument name="page" value="RowOnStage"/>
@@ -1054,26 +1044,26 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance2">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor2">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorDuplicate">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
-        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage2">
-            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeBackgroundImageDuplicate">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
-            <argument name="property" value="PageBuilderRowBackgroundPosition_Centered"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeBackgroundMobileImageDuplicate">
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
-            <argument name="property" value="PageBuilderRowBackgroundSize_Contain"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionDuplicate">
+            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
-            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeBackgroundRepeatDuplicate">
+            <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
-            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundSizeDuplicate">
+            <argument name="property" value="PageBuilderBackgroundSize_Auto"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackgroundSection3">
-            <argument name="section" value="ParallaxBackgroundForm"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentDuplicate">
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateParallaxBackgroundEnabled2">
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>
@@ -1087,7 +1077,6 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateVerticalAlignContent2">
             <argument name="property" value="PageBuilderVerticalAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1124,12 +1113,12 @@
         <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateOnStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>
             <argument name="index" value="2"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
-            <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
-            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Centered"/>
-            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Contain"/>
-            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Enabled"/>
-            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_TopLeft"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Auto"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStorefront">
             <argument name="page" value="RowOnStorefront_FullWidth_FullBleed"/>

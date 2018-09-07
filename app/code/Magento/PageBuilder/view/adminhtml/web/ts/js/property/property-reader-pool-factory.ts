@@ -9,7 +9,6 @@ import PropertyReaderPool from "./property-reader-pool";
 
 /**
  * Create a new instance of property reader pool
- * @api
  */
 export default function create(contentType: string): Promise<typeof PropertyReaderPool> {
     const config = Config.getContentTypeConfig(contentType);

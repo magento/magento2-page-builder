@@ -7,7 +7,6 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
 
   /**
    * Create a new instance of converter pool
-   * @api
    */
   function create(contentType) {
     var config = _config.getContentTypeConfig(contentType);

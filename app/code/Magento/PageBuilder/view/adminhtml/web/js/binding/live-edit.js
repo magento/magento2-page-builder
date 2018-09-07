@@ -93,6 +93,16 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
         }
       };
       /**
+       * Mousedown event on element
+       *
+       * @param {Event} event
+       */
+
+
+      var onMouseDown = function onMouseDown(event) {
+        event.stopPropagation();
+      };
+      /**
        * Key down event on element
        *
        * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
@@ -180,6 +190,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
+      element.addEventListener("mousedown", onMouseDown);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("input", onInput);
       element.addEventListener("drop", onDrop);
