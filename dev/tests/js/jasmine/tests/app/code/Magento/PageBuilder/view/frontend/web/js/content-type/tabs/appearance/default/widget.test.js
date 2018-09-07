@@ -20,7 +20,8 @@ define([
 
             expect($.ui.tabs).toHaveBeenCalledWith({
                 active: 1,
-                create: jasmine.any(Function)
+                create: jasmine.any(Function),
+                activate: jasmine.any(Function)
             }, el);
         });
 
@@ -33,7 +34,8 @@ define([
 
             expect($.ui.tabs).toHaveBeenCalledWith({
                 active: 0,
-                create: jasmine.any(Function)
+                create: jasmine.any(Function),
+                activate: jasmine.any(Function)
             }, el);
         });
     });

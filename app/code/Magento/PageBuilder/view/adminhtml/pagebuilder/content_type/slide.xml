@@ -6,30 +6,30 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-    <type name="banner"
-          label="Banner"
+    <type name="slide"
+          label="Slide"
           component="Magento_PageBuilder/js/content-type"
-          preview_component="Magento_PageBuilder/js/content-type/banner/preview"
-          form="pagebuilder_banner_form"
+          preview_component="Magento_PageBuilder/js/content-type/slide/preview"
+          form="pagebuilder_slide_form"
           group="media"
-          icon="icon-pagebuilder-banner"
-          sortOrder="30"
-          translate="label">
+          icon="icon-pagebuilder-slider"
+          translate="label"
+          is_hideable="false">
+        <parents default_policy="deny">
+            <parent name="slider" policy="allow"/>
+        </parents>
         <children default_policy="deny"/>
         <appearances>
             <appearance name="collage-left"
-                        preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                        preview_template="Magento_PageBuilder/content-type/slide/collage-left/preview"
+                        render_template="Magento_PageBuilder/content-type/slide/collage-left/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color"/>
-                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
                         <attribute name="name" source="data-role"/>
+                        <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
                         <attribute name="show_overlay" source="data-show-overlay"/>
@@ -42,12 +42,16 @@
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
                     <element name="overlay">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/slide/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color" persistence_mode="read"/>
+                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency" persistence_mode="read"/>
+                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
                     </element>
                     <element name="desktop_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
@@ -55,10 +59,13 @@
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
-                        <style name="margins_and_padding" source="padding" converter="Magento_PageBuilder/js/converter/style/paddings" persistence_mode="write"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                     </element>
                     <element name="mobile_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
@@ -66,19 +73,18 @@
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                     </element>
                     <element name="content">
-                        <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                        <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                     </element>
                     <element name="button">
-                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" persistence_mode="write"/>
-                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" persistence_mode="write"/>
+                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-opacity" persistence_mode="write"/>
+                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-visibility" persistence_mode="write"/>
                         <html name="button_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
                         <css name="button_type">
                             <filter>
-                                <class source="pagebuilder-banner-button"/>
+                                <class source="pagebuilder-slider-button"/>
                             </filter>
                         </css>
                     </element>
@@ -93,18 +99,14 @@
                 </converters>
             </appearance>
             <appearance name="collage-centered"
-                        preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                        preview_template="Magento_PageBuilder/content-type/slide/collage-centered/preview"
+                        render_template="Magento_PageBuilder/content-type/slide/collage-centered/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color"/>
-                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
                         <attribute name="name" source="data-role"/>
+                        <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
                         <attribute name="show_overlay" source="data-show-overlay"/>
@@ -117,12 +119,16 @@
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
                     <element name="overlay">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/slide/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color" persistence_mode="read"/>
+                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency" persistence_mode="read"/>
+                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
                     </element>
                     <element name="desktop_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
@@ -130,10 +136,13 @@
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
-                        <style name="margins_and_padding" source="padding" converter="Magento_PageBuilder/js/converter/style/paddings" persistence_mode="write"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                     </element>
                     <element name="mobile_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
@@ -141,19 +150,18 @@
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                     </element>
                     <element name="content">
-                        <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                        <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                     </element>
                     <element name="button">
-                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" persistence_mode="write"/>
-                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" persistence_mode="write"/>
+                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-opacity" persistence_mode="write"/>
+                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-visibility" persistence_mode="write"/>
                         <html name="button_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
                         <css name="button_type">
                             <filter>
-                                <class source="pagebuilder-banner-button"/>
+                                <class source="pagebuilder-slider-button"/>
                             </filter>
                         </css>
                     </element>
@@ -168,18 +176,14 @@
                 </converters>
             </appearance>
             <appearance name="collage-right"
-                        preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                        preview_template="Magento_PageBuilder/content-type/slide/collage-right/preview"
+                        render_template="Magento_PageBuilder/content-type/slide/collage-right/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color"/>
-                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
                         <attribute name="name" source="data-role"/>
+                        <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
                         <attribute name="show_overlay" source="data-show-overlay"/>
@@ -192,12 +196,16 @@
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
                     <element name="overlay">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/slide/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color" persistence_mode="read"/>
+                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency" persistence_mode="read"/>
+                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
                     </element>
                     <element name="desktop_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
@@ -205,10 +213,13 @@
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
-                        <style name="margins_and_padding" source="padding" converter="Magento_PageBuilder/js/converter/style/paddings" persistence_mode="write"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                     </element>
                     <element name="mobile_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
@@ -216,19 +227,18 @@
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                     </element>
                     <element name="content">
-                        <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                        <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                     </element>
                     <element name="button">
-                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" persistence_mode="write"/>
-                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" persistence_mode="write"/>
+                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-opacity" persistence_mode="write"/>
+                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-visibility" persistence_mode="write"/>
                         <html name="button_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
                         <css name="button_type">
                             <filter>
-                                <class source="pagebuilder-banner-button"/>
+                                <class source="pagebuilder-slider-button"/>
                             </filter>
                         </css>
                     </element>
@@ -244,18 +254,14 @@
             </appearance>
             <appearance default="true"
                         name="poster"
-                        preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
-                        render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                        preview_template="Magento_PageBuilder/content-type/slide/poster/preview"
+                        render_template="Magento_PageBuilder/content-type/slide/poster/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
-                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                        <style name="border_color" source="border_color"/>
-                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
                         <attribute name="name" source="data-role"/>
+                        <attribute name="slide_name" source="data-slide-name"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="show_button" source="data-show-button"/>
                         <attribute name="show_overlay" source="data-show-overlay"/>
@@ -269,40 +275,48 @@
                     </element>
                     <element name="overlay">
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/slide/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color" persistence_mode="read"/>
+                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-transparency" persistence_mode="read"/>
+                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/slide/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
                     </element>
                     <element name="desktop_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
                         <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
                     </element>
                     <element name="mobile_image">
+                        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                        <style name="border_color" source="border_color"/>
+                        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="text_align" source="text_align"/>
+                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="background_color" source="background_color"/>
                         <style name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
                         <style name="background_position" source="background_position"/>
                         <style name="background_size" source="background_size"/>
                         <style name="background_repeat" source="background_repeat"/>
-                        <style name="background_attachment" source="background_attachment"/>
                     </element>
                     <element name="content">
-                        <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                        <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                     </element>
                     <element name="button">
-                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" persistence_mode="write"/>
-                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" persistence_mode="write"/>
+                        <style name="opacity" source="opacity" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-opacity" persistence_mode="write"/>
+                        <style name="visibility" source="visibility" converter="Magento_PageBuilder/js/content-type/slide/converter/style/button-visibility" persistence_mode="write"/>
                         <html name="button_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
                         <css name="button_type">
                             <filter>
-                                <class source="pagebuilder-banner-button"/>
+                                <class source="pagebuilder-slider-button"/>
                             </filter>
                         </css>
                     </element>
@@ -317,6 +331,7 @@
                 </converters>
             </appearance>
         </appearances>
+        <is_visible>false</is_visible>
         <additional_data>
             <item name="uploaderConfig" xsi:type="array">
                 <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
@@ -343,6 +358,12 @@
                 </item>
                 <item name="validation" xsi:type="array">
                     <item name="required-entry" xsi:type="boolean">true</item>
+                </item>
+            </item>
+            <item name="wysiwygConfig" xsi:type="array">
+                <item name="wysiwygConfigData" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config</item>
+                <item name="parentSelectorsToUnderlay" xsi:type="array">
+                    <item name="0" xsi:type="string">.slider-container</item>
                 </item>
             </item>
         </additional_data>

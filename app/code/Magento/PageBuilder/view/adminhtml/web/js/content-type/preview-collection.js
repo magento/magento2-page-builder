@@ -61,6 +61,26 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
       });
     };
     /**
+     * Tries to call specified method of a current content type,
+     * and delegates attempt to its' children.
+     * @param args
+     */
+
+
+    _proto.delegate = function delegate() {
+      var _Preview$prototype$de;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      (_Preview$prototype$de = _Preview.prototype.delegate).call.apply(_Preview$prototype$de, [this].concat(args));
+
+      this.parent.getChildren().each(function (elem) {
+        elem.preview.delegate.apply(elem.preview, args);
+      });
+    };
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}

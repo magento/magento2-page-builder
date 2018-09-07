@@ -18,7 +18,6 @@ import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface
  * @param {DataStore} dataStore The datastore to store the content in.
  * @param {String} fieldName The key in the provided datastore to set the data.
  * @returns {Wysiwyg}
- * @api
  */
 export default function create(
     contentTypeId: string,
