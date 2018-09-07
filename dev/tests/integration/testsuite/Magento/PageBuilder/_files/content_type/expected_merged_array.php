@@ -218,8 +218,6 @@ return [
             'icon' => 'pagebuilder-type2-custom-icon',
             'component' => 'Path/to/custom/component',
             'preview_component' => 'Path/to/preview/custom/component',
-            'backend_block' => 'Path/to/custom/backend/block',
-            'backend_template' => 'Path/to/custom/backend/template',
             'is_visible' => 'false',
             'form' => 'pagebuilder_type2_custom_form',
             'group' => 'group2',
@@ -342,7 +340,7 @@ return [
                                     'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                 ],
                                 3 => [
-                                    'var' => 'original_complex',
+                                    'var' => 'original_complex_attribute',
                                     'name' => null,
                                     'converter' => null,
                                     'preview_converter' => null,
@@ -350,7 +348,7 @@ return [
                                     'reader' => 'Path/to/reader'
                                 ],
                                 4 => [
-                                    'var' => 'complex_style_attributes_change',
+                                    'var' => 'complex_attribute_change',
                                     'name' => null,
                                     'converter' => 'Path/to/custom/converter',
                                     'preview_converter' => 'Path/to/preview/custom/converter',
@@ -358,7 +356,7 @@ return [
                                     'reader' => 'Path/to/custom/reader'
                                 ],
                                 5 => [
-                                    'var' => 'complex_style_attributes_add',
+                                    'var' => 'complex_attribute_add',
                                     'name' => null,
                                     'converter' => 'Path/to/custom/converter',
                                     'preview_converter' => 'Path/to/preview/custom/converter',
@@ -374,7 +372,7 @@ return [
                                     'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                 ],
                                 7 => [
-                                    'var' => 'new_complex',
+                                    'var' => 'new_complex_attribute',
                                     'name' => null,
                                     'converter' => null,
                                     'preview_converter' => null,

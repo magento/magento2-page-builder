@@ -11,6 +11,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 4. [Developer documentation]
     1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
+    1. [Custom theme integration]
     1. [Third-party content type migration]
     1. [Iconography]
     1. [Add image uploader to content type]
@@ -39,6 +40,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Custom theme integration]: custom-themes.md
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
 [Add image uploader to content type]: image-uploader.md

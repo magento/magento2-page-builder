@@ -8,6 +8,25 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addSlide">
+        <arguments>
+            <argument name="slideGroupIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="Adding Slide" stepKey="comment"/>
+        <executeJS function="return document.getElementsByClassName('pagebuilder-slide').length+1" stepKey="initialNumberOfSlidesPlusOne"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, slideGroupIndex)}}" stepKey="mouseOverSlider"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="waitForAddSlideButton"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="clickAddSlideButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <executeJS function="return document.getElementsByClassName('pagebuilder-slide').length" stepKey="numberOfSlidesAfterAdd"/>
+        <assertEquals stepKey="assertOneMoreSlide">
+            <expectedResult type="variable">initialNumberOfSlidesPlusOne</expectedResult>
+            <actualResult type="variable">numberOfSlidesAfterAdd</actualResult>
+        </assertEquals>
+    </actionGroup>
     <actionGroup name="switchSlide">
         <arguments>
             <argument name="section" defaultValue="SliderOnFrontend"/>
@@ -23,15 +42,7 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
-    <actionGroup name="addSlide">
-        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
-        <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
-        <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
-        <moveMouseOver selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="clickAddNewSlideChild"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    <actionGroup name="inlineEditWYSIWYGFromStageForSlideCollageAppearancesInSmallColumns" extends="inlineEditWYSIWYGFromStage">
+        <click selector="{{SlideOnBackend.base(index)}}" stepKey="focusOnEditorArea"/>
     </actionGroup>
 </actionGroups>
