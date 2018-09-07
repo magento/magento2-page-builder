@@ -104,7 +104,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this.buildSlick();
         }, function () {
-          return (0, _jquery)(element).find(".pagebuilder-slider").length === expectedChildren;
+          return (0, _jquery)(element).find(".pagebuilder-slide").length === expectedChildren;
         });
       });
       return _this;

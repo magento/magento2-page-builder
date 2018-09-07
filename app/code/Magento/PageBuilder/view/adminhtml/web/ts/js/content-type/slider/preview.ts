@@ -139,7 +139,7 @@ export default class Preview extends PreviewCollection {
                     this.parent.dataStore.subscribe(this.buildSlick);
                     this.buildSlick();
                 },
-                () => $(element).find(".pagebuilder-slider").length === expectedChildren,
+                () => $(element).find(".pagebuilder-slide").length === expectedChildren,
             );
         });
     }
