@@ -14,10 +14,11 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
     {
         $this->getRequest()
             ->setParams([
+                'js_object_name' => 'myobject',
                 'form_namespace' => 'test_namespace',
             ])
             ->setPostValue([
-                'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|custom_design_from',
+                'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids',
                 'id' => '1--3',
             ]);
 
@@ -25,6 +26,8 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
         $responseBody = $this->getResponse()->getBody();
         // Assert form is associated correctly
         $this->assertContains('data-form-part="test_namespace"', $responseBody);
+        // Assert the form object is propagated
+        $this->assertContains('form/myobject', $responseBody);
         // Assert id is used
         $this->assertContains('name="parameters[conditions][1--3][type]"', $responseBody);
         // Assert type is used
@@ -35,17 +38,20 @@ class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendControlle
     {
         $this->getRequest()
             ->setParams([
+                'js_object_name' => 'myobject',
                 'form_namespace' => 'test_namespace',
                 'prefix' => 'myprefix',
             ])
             ->setPostValue([
-                'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|custom_design_from',
+                'type' => 'Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids',
                 'id' => '1--3',
             ]);
 
         $this->dispatch('backend/pagebuilder/form/element_productconditions_child');
         $responseBody = $this->getResponse()->getBody();
 
+        // Assert the form object is propagated
+        $this->assertContains('form/myobject', $responseBody);
         // Assert id is used
         $this->assertContains('name="parameters[myprefix][1--3][type]"', $responseBody);
     }
