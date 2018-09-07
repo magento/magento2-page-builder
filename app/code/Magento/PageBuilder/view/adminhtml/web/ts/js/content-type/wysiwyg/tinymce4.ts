@@ -69,6 +69,16 @@ export default class Wysiwyg implements WysiwygInterface {
         this.config = config;
         this.dataStore = dataStore;
 
+        if (this.config.adapter_config.mode === "inline") {
+            /**
+             * Don't include content_css within the inline mode of TinyMCE, if any stylesheets are included here they're
+             * appended to the head of the main page, and thus cause other styles to be modified.
+             *
+             * The styles for typography in the inline editor are scoped within _typography.less
+             */
+            this.config.adapter.tinymce4.content_css = [];
+        }
+
         const wysiwygSetup = new WysiwygSetup(this.elementId, this.config.adapter);
 
         wysiwygSetup.setup(this.config.adapter_config.mode);
