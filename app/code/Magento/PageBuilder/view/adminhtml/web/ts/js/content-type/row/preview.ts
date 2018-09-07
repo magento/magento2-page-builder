@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import "jarallax";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
-import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";

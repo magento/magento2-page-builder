@@ -613,85 +613,6 @@
         <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgRepeat)}}" stepKey="seeFirstColumnBgRepeat"/>
         <seeElement selector="{{ColumnOnBackend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.bgAttachment)}}" stepKey="seeFirstColumnBgAttachment"/>
     </test>
-    <test name="ColumnSettingsAppearOnFrontend">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Column"/>
-            <title value="Column settings appear on frontend"/>
-            <description value="Validate selected column settings appear on the frontend"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
-            <testCaseId value="MC-2396"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-column"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
-            <argument name="property" value="PageBuilderBackgroundColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
-            <argument name="property" value="PageBuilderBackgroundPosition_TopLeft"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundSizePropertyContain">
-            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyBottom">
-            <argument name="property" value="PageBuilderColumnAppearanceProperty_Bottom"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBackgroundRepeatYes">
-            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
-            <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="2"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundSize}}" stepKey="seeColumn1BackgroundSizeApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundRepeatApplied}}" stepKey="seeColumn1BackgroundRepeatApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundAttachment}}" stepKey="seeColumn1BackgroundAttachmentFixedApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundImage}}" stepKey="seeColumn1BackgroundImageApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1BackgroundWidth}}" stepKey="seeColumn1WidthApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceBottomApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundWidth}}" stepKey="seeColumn2DefaultWidthApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2Height}}" stepKey="seeColumn2HeightApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundSize}}" stepKey="seeColumn2BackgroundSizeAutoApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundRepeatNotApplied}}" stepKey="seeColumn2BackgroundRepeatNotApplied"/>
-        <seeElement selector="{{ColumnOnFrontend.column2BackgroundAttachment}}" stepKey="seeColumn2BackgroundAttachmentScrollApplied"/>
-    </test>
     <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
             <features value="PageBuilder"/>
@@ -884,48 +805,6 @@
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
-    <test name="ValidateBackgroundImageUrl">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Column"/>
-            <title value="Background Image Url is displayed on front end"/>
-            <description value="Validate background image appears on the frontend"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
-            <testCaseId value="MC-2394"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-column"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <seeElementInDOM selector="{{ColumnOnFrontend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path,PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeBackgroundImageInDom"/>
-        <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
-    </test>
     <test name="ColumnBackgroundColorPreserved">
         <annotations>
             <features value="PageBuilder"/>
@@ -937,8 +816,6 @@
             <testCaseId value="MC-2401"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -946,6 +823,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <closeTab stepKey="closeTab" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumn">
@@ -1020,6 +898,8 @@
         <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
         <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -1078,7 +958,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1161,7 +1040,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateTextAlignment" stepKey="seeOptionIsSelected">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
@@ -1299,105 +1177,6 @@
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ColumnOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
-    </test>
-    <test name="CanAddImageToColumn">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Column"/>
-            <title value="Add an image content type into column"/>
-            <description value="A user should be able to add an image into a column."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-86533"/>
-            <testCaseId value="MC-2403"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-column"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="deletePreReqBlock"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!--Assign block to cms page-->
-        <actionGroup ref="AssignBlockToCMSPage" stepKey="assignBlockToCMSPage">
-            <argument name="Block" value="$$createPreReqBlock$$"/>
-            <argument name="CmsPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-
-        <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
-        </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
-
-        <!--Remove uploaded image by TrashBin icon-->
-        <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
-
-        <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
-            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
-        </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
-
-        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
-            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
-        </actionGroup>
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
-            <argument name="ImageFolder" value="ImageFolder"/>
-        </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
-        </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Text from Column" stepKey="addTextToEditor"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
-        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
-        <waitForPageLoad time="30" stepKey="waitForContentLoaded"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
     <test name="DragMultipleColumnsIntoRow">
         <annotations>

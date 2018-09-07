@@ -33,20 +33,28 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $loggerInterface;
 
     /**
+     * @var \Magento\PageBuilder\Model\Stage\ScriptFilter
+     */
+    private $scriptFilter;
+
+    /**
      * CmsStaticBlock constructor.
      *
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
      * @param WidgetDirective $widgetDirectiveRenderer
      * @param LoggerInterface $loggerInterface
+     * @param \Magento\PageBuilder\Model\Stage\ScriptFilter $scriptFilter
      */
     public function __construct(
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         WidgetDirective $widgetDirectiveRenderer,
-        LoggerInterface $loggerInterface
+        LoggerInterface $loggerInterface,
+        \Magento\PageBuilder\Model\Stage\ScriptFilter $scriptFilter
     ) {
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
         $this->loggerInterface = $loggerInterface;
+        $this->scriptFilter = $scriptFilter;
     }
 
     /**
@@ -88,34 +96,11 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $this->removeScriptTags($directiveResult['content']);
+            $result['content'] = $this->scriptFilter->removeScriptTags($directiveResult['content']);
         } else {
             $result['error'] = __('Block disabled');
         }
 
         return $result;
-    }
-
-    /**
-     * Remove script tag from html
-     *
-     * @param string $content
-     * @return string
-     */
-    private function removeScriptTags(string $content): string
-    {
-        $dom = new \DOMDocument();
-        try {
-            //this code is required because of https://bugs.php.net/bug.php?id=60021
-            $previous = libxml_use_internal_errors(true);
-            $dom->loadHTML($content);
-        } catch (\Exception $e) {
-            $this->loggerInterface->critical($e->getMessage());
-        }
-        libxml_use_internal_errors($previous);
-        foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
-            $item->parentNode->removeChild($item);
-        }
-        return $dom->saveHTML();
     }
 }

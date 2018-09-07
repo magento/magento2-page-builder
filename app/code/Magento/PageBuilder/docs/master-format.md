@@ -68,7 +68,7 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 Contained:
 ```
 <div class="row-contained-wrapper" data-element="wrapper" data-role="row" data-appearance="contained">
-    <div style="..."></div>
+    <div data-background-images="{}" style="..."></div>
 </div>
 ```
 
@@ -82,19 +82,19 @@ Contained:
 Attributes
 1. data-enable-parallax [1, 0]
 2. data-parallax-speed [0-1]
-3. data-background-color-format [hex, rgb, hsl, hsv, name, none]
+3. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
 4. class
 
 Full Width:
 ```
-<div data-element="main" data-role="row" data-appearance="contained" style="...">
+<div data-element="main" data-role="row" data-appearance="contained" data-background-images="{}" style="...">
     <div data-element="inner" class="row-full-width-inner"></div>
 </div>
 ```
 
 Full Bleed:
 ```
-<div data-element="main" data-role="row" data-appearance="full-bleed" style="..."></div>
+<div data-element="main" data-role="row" data-appearance="full-bleed" data-background-images="{}" style="..."></div>
 ```
 
 ### main element
@@ -105,12 +105,11 @@ Attributes
 3. data-appearance [full-width, full-bleed]
 4. data-enable-parallax [1, 0]
 5. data-parallax-speed [0-1]
-6. data-background-color-format [hex, rgb, hsl, hsv, name, none]
+6. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
 7. class
 
 Inline styles
 1. background-color
-2. background-image
 3. background-position
 4. background-size
 5. background-repeat
@@ -141,18 +140,18 @@ Attributes
 ## Column
 
 ```
-<div data-element="main" data-role="column" data-appearance="full-height" style="..."></div>
+<div data-element="main" data-role="column" data-appearance="full-height" data-background-images="{}" style="..."></div>
 ```
 
 Attributes
 1. data-element [main]
 2. data-role [column]
 3. data-appearance [full-height, align-top, align-center, align-bottom]
-4. class
+4. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
+5. class
 
 Inline styles
 1. background-color
-2. background-image
 3. background-position
 4. background-size
 5. background-repeat
@@ -1022,6 +1021,25 @@ Inline styles
 4. border-width
 5. border-radius
 6. margin
+7. padding
+
+## Dynamic Block
+
+```
+<div data-role="dynamic_block" data-appearance="default">{{widget type="Magento\Banner\Block\Widget\Banner" display_mode="fixed" rotate="" template="widget/block.phtml" banner_ids="54" unique_id="54" type_name="Dynamic Blocks Rotator"}}</div>
+```
+
+Attributes
+1. data-role [dynamic_block]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border
+3. border_color
+4. border_width
+5. border_radius
+6. margins
 7. padding
 
 ## Products

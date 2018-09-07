@@ -54,7 +54,7 @@ class ProductConditions extends \Magento\CatalogWidget\Controller\Adminhtml\Prod
         $this->rule->loadPost(['conditions' => $this->serializer->unserialize($conditionsEncoded)]);
         $formName = $this->getRequest()->getParam('form_namespace');
         // Combine class recursively sets jsFormObject so we don't need to
-        $conditions->setJsFormObject($formName);
+        $conditions->setJsFormObject($this->getRequest()->getParam('js_object_name'));
         // The Combine class doesn't need the data attribute on children but we do.
         $this->configureConditionsFormName($conditions, $formName);
         $result = $conditions->asHtmlRecursive();

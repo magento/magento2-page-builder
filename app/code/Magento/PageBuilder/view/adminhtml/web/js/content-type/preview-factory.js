@@ -11,7 +11,6 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/content-t
    * @param {ContentTypeInterface} contentType
    * @param {ContentTypeConfigInterface} config
    * @returns {Promise<ContentTypeInterface>}
-   * @api
    */
   function create(contentType, config) {
     return new Promise(function (resolve) {
