@@ -121,7 +121,9 @@ export default class Wysiwyg implements WysiwygInterface {
         // Clear any existing document selections
         window.getSelection().empty();
 
-        $(`#${this.elementId}`).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+        $(`#${this.elementId}`)
+            .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
+            .addClass("pagebuilder-toolbar-active");
 
         events.trigger("stage:interactionStart");
 
@@ -138,7 +140,9 @@ export default class Wysiwyg implements WysiwygInterface {
     private onBlur() {
         // Clear any selections in the editable area
         window.getSelection().empty();
-        $(`#${this.elementId}`).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+        $(`#${this.elementId}`)
+            .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
+            .removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
     }
 

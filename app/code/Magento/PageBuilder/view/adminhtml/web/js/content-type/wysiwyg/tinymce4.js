@@ -101,7 +101,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
       // Clear any existing document selections
       window.getSelection().empty();
-      (0, _jquery)("#" + this.elementId).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+      (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container).addClass("pagebuilder-toolbar-active");
 
       _events2.trigger("stage:interactionStart"); // Wait for everything else to finish
 
@@ -118,7 +118,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     _proto.onBlur = function onBlur() {
       // Clear any selections in the editable area
       window.getSelection().empty();
-      (0, _jquery)("#" + this.elementId).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+      (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container).removeClass("pagebuilder-toolbar-active");
 
       _events2.trigger("stage:interactionStop");
     };

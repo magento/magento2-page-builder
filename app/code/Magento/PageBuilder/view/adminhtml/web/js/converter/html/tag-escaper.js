@@ -18,7 +18,7 @@ define(["underscore"], function (_underscore) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return (0, _underscore.unescape)((0, _underscore.unescape)(value));
+      return (0, _underscore.unescape)(value);
     };
     /**
      * Convert value to knockout format
@@ -30,7 +30,7 @@ define(["underscore"], function (_underscore) {
 
 
     _proto.toDom = function toDom(name, data) {
-      return (0, _underscore.escape)((0, _underscore.escape)(data[name].toString()));
+      return (0, _underscore.escape)(data[name].toString());
     };
 
     return TagEscaper;

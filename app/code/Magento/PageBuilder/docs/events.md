@@ -73,6 +73,7 @@ This document contains reference information for events dispatched in Page Build
 * [contentType:duplicateAfter](#contenttypeduplicateafter)
 * [contentType:moveBefore](#contenttypemovebefore)
 * [contentType:moveAfter](#contenttypemoveafter)
+* [contentType:redrawAfter](#contenttyperedrawafter)
 * [column:dragStart](#columdragstart)
 * [column:dragStop](#columndragstop)
 * [column:initializeAfter](#columninitializeafter)
@@ -263,6 +264,39 @@ All events starting with `contentType:` can also be called for specific content 
     targetParent: ContentTypeCollectionInterface;
     targetIndex: number;
     stageId: string;
+}
+```
+
+[Back to top]
+
+### `contentType:redrawAfter`
+
+#### Backend
+
+**Triggers**
+
+* `Tabs.Preview::onTabClick`
+
+**Params**
+
+``` js
+{
+    id: string,
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface
+}
+```
+
+#### Frontend
+
+**Triggers**
+
+* `Tabs.widget.ui.tabs::activate`
+
+**Params**
+
+``` js
+{
+    element: HTMLElement
 }
 ```
 
