@@ -839,6 +839,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
+        <actionGroup ref="addTab" stepKey="addSecondTab"/>
         <!-- User sees tabs displayed with 1st default tab item created by default -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
@@ -859,9 +860,13 @@
             <argument name="property" value="PageBuilderTabBackgroundColorPink"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveAdminPreview"/>
         <comment userInput="User updates tab settings and saves configuration" stepKey="saveBlock"/>
         <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
         <waitForPageLoad stepKey="waitForPageToLoad"/>
+        <!--Verify stage after save-->
+        <comment userInput="Verify stage after save" stepKey="commentVerifyStageAfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveAdminPreviewAfterSave"/>
         <!--User goes to created CMS page-->
         <comment userInput="User goes to created CMS page" stepKey="NavigateToCMSPage"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
@@ -883,6 +888,7 @@
         <!--Check that tab was rendered on the stage-->
         <comment userInput="Check that tab was rendered on the stage" stepKey="commentCheckingThatTabAreRenderedOnTHeStage"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront2"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveStorefront2"/>
         <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor2"/>
         <actionGroup ref="openOptionsMenu" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
@@ -894,6 +900,7 @@
         <comment userInput="Verify Block On Store front" stepKey="commentCheckingThatImageIsNotRenderedOnTheStoreFront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActiveStorefront"/>
         <seeElement selector="{{TabOnStorefront.backgroundColor('1', PageBuilderTabBackgroundColorPink.rgb)}}" stepKey="seeTab1BackgroundColor"/>
         <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnCmsStage1"/>
     </test>
