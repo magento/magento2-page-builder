@@ -47,6 +47,8 @@ export default class Preview extends PreviewCollection {
     private mountAfterDeferred: DeferredInterface = deferred();
     private afterChildrenRenderDeferred: DeferredInterface = deferred();
 
+    private buildSlickDebounce = _.debounce(this.buildSlick.bind(this), 10);
+
     /**
      * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
@@ -79,8 +81,8 @@ export default class Preview extends PreviewCollection {
             delayUntil(
                 () => {
                     this.element = element as HTMLElement;
-                    this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-                    this.parent.dataStore.subscribe(this.buildSlick);
+                    this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
+                    this.parent.dataStore.subscribe(this.buildSlickDebounce);
                     this.buildSlick();
                 },
                 () => $(element).find(".pagebuilder-slide").length === expectedChildren,
@@ -339,6 +341,7 @@ export default class Preview extends PreviewCollection {
      * Build our instance of slick
      */
     private buildSlick(): void {
+        console.log("build called");
         if (this.element && this.element.children.length > 0) {
             try {
                 $(this.element).slick("unslick");
@@ -356,7 +359,7 @@ export default class Preview extends PreviewCollection {
             this.parent.children(data);
 
             // Re-subscribe original event
-            this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
+            this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
 
             // Build slick
             $(this.element).slick(

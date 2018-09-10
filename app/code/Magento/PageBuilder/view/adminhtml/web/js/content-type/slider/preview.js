@@ -30,6 +30,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.contentTypeHeightReset = void 0;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
+      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_this), 10);
 
       _this.focusedSlide.subscribe(function (value) {
         if (value !== null) {
@@ -48,9 +49,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         (0, _delayUntil)(function () {
           _this.element = element;
-          _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
+          _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlickDebounce);
 
-          _this.parent.dataStore.subscribe(_this.buildSlick);
+          _this.parent.dataStore.subscribe(_this.buildSlickDebounce);
 
           _this.buildSlick();
         }, function () {
@@ -363,6 +364,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.buildSlick = function buildSlick() {
       var _this5 = this;
 
+      console.log("build called");
+
       if (this.element && this.element.children.length > 0) {
         try {
           (0, _jquery)(this.element).slick("unslick");
@@ -377,7 +380,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         (0, _jquery)(this.element).empty();
         this.parent.children(data); // Re-subscribe original event
 
-        this.childSubscribe = this.parent.children.subscribe(this.buildSlick); // Build slick
+        this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce); // Build slick
 
         (0, _jquery)(this.element).slick(Object.assign({
           initialSlide: this.activeSlide() || 0
