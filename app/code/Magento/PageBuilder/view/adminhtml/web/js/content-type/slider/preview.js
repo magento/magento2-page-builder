@@ -31,6 +31,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.contentTypeHeightReset = void 0;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
+      _this.ready = void 0;
       _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_this), 10);
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
@@ -255,15 +256,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this); // We only start forcing the containers height once the slider is ready
-
-
-      var sliderReady = false;
+      _PreviewCollection.prototype.bindEvents.call(this);
 
       _events.on("slider:mountAfter", function (args) {
         if (args.id === _this4.parent.id) {
-          sliderReady = true;
-
           if (args.expectChildren !== undefined) {
             _this4.mountAfterDeferred.resolve(args.expectChildren);
           }
