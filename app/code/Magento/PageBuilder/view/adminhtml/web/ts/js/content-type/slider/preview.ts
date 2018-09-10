@@ -39,7 +39,6 @@ export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     public element: HTMLElement;
-    private ready: boolean;
     protected events: DataObject = {
         columnWidthChangeAfter: "onColumnResize",
     };
@@ -47,7 +46,7 @@ export default class Preview extends PreviewCollection {
     private contentTypeHeightReset: boolean;
     private mountAfterDeferred: DeferredInterface = deferred();
     private afterChildrenRenderDeferred: DeferredInterface = deferred();
-
+    private ready: boolean;
     private buildSlickDebounce = _.debounce(this.buildSlick.bind(this), 10);
 
     /**
@@ -251,11 +250,8 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
-        // We only start forcing the containers height once the slider is ready
-        let sliderReady: boolean = false;
         events.on("slider:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.id === this.parent.id) {
-                sliderReady = true;
                 if (args.expectChildren !== undefined) {
                     this.mountAfterDeferred.resolve(args.expectChildren);
                 }
