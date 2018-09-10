@@ -31,7 +31,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.contentTypeHeightReset = void 0;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
-      _this.ready = void 0;
       _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_this), 10);
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],

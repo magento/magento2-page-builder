@@ -47,7 +47,6 @@ export default class Preview extends PreviewCollection {
     private contentTypeHeightReset: boolean;
     private mountAfterDeferred: DeferredInterface = deferred();
     private afterChildrenRenderDeferred: DeferredInterface = deferred();
-    private ready: boolean;
     private buildSlickDebounce = _.debounce(this.buildSlick.bind(this), 10);
 
     /**
