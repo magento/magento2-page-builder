@@ -200,7 +200,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       var containerLocked = getParentProxy(preview).getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Create the new content type and insert it into the parent
 
       (0, _contentTypeFactory)(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (contentType) {
-        // Prepare the event handler to animate the container height on render
+        // Set the content type instance as "dropped", as it was dropped from the left panel
+        contentType.dropped = true; // Prepare the event handler to animate the container height on render
+
         (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, contentType, parentContainerElement);
         getParentProxy(preview).addChild(contentType, index);
 

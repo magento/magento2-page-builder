@@ -47,7 +47,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
-          placeholder = _valueAccessor.placeholder;
+          placeholder = _valueAccessor.placeholder,
+          _valueAccessor$select = _valueAccessor.selectAll,
+          selectAll = _valueAccessor$select === void 0 ? false : _valueAccessor$select;
 
       var focusedValue = element.innerHTML;
       /**
@@ -86,7 +88,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
 
       var onClick = function onClick() {
-        if (element.innerHTML !== "") {
+        if (selectAll && element.innerHTML !== "") {
           document.execCommand("selectAll", false, null);
         }
       };

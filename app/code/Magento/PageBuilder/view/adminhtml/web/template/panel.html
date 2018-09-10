@@ -12,7 +12,7 @@
         <div class="search-content-types">
             <label for="search-content-types-input"></label>
             <a href="" class="close" click="clearSearch" attr="title: searchTitle" visible="searching"></a>
-            <input type="text" id="search-content-types-input" name="search" ko-value="searchValue" event="keyup: search" attr="placeholder: searchPlaceholder"/>
+            <input type="text" id="search-content-types-input" name="search" ko-value="searchValue" event="keyup: search" attr="placeholder: searchPlaceholder" autocomplete="off"/>
         </div>
         <ul id="search-results" visible="searching() && searchResults().length" each="searchResults">
             <li class="pagebuilder-draggable-content-type" attr="id: 'content-type-' + identifier()" data-bind="draggable: Object.assign($parent.getDraggableOptions(), getDraggableOptions())">
