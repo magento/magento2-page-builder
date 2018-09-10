@@ -39,6 +39,7 @@ export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     public element: HTMLElement;
+    private ready: boolean;
     protected events: DataObject = {
         columnWidthChangeAfter: "onColumnResize",
     };
@@ -341,7 +342,6 @@ export default class Preview extends PreviewCollection {
      * Build our instance of slick
      */
     private buildSlick(): void {
-        console.log("build called");
         if (this.element && this.element.children.length > 0) {
             try {
                 $(this.element).slick("unslick");
@@ -385,6 +385,8 @@ export default class Preview extends PreviewCollection {
                     });
                     this.contentTypeHeightReset = null;
                 }
+            }).on("init", () => {
+                this.ready = true;
             });
         }
     }

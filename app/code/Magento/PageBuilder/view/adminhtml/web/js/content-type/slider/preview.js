@@ -23,6 +23,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
+      _this.ready = void 0;
       _this.events = {
         columnWidthChangeAfter: "onColumnResize"
       };
@@ -364,8 +365,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.buildSlick = function buildSlick() {
       var _this5 = this;
 
-      console.log("build called");
-
       if (this.element && this.element.children.length > 0) {
         try {
           (0, _jquery)(this.element).slick("unslick");
@@ -396,6 +395,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             });
             _this5.contentTypeHeightReset = null;
           }
+        }).on("init", function () {
+          _this5.ready = true;
         });
       }
     };
