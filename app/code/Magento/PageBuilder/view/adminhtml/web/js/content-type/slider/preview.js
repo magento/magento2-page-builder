@@ -11,12 +11,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
-     * Initialize Slick after DOM has updated
-     *
-     * @type {(() => any) & _.Cancelable}
-     */
-
-    /**
      * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -34,52 +28,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       };
       _this.childSubscribe = void 0;
       _this.contentTypeHeightReset = void 0;
-      _this.ready = void 0;
-      _this.onAfterRenderDeferred = (0, _promiseDeferred)();
       _this.mountAfterDeferred = (0, _promiseDeferred)();
-
-      _this.buildSlick = function () {
-        _this.ready = false;
-
-        if (_this.element && _this.element.children.length > 0) {
-          try {
-            (0, _jquery)(_this.element).slick("unslick");
-          } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-          // Dispose current subscription in order to prevent infinite loop
-
-
-          _this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
-
-
-          var data = _this.parent.children().slice(0);
-
-          _this.parent.children([]);
-
-          (0, _jquery)(_this.element).empty();
-
-          _this.parent.children(data); // Re-subscribe original event
-
-
-          _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick); // Build slick
-
-          (0, _jquery)(_this.element).slick(Object.assign({
-            initialSlide: _this.activeSlide() || 0
-          }, _this.buildSlickConfig()));
-          _this.ready = true; // Update our KO pointer to the active slide on change
-
-          (0, _jquery)(_this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
-            _this.setActiveSlide(nextSlide);
-          }).on("afterChange", function () {
-            if (!_this.contentTypeHeightReset) {
-              (0, _jquery)(_this.element).css({
-                height: "",
-                overflow: ""
-              });
-              _this.contentTypeHeightReset = null;
-            }
-          });
-        }
-      };
+      _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
 
       _this.focusedSlide.subscribe(function (value) {
         if (value !== null) {
@@ -90,11 +40,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // Wait for the tabs instance to mount and the container to be ready
 
 
-      Promise.all([_this.onAfterRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
+      Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];
-        // We always create 1 slide when dropping slider into the instance
-        expectedChildren = expectedChildren || 1; // Wait until all children's DOM elements are present before building the Slick instance
+        // We always create 1 tab when dropping tabs into the instance
+        expectedChildren = expectedChildren || 1; // Wait until all children's DOM elements are present before building the tabs instance
 
         (0, _delayUntil)(function () {
           _this.element = element;
@@ -130,16 +80,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         sort: 10
       });
       return options;
-    };
-    /**
-     * Capture an after render event
-     *
-     * @param {HTMLElement} element
-     */
-
-
-    _proto.onAfterRender = function onAfterRender(element) {
-      this.onAfterRenderDeferred.resolve(element);
     };
     /**
      * Set an active slide for navigation dot
@@ -215,8 +155,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.afterChildrenRender = function afterChildrenRender(element) {
       _PreviewCollection.prototype.afterChildrenRender.call(this, element);
 
-      this.element = element;
-      this.checkWidth();
+      this.afterChildrenRenderDeferred.resolve(element);
     };
     /**
      * On sort start force the container height, also focus to that slide
@@ -318,9 +257,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.bindEvents.call(this); // We only start forcing the containers height once the slider is ready
 
 
+      var sliderReady = false;
+
       _events.on("slider:mountAfter", function (args) {
-        if (args.id === _this4.parent.id && args.expectChildren !== undefined) {
-          _this4.mountAfterDeferred.resolve(args.expectChildren);
+        if (args.id === _this4.parent.id) {
+          sliderReady = true;
+
+          if (args.expectChildren !== undefined) {
+            _this4.mountAfterDeferred.resolve(args.expectChildren);
+          }
         }
       }); // Set the active slide to the new position of the sorted slide
 
@@ -411,6 +356,47 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
+     * Build our instance of slick
+     */
+
+
+    _proto.buildSlick = function buildSlick() {
+      var _this5 = this;
+
+      if (this.element && this.element.children.length > 0) {
+        try {
+          (0, _jquery)(this.element).slick("unslick");
+        } catch (e) {} // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
+        // Dispose current subscription in order to prevent infinite loop
+
+
+        this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
+
+        var data = this.parent.children().slice(0);
+        this.parent.children([]);
+        (0, _jquery)(this.element).empty();
+        this.parent.children(data); // Re-subscribe original event
+
+        this.childSubscribe = this.parent.children.subscribe(this.buildSlick); // Build slick
+
+        (0, _jquery)(this.element).slick(Object.assign({
+          initialSlide: this.activeSlide() || 0
+        }, this.buildSlickConfig())); // Update our KO pointer to the active slide on change
+
+        (0, _jquery)(this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
+          _this5.setActiveSlide(nextSlide);
+        }).on("afterChange", function () {
+          if (!_this5.contentTypeHeightReset) {
+            (0, _jquery)(_this5.element).css({
+              height: "",
+              overflow: ""
+            });
+            _this5.contentTypeHeightReset = null;
+          }
+        });
+      }
+    };
+    /**
      * Take dropped element on focus.
      *
      * @param {JQueryEventObject} event
@@ -463,12 +449,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onColumnResize = function onColumnResize(params) {
-      var _this5 = this;
+      var _this6 = this;
 
       setTimeout(function () {
-        (0, _jquery)(_this5.element).slick("setPosition");
+        (0, _jquery)(_this6.element).slick("setPosition");
 
-        _this5.checkWidth();
+        _this6.checkWidth();
       }, 250);
     };
     /**

@@ -12,7 +12,7 @@ import _ from "underscore";
 import "../../binding/focus";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
@@ -44,64 +44,8 @@ export default class Preview extends PreviewCollection {
     };
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
-    private ready: boolean;
-    private onAfterRenderDeferred: DeferredInterface = deferred();
     private mountAfterDeferred: DeferredInterface = deferred();
-
-    /**
-     * Initialize Slick after DOM has updated
-     *
-     * @type {(() => any) & _.Cancelable}
-     */
-    private buildSlick = () => {
-        this.ready = false;
-        if (this.element && this.element.children.length > 0) {
-            try {
-                $(this.element).slick("unslick");
-            } catch (e) {
-                // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-            }
-
-            // Dispose current subscription in order to prevent infinite loop
-            this.childSubscribe.dispose();
-
-            // Force an update on all children, ko tries to intelligently re-render but fails
-            const data = this.parent.children().slice(0);
-            this.parent.children([]);
-            $(this.element).empty();
-            this.parent.children(data);
-
-            // Re-subscribe original event
-            this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-
-            // Build slick
-            $(this.element).slick(
-                Object.assign(
-                    {
-                        initialSlide: this.activeSlide() || 0,
-                    },
-                    this.buildSlickConfig(),
-                ),
-            );
-            this.ready = true;
-
-            // Update our KO pointer to the active slide on change
-            $(this.element).on(
-                "beforeChange",
-                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
-                    this.setActiveSlide(nextSlide);
-                },
-            ).on("afterChange", () => {
-                if (!this.contentTypeHeightReset) {
-                    $(this.element).css({
-                        height: "",
-                        overflow: "",
-                    });
-                    this.contentTypeHeightReset = null;
-                }
-            });
-        }
-    }
+    private afterChildrenRenderDeferred: DeferredInterface = deferred();
 
     /**
      * @param {ContentTypeCollectionInterface} parent
@@ -126,12 +70,12 @@ export default class Preview extends PreviewCollection {
 
         // Wait for the tabs instance to mount and the container to be ready
         Promise.all([
-            this.onAfterRenderDeferred.promise,
+            this.afterChildrenRenderDeferred.promise,
             this.mountAfterDeferred.promise,
         ]).then(([element, expectedChildren]) => {
-            // We always create 1 slide when dropping slider into the instance
+            // We always create 1 tab when dropping tabs into the instance
             expectedChildren = expectedChildren || 1;
-            // Wait until all children's DOM elements are present before building the Slick instance
+            // Wait until all children's DOM elements are present before building the tabs instance
             delayUntil(
                 () => {
                     this.element = element as HTMLElement;
@@ -160,15 +104,6 @@ export default class Preview extends PreviewCollection {
             sort: 10,
         });
         return options;
-    }
-
-    /**
-     * Capture an after render event
-     *
-     * @param {HTMLElement} element
-     */
-    public onAfterRender(element: HTMLElement): void {
-        this.onAfterRenderDeferred.resolve(element);
     }
 
     /**
@@ -227,8 +162,7 @@ export default class Preview extends PreviewCollection {
      */
     public afterChildrenRender(element: HTMLElement): void {
         super.afterChildrenRender(element);
-        this.element = element;
-        this.checkWidth();
+        this.afterChildrenRenderDeferred.resolve(element);
     }
 
     /**
@@ -315,9 +249,13 @@ export default class Preview extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         // We only start forcing the containers height once the slider is ready
+        let sliderReady: boolean = false;
         events.on("slider:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.id === this.parent.id && args.expectChildren !== undefined) {
-                this.mountAfterDeferred.resolve(args.expectChildren);
+            if (args.id === this.parent.id) {
+                sliderReady = true;
+                if (args.expectChildren !== undefined) {
+                    this.mountAfterDeferred.resolve(args.expectChildren);
+                }
             }
         });
 
@@ -346,8 +284,7 @@ export default class Preview extends PreviewCollection {
         });
 
         events.on("slide:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            const itemIndex = (args.contentType.parent as ContentTypeCollectionInterface)
-                .getChildren()().indexOf(args.contentType);
+            const itemIndex = args.contentType.parent.getChildren()().indexOf(args.contentType);
             if ((args.contentType.parent.id === this.parent.id) &&
                 (newItemIndex !== null && newItemIndex === itemIndex)
             ) {
@@ -396,6 +333,57 @@ export default class Preview extends PreviewCollection {
                 });
             }
         });
+    }
+
+    /**
+     * Build our instance of slick
+     */
+    private buildSlick(): void {
+        if (this.element && this.element.children.length > 0) {
+            try {
+                $(this.element).slick("unslick");
+            } catch (e) {
+                // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
+            }
+
+            // Dispose current subscription in order to prevent infinite loop
+            this.childSubscribe.dispose();
+
+            // Force an update on all children, ko tries to intelligently re-render but fails
+            const data = this.parent.children().slice(0);
+            this.parent.children([]);
+            $(this.element).empty();
+            this.parent.children(data);
+
+            // Re-subscribe original event
+            this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
+
+            // Build slick
+            $(this.element).slick(
+                Object.assign(
+                    {
+                        initialSlide: this.activeSlide() || 0,
+                    },
+                    this.buildSlickConfig(),
+                ),
+            );
+
+            // Update our KO pointer to the active slide on change
+            $(this.element).on(
+                "beforeChange",
+                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
+                    this.setActiveSlide(nextSlide);
+                },
+            ).on("afterChange", () => {
+                if (!this.contentTypeHeightReset) {
+                    $(this.element).css({
+                        height: "",
+                        overflow: "",
+                    });
+                    this.contentTypeHeightReset = null;
+                }
+            });
+        }
     }
 
     /**

@@ -31,6 +31,7 @@ export default class PreviewCollection extends Preview {
         autoAppend: boolean = true,
     ): Promise<ContentTypeCollectionInterface> | void {
         const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+        const childrenLength = contentType.children ? contentType.children().length : null;
 
         return new Promise((resolve, reject) => {
             createContentType(
@@ -38,6 +39,7 @@ export default class PreviewCollection extends Preview {
                 contentType.parent,
                 contentType.stageId,
                 contentType.dataStore.get() as DataObject,
+                childrenLength,
             ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
