@@ -17,6 +17,7 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
+import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
 import deferred from "../../utils/promise-deferred";
@@ -24,12 +25,11 @@ import DeferredInterface from "../../utils/promise-deferred.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import Slide from "../slide/preview";
 import {default as SliderPreview} from "../slider/preview";
 
 /**
@@ -39,10 +39,10 @@ export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     public element: HTMLElement;
-    private ready: boolean;
     protected events: DataObject = {
         columnWidthChangeAfter: "onColumnResize",
     };
+    private ready: boolean = false;
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
     private mountAfterDeferred: DeferredInterface = deferred();
@@ -62,15 +62,6 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        // Set the stage to interacting when a slide is focused
-        this.focusedSlide.subscribe((value: number) => {
-            if (value !== null) {
-                events.trigger("stage:interactionStart");
-            } else {
-                events.trigger("stage:interactionStop");
-            }
-        });
-
         // Wait for the tabs instance to mount and the container to be ready
         Promise.all([
             this.afterChildrenRenderDeferred.promise,
@@ -82,9 +73,20 @@ export default class Preview extends PreviewCollection {
             delayUntil(
                 () => {
                     this.element = element as HTMLElement;
+
                     this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
                     this.parent.dataStore.subscribe(this.buildSlickDebounce);
+
                     this.buildSlick();
+
+                    // Set the stage to interacting when a slide is focused
+                    this.focusedSlide.subscribe((value: number) => {
+                        if (value !== null) {
+                            events.trigger("stage:interactionStart");
+                        } else {
+                            events.trigger("stage:interactionStop");
+                        }
+                    });
                 },
                 () => $(element).find(".pagebuilder-slide").length === expectedChildren,
             );
@@ -319,11 +321,11 @@ export default class Preview extends PreviewCollection {
         });
 
         // Capture when a content type is duplicated within the container
-        let duplicatedSlide: Slide;
+        let duplicatedSlide: ContentTypeInterface;
         let duplicatedSlideIndex: number;
         events.on("slide:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (args.duplicateContentType.parent.id === this.parent.id) {
-                duplicatedSlide = (args.duplicateContentType as Slide);
+            if (args.duplicateContentType.parent.id === this.parent.id && args.direct) {
+                duplicatedSlide = args.duplicateContentType;
                 duplicatedSlideIndex = args.index;
             }
         });
@@ -361,6 +363,11 @@ export default class Preview extends PreviewCollection {
             // Re-subscribe original event
             this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
 
+            // Bind our init event for slick
+            $(this.element).on("init", () => {
+                this.ready = true;
+            });
+
             // Build slick
             $(this.element).slick(
                 Object.assign(
@@ -385,8 +392,6 @@ export default class Preview extends PreviewCollection {
                     });
                     this.contentTypeHeightReset = null;
                 }
-            }).on("init", () => {
-                this.ready = true;
             });
         }
     }

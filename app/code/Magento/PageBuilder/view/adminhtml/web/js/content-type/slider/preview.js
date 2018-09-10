@@ -18,30 +18,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Set the stage to interacting when a slide is focused
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
-      _this.ready = void 0;
       _this.events = {
         columnWidthChangeAfter: "onColumnResize"
       };
+      _this.ready = false;
       _this.childSubscribe = void 0;
       _this.contentTypeHeightReset = void 0;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
       _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_this), 10);
-
-      _this.focusedSlide.subscribe(function (value) {
-        if (value !== null) {
-          _events.trigger("stage:interactionStart");
-        } else {
-          _events.trigger("stage:interactionStop");
-        }
-      }); // Wait for the tabs instance to mount and the container to be ready
-
-
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];
@@ -54,7 +44,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this.parent.dataStore.subscribe(_this.buildSlickDebounce);
 
-          _this.buildSlick();
+          _this.buildSlick(); // Set the stage to interacting when a slide is focused
+
+
+          _this.focusedSlide.subscribe(function (value) {
+            if (value !== null) {
+              _events.trigger("stage:interactionStart");
+            } else {
+              _events.trigger("stage:interactionStop");
+            }
+          });
         }, function () {
           return (0, _jquery)(element).find(".pagebuilder-slide").length === expectedChildren;
         });
@@ -340,7 +339,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedSlideIndex;
 
       _events.on("slide:duplicateAfter", function (args) {
-        if (args.duplicateContentType.parent.id === _this4.parent.id) {
+        if (args.duplicateContentType.parent.id === _this4.parent.id && args.direct) {
           duplicatedSlide = args.duplicateContentType;
           duplicatedSlideIndex = args.index;
         }
@@ -379,7 +378,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         (0, _jquery)(this.element).empty();
         this.parent.children(data); // Re-subscribe original event
 
-        this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce); // Build slick
+        this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce); // Bind our init event for slick
+
+        (0, _jquery)(this.element).on("init", function () {
+          _this5.ready = true;
+        }); // Build slick
 
         (0, _jquery)(this.element).slick(Object.assign({
           initialSlide: this.activeSlide() || 0
@@ -395,8 +398,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             });
             _this5.contentTypeHeightReset = null;
           }
-        }).on("init", function () {
-          _this5.ready = true;
         });
       }
     };

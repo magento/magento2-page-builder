@@ -411,7 +411,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedTabIndex;
 
       _events.on("tab-item:duplicateAfter", function (args) {
-        if (_this3.parent.id === args.duplicateContentType.parent.id) {
+        if (_this3.parent.id === args.duplicateContentType.parent.id && args.direct) {
           var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
