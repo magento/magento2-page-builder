@@ -224,6 +224,7 @@ All events starting with `contentType:` can also be called for specific content 
     originalContentType: ContentTypeInterface & ContentTypeCollectionInterface;
     duplicateContentType: ContentTypeInterface & ContentTypeCollectionInterface;
     index: number;
+    direct: boolean;
 }
 ```
 
