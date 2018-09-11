@@ -87,7 +87,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("contentType:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
-          _this.spreadWidth(event, args);
+          _underscore.defer(function () {
+            _this.spreadWidth(event, args);
+          });
         }
       }); // Listen for resizing events from child columns
 

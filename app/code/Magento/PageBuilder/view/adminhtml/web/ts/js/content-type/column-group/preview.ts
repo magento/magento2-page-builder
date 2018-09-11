@@ -106,7 +106,9 @@ export default class Preview extends PreviewCollection {
 
         events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
-                this.spreadWidth(event, args);
+                _.defer(() => {
+                    this.spreadWidth(event, args);
+                });
             }
         });
 
