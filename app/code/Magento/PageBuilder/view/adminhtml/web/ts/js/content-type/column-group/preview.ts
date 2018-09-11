@@ -13,7 +13,6 @@ import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import {DataObject} from "../../data-store";
-import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
@@ -491,7 +490,7 @@ export default class Preview extends PreviewCollection {
     private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>): void {
         columns.forEach((column) => {
             column.preview.resizing(true);
-            column.preview.element.css({transition: `width ${animationTime}ms ease-in-out`});
+            column.preview.element.css({transition: `width 350ms ease-in-out`});
         });
     }
 

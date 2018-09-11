@@ -10,7 +10,6 @@ import ContentTypeCollectionInterface from "../content-type-collection";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
 import Stage from "../stage";
-import {bindAfterRenderForAnimation, lockContainerHeight} from "./container-animation";
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";
 import {getAllowedContainersClasses} from "./matrix";
 import {moveContentType} from "./move-content-type";
@@ -208,18 +207,11 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
                 return element.classList.contains("pagebuilder-draggable-content-type");
             });
 
-        const parentContainerElement = $(event.target).parents(".type-container");
-        const containerLocked = getParentProxy(preview).getChildren()().length === 0 &&
-            lockContainerHeight(parentContainerElement);
-
         // Create the new content type and insert it into the parent
         createContentType(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview))
             .then((contentType: ContentTypeInterface) => {
                 // Set the content type instance as "dropped", as it was dropped from the left panel
                 contentType.dropped = true;
-
-                // Prepare the event handler to animate the container height on render
-                bindAfterRenderForAnimation(containerLocked, contentType, parentContainerElement);
 
                 getParentProxy(preview).addChild(contentType, index);
                 events.trigger("contentType:dropAfter", {id: contentType.id, contentType});
@@ -291,21 +283,6 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
                 $(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
             } else {
                 $(el).remove();
-            }
-
-            const parentContainerElement = $(event.target).parents(".type-container");
-            const parentContainerLocked = targetParent.getChildren()().length === 0 &&
-                lockContainerHeight(parentContainerElement);
-
-            // Bind the event handler before the move operation
-            bindAfterRenderForAnimation(parentContainerLocked, contentTypeInstance, parentContainerElement);
-
-            // Also check if we need to handle animations on the source container
-            if (sourceParent.preview && sourceParent.preview.wrapperElement) {
-                const sourceContainerElement = $(sourceParent.preview.wrapperElement);
-                const sourceContainerLocked = sourceParent.getChildren()().length === 1 &&
-                    lockContainerHeight(sourceContainerElement);
-                bindAfterRenderForAnimation(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
             }
 
             moveContentType(contentTypeInstance, targetIndex, targetParent);

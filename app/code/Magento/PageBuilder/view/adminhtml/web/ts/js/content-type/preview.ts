@@ -23,7 +23,6 @@ import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
-import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
 import {getSortableOptions} from "../drag-drop/sortable";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
@@ -344,16 +343,9 @@ export default class Preview {
             };
 
             if (this.wrapperElement) {
-                const parentContainerElement = $(this.wrapperElement).parents(".type-container");
-                const containerLocked =
-                    (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
-                    lockContainerHeight(parentContainerElement);
-
                 // Fade out the content type
-                $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+                $(this.wrapperElement).fadeOut(350 / 2, () => {
                     dispatchRemoveEvent();
-                    // Prepare the event handler to animate the container height on render
-                    animateContainerHeight(containerLocked, parentContainerElement);
                 });
             } else {
                 dispatchRemoveEvent();

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry"], function (_jquery, _knockout, _events, _contentTypeFactory, _containerAnimation, _dropIndicators, _matrix, _moveContentType, _registry) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry"], function (_jquery, _knockout, _events, _contentTypeFactory, _dropIndicators, _matrix, _moveContentType, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -195,15 +195,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       var index = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type").toArray().findIndex(function (element) {
         return element.classList.contains("pagebuilder-draggable-content-type");
-      });
-      var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
-      var containerLocked = getParentProxy(preview).getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Create the new content type and insert it into the parent
+      }); // Create the new content type and insert it into the parent
 
       (0, _contentTypeFactory)(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (contentType) {
         // Set the content type instance as "dropped", as it was dropped from the left panel
-        contentType.dropped = true; // Prepare the event handler to animate the container height on render
-
-        (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, contentType, parentContainerElement);
+        contentType.dropped = true;
         getParentProxy(preview).addChild(contentType, index);
 
         _events.trigger("contentType:dropAfter", {
@@ -273,17 +269,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
           (0, _jquery)(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
         } else {
           (0, _jquery)(el).remove();
-        }
-
-        var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
-        var parentContainerLocked = targetParent.getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Bind the event handler before the move operation
-
-        (0, _containerAnimation.bindAfterRenderForAnimation)(parentContainerLocked, contentTypeInstance, parentContainerElement); // Also check if we need to handle animations on the source container
-
-        if (sourceParent.preview && sourceParent.preview.wrapperElement) {
-          var sourceContainerElement = (0, _jquery)(sourceParent.preview.wrapperElement);
-          var sourceContainerLocked = sourceParent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(sourceContainerElement);
-          (0, _containerAnimation.bindAfterRenderForAnimation)(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
         }
 
         (0, _moveContentType.moveContentType)(contentTypeInstance, targetIndex, targetParent);
