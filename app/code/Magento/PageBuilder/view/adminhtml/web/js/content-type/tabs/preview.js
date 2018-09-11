@@ -370,7 +370,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            * @returns {JQuery}
            */
           element: function element(item) {
-            var placeholder = item.clone().show().css({
+            var placeholder = item.clone().css({
               display: "inline-block",
               opacity: "0.3"
             }).removeClass("focused").addClass("sortable-placeholder");

@@ -6,7 +6,8 @@
 -->
 <div class="pagebuilder-stage"
      attr="id: id, 'data-role': 'pagebuilder-stage'"
-     css="'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': parent.panel.isCollapsed, 'interacting': interacting, 'focus-child': focusChild">
+     css="'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': parent.panel.isCollapsed, 'interacting': interacting, 'focus-child': focusChild"
+     data-bind="afterRender: onRender">
     <div class="pagebuilder-stage-loading" visible="loading" >
         <p translate="stageLoadingMessage"></p>
         <span class="spinner">

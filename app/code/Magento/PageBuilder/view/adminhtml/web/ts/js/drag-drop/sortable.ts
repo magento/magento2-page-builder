@@ -2,6 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
@@ -109,14 +110,14 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
         const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
         if (contentTypeInstance) {
             // Ensure the original item is displayed but with reduced opacity
-            ui.item.show().addClass("pagebuilder-sorting-original");
+            ui.item.css("display", "block").addClass("pagebuilder-sorting-original");
 
-            $(".pagebuilder-drop-indicator.hidden-drop-indicator").show().removeClass("hidden-drop-indicator");
+            $(".pagebuilder-drop-indicator.hidden-drop-indicator").css("display", "block")
+                .removeClass("hidden-drop-indicator");
 
             // If we're the first item in the container we need to hide the first drop indicator
-            if ((contentTypeInstance.parent as ContentTypeCollectionInterface)
-                    .getChildren().indexOf(contentTypeInstance) === 0) {
-                ui.item.prev(".pagebuilder-drop-indicator").hide().addClass("hidden-drop-indicator");
+            if (contentTypeInstance.parent.getChildren().indexOf(contentTypeInstance) === 0) {
+                ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
             }
 
             sortedContentType = contentTypeInstance;
@@ -142,9 +143,9 @@ function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     if ($(this).sortable("option", "disabled") ||
         ui.placeholder.parents(hiddenClass).length > 0
     ) {
-        ui.placeholder.hide();
+        ui.placeholder.css("display", "none");
     } else {
-        ui.placeholder.show();
+        ui.placeholder.css("display", "block");
     }
 
     /**

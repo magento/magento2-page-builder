@@ -105,11 +105,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       if (contentTypeInstance) {
         // Ensure the original item is displayed but with reduced opacity
-        ui.item.show().addClass("pagebuilder-sorting-original");
-        (0, _jquery)(".pagebuilder-drop-indicator.hidden-drop-indicator").show().removeClass("hidden-drop-indicator"); // If we're the first item in the container we need to hide the first drop indicator
+        ui.item.css("display", "block").addClass("pagebuilder-sorting-original");
+        (0, _jquery)(".pagebuilder-drop-indicator.hidden-drop-indicator").css("display", "block").removeClass("hidden-drop-indicator"); // If we're the first item in the container we need to hide the first drop indicator
 
         if (contentTypeInstance.parent.getChildren().indexOf(contentTypeInstance) === 0) {
-          ui.item.prev(".pagebuilder-drop-indicator").hide().addClass("hidden-drop-indicator");
+          ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
         }
 
         sortedContentType = contentTypeInstance;
@@ -132,9 +132,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
   function onSort(preview, event, ui) {
     if ((0, _jquery)(this).sortable("option", "disabled") || ui.placeholder.parents(hiddenClass).length > 0) {
-      ui.placeholder.hide();
+      ui.placeholder.css("display", "none");
     } else {
-      ui.placeholder.show();
+      ui.placeholder.css("display", "block");
     }
     /**
      * We record the position of the placeholder on sort so we can ensure we place the content type in the correct place
