@@ -27,6 +27,7 @@ import {getSortableOptions} from "../drag-drop/sortable";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 
 /**
  * @api
@@ -176,7 +177,7 @@ export default class Preview {
      * @param {Event} event
      */
     public onMouseOver(context: Preview, event: Event): void {
-        if (this.mouseover) {
+        if (this.mouseover || getDraggedContentTypeConfig()) {
             return;
         }
 
@@ -204,6 +205,10 @@ export default class Preview {
      * @param {Event} event
      */
     public onMouseOut(context: Preview, event: Event) {
+        if (getDraggedContentTypeConfig()) {
+            return;
+        }
+
         this.mouseover = false;
         _.delay(() => {
             if (!this.mouseover && this.mouseoverContext === context) {
