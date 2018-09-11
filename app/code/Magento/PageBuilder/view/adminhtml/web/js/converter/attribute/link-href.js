@@ -56,7 +56,7 @@ define(["underscore"], function (_underscore) {
 
     _proto.toDom = function toDom(name, data) {
       var link = data[name];
-      var href = "";
+      var href = "javascript:void(0)";
 
       if (!link) {
         return href;
