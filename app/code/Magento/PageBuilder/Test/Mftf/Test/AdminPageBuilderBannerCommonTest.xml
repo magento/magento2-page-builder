@@ -2098,4 +2098,82 @@
         <comment userInput="Verify Editor Still In Focus 2" stepKey="commentEditorInFocus2"/>
         <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="seeEditorPanel2"/>
     </test>
+    <test name="BannerContentVariableCanWrap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner content variable value can wrap to multiple lines"/>
+            <description value="A user can see a long banner content variable with no spaces can wrap to multiple lines in storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-1416"/>
+            <testCaseId value="MC-4141"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/name {{TinyMCEVariableStoreName.storefrontValue}}" stepKey="setValueForStoreNameVariable"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/name none" stepKey="setBackToDefaultValue"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Add Column to Stage -->
+        <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Banner to Column -->
+        <comment userInput="Add Banner to Column" stepKey="addBannerToColumn"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Variable to Banner -->
+        <comment userInput="Add Variable to Banner" stepKey="commentAddVariableToBanner"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
+        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+            <argument name="variable" value="TinyMCEVariableStoreName"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="expectedIndex" value="2"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
+        </actionGroup>
+        <!-- Resize Columns -->
+        <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumnToOne"/>
+        <!-- Validate Height of Variable in Storefront -->
+        <comment userInput="Validate Height of Variable in Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <comment userInput="View Text inside column on storefront" stepKey="viewTextOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Grab Height Values -->
+        <comment userInput="Grab Height Values" stepKey="commentGrabHeightValues"/>
+        <executeJS function="{{BannerOnFrontend.messageContentHeightJS('1', TinyMCEVariableStoreName.storefrontValue)}}" stepKey="columnOneTextHeight"/>
+        <executeJS function="{{BannerOnFrontend.messageContentHeightJS('2', TinyMCEVariableStoreName.storefrontValue)}}" stepKey="columnTwoTextHeight"/>
+        <assertGreaterThan stepKey="assertColumnTwoTextGreaterThanColumnOneText">
+            <expectedResult type="variable">columnTwoTextHeight</expectedResult>
+            <actualResult type="variable">columnOneTextHeight</actualResult>
+        </assertGreaterThan>
+    </test>
 </tests>
