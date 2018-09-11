@@ -24,6 +24,7 @@ export default class ContentType implements ContentTypeInterface {
     public dataStore: DataStore = new DataStore();
     public preview: Preview;
     public content: Master;
+    public dropped: boolean = false;
 
     /**
      * @param {ContentTypeInterface} parent

@@ -16,7 +16,7 @@
             <description value="Tests the following for each attribute under Advanced Configuration: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89330"/>
+            <testCaseId value="MC-2771"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
         </annotations>
@@ -37,6 +37,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -155,7 +156,7 @@
             <description value="Tests that the Alignment attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89331"/>
+            <testCaseId value="MC-2587"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
         </annotations>
@@ -192,6 +193,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -211,6 +213,7 @@
             <argument name="containerTargetIndex" value="2"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -230,6 +233,7 @@
             <argument name="containerTargetIndex" value="3"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -249,6 +253,7 @@
             <argument name="containerTargetIndex" value="4"/>
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="4"/>
@@ -356,7 +361,7 @@
             <description value="Tests that the Border attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89332"/>
+            <testCaseId value="MC-2676"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <skip>
@@ -819,7 +824,7 @@
             <description value="Tests that the Border Color attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89333"/>
+            <testCaseId value="MC-2909"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
         </annotations>
@@ -859,6 +864,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -881,6 +887,7 @@
             <argument name="containerTargetIndex" value="2"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -903,6 +910,7 @@
             <argument name="containerTargetIndex" value="3"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -925,6 +933,7 @@
             <argument name="containerTargetIndex" value="4"/>
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="4"/>
@@ -947,6 +956,7 @@
             <argument name="containerTargetIndex" value="5"/>
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="5"/>
@@ -1078,7 +1088,7 @@
             <description value="Tests that the Border Width attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89355"/>
+            <testCaseId value="MC-2821"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <skip>
@@ -1329,6 +1339,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1383,7 +1394,7 @@
             <description value="Tests that the Border Radius attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89356"/>
+            <testCaseId value="MC-2885"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <skip>
@@ -1627,7 +1638,7 @@
             <description value="Tests that the CSS Classes attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89357"/>
+            <testCaseId value="MC-2593"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
         </annotations>
@@ -1661,6 +1672,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1680,6 +1692,7 @@
             <argument name="containerTargetIndex" value="2"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -1699,6 +1712,7 @@
             <argument name="containerTargetIndex" value="3"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -1785,7 +1799,7 @@
             <description value="Tests that the Margin attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89358"/>
+            <testCaseId value="MC-2606"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <skip>
@@ -1828,6 +1842,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -1847,6 +1862,7 @@
             <argument name="containerTargetIndex" value="2"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -1866,6 +1882,7 @@
             <argument name="containerTargetIndex" value="3"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -1885,6 +1902,7 @@
             <argument name="containerTargetIndex" value="4"/>
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="4"/>
@@ -1904,6 +1922,7 @@
             <argument name="containerTargetIndex" value="5"/>
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit5"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="5"/>
@@ -2055,6 +2074,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -2103,7 +2123,7 @@
             <description value="Tests that the Padding attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89359"/>
+            <testCaseId value="MC-2611"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
             <skip>
@@ -2146,6 +2166,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -2165,6 +2186,7 @@
             <argument name="containerTargetIndex" value="2"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="2"/>
@@ -2184,6 +2206,7 @@
             <argument name="containerTargetIndex" value="3"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -2203,6 +2226,7 @@
             <argument name="containerTargetIndex" value="4"/>
             <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="4"/>
@@ -2222,6 +2246,7 @@
             <argument name="containerTargetIndex" value="5"/>
             <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="5"/>
@@ -2373,6 +2398,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -2421,7 +2447,7 @@
             <description value="Tests that all attributes function as expected together on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89360"/>
+            <testCaseId value="MC-2874"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
         </annotations>
@@ -2447,6 +2473,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
@@ -2559,6 +2586,7 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="contentTypeIndex" value="1"/>
