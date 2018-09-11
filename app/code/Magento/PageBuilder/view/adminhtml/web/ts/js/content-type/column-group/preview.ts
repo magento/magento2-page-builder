@@ -935,13 +935,13 @@ export default class Preview extends PreviewCollection {
                 self.dropPlaceholder.removeClass("left right");
             },
             over() {
-                // Always calculate drop positions when an element is dragged over
-                self.dropPositions = calculateDropPositions(
-                    self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                );
-
                 // Is the element currently being dragged a column?
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                    // Always calculate drop positions when an element is dragged over
+                    self.dropPositions = calculateDropPositions(
+                        self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
+                    );
+
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;
