@@ -32,7 +32,10 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
         $this->additionalSettings = $additionalSettings;
     }
     /**
-     * {@inheritdoc}
+     * Returns configuration data
+     *
+     * @param \Magento\Framework\DataObject $config
+     * @return \Magento\Framework\DataObject
      */
     public function getConfig(\Magento\Framework\DataObject $config): \Magento\Framework\DataObject
     {
