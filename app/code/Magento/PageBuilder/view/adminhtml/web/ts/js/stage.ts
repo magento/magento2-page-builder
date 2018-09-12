@@ -20,9 +20,9 @@ import {getSortableOptions} from "./drag-drop/sortable";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";
+import StageUpdateAfterParamsInterface from "./stage-update-after-params";
 import deferred from "./utils/promise-deferred";
 import DeferredInterface from "./utils/promise-deferred.d";
-import StageUpdateAfterParamsInterface from "./stage-update-after-params";
 
 export default class Stage {
     public parent: PageBuilderInterface;
