@@ -96,6 +96,7 @@
         <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content'][not(*)]" parameterized="true"/>
         <element name="messageContentTextArea" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
+        <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
         <element name="linkUrl" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='link'][contains(@href,'{{arg2}}')]" parameterized="true"/>
         <element name="openInNewTab" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]/a[contains(@target,'_blank')]" parameterized="true"/>
         <element name="button" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='desktop_image']//button[@data-element='button']" parameterized="true"/>
