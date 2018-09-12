@@ -246,11 +246,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       (0, _contentTypeFactory)(_config.getConfig("content_types").slide, this.parent, this.parent.stageId).then(function (slide) {
         _events.on("slide:mountAfter", function (args) {
           if (args.id === slide.id) {
-            _underscore.delay(function () {
-              _this3.navigateToSlide(_this3.parent.children().length - 1);
+            _this3.navigateToSlide(_this3.parent.children().length - 1); //slide.preview.onOptionEdit();
 
-              slide.preview.onOptionEdit();
-            }, 500);
 
             _events.off("slide:" + slide.id + ":mountAfter");
           }

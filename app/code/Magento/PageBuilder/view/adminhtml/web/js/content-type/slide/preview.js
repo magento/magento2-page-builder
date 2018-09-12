@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _conditionalRemoveOption, _preview, _uploader, _factory) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _delayUntil, _preview, _uploader, _factory) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -27,14 +27,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     /**
      * @param {HTMLElement} element
      */
-    _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
-
+    _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
-      element.id = this.parent.id + "-editor";
-      (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
-      });
+      element.id = this.parent.id + "-editor"; // This function is called whenever a render happens, meaning our WYSIWYG instance is destroyed
+
+      this.wysiwyg = null;
     };
     /**
      * Set state based on overlay mouseover event for the preview
@@ -115,13 +112,32 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var element = this.wysiwyg && this.element || this.textarea;
+      var _this2 = this;
 
-      if (!element || !this.slideChanged || event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
-        return false;
+      var activate = function activate() {
+        var element = _this2.wysiwyg && _this2.element || _this2.textarea;
+        element.focus();
+      };
+
+      if (!this.wysiwyg) {
+        var selection = this.saveSelection();
+        console.log(event, selection);
+        this.element.removeAttribute("contenteditable");
+
+        _underscore.defer(function () {
+          _this2.initWysiwyg(true).then(function () {
+            return (0, _delayUntil)(function () {
+              activate();
+
+              _this2.restoreSelection(_this2.element, selection);
+            }, function () {
+              return _this2.element.classList.contains("mce-edit-focus");
+            }, 10);
+          });
+        });
+      } else {
+        activate();
       }
-
-      element.focus();
     };
     /**
      * Stop event to prevent execution of action when editing textarea.
@@ -250,6 +266,28 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       });
     };
     /**
+     * Init the WYSIWYG
+     */
+
+
+    _proto.initWysiwyg = function initWysiwyg(focus) {
+      var _this5 = this;
+
+      if (focus === void 0) {
+        focus = false;
+      }
+
+      var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+      if (focus) {
+        wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+      }
+
+      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+        _this5.wysiwyg = wysiwyg;
+      });
+    };
+    /**
      * Update image data inside data store
      *
      * @param {Array} data - list of each files' data
@@ -275,6 +313,78 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
+    };
+    /**
+     * Save the current selection to be restored at a later point
+     *
+     * @returns {Range}
+     */
+
+
+    _proto.saveSelection = function saveSelection() {
+      if (window.getSelection) {
+        var selection = window.getSelection();
+
+        if (selection.getRangeAt && selection.rangeCount) {
+          var range = selection.getRangeAt(0).cloneRange();
+          return {
+            startContainer: range.startContainer,
+            startOffset: range.startOffset,
+            endContainer: range.endContainer,
+            endOffset: range.endOffset
+          };
+        }
+      }
+
+      return null;
+    };
+    /**
+     * Restore the original selection
+     *
+     * @param {HTMLElement} element
+     * @param {Selection} selection
+     */
+
+
+    _proto.restoreSelection = function restoreSelection(element, selection) {
+      if (window.getSelection) {
+        // Find the original container that had the selection
+        var _startContainer = this.findTextNode(element, selection.startContainer.nodeValue);
+
+        var _endContainer = _startContainer;
+
+        if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+          _endContainer = this.findTextNode(element, selection.endContainer.nodeValue);
+        }
+
+        if (_startContainer && _endContainer) {
+          var newSelection = window.getSelection();
+          newSelection.removeAllRanges();
+          var range = document.createRange();
+          range.setStart(_startContainer, selection.startOffset);
+          range.setEnd(_endContainer, selection.endOffset);
+          newSelection.addRange(range);
+        }
+      }
+    };
+    /**
+     * Find a text node within an existing element
+     *
+     * @param {HTMLElement} element
+     * @param {string} text
+     * @returns {HTMLElement}
+     */
+
+
+    _proto.findTextNode = function findTextNode(element, text) {
+      var textSearch = (0, _jquery)(element).find(":contains(\"" + text.trim() + "\")");
+
+      if (textSearch.length > 0) {
+        // Search for the #text node within the element for the new range
+        return textSearch.last().contents().filter(function () {
+          return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
+        })[0];
+      }
     };
 
     return Preview;

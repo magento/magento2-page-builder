@@ -6,11 +6,13 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
+import delayUntil from "../../utils/delay-until";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
@@ -51,20 +53,12 @@ export default class Preview extends BasePreview {
     /**
      * @param {HTMLElement} element
      */
-    public initWysiwyg(element: HTMLElement) {
+    public afterRenderWysiwyg(element: HTMLElement) {
         this.element = element;
         element.id = this.parent.id + "-editor";
 
-        WysiwygFactory(
-            this.parent.id,
-            element.id,
-            this.config.name,
-            this.config.additional_data.wysiwygConfig.wysiwygConfigData,
-            this.parent.dataStore,
-            "content",
-        ).then((wysiwyg: WysiwygInterface): void => {
-            this.wysiwyg = wysiwyg;
-        });
+        // This function is called whenever a render happens, meaning our WYSIWYG instance is destroyed
+        this.wysiwyg = null;
     }
 
     /**
@@ -151,18 +145,29 @@ export default class Preview extends BasePreview {
      * @returns {Boolean}
      */
     public activateEditor(preview: Preview, event: JQueryEventObject) {
-        const element = this.wysiwyg && this.element || this.textarea;
+        const activate = () => {
+            const element = this.wysiwyg && this.element || this.textarea;
+            element.focus();
+        };
 
-        if (!element ||
-            !this.slideChanged ||
-            event.currentTarget !== event.target &&
-            event.target !== element &&
-            !element.contains(event.target)
-        ) {
-            return false;
+        if (!this.wysiwyg) {
+            const selection = this.saveSelection();
+            console.log(event, selection);
+            this.element.removeAttribute("contenteditable");
+            _.defer(() => {
+                this.initWysiwyg(true)
+                    .then(() => delayUntil(
+                        () => {
+                            activate();
+                            this.restoreSelection(this.element, selection);
+                        },
+                        () => this.element.classList.contains("mce-edit-focus"),
+                        10,
+                    ));
+            });
+        } else {
+            activate();
         }
-
-        element.focus();
     }
 
     /**
@@ -288,6 +293,28 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Init the WYSIWYG
+     */
+    private initWysiwyg(focus: boolean = false) {
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        if (focus) {
+            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+        }
+
+        return WysiwygFactory(
+            this.parent.id,
+            this.element.id,
+            this.config.name,
+            wysiwygConfig,
+            this.parent.dataStore,
+            "content",
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
+        });
+    }
+
+    /**
      * Update image data inside data store
      *
      * @param {Array} data - list of each files' data
@@ -314,4 +341,76 @@ export default class Preview extends BasePreview {
 
         $(this.textarea).height(scrollHeight);
     }
+
+    /**
+     * Save the current selection to be restored at a later point
+     *
+     * @returns {Range}
+     */
+    private saveSelection(): Selection {
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            if (selection.getRangeAt && selection.rangeCount) {
+                const range = selection.getRangeAt(0).cloneRange();
+                return {
+                    startContainer: range.startContainer,
+                    startOffset: range.startOffset,
+                    endContainer: range.endContainer,
+                    endOffset: range.endOffset,
+                };
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restore the original selection
+     *
+     * @param {HTMLElement} element
+     * @param {Selection} selection
+     */
+    private restoreSelection(element: HTMLElement, selection: Selection) {
+        if (window.getSelection) {
+            // Find the original container that had the selection
+            const startContainer: HTMLElement = this.findTextNode(element, selection.startContainer.nodeValue);
+            let endContainer: HTMLElement = startContainer;
+            if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+                endContainer = this.findTextNode(element, selection.endContainer.nodeValue);
+            }
+
+            if (startContainer && endContainer) {
+                const newSelection = window.getSelection();
+                newSelection.removeAllRanges();
+
+                const range = document.createRange();
+                range.setStart(startContainer, selection.startOffset);
+                range.setEnd(endContainer, selection.endOffset);
+                newSelection.addRange(range);
+            }
+        }
+    }
+
+    /**
+     * Find a text node within an existing element
+     *
+     * @param {HTMLElement} element
+     * @param {string} text
+     * @returns {HTMLElement}
+     */
+    private findTextNode(element: HTMLElement, text: string): HTMLElement {
+        const textSearch = $(element).find(":contains(\"" + text.trim() + "\")");
+        if (textSearch.length > 0) {
+            // Search for the #text node within the element for the new range
+            return textSearch.last().contents().filter(function() {
+                return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
+            })[0];
+        }
+    }
+}
+
+interface Selection {
+    startContainer: Node;
+    startOffset: number;
+    endContainer: Node;
+    endOffset: number;
 }
