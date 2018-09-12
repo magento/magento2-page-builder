@@ -2346,11 +2346,10 @@
         <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumnToOne"/>
-        <!-- Validate height of variable in storefront -->
-        <comment userInput="Validate height of variable in storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <comment userInput="View Text inside column on storefront" stepKey="viewTextOnStorefront"/>
+        <!-- Validate height of variable in storefront -->
+        <comment userInput="Validate height of variable in storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>

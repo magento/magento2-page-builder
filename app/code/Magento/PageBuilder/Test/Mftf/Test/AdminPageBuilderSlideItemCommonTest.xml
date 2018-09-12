@@ -1510,14 +1510,15 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeToStage">
+        <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragSliderToColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Add Variable to Slide -->
         <comment userInput="Add Variable to Slide" stepKey="commentAddVariableToSlide"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableStoreName"/>
         </actionGroup>
@@ -1535,11 +1536,10 @@
         <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumnToOne"/>
-        <!-- Validate Height of Variable in Storefront -->
-        <comment userInput="Validate Height of Variable in Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <comment userInput="View Text inside column on storefront" stepKey="viewTextOnStorefront"/>
+        <!-- Validate Height of Variable in Storefront -->
+        <comment userInput="Validate Height of Variable in Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
