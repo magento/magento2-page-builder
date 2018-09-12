@@ -999,8 +999,8 @@
             <stories value="Slider"/>
             <title value="Slide Item - Slide Empty Link URL Does Nothing On Storefront"/>
             <description value="A user should be able to click on Slide with empty link url and remain on same page on the frontend"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-75774"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3865"/>
             <testCaseId value="MC-4139"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
@@ -1037,8 +1037,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
-        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_EmptyFrontend.value)}}" stepKey="clickLinkUrl"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.frontendValue)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.frontendValue)}}" stepKey="clickLinkUrl"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderSliderContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
