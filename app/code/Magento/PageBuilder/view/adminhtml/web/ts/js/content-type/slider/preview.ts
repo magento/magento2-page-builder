@@ -251,8 +251,10 @@ export default class Preview extends PreviewCollection {
         ).then((slide) => {
             events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
-                    this.navigateToSlide(this.parent.children().length - 1);
-                    slide.preview.onOptionEdit();
+                    _.defer(() => {
+                        this.navigateToSlide(this.parent.children().length - 1);
+                        slide.preview.onOptionEdit();
+                    });
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
             }, `slide:${slide.id}:mountAfter`);
