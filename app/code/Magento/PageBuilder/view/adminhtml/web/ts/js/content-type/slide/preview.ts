@@ -152,7 +152,6 @@ export default class Preview extends BasePreview {
 
         if (!this.wysiwyg) {
             const selection = this.saveSelection();
-            console.log(event, selection);
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)

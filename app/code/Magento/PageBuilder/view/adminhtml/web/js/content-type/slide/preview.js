@@ -121,7 +121,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       if (!this.wysiwyg) {
         var selection = this.saveSelection();
-        console.log(event, selection);
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
