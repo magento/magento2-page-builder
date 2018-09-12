@@ -10,14 +10,13 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import {SortableOptionsInterface} from "../../binding/sortable-options";
 import Config from "../../config";
-import ContentTypeInterface from "../../content-type";
+import ContentTypeInterface from "../../content-type.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
-import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
 import PreviewCollection from "../preview-collection";
 
 /**
@@ -51,23 +50,23 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        events.on("buttons:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
-            if (eventData.contentType.id === this.parent.id) {
+        events.on("buttons:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            if (args.contentType.id === this.parent.id) {
                 this.debouncedResizeHandler();
             }
         });
 
-        events.on("button-item:renderAfter", (eventData: ContentTypeAfterRenderEventParamsInterface) => {
-            if (eventData.contentType.parent.id === this.parent.id) {
+        events.on("button-item:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            if (args.contentType.parent.id === this.parent.id) {
                 this.debouncedResizeHandler();
             }
         });
 
-        events.on("stage:updateAfter", (eventData: StageUpdateAfterParamsInterface) => {
+        events.on("stage:updateAfter", () => {
             this.debouncedResizeHandler();
         });
 
-        events.on("contentType:redrawAfter", (eventData: ContentTypeRedrawAfterEventParamsInterface) => {
+        events.on("contentType:redrawAfter", () => {
             this.debouncedResizeHandler();
         });
     }

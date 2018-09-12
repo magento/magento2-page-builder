@@ -46,24 +46,18 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       }, 500);
       this.parent = parent;
       this.id = parent.id;
-      (0, _matrix.generateAllowedParents)();
-    }
-    /**
-     * On render build the stage and init any event listeners
-     */
+      (0, _matrix.generateAllowedParents)(); // Wait for the stage to be built alongside the stage being rendered
 
-
-    var _proto = Stage.prototype;
-
-    _proto.onRender = function onRender() {
       Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
-    };
+    }
     /**
      * Get template.
      *
      * @returns {string}
      */
 
+
+    var _proto = Stage.prototype;
 
     _proto.getTemplate = function getTemplate() {
       return this.template;

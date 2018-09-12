@@ -22,6 +22,7 @@ import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";
 import deferred from "./utils/promise-deferred";
 import DeferredInterface from "./utils/promise-deferred.d";
+import StageUpdateAfterParamsInterface from "./stage-update-after-params";
 
 export default class Stage {
     public parent: PageBuilderInterface;
@@ -64,12 +65,8 @@ export default class Stage {
         this.parent = parent;
         this.id = parent.id;
         generateAllowedParents();
-    }
 
-    /**
-     * On render build the stage and init any event listeners
-     */
-    public onRender() {
+        // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
             buildStage(this, this.parent.initialValue),
             this.afterRenderDeferred.promise,
@@ -181,7 +178,7 @@ export default class Stage {
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
-        events.on("stage:updateAfter", (args) => {
+        events.on("stage:updateAfter", (args: StageUpdateAfterParamsInterface) => {
             if (args.stageId === this.id) {
                 this.applyBindingsDebounce();
             }

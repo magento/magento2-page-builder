@@ -23,7 +23,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
       var _this = this;
 
       var element = (0, _jquery)("<div>");
-      return new Promise(function (resolve, reject) {
+      return new Promise(function (resolve) {
         _engine.waitForFinishRender().then(function () {
           _knockout.cleanNode(element[0]);
 

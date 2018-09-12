@@ -120,8 +120,9 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
                 ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
             }
 
-            sortedContentType = contentTypeInstance;
             showDropIndicators(contentTypeInstance.config.name);
+
+            sortedContentType = contentTypeInstance;
 
             // Dynamically change the connect with option to restrict content types
             $(this).sortable("option", "connectWith", getAllowedContainersClasses(contentTypeInstance.config.name));
