@@ -29,7 +29,6 @@ import ContentTypeRemovedEventParamsInterface from "../content-type-removed-even
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
-import {default as SliderPreview} from "../slider/preview";
 
 /**
  * @api
@@ -82,7 +81,7 @@ export default class Preview extends PreviewCollection {
             // Update our KO pointer to the active slide on change
             $(this.element).on(
                 "beforeChange",
-                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
+                (event: Event, slick: {}, currentSlide: number, nextSlide: number) => {
                     this.setActiveSlide(nextSlide);
                 },
             ).on("afterChange", () => {
@@ -329,7 +328,7 @@ export default class Preview extends PreviewCollection {
                 _.defer(() => {
                     if (newItemIndex !== null) {
                         newItemIndex = null;
-                        (this as SliderPreview).navigateToSlide(itemIndex, true, true);
+                        this.navigateToSlide(itemIndex, true, true);
                         _.defer(() => {
                             this.focusedSlide(null);
                             this.focusedSlide(itemIndex);
@@ -366,7 +365,7 @@ export default class Preview extends PreviewCollection {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 _.defer(() => {
                     // Mark the new duplicate slide as active
-                    (this as SliderPreview).navigateToSlide(duplicatedSlideIndex, true, true);
+                    this.navigateToSlide(duplicatedSlideIndex, true, true);
                     duplicatedSlide = duplicatedSlideIndex = null;
                 });
             }

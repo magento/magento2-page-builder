@@ -208,72 +208,19 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       _events.trigger("stage:interactionStop");
     };
     /**
-     * @inheritDoc
-     */
-
-
-    _proto.bindEvents = function bindEvents() {
-      var _this4 = this;
-
-      _BasePreview.prototype.bindEvents.call(this);
-
-      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this4.parent.dataStore.get();
-
-        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
-
-        _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
-      }); // Remove wysiwyg before assign new instance.
-
-
-      _events.on("childContentType:sortUpdate", function (args) {
-        if (args.instance.id === _this4.parent.parent.id) {
-          _this4.wysiwyg = null;
-        }
-      });
-
-      _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this4.parent.id) {
-          var dataStore = _this4.parent.dataStore.get();
-
-          var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-          _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue); // Update the display label for the slide
-
-          var slider = _this4.parent.parent;
-
-          _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
-
-          slider.children.subscribe(function (children) {
-            var index = children.indexOf(_this4.parent);
-
-            _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
-          });
-        }
-      });
-
-      _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.id === _this4.parent.id) {
-          var slider = _this4.parent.parent;
-          (0, _jquery)(slider.preview.element).on("beforeChange", function () {
-            _this4.slideChanged = false;
-          });
-          (0, _jquery)(slider.preview.element).on("afterChange", function () {
-            _this4.slideChanged = true;
-          });
-        }
-      });
-    };
-    /**
      * Init the WYSIWYG
      */
 
 
     _proto.initWysiwyg = function initWysiwyg(focus) {
-      var _this5 = this;
+      var _this4 = this;
 
       if (focus === void 0) {
         focus = false;
+      }
+
+      if (this.wysiwyg) {
+        return;
       }
 
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
@@ -283,7 +230,64 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       }
 
       return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
-        _this5.wysiwyg = wysiwyg;
+        _this4.wysiwyg = wysiwyg;
+      });
+    };
+    /**
+     * @inheritDoc
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      var _this5 = this;
+
+      _BasePreview.prototype.bindEvents.call(this);
+
+      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
+        var dataStore = _this5.parent.dataStore.get();
+
+        var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
+
+        _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
+      }); // Remove wysiwyg before assign new instance.
+
+
+      _events.on("childContentType:sortUpdate", function (args) {
+        if (args.instance.id === _this5.parent.parent.id) {
+          _this5.wysiwyg = null;
+        }
+      });
+
+      _events.on(this.config.name + ":mountAfter", function (args) {
+        if (args.id === _this5.parent.id) {
+          var dataStore = _this5.parent.dataStore.get();
+
+          var initialImageValue = dataStore[_this5.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+          _this5.uploader = new _uploader("imageuploader_" + _this5.parent.id, _this5.config.additional_data.uploaderConfig, _this5.parent.id, _this5.parent.dataStore, initialImageValue); // Update the display label for the slide
+
+          var slider = _this5.parent.parent;
+
+          _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
+
+          slider.children.subscribe(function (children) {
+            var index = children.indexOf(_this5.parent);
+
+            _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
+          });
+        }
+      });
+
+      _events.on(this.config.name + ":renderAfter", function (args) {
+        if (args.id === _this5.parent.id) {
+          var slider = _this5.parent.parent;
+          (0, _jquery)(slider.preview.element).on("beforeChange", function () {
+            _this5.slideChanged = false;
+          });
+          (0, _jquery)(slider.preview.element).on("afterChange", function () {
+            _this5.slideChanged = true;
+          });
+        }
       });
     };
     /**

@@ -235,6 +235,32 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Init the WYSIWYG
+     */
+    public initWysiwyg(focus: boolean = false) {
+        if (this.wysiwyg) {
+            return;
+        }
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        if (focus) {
+            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+        }
+
+        return WysiwygFactory(
+            this.parent.id,
+            this.element.id,
+            this.config.name,
+            wysiwygConfig,
+            this.parent.dataStore,
+            "content",
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
+        });
+    }
+
+    /**
      * @inheritDoc
      */
     protected bindEvents() {
@@ -288,28 +314,6 @@ export default class Preview extends BasePreview {
                     this.slideChanged = true;
                 });
             }
-        });
-    }
-
-    /**
-     * Init the WYSIWYG
-     */
-    private initWysiwyg(focus: boolean = false) {
-        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-
-        if (focus) {
-            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
-        }
-
-        return WysiwygFactory(
-            this.parent.id,
-            this.element.id,
-            this.config.name,
-            wysiwygConfig,
-            this.parent.dataStore,
-            "content",
-        ).then((wysiwyg: WysiwygInterface): void => {
-            this.wysiwyg = wysiwyg;
         });
     }
 
