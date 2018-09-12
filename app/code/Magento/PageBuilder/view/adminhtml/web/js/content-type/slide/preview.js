@@ -380,13 +380,15 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
 
     _proto.findTextNode = function findTextNode(element, text) {
-      var textSearch = (0, _jquery)(element).find(":contains(\"" + text.trim() + "\")");
+      if (text && text.trim().length > 0) {
+        var textSearch = (0, _jquery)(element).find(":contains(\"" + text.trim() + "\")");
 
-      if (textSearch.length > 0) {
-        // Search for the #text node within the element for the new range
-        return textSearch.last().contents().filter(function () {
-          return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
-        })[0];
+        if (textSearch.length > 0) {
+          // Search for the #text node within the element for the new range
+          return textSearch.last().contents().filter(function () {
+            return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
+          })[0];
+        }
       }
     };
 
