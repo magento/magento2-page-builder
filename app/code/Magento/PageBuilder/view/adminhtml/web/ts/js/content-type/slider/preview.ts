@@ -29,6 +29,7 @@ import ContentTypeRemovedEventParamsInterface from "../content-type-removed-even
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
+import delayUntil from "../../utils/delay-until";
 
 /**
  * @api
@@ -190,9 +191,11 @@ export default class Preview extends PreviewCollection {
      * @param {boolean} force
      */
     public navigateToSlide(slideIndex: number, dontAnimate: boolean = false, force: boolean = false): void {
-        $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
-        this.setActiveSlide(slideIndex);
-        this.setFocusedSlide(slideIndex, force);
+        if ($(this.element).hasClass("slick-initialized")) {
+            $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
+            this.setActiveSlide(slideIndex);
+            this.setFocusedSlide(slideIndex, force);
+        }
     }
 
     /**
@@ -252,7 +255,12 @@ export default class Preview extends PreviewCollection {
             events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.defer(() => {
-                        this.navigateToSlide(this.parent.children().length - 1);
+                        // Wait until slick is initialized before trying to navigate
+                        delayUntil(
+                            () => this.navigateToSlide(this.parent.children().length - 1),
+                            () => $(this.element).hasClass("slick-initialized"),
+                            10,
+                        );
                         slide.preview.onOptionEdit();
                     });
                     events.off(`slide:${slide.id}:mountAfter`);

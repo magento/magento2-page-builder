@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/utils/delay-until"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _previewCollection, _delayUntil) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -177,9 +177,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         force = false;
       }
 
-      (0, _jquery)(this.element).slick("slickGoTo", slideIndex, dontAnimate);
-      this.setActiveSlide(slideIndex);
-      this.setFocusedSlide(slideIndex, force);
+      if ((0, _jquery)(this.element).hasClass("slick-initialized")) {
+        (0, _jquery)(this.element).slick("slickGoTo", slideIndex, dontAnimate);
+        this.setActiveSlide(slideIndex);
+        this.setFocusedSlide(slideIndex, force);
+      }
     };
     /**
      * After child render record element
@@ -247,8 +249,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _events.on("slide:mountAfter", function (args) {
           if (args.id === slide.id) {
             _underscore.defer(function () {
-              _this3.navigateToSlide(_this3.parent.children().length - 1);
-
+              // Wait until slick is initialized before trying to navigate
+              (0, _delayUntil)(function () {
+                return _this3.navigateToSlide(_this3.parent.children().length - 1);
+              }, function () {
+                return (0, _jquery)(_this3.element).hasClass("slick-initialized");
+              }, 10);
               slide.preview.onOptionEdit();
             });
 
