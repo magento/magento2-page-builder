@@ -348,7 +348,7 @@ export default class Preview extends BasePreview {
     /**
      * Save the current selection to be restored at a later point
      *
-     * @returns {Range}
+     * @returns {Selection}
      */
     private saveSelection(): Selection {
         if (window.getSelection) {

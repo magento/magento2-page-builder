@@ -320,7 +320,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     /**
      * Save the current selection to be restored at a later point
      *
-     * @returns {Range}
+     * @returns {Selection}
      */
 
 
