@@ -1,11 +1,10 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], function (_jquery, _knockout, _keyCodes, _underscore) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
   _keyCodes = _interopRequireDefault(_keyCodes);
-  _underscore = _interopRequireDefault(_underscore);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,8 +42,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
      * @param {KnockoutBindingContext} bindingContext
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-      var _this = this;
-
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
           placeholder = _valueAccessor.placeholder,
@@ -127,42 +124,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
           event.stopPropagation();
         }
 
-        debouncedUpdateHandler.call(_this);
-      };
-      /**
-       * Debounce the saving of the state to ensure that on save without first unfocusing will succeed
-       */
-
-
-      var debouncedUpdateHandler = _underscore.default.debounce(function () {
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        var getCharPosition = function getCharPosition(editableDiv) {
-          var charPosition = 0;
-
-          if (window.getSelection) {
-            if (selection.rangeCount) {
-              if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
-                charPosition = selection.getRangeAt(0).endOffset;
-              }
-            }
-          }
-
-          return charPosition;
-        };
-
-        var pos = getCharPosition(element);
-
         if (focusedValue !== stripHtml(element.innerHTML)) {
           viewModel.updateData(field, stripHtml(element.innerHTML));
         }
-
-        range.setStart(element.childNodes[0], pos);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }, 300);
+      };
       /**
        * Prevent content from being dropped inside of inline edit area
        *

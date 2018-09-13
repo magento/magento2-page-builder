@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import _ from "underscore";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ButtonsPreview from "../buttons/preview";
@@ -51,22 +52,25 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusOut(index: number, event: JQueryEventObject): void {
-        const parentPreview = this.parent.parent.preview as ButtonsPreview;
-        if (!event.relatedTarget) {
-            if (parentPreview.focusedButton() === index) {
-                window.getSelection().removeAllRanges();
-                parentPreview.focusedButton(null);
-            }
-        } else {
-            // Have we moved the focus onto another button in the current group?
-            if ($.contains(parentPreview.wrapperElement, event.relatedTarget)) {
-                const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
-                if (buttonItem) {
-                    $(buttonItem.wrapperElement).find("[contenteditable]").focus();
+        if (this.parent && this.parent.parent) {
+            const parentPreview = this.parent.parent.preview as ButtonsPreview;
+            if (!event.relatedTarget) {
+                if (parentPreview.focusedButton() === index) {
+                    window.getSelection().removeAllRanges();
+                    parentPreview.focusedButton(null);
                 }
             } else {
-                window.getSelection().removeAllRanges();
-                parentPreview.focusedButton(null);
+                // Have we moved the focus onto another button in the current group?
+                if ($.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+                    const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
+                    if (buttonItem) {
+                        const newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
+                        parentPreview.focusedButton(newIndex);
+                    }
+                } else {
+                    window.getSelection().removeAllRanges();
+                    parentPreview.focusedButton(null);
+                }
             }
         }
     }

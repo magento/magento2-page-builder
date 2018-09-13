@@ -60,24 +60,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
 
 
     _proto.onFocusOut = function onFocusOut(index, event) {
-      var parentPreview = this.parent.parent.preview;
+      if (this.parent && this.parent.parent) {
+        var parentPreview = this.parent.parent.preview;
 
-      if (!event.relatedTarget) {
-        if (parentPreview.focusedButton() === index) {
-          window.getSelection().removeAllRanges();
-          parentPreview.focusedButton(null);
-        }
-      } else {
-        // Have we moved the focus onto another button in the current group?
-        if (_jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
-          var buttonItem = _knockout.dataFor(event.relatedTarget);
-
-          if (buttonItem) {
-            (0, _jquery)(buttonItem.wrapperElement).find("[contenteditable]").focus();
+        if (!event.relatedTarget) {
+          if (parentPreview.focusedButton() === index) {
+            window.getSelection().removeAllRanges();
+            parentPreview.focusedButton(null);
           }
         } else {
-          window.getSelection().removeAllRanges();
-          parentPreview.focusedButton(null);
+          // Have we moved the focus onto another button in the current group?
+          if (_jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+            var buttonItem = _knockout.dataFor(event.relatedTarget);
+
+            if (buttonItem) {
+              var newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
+              parentPreview.focusedButton(newIndex);
+            }
+          } else {
+            window.getSelection().removeAllRanges();
+            parentPreview.focusedButton(null);
+          }
         }
       }
     };

@@ -11,10 +11,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
-     * Keeps track of number of button item to disable sortable if there is only 1.
-     */
-
-    /**
      * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -22,10 +18,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Keeps track of number of button item to disable sortable if there is only 1.
 
       _this.focusedButton = _knockout.observable();
-      _this.disableSorting = _knockout.computed(function () {
+      _this.debouncedResizeHandler = _underscore.debounce(function () {
+        _this.resizeChildButtons();
+      }, 350);
+
+      _this.parent.children.subscribe(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
         if (_this.parent.children().length <= 1) {
@@ -33,10 +33,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           sortableElement.sortable("enable");
         }
-      });
-      _this.debouncedResizeHandler = _underscore.debounce(function () {
-        _this.resizeChildButtons();
-      }, 350);
+      }); // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+
 
       _this.focusedButton.subscribe(_underscore.debounce(function (index) {
         if (index !== null) {

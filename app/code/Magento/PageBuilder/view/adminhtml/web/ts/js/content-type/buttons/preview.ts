@@ -32,18 +32,6 @@ import PreviewCollection from "../preview-collection";
 export default class Preview extends PreviewCollection {
     public focusedButton: KnockoutObservable<number> = ko.observable();
 
-    /**
-     * Keeps track of number of button item to disable sortable if there is only 1.
-     */
-    public disableSorting: KnockoutComputed<void> = ko.computed(() => {
-        const sortableElement = $(this.wrapperElement).find(".buttons-container");
-        if (this.parent.children().length <= 1) {
-            sortableElement.sortable("disable");
-        } else {
-            sortableElement.sortable("enable");
-        }
-    });
-
     private debouncedResizeHandler = _.debounce(() => {
         this.resizeChildButtons();
     }, 350);
@@ -59,6 +47,16 @@ export default class Preview extends PreviewCollection {
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
+
+        // Keeps track of number of button item to disable sortable if there is only 1.
+        this.parent.children.subscribe(() => {
+            const sortableElement = $(this.wrapperElement).find(".buttons-container");
+            if (this.parent.children().length <= 1) {
+                sortableElement.sortable("disable");
+            } else {
+                sortableElement.sortable("enable");
+            }
+        });
 
         // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
         this.focusedButton.subscribe(_.debounce((index: number) => {
