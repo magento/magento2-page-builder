@@ -19,17 +19,17 @@ import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
+import delayUntil from "../../utils/delay-until";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
+import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
-import delayUntil from "../../utils/delay-until";
 
 /**
  * @api
