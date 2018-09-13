@@ -13,8 +13,8 @@
 6. [How to create custom PageBuilder content type container]
 
 
-[Introduction]: README.md
-[Contribution guide]: CONTRIBUTING.md
+[Introduction]: introduction.md
+[Contribution guide]: ../CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
