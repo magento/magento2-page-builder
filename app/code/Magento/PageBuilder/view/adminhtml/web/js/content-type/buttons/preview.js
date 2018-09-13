@@ -10,14 +10,22 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   function (_PreviewCollection) {
     _inheritsLoose(Preview, _PreviewCollection);
 
-    function Preview() {
-      var _temp, _this;
+    /**
+     * Keeps track of number of button item to disable sortable if there is only 1.
+     */
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    /**
+     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Preview(parent, config, observableUpdater) {
+      var _this;
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.disableSorting = _knockout.computed(function () {
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+
+      _this.focusedButton = _knockout.observable();
+      _this.disableSorting = _knockout.computed(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
         if (_this.parent.children().length <= 1) {
@@ -25,10 +33,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           sortableElement.sortable("enable");
         }
-      }), _this.debouncedResizeHandler = _underscore.debounce(function () {
+      });
+      _this.debouncedResizeHandler = _underscore.debounce(function () {
         _this.resizeChildButtons();
-      }, 350), _temp) || _this;
+      }, 350);
+
+      _this.focusedButton.subscribe(_underscore.debounce(function (index) {
+        if (index !== null) {
+          _events.trigger("stage:interactionStart");
+        } else {
+          // We have to force the stop as the event firing is inconsistent for certain operations
+          _events.trigger("stage:interactionStop", {
+            force: true
+          });
+        }
+      }, 1));
+
+      return _this;
     }
+    /**
+     * Bind events
+     */
+
 
     var _proto = Preview.prototype;
 
@@ -61,21 +87,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("contentType:redrawAfter", function (eventData) {
         _this2.debouncedResizeHandler();
+      }); // Capture when a content type is duplicated within the container
+
+
+      var duplicatedButton;
+      var duplicatedButtonIndex;
+
+      _events.on("button-item:duplicateAfter", function (args) {
+        if (_this2.parent.id === args.duplicateContentType.parent.id) {
+          duplicatedButton = args.duplicateContentType;
+          duplicatedButtonIndex = args.index;
+        }
       });
-    };
-    /**
-     * Set state based on mouseover event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
 
+      _events.on("button-item:mountAfter", function (args) {
+        if (duplicatedButton && args.id === duplicatedButton.id) {
+          _this2.focusedButton(duplicatedButtonIndex);
 
-    _proto.onMouseOver = function onMouseOver(context, event) {
-      // Only run the mouse over action when the active element is not a child of buttons
-      if (!_jquery.contains(this.wrapperElement, document.activeElement)) {
-        return _PreviewCollection.prototype.onMouseOver.call(this, context, event);
-      }
+          (0, _jquery)(duplicatedButton.preview.wrapperElement).find("[contenteditable]").focus();
+        }
+      });
     };
     /**
      * Return an array of options
@@ -109,7 +140,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       createButtonItemPromise.then(function (button) {
         _this3.parent.addChild(button);
 
-        _this3.isLiveEditing(_this3.parent.children().indexOf(button) !== -1);
+        _this3.focusedButton(_this3.parent.children().indexOf(button));
 
         return button;
       }).catch(function (error) {

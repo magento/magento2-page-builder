@@ -10,21 +10,26 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import {SortableOptionsInterface} from "../../binding/sortable-options";
 import Config from "../../config";
-import ContentTypeInterface from "../../content-type";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
+import ContentTypeConfigInterface from "../../content-type-config";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
+import ContentTypeInterface from "../../content-type.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
+import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 
 /**
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+    public focusedButton: KnockoutObservable<number> = ko.observable();
 
     /**
      * Keeps track of number of button item to disable sortable if there is only 1.
@@ -42,6 +47,32 @@ export default class Preview extends PreviewCollection {
         this.resizeChildButtons();
     }, 350);
 
+    /**
+     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    constructor(
+        parent: ContentTypeCollectionInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedButton.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
+    }
+
+    /**
+     * Bind events
+     */
     public bindEvents() {
         super.bindEvents();
 
@@ -70,19 +101,22 @@ export default class Preview extends PreviewCollection {
         events.on("contentType:redrawAfter", (eventData: ContentTypeRedrawAfterEventParamsInterface) => {
             this.debouncedResizeHandler();
         });
-    }
 
-    /**
-     * Set state based on mouseover event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
-    public onMouseOver(context: Preview, event: Event): void {
-        // Only run the mouse over action when the active element is not a child of buttons
-        if (!$.contains(this.wrapperElement, document.activeElement)) {
-            return super.onMouseOver(context, event);
-        }
+        // Capture when a content type is duplicated within the container
+        let duplicatedButton: ContentTypeInterface;
+        let duplicatedButtonIndex: number;
+        events.on("button-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
+            if (this.parent.id === args.duplicateContentType.parent.id) {
+                duplicatedButton = args.duplicateContentType;
+                duplicatedButtonIndex = args.index;
+            }
+        });
+        events.on("button-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (duplicatedButton && args.id === duplicatedButton.id) {
+                this.focusedButton(duplicatedButtonIndex);
+                $(duplicatedButton.preview.wrapperElement).find("[contenteditable]").focus();
+            }
+        });
     }
 
     /**
@@ -116,7 +150,7 @@ export default class Preview extends PreviewCollection {
 
         createButtonItemPromise.then((button: ContentTypeInterface) => {
             this.parent.addChild(button);
-            this.isLiveEditing(this.parent.children().indexOf(button) !== -1);
+            this.focusedButton(this.parent.children().indexOf(button));
             return button;
         }).catch((error: Error) => {
             console.error(error);

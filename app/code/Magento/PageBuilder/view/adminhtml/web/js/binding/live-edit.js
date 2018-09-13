@@ -71,6 +71,14 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
       var onFocus = function onFocus() {
         focusedValue = stripHtml(element.innerHTML);
+
+        if (selectAll && element.innerHTML !== "") {
+          var selection = window.getSelection();
+          var range = document.createRange();
+          range.selectNodeContents(element);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
       };
       /**
        * Blur event on element
@@ -80,16 +88,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var onBlur = function onBlur() {
         if (focusedValue !== stripHtml(element.innerHTML)) {
           viewModel.updateData(field, stripHtml(element.innerHTML));
-        }
-      };
-      /**
-       * Click event on element
-       */
-
-
-      var onClick = function onClick() {
-        if (selectAll && element.innerHTML !== "") {
-          document.execCommand("selectAll", false, null);
         }
       };
       /**
@@ -189,7 +187,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
-      element.addEventListener("click", onClick);
       element.addEventListener("mousedown", onMouseDown);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("input", onInput);

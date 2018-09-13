@@ -56,6 +56,14 @@ ko.bindingHandlers.liveEdit = {
          */
         const onFocus = () => {
             focusedValue = stripHtml(element.innerHTML);
+
+            if (selectAll && element.innerHTML !== "") {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(element);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
         };
 
         /**
@@ -64,15 +72,6 @@ ko.bindingHandlers.liveEdit = {
         const onBlur = () => {
             if (focusedValue !== stripHtml(element.innerHTML)) {
                 viewModel.updateData(field, stripHtml(element.innerHTML));
-            }
-        };
-
-        /**
-         * Click event on element
-         */
-        const onClick = () => {
-            if (selectAll && element.innerHTML !== "") {
-                document.execCommand("selectAll", false, null);
             }
         };
 
@@ -161,7 +160,6 @@ ko.bindingHandlers.liveEdit = {
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
-        element.addEventListener("click", onClick);
         element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("input", onInput);

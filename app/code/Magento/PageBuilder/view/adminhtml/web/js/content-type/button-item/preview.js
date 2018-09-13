@@ -40,54 +40,16 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/co
       return options;
     };
     /**
-     * Set state based on button click event for the preview
+     * Force the focus on the clicked button
      *
-     * @param {Preview} context
-     * @param {Event} event
+     * @param {number} index
+     * @param {JQueryEventObject} event
      */
 
 
-    _proto.onButtonClick = function onButtonClick(context, event) {
-      // Ensure no other options panel and button drag handles are displayed
-      (0, _jquery)(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
-      (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-      var currentTarget = (0, _jquery)(event.currentTarget);
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
-
-      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = optionsMenu.first();
-      }
-
-      (0, _jquery)(currentTarget).find("[data-element='link_text']").focus();
-      optionsMenu.parent().addClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
-    };
-    /**
-     * Set state based on blur event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
-
-
-    _proto.onBlur = function onBlur(context, event) {
-      var currentTarget = event.currentTarget;
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
-
-      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = optionsMenu.first();
-      }
-
-      optionsMenu.parent().removeClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
-    };
-    /**
-     * Focus out of the element
-     */
-
-
-    _proto.onFocusOut = function onFocusOut() {
-      this.parent.parent.preview.isLiveEditing(null);
+    _proto.onClick = function onClick(index, event) {
+      (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
+      event.stopPropagation();
     };
     /**
      * If the button is displayed we need to show the options menu on hover
