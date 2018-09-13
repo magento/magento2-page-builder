@@ -7,7 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import "Magento_PageBuilder/js/resource/slick/slick.min";
+import "slick";
 import _ from "underscore";
 import "../../binding/focus";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
