@@ -73,7 +73,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       });
 
       this.loading(false);
-      this.initListeners();
+      this.initListeners(); // Ensure we complete an initial save of the data within the stage once we're ready
+
+      _events.trigger("stage:updateAfter", {
+        stageId: this.id
+      });
     };
     /**
      * Remove a child from the observable array

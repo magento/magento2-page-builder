@@ -89,6 +89,9 @@ export default class Stage {
         events.trigger(`stage:${ this.id }:readyAfter`, {stage: this});
         this.loading(false);
         this.initListeners();
+
+        // Ensure we complete an initial save of the data within the stage once we're ready
+        events.trigger("stage:updateAfter", {stageId: this.id});
     }
 
     /**
