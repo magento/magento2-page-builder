@@ -17,6 +17,7 @@ import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
+import delayUntil from "../../utils/delay-until";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
@@ -24,7 +25,6 @@ import ContentTypeMountEventParamsInterface from "../content-type-mount-event-pa
 import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import delayUntil from "../../utils/delay-until";
 
 /**
  * @api
