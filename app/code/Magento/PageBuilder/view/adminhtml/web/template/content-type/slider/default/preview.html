@@ -22,7 +22,7 @@
             <div class="navigation-dot"
                  event="focusin: $parent.setFocusedSlide.bind($parent, $index(), false), focusout: $parent.onFocusOut.bind($parent)"
                  css="active: $parent.activeSlide() === $index(), focus: $parent.focusedSlide() === $index()">
-                <a class="navigation-dot-anchor" href="#" tabindex="0" click="$parent.onControlClick.bind($parent, $index())" hasFocus="$parent.focusedSlide() === $index()"/>
+                <a class="navigation-dot-anchor" href="#" tabindex="0" click="$parent.onControlClick.bind($parent, $index())" data-bind="hasFocusNoScroll: $parent.focusedSlide() === $index()"/>
                 <with args="preview">
                     <render with="preview" args="getOptions().template" />
                 </with>
