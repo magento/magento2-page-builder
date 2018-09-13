@@ -15,7 +15,7 @@
             <title value="Can create product attribute with pagebuilder"/>
             <description value="The user should be able to create product attribute type of pagebuilder"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-84243"/>
+            <useCaseId value="MC-1423"/>
             <testCaseId value="MC-1321"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
@@ -43,14 +43,11 @@
             <title value="Can create product using pagebuilder product attribute"/>
             <description value="Can create product using pagebuilder product attribute and see it on Storefront"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-84243"/>
+            <useCaseId value="MC-1423"/>
             <testCaseId value="MC-1316"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
             <group value="pagebuilder-customBeforeAfter"/>
-            <skip>
-                <issueId value="MC-4057"/>
-            </skip>
         </annotations>
         <before>
             <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
@@ -73,12 +70,15 @@
         <waitForPageLoad stepKey="waitForPageLoad3" />
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.label$$)}}" stepKey="seePagebuilderBtn"/>
-        <click selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.label$$)}}" stepKey="enablePageBuilder"/>
+        <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
+        <click selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="enablePageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
         <seeElement selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible" />
         <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -102,13 +102,10 @@
             <title value="Can downgrade pagebuilder product attribute to text area product attribute"/>
             <description value="Can downgrade pagebuilder product attribute to text area product attribute"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-84243"/>
+            <useCaseId value="MC-1423"/>
             <testCaseId value="MC-3015"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
-            <skip>
-                <issueId value="MC-4057"/>
-            </skip>
         </annotations>
         <before>
             <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
@@ -166,13 +163,10 @@
             <title value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
             <description value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-84243"/>
+            <useCaseId value="MC-1423"/>
             <testCaseId value="MC-3013"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
-            <skip>
-                <issueId value="MC-4057"/>
-            </skip>
         </annotations>
         <before>
             <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
@@ -230,7 +224,7 @@
             <title value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
             <description value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-84243"/>
+            <useCaseId value="MC-1423"/>
             <testCaseId value="MC-4026"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
@@ -286,7 +280,7 @@
             <title value="Can create pagebuilder product attribute on product form"/>
             <description value="Can create pagebuilder product attribute on product form"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-84243"/>
+            <useCaseId value="MC-1423"/>
             <testCaseId value="MC-1332"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>

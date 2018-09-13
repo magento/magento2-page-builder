@@ -525,7 +525,7 @@
             <title value="Can close the edit panel"/>
             <description value="A user should be able to open the edit form on an added column."/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
+            <useCaseId value="MC-1954"/>
             <testCaseId value="MC-2582"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -620,13 +620,10 @@
             <title value="Column appearance settings show on frontend"/>
             <description value="Validate column appearance settings appear on the frontend"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
+            <useCaseId value="MC-1954"/>
             <testCaseId value="MC-2383"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
-            <skip>
-                <issueId value="MC-4057"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -697,13 +694,10 @@
             <title value="Column settings appear on the column form after page save"/>
             <description value="Validate selected column settings appear on the form after page save"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
+            <useCaseId value="MC-1954"/>
             <testCaseId value="MC-2384"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
-            <skip>
-                <issueId value="MC-4057"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -725,6 +719,7 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
@@ -750,9 +745,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumnAfterSave">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderMinHeightProperty_500">
             <argument name="property" value="PageBuilderMinHeightProperty_500"/>
@@ -781,7 +776,7 @@
             <title value="Upload and preview an image for column background style"/>
             <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
+            <useCaseId value="MC-1954"/>
             <testCaseId value="MC-2395"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -814,7 +809,7 @@
             <title value="Column background color is preserved on edit"/>
             <description value="Validate column background color is preserved on edit"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-66176"/>
+            <useCaseId value="MC-1954"/>
             <testCaseId value="MC-2401"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
