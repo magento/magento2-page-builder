@@ -1,4 +1,4 @@
-# Bindings
+# Iconography
 
 ## Navigation
 
@@ -9,14 +9,14 @@
     1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
-    1. [Iconography]
+    1. **Iconography**
     1. [Add image uploader to content type]
     1. [Module integration]
     1. [Additional data configuration]
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
-    1. **Bindings**
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
     1. [Reuse product conditions in content types]
@@ -30,8 +30,8 @@
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
-[Introduction]: README.md
-[Contribution guide]: CONTRIBUTING.md
+[Introduction]: introduction.md
+[Contribution guide]: ../CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
@@ -58,51 +58,32 @@
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
+## Overview
 
-## Summary
+PageBuilder Admin icons follow the same design principles as the core [Magento Admin icons].
+They are simple, flat, and monochromatic to prevent the loss of detail at smaller sizes and makes the shapes easier to comprehend.
 
-As part of the Page Builder application, we provide new Knockout bindings you can use in your custom content types:
+## Icon library
+The following image shows all available PageBuilder Admin icons:
 
-| Name           | Description                                                    | Usage                                  |
-| -------------- | -------------------------------------------------------------- | -------------------------------------  |
-| sortable       | Enables sorting the children of a bound element.               | \<div data-bind="sortable: {}"></div>  |
-| draggable      | Enables draggable functionality on DOM elements.               | \<div data-bind="draggable: {}"></div> |
+![PageBuilder admin icons](images/pagebuilder-icons.png)
 
-### Sortable binding
-```
-app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/binding/sortable.ts
-```
+You can use these icons when extending or customizing the PageBuilder module or [create your own icons].
 
-The options in this binding are passed to the jQuery UI sortable instance. All options and their descriptions are available on the jQuery UI site: http://api.jqueryui.com/sortable/.
+## Icon fonts
+We recommend using icon fonts to get the best quality for your icons. 
+The PageBuilder Admin icon fonts can be found in the [cms-icons repository].
 
-Within Page Builder, we use the `sortable` binding to pass preview-component options to the drag-and-drop binding. We bind multiple options and events to the `sortable` instance so we can correctly respond to user actions when dragging and dropping content. Configuration and usage of the `sortable` binding can be seen in the Preview component:
+If you want to add your own icons, each icon will need to be in its own SVG files. There are multiple ways to create icon fonts, here is one to get started:
 
-Example Configuration: 
-```
-app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts
-```
- 
-Example Usage: 
-```
-app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/preview.html
-```
+1. Go to <a href="https://icomoon.io/app/" target="\_blank"> https://icomoon.io/app/ </a> or download this app in Chrome web store.  
 
-### Draggable binding
-```
-app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/binding/draggable.ts
-``` 
+2. Upload your icons in SVG format into the app.
 
-The options provided in this binding are passed to the jQuery UI draggable instance. All options and their descriptions are available on the jQuery UI site: http://api.jqueryui.com/draggable/.
+3. Specify desired font names and specify the Unicode characters to map the icons. Setting the icons to Private User Area will disable screen-readers or other accessibility tools to read your icon's characters (read "Unicode" section here).
 
-Within Page Builder, we use this binding for the left panel's content types. The configuration and usage of the `draggable` binding can be seen in the Panel component:
+4. Then initialize a download in the app to generate the icon font and CSS style sheet.
 
-Example Configuration: 
-```
-app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/panel.ts
-```
- 
-Example Usage: 
-```
-app/code/Magento/PageBuilder/view/adminhtml/web/template/panel.html
-```
-
+[Magento Admin icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html
+[create your own icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html#creating-icons
+[cms-icons repository]: https://github.com/magento-ux/cms-icons
