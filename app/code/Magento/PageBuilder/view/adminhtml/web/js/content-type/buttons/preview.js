@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/utils/delay-until"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _previewCollection, _delayUntil) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -41,6 +41,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.focusedButton.subscribe(_underscore.debounce(function (index) {
         if (index !== null) {
           _events.trigger("stage:interactionStart");
+
+          var focusedButton = _this.parent.children()[index];
+
+          (0, _delayUntil)(function () {
+            return (0, _jquery)(focusedButton.preview.wrapperElement).find("[contenteditable]").focus();
+          }, function () {
+            return typeof focusedButton.preview.wrapperElement !== "undefined";
+          }, 10);
         } else {
           // We have to force the stop as the event firing is inconsistent for certain operations
           _events.trigger("stage:interactionStop", {
@@ -103,8 +111,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("button-item:mountAfter", function (args) {
         if (duplicatedButton && args.id === duplicatedButton.id) {
           _this2.focusedButton(duplicatedButtonIndex);
-
-          (0, _jquery)(duplicatedButton.preview.wrapperElement).find("[contenteditable]").focus();
         }
       });
     };

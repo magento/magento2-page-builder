@@ -24,6 +24,7 @@ import ContentTypeMountEventParamsInterface from "../content-type-mount-event-pa
 import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+import delayUntil from "../../utils/delay-until";
 
 /**
  * @api
@@ -63,6 +64,12 @@ export default class Preview extends PreviewCollection {
         this.focusedButton.subscribe(_.debounce((index: number) => {
             if (index !== null) {
                 events.trigger("stage:interactionStart");
+                const focusedButton = this.parent.children()[index];
+                delayUntil(
+                    () => $(focusedButton.preview.wrapperElement).find("[contenteditable]").focus(),
+                    () => typeof focusedButton.preview.wrapperElement !== "undefined",
+                    10,
+                );
             } else {
                 // We have to force the stop as the event firing is inconsistent for certain operations
                 events.trigger("stage:interactionStop", {force : true});
@@ -114,7 +121,6 @@ export default class Preview extends PreviewCollection {
         events.on("button-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedButton && args.id === duplicatedButton.id) {
                 this.focusedButton(duplicatedButtonIndex);
-                $(duplicatedButton.preview.wrapperElement).find("[contenteditable]").focus();
             }
         });
     }
