@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import $t from "mage/translate";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
@@ -41,6 +42,44 @@ export default class Preview extends BasePreview {
     public onClick(index: number, event: JQueryEventObject): void {
         $(event.currentTarget).find("[contenteditable]").focus();
         event.stopPropagation();
+    }
+
+    /**
+     * On focus out
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+    public onFocusOut(index: number, event: JQueryEventObject): void {
+        const parentPreview = this.parent.parent.preview as ButtonsPreview;
+        if (!event.relatedTarget) {
+            if (parentPreview.focusedButton() === index) {
+                window.getSelection().removeAllRanges();
+                parentPreview.focusedButton(null);
+            }
+        } else {
+            // Have we moved the focus onto another button in the current group?
+            if ($.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+                const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
+                if (buttonItem) {
+                    $(buttonItem.wrapperElement).find("[contenteditable]").focus();
+                }
+            } else {
+                window.getSelection().removeAllRanges();
+                parentPreview.focusedButton(null);
+            }
+        }
+    }
+
+    /**
+     * On focus in set the focused button
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+    public onFocusIn(index: number, event: Event): void {
+        const parentPreview = this.parent.parent.preview as ButtonsPreview;
+        parentPreview.focusedButton(index);
     }
 
     /**

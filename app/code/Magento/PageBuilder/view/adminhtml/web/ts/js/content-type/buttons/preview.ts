@@ -19,11 +19,11 @@ import ContentTypeInterface from "../../content-type.d";
 import StageUpdateAfterParamsInterface from "../../stage-update-after-params.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import ContentTypeRedrawAfterEventParamsInterface from "../content-type-redraw-after-event-params";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 
 /**
  * @api

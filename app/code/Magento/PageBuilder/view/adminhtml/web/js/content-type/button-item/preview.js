@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _conditionalRemoveOption, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _conditionalRemoveOption, _preview) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -50,6 +50,48 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/co
     _proto.onClick = function onClick(index, event) {
       (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
       event.stopPropagation();
+    };
+    /**
+     * On focus out
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+
+
+    _proto.onFocusOut = function onFocusOut(index, event) {
+      var parentPreview = this.parent.parent.preview;
+
+      if (!event.relatedTarget) {
+        if (parentPreview.focusedButton() === index) {
+          window.getSelection().removeAllRanges();
+          parentPreview.focusedButton(null);
+        }
+      } else {
+        // Have we moved the focus onto another button in the current group?
+        if (_jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+          var buttonItem = _knockout.dataFor(event.relatedTarget);
+
+          if (buttonItem) {
+            (0, _jquery)(buttonItem.wrapperElement).find("[contenteditable]").focus();
+          }
+        } else {
+          window.getSelection().removeAllRanges();
+          parentPreview.focusedButton(null);
+        }
+      }
+    };
+    /**
+     * On focus in set the focused button
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+
+
+    _proto.onFocusIn = function onFocusIn(index, event) {
+      var parentPreview = this.parent.parent.preview;
+      parentPreview.focusedButton(index);
     };
     /**
      * If the button is displayed we need to show the options menu on hover
