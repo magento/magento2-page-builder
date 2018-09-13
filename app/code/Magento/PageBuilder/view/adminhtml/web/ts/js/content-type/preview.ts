@@ -292,19 +292,21 @@ export default class Preview {
      * Handle duplicate of items
      */
     public onOptionDuplicate(): void {
-        this.clone(this.parent);
+        this.clone(this.parent, true, true);
     }
 
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
+     * @param {boolean} direct
      * @returns {Promise<ContentTypeInterface> | void}
      */
     public clone(
         contentType: ContentTypeInterface | ContentTypeCollectionInterface,
         autoAppend: boolean = true,
+        direct: boolean = false,
     ): Promise<ContentTypeInterface> | void {
         const contentTypeData = contentType.dataStore.get() as DataObject;
         const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
@@ -320,7 +322,7 @@ export default class Preview {
                     contentType.parent.addChild(duplicateContentType, index);
                 }
 
-                this.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index);
+                this.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
 
                 resolve(duplicateContentType);
             });
@@ -476,16 +478,19 @@ export default class Preview {
      * @param {ContentTypeInterface} originalContentType
      * @param {ContentTypeInterface} duplicateContentType
      * @param {number} index
+     * @param {boolean} direct
      */
     protected dispatchContentTypeCloneEvents(
         originalContentType: ContentTypeInterface,
         duplicateContentType: ContentTypeInterface,
         index: number,
+        direct: boolean,
     ) {
         const duplicateEventParams = {
-            original: originalContentType,
+            originalContentType,
             duplicateContentType,
             index,
+            direct,
         };
 
         events.trigger("contentType:duplicateAfter", duplicateEventParams);

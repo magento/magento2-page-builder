@@ -106,7 +106,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedButton: ContentTypeInterface;
         let duplicatedButtonIndex: number;
         events.on("button-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (this.parent.id === args.duplicateContentType.parent.id) {
+            if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
                 duplicatedButton = args.duplicateContentType;
                 duplicatedButtonIndex = args.index;
             }
@@ -164,11 +164,10 @@ export default class Preview extends PreviewCollection {
      * @param {string} tolerance
      * @returns {JQueryUI.Sortable}
      */
-    public buttonsSortableOptions(
+    public getSortableOptions(
         orientation: string = "width",
         tolerance: string = "intersect",
     ): SortableOptionsInterface {
-        let placeholderGhost: JQuery;
         return {
             handle: ".button-item-drag-handle",
             items: ".pagebuilder-content-type-wrapper",
@@ -177,6 +176,7 @@ export default class Preview extends PreviewCollection {
             tolerance,
             revert: 200,
             disabled: this.parent.children().length <= 1,
+
             /**
              * Provide custom helper element
              *
@@ -192,6 +192,7 @@ export default class Preview extends PreviewCollection {
                 helper[0].querySelector(".pagebuilder-options").remove();
                 return helper[0];
             },
+
             placeholder: {
                 /**
                  * Provide custom placeholder element
@@ -204,9 +205,7 @@ export default class Preview extends PreviewCollection {
                         .clone()
                         .css({
                             display: "inline-block",
-                            opacity: 0,
-                            width: item.width(),
-                            height: item.height(),
+                            opacity: "0.3",
                         })
                         .removeClass("focused")
                         .addClass("sortable-placeholder");
@@ -217,54 +216,18 @@ export default class Preview extends PreviewCollection {
                     return;
                 },
             },
+
             /**
-             * Logic for starting the sorting and adding the placeholderGhost
-             *
-             * @param {Event} event
-             * @param {JQueryUI.SortableUIParams} element
+             * Trigger interaction start on sort
              */
-            start(event: Event, element: JQueryUI.SortableUIParams) {
-                placeholderGhost = element.placeholder
-                    .clone()
-                    .css({
-                        opacity: 0.3,
-                        position: "absolute",
-                        left: element.placeholder.position().left,
-                        top: element.placeholder.position().top,
-                    });
-                element.item.parent().append(placeholderGhost);
+            start() {
                 events.trigger("stage:interactionStart");
             },
+
             /**
-             * Logic for changing element position
-             *
-             * Set the width and height of the moving placeholder animation
-             * and then add animation of placeholder ghost to the placeholder position.
-             *
-             * @param {Event} event
-             * @param {JQueryUI.SortableUIParams} element
+             * Stop stage interaction on stop
              */
-            change(event: Event, element: JQueryUI.SortableUIParams) {
-                element.placeholder.stop(true, false);
-                if (orientation === "height") {
-                    element.placeholder.css({height: element.item.height() / 1.2});
-                    element.placeholder.animate({height: element.item.height()}, 200, "linear");
-                }
-                if (orientation === "width") {
-                    element.placeholder.css({width: element.item.width() / 1.2});
-                    element.placeholder.animate({width: element.item.width()}, 200, "linear");
-                }
-                placeholderGhost.stop(true, false).animate({
-                    left: element.placeholder.position().left,
-                    top: element.placeholder.position().top,
-                }, 200);
-            },
-            /**
-             * Logic for post sorting and removing the placeholderGhost
-             */
-            stop(event: Event, element: JQueryUI.SortableUIParams) {
-                placeholderGhost.remove();
-                element.item.find(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
+            stop() {
                 events.trigger("stage:interactionStop");
             },
         };

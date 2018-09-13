@@ -94,7 +94,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedButtonIndex;
 
       _events.on("button-item:duplicateAfter", function (args) {
-        if (_this2.parent.id === args.duplicateContentType.parent.id) {
+        if (_this2.parent.id === args.duplicateContentType.parent.id && args.direct) {
           duplicatedButton = args.duplicateContentType;
           duplicatedButtonIndex = args.index;
         }
@@ -156,7 +156,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.buttonsSortableOptions = function buttonsSortableOptions(orientation, tolerance) {
+    _proto.getSortableOptions = function getSortableOptions(orientation, tolerance) {
       if (orientation === void 0) {
         orientation = "width";
       }
@@ -165,7 +165,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         tolerance = "intersect";
       }
 
-      var placeholderGhost;
       return {
         handle: ".button-item-drag-handle",
         items: ".pagebuilder-content-type-wrapper",
@@ -200,9 +199,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           element: function element(item) {
             var placeholder = item.clone().css({
               display: "inline-block",
-              opacity: 0,
-              width: item.width(),
-              height: item.height()
+              opacity: "0.3"
             }).removeClass("focused").addClass("sortable-placeholder");
             placeholder[0].querySelector(".pagebuilder-options").remove();
             return placeholder[0];
@@ -213,66 +210,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         },
 
         /**
-         * Logic for starting the sorting and adding the placeholderGhost
-         *
-         * @param {Event} event
-         * @param {JQueryUI.SortableUIParams} element
+         * Trigger interaction start on sort
          */
-        start: function start(event, element) {
-          placeholderGhost = element.placeholder.clone().css({
-            opacity: 0.3,
-            position: "absolute",
-            left: element.placeholder.position().left,
-            top: element.placeholder.position().top
-          });
-          element.item.parent().append(placeholderGhost);
-
+        start: function start() {
           _events.trigger("stage:interactionStart");
         },
 
         /**
-         * Logic for changing element position
-         *
-         * Set the width and height of the moving placeholder animation
-         * and then add animation of placeholder ghost to the placeholder position.
-         *
-         * @param {Event} event
-         * @param {JQueryUI.SortableUIParams} element
+         * Stop stage interaction on stop
          */
-        change: function change(event, element) {
-          element.placeholder.stop(true, false);
-
-          if (orientation === "height") {
-            element.placeholder.css({
-              height: element.item.height() / 1.2
-            });
-            element.placeholder.animate({
-              height: element.item.height()
-            }, 200, "linear");
-          }
-
-          if (orientation === "width") {
-            element.placeholder.css({
-              width: element.item.width() / 1.2
-            });
-            element.placeholder.animate({
-              width: element.item.width()
-            }, 200, "linear");
-          }
-
-          placeholderGhost.stop(true, false).animate({
-            left: element.placeholder.position().left,
-            top: element.placeholder.position().top
-          }, 200);
-        },
-
-        /**
-         * Logic for post sorting and removing the placeholderGhost
-         */
-        stop: function stop(event, element) {
-          placeholderGhost.remove();
-          element.item.find(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
-
+        stop: function stop() {
           _events.trigger("stage:interactionStop");
         }
       };
