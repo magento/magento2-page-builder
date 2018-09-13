@@ -1472,18 +1472,18 @@
         <comment userInput="Verify Editor Still In Focus 2" stepKey="commentEditorInFocus2"/>
         <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="seeEditorPanel2"/>
     </test>
-    <test name="DeletingSecondSlideShowsFirstSlide">
+    <test name="SlideItemDeletingSecondSlideShowsFirstSlide">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Deleting second slide will display first"/>
+            <title value="Slide Item - Deleting second slide will display first"/>
             <description value="A user should be able to delete the secondary slide within a slider and have the first be focused and displayed"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-3773"/>
             <testCaseId value="MC-4107"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-slider"/>
-            <group value="pagebuilder-sliderCommon"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1494,7 +1494,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider to Stage -->
-        <comment userInput="User adds Slider into the content, user sees first Slide to be displayed inside the slider" stepKey="addSliderToStage"/>
+        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -1512,25 +1512,46 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!-- Validate first slide -->
-        <comment userInput="User sees Slide on stage with updated title and content." stepKey="checkFilledData"/>
+        <comment userInput="Validate first slide" stepKey="checkFilledData"/>
         <click stepKey="unfocusNavigation" selector="{{PageBuilderPanel.searchPanel}}"/>
-        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
-        <waitForElementVisible selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundColor"/>
-        <!-- Duplicate -->
-        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundColor"/>
+        <!-- Test removing duplicated slide -->
+        <comment userInput="Test removing duplicated slide" stepKey="commentDuplicate"/>
         <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideDuplicatedContent"/>
-        <waitForElementVisible selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideDuplicatedBackground"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideDuplicatedContent"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideDuplicatedBackground"/>
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
-        <waitForPageLoad stepKey="waitForConfirmationModal"/>
-        <waitForElementVisible selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterDelete"/>
-        <waitForElementVisible selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundAfterDelete"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterDelete"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundAfterDelete"/>
+        <!-- Test removing added slide -->
+        <comment userInput="Test removing added slide" stepKey="commentAddedSlide"/>
+        <actionGroup ref="addSlide" stepKey="addNewSlide" />
+        <!-- Fill first slide data -->
+        <comment userInput="Fill second slide data." stepKey="fillSlide2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputPlaintext1">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE1">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeNewSlideDuplicatedContent"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeNewSlideDuplicatedBackground"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeNewSlideFromStage">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal1"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterDelete1"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundAfterDelete1"/>
     </test>
 </tests>
