@@ -16,7 +16,7 @@
             <description value="Validate the default values for every attribute for Appearance in the Configuration form, on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92336"/>
+            <testCaseId value="MC-2448"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -118,7 +118,7 @@
             <description value="Validate the Inline Appearance in the Configuration form, on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92347"/>
+            <testCaseId value="MC-2455"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -255,7 +255,7 @@
             <description value="Validate the Stacked Appearance in the Configuration form, on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92337"/>
+            <testCaseId value="MC-2474"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -327,7 +327,7 @@
             <description value="Validate the add button and Inline Appearance in the Configuration form, on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92339"/>
+            <testCaseId value="MC-2438"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -391,7 +391,7 @@
             <description value="Validate the add button and Stacked Appearance in the Configuration form, on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92340"/>
+            <testCaseId value="MC-2476"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -455,7 +455,7 @@
             <description value="Validate switching between appearances in the Configuration form, on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92374"/>
+            <testCaseId value="MC-2436"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -575,7 +575,7 @@
             <description value="Validate that buttons wrap when one gets long name with Inline Appearance on Stage and Storefront for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66361"/>
-            <testCaseId value="MAGETWO-92381"/>
+            <testCaseId value="MC-2458"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -1905,7 +1905,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
-            <group value="ButtonGroupValidateSameSizeWithinTab"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
@@ -1994,5 +1993,121 @@
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
         </assertLessThan>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop1"/>
+    </test>
+    <test name="ButtonGroupValidateSameSizeWhenSwitchingActiveTab">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Validate Same Size Works When Switching Between Active Tabs"/>
+            <description value="Validate that when buttons are added to Tabs and same size is enabled, buttons resize when switching between Tabs"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3847"/>
+            <testCaseId value="MC-3909"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Button Group To Tab -->
+        <comment userInput="Add Button Group To Tab" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToTab">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Enable Same Size -->
+        <comment userInput="Enable Same Size" stepKey="commentEditPanel1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableSameSize">
+            <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Edit Buttons -->
+        <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
+        <actionGroup ref="addButton" stepKey="addButton1"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Duplicate Tab -->
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <!-- Validate Tab 2 Buttons On Stage -->
+        <comment userInput="Validate Stage: Tab 2 Buttons" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage1">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="buttonGroupIndex" value="2"/>
+            <argument name="firstButtonIndex" value="3"/>
+            <argument name="secondButtonIndex" value="4"/>
+        </actionGroup>
+        <!-- Validate Tab 1 Buttons On Stage -->
+        <comment userInput="Validate Stage: Tab 1 Buttons" stepKey="commentValidateStage2"/>
+        <click selector="{{TabOnStage.tabHeader('1')}}" stepKey="clickActiveTab2"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeNewTabActive2"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Tab 1 Buttons On Stage After Save -->
+        <comment userInput="Validate Stage After Save: Tab 1 Buttons" stepKey="commentValidateStage3"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <!-- Validate Tab 2 Buttons On Stage After Save -->
+        <comment userInput="Validate Stage After Save: Tab 2 Buttons" stepKey="commentValidateStage4"/>
+        <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="clickActiveTab3"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeNewTabActive3"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStage4">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="buttonGroupIndex" value="2"/>
+            <argument name="firstButtonIndex" value="3"/>
+            <argument name="secondButtonIndex" value="4"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront: Initial" stepKey="commentValidateStorefront1"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="goToStorefront1"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="clickActiveTabStorefront"/>
+        <waitForElementVisible time="30" selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeNewTabActiveStorefront"/>
+        <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonGroupIndex" value="2"/>
+            <argument name="firstButtonIndex" value="3"/>
+            <argument name="secondButtonIndex" value="4"/>
+        </actionGroup>
     </test>
 </tests>

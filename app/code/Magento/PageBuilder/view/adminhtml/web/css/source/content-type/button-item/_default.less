@@ -28,13 +28,22 @@
         }
         a[data-element='link'] {
             max-width: 100%;
+            min-width: 0;
             position: relative;
+            transition: min-width 200ms ease;
             word-wrap: break-word;
             [data-element='link_text'] {
                 max-width: 100%;
             }
         }
+
         &.pagebuilder-content-type-active {
+            .pagebuilder-button-primary {
+                .button-item-drag-handle {
+                    color: rgba(255, 255, 255, .8);
+                }
+            }
+
             .button-item-drag-handle {
                 color: @color-dark-gray0;
                 cursor: move; /* fallback if grab cursor is unsupported */
@@ -61,7 +70,7 @@
                 }
 
                 &.disabled {
-                    color: @color-light-gray;
+                    color: rgba(221, 221, 221, .4);
                     cursor: not-allowed;
                 }
             }

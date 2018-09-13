@@ -340,7 +340,7 @@ return [
                                     'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                 ],
                                 3 => [
-                                    'var' => 'original_complex',
+                                    'var' => 'original_complex_attribute',
                                     'name' => null,
                                     'converter' => null,
                                     'preview_converter' => null,
@@ -348,7 +348,7 @@ return [
                                     'reader' => 'Path/to/reader'
                                 ],
                                 4 => [
-                                    'var' => 'complex_style_attributes_change',
+                                    'var' => 'complex_attribute_change',
                                     'name' => null,
                                     'converter' => 'Path/to/custom/converter',
                                     'preview_converter' => 'Path/to/preview/custom/converter',
@@ -356,7 +356,7 @@ return [
                                     'reader' => 'Path/to/custom/reader'
                                 ],
                                 5 => [
-                                    'var' => 'complex_style_attributes_add',
+                                    'var' => 'complex_attribute_add',
                                     'name' => null,
                                     'converter' => 'Path/to/custom/converter',
                                     'preview_converter' => 'Path/to/preview/custom/converter',
@@ -372,7 +372,7 @@ return [
                                     'reader' => 'Magento_PageBuilder/js/property/attribute-reader'
                                 ],
                                 7 => [
-                                    'var' => 'new_complex',
+                                    'var' => 'new_complex_attribute',
                                     'name' => null,
                                     'converter' => null,
                                     'preview_converter' => null,

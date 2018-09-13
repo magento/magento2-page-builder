@@ -12,7 +12,6 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
    * @param {number} width
    * @param {number} index
    * @returns {Promise<ContentTypeCollectionInterface>}
-   * @api
    */
   function createColumn(parent, width, index) {
     return (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), parent, parent.stageId, {

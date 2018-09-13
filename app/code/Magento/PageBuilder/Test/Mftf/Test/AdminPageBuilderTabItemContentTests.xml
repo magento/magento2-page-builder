@@ -16,7 +16,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89954"/>
+            <testCaseId value="MC-2873"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -53,20 +53,21 @@
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" stepKey="addTextToWYSIWYG"/>
-        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Tab Height Adjusts to Content - Depends on MQE-818 -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <see userInput="This is some text" stepKey="assertTextOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="{{PageBuilderTextProperty.value}}" stepKey="assertTextOnStorefront"/>
     </test>
     <test name="CanAddContentTypeToTab">
         <annotations>
@@ -76,7 +77,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89955"/>
+            <testCaseId value="MC-2644"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -136,7 +137,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89956"/>
+            <testCaseId value="MC-2679"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -184,7 +185,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89957"/>
+            <testCaseId value="MC-2819"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
             <group value="pagebuilder-image"/>
@@ -245,7 +246,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89958"/>
+            <testCaseId value="MC-2683"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-video"/>
             <group value="pagebuilder-tabs-content"/>
@@ -319,7 +320,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89959"/>
+            <testCaseId value="MC-2720"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -380,7 +381,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89960"/>
+            <testCaseId value="MC-2564"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
             <group value="pagebuilder-slide"/>
@@ -457,7 +458,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89961"/>
+            <testCaseId value="MC-2756"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
             <group value="pagebuilder-map"/>
@@ -511,7 +512,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89962"/>
+            <testCaseId value="MC-2670"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -581,7 +582,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89967"/>
+            <testCaseId value="MC-2567"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
             <group value="pagebuilder-heading"/>
@@ -640,7 +641,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89969"/>
+            <testCaseId value="MC-2889"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -710,7 +711,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-90013"/>
+            <testCaseId value="MC-2591"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -770,7 +771,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89964"/>
+            <testCaseId value="MC-2733"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -814,7 +815,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-89965"/>
+            <testCaseId value="MC-2710"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
@@ -858,7 +859,7 @@
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88269"/>
-            <testCaseId value="MAGETWO-92248"/>
+            <testCaseId value="MC-2816"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-tabs-content"/>
