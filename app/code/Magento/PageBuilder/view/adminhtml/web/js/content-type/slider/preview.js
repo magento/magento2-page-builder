@@ -120,7 +120,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onFocusOut = function onFocusOut(data, event) {
-      if (_underscore.isNull(event.relatedTarget) || event.relatedTarget && !_jquery.contains(event.currentTarget, event.relatedTarget)) {
+      if (_underscore.isNull(event.relatedTarget) || event.relatedTarget && !(0, _jquery)(event.currentTarget).closest(event.relatedTarget).length) {
         this.setFocusedSlide(null);
       }
     };

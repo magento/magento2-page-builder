@@ -140,7 +140,7 @@ export default class Preview extends PreviewCollection {
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
         if (_.isNull(event.relatedTarget) ||
-            event.relatedTarget && !$.contains(event.currentTarget as HTMLElement, event.relatedTarget)
+            event.relatedTarget && !$(event.currentTarget as HTMLElement).closest(event.relatedTarget).length
         ) {
             this.setFocusedSlide(null);
         }
