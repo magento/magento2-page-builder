@@ -63,24 +63,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       if (this.parent && this.parent.parent) {
         var parentPreview = this.parent.parent.preview;
 
-        if (!event.relatedTarget) {
-          if (parentPreview.focusedButton() === index) {
-            window.getSelection().removeAllRanges();
-            parentPreview.focusedButton(null);
-          }
-        } else {
-          // Have we moved the focus onto another button in the current group?
-          if (_jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+        var unfocus = function unfocus() {
+          window.getSelection().removeAllRanges();
+          parentPreview.focusedButton(null);
+        };
+
+        if (event.relatedTarget && _jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+          // Verify the focus was not onto the options menu
+          if ((0, _jquery)(event.relatedTarget).closest(".pagebuilder-options").length > 0) {
+            unfocus();
+          } else {
+            // Have we moved the focus onto another button in the current group?
             var buttonItem = _knockout.dataFor(event.relatedTarget);
 
             if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
               var newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
               parentPreview.focusedButton(newIndex);
             }
-          } else {
-            window.getSelection().removeAllRanges();
-            parentPreview.focusedButton(null);
           }
+        } else if (parentPreview.focusedButton() === index) {
+          unfocus();
         }
       }
     };

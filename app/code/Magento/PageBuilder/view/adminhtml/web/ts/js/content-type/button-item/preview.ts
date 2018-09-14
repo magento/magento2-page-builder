@@ -54,23 +54,24 @@ export default class Preview extends BasePreview {
     public onFocusOut(index: number, event: JQueryEventObject): void {
         if (this.parent && this.parent.parent) {
             const parentPreview = this.parent.parent.preview as ButtonsPreview;
-            if (!event.relatedTarget) {
-                if (parentPreview.focusedButton() === index) {
-                    window.getSelection().removeAllRanges();
-                    parentPreview.focusedButton(null);
-                }
-            } else {
-                // Have we moved the focus onto another button in the current group?
-                if ($.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+            const unfocus = () => {
+                window.getSelection().removeAllRanges();
+                parentPreview.focusedButton(null);
+            };
+            if (event.relatedTarget && $.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+                // Verify the focus was not onto the options menu
+                if ($(event.relatedTarget).closest(".pagebuilder-options").length > 0) {
+                    unfocus();
+                } else {
+                    // Have we moved the focus onto another button in the current group?
                     const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
                     if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
                         const newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
                         parentPreview.focusedButton(newIndex);
                     }
-                } else {
-                    window.getSelection().removeAllRanges();
-                    parentPreview.focusedButton(null);
                 }
+            } else if (parentPreview.focusedButton() === index) {
+                unfocus();
             }
         }
     }
