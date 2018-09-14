@@ -17,7 +17,6 @@ import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {ContentType as GroupContentType} from "./panel/group/content-type";
-import {DataObject} from "./data-store";
 
 /**
  * @api
