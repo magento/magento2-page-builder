@@ -12,6 +12,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   /*#__PURE__*/
   function () {
     function Panel(parent) {
+      this.stageReady = _knockout.observable(false);
       this.groups = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
       this.isCollapsed = _knockout.observable(false);
@@ -42,7 +43,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Panel.prototype;
 
     _proto.afterRender = function afterRender(element) {
+      var _this = this;
+
       this.element = element;
+      this.stageReady.subscribe(function (data) {
+        if (data) {
+          _this.onScroll();
+        }
+      });
     };
     /**
      * Init listeners
@@ -50,14 +58,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.initListeners = function initListeners() {
-      var _this = this;
+      var _this2 = this;
 
       _events.on("stage:" + this.id + ":readyAfter", function () {
-        _this.populateContentTypes();
+        _this2.populateContentTypes();
 
-        _this.onScroll();
+        _this2.stageReady(true);
 
-        _this.isVisible(true);
+        _this2.isVisible(true);
       });
     };
     /**
@@ -231,7 +239,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.populateContentTypes = function populateContentTypes() {
-      var _this2 = this;
+      var _this3 = this;
 
       var groups = _config.getConfig("groups");
 
@@ -242,7 +250,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Iterate through the groups creating new instances with their associated content types
         _underscore.each(groups, function (group, id) {
           // Push the group instance into the observable array to update the UI
-          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
+          _this3.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
             is_visible: true
           }),

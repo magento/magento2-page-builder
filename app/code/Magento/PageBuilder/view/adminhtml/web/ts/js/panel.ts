@@ -17,11 +17,13 @@ import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {ContentType as GroupContentType} from "./panel/group/content-type";
+import {DataObject} from "./data-store";
 
 /**
  * @api
  */
 export default class Panel implements PanelInterface {
+    public stageReady: KnockoutObservable<boolean> = ko.observable(false);
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isCollapsed: KnockoutObservable<boolean> = ko.observable(false);
@@ -52,6 +54,13 @@ export default class Panel implements PanelInterface {
      */
     public afterRender(element: Element): void {
         this.element = element;
+        this.stageReady.subscribe(
+            (data: boolean) => {
+                if (data) {
+                    this.onScroll();
+                }
+            },
+        );
     }
 
     /**
@@ -60,7 +69,7 @@ export default class Panel implements PanelInterface {
     public initListeners(): void {
         events.on("stage:" + this.id + ":readyAfter", () => {
             this.populateContentTypes();
-            this.onScroll();
+            this.stageReady(true);
             this.isVisible(true);
         });
     }
