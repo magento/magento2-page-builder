@@ -63,7 +63,7 @@ export default class Preview extends BasePreview {
                 // Have we moved the focus onto another button in the current group?
                 if ($.contains(parentPreview.wrapperElement, event.relatedTarget)) {
                     const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (buttonItem) {
+                    if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
                         const newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
                         parentPreview.focusedButton(newIndex);
                     }

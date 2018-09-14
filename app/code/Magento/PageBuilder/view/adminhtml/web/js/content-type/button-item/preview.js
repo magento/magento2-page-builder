@@ -73,7 +73,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           if (_jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
             var buttonItem = _knockout.dataFor(event.relatedTarget);
 
-            if (buttonItem) {
+            if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
               var newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
               parentPreview.focusedButton(newIndex);
             }
