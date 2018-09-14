@@ -29,7 +29,12 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
      */
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
-      element.id = this.parent.id + "-editor"; // This function is called whenever a render happens, meaning our WYSIWYG instance is destroyed
+      element.id = this.parent.id + "-editor";
+      /**
+       * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+       * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+       * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+       */
 
       this.wysiwyg = null;
     };
@@ -330,6 +335,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
         if (selection.getRangeAt && selection.rangeCount) {
           var range = selection.getRangeAt(0).cloneRange();
+          (0, _jquery)(range.startContainer.parentNode).attr("data-startContainer", "true");
+          (0, _jquery)(range.endContainer.parentNode).attr("data-endContainer", "true");
           return {
             startContainer: range.startContainer,
             startOffset: range.startOffset,
@@ -352,12 +359,17 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     _proto.restoreSelection = function restoreSelection(element, selection) {
       if (window.getSelection) {
         // Find the original container that had the selection
-        var _startContainer = this.findTextNode(element, selection.startContainer.nodeValue);
+        var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
+        startContainerParent.removeAttr("data-startContainer");
 
+        var _startContainer = this.findTextNode(startContainerParent, selection.startContainer.nodeValue);
+
+        var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
+        endContainerParent.removeAttr("data-endContainer");
         var _endContainer = _startContainer;
 
         if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-          _endContainer = this.findTextNode(element, selection.endContainer.nodeValue);
+          _endContainer = this.findTextNode(endContainerParent, selection.endContainer.nodeValue);
         }
 
         if (_startContainer && _endContainer) {
@@ -381,14 +393,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
     _proto.findTextNode = function findTextNode(element, text) {
       if (text && text.trim().length > 0) {
-        var textSearch = (0, _jquery)(element).find(":contains(\"" + text.trim() + "\")");
-
-        if (textSearch.length > 0) {
-          // Search for the #text node within the element for the new range
-          return textSearch.last().contents().filter(function () {
-            return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
-          })[0];
-        }
+        return element.contents().filter(function () {
+          return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
+        })[0];
       }
     };
 

@@ -57,7 +57,11 @@ export default class Preview extends BasePreview {
         this.element = element;
         element.id = this.parent.id + "-editor";
 
-        // This function is called whenever a render happens, meaning our WYSIWYG instance is destroyed
+        /**
+         * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+         * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+         * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+         */
         this.wysiwyg = null;
     }
 
@@ -355,6 +359,8 @@ export default class Preview extends BasePreview {
             const selection = window.getSelection();
             if (selection.getRangeAt && selection.rangeCount) {
                 const range = selection.getRangeAt(0).cloneRange();
+                $(range.startContainer.parentNode).attr("data-startContainer", "true");
+                $(range.endContainer.parentNode).attr("data-endContainer", "true");
                 return {
                     startContainer: range.startContainer,
                     startOffset: range.startOffset,
@@ -375,10 +381,20 @@ export default class Preview extends BasePreview {
     private restoreSelection(element: HTMLElement, selection: Selection) {
         if (window.getSelection) {
             // Find the original container that had the selection
-            const startContainer: HTMLElement = this.findTextNode(element, selection.startContainer.nodeValue);
+            const startContainerParent = $(element).find("[data-startContainer]");
+            startContainerParent.removeAttr("data-startContainer");
+            const startContainer: HTMLElement = this.findTextNode(
+                startContainerParent,
+                selection.startContainer.nodeValue,
+            );
+            const endContainerParent = $(element).find("[data-endContainer]");
+            endContainerParent.removeAttr("data-endContainer");
             let endContainer: HTMLElement = startContainer;
             if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
-                endContainer = this.findTextNode(element, selection.endContainer.nodeValue);
+                endContainer = this.findTextNode(
+                    endContainerParent,
+                    selection.endContainer.nodeValue,
+                );
             }
 
             if (startContainer && endContainer) {
@@ -400,15 +416,11 @@ export default class Preview extends BasePreview {
      * @param {string} text
      * @returns {HTMLElement}
      */
-    private findTextNode(element: HTMLElement, text: string): HTMLElement {
+    private findTextNode(element: JQuery, text: string): HTMLElement {
         if (text && text.trim().length > 0) {
-            const textSearch = $(element).find(":contains(\"" + text.trim() + "\")");
-            if (textSearch.length > 0) {
-                // Search for the #text node within the element for the new range
-                return textSearch.last().contents().filter(function() {
-                    return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
-                })[0];
-            }
+            return element.contents().filter(function() {
+                return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
+            })[0];
         }
     }
 }
