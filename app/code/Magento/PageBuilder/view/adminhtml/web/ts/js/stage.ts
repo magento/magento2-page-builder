@@ -7,6 +7,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";
+import domObserver from "Magento_Ui/js/lib/view/utils/dom-observer";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import "./binding/sortable";
@@ -85,7 +86,10 @@ export default class Stage {
     /**
      * The stage has been initiated fully and is ready
      */
-    public ready() {
+    public ready([buildResults, canvasElement]: [any[], HTMLElement]) {
+        // Disable the dom observer from running on our canvas
+        domObserver.disableNode(canvasElement);
+
         events.trigger(`stage:${ this.id }:readyAfter`, {stage: this});
         this.loading(false);
         this.initListeners();
