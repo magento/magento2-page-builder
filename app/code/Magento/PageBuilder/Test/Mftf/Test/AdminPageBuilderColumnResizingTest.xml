@@ -7,15 +7,15 @@
 -->
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="ColumnResize1v6">
+    <test name="ColumnResize1to0">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Resize Column: 6:0 Ratio"/>
-            <description value="A user should be able to resize a columns to achieve a ratio of 6:0."/>
+            <title value="Resize Column: 1:0 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 1:0."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-950"/>
-            <testCaseId value="MAGETWO-91127"/>
+            <testCaseId value="MC-2717"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -40,8 +40,8 @@
         <!-- Assert the initial width classes are correct -->
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','50')}}" stepKey="assertInitialWidthClass1"/>
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('2','50')}}" stepKey="assertInitialWidthClass2"/>
-        <!-- Change Columns To 6:0 Ratio -->
-        <comment userInput="Change Columns To 6:0 Ratio" stepKey="context2"/>
+        <!-- Change Columns To 1:0 Ratio -->
+        <comment userInput="Change Columns To 1:0 Ratio" stepKey="context2"/>
         <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="2"/>
@@ -93,14 +93,14 @@
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize1v5And1v1">
+    <test name="ColumnResize5to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
             <title value="Resize Column: 5:1 Ratio"/>
             <description value="A user should be able to resize a columns to achieve a ratio of 5:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91128"/>
+            <testCaseId value="MC-2740"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -180,14 +180,14 @@
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize1v4And1v2">
+    <test name="ColumnResize2to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Resize Column: 4:2 Ratio"/>
-            <description value="A user should be able to resize a columns to achieve a ratio of 4:2."/>
+            <title value="Resize Column: 2:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 2:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91129"/>
+            <testCaseId value="MC-2867"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -206,8 +206,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Change Columns To 4:2 Ratio -->
-        <comment userInput="Change Columns To 4:2 Ratio" stepKey="context1"/>
+        <!-- Change Columns To 2:1 Ratio -->
+        <comment userInput="Change Columns To 2:1 Ratio" stepKey="context1"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -271,19 +271,17 @@
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize1v4And2v1">
+    <test name="ColumnResize4to1to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
             <title value="Resize Column: 4:1:1 Ratio"/>
             <description value="A user should be able to resize a columns to achieve a ratio of 4:1:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91130"/>
+            <testCaseId value="MC-2803"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
-            <!-- MC-2434 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -299,18 +297,21 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Grab grid guide width (-8 due to how picky the guide is) -->
+        <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('8')}}').clientWidth-8" stepKey="guideWidth"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 4:1:1 Ratio -->
         <comment userInput="Change Columns To 4:1:1 Ratio" stepKey="context1"/>
-        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToFour"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToEight"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -383,14 +384,14 @@
             <actualResult type="variable">columnRatioFrontend2</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResizeColumn2v3">
+    <test name="ColumnResize1to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Resize Column: 3:3 Ratio"/>
-            <description value="A user should be able to resize a columns to achieve a ratio of 3:3."/>
+            <title value="Resize Column: 1:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 1:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91131"/>
+            <testCaseId value="MC-2837"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -461,14 +462,14 @@
             <actualResult type="variable">columnRatioFrontend</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize1v3And1v2And1v1">
+    <test name="ColumnResize3to2to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
             <title value="Resize Column: 3:2:1 Ratio"/>
             <description value="A user should be able to resize a columns to achieve a ratio of 3:2:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91132"/>
+            <testCaseId value="MC-2905"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -573,14 +574,14 @@
             <actualResult type="variable">columnRatioFrontend2</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize1v3And3v1">
+    <test name="ColumnResize3to1to1to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
             <title value="Resize Column: 3:1:1:1 Ratio"/>
             <description value="A user should be able to resize a columns to achieve a ratio of 3:1:1:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91133"/>
+            <testCaseId value="MC-2678"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -712,14 +713,14 @@
             <actualResult type="variable">columnRatioFrontend3</actualResult>
         </assertEquals>
     </test>
-    <test name="ColumnResize3v2">
+    <test name="ColumnResize1to1to1">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Resize Column: 2:2:2 Ratio"/>
-            <description value="A user should be able to resize a columns to achieve a ratio of 2:2:2."/>
+            <title value="Resize Column: 1:1:1 Ratio"/>
+            <description value="A user should be able to resize a columns to achieve a ratio of 1:1:1."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91134"/>
+            <testCaseId value="MC-2592"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnResize"/>
@@ -741,8 +742,8 @@
         <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidth"/>
-        <!-- Change Columns To 2:2:2 Ratio -->
-        <comment userInput="Change Columns To 2:2:2 Ratio" stepKey="context1"/>
+        <!-- Change Columns To 1:1:1 Ratio -->
+        <comment userInput="Change Columns To 1:1:1 Ratio" stepKey="context1"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>

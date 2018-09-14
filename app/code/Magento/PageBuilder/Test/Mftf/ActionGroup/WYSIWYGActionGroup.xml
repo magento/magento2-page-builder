@@ -27,14 +27,18 @@
             <argument name="variable" defaultValue=""/>
         </arguments>
         <comment userInput="Adding Variable To Tiny MCE" stepKey="commentAddVariableToTinyMCE"/>
-        <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
-        <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="waitForVariable1"/>
         <checkOption selector="{{VariableSection.Radio(variable.variableName)}}" stepKey="selectVariable"/>
         <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
+    </actionGroup>
+    <actionGroup name="addVariableToTinyMCEInline" extends="addVariableToTinyMCE">
+        <waitForElementVisible selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="waitForInsertVariable1"/>
+        <click selector="{{TinyMCESection.InsertVariableIcon}}" stepKey="clickInsertVariable1"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCE3" extends="addVariableToTinyMCE">
         <arguments>
@@ -67,8 +71,8 @@
             <argument name="page" defaultValue="" type="string"/>
         </arguments>
         <comment userInput="Adding Widget To Tiny MCE" stepKey="commentAddWidget"/>
-        <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
-        <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{WidgetSection.WidgetType}}" stepKey="waitForWidgetType"/>
         <selectOption selector="{{WidgetSection.WidgetType}}" userInput="{{TinyMCEWidgetCMSPageLink.widgetType}}" stepKey="selectCMSPageLinkWidget"/>
@@ -89,6 +93,10 @@
         <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
+    </actionGroup>
+    <actionGroup name="addPageLinkWidgetToTinyMCEInline" extends="addPageLinkWidgetToTinyMCE">
+        <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
+        <click selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="clickAddWidgetBtn"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetToTinyMCE3" extends="addPageLinkWidgetToTinyMCE">
         <arguments>
@@ -131,8 +139,8 @@
             <argument name="title" type="string" defaultValue=""/>
         </arguments>
         <comment userInput="insertLinkInWYSIWYG" stepKey="comment"/>
-        <waitForElementVisible selector="{{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
-        <click selector="{{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>

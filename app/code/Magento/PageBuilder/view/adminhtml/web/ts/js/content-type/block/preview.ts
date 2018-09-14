@@ -112,7 +112,8 @@ export default class Preview extends BasePreview {
             this.placeholderText("");
         }
 
-        if (!data[identifierName] || data.template.length === 0) {
+        if (!data[identifierName] || (data[identifierName] && data[identifierName].length === 0) ||
+            data.template.length === 0) {
             this.showBlockPreview(false);
             this.placeholderText(this.messages.NOT_SELECTED);
             return;

@@ -14,9 +14,6 @@
         min-height: 20px;
         vertical-align: baseline;
     }
-    &.mce-edit-focus {
-        outline: none;
-    }
     ~ .mce-tinymce-inline {
         display: block !important;
         height: auto !important;
@@ -38,9 +35,11 @@
         .mce-abs-layout-item {
             position: static;
         }
+    }
+    &.mce-edit-focus {
+        outline: none;
 
-        // Targeting focused editor (there aren't any classes to hook into for this)
-        &:not([style*='display: none;']) {
+        ~ .mce-tinymce-inline {
             opacity: 1;
             pointer-events: all;
             transform: translateY(-100%);

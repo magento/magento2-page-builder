@@ -25,6 +25,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
       this.dataStore = new _dataStore();
       this.preview = void 0;
       this.content = void 0;
+      this.dropped = false;
       this.parent = parent;
       this.config = config;
       this.stageId = stageId;
