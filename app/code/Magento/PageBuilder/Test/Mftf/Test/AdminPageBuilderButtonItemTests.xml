@@ -1244,54 +1244,6 @@
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
     </test>
-    <test name="ButtonItemCanSaveButtonTextWithoutFocusingOutsideOfLiveEdit">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Buttons"/>
-            <title value="Button Item - Can Save Button Text Without Focusing Outside of Live Edit"/>
-            <description value="A user should be able to edit a button item inline on the stage and save the edit without first focusing outside of the live edit area."/>
-            <severity value="AVERAGE"/>
-            <useCaseId value="MC-877"/>
-            <testCaseId value="MC-3672"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-buttons"/>
-            <group value="pagebuilder-buttonItem"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <!-- Add Button Group -->
-        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <!-- Enter Text On Stage -->
-        <comment userInput="Enter Text On Stage" stepKey="commentEnterText"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement('1')}}" stepKey="waitForButtonEditable"/>
-        <click selector="{{ButtonItemOnStage.editableButtonItemElement('1')}}" stepKey="clickButtonText"/>
-        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement('1')}}" userInput="{{PageBuilderButtonItemText_Common.value}}" stepKey="enterButtonText"/>
-        <!-- Click Save -->
-        <comment userInput="Click Save" stepKey="commentSave"/>
-        <moveMouseOver selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="moveMouseOverSave"/>
-        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="clickSaveAndContinueEditCmsPage"/>
-        <waitForPageLoad stepKey="waitForCmsPageLoad"/>
-        <waitForElementVisible selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="waitForCmsPageTitle"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage After Page Save -->
-        <comment userInput="Validate Stage After Page Save" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Common.value)}}" stepKey="seeButtonTextStage"/>
-    </test>
     <test name="ButtonItemHtmlValueInButtons">
         <annotations>
             <features value="PageBuilder"/>
