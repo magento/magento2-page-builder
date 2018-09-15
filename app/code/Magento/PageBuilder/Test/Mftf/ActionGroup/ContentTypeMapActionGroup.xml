@@ -8,6 +8,15 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="closeGoogleMapsErrorModal">
+        <arguments>
+            <argument name="section" defaultValue="AddLocationForm"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.googleModalOkButton(index)}}" stepKey="waitForOkButton"/>
+        <click selector="{{section.googleModalOkButton(index)}}" stepKey="clickOkButton"/>
+        <waitForElementNotVisible selector="{{section.googleModalOkButton(index)}}" stepKey="waitForOkButtonNotVisible"/>
+    </actionGroup>
     <actionGroup name="clickAddLocationButton">
         <comment userInput="clickAddLocationButton" stepKey="comment"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
@@ -16,8 +25,6 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
-        <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
     </actionGroup>
     <actionGroup name="saveLocationForm">
         <comment userInput="saveLocationForm" stepKey="comment"/>
@@ -46,8 +53,6 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
-        <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
     </actionGroup>
     <actionGroup name="clickEditButtonOnLocationGrid">
         <arguments>
@@ -61,8 +66,6 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
-        <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
     </actionGroup>
     <actionGroup name="deleteLocationFromGrid">
         <arguments>
