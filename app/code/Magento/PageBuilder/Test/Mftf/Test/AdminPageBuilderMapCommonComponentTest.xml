@@ -54,7 +54,6 @@
         <!-- Validate Edit Panel: Add Location Form -->
         <comment userInput="Validate Edit Panel: Add Location Form" stepKey="commentValidateEditPanelAddLocationForm"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seePositionAttribute">
             <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
@@ -140,7 +139,6 @@
         <!-- Validate Edit Panel: Add Location Form 2 -->
         <comment userInput="Validate Edit Panel: Add Location Form 2" stepKey="commentValidateEditPanelAddLocationForm2"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal2"/>
         <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsEditPanel2">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
@@ -376,7 +374,6 @@
         <!-- Add Location -->
         <comment userInput="Add Location" stepKey="commentAddLocation"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
@@ -549,7 +546,6 @@
         <!-- Add Location 1 -->
         <comment userInput="Add Location 1" stepKey="commentAddLocation1"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Location Form: Get Initial Coordinates -->
         <comment userInput="Location Form: Get Initial Coordinates" stepKey="commentLocationFormGetCoordinates"/>
@@ -587,7 +583,6 @@
         <!-- Add 2nd Location -->
         <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
@@ -678,7 +673,6 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal3"/>
         <actionGroup ref="validateMapSettings" stepKey="validateMapStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
@@ -730,7 +724,6 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal4"/>
         <actionGroup ref="validateMapSettings" stepKey="validateMapStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
@@ -938,7 +931,6 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal5"/>
         <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="height" value="PageBuilderMapHeightProperty350"/>
@@ -1020,7 +1012,6 @@
         <!-- Add Location 1 -->
         <comment userInput="Add Location 1" stepKey="commentAddLocation1"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton1"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Location 1 Form: Get Initial Coordinates -->
         <comment userInput="Location 1 Form: Get Initial Coordinates" stepKey="commentLocationFormGetCoordinates"/>
@@ -1058,7 +1049,6 @@
         <!-- Add 2nd Location -->
         <comment userInput="Add 2nd Location" stepKey="commentAddLocation2"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
             <argument name="property" value="PageBuilderMapLatitude_Positive39_74"/>
         </actionGroup>
@@ -1164,7 +1154,6 @@
         </actionGroup>
         <!-- Stage: Verify Map Pin Positions On Duplicate -->
         <comment userInput="Stage: Verify Map Pin Positions On Duplicate" stepKey="commentValidateStagePin"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal3"/>
         <waitForElementVisible selector="{{MapOnStage.pinLocations('2')}}" stepKey="waitForPinLocationStage2"/>
         <grabAttributeFrom selector="{{MapOnStage.pinLocations('2')}}" userInput="style" stepKey="duplicatePinLocationStage"/>
         <assertEquals stepKey="assertPinLocationTheSameStage1">
@@ -1386,7 +1375,6 @@
         </actionGroup>
         <!-- Stage: Verify Map Pin Positions On Duplicate After Save -->
         <comment userInput="Stage: Verify Map Pin Positions On Duplicate After Save" stepKey="commentValidateStagePinAfterSave"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal4"/>
         <waitForElementVisible selector="{{MapOnStage.pinLocations('2')}}" stepKey="waitForPinLocationStage3"/>
         <grabAttributeFrom selector="{{MapOnStage.pinLocations('2')}}" userInput="style" stepKey="duplicatePinLocationStage2"/>
         <assertEquals stepKey="assertPinLocationTheSameStage2">
@@ -1606,7 +1594,6 @@
         </actionGroup>
         <!-- Storefront: Verify Map Pin Positions On Duplicate -->
         <comment userInput="Storefront: Verify Map Pin Positions On Duplicate" stepKey="commentValidateStorefrontPin"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal5"/>
         <waitForElementVisible selector="{{MapOnStorefront.pinLocations('2')}}" stepKey="waitForPinLocationStoreFront2"/>
         <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('2')}}" userInput="style" stepKey="duplicatePinLocationStoreFront"/>
         <assertEquals stepKey="assertPinLocationTheSameStorefront">
@@ -1768,7 +1755,6 @@
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Add Fill Required Fields -->
         <comment userInput="Add Fill Required Fields" stepKey="commentAddFillRequiredFields"/>
@@ -1871,7 +1857,6 @@
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="closeGoogleMapsErrorModal" stepKey="closeGoogleMapsErrorModal"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Fill Required Fields -->
         <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
