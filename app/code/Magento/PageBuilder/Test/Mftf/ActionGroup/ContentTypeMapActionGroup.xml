@@ -227,6 +227,8 @@
             <argument name="mapIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="closeMapPinTooltipWindow" stepKey="comment"/>
+        <moveMouseOver selector="{{page.base(mapIndex)}}" x="-1" y="0" stepKey="moveMouseOutsideMap"/>
+        <waitForPageLoad stepKey="waitForOptionMenuGone"/>
         <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
         <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
@@ -254,6 +256,8 @@
         <waitForElementVisible selector="{{page.comment(mapIndex, comment.value)}}" stepKey="waitForComment"/>
         <waitForElementVisible selector="{{page.phoneNumber(mapIndex, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
         <waitForElementVisible selector="{{page.addressCityStateZipCountry(mapIndex, address.value, city.value, state.tooltipValue, zip.value, country.tooltipValue)}}" stepKey="waitForAddress"/>
+        <moveMouseOver selector="{{page.base(mapIndex)}}" x="-1" y="0" stepKey="moveMouseOutsideMap"/>
+        <waitForPageLoad stepKey="waitForOptionMenuGone"/>
         <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
         <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
