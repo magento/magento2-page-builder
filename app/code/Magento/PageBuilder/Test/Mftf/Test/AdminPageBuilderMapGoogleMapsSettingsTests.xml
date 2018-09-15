@@ -631,13 +631,14 @@
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Storefront: Validate Map Style Changed -->
         <comment userInput="Storefront: Validate Map Style Changed" stepKey="commentValidate2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
         <assertEquals stepKey="assertMapStyle2">
             <actualResult type="variable">$mapStyle2</actualResult>
