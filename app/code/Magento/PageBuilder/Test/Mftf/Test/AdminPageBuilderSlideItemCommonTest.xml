@@ -1472,12 +1472,12 @@
         <comment userInput="Verify Editor Still In Focus 2" stepKey="commentEditorInFocus2"/>
         <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="seeEditorPanel2"/>
     </test>
-    <test name="SlideItemDeletingSecondSlideShowsFirstSlide">
+    <test name="SlideItemBackgroundColorAlwaysDisplayed">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Slide Item - Deleting second slide will display first"/>
-            <description value="A user should be able to delete the secondary slide within a slider and have the first be focused and displayed"/>
+            <title value="Slide Item - The background color should always be displayed"/>
+            <description value="Ensure operations performed on the slider and slide item don't cause the background color to be hidden"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-3773"/>
             <testCaseId value="MC-4107"/>
@@ -1524,6 +1524,10 @@
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideDuplicatedContent"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideDuplicatedBackground"/>
+        <!-- Verify the first slides background and message are still present -->
+        <comment userInput="Verify the first slides background and message are still present" stepKey="verifySlide1RetainedBackground"/>
+        <seeElementInDOM selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd"/>
+        <seeElementInDOM selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundAfterAdd"/>
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -1536,16 +1540,20 @@
         <actionGroup ref="addSlide" stepKey="addNewSlide" />
         <!-- Fill first slide data -->
         <comment userInput="Fill second slide data." stepKey="fillSlide2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputPlaintext1">
-            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputSlideColorWhite">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_Grey"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE1">
-            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeNewSlideDuplicatedContent"/>
-        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeNewSlideDuplicatedBackground"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeNewSlideDuplicatedContent"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeNewSlideDuplicatedBackground"/>
+        <!-- Verify the first slides background and message are still present -->
+        <comment userInput="Verify the first slides background and message are still present" stepKey="verifySlide1RetainedBackground1"/>
+        <seeElementInDOM selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd1"/>
+        <seeElementInDOM selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundAfterAdd1"/>
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeNewSlideFromStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -1553,5 +1561,20 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal1"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterDelete1"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundAfterDelete1"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
+        <actionGroup ref="hideContentType" stepKey="hideContentType">
+            <argument name="section" value="SliderOnStage"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterHide"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorAfterHide"/>
+        <actionGroup ref="showContentType" stepKey="showContentType">
+            <argument name="section" value="SliderOnStage"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterHideShow"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorAfterHideShow"/>
     </test>
 </tests>
