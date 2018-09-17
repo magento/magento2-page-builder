@@ -48,7 +48,7 @@ define([
                 }
             };
 
-            widgetInitializer(data);
+            widgetInitializer(data, el);
 
             expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el[0], true, 'awesome');
             expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el[0], true, 'cool');
