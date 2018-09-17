@@ -107,7 +107,7 @@ export default class Preview extends PreviewCollection {
 
         events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
-                this.spreadWidth(event, args);
+                this.spreadWidth(args.index);
             }
         });
 
@@ -952,12 +952,11 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Spread any empty space across the other columns
+     * Spread any empty space across the other columns when a column is removed
      *
-     * @param {Event} event
-     * @param {ContentTypeRemovedEventParamsInterface} params
+     * @param {number} removedIndex
      */
-    private spreadWidth(event: Event, params: ContentTypeRemovedEventParamsInterface): void {
+    private spreadWidth(removedIndex: number): void {
         if (this.parent.children().length === 0) {
             return;
         }
@@ -995,15 +994,15 @@ export default class Preview extends PreviewCollection {
             let columnToModify: ContentTypeCollectionInterface<ColumnPreview>;
 
             // As the original column has been removed from the array, check the new index for a column
-            if ((params.index) <= this.parent.children().length
-                && typeof this.parent.children()[params.index] !== "undefined") {
-                columnToModify = this.parent.children()[params.index] as ContentTypeCollectionInterface<ColumnPreview>;
+            if (removedIndex <= this.parent.children().length
+                && typeof this.parent.children()[removedIndex] !== "undefined") {
+                columnToModify = this.parent.children()[removedIndex] as ContentTypeCollectionInterface<ColumnPreview>;
             }
-            if (!columnToModify && (params.index - i) >= 0 &&
-                typeof this.parent.children()[params.index - i] !== "undefined"
+            if (!columnToModify && (removedIndex - i) >= 0 &&
+                typeof this.parent.children()[removedIndex - i] !== "undefined"
             ) {
                 columnToModify =
-                    this.parent.children()[params.index - i] as ContentTypeCollectionInterface<ColumnPreview>;
+                    this.parent.children()[removedIndex - i] as ContentTypeCollectionInterface<ColumnPreview>;
             }
             if (columnToModify) {
                 updateColumnWidth(
