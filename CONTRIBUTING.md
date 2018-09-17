@@ -14,30 +14,8 @@
 6. [How to create custom PageBuilder content type container]
 
 [Introduction]: docs/introduction.md
-[Contribution guide]: CONTRIBUTING.md
 [Installation guide]: docs/install.md
 [Developer documentation]: docs/developer-documentation.md
-[Architecture overview]: docs/architecture-overview.md
-[BlueFoot to PageBuilder data migration]: docs/bluefoot-data-migration.md
-[Third-party content type migration]: docs/new-content-type-example.md
-[Iconography]: docs/iconography.md
-[Add image uploader to content type]: docs/image-uploader.md
-[Module integration]: docs/module-integration.md
-[Additional data configuration]: docs/custom-configuration.md
-[Content type configuration]: docs/content-type-configuration.md
-[How to add a new content type]: docs/how-to-add-new-content-type.md
-[Events]: docs/events.md
-[Bindings]: docs/bindings.md
-[Master format]: docs/master-format.md
-[Visual select]: docs/visual-select.md
-[Reuse product conditions in content types]: docs/product-conditions.md
-[Store component master format as widget directive]: docs/widget-directive.md
-[Use the block chooser UI component]: docs/block-chooser-component.md
-[Use the inline text editing component]: docs/inline-editing-component.md
-[Render a backend content type preview]: docs/content-type-preview.md
-[Custom Toolbar]: docs/toolbar.md
-[Full width page layouts]: docs/full-width-page-layouts.md
-[Add custom logic to content types]: docs/add-custom-logic.md
 [Roadmap and Known Issues]: docs/roadmap.md
 [How to create custom PageBuilder content type container]: docs/how-to-create-custom-content-type-container.md
 
