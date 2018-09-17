@@ -46,6 +46,9 @@ define([
 
     return function (validator) {
         var requiredInputRule = validator.getRule('required-entry');
+        var validateNumberRule = validator.getRule('validate-number');
+        var lessThanEqualsToRule = validator.getRule('less-than-equals-to');
+        var greaterThanEqualsToRule = validator.getRule('greater-than-equals-to');
 
         validator.addRule(
             'required-entry-location-name',
@@ -113,6 +116,66 @@ define([
                 return allFilled;
             },
             $.mage.__(requiredInputRule.message)
+        );
+
+        validator.addRule(
+            'validate-number',
+            function (value) {
+                var allNumbers = true;
+
+                if (typeof value !== 'object') {
+                    return validateNumberRule.handler(value);
+                }
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    if (!validateNumberRule.handler(val)) {
+                        return allNumbers = false;
+                    }
+                });
+
+                return allNumbers;
+            },
+            $.mage.__(validateNumberRule.message)
+        );
+
+        validator.addRule(
+            'less-than-equals-to',
+            function (value, params) {
+                var allNumbers = true;
+
+                if (typeof value !== 'object') {
+                    return lessThanEqualsToRule.handler(value);
+                }
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    if (!lessThanEqualsToRule.handler(val, params)) {
+                        return allNumbers = false;
+                    }
+                });
+
+                return allNumbers;
+            },
+            $.mage.__(lessThanEqualsToRule.message)
+        );
+
+        validator.addRule(
+            'greater-than-equals-to',
+            function (value, params) {
+                var allNumbers = true;
+
+                if (typeof value !== 'object') {
+                    return greaterThanEqualsToRule.handler(value);
+                }
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    if (!greaterThanEqualsToRule.handler(val, params)) {
+                        return allNumbers = false;
+                    }
+                });
+
+                return allNumbers;
+            },
+            $.mage.__(greaterThanEqualsToRule.message)
         );
 
         return validator;
