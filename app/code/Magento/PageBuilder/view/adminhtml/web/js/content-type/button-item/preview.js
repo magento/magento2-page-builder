@@ -52,7 +52,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       event.stopPropagation();
     };
     /**
-     * On focus out
+     * Handle on focus out events, when the button item is focused out we need to set our focusedButton record on the
+     * buttons preview item to null. If we detect this focus out event is to focus into another button we need to ensure
+     * we update the record appropriately.
      *
      * @param {number} index
      * @param {Event} event
