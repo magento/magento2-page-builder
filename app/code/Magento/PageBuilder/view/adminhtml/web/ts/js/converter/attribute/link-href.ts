@@ -49,6 +49,10 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
+        if (value === "") {
+            value = "javascript:void(0)";
+        }
+
         return value;
     }
 
@@ -60,37 +64,49 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
+        const link = data[name] as any;
+        let href;
 
-        const link = data[name];
-        let href = "javascript:void(0)";
+        if (typeof link === "undefined") {
+            href = "javascript:void(0)";
+        } else if (typeof link.type !== "undefined") {
+            if (typeof link.href !== "undefined" && link.type === "default") {
+                link[link.type] = link.href;
+            }
 
-        if (!link) {
-            return href;
+            delete link.href;
+
+            if (link[link.type] === "javascript:void(0)") {
+                link[link.type] = "";
+            }
+
+            href = link[link.type];
+
+            if (!href.length) {
+                href = "javascript:void(0)";
+            }
+
+            const isHrefIdReference = !isNaN(parseInt(href, 10)) && link.type !== "default";
+
+            if (isHrefIdReference) {
+                href = this.convertToWidget(href, link.type);
+            }
         }
 
-        const linkType = link.type;
-        const isHrefId = !isNaN(parseInt(link[linkType], 10));
-
-        if (isHrefId && link) {
-            href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
-        } else if (link[linkType]) {
-            href = link[linkType];
-        }
         return href;
     }
 
     /**
      * @param {string} href
-     * @param {object} widgetAttributes
+     * @param {string} linkType
      * @returns {string}
      */
-    private convertToWidget(href: string, widgetAttributes: object): string {
+    private convertToWidget(href: string, linkType: string): string {
         const attributesString = _.map(
-            widgetAttributes,
+            this.widgetParamsByLinkType[linkType],
             (val: string, key: string) => `${key}='${val.replace(":href", href)}'`,
         ).join(" ");
 
         return `{{widget ${attributesString} }}`;
     }
-
 }

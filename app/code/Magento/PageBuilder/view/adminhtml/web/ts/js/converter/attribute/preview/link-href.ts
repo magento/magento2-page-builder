@@ -2,15 +2,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
-import {DataObject} from "../../data-store";
-import ConverterInterface from "../converter-interface";
+import _ from "underscore";
+import {DataObject} from "../../../data-store";
+import ConverterInterface from "../../converter-interface";
 
 /**
  * @api
  */
-export default class CreateValueForLinkType implements ConverterInterface {
-
+export default class CreateValueForHref implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -29,6 +28,19 @@ export default class CreateValueForLinkType implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return data[name] && data[name].type ? data[name].type : "default";
+        const link = data[name] as any;
+        let href = "";
+
+        if (!link) {
+            return href;
+        }
+
+        const linkType = link.type;
+
+        if (link[linkType]) {
+            href = link[linkType];
+        }
+
+        return href;
     }
 }

@@ -8,12 +8,12 @@ define([], function () {
   /**
    * @api
    */
-  var CreateValueForLinkType =
+  var CreateValueForHref =
   /*#__PURE__*/
   function () {
-    function CreateValueForLinkType() {}
+    function CreateValueForHref() {}
 
-    var _proto = CreateValueForLinkType.prototype;
+    var _proto = CreateValueForHref.prototype;
 
     /**
      * Convert value to internal format
@@ -34,12 +34,25 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] && data[name].type ? data[name].type : "default";
+      var link = data[name];
+      var href = "";
+
+      if (!link) {
+        return href;
+      }
+
+      var linkType = link.type;
+
+      if (link[linkType]) {
+        href = link[linkType];
+      }
+
+      return href;
     };
 
-    return CreateValueForLinkType;
+    return CreateValueForHref;
   }();
 
-  return CreateValueForLinkType;
+  return CreateValueForHref;
 });
-//# sourceMappingURL=link-type.js.map
+//# sourceMappingURL=link-href.js.map

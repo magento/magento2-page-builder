@@ -43,6 +43,10 @@ define(["underscore"], function (_underscore) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
+      if (value === "") {
+        value = "javascript:void(0)";
+      }
+
       return value;
     };
     /**
@@ -56,32 +60,45 @@ define(["underscore"], function (_underscore) {
 
     _proto.toDom = function toDom(name, data) {
       var link = data[name];
-      var href = "javascript:void(0)";
+      var href;
 
-      if (!link) {
-        return href;
-      }
+      if (typeof link === "undefined") {
+        href = "javascript:void(0)";
+      } else if (typeof link.type !== "undefined") {
+        if (typeof link.href !== "undefined" && link.type === "default") {
+          link[link.type] = link.href;
+        }
 
-      var linkType = link.type;
-      var isHrefId = !isNaN(parseInt(link[linkType], 10));
+        delete link.href;
 
-      if (isHrefId && link) {
-        href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
-      } else if (link[linkType]) {
-        href = link[linkType];
+        if (link[link.type] === "javascript:void(0)") {
+          link[link.type] = "";
+        }
+
+        href = link[link.type];
+
+        if (!href.length) {
+          href = "javascript:void(0)";
+        }
+
+        var isHrefIdReference = !isNaN(parseInt(href, 10)) && link.type !== "default";
+
+        if (isHrefIdReference) {
+          href = this.convertToWidget(href, link.type);
+        }
       }
 
       return href;
     };
     /**
      * @param {string} href
-     * @param {object} widgetAttributes
+     * @param {string} linkType
      * @returns {string}
      */
 
 
-    _proto.convertToWidget = function convertToWidget(href, widgetAttributes) {
-      var attributesString = _underscore.map(widgetAttributes, function (val, key) {
+    _proto.convertToWidget = function convertToWidget(href, linkType) {
+      var attributesString = _underscore.map(this.widgetParamsByLinkType[linkType], function (val, key) {
         return key + "='" + val.replace(":href", href) + "'";
       }).join(" ");
 
