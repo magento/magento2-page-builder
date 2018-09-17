@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-export interface DomObserver {
+declare var DomObserver: {
     /**
      * Disable a node from being observed by the mutations
      *
@@ -38,7 +38,7 @@ export interface DomObserver {
      * @param {Function} [fn]
      */
     off(selector: string, fn: () => void): void;
-}
+};
 
 declare module "Magento_Ui/js/lib/view/utils/dom-observer" {
     export = DomObserver;
