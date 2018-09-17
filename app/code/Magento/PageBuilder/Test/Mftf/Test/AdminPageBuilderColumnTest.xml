@@ -633,12 +633,14 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
