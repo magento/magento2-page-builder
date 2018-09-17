@@ -154,7 +154,8 @@ export default class Preview extends PreviewCollection {
 
         createButtonItemPromise.then((button: ContentTypeInterface) => {
             this.parent.addChild(button);
-            this.focusedButton(this.parent.children().indexOf(button));
+            const buttonIndex = this.parent.children().indexOf(button);
+            this.focusedButton(buttonIndex > -1 ? buttonIndex : null);
             return button;
         }).catch((error: Error) => {
             console.error(error);
