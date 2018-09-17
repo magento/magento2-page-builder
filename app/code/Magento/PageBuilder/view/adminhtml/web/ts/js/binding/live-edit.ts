@@ -38,6 +38,7 @@ ko.bindingHandlers.liveEdit = {
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field, placeholder, selectAll = false} = valueAccessor();
         let focusedValue = element.innerHTML;
+
         /**
          * Strip HTML and return text
          *
@@ -58,20 +59,13 @@ ko.bindingHandlers.liveEdit = {
             focusedValue = stripHtml(element.innerHTML);
 
             if (selectAll && element.innerHTML !== "") {
-                const selection = window.getSelection();
-                const range = document.createRange();
-                range.selectNodeContents(element);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            }
-        };
-
-        /**
-         * Blur event on element
-         */
-        const onBlur = () => {
-            if (focusedValue !== stripHtml(element.innerHTML)) {
-                viewModel.updateData(field, stripHtml(element.innerHTML));
+                _.defer(() => {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(element);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                });
             }
         };
 
@@ -91,7 +85,7 @@ ko.bindingHandlers.liveEdit = {
          *
          * @param {any} event
          */
-        const onKeyDown = (event: any) => {
+        const onKeyDown = (event: JQueryEventObject) => {
             const key = keyCodes[event.keyCode];
 
             // command or control
@@ -107,7 +101,14 @@ ko.bindingHandlers.liveEdit = {
             if (key === "pageLeftKey" || key === "pageRightKey") {
                 event.stopPropagation();
             }
+        };
 
+        /**
+         * On key up update the view model to ensure all changes are saved
+         *
+         * @param {Event} event
+         */
+        const onKeyUp = () => {
             if (focusedValue !== stripHtml(element.innerHTML)) {
                 viewModel.updateData(field, stripHtml(element.innerHTML));
             }
@@ -128,13 +129,14 @@ ko.bindingHandlers.liveEdit = {
         const onInput = () => {
             handlePlaceholderClass(element);
         };
+
         element.setAttribute("data-placeholder", placeholder);
         element.textContent = viewModel.parent.dataStore.get(field);
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
-        element.addEventListener("blur", onBlur);
         element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("keydown", onKeyDown);
+        element.addEventListener("keyup", onKeyUp);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);
 

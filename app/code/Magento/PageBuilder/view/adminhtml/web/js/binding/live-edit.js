@@ -1,10 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], function (_jquery, _knockout, _keyCodes, _underscore) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
   _keyCodes = _interopRequireDefault(_keyCodes);
+  _underscore = _interopRequireDefault(_underscore);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -70,21 +71,13 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
         focusedValue = stripHtml(element.innerHTML);
 
         if (selectAll && element.innerHTML !== "") {
-          var selection = window.getSelection();
-          var range = document.createRange();
-          range.selectNodeContents(element);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-      };
-      /**
-       * Blur event on element
-       */
-
-
-      var onBlur = function onBlur() {
-        if (focusedValue !== stripHtml(element.innerHTML)) {
-          viewModel.updateData(field, stripHtml(element.innerHTML));
+          _underscore.default.defer(function () {
+            var selection = window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents(element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          });
         }
       };
       /**
@@ -123,7 +116,15 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
         if (key === "pageLeftKey" || key === "pageRightKey") {
           event.stopPropagation();
         }
+      };
+      /**
+       * On key up update the view model to ensure all changes are saved
+       *
+       * @param {Event} event
+       */
 
+
+      var onKeyUp = function onKeyUp() {
         if (focusedValue !== stripHtml(element.innerHTML)) {
           viewModel.updateData(field, stripHtml(element.innerHTML));
         }
@@ -151,9 +152,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.textContent = viewModel.parent.dataStore.get(field);
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
-      element.addEventListener("blur", onBlur);
       element.addEventListener("mousedown", onMouseDown);
       element.addEventListener("keydown", onKeyDown);
+      element.addEventListener("keyup", onKeyUp);
       element.addEventListener("input", onInput);
       element.addEventListener("drop", onDrop);
       (0, _jquery.default)(element).parent().css("cursor", "text");
