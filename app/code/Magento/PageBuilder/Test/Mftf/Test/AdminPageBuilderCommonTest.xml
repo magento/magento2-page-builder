@@ -32,11 +32,17 @@
         <!-- Validate Row Box Shadow -->
         <comment userInput="Validate Row Box-Shadow" stepKey="commentValidateRowBoxShadow"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0.3) 0px 0px 0px 1px" expectedType="string" actual="getDefaultRowBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultRowBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultRowBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultRowBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{RowOnStage.base('1')}}" stepKey="moveMouseOverRow"/>
         <waitForPageLoad stepKey="waitForRowHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-row'),null).getPropertyValue('box-shadow')" stepKey="getDefaultRowHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultRowHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultRowHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultRowHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultRowHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <!-- Validate Column Box Shadow -->
         <comment userInput="Validate Column Box-Shadow" stepKey="commentValidateColumnBoxShadow"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
@@ -44,11 +50,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverColumn"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-column'),null).getPropertyValue('box-shadow')" stepKey="getDefaultColumnBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0.3) 0px 0px 0px 1px" expectedType="string" actual="getDefaultColumnBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultColumnBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultColumnBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultColumnBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{ColumnOnBackend.base('1')}}" stepKey="moveMouseOverColumn"/>
         <waitForPageLoad stepKey="waitForColumnHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-column'),null).getPropertyValue('box-shadow')" stepKey="getDefaultColumnHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultColumnHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultColumnHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultColumnHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultColumnHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
@@ -62,11 +74,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverTabs"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-tabs'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTabsBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultTabsBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultTabsBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTabsBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTabsBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{TabsOnStage.base('1')}}" stepKey="moveMouseOverTabs"/>
         <waitForPageLoad stepKey="waitForTabsHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-tabs'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTabsHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultTabsHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultTabsHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTabsHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTabsHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeTabs">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -81,11 +99,17 @@
         <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverText"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-text'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTextBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultTextBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultTextBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTextBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTextBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{TextOnStage.base('1')}}" stepKey="moveMouseOverText"/>
         <waitForPageLoad stepKey="waitForTextHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-text'),null).getPropertyValue('box-shadow')" stepKey="getDefaultTextHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultTextHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultTextHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultTextHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultTextHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeText">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -99,11 +123,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverHeading"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-heading'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHeadingBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultHeadingBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultHeadingBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHeadingBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHeadingBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{HeadingOnStage.base('1')}}" stepKey="moveMouseOverHeading"/>
         <waitForPageLoad stepKey="waitForHeadingHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-heading'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHeadingHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultHeadingHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultHeadingHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHeadingHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHeadingHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeading">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
@@ -114,11 +144,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverButtons"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-buttons'),null).getPropertyValue('box-shadow')" stepKey="getDefaultButtonsBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultButtonsBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultButtonsBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultButtonsBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultButtonsBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{ButtonGroupOnStage.base('1')}}" stepKey="moveMouseOverButtons"/>
         <waitForPageLoad stepKey="waitForButtonsHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-buttons'),null).getPropertyValue('box-shadow')" stepKey="getDefaultButtonsHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultButtonsHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultButtonsHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultButtonsHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultButtonsHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeButtons">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -129,11 +165,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverDivider"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-divider'),null).getPropertyValue('box-shadow')" stepKey="getDefaultDividerBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultDividerBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultDividerBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultDividerBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultDividerBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{DividerOnStage.base('1')}}" stepKey="moveMouseOverDivider"/>
         <waitForPageLoad stepKey="waitForDividerHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-divider'),null).getPropertyValue('box-shadow')" stepKey="getDefaultDividerHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultDividerHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultDividerHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultDividerHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultDividerHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeDivider">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
@@ -144,11 +186,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverHtml"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-html'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHtmlBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultHtmlBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultHtmlBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHtmlBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHtmlBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{HtmlOnStage.base('1')}}" stepKey="moveMouseOverHtml"/>
         <waitForPageLoad stepKey="waitForHtmlHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-html'),null).getPropertyValue('box-shadow')" stepKey="getDefaultHtmlHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultHtmlHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultHtmlHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultHtmlHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultHtmlHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHtml">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
@@ -162,11 +210,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverImage"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-image'),null).getPropertyValue('box-shadow')" stepKey="getDefaultImageBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultImageBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultImageBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultImageBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultImageBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="moveMouseOverImage"/>
         <waitForPageLoad stepKey="waitForImageHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-image'),null).getPropertyValue('box-shadow')" stepKey="getDefaultImageHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultImageHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultImageHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultImageHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultImageHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeImage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
@@ -178,11 +232,17 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeVideoEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverVideo"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-video'),null).getPropertyValue('box-shadow')" stepKey="getDefaultVideoBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultVideoBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultVideoBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultVideoBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultVideoBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{VideoOnStage.base('1')}}" stepKey="moveMouseOverVideo"/>
         <waitForPageLoad stepKey="waitForVideoHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-video'),null).getPropertyValue('box-shadow')" stepKey="getDefaultVideoHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultVideoHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultVideoHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultVideoHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultVideoHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeVideo">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
@@ -193,11 +253,17 @@
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverBanner"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-banner'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBannerBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultBannerBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultBannerBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBannerBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBannerBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{BannerOnBackend.base('1')}}" stepKey="moveMouseOverBanner"/>
         <waitForPageLoad stepKey="waitForBannerHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-banner'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBannerHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultBannerHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultBannerHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBannerHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBannerHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeBanner">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -209,11 +275,17 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSliderEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverSlider"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-slider .slider-container'),null).getPropertyValue('box-shadow')" stepKey="getDefaultSliderBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultSliderBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultSliderBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultSliderBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultSliderBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{SliderOnStage.base('1')}}" stepKey="moveMouseOverSlider"/>
         <waitForPageLoad stepKey="waitForSliderHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-slider .slider-container'),null).getPropertyValue('box-shadow')" stepKey="getDefaultSliderHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultSliderHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultSliderHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultSliderHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultSliderHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeSlider">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -225,12 +297,17 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeMapEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverMap"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-map'),null).getPropertyValue('box-shadow')" stepKey="getDefaultMapBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultMapBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultMapBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultMapBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultMapBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{MapOnStage.base('1')}}" stepKey="moveMouseOverMap"/>
         <waitForPageLoad stepKey="waitForMapHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-map'),null).getPropertyValue('box-shadow')" stepKey="getDefaultMapHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultMapHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultMapHoverBoxShadowStyle"/>
-        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeMap">
+        <assertEquals stepKey="assertDefaultMapHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultMapHoverBoxShadowStyle</actualResult>
+        </assertEquals>        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeMap">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Validate Block Box Shadow -->
@@ -244,11 +321,17 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeBlockEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverBlock"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-block'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBlockBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultBlockBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultBlockBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBlockBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBlockBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{BlockOnStage.base('1')}}" stepKey="moveMouseOverBlock"/>
         <waitForPageLoad stepKey="waitForBlockHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-block'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBlockHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultBlockHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultBlockHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultBlockHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultBlockHoverBoxShadowStyle</actualResult>
+        </assertEquals>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeBlock">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -260,11 +343,17 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeProductsEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverProducts"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-products'),null).getPropertyValue('box-shadow')" stepKey="getDefaultProductsBoxShadowStyle"/>
-        <assertEquals expected="rgba(153, 153, 153, 0) 0px 0px 0px 1px" expectedType="string" actual="getDefaultProductsBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultProductsBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultProductsBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
+            <actualResult type="variable">getDefaultProductsBoxShadowStyle</actualResult>
+        </assertEquals>
         <moveMouseOver selector="{{ProductsOnStage.base('1')}}" stepKey="moveMouseOverProducts"/>
         <waitForPageLoad stepKey="waitForProductsHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-products'),null).getPropertyValue('box-shadow')" stepKey="getDefaultProductsHoverBoxShadowStyle"/>
-        <assertEquals expected="rgb(153, 153, 153) 0px 0px 0px 1px" expectedType="string" actual="getDefaultProductsHoverBoxShadowStyle" actualType="variable" message="pass" stepKey="assertDefaultProductsHoverBoxShadowStyle"/>
+        <assertEquals stepKey="assertDefaultProductsHoverBoxShadowStyle" message="pass">
+            <expectedResult type="string">{{PageBuilderBoxShadowOnHoverProperty_Default.value}}</expectedResult>
+            <actualResult type="variable">getDefaultProductsHoverBoxShadowStyle</actualResult>
+        </assertEquals>
     </test>
     <test name="NoConfirmationOnDefaultStateContentTypeRemoval">
         <annotations>
