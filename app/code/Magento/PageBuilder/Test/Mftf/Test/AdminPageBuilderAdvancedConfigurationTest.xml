@@ -1739,20 +1739,183 @@
             <argument name="index" value="3"/>
         </actionGroup>
     </test>
+    <test name="AdvancedConfigurationInvalidMargins">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Advanced Configuration"/>
+            <title value="Invalid - Margins"/>
+            <description value="A user cannot add an invalid value for margins"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-83415"/>
+            <testCaseId value="MC-4195"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-advancedConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Text to Stage -->
+        <comment userInput="Add Text to Stage" stepKey="commentAddTextToStage"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
+            <argument name="property" value="PageBuilderTextProperty"/>
+        </actionGroup>
+        <!-- Add Invalid Margin: NonNumeric - Margin Top -->
+        <comment userInput="Add Invalid Margin: NonNumeric - Margin Top" stepKey="commentNonNumericMarginTop"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericMarginTop">
+            <argument name="field" value="marginTop"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericMarginTop">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericMarginTop">
+            <argument name="field" value="marginTop"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: NonNumeric - Margin Right -->
+        <comment userInput="Add Invalid Margin: NonNumeric - Margin Right" stepKey="commentNonNumericMarginRight"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericMarginRight">
+            <argument name="field" value="marginRight"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericMarginRight">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericMarginRight">
+            <argument name="field" value="marginRight"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: NonNumeric - Margin Bottom -->
+        <comment userInput="Add Invalid Margin: NonNumeric - Margin Bottom" stepKey="commentNonNumericMarginBottom"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericMarginBottom">
+            <argument name="field" value="marginBottom"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericMarginBottom">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericMarginBottom">
+            <argument name="field" value="marginBottom"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: NonNumeric - Margin Left -->
+        <comment userInput="Add Invalid Margin: NonNumeric - Margin Left" stepKey="commentNonNumericMarginLeft"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillNonNumericMarginLeft">
+            <argument name="field" value="marginLeft"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidString}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorNonNumericMarginLeft">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidStringError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearNonNumericMarginLeft">
+            <argument name="field" value="marginLeft"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: Invalid Min - Margin Top -->
+        <comment userInput="Add Invalid Margin: Invalid Min - Margin Top" stepKey="commentInvalidMinMarginTop"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinMarginTop">
+            <argument name="field" value="marginTop"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinMarginTop">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinMarginTop">
+            <argument name="field" value="marginTop"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: Invalid Min - Margin Right -->
+        <comment userInput="Add Invalid Margin: Invalid Min - Margin Right" stepKey="commentInvalidMinMarginRight"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinMarginRight">
+            <argument name="field" value="marginRight"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinMarginRight">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinMarginRight">
+            <argument name="field" value="marginRight"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: Invalid Min - Margin Bottom -->
+        <comment userInput="Add Invalid Margin: Invalid Min - Margin Bottom" stepKey="commentInvalidMinMarginBottom"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinMarginBottom">
+            <argument name="field" value="marginBottom"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinMarginBottom">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinMarginBottom">
+            <argument name="field" value="marginBottom"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- Add Invalid Margin: Invalid Min - Margin Left -->
+        <comment userInput="Add Invalid Margin: Invalid Min - Margin Left" stepKey="commentInvalidMinMarginLeft"/>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="fillInvalidMinMarginLeft">
+            <argument name="field" value="marginLeft"/>
+            <argument name="value" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMin}}"/>
+        </actionGroup>
+        <actionGroup ref="validateMarginsOrPaddingError" stepKey="validateErrorInvalidMinMarginLeft">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingBoundaryData"/>
+            <argument name="errorMessage" value="{{PageBuilderAdvancedMarginsAndPaddingBoundaryData.invalidMinError}}"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelSingleFieldMarginsOrPadding" stepKey="clearInvalidMinMarginLeft">
+            <argument name="field" value="marginLeft"/>
+            <argument name="value" value=""/>
+        </actionGroup>
+        <!-- User can recover after invalid input -->
+        <comment userInput="User can recover after invalid input" stepKey="commentCanRecover"/>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
     <test name="AdvancedConfigurationFunctionalMargins">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Advanced Configuration"/>
             <title value="Functional - Margins"/>
             <description value="Tests that the Margin attributes functions as expected on Stage and Storefront for Text"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MC-2606"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <skip>
-                <issueId value="MC-3723"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1879,7 +2042,7 @@
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins5">
-            <argument name="property" value="PageBuilderMarginsPropertyInvalid"/>
+            <argument name="property" value="PageBuilderMarginsProperty_NonNumeric"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Margins: Empty -->

@@ -19,6 +19,22 @@
         <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
         <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelSingleFieldMarginsOrPadding">
+        <arguments>
+            <argument name="field" type="string"/>
+            <argument name="value" type="string"/>
+        </arguments>
+        <waitForElement selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" stepKey="waitForElementVisible"/>
+        <fillField selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" userInput="{{value}}" stepKey="fillFieldMarginOrPadding"/>
+    </actionGroup>
+    <actionGroup name="validateMarginsOrPaddingError">
+        <arguments>
+            <argument name="property"/>
+            <argument name="errorMessage" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
+        <see userInput="{{errorMessage}}" selector="{{AdvancedForm.advancedMarginAndPaddingErrorMessage}}" stepKey="waitForErrorMessage"/>
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldPadding">
         <arguments>
             <argument name="property" defaultValue=""/>
