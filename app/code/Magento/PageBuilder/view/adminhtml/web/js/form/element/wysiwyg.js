@@ -4,11 +4,12 @@
  */
 
 define([
+    'jquery',
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
     'Magento_PageBuilder/js/events',
     'Magento_PageBuilder/js/page-builder'
-], function (Wysiwyg, $t, events, PageBuilder) {
+], function (jquery, Wysiwyg, $t, events, PageBuilder) {
     'use strict';
 
     /**
@@ -81,8 +82,14 @@ define([
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
                 if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
+                    if (jquery('#' + id).parents('aside').length) {
+                        jquery('#' + id).parents('.modal-inner-wrap').removeClass('un-transform');
+                    }
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(true);
+                    if (jquery('#' + id).parents('aside').length) {
+                        jquery('#' + id).parents('.modal-inner-wrap').addClass('un-transform');
+                    }
                 }
             }.bind(this));
         }
