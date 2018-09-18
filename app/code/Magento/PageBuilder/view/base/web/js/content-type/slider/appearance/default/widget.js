@@ -5,8 +5,9 @@
 
 define([
     'jquery',
+    'Magento_PageBuilder/js/events',
     'slick'
-], function ($) {
+], function ($, events) {
     'use strict';
 
     return function (config, sliderElement) {
@@ -26,6 +27,10 @@ define([
             infinite: $element.data('is-infinite'),
             arrows: $element.data('show-arrows'),
             dots: $element.data('show-dots')
+        });
+
+        events.on('contentType:redrawAfter', function () {
+            $element.slick('setPosition');
         });
     };
 });
