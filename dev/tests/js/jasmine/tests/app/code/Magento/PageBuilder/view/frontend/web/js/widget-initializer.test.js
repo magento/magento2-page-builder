@@ -48,10 +48,10 @@ define([
                 }
             };
 
-            widgetInitializer(data, el[0]);
+            widgetInitializer(data);
 
-            expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el[0], true, 'awesome');
-            expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el[0], true, 'cool');
+            expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el, true, 'awesome');
+            expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el, true, 'cool');
         });
     });
 });

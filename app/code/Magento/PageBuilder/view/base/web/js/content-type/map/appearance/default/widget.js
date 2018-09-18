@@ -13,6 +13,8 @@ define([
             controls,
             mapOptions = {};
 
+        element = element[0];
+
         if (element.hasAttribute('data-locations')) {
 
             /**
