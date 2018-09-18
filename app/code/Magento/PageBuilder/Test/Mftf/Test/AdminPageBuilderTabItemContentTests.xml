@@ -1018,6 +1018,12 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
+        <!-- Add Button to Tab -->
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonOntoTab">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
         <!-- Verify Tab height on stage -->
         <comment userInput="Verify Tab height on stage" stepKey="verifyTabOnStage"/>
         <executeJS function="return {{TabOnStage.tabContentHeightJS('0')}}" stepKey="tabContentHeightStage"/>
