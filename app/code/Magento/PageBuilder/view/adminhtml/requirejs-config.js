@@ -29,6 +29,9 @@ var config = {
         }
     },
     shim: {
+        'Magento_PageBuilder/js/page-builder': {
+            deps: ['Magento_PageBuilder/js/babel/polyfill.min']
+        },
         'pagebuilder/ko-sortable': {
             deps: ['jquery', 'jquery/ui', 'Magento_PageBuilder/js/resource/jquery-ui/jquery.ui.touch-punch.min']
         },

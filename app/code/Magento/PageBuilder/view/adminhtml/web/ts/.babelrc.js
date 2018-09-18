@@ -7,21 +7,27 @@ module.exports = {
     presets: [
         ['env', {
             loose: true,
-            browsers: ["last 2 versions", "ie >= 11"]
+            browsers: ['last 2 versions', 'ie >= 11'],
         }],
         {
             plugins: [
-                ["transform-class-properties", {loose: true}]
+                ['transform-class-properties', {
+                    loose: true
+                }]
             ]
         },
-        ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass']}]
+        ['es6-to-magento-amd', {
+            magentoClasses: ['uiComponent', 'uiElement', 'uiClass']
+        }]
     ],
     plugins: [
-        ['./babel/resolve-imports', {prefix: 'Magento_PageBuilder/'}],
+        ['./babel/resolve-imports', {
+            prefix: 'Magento_PageBuilder/'
+        }],
         'transform-typescript',
         'transform-object-rest-spread',
     ],
     ignore: [
-        "/**/*.d.ts"
+        '/**/*.d.ts'
     ]
 };
