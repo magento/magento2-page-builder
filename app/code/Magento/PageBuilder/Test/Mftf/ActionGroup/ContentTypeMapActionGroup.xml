@@ -137,8 +137,8 @@
             <argument name="mapIndex" defaultValue="1" type="string"/>
             <argument name="count" type="string"/>
         </arguments>
-        <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
-        <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
+        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
+        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <waitForElementVisible selector="{{page.base(mapIndex)}}" stepKey="waitForMap"/>
         <waitForElementVisible selector="{{page.pin(mapIndex)}}" stepKey="waitForMapPin"/>
         <seeNumberOfElements selector="{{page.pin(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
