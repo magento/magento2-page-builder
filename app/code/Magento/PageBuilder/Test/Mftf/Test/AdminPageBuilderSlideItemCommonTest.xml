@@ -1526,8 +1526,12 @@
         <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideDuplicatedBackground"/>
         <!-- Verify the first slides background and message are still present -->
         <comment userInput="Verify the first slides background and message are still present" stepKey="verifySlide1RetainedBackground"/>
-        <seeElementInDOM selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd"/>
-        <seeElementInDOM selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundAfterAdd"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
+        <waitForPageLoad stepKey="waitForSlideNavigation" />
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundAfterAdd"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlideOptionsMenu1"/>
+        <waitForPageLoad stepKey="waitForSlideNavigation1" />
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeSlideFromStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -1552,8 +1556,12 @@
         <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeNewSlideDuplicatedBackground"/>
         <!-- Verify the first slides background and message are still present -->
         <comment userInput="Verify the first slides background and message are still present" stepKey="verifySlide1RetainedBackground1"/>
-        <seeElementInDOM selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd1"/>
-        <seeElementInDOM selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundAfterAdd1"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu2"/>
+        <waitForPageLoad stepKey="waitForSlideNavigation2" />
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1MessageAfterAdd1"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlide1BackgroundAfterAdd1"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlideOptionsMenu3"/>
+        <waitForPageLoad stepKey="waitForSlideNavigation3" />
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeNewSlideFromStage">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
