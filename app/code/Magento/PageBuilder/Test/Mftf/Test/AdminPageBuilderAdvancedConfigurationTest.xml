@@ -1094,7 +1094,7 @@
             <title value="Invalid - Border Width"/>
             <description value="A user cannot add an invalid value for border width"/>
             <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-83415"/>
+            <useCaseId value="MC-3723"/>
             <testCaseId value="MC-4176"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
@@ -1384,7 +1384,7 @@
             <title value="Invalid - Border Radius"/>
             <description value="A user cannot add an invalid value for border radius"/>
             <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-83415"/>
+            <useCaseId value="MC-3723"/>
             <testCaseId value="MC-4185"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
@@ -1533,6 +1533,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor3"/>
+        <!-- Stage: Check Border Radius: Empty -->
         <comment userInput="Stage: Check Border Radius: Empty" stepKey="commentStageCheckEmpty"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignmentEmptyBorderRadius" stepKey="validateStageEmpty">
             <argument name="page" value="TextOnStage"/>
@@ -1545,6 +1546,7 @@
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
@@ -1746,7 +1748,7 @@
             <title value="Invalid - Margins"/>
             <description value="A user cannot add an invalid value for margins"/>
             <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-83415"/>
+            <useCaseId value="MC-3723"/>
             <testCaseId value="MC-4195"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
@@ -2161,7 +2163,7 @@
             <title value="Invalid - Padding"/>
             <description value="A user cannot add an invalid value for padding"/>
             <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-83415"/>
+            <useCaseId value="MC-3723"/>
             <testCaseId value="MC-4214"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>

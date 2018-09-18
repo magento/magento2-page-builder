@@ -24,7 +24,7 @@
             <argument name="field" type="string"/>
             <argument name="value" type="string"/>
         </arguments>
-        <waitForElement selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" stepKey="waitForElementVisible"/>
+        <waitForElement selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" stepKey="waitForElement"/>
         <fillField selector="{{AdvancedForm.advancedMarginsOrPaddingField(field)}}" userInput="{{value}}" stepKey="fillFieldMarginOrPadding"/>
     </actionGroup>
     <actionGroup name="validateMarginsOrPaddingError">
@@ -33,7 +33,8 @@
             <argument name="errorMessage" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionChangedIcon"/>
-        <see userInput="{{errorMessage}}" selector="{{AdvancedForm.advancedMarginAndPaddingErrorMessage}}" stepKey="waitForErrorMessage"/>
+        <seeElement selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="seeElementSectionChangedIcon"/>
+        <see userInput="{{errorMessage}}" selector="{{AdvancedForm.advancedMarginAndPaddingErrorMessage}}" stepKey="seeErrorMessage"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldPadding">
         <arguments>
