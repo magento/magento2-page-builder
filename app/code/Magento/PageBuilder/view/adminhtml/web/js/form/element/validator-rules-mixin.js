@@ -144,7 +144,7 @@ define([
                 var allNumbers = true;
 
                 if (typeof value !== 'object') {
-                    return lessThanEqualsToRule.handler(value);
+                    return lessThanEqualsToRule.handler(value, params);
                 }
 
                 _.flatten(_.map(value, _.values)).forEach(function(val) {
@@ -164,7 +164,7 @@ define([
                 var allNumbers = true;
 
                 if (typeof value !== 'object') {
-                    return greaterThanEqualsToRule.handler(value);
+                    return greaterThanEqualsToRule.handler(value, params);
                 }
 
                 _.flatten(_.map(value, _.values)).forEach(function(val) {
