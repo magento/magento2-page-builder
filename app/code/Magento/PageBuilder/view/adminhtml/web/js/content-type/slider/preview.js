@@ -74,7 +74,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }, 10);
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
-      _this.parent.dataStore.subscribe(_this.buildSlick); // Set the stage to interacting when a slide is focused
+      _this.parent.dataStore.subscribe(_this.buildSlick); // Redraw slide after content type gets redrawn
+
+
+      _events.on("contentType:redrawAfter", function () {
+        (0, _jquery)(this.element).slick("setPosition");
+      }.bind(_this)); // Set the stage to interacting when a slide is focused
 
 
       _this.focusedSlide.subscribe(function (value) {
@@ -412,7 +417,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
-     * Build the slack config object
+     * Build the slick config object
      *
      * @returns {{autoplay: boolean; autoplaySpeed: (any | number);
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}

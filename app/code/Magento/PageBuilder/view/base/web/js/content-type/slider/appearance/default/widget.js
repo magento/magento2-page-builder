@@ -29,6 +29,7 @@ define([
             dots: $element.data('show-dots')
         });
 
+        // Redraw slide after content type gets redrawn
         events.on('contentType:redrawAfter', function () {
             $element.slick('setPosition');
         });
