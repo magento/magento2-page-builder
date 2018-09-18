@@ -137,6 +137,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);
+          }).catch(function (error) {
+            // If there's an error with init of WYSIWYG editor push into the console to aid support
+            console.error(error);
           });
         });
       } else {
@@ -393,9 +396,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
     _proto.findTextNode = function findTextNode(element, text) {
       if (text && text.trim().length > 0) {
-        return element.contents().filter(function () {
-          return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
-        })[0];
+        return element.contents().toArray().find(function (node) {
+          return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+        });
       }
     };
 

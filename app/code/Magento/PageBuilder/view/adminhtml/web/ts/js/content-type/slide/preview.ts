@@ -166,7 +166,10 @@ export default class Preview extends BasePreview {
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,
-                    ));
+                    )).catch((error) => {
+                        // If there's an error with init of WYSIWYG editor push into the console to aid support
+                        console.error(error);
+                    });
             });
         } else {
             activate();
@@ -418,9 +421,9 @@ export default class Preview extends BasePreview {
      */
     private findTextNode(element: JQuery, text: string): HTMLElement {
         if (text && text.trim().length > 0) {
-            return element.contents().filter(function() {
-                return this.nodeType === Node.TEXT_NODE && text === this.nodeValue;
-            })[0];
+            return element.contents().toArray().find((node: HTMLElement) => {
+                return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+            });
         }
     }
 }
