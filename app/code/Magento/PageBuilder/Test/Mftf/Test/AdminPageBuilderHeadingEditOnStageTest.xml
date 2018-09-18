@@ -1556,9 +1556,9 @@
             <stories value="Heading"/>
             <title value="Stage Edit - Heading Non Breaking Space"/>
             <description value="Add non breaking space on stage and view the rendered content type in stage and storefront."/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-3889"/>
-            <testCaseId value="MC-2566"/>
+            <testCaseId value="MC-4215"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
         </annotations>
@@ -1585,10 +1585,6 @@
         <!--Edit heading text inline on stage -->
         <comment userInput="Edit heading text inline on stage" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingNonBreakingSpaceProperty.value}}" stepKey="enterNBSPHeadingText"/>
-        <waitForPageLoad stepKey="waitForAnimationAlign1" time="30"/>
-        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
-            <argument name="index" value="1"/>
-        </actionGroup>
         <!-- Stage: Check NBSP in heading -->
         <comment userInput="Check NBSP in heading" stepKey="commentStageCheckNBSP"/>
         <see selector="{{HeadingOnStage.base('1')}}" userInput="{{PageBuilderHeadingNonBreakingSpaceProperty.value}}" stepKey="seeStageNBSPHeadingText"/>

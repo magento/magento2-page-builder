@@ -548,7 +548,6 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Html.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
-
     <test name="SliderCollageCenterNonBreakingSpaceValueInButtons">
         <annotations>
             <features value="PageBuilder"/>
@@ -557,7 +556,7 @@
             <description value="Validate that non breaking space can be entered into the button and that the html doesn't render on stage and storefront as nbsp."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-3889"/>
-            <testCaseId value="MC-3659"/>
+            <testCaseId value="MC-4202"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCollageCenter"/>
@@ -591,7 +590,7 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="seeButtonIsEditable"/>
+        <waitForElementVisible selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="waitForButtonIsEditable"/>
         <click selector="{{SlideOnBackend.editableButtonItemElement('1')}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Non_Breaking_Space.value}}" stepKey="enterButtonText"/>
         <see selector="{{SlideOnBackend.editableButtonItemElement('1')}}" userInput="{{PageBuilderSlideItemButtonText_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonText"/>

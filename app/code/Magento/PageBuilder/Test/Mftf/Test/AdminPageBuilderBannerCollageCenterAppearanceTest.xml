@@ -940,7 +940,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Banner Collage Center - Update All Attributes"/>
+            <title value="Collage Center - Update All Attributes"/>
             <description value="A user should be able to add a collage center banner with all attribute fields filled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1433"/>
@@ -1286,7 +1286,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Banner Collage Center - HTML Value In Buttons Does Not Render As HTML"/>
+            <title value="Collage Center - HTML Value In Buttons Does Not Render As HTML"/>
             <description value="Validate that html can be entered into the button and that the html doesn't render on stage and storefront."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-849"/>
@@ -1355,11 +1355,11 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Banner Collage Center - Non Breaking Space In Button Does Not Render as nbsp;"/>
+            <title value="Collage Center - Non Breaking Space In Button Does Not Render as nbsp;"/>
             <description value="Validate that non breaking space can be entered into the button and that the html doesn't render on stage and storefront as nbsp."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-3889"/>
-            <testCaseId value="MC-3654"/>
+            <testCaseId value="MC-4196"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCollageCenter"/>
@@ -1387,7 +1387,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -1396,7 +1396,7 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="seeButtonIsEditable"/>
+        <waitForElementVisible selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="waitForButtonIsEditable"/>
         <click selector="{{BannerOnBackend.editableButtonOnStage('1')}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="enterButtonText"/>
         <see selector="{{BannerOnBackend.editableButtonOnStage('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStageNBSPBannerButtonText"/>

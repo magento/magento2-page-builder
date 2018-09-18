@@ -1356,7 +1356,7 @@
             <description value="Validate that non breaking space can be entered into the button and that the string literal is not in stage after save."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-3889"/>
-            <testCaseId value="MC-3658"/>
+            <testCaseId value="MC-4200"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -1385,7 +1385,6 @@
         <comment userInput="Edit button item text inline on stage" stepKey="commentEditButtonItem"/>
         <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement('1')}}" userInput="{{PageBuilderButtonItemText_NBSP.value}}" stepKey="enterNBSPButtonItemText"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
-        <waitForPageLoad stepKey="waitForAnimationAlign1" time="30"/>
         <!-- Stage: Check NBSP in button item -->
         <comment userInput="Check NBSP in button item" stepKey="commentStageCheckNBSP"/>
         <see selector="{{ButtonItemOnStage.base('1')}}" userInput="{{PageBuilderButtonItemText_NBSP.value}}" stepKey="seeStageNBSPButtonItemText"/>
