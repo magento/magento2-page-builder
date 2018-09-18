@@ -44,11 +44,37 @@ define([
         return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href)//eslint-disable-line max-len);
     }
 
+    /**
+     * Validate field with data object
+     * @param {Function} validator
+     * @param {String} ruleName
+     */
+    function validateObjectField(validator, ruleName) {
+        var rule = validator.getRule(ruleName);
+
+        validator.addRule(
+            ruleName,
+            function (value, params) {
+                var allNumbers = true;
+
+                if (typeof value !== 'object') {
+                    return rule.handler(value, params);
+                }
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    if (!rule.handler(val, params)) {
+                        return allNumbers = false;
+                    }
+                });
+
+                return allNumbers;
+            },
+            $.mage.__(rule.message)
+        );
+    }
+
     return function (validator) {
         var requiredInputRule = validator.getRule('required-entry');
-        var validateNumberRule = validator.getRule('validate-number');
-        var lessThanEqualsToRule = validator.getRule('less-than-equals-to');
-        var greaterThanEqualsToRule = validator.getRule('greater-than-equals-to');
 
         validator.addRule(
             'required-entry-location-name',
@@ -118,65 +144,9 @@ define([
             $.mage.__(requiredInputRule.message)
         );
 
-        validator.addRule(
-            'validate-number',
-            function (value) {
-                var allNumbers = true;
-
-                if (typeof value !== 'object') {
-                    return validateNumberRule.handler(value);
-                }
-
-                _.flatten(_.map(value, _.values)).forEach(function(val) {
-                    if (!validateNumberRule.handler(val)) {
-                        return allNumbers = false;
-                    }
-                });
-
-                return allNumbers;
-            },
-            $.mage.__(validateNumberRule.message)
-        );
-
-        validator.addRule(
-            'less-than-equals-to',
-            function (value, params) {
-                var allNumbers = true;
-
-                if (typeof value !== 'object') {
-                    return lessThanEqualsToRule.handler(value, params);
-                }
-
-                _.flatten(_.map(value, _.values)).forEach(function(val) {
-                    if (!lessThanEqualsToRule.handler(val, params)) {
-                        return allNumbers = false;
-                    }
-                });
-
-                return allNumbers;
-            },
-            $.mage.__(lessThanEqualsToRule.message)
-        );
-
-        validator.addRule(
-            'greater-than-equals-to',
-            function (value, params) {
-                var allNumbers = true;
-
-                if (typeof value !== 'object') {
-                    return greaterThanEqualsToRule.handler(value, params);
-                }
-
-                _.flatten(_.map(value, _.values)).forEach(function(val) {
-                    if (!greaterThanEqualsToRule.handler(val, params)) {
-                        return allNumbers = false;
-                    }
-                });
-
-                return allNumbers;
-            },
-            $.mage.__(greaterThanEqualsToRule.message)
-        );
+        validateObjectField(validator, 'validate-number');
+        validateObjectField(validator, 'less-than-equals-to');
+        validateObjectField(validator, 'greater-than-equals-to');
 
         return validator;
     };
