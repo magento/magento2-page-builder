@@ -16,7 +16,7 @@
         <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
         <element name="editPanelSectionName" type="button" selector="//div[@data-index='{{arg1}}']" parameterized="true"/>
         <element name="editPanelSectionExpanded" type="button" selector="//div[@data-index='{{arg1}}' and contains(@class,'_show')]" parameterized="true"/>
-        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/descendant::label[not(contains(@style,"display: none;"))] | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"]/descendant::span[text()="{{arg4}}"]' parameterized="true" />
+        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/descendant::label[not(contains(@style,"display: none;"))] | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"]/descendant::span[text()="{{arg4}}"][not(ancestor::legend)]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelSectionError" type="text" selector="[data-index='{{arg1}}'] span._error .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelFieldControl" type="input" selector='//aside//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
