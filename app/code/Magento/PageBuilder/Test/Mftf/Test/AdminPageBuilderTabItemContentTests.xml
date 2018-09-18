@@ -977,8 +977,8 @@
             <stories value="Tabs"/>
             <title value="Tabs Content - Add Heading to Tabs container and verify minimum height on Admin and Storefront"/>
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-964"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4112"/>
             <testCaseId value="MC-4209"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
@@ -1018,12 +1018,20 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
+        <!-- Verify Tab height on stage -->
+        <comment userInput="Verify Tab height on stage" stepKey="verifyTabOnStage"/>
         <executeJS function="return {{TabOnStage.tabContentHeightJS('0')}}" stepKey="tabContentHeightStage"/>
+        <executeJS function="return {{PageBuilderTabMinimumHeightDefaultProperty.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tabExpectedHeight"/>
+        <assertEquals stepKey="assertTabHeightStage">
+            <expectedResult type="variable">tabExpectedHeight</expectedResult>
+            <actualResult type="variable">tabContentHeightStage</actualResult>
+        </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Tab height on storefront -->
         <comment userInput="Verify Tab height on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <waitForElementVisible selector="{{TabOnStorefront.tabContent('1')}}" stepKey="waitForTabContentVisible"/>
         <executeJS function="return {{TabsOnFrontend.tabsContentHeightJS('0')}}" stepKey="tabContentHeightStorefront"/>
         <assertEquals stepKey="assertTabHeightStorefrontEqualsStage">
