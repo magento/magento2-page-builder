@@ -7,6 +7,9 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <block class="Magento\Framework\View\Element\Template" name="head.additional" as="head.additional" template="Magento_PageBuilder::html/container.phtml">
+            <block class="Magento\PageBuilder\Block\Adminhtml\Html\Head\BabelPolyfill" name="pagebuilder.babel.polyfill" as="pagebuilder.babel.polyfill" template="Magento_PageBuilder::head/babel-polyfill.phtml"/>
+        </block>
         <referenceContainer name="before.body.end">
             <uiComponent name="pagebuilder_modal_form" />
         </referenceContainer>
