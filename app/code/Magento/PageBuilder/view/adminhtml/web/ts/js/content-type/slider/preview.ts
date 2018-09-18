@@ -113,7 +113,7 @@ export default class Preview extends PreviewCollection {
         this.parent.dataStore.subscribe(this.buildSlick);
 
         // Redraw slide after content type gets redrawn
-        events.on("contentType:redrawAfter", function () {
+        events.on("contentType:redrawAfter", function() {
             $(this.element).slick("setPosition");
         }.bind(this));
 

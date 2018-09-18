@@ -65,7 +65,7 @@ export default class Preview extends PreviewCollection {
                  */
                 activate: () => {
                     events.trigger("contentType:redrawAfter", {
-                        element: this.element
+                        element: this.element,
                     });
                 },
             });
