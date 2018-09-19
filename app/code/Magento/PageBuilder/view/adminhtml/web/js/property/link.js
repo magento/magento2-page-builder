@@ -37,7 +37,7 @@ define([], function () {
         href = this.getIdFromWidgetSyntax(href, this.regexpByLinkType[attributeLinkType]);
       }
 
-      return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = element.target === "_blank", _ref.type = attributeLinkType, _ref;
+      return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = element.getAttribute("target") === "_blank", _ref.type = attributeLinkType, _ref;
     };
     /**
      * Returns link value from widget string

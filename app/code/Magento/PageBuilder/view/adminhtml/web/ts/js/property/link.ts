@@ -34,7 +34,7 @@ export default class Link implements PropertyReaderInterface {
 
         return {
             [attributeLinkType]: href,
-            setting: element.target === "_blank",
+            setting: element.getAttribute("target") === "_blank",
             type: attributeLinkType,
         };
     }

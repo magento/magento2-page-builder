@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
+define(["mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _underscore, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -77,11 +77,11 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
      * Read attributes for element
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
-     * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ConverterPool} converterPool
-     * @returns {object}
+     * @param {typeof PropertyReaderPool} propertyReaderPool
+     * @param {typeof ConverterPool} converterPool
+     * @returns {any}
      */
 
 
@@ -119,22 +119,22 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
         result[attributeConfig.var] = value;
       }
 
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Read style properties for element
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
-     * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ConverterPool} converterPool
+     * @param {typeof PropertyReaderPool} propertyReaderPool
+     * @param {typeof ConverterPool} converterPool
      * @returns {object}
      */
 
 
     _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
-      var result = _.extend({}, data);
+      var result = _underscore.extend({}, data);
 
       for (var _iterator2 = config, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
         var _ref2;
@@ -173,7 +173,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
      * Read element's tag
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
      * @returns {object}
      */
@@ -182,13 +182,13 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
     _proto.readHtmlTag = function readHtmlTag(config, element, data) {
       var result = {};
       result[config.tag.var] = element.nodeName.toLowerCase();
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Read element's css
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
      * @returns {object}
      */
@@ -217,14 +217,15 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
       }
 
       result[config.css.var] = css.replace(/\s{2,}/g, " ").trim();
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Read element's content
      *
-     * @param {object} config
-     * @param {Node} element
+     * @param config
+     * @param {HTMLElement} element
      * @param {object} data
+     * @param {typeof ConverterPool} converterPool
      * @returns {object}
      */
 
@@ -238,14 +239,14 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
       }
 
       result[config.html.var] = value;
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Convert data after it's read for all elements
      *
-     * @param {object} config
+     * @param config
      * @param {object} data
-     * @param {MassConverterPool} massConverterPool
+     * @param {typeof MassConverterPool} massConverterPool
      * @returns {object}
      */
 

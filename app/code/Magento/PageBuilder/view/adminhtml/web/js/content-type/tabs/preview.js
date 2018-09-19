@@ -482,7 +482,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             } else {
               _this4.setFocusedTab(null);
 
-              if (activeTabIndex !== false) {
+              if (activeTabIndex) {
                 _this4.setActiveTab(activeTabIndex);
               }
             }
