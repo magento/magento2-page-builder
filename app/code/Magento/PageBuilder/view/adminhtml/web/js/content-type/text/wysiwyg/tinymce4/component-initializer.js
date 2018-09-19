@@ -7,22 +7,17 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
   var ComponentInitializer =
   /*#__PURE__*/
   function () {
-    function ComponentInitializer() {
-      Object.defineProperty(this, "$element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-    }
+    function ComponentInitializer() {}
 
     var _proto = ComponentInitializer.prototype;
+
+    /**
+     * The editor element
+     */
+
+    /**
+     * The configuration of the wysiwyg content type
+     */
 
     /**
      * Initialize the instance
@@ -71,6 +66,8 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
     return ComponentInitializer;
   }();
 
-  return ComponentInitializer;
+  return Object.assign(ComponentInitializer, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=component-initializer.js.map

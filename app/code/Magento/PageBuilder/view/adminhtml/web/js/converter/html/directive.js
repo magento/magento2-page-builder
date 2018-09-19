@@ -40,6 +40,8 @@ define(["Magento_PageBuilder/js/utils/directives"], function (_directives) {
     return Directives;
   }();
 
-  return Directives;
+  return Object.assign(Directives, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=directive.js.map

@@ -12,31 +12,26 @@ define(["underscore"], function (_underscore) {
   /*#__PURE__*/
   function () {
     function CreateValueForHref() {
-      Object.defineProperty(this, "widgetParamsByLinkType", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          category: {
-            type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
-            id_path: "category/:href",
-            template: "Magento_PageBuilder::widget/link_href.phtml",
-            type_name: "Catalog Category Link"
-          },
-          product: {
-            type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
-            id_path: "product/:href",
-            template: "Magento_PageBuilder::widget/link_href.phtml",
-            type_name: "Catalog Product Link"
-          },
-          page: {
-            type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
-            page_id: ":href",
-            template: "Magento_PageBuilder::widget/link_href.phtml",
-            type_name: "CMS Page Link"
-          }
+      this.widgetParamsByLinkType = {
+        category: {
+          type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
+          id_path: "category/:href",
+          template: "Magento_PageBuilder::widget/link_href.phtml",
+          type_name: "Catalog Category Link"
+        },
+        product: {
+          type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
+          id_path: "product/:href",
+          template: "Magento_PageBuilder::widget/link_href.phtml",
+          type_name: "Catalog Product Link"
+        },
+        page: {
+          type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
+          page_id: ":href",
+          template: "Magento_PageBuilder::widget/link_href.phtml",
+          type_name: "CMS Page Link"
         }
-      });
+      };
     }
 
     var _proto = CreateValueForHref.prototype;
@@ -96,6 +91,8 @@ define(["underscore"], function (_underscore) {
     return CreateValueForHref;
   }();
 
-  return CreateValueForHref;
+  return Object.assign(CreateValueForHref, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=link-href.js.map

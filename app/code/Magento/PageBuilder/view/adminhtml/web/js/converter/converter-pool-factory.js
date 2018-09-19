@@ -41,14 +41,14 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref = _i3.value;
               }
 
-              var _propertyConfig = _ref;
+              var propertyConfig = _ref;
 
-              if (!!_propertyConfig.converter && converters.indexOf(_propertyConfig.converter) === -1 && !_converterPool.get(_propertyConfig.converter)) {
-                converters.push(_propertyConfig.converter);
+              if (!!propertyConfig.converter && converters.indexOf(propertyConfig.converter) === -1 && !_converterPool.get(propertyConfig.converter)) {
+                converters.push(propertyConfig.converter);
               }
 
-              if (!!_propertyConfig.preview_converter && converters.indexOf(_propertyConfig.preview_converter) === -1 && !_converterPool.get(_propertyConfig.preview_converter)) {
-                converters.push(_propertyConfig.preview_converter);
+              if (!!propertyConfig.preview_converter && converters.indexOf(propertyConfig.preview_converter) === -1 && !_converterPool.get(propertyConfig.preview_converter)) {
+                converters.push(propertyConfig.preview_converter);
               }
             }
           }
@@ -66,14 +66,14 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref2 = _i4.value;
               }
 
-              var _attributeConfig = _ref2;
+              var attributeConfig = _ref2;
 
-              if (!!_attributeConfig.converter && converters.indexOf(_attributeConfig.converter) === -1 && !_converterPool.get(_attributeConfig.converter)) {
-                converters.push(_attributeConfig.converter);
+              if (!!attributeConfig.converter && converters.indexOf(attributeConfig.converter) === -1 && !_converterPool.get(attributeConfig.converter)) {
+                converters.push(attributeConfig.converter);
               }
 
-              if (!!_attributeConfig.preview_converter && converters.indexOf(_attributeConfig.preview_converter) === -1 && !_converterPool.get(_attributeConfig.preview_converter)) {
-                converters.push(_attributeConfig.preview_converter);
+              if (!!attributeConfig.preview_converter && converters.indexOf(attributeConfig.preview_converter) === -1 && !_converterPool.get(attributeConfig.preview_converter)) {
+                converters.push(attributeConfig.preview_converter);
               }
             }
           }
@@ -108,6 +108,8 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
     });
   }
 
-  return create;
+  return Object.assign(create, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=converter-pool-factory.js.map

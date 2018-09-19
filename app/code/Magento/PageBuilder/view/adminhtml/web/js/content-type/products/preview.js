@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _config, _preview) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -19,29 +17,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      Object.defineProperty(_this, "displayPreview", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(_this, "placeholderText", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "messages", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          EMPTY: (0, _translate)("Empty Products"),
-          NO_RESULTS: (0, _translate)("No products were found matching your condition"),
-          LOADING: (0, _translate)("Loading..."),
-          UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
-        }
-      });
+      _this.displayPreview = _knockout.observable(false);
+      _this.messages = {
+        EMPTY: (0, _translate)("Empty Products"),
+        NO_RESULTS: (0, _translate)("No products were found matching your condition"),
+        LOADING: (0, _translate)("Loading..."),
+        UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
+      };
       _this.placeholderText = _knockout.observable(_this.messages.EMPTY);
       return _this;
     }
@@ -97,7 +79,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.placeholderText(this.messages.LOADING);
 
       _jquery.ajax(url, requestConfig).done(function (response) {
-        if (_typeof(response.data) !== "object" || !Boolean(response.data.content)) {
+        if (typeof response.data !== "object" || !Boolean(response.data.content)) {
           _this3.placeholderText(_this3.messages.NO_RESULTS);
 
           return;
@@ -118,6 +100,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

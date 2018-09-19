@@ -13,18 +13,15 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/co
     _inheritsLoose(Preview, _BasePreview);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "buttonPlaceholder", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)("Edit Button Text")
-      }), _temp) || _this;
+      _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this;
+      _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -124,6 +121,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/co
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

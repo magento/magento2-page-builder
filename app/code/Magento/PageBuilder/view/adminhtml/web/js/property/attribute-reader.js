@@ -29,6 +29,8 @@ define([], function () {
     return AttributeReader;
   }();
 
-  return AttributeReader;
+  return Object.assign(AttributeReader, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=attribute-reader.js.map

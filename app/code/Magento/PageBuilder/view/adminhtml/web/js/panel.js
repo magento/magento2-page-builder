@@ -12,102 +12,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   /*#__PURE__*/
   function () {
     function Panel(parent) {
-      Object.defineProperty(this, "groups", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observableArray([])
-      });
-      Object.defineProperty(this, "searchResults", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observableArray([])
-      });
-      Object.defineProperty(this, "isCollapsed", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "isVisible", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "isStickyBottom", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "isStickyTop", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "searching", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "searchValue", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable("")
-      });
-      Object.defineProperty(this, "searchPlaceholder", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)("Find items")
-      });
-      Object.defineProperty(this, "searchNoResult", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)("Nothing found")
-      });
-      Object.defineProperty(this, "fullScreenTitle", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)("Full Screen")
-      });
-      Object.defineProperty(this, "searchTitle", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)("Clear Search")
-      });
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "id", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: "Magento_PageBuilder/panel"
-      });
+      this.groups = _knockout.observableArray([]);
+      this.searchResults = _knockout.observableArray([]);
+      this.isCollapsed = _knockout.observable(false);
+      this.isVisible = _knockout.observable(false);
+      this.isStickyBottom = _knockout.observable(false);
+      this.isStickyTop = _knockout.observable(false);
+      this.searching = _knockout.observable(false);
+      this.searchValue = _knockout.observable("");
+      this.searchPlaceholder = (0, _translate)("Find items");
+      this.searchNoResult = (0, _translate)("Nothing found");
+      this.fullScreenTitle = (0, _translate)("Full Screen");
+      this.searchTitle = (0, _translate)("Clear Search");
+      this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
       this.id = this.parent.id;
       this.initListeners();
@@ -349,6 +266,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Panel;
   }();
 
-  return Panel;
+  return Object.assign(Panel, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=panel.js.map

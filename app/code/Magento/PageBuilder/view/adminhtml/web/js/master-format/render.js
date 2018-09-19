@@ -8,12 +8,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   /*#__PURE__*/
   function () {
     function MasterFormatRenderer() {
-      Object.defineProperty(this, "rootTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: "Magento_PageBuilder/content-type/master"
-      });
+      this.rootTemplate = "Magento_PageBuilder/content-type/master";
     }
 
     var _proto = MasterFormatRenderer.prototype;
@@ -54,6 +49,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     return MasterFormatRenderer;
   }();
 
-  return MasterFormatRenderer;
+  return Object.assign(MasterFormatRenderer, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=render.js.map

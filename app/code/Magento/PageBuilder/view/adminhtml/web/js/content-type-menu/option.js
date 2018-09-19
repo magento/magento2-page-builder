@@ -13,66 +13,10 @@ define(["knockout"], function (_knockout) {
     function Option(config) {
       var _this = this;
 
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "preview", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "code", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "icon", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable("")
-      });
-      Object.defineProperty(this, "title", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable("")
-      });
-      Object.defineProperty(this, "classes", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable({})
-      });
-      Object.defineProperty(this, "sort", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "action", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "isDisabled", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "customTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      this.icon = _knockout.observable("");
+      this.title = _knockout.observable("");
+      this.classes = _knockout.observable({});
+      this.isDisabled = _knockout.observable(false);
       this.config = config;
       this.preview = config.preview;
       this.icon(config.icon);
@@ -118,6 +62,8 @@ define(["knockout"], function (_knockout) {
     return Option;
   }();
 
-  return Option;
+  return Object.assign(Option, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=option.js.map

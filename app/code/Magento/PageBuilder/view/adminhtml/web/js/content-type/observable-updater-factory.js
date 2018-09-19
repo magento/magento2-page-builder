@@ -25,6 +25,8 @@ define(["Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_Page
     });
   }
 
-  return create;
+  return Object.assign(create, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=observable-updater-factory.js.map

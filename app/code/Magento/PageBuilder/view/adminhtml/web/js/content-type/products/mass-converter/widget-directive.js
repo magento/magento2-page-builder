@@ -80,6 +80,8 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
     return WidgetDirective;
   }(_widgetDirectiveAbstract);
 
-  return WidgetDirective;
+  return Object.assign(WidgetDirective, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=widget-directive.js.map

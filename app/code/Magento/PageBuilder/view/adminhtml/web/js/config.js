@@ -55,14 +55,11 @@ define(["underscore"], function (_underscore) {
     return Config;
   }();
 
-  Object.defineProperty(Config, "config", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: {
-      dataRoleAttributeName: "data-role"
-    }
+  Config.config = {
+    dataRoleAttributeName: "data-role"
+  };
+  return Object.assign(Config, {
+    __esModule: true
   });
-  return Config;
 });
 //# sourceMappingURL=config.js.map

@@ -25,6 +25,8 @@ define([], function () {
     };
   }
 
-  return deferred;
+  return Object.assign(deferred, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=promise-deferred.js.map

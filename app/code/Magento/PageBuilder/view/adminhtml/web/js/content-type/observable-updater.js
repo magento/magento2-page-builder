@@ -1,7 +1,9 @@
 /*eslint-disable */
 define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var ObservableUpdater =
   /*#__PURE__*/
   function () {
@@ -11,24 +13,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
-      Object.defineProperty(this, "converterPool", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "massConverterPool", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "converterResolver", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
       this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
@@ -141,8 +125,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           _ref = _i3.value;
         }
 
-        var _converterConfig = _ref;
-        data = this.massConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
+        var converterConfig = _ref;
+        data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
       }
 
       return data;
@@ -171,20 +155,20 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           _ref2 = _i4.value;
         }
 
-        var _attributeConfig = _ref2;
+        var attributeConfig = _ref2;
 
-        if ("read" === _attributeConfig.persistence_mode) {
+        if ("read" === attributeConfig.persistence_mode) {
           continue;
         }
 
-        var value = data[_attributeConfig.var];
-        var converter = this.converterResolver(_attributeConfig);
+        var value = data[attributeConfig.var];
+        var converter = this.converterResolver(attributeConfig);
 
         if (this.converterPool.get(converter)) {
-          value = this.converterPool.get(converter).toDom(_attributeConfig.var, data);
+          value = this.converterPool.get(converter).toDom(attributeConfig.var, data);
         }
 
-        result[_attributeConfig.name] = value;
+        result[attributeConfig.name] = value;
       }
 
       return result;
@@ -214,29 +198,29 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
             _ref3 = _i5.value;
           }
 
-          var _propertyConfig = _ref3;
+          var propertyConfig = _ref3;
 
-          if ("read" === _propertyConfig.persistence_mode) {
+          if ("read" === propertyConfig.persistence_mode) {
             continue;
           }
 
           var value = void 0;
 
-          if (!!_propertyConfig.static) {
-            value = _propertyConfig.value;
+          if (!!propertyConfig.static) {
+            value = propertyConfig.value;
           } else {
-            value = data[_propertyConfig.var];
-            var converter = this.converterResolver(_propertyConfig);
+            value = data[propertyConfig.var];
+            var converter = this.converterResolver(propertyConfig);
 
             if (this.converterPool.get(converter)) {
-              value = this.converterPool.get(converter).toDom(_propertyConfig.var, data);
+              value = this.converterPool.get(converter).toDom(propertyConfig.var, data);
             }
           }
 
-          if (_typeof(value) === "object") {
+          if (typeof value === "object") {
             _underscore.extend(result, value);
           } else if (typeof value !== "undefined") {
-            result[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)] = value;
+            result[(0, _string.fromSnakeToCamelCase)(propertyConfig.name)] = value;
           }
         }
       }
@@ -275,6 +259,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
     return ObservableUpdater;
   }();
 
-  return ObservableUpdater;
+  return Object.assign(ObservableUpdater, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=observable-updater.js.map

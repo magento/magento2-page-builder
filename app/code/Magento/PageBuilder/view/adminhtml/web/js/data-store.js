@@ -8,24 +8,9 @@ define(["jquery"], function (_jquery) {
   /*#__PURE__*/
   function () {
     function DataStore() {
-      Object.defineProperty(this, "state", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
-      Object.defineProperty(this, "events", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _jquery)({})
-      });
-      Object.defineProperty(this, "previousState", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
+      this.state = {};
+      this.events = (0, _jquery)({});
+      this.previousState = {};
     }
 
     var _proto = DataStore.prototype;
@@ -111,6 +96,8 @@ define(["jquery"], function (_jquery) {
     return DataStore;
   }();
 
-  return DataStore;
+  return Object.assign(DataStore, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=data-store.js.map

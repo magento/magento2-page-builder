@@ -24,6 +24,7 @@ define([], function () {
   }
 
   return {
+    __esModule: true,
     fromSnakeToCamelCase: fromSnakeToCamelCase
   };
 });

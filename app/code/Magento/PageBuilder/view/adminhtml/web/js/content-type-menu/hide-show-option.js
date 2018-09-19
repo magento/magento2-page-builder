@@ -2,6 +2,8 @@
 define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], function (_translate, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
   var HideShowOption =
   /*#__PURE__*/
   function (_Option) {
@@ -15,7 +17,7 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
 
       _this = _Option.call(this, options) || this; // Modify the icon when changes are made to display in the data store
 
-      _this.preview.parent.dataStore.subscribe(_this.onDisplayChange.bind(_this), "display");
+      _this.preview.parent.dataStore.subscribe(_this.onDisplayChange.bind(_assertThisInitialized(_assertThisInitialized(_this))), "display");
 
       return _this;
     }
@@ -43,30 +45,12 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
     return HideShowOption;
   }(_option);
 
-  Object.defineProperty(HideShowOption, "showText", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: (0, _translate)("Show")
+  HideShowOption.showText = (0, _translate)("Show");
+  HideShowOption.showIcon = "<i class='icon-pagebuilder-show'></i>";
+  HideShowOption.hideText = (0, _translate)("Hide");
+  HideShowOption.hideIcon = "<i class='icon-pagebuilder-hide'></i>";
+  return Object.assign(HideShowOption, {
+    __esModule: true
   });
-  Object.defineProperty(HideShowOption, "showIcon", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: "<i class='icon-pagebuilder-show'></i>"
-  });
-  Object.defineProperty(HideShowOption, "hideText", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: (0, _translate)("Hide")
-  });
-  Object.defineProperty(HideShowOption, "hideIcon", {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    value: "<i class='icon-pagebuilder-hide'></i>"
-  });
-  return HideShowOption;
 });
 //# sourceMappingURL=hide-show-option.js.map

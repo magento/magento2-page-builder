@@ -11,94 +11,22 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
      * @param {PageBuilderInterface} parent
      */
     function Stage(parent) {
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "id", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          name: "stage",
-          type: "restricted-container",
-          accepts: ["row"]
-        }
-      });
-      Object.defineProperty(this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(true)
-      });
-      Object.defineProperty(this, "showBorders", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "interacting", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "userSelect", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(true)
-      });
-      Object.defineProperty(this, "focusChild", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "stageLoadingMessage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _translate)("Please hold! we're just retrieving your content...")
-      });
-      Object.defineProperty(this, "dataStore", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _dataStore()
-      });
-      Object.defineProperty(this, "afterRenderDeferred", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _promiseDeferred)()
-      });
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: "Magento_PageBuilder/content-type/preview"
-      });
-      Object.defineProperty(this, "render", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _render()
-      });
-      Object.defineProperty(this, "collection", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _collection()
-      });
+      this.config = {
+        name: "stage",
+        type: "restricted-container",
+        accepts: ["row"]
+      };
+      this.loading = _knockout.observable(true);
+      this.showBorders = _knockout.observable(false);
+      this.interacting = _knockout.observable(false);
+      this.userSelect = _knockout.observable(true);
+      this.focusChild = _knockout.observable(false);
+      this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
+      this.dataStore = new _dataStore();
+      this.afterRenderDeferred = (0, _promiseDeferred)();
+      this.template = "Magento_PageBuilder/content-type/preview";
+      this.render = new _render();
+      this.collection = new _collection();
       this.parent = parent;
       this.id = parent.id;
       this.initListeners();
@@ -288,6 +216,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     return Stage;
   }();
 
-  return Stage;
+  return Object.assign(Stage, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=stage.js.map

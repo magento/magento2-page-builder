@@ -13,74 +13,13 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
      * @param {string} stageId
      */
     function ContentType(parent, config, stageId) {
-      Object.defineProperty(this, "id", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _mageUtils.uniqueid()
+      this.id = _mageUtils.uniqueid();
+      this.data = {};
+      this.wrapperStyle = _knockout.observable({
+        width: "100%"
       });
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "stageId", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "data", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
-      Object.defineProperty(this, "wrapperStyle", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable({
-          width: "100%"
-        })
-      });
-      Object.defineProperty(this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "dataStore", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _dataStore()
-      });
-      Object.defineProperty(this, "preview", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "content", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "dropped", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: false
-      });
+      this.dataStore = new _dataStore();
+      this.dropped = false;
       this.parent = parent;
       this.config = config;
       this.stageId = stageId;
@@ -108,6 +47,8 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
     return ContentType;
   }();
 
-  return ContentType;
+  return Object.assign(ContentType, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type.js.map

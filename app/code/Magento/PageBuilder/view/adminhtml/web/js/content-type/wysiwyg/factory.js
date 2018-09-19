@@ -48,6 +48,8 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
     });
   }
 
-  return create;
+  return Object.assign(create, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=factory.js.map

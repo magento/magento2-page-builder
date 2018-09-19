@@ -2,6 +2,8 @@
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
   /**
    * @api
    */
@@ -20,68 +22,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
-      Object.defineProperty(_this, "focusedSlide", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable()
-      });
-      Object.defineProperty(_this, "activeSlide", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(0)
-      });
-      Object.defineProperty(_this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "events", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          columnWidthChangeAfter: "onColumnResize"
-        }
-      });
-      Object.defineProperty(_this, "ready", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: false
-      });
-      Object.defineProperty(_this, "childSubscribe", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "contentTypeHeightReset", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "mountAfterDeferred", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _promiseDeferred)()
-      });
-      Object.defineProperty(_this, "afterChildrenRenderDeferred", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: (0, _promiseDeferred)()
-      });
-      Object.defineProperty(_this, "buildSlickDebounce", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _underscore.debounce(_this.buildSlick.bind(_this), 10)
-      });
+      _this.focusedSlide = _knockout.observable();
+      _this.activeSlide = _knockout.observable(0);
+      _this.events = {
+        columnWidthChangeAfter: "onColumnResize"
+      };
+      _this.ready = false;
+      _this.mountAfterDeferred = (0, _promiseDeferred)();
+      _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
+      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_assertThisInitialized(_this))), 10);
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];
@@ -523,6 +472,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

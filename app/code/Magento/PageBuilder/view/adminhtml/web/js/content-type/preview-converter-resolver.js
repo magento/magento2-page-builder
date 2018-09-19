@@ -15,6 +15,8 @@ define([], function () {
     return config.preview_converter ? config.preview_converter : config.converter;
   }
 
-  return resolve;
+  return Object.assign(resolve, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview-converter-resolver.js.map

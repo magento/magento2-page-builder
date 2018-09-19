@@ -8,12 +8,7 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function ConverterPool() {
-      Object.defineProperty(this, "converters", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
+      this.converters = {};
     }
 
     var _proto = ConverterPool.prototype;
@@ -44,6 +39,8 @@ define([], function () {
 
   var _default = new ConverterPool();
 
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=converter-pool.js.map

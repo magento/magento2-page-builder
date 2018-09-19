@@ -20,24 +20,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       var _this;
 
       _this = _ContentType.call(this, parent, config, stageId) || this;
-      Object.defineProperty(_this, "preview", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "content", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "collection", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: new _collection()
-      });
+      _this.collection = new _collection();
 
       _this.collection.getChildren().subscribe(function () {
         return _events.trigger("stage:updateAfter", {
@@ -114,6 +97,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     return ContentTypeCollection;
   }(_contentType);
 
-  return ContentTypeCollection;
+  return Object.assign(ContentTypeCollection, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type-collection.js.map

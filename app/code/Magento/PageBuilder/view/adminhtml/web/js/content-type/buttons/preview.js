@@ -11,38 +11,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _PreviewCollection);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, Object.defineProperty(_this, "isLiveEditing", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      }), Object.defineProperty(_this, "disableSorting", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.computed(function () {
-          var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
+      _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this;
+      _this.isLiveEditing = _knockout.observable(false);
+      _this.disableSorting = _knockout.computed(function () {
+        var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
-          if (_this.parent.children().length <= 1) {
-            sortableElement.sortable("disable");
-          } else {
-            sortableElement.sortable("enable");
-          }
-        })
-      }), Object.defineProperty(_this, "debouncedResizeHandler", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _underscore.debounce(function () {
-          _this.resizeChildButtons();
-        }, 350)
-      }), _temp) || _this;
+        if (_this.parent.children().length <= 1) {
+          sortableElement.sortable("disable");
+        } else {
+          sortableElement.sortable("enable");
+        }
+      });
+      _this.debouncedResizeHandler = _underscore.debounce(function () {
+        _this.resizeChildButtons();
+      }, 350);
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -324,6 +313,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

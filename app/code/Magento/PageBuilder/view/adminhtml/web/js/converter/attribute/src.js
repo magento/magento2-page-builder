@@ -53,6 +53,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "
     return Src;
   }();
 
-  return Src;
+  return Object.assign(Src, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=src.js.map

@@ -8,60 +8,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
   /*#__PURE__*/
   function () {
     function PageBuilder(config, initialValue) {
-      Object.defineProperty(this, "template", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: "Magento_PageBuilder/page-builder"
-      });
-      Object.defineProperty(this, "panel", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "stage", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "initialValue", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "id", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _mageUtils.uniqueid()
-      });
-      Object.defineProperty(this, "originalScrollTop", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: 0
-      });
-      Object.defineProperty(this, "isFullScreen", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(true)
-      });
+      this.template = "Magento_PageBuilder/page-builder";
+      this.id = _mageUtils.uniqueid();
+      this.originalScrollTop = 0;
+      this.isFullScreen = _knockout.observable(false);
+      this.loading = _knockout.observable(true);
 
       _config.setConfig(config);
 
@@ -136,6 +87,8 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
     return PageBuilder;
   }();
 
-  return PageBuilder;
+  return Object.assign(PageBuilder, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=page-builder.js.map

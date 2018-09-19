@@ -25,6 +25,8 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     return TitleOption;
   }(_option);
 
-  return TitleOption;
+  return Object.assign(TitleOption, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=title-option.js.map

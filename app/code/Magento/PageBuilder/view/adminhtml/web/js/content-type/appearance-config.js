@@ -36,6 +36,8 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     return config;
   }
 
-  return getAppearanceConfig;
+  return Object.assign(getAppearanceConfig, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=appearance-config.js.map

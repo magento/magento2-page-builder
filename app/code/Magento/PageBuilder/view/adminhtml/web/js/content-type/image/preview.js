@@ -11,21 +11,14 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
     _inheritsLoose(Preview, _BasePreview);
 
     function Preview() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "uploader", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      }), _temp) || _this;
+      return _BasePreview.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
+
+    /**
+     * Uploader instance
+     */
 
     /**
      * Get registry callback reference to uploader UI component
@@ -41,31 +34,33 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this = this;
 
       _BasePreview.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this.parent.dataStore.get();
 
-        var files = dataStore[_this2.config.additional_data.uploaderConfig.dataScope];
+        var files = dataStore[_this.config.additional_data.uploaderConfig.dataScope];
         var imageObject = files ? files[0] : {};
 
-        _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this.parent.id + ":assignAfter", imageObject);
       });
 
       _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this.parent.dataStore.get();
 
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+        var initialImageValue = dataStore[_this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this2.uploader = new _uploader("imageuploader_" + _this2.parent.id, _this2.config.additional_data.uploaderConfig, _this2.parent.id, _this2.parent.dataStore, initialImageValue);
+        _this.uploader = new _uploader("imageuploader_" + _this.parent.id, _this.config.additional_data.uploaderConfig, _this.parent.id, _this.parent.dataStore, initialImageValue);
       });
     };
 
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

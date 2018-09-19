@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _widgetInitializer, _config, _preview) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -19,57 +17,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      Object.defineProperty(_this, "displayingBlockPreview", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(_this, "loading", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(_this, "placeholderText", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "messages", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          NOT_SELECTED: (0, _translate)("Empty Block"),
-          UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
-        }
-      });
-      Object.defineProperty(_this, "lastBlockId", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "lastTemplate", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "lastRenderedHtml", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      _this.displayingBlockPreview = _knockout.observable(false);
+      _this.loading = _knockout.observable(false);
+      _this.messages = {
+        NOT_SELECTED: (0, _translate)("Empty Block"),
+        UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
+      };
       _this.placeholderText = _knockout.observable(_this.messages.NOT_SELECTED);
       return _this;
     }
@@ -189,7 +142,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _jquery.ajax(url, requestConfig) // The state object will contain the block name and either html or a message why there isn't any.
       .done(function (response) {
         // Empty content means something bad happened in the controller that didn't trigger a 5xx
-        if (_typeof(response.data) !== "object") {
+        if (typeof response.data !== "object") {
           _this3.showBlockPreview(false);
 
           _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
@@ -236,6 +189,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

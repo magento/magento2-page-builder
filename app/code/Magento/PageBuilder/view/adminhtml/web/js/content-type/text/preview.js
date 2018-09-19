@@ -11,31 +11,22 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _inheritsLoose(Preview, _BasePreview);
 
     function Preview() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "wysiwyg", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      }), Object.defineProperty(_this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      }), Object.defineProperty(_this, "textarea", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      }), _temp) || _this;
+      return _BasePreview.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
+
+    /**
+     * Wysiwyg instance
+     */
+
+    /**
+     * The element the text content type is bound to
+     */
+
+    /**
+     * The textarea element in disabled mode
+     */
 
     /**
      * @returns {Boolean}
@@ -49,7 +40,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
+      var _this = this;
 
       this.element = element;
       element.innerHTML = this.data.main.html();
@@ -57,7 +48,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
       wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
       (0, _factory)(this.parent.id, element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
+        _this.wysiwyg = wysiwyg;
       });
     };
     /**
@@ -66,7 +57,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -74,9 +65,9 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.parent.dataStore.get("content");
+        _this2.textarea.value = _this2.parent.dataStore.get("content");
 
-        _this3.adjustTextareaHeightBasedOnScrollHeight();
+        _this2.adjustTextareaHeightBasedOnScrollHeight();
       });
     };
     /**
@@ -142,6 +133,8 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

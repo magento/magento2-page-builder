@@ -5,6 +5,8 @@ define([], function () {
    * See COPYING.txt for license details.
    */
   var _default = WysiwygConfigModifierInterface;
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=config-modifier-interface.js.map

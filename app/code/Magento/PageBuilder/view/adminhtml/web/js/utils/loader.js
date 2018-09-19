@@ -8,6 +8,8 @@ define([], function () {
     require(dependencies, factory, onError);
   }
 
-  return load;
+  return Object.assign(load, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=loader.js.map

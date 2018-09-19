@@ -15,6 +15,8 @@ define([], function () {
     return config.converter;
   }
 
-  return resolve;
+  return Object.assign(resolve, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=converter-resolver.js.map

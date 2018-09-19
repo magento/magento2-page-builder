@@ -51,6 +51,8 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
     return BackgroundImage;
   }();
 
-  return BackgroundImage;
+  return Object.assign(BackgroundImage, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=background-image.js.map

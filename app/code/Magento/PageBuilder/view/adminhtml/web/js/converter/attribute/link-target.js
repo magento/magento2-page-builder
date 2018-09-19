@@ -44,6 +44,8 @@ define([], function () {
     return CreateValueForTarget;
   }();
 
-  return CreateValueForTarget;
+  return Object.assign(CreateValueForTarget, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=link-target.js.map

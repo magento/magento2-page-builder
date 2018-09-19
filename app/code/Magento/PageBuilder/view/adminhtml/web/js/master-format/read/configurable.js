@@ -1,6 +1,9 @@
 /*eslint-disable */
 define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
@@ -97,23 +100,23 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           _ref = _i2.value;
         }
 
-        var _attributeConfig = _ref;
+        var attributeConfig = _ref;
 
-        if ("write" === _attributeConfig.persistence_mode) {
+        if ("write" === attributeConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!_attributeConfig.static ? _attributeConfig.value : propertyReaderPool.get(_attributeConfig.reader).read(element, _attributeConfig.name);
+        var value = !!attributeConfig.static ? attributeConfig.value : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
 
-        if (converterPool.get(_attributeConfig.converter)) {
-          value = converterPool.get(_attributeConfig.converter).fromDom(value);
+        if (converterPool.get(attributeConfig.converter)) {
+          value = converterPool.get(attributeConfig.converter).fromDom(value);
         }
 
-        if (data[_attributeConfig.var] === "object") {
-          value = _mageUtils.extend(value, data[_attributeConfig.var]);
+        if (data[attributeConfig.var] === "object") {
+          value = _mageUtils.extend(value, data[attributeConfig.var]);
         }
 
-        result[_attributeConfig.var] = value;
+        result[attributeConfig.var] = value;
       }
 
       return _.extend(data, result);
@@ -145,23 +148,23 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           _ref2 = _i3.value;
         }
 
-        var _propertyConfig = _ref2;
+        var propertyConfig = _ref2;
 
-        if ("write" === _propertyConfig.persistence_mode) {
+        if ("write" === propertyConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!_propertyConfig.static ? _propertyConfig.value : propertyReaderPool.get(_propertyConfig.reader).read(element, _propertyConfig.name);
+        var value = !!propertyConfig.static ? propertyConfig.value : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
 
-        if (converterPool.get(_propertyConfig.converter)) {
-          value = converterPool.get(_propertyConfig.converter).fromDom(value);
+        if (converterPool.get(propertyConfig.converter)) {
+          value = converterPool.get(propertyConfig.converter).fromDom(value);
         }
 
-        if (_typeof(result[_propertyConfig.var]) === "object") {
-          value = _mageUtils.extend(result[_propertyConfig.var], value);
+        if (typeof result[propertyConfig.var] === "object") {
+          value = _mageUtils.extend(result[propertyConfig.var], value);
         }
 
-        result[_propertyConfig.var] = value;
+        result[propertyConfig.var] = value;
       }
 
       return result;
@@ -208,8 +211,8 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
             _ref3 = _i4.value;
           }
 
-          var _filterClass = _ref3;
-          css = css.replace(_filterClass, "");
+          var filterClass = _ref3;
+          css = css.replace(filterClass, "");
         }
       }
 
@@ -260,10 +263,10 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           _ref4 = _i5.value;
         }
 
-        var _converterConfig = _ref4;
+        var converterConfig = _ref4;
 
-        if (massConverterPool.get(_converterConfig.component)) {
-          data = massConverterPool.get(_converterConfig.component).fromDom(data, _converterConfig.config);
+        if (massConverterPool.get(converterConfig.component)) {
+          data = massConverterPool.get(converterConfig.component).fromDom(data, converterConfig.config);
         }
       }
 
@@ -273,6 +276,8 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
     return Configurable;
   }();
 
-  return Configurable;
+  return Object.assign(Configurable, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=configurable.js.map

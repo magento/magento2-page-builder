@@ -2,6 +2,8 @@
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
   /**
    * @api
    */
@@ -27,32 +29,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
 
-      Object.defineProperty(_this, "resizing", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(_this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "fieldsToIgnoreOnRemove", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: ["width"]
-      });
+      _this.resizing = _knockout.observable(false);
+      _this.fieldsToIgnoreOnRemove = ["width"];
 
-      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_this), "width");
+      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
+      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.dataStore.subscribe(_this.triggerChildren.bind(_this), "width");
+      _this.parent.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "grid_size");
+      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "grid_size");
 
       return _this;
     }
@@ -305,6 +291,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

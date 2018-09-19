@@ -45,6 +45,7 @@ define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _
   }
 
   return {
+    __esModule: true,
     generateAllowedParents: generateAllowedParents,
     getContainersFor: getContainersFor,
     getAllowedContainersClasses: getAllowedContainersClasses

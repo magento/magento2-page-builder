@@ -11,23 +11,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
     _inheritsLoose(Preview, _BasePreview);
 
     function Preview() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      }), Object.defineProperty(_this, "mapElement", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      }), _temp) || _this;
+      return _BasePreview.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
@@ -36,22 +20,22 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
      * Open edit menu on map content type drop with a delay of 300ms
      */
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this = this;
 
       _BasePreview.prototype.bindEvents.call(this); // When the map api key fails, empties out the content type and adds the placeholder
 
 
       _events.on("googleMaps:authFailure", function () {
-        if (_this2.element) {
-          _this2.mapElement.usePlaceholder(_this2.element);
+        if (_this.element) {
+          _this.mapElement.usePlaceholder(_this.element);
         }
       }); // When a map is dropped for the first time open the edit panel
 
 
       _events.on("map:dropAfter", function (args) {
-        if (args.id === _this2.parent.id) {
+        if (args.id === _this.parent.id) {
           setTimeout(function () {
-            _this2.openEdit();
+            _this.openEdit();
           }, 300);
         }
       });
@@ -65,14 +49,14 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
 
 
     _proto.renderMap = function renderMap(element) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.generateMap(element);
       this.element = element;
 
       if (this.mapElement.map) {
         this.data.main.attributes.subscribe(function () {
-          _this3.updateMap();
+          _this2.updateMap();
         });
       }
     };
@@ -145,6 +129,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

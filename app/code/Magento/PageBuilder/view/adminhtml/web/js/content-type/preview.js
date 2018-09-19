@@ -27,108 +27,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {ObservableUpdater} observableUpdater
      */
     function Preview(parent, config, observableUpdater) {
-      Object.defineProperty(this, "parent", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "config", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "data", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
-      Object.defineProperty(this, "displayLabel", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable()
-      });
-      Object.defineProperty(this, "display", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(true)
-      });
-      Object.defineProperty(this, "wrapperElement", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "placeholderCss", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "isPlaceholderVisible", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(true)
-      });
-      Object.defineProperty(this, "isEmpty", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(true)
-      });
-      Object.defineProperty(this, "previewData", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
-      Object.defineProperty(this, "fieldsToIgnoreOnRemove", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: []
-      });
-      Object.defineProperty(this, "events", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
-      Object.defineProperty(this, "edit", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "optionsMenu", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "observableUpdater", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(this, "mouseover", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: false
-      });
-      Object.defineProperty(this, "mouseoverContext", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
+      this.data = {};
+      this.displayLabel = _knockout.observable();
+      this.display = _knockout.observable(true);
+      this.isPlaceholderVisible = _knockout.observable(true);
+      this.isEmpty = _knockout.observable(true);
+      this.previewData = {};
+      this.fieldsToIgnoreOnRemove = [];
+      this.events = {};
+      this.mouseover = false;
       this.parent = parent;
       this.config = config;
       this.edit = new _edit(this.parent, this.parent.dataStore);
@@ -740,6 +647,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }();
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

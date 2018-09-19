@@ -26,6 +26,8 @@ define([], function () {
     return ConfigModifier;
   }();
 
-  return ConfigModifier;
+  return Object.assign(ConfigModifier, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=config-modifier.js.map

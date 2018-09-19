@@ -45,6 +45,8 @@ define([], function () {
     return Display;
   }();
 
-  return Display;
+  return Object.assign(Display, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=display.js.map

@@ -9,6 +9,8 @@ define([], function () {
    * @api
    */
   var _default = ConverterInterface;
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=converter-interface.js.map

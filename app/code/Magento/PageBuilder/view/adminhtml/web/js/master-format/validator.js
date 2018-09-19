@@ -18,6 +18,8 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     return !!stageDocument.querySelector("[" + _config.getConfig("dataRoleAttributeName") + "=\"row\"]");
   }
 
-  return Validate;
+  return Object.assign(Validate, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=validator.js.map

@@ -27,49 +27,27 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       var _this;
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
-      Object.defineProperty(_this, "getChildren", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "wrapClass", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _knockout.observable(false)
-      });
-      Object.defineProperty(_this, "element", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: void 0
-      });
-      Object.defineProperty(_this, "buildJarallax", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: _underscore.debounce(function () {
-          // Destroy all instances of the plugin prior
-          try {
-            jarallax(_this.element, "destroy");
-          } catch (e) {// Failure of destroying is acceptable
-          }
+      _this.wrapClass = _knockout.observable(false);
+      _this.buildJarallax = _underscore.debounce(function () {
+        // Destroy all instances of the plugin prior
+        try {
+          jarallax(_this.element, "destroy");
+        } catch (e) {// Failure of destroying is acceptable
+        }
 
-          if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax")) {
-            _underscore.defer(function () {
-              // Build Parallax on elements with the correct class
-              jarallax(_this.element, {
-                imgPosition: _this.data.main.style().backgroundPosition || "50% 50%",
-                imgRepeat: _this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                imgSize: _this.data.main.style().backgroundSize || "cover",
-                speed: _this.data.main.attributes()["data-parallax-speed"] || 0.5
-              });
-              jarallax(_this.element, "onResize");
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax")) {
+          _underscore.defer(function () {
+            // Build Parallax on elements with the correct class
+            jarallax(_this.element, {
+              imgPosition: _this.data.main.style().backgroundPosition || "50% 50%",
+              imgRepeat: _this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+              imgSize: _this.data.main.style().backgroundSize || "cover",
+              speed: _this.data.main.attributes()["data-parallax-speed"] || 0.5
             });
-          }
-        }, 50)
-      });
+            jarallax(_this.element, "onResize");
+          });
+        }
+      }, 50);
 
       _this.parent.dataStore.subscribe(_this.buildJarallax);
 
@@ -132,6 +110,8 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

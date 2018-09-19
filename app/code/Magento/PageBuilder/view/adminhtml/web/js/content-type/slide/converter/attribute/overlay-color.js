@@ -36,6 +36,8 @@ define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConvert
     return OverlayColor;
   }();
 
-  return OverlayColor;
+  return Object.assign(OverlayColor, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=overlay-color.js.map

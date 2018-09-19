@@ -12,16 +12,11 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function Link() {
-      Object.defineProperty(this, "regexpByLinkType", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {
-          category: new RegExp(/id_path=['"]category\/(\d+)/),
-          product: new RegExp(/id_path=['"]product\/(\d+)/),
-          page: new RegExp(/page_id=['"](\d+)/)
-        }
-      });
+      this.regexpByLinkType = {
+        category: new RegExp(/id_path=['"]category\/(\d+)/),
+        product: new RegExp(/id_path=['"]product\/(\d+)/),
+        page: new RegExp(/page_id=['"](\d+)/)
+      };
     }
 
     var _proto = Link.prototype;
@@ -66,6 +61,8 @@ define([], function () {
     return Link;
   }();
 
-  return Link;
+  return Object.assign(Link, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=link.js.map

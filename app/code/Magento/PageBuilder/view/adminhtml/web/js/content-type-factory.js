@@ -120,6 +120,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
     }
   }
 
-  return createContentType;
+  return Object.assign(createContentType, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type-factory.js.map

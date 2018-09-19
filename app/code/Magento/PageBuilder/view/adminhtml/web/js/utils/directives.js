@@ -141,6 +141,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
   }
 
   return Object.assign(decodeAllDataUrlsInString, {
+    __esModule: true,
     toDataUrl: toDataUrl,
     fromDataUrl: fromDataUrl,
     getImageUrl: getImageUrl,

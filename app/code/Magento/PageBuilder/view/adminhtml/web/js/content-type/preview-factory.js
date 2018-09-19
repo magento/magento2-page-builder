@@ -24,6 +24,8 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/content-t
     });
   }
 
-  return create;
+  return Object.assign(create, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview-factory.js.map

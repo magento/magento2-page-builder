@@ -8,12 +8,7 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function PropertyReaderPool() {
-      Object.defineProperty(this, "propertyReaders", {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: {}
-      });
+      this.propertyReaders = {};
     }
 
     var _proto = PropertyReaderPool.prototype;
@@ -45,6 +40,7 @@ define([], function () {
   var _default = new PropertyReaderPool();
 
   return Object.assign(_default, {
+    __esModule: true,
     PropertyReaderPool: PropertyReaderPool
   });
 });

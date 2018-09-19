@@ -17,6 +17,7 @@ define([], function () {
   }
 
   return {
+    __esModule: true,
     percentToDecimal: percentToDecimal
   };
 });

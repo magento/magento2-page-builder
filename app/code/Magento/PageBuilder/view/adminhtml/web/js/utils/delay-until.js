@@ -25,6 +25,8 @@ define([], function () {
     }, interval);
   }
 
-  return delayUntil;
+  return Object.assign(delayUntil, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=delay-until.js.map
