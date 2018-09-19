@@ -30,8 +30,10 @@ define([
         });
 
         // Redraw slide after content type gets redrawn
-        events.on('contentType:redrawAfter', function () {
-            $element.slick('setPosition');
+        events.on('contentType:redrawAfter', function (args) {
+            if ($.contains(args.element, sliderElement)) {
+                $element.slick('setPosition');
+            }
         });
     };
 });

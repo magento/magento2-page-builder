@@ -77,8 +77,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.parent.dataStore.subscribe(_this.buildSlick); // Redraw slide after content type gets redrawn
 
 
-      _events.on("contentType:redrawAfter", function () {
-        (0, _jquery)(this.element).slick("setPosition");
+      _events.on("contentType:redrawAfter", function (args) {
+        if (_jquery.contains(args.element, this.element)) {
+          (0, _jquery)(this.element).slick("setPosition");
+        }
       }.bind(_this)); // Set the stage to interacting when a slide is focused
 
 
