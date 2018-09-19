@@ -522,7 +522,9 @@
         <comment userInput="Verify slide looks OK in tab on stage before save" stepKey="commentVerifySlideBeforeSave"/>
         <scrollTo selector="{{TabOnStage.tabHeader('1')}}" x="0" y="-100" stepKey="scrollToTab"/>
         <click selector="{{TabOnStage.tabHeader('1')}}" stepKey="switchToDefaultTab"/>
+        <waitForPageLoad stepKey="waitForTabSwitch" />
         <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="switchToSecondTabOnStage"/>
+        <waitForPageLoad stepKey="waitForTabSwitch2" />
         <seeElement selector="{{SlideOnBackend.base('1')}}" stepKey="seeSliderOnOnStage"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayedOnStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayedOnStage"/>
@@ -533,6 +535,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <click selector="{{TabOnStage.tabHeader('2')}}" stepKey="switchToSecondTabOnStageAgainAfterSave"/>
+        <waitForPageLoad stepKey="waitForTabSwitch3" />
         <seeElement selector="{{SlideOnBackend.base('1')}}" stepKey="seeSliderOnOnStageAgainAfterSave"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayedOnStageAgainAfterSave"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Slide1.value)}}" stepKey="seeSlide1ButtonTextDisplayedOnStageAgainAfterSave"/>
