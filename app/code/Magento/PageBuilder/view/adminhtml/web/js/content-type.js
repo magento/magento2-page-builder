@@ -13,19 +13,74 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
      * @param {string} stageId
      */
     function ContentType(parent, config, stageId) {
-      this.id = _mageUtils.uniqueid();
-      this.parent = void 0;
-      this.stageId = void 0;
-      this.config = void 0;
-      this.data = {};
-      this.wrapperStyle = _knockout.observable({
-        width: "100%"
+      Object.defineProperty(this, "id", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _mageUtils.uniqueid()
       });
-      this.element = void 0;
-      this.dataStore = new _dataStore();
-      this.preview = void 0;
-      this.content = void 0;
-      this.dropped = false;
+      Object.defineProperty(this, "parent", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "stageId", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "config", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "data", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {}
+      });
+      Object.defineProperty(this, "wrapperStyle", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable({
+          width: "100%"
+        })
+      });
+      Object.defineProperty(this, "element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "dataStore", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new _dataStore()
+      });
+      Object.defineProperty(this, "preview", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "content", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "dropped", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: false
+      });
       this.parent = parent;
       this.config = config;
       this.stageId = stageId;

@@ -37,8 +37,18 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
         onDeleteCallback = null;
       }
 
-      this.config = void 0;
-      this.dataStore = void 0;
+      Object.defineProperty(this, "config", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "dataStore", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       var config = Object.assign({}, uploaderConfig, {
         value: initialValue
       });

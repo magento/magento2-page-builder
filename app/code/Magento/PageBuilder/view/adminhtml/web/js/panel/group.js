@@ -21,14 +21,54 @@ define(["knockout"], function (_knockout) {
         contentTypes = [];
       }
 
-      this.hidden = _knockout.observable(false);
-      this.id = _knockout.observable();
-      this.code = _knockout.observable("");
-      this.label = _knockout.observable("");
-      this.icon = _knockout.observable("");
-      this.sort = _knockout.observable();
-      this.contentTypes = _knockout.observableArray([]);
-      this.active = _knockout.observable(false);
+      Object.defineProperty(this, "hidden", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(this, "id", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(this, "code", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable("")
+      });
+      Object.defineProperty(this, "label", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable("")
+      });
+      Object.defineProperty(this, "icon", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable("")
+      });
+      Object.defineProperty(this, "sort", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(this, "contentTypes", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observableArray([])
+      });
+      Object.defineProperty(this, "active", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
       this.id(id);
       this.code(group.code);
       this.label(group.label);

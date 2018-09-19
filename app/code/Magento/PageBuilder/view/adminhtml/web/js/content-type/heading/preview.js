@@ -19,8 +19,18 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      _this.toolbar = void 0;
-      _this.element = void 0;
+      Object.defineProperty(_this, "toolbar", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       _this.toolbar = new _contentTypeToolbar(_this, _this.getToolbarOptions());
       return _this;
     }

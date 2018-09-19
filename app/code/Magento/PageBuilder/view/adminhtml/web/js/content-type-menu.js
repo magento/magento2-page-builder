@@ -19,8 +19,18 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
     function ContentTypeMenu(parent, options) {
       var _this = this;
 
-      this.parent = void 0;
-      this.options = _knockout.observableArray([]);
+      Object.defineProperty(this, "parent", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "options", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observableArray([])
+      });
       this.parent = parent;
 
       var codes = _underscore.keys(options);

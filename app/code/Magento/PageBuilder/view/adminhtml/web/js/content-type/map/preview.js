@@ -17,7 +17,17 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.element = void 0, _this.mapElement = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), Object.defineProperty(_this, "mapElement", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;

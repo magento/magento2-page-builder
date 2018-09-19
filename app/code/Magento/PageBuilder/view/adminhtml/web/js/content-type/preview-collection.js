@@ -12,7 +12,18 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     _inheritsLoose(PreviewCollection, _Preview);
 
     function PreviewCollection() {
-      return _Preview.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, Object.defineProperty(_this, "parent", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), _temp) || _this;
     }
 
     var _proto = PreviewCollection.prototype;
@@ -26,7 +37,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
      * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
     _proto.clone = function clone(contentType, autoAppend, direct) {
-      var _this = this;
+      var _this2 = this;
 
       if (autoAppend === void 0) {
         autoAppend = true;
@@ -60,7 +71,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
             contentType.parent.addChild(duplicate, index);
           }
 
-          _this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
+          _this2.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
 
           resolve(duplicate);
         });
@@ -76,8 +87,8 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     _proto.delegate = function delegate() {
       var _Preview$prototype$de;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
       }
 
       (_Preview$prototype$de = _Preview.prototype.delegate).call.apply(_Preview$prototype$de, [this].concat(args));

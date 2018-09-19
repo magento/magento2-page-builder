@@ -15,9 +15,24 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
      * @param {ObservableUpdater} observableUpdater
      */
     function Master(parent, observableUpdater) {
-      this.data = {};
-      this.parent = void 0;
-      this.observableUpdater = void 0;
+      Object.defineProperty(this, "data", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {}
+      });
+      Object.defineProperty(this, "parent", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "observableUpdater", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       this.parent = parent;
       this.observableUpdater = observableUpdater;
       this.bindEvents();

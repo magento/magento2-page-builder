@@ -27,9 +27,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
 
-      _this.resizing = _knockout.observable(false);
-      _this.element = void 0;
-      _this.fieldsToIgnoreOnRemove = ["width"];
+      Object.defineProperty(_this, "resizing", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(_this, "element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "fieldsToIgnoreOnRemove", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ["width"]
+      });
 
       _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_this), "width");
 

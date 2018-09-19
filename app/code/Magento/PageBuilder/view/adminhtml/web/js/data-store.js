@@ -8,9 +8,24 @@ define(["jquery"], function (_jquery) {
   /*#__PURE__*/
   function () {
     function DataStore() {
-      this.state = {};
-      this.events = (0, _jquery)({});
-      this.previousState = {};
+      Object.defineProperty(this, "state", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {}
+      });
+      Object.defineProperty(this, "events", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: (0, _jquery)({})
+      });
+      Object.defineProperty(this, "previousState", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {}
+      });
     }
 
     var _proto = DataStore.prototype;

@@ -17,8 +17,18 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
      * @param options
      */
     function Toolbar(preview, options) {
-      this.options = _knockout.observableArray([]);
-      this.preview = void 0;
+      Object.defineProperty(this, "options", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observableArray([])
+      });
+      Object.defineProperty(this, "preview", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       this.preview = preview;
       this.options(options);
     }

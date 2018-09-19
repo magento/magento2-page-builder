@@ -8,8 +8,18 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
   /*#__PURE__*/
   function () {
     function ComponentInitializer() {
-      this.$element = void 0;
-      this.config = void 0;
+      Object.defineProperty(this, "$element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "config", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
     }
 
     var _proto = ComponentInitializer.prototype;

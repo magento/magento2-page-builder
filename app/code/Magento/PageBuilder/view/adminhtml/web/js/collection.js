@@ -12,7 +12,12 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
   /*#__PURE__*/
   function () {
     function Collection(children) {
-      this.children = void 0;
+      Object.defineProperty(this, "children", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       this.children = children ? children : _knockout.observableArray([]);
     }
     /**

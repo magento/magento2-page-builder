@@ -20,57 +20,210 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this;
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
-      _this.resizing = _knockout.observable(false);
-      _this.hasEmptyChild = _knockout.computed(function () {
-        var empty = false;
-
-        _this.parent.getChildren()().forEach(function (column) {
-          if (column.getChildren()().length === 0) {
-            empty = true;
-          }
-        });
-
-        return empty;
+      Object.defineProperty(_this, "resizing", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
       });
-      _this.gridSize = _knockout.observable();
-      _this.gridSizeInput = _knockout.observable();
-      _this.gridSizeArray = _knockout.observableArray([]);
-      _this.gridSizeError = _knockout.observable();
-      _this.gridSizeMax = _knockout.observable((0, _gridSize.getMaxGridSize)());
-      _this.gridFormOpen = _knockout.observable(false);
-      _this.gridChange = _knockout.observable(false);
-      _this.dropPlaceholder = void 0;
-      _this.movePlaceholder = void 0;
-      _this.groupElement = void 0;
-      _this.resizeGhost = void 0;
-      _this.resizeColumnInstance = void 0;
-      _this.resizeColumnWidths = [];
-      _this.resizeMaxGhostWidth = void 0;
-      _this.resizeMouseDown = void 0;
-      _this.resizeLeftLastColumnShrunk = void 0;
-      _this.resizeRightLastColumnShrunk = void 0;
-      _this.resizeLastPosition = void 0;
-      _this.resizeLastColumnInPair = void 0;
-      _this.resizeHistory = {
-        left: [],
-        right: []
-      };
-      _this.dropOverElement = void 0;
-      _this.dropPositions = [];
-      _this.dropPosition = void 0;
-      _this.movePosition = void 0;
-      _this.groupPositionCache = void 0;
-      _this.resizeUtils = void 0;
-      _this.gridSizeHistory = new Map();
-      _this.interactionLevel = 0;
+      Object.defineProperty(_this, "hasEmptyChild", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.computed(function () {
+          var empty = false;
 
-      _this.onDocumentClick = function (event) {
-        // Verify the click event wasn't within our form
-        if (!_jquery.contains((0, _jquery)(_this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], (0, _jquery)(event.target)[0])) {
-          _this.closeGridForm();
+          _this.parent.getChildren()().forEach(function (column) {
+            if (column.getChildren()().length === 0) {
+              empty = true;
+            }
+          });
+
+          return empty;
+        })
+      });
+      Object.defineProperty(_this, "gridSize", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(_this, "gridSizeInput", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(_this, "gridSizeArray", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observableArray([])
+      });
+      Object.defineProperty(_this, "gridSizeError", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable()
+      });
+      Object.defineProperty(_this, "gridSizeMax", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable((0, _gridSize.getMaxGridSize)())
+      });
+      Object.defineProperty(_this, "gridFormOpen", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(_this, "gridChange", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(_this, "dropPlaceholder", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "movePlaceholder", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "groupElement", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeGhost", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeColumnInstance", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeColumnWidths", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: []
+      });
+      Object.defineProperty(_this, "resizeMaxGhostWidth", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeMouseDown", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeLeftLastColumnShrunk", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeRightLastColumnShrunk", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeLastPosition", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeLastColumnInPair", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeHistory", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {
+          left: [],
+          right: []
         }
-      };
-
+      });
+      Object.defineProperty(_this, "dropOverElement", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "dropPositions", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: []
+      });
+      Object.defineProperty(_this, "dropPosition", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "movePosition", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "groupPositionCache", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "resizeUtils", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "gridSizeHistory", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: new Map()
+      });
+      Object.defineProperty(_this, "interactionLevel", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: 0
+      });
+      Object.defineProperty(_this, "onDocumentClick", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: function value(event) {
+          // Verify the click event wasn't within our form
+          if (!_jquery.contains((0, _jquery)(_this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], (0, _jquery)(event.target)[0])) {
+            _this.closeGridForm();
+          }
+        }
+      });
       _this.resizeUtils = new _resize(_this.parent); // Keep track of the grid size in an observable
 
       _this.parent.dataStore.subscribe(function (state) {

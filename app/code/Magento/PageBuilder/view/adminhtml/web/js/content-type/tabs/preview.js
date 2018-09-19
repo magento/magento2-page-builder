@@ -22,12 +22,42 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
-      _this.focusedTab = _knockout.observable(null);
-      _this.disableInteracting = void 0;
-      _this.element = void 0;
-      _this.ready = void 0;
-      _this.onContainerRenderDeferred = (0, _promiseDeferred)();
-      _this.mountAfterDeferred = (0, _promiseDeferred)();
+      Object.defineProperty(_this, "focusedTab", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(null)
+      });
+      Object.defineProperty(_this, "disableInteracting", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "ready", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "onContainerRenderDeferred", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: (0, _promiseDeferred)()
+      });
+      Object.defineProperty(_this, "mountAfterDeferred", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: (0, _promiseDeferred)()
+      });
       Promise.all([_this.onContainerRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];

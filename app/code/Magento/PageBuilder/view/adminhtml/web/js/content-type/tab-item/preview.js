@@ -19,7 +19,12 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "M
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.fieldsToIgnoreOnRemove = ["tab_name"], _temp) || _this;
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, Object.defineProperty(_this, "fieldsToIgnoreOnRemove", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ["tab_name"]
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;

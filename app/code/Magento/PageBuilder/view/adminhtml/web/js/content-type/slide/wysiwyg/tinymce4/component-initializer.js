@@ -8,14 +8,54 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
   /*#__PURE__*/
   function () {
     function ComponentInitializer() {
-      this.$element = void 0;
-      this.config = void 0;
-      this.sliderTransform = void 0;
-      this.sliderSelector = ".slick-list";
-      this.sliderContentSelector = ".slick-track";
-      this.slideSelector = ".slick-slide";
-      this.activeSlideSelector = ".slick-current";
-      this.autoplay = void 0;
+      Object.defineProperty(this, "$element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "config", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "sliderTransform", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "sliderSelector", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ".slick-list"
+      });
+      Object.defineProperty(this, "sliderContentSelector", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ".slick-track"
+      });
+      Object.defineProperty(this, "slideSelector", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ".slick-slide"
+      });
+      Object.defineProperty(this, "activeSlideSelector", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: ".slick-current"
+      });
+      Object.defineProperty(this, "autoplay", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
     }
 
     var _proto = ComponentInitializer.prototype;

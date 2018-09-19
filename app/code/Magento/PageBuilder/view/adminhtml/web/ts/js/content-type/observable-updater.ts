@@ -10,6 +10,8 @@ import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
 import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
+import Master from "./master";
+import Preview from "./preview";
 
 export default class ObservableUpdater {
     private converterPool: typeof ConverterPool;
@@ -32,13 +34,13 @@ export default class ObservableUpdater {
     }
 
     /**
-     * Update preview observables after data changed in data store
+     * Generate our data.ELEMENT.style Knockout observable objects for use within master and preview formats.
      *
-     * @param {object} viewModel
+     * @param {Preview} viewModel
      * @param {DataObject} data
      */
-    public update(viewModel: object, data: DataObject) {
-        const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
+    public update(viewModel: Preview | Master, data: DataObject) {
+        const appearance = data && data.appearance !== undefined ? data.appearance as string : undefined;
         const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
         if (undefined === appearanceConfiguration
             || undefined === appearanceConfiguration.elements
@@ -63,15 +65,18 @@ export default class ObservableUpdater {
             if (config[elementName].style !== undefined) {
                 viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
             }
+
             if (config[elementName].attributes !== undefined) {
                 const attributeData = this.convertAttributes(config[elementName], data);
 
                 attributeData["data-element"] = elementName;
                 viewModel.data[elementName].attributes(attributeData);
             }
+
             if (config[elementName].html !== undefined) {
                 viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
             }
+
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
                 const css = data[config[elementName].css.var];
                 const newClasses = {};
@@ -88,6 +93,7 @@ export default class ObservableUpdater {
                 }
                 viewModel.data[elementName].css(newClasses);
             }
+
             if (config[elementName].tag !== undefined) {
                 if (viewModel.data[elementName][config[elementName].tag.var] === undefined) {
                     viewModel.data[elementName][config[elementName].tag.var] = ko.observable("");
@@ -95,6 +101,7 @@ export default class ObservableUpdater {
                 viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
         }
+        console.log(viewModel.data.main.style());
     }
 
     /**
@@ -144,13 +151,13 @@ export default class ObservableUpdater {
      * @returns {object}
      */
     private convertStyle(config: any, data: any) {
-        const result = {};
+        const result: {[key: string]: string} = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
                 if ("read" === propertyConfig.persistence_mode) {
                     continue;
                 }
-                let value = "";
+                let value: string | object;
                 if (!!propertyConfig.static) {
                     value = propertyConfig.value;
                 } else {
@@ -162,10 +169,13 @@ export default class ObservableUpdater {
                 }
                 if (typeof value === "object") {
                     _.extend(result, value);
-                } else {
+                } else if (typeof value !== "undefined") {
                     result[fromSnakeToCamelCase(propertyConfig.name)] = value;
                 }
             }
+        }
+        if (_.isEmpty(result)) {
+            return null;
         }
         return result;
     }

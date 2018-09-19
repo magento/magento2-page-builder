@@ -43,10 +43,30 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
     return HideShowOption;
   }(_option);
 
-  HideShowOption.showText = (0, _translate)("Show");
-  HideShowOption.showIcon = "<i class='icon-pagebuilder-show'></i>";
-  HideShowOption.hideText = (0, _translate)("Hide");
-  HideShowOption.hideIcon = "<i class='icon-pagebuilder-hide'></i>";
+  Object.defineProperty(HideShowOption, "showText", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: (0, _translate)("Show")
+  });
+  Object.defineProperty(HideShowOption, "showIcon", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: "<i class='icon-pagebuilder-show'></i>"
+  });
+  Object.defineProperty(HideShowOption, "hideText", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: (0, _translate)("Hide")
+  });
+  Object.defineProperty(HideShowOption, "hideIcon", {
+    configurable: true,
+    enumerable: true,
+    writable: true,
+    value: "<i class='icon-pagebuilder-hide'></i>"
+  });
   return HideShowOption;
 });
 //# sourceMappingURL=hide-show-option.js.map

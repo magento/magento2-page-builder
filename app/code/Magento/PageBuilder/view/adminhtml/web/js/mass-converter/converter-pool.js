@@ -8,7 +8,12 @@ define([], function () {
   /*#__PURE__*/
   function () {
     function DataConverterPool() {
-      this.converters = {};
+      Object.defineProperty(this, "converters", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {}
+      });
     }
 
     var _proto = DataConverterPool.prototype;

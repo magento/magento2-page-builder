@@ -14,8 +14,18 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
     function Edit(instance, dataStore) {
       var _this = this;
 
-      this.instance = void 0;
-      this.dataStore = void 0;
+      Object.defineProperty(this, "instance", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "dataStore", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       this.instance = instance;
       this.dataStore = dataStore;
 

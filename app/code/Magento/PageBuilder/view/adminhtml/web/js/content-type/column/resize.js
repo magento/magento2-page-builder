@@ -8,7 +8,12 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /*#__PURE__*/
   function () {
     function Resize(columnGroup) {
-      this.columnGroup = void 0;
+      Object.defineProperty(this, "columnGroup", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       this.columnGroup = columnGroup;
     }
     /**

@@ -8,7 +8,12 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   /*#__PURE__*/
   function () {
     function MasterFormatRenderer() {
-      this.rootTemplate = "Magento_PageBuilder/content-type/master";
+      Object.defineProperty(this, "rootTemplate", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: "Magento_PageBuilder/content-type/master"
+      });
     }
 
     var _proto = MasterFormatRenderer.prototype;

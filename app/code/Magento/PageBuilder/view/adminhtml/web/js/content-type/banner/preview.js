@@ -17,7 +17,32 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _this.textarea = void 0, _this.uploader = void 0, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "wysiwyg", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), Object.defineProperty(_this, "element", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), Object.defineProperty(_this, "textarea", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), Object.defineProperty(_this, "uploader", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), Object.defineProperty(_this, "buttonPlaceholder", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: (0, _translate)("Edit Button Text")
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;

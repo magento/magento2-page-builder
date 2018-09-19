@@ -11,7 +11,7 @@ module.exports = {
         }],
         {
             plugins: [
-                ["transform-class-properties", {loose: true}]
+                ["transform-class-properties", {spec: true}]
             ]
         },
         ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass']}]

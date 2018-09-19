@@ -17,7 +17,12 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "displayPreview", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;

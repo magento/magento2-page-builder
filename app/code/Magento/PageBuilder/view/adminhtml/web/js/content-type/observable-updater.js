@@ -11,17 +11,32 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
-      this.converterPool = void 0;
-      this.massConverterPool = void 0;
-      this.converterResolver = void 0;
+      Object.defineProperty(this, "converterPool", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "massConverterPool", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(this, "converterResolver", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
       this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
     }
     /**
-     * Update preview observables after data changed in data store
+     * Generate our data.ELEMENT.style Knockout observable objects for use within master and preview formats.
      *
-     * @param {object} viewModel
+     * @param {Preview} viewModel
      * @param {DataObject} data
      */
 
@@ -100,6 +115,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
       }
+
+      console.log(viewModel.data.main.style());
     };
     /**
      * Process data for elements before its converted to knockout format
@@ -203,7 +220,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
             continue;
           }
 
-          var value = "";
+          var value = void 0;
 
           if (!!_propertyConfig.static) {
             value = _propertyConfig.value;
@@ -218,10 +235,14 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
           if (_typeof(value) === "object") {
             _underscore.extend(result, value);
-          } else {
+          } else if (typeof value !== "undefined") {
             result[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)] = value;
           }
         }
+      }
+
+      if (_underscore.isEmpty(result)) {
+        return null;
       }
 
       return result;

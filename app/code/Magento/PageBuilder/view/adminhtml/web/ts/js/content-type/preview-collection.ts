@@ -10,6 +10,8 @@ import {DataObject} from "../data-store";
 import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
+    public parent: ContentTypeCollectionInterface;
+
     /**
      * Retrieve the preview child template
      *

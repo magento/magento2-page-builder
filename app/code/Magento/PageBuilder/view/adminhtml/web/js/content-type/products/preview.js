@@ -19,14 +19,29 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      _this.displayPreview = _knockout.observable(false);
-      _this.placeholderText = void 0;
-      _this.messages = {
-        EMPTY: (0, _translate)("Empty Products"),
-        NO_RESULTS: (0, _translate)("No products were found matching your condition"),
-        LOADING: (0, _translate)("Loading..."),
-        UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
-      };
+      Object.defineProperty(_this, "displayPreview", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: _knockout.observable(false)
+      });
+      Object.defineProperty(_this, "placeholderText", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      });
+      Object.defineProperty(_this, "messages", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: {
+          EMPTY: (0, _translate)("Empty Products"),
+          NO_RESULTS: (0, _translate)("No products were found matching your condition"),
+          LOADING: (0, _translate)("Loading..."),
+          UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
+        }
+      });
       _this.placeholderText = _knockout.observable(_this.messages.EMPTY);
       return _this;
     }

@@ -17,7 +17,12 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.uploader = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "uploader", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: void 0
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;

@@ -19,7 +19,12 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/co
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, Object.defineProperty(_this, "buttonPlaceholder", {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: (0, _translate)("Edit Button Text")
+      }), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
