@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _events, _config, _preview, _factory) {
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _events, _underscore, _config, _preview, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -37,8 +37,11 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       var _this2 = this;
 
       this.element = element;
+      element.innerHTML = this.data.main.html();
       element.id = this.parent.id + "-editor";
-      (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
+      var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+      wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
+      (0, _factory)(this.parent.id, element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });
     };
@@ -89,6 +92,19 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");
+    };
+    /**
+     * Retrieve the margin & padding styles for the placeholder
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getPlaceholderStyle = function getPlaceholderStyle() {
+      var keys = ["marginBottom", "marginLeft", "marginRight", "marginTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop"];
+      return _underscore.pick(this.data.main.style(), function (style, key) {
+        return keys.indexOf(key) !== -1;
+      });
     };
     /**
      * Adjust textarea's height based on scrollHeight

@@ -23,6 +23,7 @@ export default class Preview extends BasePreview {
     public displayingBlockPreview: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
+    public element: HTMLElement;
     protected messages = {
         NOT_SELECTED: $t("Empty Block"),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
@@ -46,10 +47,13 @@ export default class Preview extends BasePreview {
     /**
      * Runs the widget initializer for each configured widget
      */
-    public initializeWidgets() {
-        widgetInitializer({
-            config: Config.getConfig("widgets"),
-        });
+    public initializeWidgets(element: HTMLElement) {
+        if (element) {
+            this.element = element;
+            widgetInitializer({
+                config: Config.getConfig("widgets"),
+            }, element);
+        }
     }
 
     /**
@@ -105,14 +109,15 @@ export default class Preview extends BasePreview {
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
                 this.showBlockPreview(true);
-                this.initializeWidgets();
+                this.initializeWidgets(this.element);
             }
         } else {
             this.showBlockPreview(false);
             this.placeholderText("");
         }
 
-        if (!data[identifierName] || data.template.length === 0) {
+        if (!data[identifierName] || (data[identifierName] && data[identifierName].length === 0) ||
+            data.template.length === 0) {
             this.showBlockPreview(false);
             this.placeholderText(this.messages.NOT_SELECTED);
             return;
@@ -156,7 +161,7 @@ export default class Preview extends BasePreview {
                 if (response.data.content) {
                     this.showBlockPreview(true);
                     this.data.main.html(response.data.content);
-                    this.initializeWidgets();
+                    this.initializeWidgets(this.element);
                 } else if (response.data.error) {
                     this.showBlockPreview(false);
                     this.placeholderText(response.data.error);
