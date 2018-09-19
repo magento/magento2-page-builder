@@ -60,34 +60,13 @@ define(["underscore"], function (_underscore) {
 
     _proto.toDom = function toDom(name, data) {
       var link = data[name];
-      var href;
 
-      if (typeof link === "undefined") {
-        href = "javascript:void(0)";
-      } else if (typeof link.type !== "undefined") {
-        if (typeof link.href !== "undefined" && link.type === "default") {
-          link[link.type] = link.href;
-        }
-
-        delete link.href;
-
-        if (link[link.type] === "javascript:void(0)") {
-          link[link.type] = "";
-        }
-
-        href = link[link.type];
-
-        if (!href.length) {
-          href = "javascript:void(0)";
-        }
-
-        var isHrefIdReference = !isNaN(parseInt(href, 10)) && link.type !== "default";
-
-        if (isHrefIdReference) {
-          href = this.convertToWidget(href, link.type);
-        }
+      if (typeof link === "undefined" || !link[link.type].length) {
+        return "javascript:void(0)";
       }
 
+      var href = link[link.type];
+      href = this.convertToWidget(href, link.type);
       return href;
     };
     /**
@@ -98,6 +77,10 @@ define(["underscore"], function (_underscore) {
 
 
     _proto.convertToWidget = function convertToWidget(href, linkType) {
+      if (!href || !this.widgetParamsByLinkType[linkType]) {
+        return href;
+      }
+
       var attributesString = _underscore.map(this.widgetParamsByLinkType[linkType], function (val, key) {
         return key + "='" + val.replace(":href", href) + "'";
       }).join(" ");

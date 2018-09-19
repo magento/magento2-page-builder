@@ -38,6 +38,10 @@ export default class CreateValueForHref implements ConverterInterface {
         const linkType = link.type;
 
         if (link[linkType]) {
+            if (link[linkType] === "javascript:void(0)") {
+                link[linkType] = "";
+            }
+
             href = link[linkType];
         }
 

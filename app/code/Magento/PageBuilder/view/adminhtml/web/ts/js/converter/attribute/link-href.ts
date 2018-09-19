@@ -64,34 +64,15 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const link = data[name] as any;
-        let href;
+        let link = data[name] as any;
 
-        if (typeof link === "undefined") {
-            href = "javascript:void(0)";
-        } else if (typeof link.type !== "undefined") {
-            if (typeof link.href !== "undefined" && link.type === "default") {
-                link[link.type] = link.href;
-            }
-
-            delete link.href;
-
-            if (link[link.type] === "javascript:void(0)") {
-                link[link.type] = "";
-            }
-
-            href = link[link.type];
-
-            if (!href.length) {
-                href = "javascript:void(0)";
-            }
-
-            const isHrefIdReference = !isNaN(parseInt(href, 10)) && link.type !== "default";
-
-            if (isHrefIdReference) {
-                href = this.convertToWidget(href, link.type);
-            }
+        if (typeof link === "undefined" || !link[link.type].length) {
+            return "javascript:void(0)";
         }
+
+        let href = link[link.type];
+
+        href = this.convertToWidget(href, link.type);
 
         return href;
     }
@@ -102,6 +83,10 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string}
      */
     private convertToWidget(href: string, linkType: string): string {
+        if (!href || !this.widgetParamsByLinkType[linkType]) {
+            return href;
+        }
+
         const attributesString = _.map(
             this.widgetParamsByLinkType[linkType],
             (val: string, key: string) => `${key}='${val.replace(":href", href)}'`,
