@@ -2109,6 +2109,9 @@
             <testCaseId value="MC-4141"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
+            <skip>
+                <issueId value="MC-4224"/>
+            </skip>
         </annotations>
         <before>
             <magentoCLI command="config:set general/store_information/name {{TinyMCEVariableStoreName.storefrontValue}}" stepKey="setValueForStoreNameVariable"/>
@@ -2143,7 +2146,7 @@
         <!-- Add Variable to Banner -->
         <comment userInput="Add Variable to Banner" stepKey="commentAddVariableToBanner"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCEInline">
             <argument name="variable" value="TinyMCEVariableStoreName"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
