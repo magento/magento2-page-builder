@@ -45,7 +45,7 @@ define([
     }
 
     /**
-     * Validate field with data object
+     * Validate a field with an expected data value of type object, like margins_and_padding field
      * @param {Function} validator
      * @param {String} ruleName
      */
