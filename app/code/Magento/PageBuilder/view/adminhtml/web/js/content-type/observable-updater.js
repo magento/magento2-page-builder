@@ -53,7 +53,28 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         }
 
         if (config[elementName].style !== undefined) {
-          viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
+          var currentStyles = viewModel.data[elementName].style();
+          var newStyles = this.convertStyle(config[elementName], data);
+
+          if (currentStyles) {
+            /**
+             * If so we need to retrieve the previous styles applied to this element and create a new object
+             * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
+             * applying new styles to an element. This resolves styles sticking around when they should be
+             * removed.
+             */
+            var removeCurrentStyles = Object.keys(currentStyles).reduce(function (object, styleName) {
+              var _Object$assign;
+
+              return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
+            }, {});
+
+            if (!_underscore.isEmpty(removeCurrentStyles)) {
+              newStyles = _underscore.extend(removeCurrentStyles, newStyles);
+            }
+          }
+
+          viewModel.data[elementName].style(newStyles);
         }
 
         if (config[elementName].attributes !== undefined) {
@@ -99,8 +120,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
       }
-
-      console.log(viewModel.data.main.style());
     };
     /**
      * Process data for elements before its converted to knockout format

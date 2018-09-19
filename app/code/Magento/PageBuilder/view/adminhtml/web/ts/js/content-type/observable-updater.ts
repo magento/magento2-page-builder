@@ -63,7 +63,27 @@ export default class ObservableUpdater {
             }
 
             if (config[elementName].style !== undefined) {
-                viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
+                const currentStyles = viewModel.data[elementName].style();
+                let newStyles = this.convertStyle(config[elementName], data);
+
+                if (currentStyles) {
+                    /**
+                     * If so we need to retrieve the previous styles applied to this element and create a new object
+                     * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
+                     * applying new styles to an element. This resolves styles sticking around when they should be
+                     * removed.
+                     */
+                    const removeCurrentStyles = Object.keys(currentStyles)
+                        .reduce((object: object, styleName: string) => {
+                            return Object.assign(object, {[styleName]: ""});
+                        }, {});
+
+                    if (!_.isEmpty(removeCurrentStyles)) {
+                        newStyles = _.extend(removeCurrentStyles, newStyles);
+                    }
+                }
+
+                viewModel.data[elementName].style(newStyles);
             }
 
             if (config[elementName].attributes !== undefined) {
@@ -101,7 +121,6 @@ export default class ObservableUpdater {
                 viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
         }
-        console.log(viewModel.data.main.style());
     }
 
     /**
