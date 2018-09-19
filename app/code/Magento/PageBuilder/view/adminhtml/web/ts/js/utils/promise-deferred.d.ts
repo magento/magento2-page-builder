@@ -9,7 +9,7 @@
  * @api
  */
 export default interface DeferredInterface {
-    resolve: () => void;
-    reject: () => void;
+    resolve: (...args: any[]) => void;
+    reject: (...args: any[]) => void;
     promise: Promise<{}>;
 }

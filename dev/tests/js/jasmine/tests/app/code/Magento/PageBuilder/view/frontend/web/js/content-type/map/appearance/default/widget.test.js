@@ -3,8 +3,9 @@
  * See COPYING.txt for license details.
  */
 define([
-    'squire'
-], function (Squire) {
+    'squire',
+    'jquery'
+], function (Squire, $) {
     'use strict';
 
     var mapWidgetInitializer,
@@ -12,20 +13,30 @@ define([
         mocks = {
             'Magento_PageBuilder/js/utils/map': jasmine.createSpy(),
             'googleMaps': jasmine.createSpy()
-        };
+        },
+        loadWidgetinitializer;
 
-    beforeEach(function (done) {
+    /**
+     * Load the widget initializer for map
+     *
+     * @param {Function} done
+     */
+    loadWidgetinitializer = function (done) {
         injector.mock(mocks);
-        injector.require(['Magento_PageBuilder/js/content-type/map/appearance/default/widget'], function (module) {
-            mapWidgetInitializer = module;
-            done();
-        });
-    });
+        injector.require(
+            ['Magento_PageBuilder/js/content-type/map/appearance/default/widget'],
+            function (module) {
+                mapWidgetInitializer = module;
+                done();
+            }
+        );
+    };
 
     describe('Magento_PageBuilder/js/content-type/map/appearance/default/widget', function () {
+        beforeEach(loadWidgetinitializer);
 
         it('Does not call googleMap constructor if element is missing data-locations', function () {
-            var el = document.createElement('div');
+            var el = $('div');
 
             mapWidgetInitializer(undefined, el);
 
@@ -33,16 +44,16 @@ define([
         });
 
         it('Calls googleMap constructor if element has data-locations', function () {
-            var el = document.createElement('div'),
+            var el = $('<div />'),
                 locationsJSON = '[{"position": {"latitude": 0, "longitude": 0}}]';
 
-            el.setAttribute('data-locations', locationsJSON);
-            el.setAttribute('data-show-controls', true);
+            el.attr('data-locations', locationsJSON);
+            el.attr('data-show-controls', true);
 
             mapWidgetInitializer(undefined, el);
 
             expect(mocks['Magento_PageBuilder/js/utils/map']).toHaveBeenCalledWith(
-                el,
+                el[0],
                 JSON.parse(locationsJSON),
                 {
                     disableDefaultUI: false,

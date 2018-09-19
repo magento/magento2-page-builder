@@ -7,7 +7,7 @@ import "jarallax";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
-import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
+import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";

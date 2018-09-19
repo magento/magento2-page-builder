@@ -154,8 +154,12 @@ div[data-role='tabs'],
             min-height: inherit;
             padding: 0;
 
-            > .pagebuilder-content-type-wrapper:not(:first-child) {
-                display: none;
+            > .pagebuilder-content-type-wrapper {
+                display: block;
+
+                ~ .pagebuilder-content-type-wrapper {
+                    display: none;
+                }
             }
         }
     }
@@ -182,6 +186,19 @@ div[data-role='tabs'] {
     .tabs-content {
         border: 1px solid @color-gray;
         border-top: none;
+
+        [data-role='tab-item'] &:not(.empty-placeholder) {
+            box-sizing: content-box;
+            min-height: inherit;
+
+            &:not(:first-child) {
+                display: none;
+            }
+
+            > * {
+                min-height: inherit;
+            }
+        }
     }
 }
 

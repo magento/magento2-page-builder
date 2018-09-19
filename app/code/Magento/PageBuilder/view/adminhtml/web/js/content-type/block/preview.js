@@ -22,6 +22,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.placeholderText = void 0;
+      _this.element = void 0;
       _this.messages = {
         NOT_SELECTED: (0, _translate)("Empty Block"),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
@@ -39,10 +40,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     var _proto = Preview.prototype;
 
-    _proto.initializeWidgets = function initializeWidgets() {
-      (0, _widgetInitializer)({
-        config: _config.getConfig("widgets")
-      });
+    _proto.initializeWidgets = function initializeWidgets(element) {
+      if (element) {
+        this.element = element;
+        (0, _widgetInitializer)({
+          config: _config.getConfig("widgets")
+        }, element);
+      }
     };
     /**
      * Updates the view state using the data provided
@@ -104,14 +108,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
           this.showBlockPreview(true);
-          this.initializeWidgets();
+          this.initializeWidgets(this.element);
         }
       } else {
         this.showBlockPreview(false);
         this.placeholderText("");
       }
 
-      if (!data[identifierName] || data.template.length === 0) {
+      if (!data[identifierName] || data[identifierName] && data[identifierName].length === 0 || data.template.length === 0) {
         this.showBlockPreview(false);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
@@ -161,7 +165,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           _this3.data.main.html(response.data.content);
 
-          _this3.initializeWidgets();
+          _this3.initializeWidgets(_this3.element);
         } else if (response.data.error) {
           _this3.showBlockPreview(false);
 
