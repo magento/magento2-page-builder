@@ -4,24 +4,40 @@
  */
 
 module.exports = {
+    passPerPreset: true,
     presets: [
-        ['env', {
-            loose: true,
-            browsers: ["last 2 versions", "ie >= 11"]
-        }],
         {
             plugins: [
-                ["transform-class-properties", {spec: true}]
+                ['@babel/plugin-proposal-class-properties', {
+                    loose: true
+                }]
             ]
         },
-        ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass']}]
+        [
+            '@babel/preset-env',
+            {
+                loose: true,
+                targets: {
+                    browsers: ['last 2 versions', 'ie >= 11']
+                },
+                modules: 'amd'
+            }
+        ],
+        [
+            'es6-to-magento-amd',
+            {
+                magentoClasses: ['uiComponent', 'uiElement', 'uiClass']
+            }
+        ]
     ],
     plugins: [
-        ['./babel/resolve-imports', {prefix: 'Magento_PageBuilder/'}],
-        'transform-typescript',
-        'transform-object-rest-spread',
+        '@babel/plugin-transform-typescript',
+        ['./babel/resolve-imports', {
+            prefix: 'Magento_PageBuilder/'
+        }],
+        '@babel/plugin-syntax-object-rest-spread'
     ],
     ignore: [
-        "/**/*.d.ts"
+        '/**/*.d.ts'
     ]
 };
