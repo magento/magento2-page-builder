@@ -15,8 +15,8 @@ export default function deferred(): DeferredInterface {
     let resolve: () => void;
     let reject: () => void;
     const promise = new Promise((promiseResolve: () => void, promiseReject: () => void) => {
-            resolve = promiseResolve;
-            reject = promiseReject;
+        resolve = promiseResolve;
+        reject = promiseReject;
     });
     return { resolve, reject, promise };
 }

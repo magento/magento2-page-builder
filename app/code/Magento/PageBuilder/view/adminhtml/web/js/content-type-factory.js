@@ -88,15 +88,15 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
 
   function fireContentTypeReadyEvent(contentType, childrenLength) {
     var fire = function fire() {
-      _events.trigger("contentType:mountAfter", {
+      var params = {
         id: contentType.id,
-        contentType: contentType
-      });
+        contentType: contentType,
+        expectChildren: childrenLength
+      };
 
-      _events.trigger(contentType.config.name + ":mountAfter", {
-        id: contentType.id,
-        contentType: contentType
-      });
+      _events.trigger("contentType:mountAfter", params);
+
+      _events.trigger(contentType.config.name + ":mountAfter", params);
     };
 
     if (childrenLength === 0) {
@@ -109,6 +109,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
           mountCounter++;
 
           if (mountCounter === childrenLength) {
+            mountCounter = 0;
             fire();
 
             _events.off("contentType:" + contentType.id + ":mountAfter");

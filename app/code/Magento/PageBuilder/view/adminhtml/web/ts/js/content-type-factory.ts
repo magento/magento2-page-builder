@@ -98,8 +98,9 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
-        events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
+        const params = {id: contentType.id, contentType, expectChildren: childrenLength};
+        events.trigger("contentType:mountAfter", params);
+        events.trigger(contentType.config.name + ":mountAfter", params);
     };
 
     if (childrenLength === 0) {
@@ -111,6 +112,7 @@ function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLe
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
+                    mountCounter = 0;
                     fire();
                     events.off(`contentType:${contentType.id}:mountAfter`);
                 }

@@ -13,4 +13,5 @@ export default interface ContentTypeDuplicateEventParamsInterface {
     originalContentType: ContentTypeInterface & ContentTypeCollectionInterface;
     duplicateContentType: ContentTypeInterface & ContentTypeCollectionInterface;
     index: number;
+    direct: boolean;
 }

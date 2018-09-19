@@ -20,20 +20,26 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     /**
      * Duplicate a collection content type
      *
-     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
+     * @param {boolean} direct
      * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
-    _proto.clone = function clone(contentType, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend, direct) {
       var _this = this;
 
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
+      if (direct === void 0) {
+        direct = false;
+      }
+
       var index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+      var childrenLength = contentType.children ? contentType.children().length : null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentType.dataStore.get()).then(function (duplicate) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentType.dataStore.get(), childrenLength).then(function (duplicate) {
           if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
             contentType.children().forEach(function (subChild) {
@@ -54,7 +60,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
             contentType.parent.addChild(duplicate, index);
           }
 
-          _this.dispatchContentTypeCloneEvents(contentType, duplicate, index);
+          _this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
 
           resolve(duplicate);
         });
