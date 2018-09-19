@@ -15,7 +15,7 @@ define([
 
         element = element[0];
 
-        if (element.hasAttribute('data-locations')) {
+        if (element !== undefined && element.hasAttribute('data-locations')) {
 
             /**
              * Set map display to none if no locations
