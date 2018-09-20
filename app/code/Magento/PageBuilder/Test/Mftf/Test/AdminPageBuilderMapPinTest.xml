@@ -20,9 +20,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -153,9 +150,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -262,9 +256,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -322,9 +313,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413" />
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -377,6 +365,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -443,9 +433,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -463,9 +452,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413" />
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -518,6 +504,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -570,9 +558,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -590,9 +577,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413" />
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -645,6 +629,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -695,9 +681,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -715,9 +700,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413" />
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -770,6 +752,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -820,9 +804,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -840,9 +823,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -910,9 +890,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1000,9 +977,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1119,9 +1093,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1344,9 +1315,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1541,9 +1509,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1634,9 +1599,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <skip>
-                <issueId value="MC-3413"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
