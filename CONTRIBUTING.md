@@ -13,33 +13,11 @@
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
-[Introduction]: README.md
-[Contribution guide]: CONTRIBUTING.md
-[Installation guide]: install.md
-[Developer documentation]: developer-documentation.md
-[Architecture overview]: architecture-overview.md
-[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
-[Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
-[Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
-[Content type configuration]: content-type-configuration.md
-[How to add a new content type]: how-to-add-new-content-type.md
-[Events]: events.md
-[Bindings]: bindings.md
-[Master format]: master-format.md
-[Visual select]: visual-select.md
-[Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Render a backend content type preview]: content-type-preview.md
-[Custom Toolbar]: toolbar.md
-[Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+[Introduction]: docs/introduction.md
+[Installation guide]: docs/install.md
+[Developer documentation]: docs/developer-documentation.md
+[Roadmap and Known Issues]: docs/roadmap.md
+[How to create custom PageBuilder content type container]: docs/how-to-create-custom-content-type-container.md
 
 ## Overview
 
@@ -67,8 +45,8 @@ The Magento 2 development team will review all issues and contributions submitte
 
 If you are a new GitHub user, we recommend that you create your own [free github account](https://github.com/signup/free). By doing that, you will be able to collaborate with the Magento 2 development team, “fork” the Magento 2 project and be able to easily send “pull requests”.
 
-1. Search current [listed issues](https://github.com/magento/magento2-page-builder/issues) on GitHub (open or closed) and [list of known issues](roadmap.md#Known Issues) on our roadmap for similar proposals of intended contribution before starting work on a new contribution.
-2. Please contact us in Slack chanel if you want to work on issue from [list of known issues](roadmap.md#Known Issues).
+1. Search current [listed issues](https://github.com/magento/magento2-page-builder/issues) on GitHub (open or closed) and [list of known issues](docs/roadmap.md#Known Issues) on our roadmap for similar proposals of intended contribution before starting work on a new contribution.
+2. Please contact us in Slack chanel if you want to work on issue from [list of known issues](docs/roadmap.md#Known Issues).
 2. Review the [Contributor License Agreement](https://magento.com/legaldocuments/mca) if this is your first time contributing.
 3. Create and test your work.
 4. Fork the Magento 2 repository according to [Fork a repository instructions](http://devdocs.magento.com/guides/v2.0/contributor-guide/contributing.html#fork) and when you are ready to send us a pull request – follow [Create a pull request instructions](http://devdocs.magento.com/guides/v2.0/contributor-guide/contributing.html#pull_request). Instructions written for `https://github.com/magento/magento2` repository, but they also apply to `https://github.com/magento/magento2-page-builder`.

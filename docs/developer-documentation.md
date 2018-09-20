@@ -74,8 +74,8 @@
 
 **[Add custom logic to content types]** - Documentation on customizing PageBuilder content types by addig your own logic on the frontend.
 
-[Introduction]: README.md
-[Contribution guide]: CONTRIBUTING.md
+[Introduction]: introduction.md
+[Contribution guide]: ../CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
