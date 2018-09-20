@@ -38,6 +38,7 @@ ko.bindingHandlers.liveEdit = {
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field, placeholder, selectAll = false} = valueAccessor();
         let focusedValue = element.innerHTML;
+
         /**
          * Strip HTML and return text
          *
@@ -56,23 +57,15 @@ ko.bindingHandlers.liveEdit = {
          */
         const onFocus = () => {
             focusedValue = stripHtml(element.innerHTML);
-        };
 
-        /**
-         * Blur event on element
-         */
-        const onBlur = () => {
-            if (focusedValue !== stripHtml(element.innerHTML)) {
-                viewModel.updateData(field, stripHtml(element.innerHTML));
-            }
-        };
-
-        /**
-         * Click event on element
-         */
-        const onClick = () => {
             if (selectAll && element.innerHTML !== "") {
-                document.execCommand("selectAll", false, null);
+                _.defer(() => {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(element);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                });
             }
         };
 
@@ -92,7 +85,7 @@ ko.bindingHandlers.liveEdit = {
          *
          * @param {any} event
          */
-        const onKeyDown = (event: any) => {
+        const onKeyDown = (event: JQueryEventObject) => {
             const key = keyCodes[event.keyCode];
 
             // command or control
@@ -108,38 +101,18 @@ ko.bindingHandlers.liveEdit = {
             if (key === "pageLeftKey" || key === "pageRightKey") {
                 event.stopPropagation();
             }
-
-            debouncedUpdateHandler.call(this);
         };
 
         /**
-         * Debounce the saving of the state to ensure that on save without first unfocusing will succeed
+         * On key up update the view model to ensure all changes are saved
+         *
+         * @param {Event} event
          */
-        const debouncedUpdateHandler = _.debounce(() => {
-            const selection = window.getSelection();
-            const range = document.createRange();
-            const getCharPosition = (editableDiv: HTMLElement): number => {
-                let charPosition = 0;
-
-                if (window.getSelection) {
-                    if (selection.rangeCount) {
-                        if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
-                            charPosition = selection.getRangeAt(0).endOffset;
-                        }
-                    }
-                }
-                return charPosition;
-            };
-            const pos: number = getCharPosition(element);
-
+        const onKeyUp = () => {
             if (focusedValue !== stripHtml(element.innerHTML)) {
                 viewModel.updateData(field, stripHtml(element.innerHTML));
             }
-            range.setStart(element.childNodes[0], pos);
-            range.collapse(true);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }, 300);
+        };
 
         /**
          * Prevent content from being dropped inside of inline edit area
@@ -156,14 +129,14 @@ ko.bindingHandlers.liveEdit = {
         const onInput = () => {
             handlePlaceholderClass(element);
         };
+
         element.setAttribute("data-placeholder", placeholder);
         element.textContent = viewModel.parent.dataStore.get(field);
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
-        element.addEventListener("blur", onBlur);
-        element.addEventListener("click", onClick);
         element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("keydown", onKeyDown);
+        element.addEventListener("keyup", onKeyUp);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);
 
