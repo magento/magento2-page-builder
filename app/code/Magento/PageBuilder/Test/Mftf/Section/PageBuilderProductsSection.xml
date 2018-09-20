@@ -10,6 +10,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ProductsOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]" parameterized="true"/>
+        <element name="price" type="text" selector="//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//div[contains(@data-role,'priceBox')]"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="product" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
@@ -44,6 +45,7 @@
     </section>
     <section name="ProductsOnStorefront">
         <element name="base" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}]" parameterized="true"/>
+        <element name="price" type="text" selector="//div[contains(@data-role,'products')]//div[contains(@data-role,'priceBox')]"/>
         <element name="hidden" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="product" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
