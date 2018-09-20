@@ -44,6 +44,35 @@ define([
         return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href)//eslint-disable-line max-len);
     }
 
+    /**
+     * Validate a field with an expected data value of type object, like margins_and_padding field
+     * @param {Function} validator
+     * @param {String} ruleName
+     */
+    function validateObjectField(validator, ruleName) {
+        var rule = validator.getRule(ruleName);
+
+        validator.addRule(
+            ruleName,
+            function (value, params) {
+                var allNumbers = true;
+
+                if (typeof value !== 'object') {
+                    return rule.handler(value, params);
+                }
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    if (!rule.handler(val, params)) {
+                        return allNumbers = false;
+                    }
+                });
+
+                return allNumbers;
+            },
+            $.mage.__(rule.message)
+        );
+    }
+
     return function (validator) {
         var requiredInputRule = validator.getRule('required-entry');
 
@@ -114,6 +143,10 @@ define([
             },
             $.mage.__(requiredInputRule.message)
         );
+
+        validateObjectField(validator, 'validate-number');
+        validateObjectField(validator, 'less-than-equals-to');
+        validateObjectField(validator, 'greater-than-equals-to');
 
         return validator;
     };

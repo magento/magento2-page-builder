@@ -62,6 +62,7 @@
         <element name="marginNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Margin']"/>
         <element name="paddingNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Padding']"/>
         <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
+        <element name="advancedMarginsOrPaddingField" type="input" selector="//input[@name='{{arg1}}']" parameterized="true"/>
         <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
         <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>
         <element name="advancedMarginBottom" type="input" selector="//input[@name='marginBottom']"/>
@@ -71,6 +72,7 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
         <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
+        <element name="advancedMarginAndPaddingErrorMessage" type="button" selector="//div[@data-index='margins_and_padding']/descendant::label[not(contains(@style,'display: none;'))][2]"/>
     </section>
     <section name="ColorPicker">
         <element name="panelEmptyColorSwatch" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[contains(@class,'sp-clear-display')]" parameterized="true"/>

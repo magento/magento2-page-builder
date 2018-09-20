@@ -154,6 +154,10 @@
                 <imports>
                     <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
                 </imports>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
+                </validation>
             </settings>
         </field>
         <field name="border_radius" sortOrder="50" formElement="input">
@@ -170,6 +174,10 @@
                 </additionalClasses>
                 <addAfter translate="true">px</addAfter>
                 <placeholder translate="true">Default</placeholder>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
+                </validation>
             </settings>
         </field>
         <field name="css_classes" sortOrder="60" formElement="input">
@@ -188,6 +196,11 @@
             <settings>
                 <label translate="true">Margins and Padding</label>
                 <placeholder translate="true">Default</placeholder>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">999</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">-999</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>
