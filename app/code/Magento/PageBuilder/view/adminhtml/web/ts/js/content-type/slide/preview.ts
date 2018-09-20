@@ -39,11 +39,6 @@ export default class Preview extends BasePreview {
     private element: HTMLElement;
 
     /**
-     * Uploader instance
-     */
-    private uploader: Uploader;
-
-    /**
      * Slide flag
      */
     private slideChanged: boolean = true;
@@ -140,18 +135,17 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const dataStore = this.parent.dataStore.get() as any[];
+        const dataStore = this.parent.dataStore.get();
         const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
         // Create uploader
-        this.uploader = new Uploader(
+        return new Uploader(
             "imageuploader_" + this.parent.id,
             this.config.additional_data.uploaderConfig,
             this.parent.id,
             this.parent.dataStore,
             initialImageValue,
         );
-        return this.uploader;
     }
 
     /**

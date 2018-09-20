@@ -19,7 +19,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.uploader = void 0, _this.slideChanged = true, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.slideChanged = true, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -106,8 +106,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       var dataStore = this.parent.dataStore.get();
       var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-      this.uploader = new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
-      return this.uploader;
+      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
     /**
      * Makes WYSIWYG active

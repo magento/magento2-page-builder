@@ -32,6 +32,6 @@ declare var ResizeObserver: {
     new(callback: ResizeObserverCallback): ResizeObserver;
 };
 
-declare module "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min" {
+declare module "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver" {
     export = ResizeObserver;
 }
