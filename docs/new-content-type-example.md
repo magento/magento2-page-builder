@@ -30,8 +30,8 @@
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
-[Introduction]: README.md
-[Contribution guide]: CONTRIBUTING.md
+[Introduction]: introduction.md
+[Contribution guide]: ../CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
@@ -243,8 +243,8 @@ Run the following command on the server to initiate your module's migration proc
 
 You have migrated your old BlueFoot content type into your new PageBuilder content type!
 
-[PageBuilder migration API]: ./bluefoot-data-migration.md
-[BlueFoot data migration]: ./bluefoot-data-migration.md
+[PageBuilder migration API]: bluefoot-data-migration.md
+[BlueFoot data migration]: bluefoot-data-migration.md
 [`composer.json`]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/composer-integration.html
 [versioning policy]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/versioning/
 [module lifecycle]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/prepare/lifecycle.html
