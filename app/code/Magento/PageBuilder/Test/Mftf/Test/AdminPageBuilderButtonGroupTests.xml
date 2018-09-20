@@ -1041,9 +1041,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton" />
         <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
@@ -1089,5 +1094,32 @@
         <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible" />
         <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible" />
+    </test>
+    <test name="ValidateShowHideOnButtonsOnStackedAppearance" extends="ValidateShowHideOnButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Buttons has hide show capabilities on stacked appearance"/>
+            <description value="A user is able to hide and show the buttons successfully when using stacked appearance"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4093"/>
+            <testCaseId value="MC-4230"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu" after="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Select Stacked Appearance -->
+        <comment userInput="Select Stacked Appearances" stepKey="commentSelectStackedAppearance" after="openEditMenuOnStage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance" after="commentSelectStackedAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
     </test>
 </tests>
