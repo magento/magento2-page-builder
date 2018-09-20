@@ -967,8 +967,63 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+    </test>
+    <test name="ButtonItemEmptyLinkURLDoesNothingOnStorefront">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - Button Empty Link URL Does Nothing On Storefront"/>
+            <description value="A user should be able to click on Button with empty link url and remain on same page on the frontend"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3865"/>
+            <testCaseId value="MC-4143"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterButtonItemLinkUrl">
+            <argument name="property" value="PageBuilderButtonItemLink_Empty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
+        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="clickLinkUrl" />
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
+        <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderButtonItemContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
     <test name="ButtonItemNoRequiredFields">
         <annotations>

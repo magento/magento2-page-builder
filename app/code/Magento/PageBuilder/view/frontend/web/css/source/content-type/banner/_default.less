@@ -7,13 +7,19 @@
 //  Default appearance styles
 //  _____________________________________________
 
-[data-role='banner'] > a {
-    color: inherit;
-    text-decoration: inherit;
-
-    &:hover {
+[data-role='banner'] {
+    > a {
         color: inherit;
         text-decoration: inherit;
+
+        &:hover {
+            color: inherit;
+            text-decoration: inherit;
+        }
+    }
+
+    [data-element='link'][href='javascript:void(0)'] {
+        cursor: auto;
     }
 }
 
