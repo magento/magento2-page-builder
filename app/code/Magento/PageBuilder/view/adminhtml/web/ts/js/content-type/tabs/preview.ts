@@ -13,6 +13,7 @@ import {ActiveOptionsInterface} from "../../binding/active-options.d";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import {SortableOptionsInterface} from "../../binding/sortable-options.d";
 import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
@@ -20,6 +21,9 @@ import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
+import delayUntil from "../../utils/delay-until";
+import deferred from "../../utils/promise-deferred";
+import DeferredInterface from "../../utils/promise-deferred.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
@@ -31,53 +35,59 @@ import PreviewCollection from "../preview-collection";
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public focusedTab: KnockoutObservable<number> = ko.observable();
+    public focusedTab: KnockoutObservable<number> = ko.observable(null);
     private disableInteracting: boolean;
     private element: Element;
+    private ready: boolean;
+    private onContainerRenderDeferred: DeferredInterface = deferred();
+    private mountAfterDeferred: DeferredInterface = deferred();
 
     /**
-     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-    private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
-        if (this.element && this.element.children.length > 0) {
-            const focusedTab = this.focusedTab();
-            try {
-                $(this.element).tabs("destroy");
-            } catch (e) {
-                // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
-            }
-            $(this.element).tabs({
-                create: () => {
-                    // Ensure focus tab is restored after a rebuild cycle
-                    if (focusedTab) {
-                        this.setFocusedTab(focusedTab, true);
-                    } else {
-                        this.setFocusedTab(null);
-                        if (activeTabIndex) {
-                            this.setActiveTab(activeTabIndex);
-                        }
-                    }
-                },
-            });
-        }
-    }, 10);
-
-    /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
+
+        // Wait for the tabs instance to mount and the container to be ready
+        Promise.all([
+            this.onContainerRenderDeferred.promise,
+            this.mountAfterDeferred.promise,
+        ]).then(([element, expectedChildren]) => {
+            // We always create 1 tab when dropping tabs into the instance
+            expectedChildren = expectedChildren || 1;
+            // Wait until all children's DOM elements are present before building the tabs instance
+            delayUntil(
+                () => {
+                    this.element = element as Element;
+                    this.buildTabs();
+                },
+                () => $(element).find(".pagebuilder-tab-item").length === expectedChildren,
+            );
+        });
+
+        // Resolve our deferred when the tabs item mounts with expect children
+        events.on("tabs:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.contentType.id === this.parent.id && args.expectChildren !== undefined) {
+                this.mountAfterDeferred.resolve(args.expectChildren);
+            }
+        });
+
         events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (this.element && args.contentType.parent.id === this.parent.id) {
                 this.refreshTabs();
+            }
+        });
+        events.on("tab-item:renderAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (this.element && args.contentType.parent.id === this.parent.id) {
+                _.defer(() => {
+                    this.refreshTabs();
+                });
             }
         });
         // Set the active tab to the new position of the sorted tab
@@ -133,7 +143,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} activeIndex
      */
     public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
-        if (this.element) {
+        if (this.ready) {
             $(this.element).tabs("refresh");
             if (focusIndex >= 0) {
                 this.setFocusedTab(focusIndex, forceFocus);
@@ -176,7 +186,7 @@ export default class Preview extends PreviewCollection {
         }
         this.focusedTab(index);
 
-        if (this.element && index !== null) {
+        if (this.ready && index !== null) {
             if (this.element.getElementsByClassName("tab-name")[index]) {
                 (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
             }
@@ -245,8 +255,7 @@ export default class Preview extends PreviewCollection {
      * @param {Element} element
      */
     public onContainerRender(element: Element) {
-        this.element = element;
-        this.buildTabs();
+        this.onContainerRenderDeferred.resolve(element);
     }
 
     /**
@@ -393,7 +402,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
         events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (this.parent.id === args.duplicateContentType.parent.id) {
+            if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
                 const tabData = args.duplicateContentType.dataStore.get();
                 args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
@@ -435,6 +444,37 @@ export default class Preview extends PreviewCollection {
             activeOptions,
             "_default_active_options",
         );
+    }
+
+    /**
+     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private buildTabs(activeTabIndex = this.previewData.default_active() || 0) {
+        this.ready = false;
+        if (this.element && this.element.children.length > 0) {
+            const focusedTab = this.focusedTab();
+            try {
+                $(this.element).tabs("destroy");
+            } catch (e) {
+                // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
+            }
+            $(this.element).tabs({
+                create: () => {
+                    this.ready = true;
+                    // Ensure focus tab is restored after a rebuild cycle
+                    if (focusedTab !== null) {
+                        this.setFocusedTab(focusedTab, true);
+                    } else {
+                        this.setFocusedTab(null);
+                        if (activeTabIndex !== false) {
+                            this.setActiveTab(activeTabIndex);
+                        }
+                    }
+                },
+            });
+        }
     }
 }
 

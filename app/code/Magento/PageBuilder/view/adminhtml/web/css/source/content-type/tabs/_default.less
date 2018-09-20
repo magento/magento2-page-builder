@@ -154,8 +154,12 @@ div[data-role='tabs'],
             min-height: inherit;
             padding: 0;
 
-            > .pagebuilder-content-type-wrapper:not(:first-child) {
-                display: none;
+            > .pagebuilder-content-type-wrapper {
+                display: block;
+
+                ~ .pagebuilder-content-type-wrapper {
+                    display: none;
+                }
             }
         }
     }

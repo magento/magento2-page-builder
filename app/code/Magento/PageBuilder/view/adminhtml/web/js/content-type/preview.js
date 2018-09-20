@@ -291,22 +291,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onOptionDuplicate = function onOptionDuplicate() {
-      this.clone(this.parent);
+      this.clone(this.parent, true, true);
     };
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
+     * @param {boolean} direct
      * @returns {Promise<ContentTypeInterface> | void}
      */
 
 
-    _proto.clone = function clone(contentType, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend, direct) {
       var _this3 = this;
 
       if (autoAppend === void 0) {
         autoAppend = true;
+      }
+
+      if (direct === void 0) {
+        direct = false;
       }
 
       var contentTypeData = contentType.dataStore.get();
@@ -317,7 +322,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             contentType.parent.addChild(duplicateContentType, index);
           }
 
-          _this3.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index);
+          _this3.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
 
           resolve(duplicateContentType);
         });
@@ -474,14 +479,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {ContentTypeInterface} originalContentType
      * @param {ContentTypeInterface} duplicateContentType
      * @param {number} index
+     * @param {boolean} direct
      */
 
 
-    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalContentType, duplicateContentType, index) {
+    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalContentType, duplicateContentType, index, direct) {
       var duplicateEventParams = {
-        original: originalContentType,
+        originalContentType: originalContentType,
         duplicateContentType: duplicateContentType,
-        index: index
+        index: index,
+        direct: direct
       };
 
       _events.trigger("contentType:duplicateAfter", duplicateEventParams);
