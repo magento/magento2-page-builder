@@ -235,6 +235,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <!-- Add 2nd Button -->
         <comment userInput="Add 2nd Button" stepKey="commentAddButton"/>
         <actionGroup ref="addButton" stepKey="addButton1"/>
@@ -248,6 +251,9 @@
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="1" stepKey="seeButtonsStage2"/>
         <!-- Add Button Again -->
         <comment userInput="Add Button Again" stepKey="commentAddButtonAgain"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu1">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="addButton" stepKey="addButton2"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="seeButtonsStage3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
