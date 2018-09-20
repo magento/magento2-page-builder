@@ -19,13 +19,12 @@
             <testCaseId value="MC-2386"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting" />
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
