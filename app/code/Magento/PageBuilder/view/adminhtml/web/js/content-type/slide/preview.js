@@ -19,7 +19,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.uploader = void 0, _this.slideChanged = true, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.slideChanged = true, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -103,7 +103,10 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.getUploader = function getUploader() {
-      return this.uploader;
+      var dataStore = this.parent.dataStore.get();
+      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
     /**
      * Makes WYSIWYG active
@@ -219,12 +222,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       _events.on(this.config.name + ":mountAfter", function (args) {
         if (args.id === _this4.parent.id) {
-          var dataStore = _this4.parent.dataStore.get();
-
-          var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-          _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue); // Update the display label for the slide
-
+          // Update the display label for the slide
           var slider = _this4.parent.parent;
 
           _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
