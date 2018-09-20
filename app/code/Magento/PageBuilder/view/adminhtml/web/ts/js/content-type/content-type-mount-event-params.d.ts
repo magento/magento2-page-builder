@@ -12,4 +12,5 @@ import ContentTypeInterface from "../content-type.d";
 export default interface ContentTypeMountEventParamsInterface {
     id: string;
     contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    expectChildren: number;
 }

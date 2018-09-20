@@ -7,8 +7,7 @@
 
 <div class="pagebuilder-content-type pagebuilder-slider children-min-height"
      attr="data.main.attributes"
-     event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false"
-     afterRender="onAfterRender">
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false">
     <render args="getOptions().template" />
     <div class="slider-container"
          css="data.main.css"
@@ -20,9 +19,10 @@
              each="$parent.getChildren()"
              data-bind="sortableChildren: { handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: onSortStart.bind($parent.preview), stop: onSortStop.bind($parent.preview) }">
             <div class="navigation-dot"
+                 tabindex="0"
                  event="focusin: $parent.setFocusedSlide.bind($parent, $index(), false), focusout: $parent.onFocusOut.bind($parent)"
                  css="active: $parent.activeSlide() === $index(), focus: $parent.focusedSlide() === $index()">
-                <a class="navigation-dot-anchor" href="#" tabindex="0" click="$parent.onControlClick.bind($parent, $index())" hasFocus="$parent.focusedSlide() === $index()"/>
+                <a class="navigation-dot-anchor" href="#" click="$parent.onControlClick.bind($parent, $index())" hasFocus="$parent.focusedSlide() === $index()"/>
                 <with args="preview">
                     <render with="preview" args="getOptions().template" />
                 </with>
