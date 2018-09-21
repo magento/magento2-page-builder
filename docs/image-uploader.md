@@ -62,6 +62,7 @@
 
 <!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to add a reusable image uploader component to the PageBuilder stage for a content type.
 
 ## Overview

@@ -101,6 +101,7 @@ This document contains reference information for events dispatched in Page Build
 * [googleMaps:authFailure](#googlemapsauthFailure)
 
 ## `contentType:*` events
+
 All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
 * `text:createAfter`
 * `row:mountAfter`

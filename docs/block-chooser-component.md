@@ -66,6 +66,7 @@
 This topic describes how to use the block chooser UI component for a custom content type.
 
 ## Overview
+
 To use the block chooser component for your custom content type:
 
 1. [Add the block select grid listing modal to content type XML](#add-the-block-select-grid-listing-modal-to-content-type-XML)
@@ -73,6 +74,7 @@ To use the block chooser component for your custom content type:
 
 
 ## Configuration options
+
 Extends all `abstract` configuration.
 
 `Magento_PageBuilder/js/form/element/block-chooser` configuration options:

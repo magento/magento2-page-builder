@@ -62,6 +62,7 @@
 
 <!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
 
 The text alignment field for each content block, in the Advanced section, now shows an icon and title. You can customize the text alignment field to show this new look and feel for all content blocks.
@@ -139,6 +140,7 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
 ```
 
 ### Display notice when option is selected
+
 For some options you may wish to display an additional notice when the user selects the item. You can do this by providing a `noticeMessage` within the items declaration.
 ```xml
 <item name="3" xsi:type="array">
@@ -150,6 +152,7 @@ For some options you may wish to display an additional notice when the user sele
 ```
 
 ## How to reuse vertical alignment between different content types {#vertical-alignment}
+
 To apply vertical alignment to a content type using the Visual Select component, use the virtualType `Magento\PageBuilder\Model\Source\VerticalAlignment` with options in your module's `di.xml` configuration file.
 
 ```xml

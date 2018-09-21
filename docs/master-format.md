@@ -77,6 +77,7 @@ Contained:
 ```
 
 ### wrapper element
+
 1. data-element [main]
 2. data-role [row]
 3. data-appearance [contained]
@@ -186,6 +187,7 @@ Inline styles
 ```
 
 ### main element
+
 Attributes
 1. data-element [main, navigation, headers, content]
 2. data-role [tabs]
@@ -202,6 +204,7 @@ Inline styles
 
 
 ### navigation element
+
 Attributes
 1. data-element [navigation]
 
@@ -209,6 +212,7 @@ Inline styles
 1. text-align
 
 ### headers element
+
 Attributes
 1. data-element [headers]
 
@@ -218,6 +222,7 @@ Inline styles
 3. border-width
 
 ### content element
+
 Attributes
 1. data-element [content]
 

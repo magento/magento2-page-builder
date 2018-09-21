@@ -67,6 +67,7 @@ PageBuilder Admin icons follow the same design principles as the core [Magento A
 They are simple, flat, and monochromatic to prevent the loss of detail at smaller sizes and makes the shapes easier to comprehend.
 
 ## Icon library
+
 The following image shows all available PageBuilder Admin icons:
 
 ![PageBuilder admin icons](images/pagebuilder-icons.png)
@@ -74,6 +75,7 @@ The following image shows all available PageBuilder Admin icons:
 You can use these icons when extending or customizing the PageBuilder module or [create your own icons].
 
 ## Icon fonts
+
 We recommend using icon fonts to get the best quality for your icons. 
 The PageBuilder Admin icon fonts can be found in the [cms-icons repository].
 

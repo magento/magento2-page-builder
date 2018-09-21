@@ -62,6 +62,7 @@
 
 <!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to store a component's master format as a `widget-directive`.
 
 ## Overview

@@ -62,6 +62,7 @@
 
 <!-- {% raw %} -->
 ## What's in this topic
+
 This document outlines how to add a custom toolbar in Page Builder. It's a simplified/lightweight version of a WYSIWYG:
 ![Page Builder toolbar](images/toolbar.png)
 

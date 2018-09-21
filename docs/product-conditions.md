@@ -62,6 +62,7 @@
 
 <!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how use the product conditions rule tree for different content types. By reusing the conditions mechanism you can apply it to your own custom content types.
 
 ## Overview
