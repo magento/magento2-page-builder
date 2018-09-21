@@ -72,6 +72,7 @@
         <element name="textAreaText" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(text(),'{{arg2}}')]" parameterized="true"/>
         <element name="textAreaVariable" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
+        <element name="textVariableHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-role='text'])[{{arg1}}]//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight" parameterized="true"/>
         <element name="empty" type="text" selector="//div[@data-role='text'][{{arg1}}][not(*)]" parameterized="true"/>
         <element name="image" type="text" selector="//div[@data-role='text'][{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="textInImportantStyle" type="text" selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='{{arg1}}']" parameterized="true"/>

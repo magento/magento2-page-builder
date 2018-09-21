@@ -1,6 +1,9 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
@@ -109,8 +112,10 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           value = converterPool.get(_attributeConfig.converter).fromDom(value);
         }
 
-        if (data[_attributeConfig.var] === "object") {
-          value = _mageUtils.extend(value, data[_attributeConfig.var]);
+        if (_jquery.type(result[_attributeConfig.var]) === "object") {
+          var _mageUtils$extend;
+
+          value = _mageUtils.extend((_mageUtils$extend = {}, _mageUtils$extend[_attributeConfig.name] = value, _mageUtils$extend), result[_attributeConfig.var]);
         }
 
         result[_attributeConfig.var] = value;
@@ -157,7 +162,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
           value = converterPool.get(_propertyConfig.converter).fromDom(value);
         }
 
-        if (_typeof(result[_propertyConfig.var]) === "object") {
+        if (_jquery.type(result[_propertyConfig.var]) === "object") {
           value = _mageUtils.extend(result[_propertyConfig.var], value);
         }
 

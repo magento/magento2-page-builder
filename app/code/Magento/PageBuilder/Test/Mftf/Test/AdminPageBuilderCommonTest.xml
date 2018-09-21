@@ -1411,6 +1411,9 @@
             <argument name="searchResult" value="$$createCMSPageA.title$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <!--Add image into PageBuilder-->
         <comment userInput="Add image into PageBuilder" stepKey="addImageIntoPageBuilder"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
@@ -1540,7 +1543,7 @@
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>

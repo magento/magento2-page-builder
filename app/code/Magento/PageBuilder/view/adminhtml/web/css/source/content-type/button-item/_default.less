@@ -10,22 +10,21 @@
 .pagebuilder-content-type {
     .pagebuilder-button-item {
         font-size: 0;
+        margin: 0 10px 10px 0;
         max-width: 100%;
         width: auto;
         z-index: auto;
-        .pagebuilder-options {
-            bottom: 0;
-            left: calc(50% - 5px);
-            transform: translate(-50%, -50%);
-            li.pagebuilder-options-link {
-                margin: 0;
-            }
-        }
+
         [contenteditable=true] {
             display: inline-block;
             min-height: 18px;
             min-width: 20px;
         }
+
+        a {
+            margin: 0;
+        }
+
         a[data-element='link'] {
             max-width: 100%;
             min-width: 0;
@@ -37,42 +36,60 @@
             }
         }
 
-        &.pagebuilder-content-type-active {
-            .pagebuilder-button-primary {
-                .button-item-drag-handle {
-                    color: rgba(255, 255, 255, .8);
-                }
+        .button-item-drag-handle {
+            height: 100%;
+            left: 1px;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            transition: all .3s;
+            visibility: hidden;
+            width: 14px;
+
+            &.disabled:before {
+                color: @color-light-gray;
+                cursor: not-allowed;
             }
 
-            .button-item-drag-handle {
+            &.disabled:active:before {
+                cursor: not-allowed;
+            }
+
+            &:before {
+                .abs-icon;
                 color: @color-dark-gray0;
+                content: @icon-gripper__content;
                 cursor: move; /* fallback if grab cursor is unsupported */
                 cursor: grab;
                 cursor: -moz-grab;
                 cursor: -webkit-grab;
-                left: 0;
-                margin-top: -(@pagebuilder-button__font-size/2);
+                display: block;
+                font-size: 16px;
                 position: absolute;
                 top: 50%;
+                transform: translateY(-50%);
+            }
 
-                &:active {
-                    cursor: grabbing;
-                    cursor: -moz-grabbing;
-                    cursor: -webkit-grabbing;
-                }
+            &:active:before {
+                cursor: grabbing;
+                cursor: -moz-grabbing;
+                cursor: -webkit-grabbing;
+            }
+        }
 
-                &:before {
-                    .abs-icon;
-                    content: @icon-gripper__content;
-                    display: inline-block;
-                    font-size: @pagebuilder-button__font-size;
-                    position: absolute;
-                }
+        .pagebuilder-button-primary .button-item-drag-handle:before {
+            color: @color-white;
+            opacity: .7;
+        }
 
-                &.disabled {
-                    color: rgba(221, 221, 221, .4);
-                    cursor: not-allowed;
-                }
+        &.focused {
+            .button-item-drag-handle {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .pagebuilder-options {
+                .pagebuilder-options-visible;
             }
         }
     }
