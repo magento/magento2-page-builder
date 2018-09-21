@@ -57,6 +57,7 @@ export default class ObservableUpdater {
                 viewModel.data[elementName] = {
                     attributes: ko.observable({}),
                     style: ko.observable({}),
+                    styleNoReset: ko.observable({}),
                     css: ko.observable({}),
                     html: ko.observable({}),
                 };
@@ -65,6 +66,12 @@ export default class ObservableUpdater {
             if (config[elementName].style !== undefined) {
                 const currentStyles = viewModel.data[elementName].style();
                 let newStyles = this.convertStyle(config[elementName], data);
+                /**
+                 * There maybe instances when you need to interface with the styles without the reset applied, this is
+                 * currently used when merging multiple elements styles together, as the reset can cause undesired
+                 * effects if all elements attempt to apply.
+                 */
+                viewModel.data[elementName].styleNoReset(newStyles);
 
                 if (currentStyles) {
                     /**
