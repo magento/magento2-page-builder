@@ -1,5 +1,6 @@
 # Custom Toolbar
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
 This document outlines how to add a custom toolbar in Page Builder. It's a simplified/lightweight version of a WYSIWYG:
 ![Page Builder toolbar](images/toolbar.png)
@@ -132,4 +135,4 @@ In your content block template, add the toolbar events to your main toolbar cont
 An example implementation can be found in the Heading content block:
 `app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
 
-
+<!-- {% endraw %} -->

@@ -1,5 +1,6 @@
 # Iconography
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Overview
 
 PageBuilder Admin icons follow the same design principles as the core [Magento Admin icons].
@@ -87,3 +90,5 @@ If you want to add your own icons, each icon will need to be in its own SVG file
 [Magento Admin icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html
 [create your own icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html#creating-icons
 [cms-icons repository]: https://github.com/magento-ux/cms-icons
+
+<!-- {% endraw %} -->

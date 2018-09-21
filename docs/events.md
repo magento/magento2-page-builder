@@ -1,5 +1,6 @@
 # Events
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,6 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
+
+<!-- {% raw %} -->
 
 This document contains reference information for events dispatched in Page Builder.
 
@@ -599,3 +603,5 @@ _none_
 [Back to top]
 
 [Back to top]: #events
+
+<!-- {% endraw %} -->

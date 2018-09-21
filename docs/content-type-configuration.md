@@ -3,6 +3,7 @@
 **Note:**
 *We are revising configuration, format will change. We will publish draft of new improved configuration soon to get feedback.*
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -60,7 +61,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Configuration
 
 Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
@@ -558,3 +561,4 @@ define([], function () {
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- |
 |`fieldsToIgnoreOnRemove`| array containing field names to ignore when evaluating whether an element has been configured. The default value is an empty array. | `["tab_name"]` |
 
+<!-- {% endraw %} -->

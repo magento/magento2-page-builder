@@ -1,5 +1,6 @@
 # How to Add New Content Type 
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Configuration
 
 Adding new content type starts with [configuration](content-type-configuration.md).
@@ -387,3 +390,5 @@ define(["Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/con
     };
 });
 ```
+
+<!-- {% endraw %} -->

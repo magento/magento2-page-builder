@@ -1,5 +1,6 @@
 # Full width page layouts
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
 This topic describes the new full-width page layouts in Page Builder, along with instructions on how you can use them in custom themes.
 
@@ -142,3 +145,5 @@ To enable full width within your custom themes, you must ensure the appropriate 
 
 ## Disabling Page Builder
 If you apply one of our custom layouts to an entity and then disable or remove the Page Builder module you'll be required to manually update those entities with new page layouts. This is due to disabling Page Builder will make the new full width layouts unavailable thus causing entities to render incorrectly.
+
+<!-- {% endraw %} -->

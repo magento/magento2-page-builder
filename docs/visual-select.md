@@ -1,5 +1,6 @@
 # Visual Select
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
 
@@ -257,3 +260,5 @@ Example preview template:
     <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: parent.children().length == 0}, i18n: 'Drag content types or columns here'"></div>
 </div>
 ```
+
+<!-- {% endraw %} -->

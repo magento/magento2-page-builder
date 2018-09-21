@@ -1,5 +1,6 @@
 # Contributing to Magento 2 code
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -18,7 +19,9 @@
 [Developer documentation]: docs/developer-documentation.md
 [Roadmap and Known Issues]: docs/roadmap.md
 [How to create custom PageBuilder content type container]: docs/how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Overview
 
 Contributions to the Magento 2 codebase are done using the fork & pull model.
@@ -56,3 +59,5 @@ If you are a new GitHub user, we recommend that you create your own [free github
 
 Please note that this project is released with a Contributor Code of Conduct. We expect you to agree to its terms when participating in this project.
 The full text is available in the repository [Wiki](https://github.com/magento/magento2/wiki/Magento-Code-of-Conduct).
+
+<!-- {% endraw %} -->

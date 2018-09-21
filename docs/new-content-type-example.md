@@ -1,5 +1,6 @@
 # Third-party content type migration
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Before you begin
 
 This tutorial goes through the process of using the PageBuilder migration API to convert data from a third-party content type into its new PageBuilder content type.
@@ -249,3 +252,5 @@ You have migrated your old BlueFoot content type into your new PageBuilder conte
 [versioning policy]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/versioning/
 [module lifecycle]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/prepare/lifecycle.html
 [data upgrade]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/prepare/lifecycle.html#data-upgrade
+
+<!-- {% endraw %} -->

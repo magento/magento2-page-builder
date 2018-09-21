@@ -1,5 +1,6 @@
 # BlueFoot to PageBuilder data migration
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,8 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
-
+<!-- {% raw %} -->
 ## Overview
 
 This topic goes over the data migration process for BlueFoot data into the PageBuilder module in Magento 2.3.
@@ -308,3 +310,5 @@ If you are creating a new renderer for migration outside the PageBuilder module,
 [lifecycle]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/prepare/lifecycle.html
 [`di.xml`]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/di-xml-file.html
 [dependency injection]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/depend-inj.html
+
+<!-- {% endraw %} -->

@@ -1,5 +1,6 @@
 # Master format
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,6 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
+
+<!-- {% raw %} -->
 
 PageBuilder uses XHTML with inline styles and data attributes as the master format for storage.
 
@@ -1061,3 +1065,5 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
+
+<!-- {% endraw %} -->

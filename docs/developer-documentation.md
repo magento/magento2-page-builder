@@ -1,5 +1,6 @@
 # Developer Documentation
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -29,6 +30,9 @@
     1. [Add custom logic to content types]
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
+<!--{% endcomment %}-->
+
+<!-- {% raw %} -->
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
 
@@ -101,3 +105,5 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+
+<!-- {% endraw %} -->

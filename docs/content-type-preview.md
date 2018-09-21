@@ -1,5 +1,6 @@
 # Render a backend content type preview
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,8 +58,11 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to use the `RenderPool` on the stage to render a backend [content type] preview. 
 
 Using this method, you can preview content types that cannot be rendered on the stage and require further backend processing to be previewed.
@@ -155,4 +159,4 @@ Generally, you would perform this operation when the properties change, by overr
 
 To update the Document Object Model (DOM) to display your content, amend the JavaScript property that represents the HTML variable of your main element with the response from the HTTP request, `this.data.main.html(response.content);` from the previous example.
 
-
+<!-- {% endraw %} -->
