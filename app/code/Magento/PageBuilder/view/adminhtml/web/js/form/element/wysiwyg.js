@@ -82,14 +82,10 @@ define([
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
                 if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
-                    if (jquery('#' + id).parents('aside').length) {
-                        jquery('#' + id).parents('.modal-inner-wrap').removeClass('un-transform');
-                    }
+                    jquery('.modal-inner-wrap').removeClass('un-transform');
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(true);
-                    if (jquery('#' + id).parents('aside').length) {
-                        jquery('#' + id).parents('.modal-inner-wrap').addClass('un-transform');
-                    }
+                    jquery('.modal-inner-wrap').addClass('un-transform');
                 }
             }.bind(this));
         }
