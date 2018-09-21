@@ -475,7 +475,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     };
     /**
      * Dispatch content type clone events
-     * 
+     *
      * @param {ContentTypeInterface} originalContentType
      * @param {ContentTypeInterface} duplicateContentType
      * @param {number} index

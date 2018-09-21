@@ -9,7 +9,7 @@
     <suite name="PageBuilderWithWYSIWYG">
         <before>
             <createData stepKey="enablePageBuilderAndWYSIWYG" entity="enablePageBuilderAndWYSIWYGForm"/>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setGoogleMapsAPIKey"/>
         </before>
         <after>
             <createData stepKey="DisabledWYSIWYG" entity="disableWYSYWYGForm"/>
