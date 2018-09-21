@@ -1836,7 +1836,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Row"/>
-            <title value="Row border should change to correct element"/>
+            <title value="Row border should change to correct element on appearance change"/>
             <description value="A user should be able to change the appearance on a row and see the border update as expected"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-4126"/>
@@ -1875,10 +1875,10 @@
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible"/>
-        <waitForElementVisible selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible"/>
-        <waitForElementVisible selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="waitForBorderColorVisible"/>
-        <waitForElementVisible selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible"/>
+        <seeElement selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible"/>
+        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="waitForBorderColorVisible"/>
+        <seeElement selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible"/>
         <!-- Change appearance to contained -->
         <comment userInput="Change appearance to contained" stepKey="commentContained"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -1888,10 +1888,10 @@
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForElementVisible selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible1"/>
-        <waitForElementVisible selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible1"/>
-        <waitForElementVisible selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="waitForBorderColorVisible1"/>
-        <waitForElementVisible selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible1"/>
+        <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible1"/>
+        <seeElement selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible1"/>
+        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="waitForBorderColorVisible1"/>
+        <seeElement selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible1"/>
         <!-- Verify the border is not on the outside of the contained row -->
         <comment userInput="Verify the border is not on the outside of the contained row" stepKey="commentVerifyBorder"/>
         <dontSeeElement selector="{{RowOnStage_Contained_Invalid.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="dontSeeBorderOnOutside" />
