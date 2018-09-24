@@ -876,12 +876,12 @@
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
-        <!-- Click banner anchor -->
+        <!-- Click mobile banner anchor -->
         <comment userInput="Click mobile banner anchor" stepKey="clickMobileBannerAnchorStorefront" />
         <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlPropertyValidate.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile" />
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlPropertyValidate.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefrontMobile" />
-        <!-- Click wysiwyg anchor -->
+        <!-- Click mobile wysiwyg anchor -->
         <comment userInput="Click mobile wysiwyg anchor" stepKey="clickMobileWysiwygLinkAnchorStorefront" />
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
