@@ -6,13 +6,21 @@
 define(['jquery'], function ($) {
     'use strict';
 
-    return function (config, element) {
+    /**
+     * Binds window navigation event handler to non-anchor elements to facilitate simulated nested anchor functionality
+     * @param {Object|null} config
+     * @param {Node} element
+     */
+    function bindClickWidget(config, element) {
         var $linkElements = $(element).find('[data-link-type]');
 
         $linkElements.each(function (idx, linkElement) {
-            var $linkElement = $(linkElement);
+            var $linkElement = $(linkElement),
+                isActualAnchorElement = $linkElement.prop('nodeName') === 'A',
+                href = ($linkElement.attr('href') || '').trim(),
+                isValidHref = ['javascript:void(0)', ''].indexOf(href) === -1;
 
-            if ($linkElement.prop('nodeName') === 'A' || !$linkElement.attr('href')) {
+            if (isActualAnchorElement || !isValidHref) {
                 return;
             }
 
@@ -23,8 +31,18 @@ define(['jquery'], function ($) {
                     return;
                 }
 
-                window.location.href = $linkElement.attr('href');
+                bindClickWidget.redirectTo($linkElement.attr('href'));
             });
         });
+    }
+
+    /**
+     * Navigate to href in browser
+     * @param {String} href
+     */
+    bindClickWidget.redirectTo = function (href) {
+        window.location.href = href;
     };
+
+    return bindClickWidget;
 });
