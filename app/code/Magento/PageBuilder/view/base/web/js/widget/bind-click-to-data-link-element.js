@@ -31,17 +31,25 @@ define(['jquery'], function ($) {
                     return;
                 }
 
-                bindClickWidget.redirectTo($linkElement.attr('href'));
+                bindClickWidget.redirectTo(
+                    $linkElement.attr('href'),
+                    $linkElement.attr('target')
+                );
             });
         });
     }
 
     /**
-     * Navigate to href in browser
+     * Navigate to href in browser.  Open in new window if target is '_blank'
      * @param {String} href
+     * @param {String} target
      */
-    bindClickWidget.redirectTo = function (href) {
-        window.location.href = href;
+    bindClickWidget.redirectTo = function (href, target) {
+        if (target === '_blank') {
+            window.open(href, target);
+        } else {
+            window.location.href = href;
+        }
     };
 
     return bindClickWidget;
