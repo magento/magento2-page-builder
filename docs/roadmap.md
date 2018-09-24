@@ -1,5 +1,6 @@
 # Project Roadmap
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -40,7 +41,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Overview
 
 This page lists the upcoming functionality and known issues for the PageBuilder project.
@@ -111,3 +114,4 @@ This page lists the upcoming functionality and known issues for the PageBuilder 
 * Editing/Deleting a product that is tied to a page does not update a page on the storefront until the page is saved or the cache is flushed. <!-- MAGETWO-90432 -->
 
 
+<!-- {% endraw %} -->

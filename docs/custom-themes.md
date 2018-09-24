@@ -1,5 +1,6 @@
 # Custom Theme Integration
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -59,11 +60,15 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to use your custom themes to control responsive layouts within Page Builder.
 
 ## Responsive Mobile Images
+
 By default, when you configure Page Builder to render a background image for a container, it uses a mobile image when the container's width is less than the industry-standard max-width of 768px. This width is configured within `Magento_PageBuilder/etc/view.xml`, as follows:
 ```xml
 <vars module="Magento_PageBuilder">
@@ -95,3 +100,5 @@ However, if your custom theme uses a different mobile breakpoint, you'll need to
 This directs Page Builder to use your theme's mobile breakpoint instead of its default breakpoint of 768px. Other responsive breakpoints from your custom theme can be added in the same way.
 
 [Note: I think it might be nice to include another example or two of configuring other breakpoints (or other styles?) from custom themes as relevant.]
+
+<!-- {% endraw %} -->

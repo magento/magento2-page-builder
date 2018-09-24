@@ -1,5 +1,6 @@
 # Add image uploader to content type
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,8 +58,11 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to add a reusable image uploader component to the PageBuilder stage for a content type.
 
 ## Overview
@@ -173,3 +177,5 @@ Update the preview template file, `bluefoot/app/code/Magento/PageBuilder/view/ad
 ```
 
 **Note:** When a file is deleted from the media browser, the `fileDeleted` event is triggered on the window with the `mediabrowser` namespace. The passed argument is an object containing the `ids` property, which is an array of ID strings for each of the deleted files. The IDs of the selected files are provided in the objects dispatched by the `addFile` and `processFile` methods inside the image uploader UI Component.
+
+<!-- {% endraw %} -->
