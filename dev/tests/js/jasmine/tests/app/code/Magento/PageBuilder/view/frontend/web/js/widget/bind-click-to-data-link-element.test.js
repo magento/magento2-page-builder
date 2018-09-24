@@ -87,7 +87,7 @@ define([
             expect(window.open).not.toHaveBeenCalled();
         });
 
-        it('Should not navigate to an simulated anchor\'s href if clicked inside of nested anchor', function () {
+        it('Should not navigate to simulated anchor\'s href if clicked inside of nested anchor', function () {
             spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
@@ -110,7 +110,7 @@ define([
             expect(window.open).not.toHaveBeenCalled();
         });
 
-        it('Should navigate to an simulated anchor\'s href if clicked outside of nested anchor', function () {
+        it('Should navigate to simulated anchor\'s href if clicked outside of nested anchor', function () {
             spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
