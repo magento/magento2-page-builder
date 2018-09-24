@@ -1,5 +1,6 @@
 # How to create custom content type container
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainer`.
 
 The module creates a new custom container group content type with a `left` and `right` appearance.
@@ -1091,3 +1094,5 @@ Use the configuration form in the container group's edit panel to switch between
 [custom container group]: #custom-container-group
 [custom container group form]: #custom-container-group-form-layout
 [custom container form]: #custom-container-form-layout
+
+<!-- {% endraw %} -->

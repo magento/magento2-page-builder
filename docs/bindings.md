@@ -1,5 +1,6 @@
 # Bindings
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,8 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
-
+<!-- {% raw %} -->
 ## Summary
 
 As part of the Page Builder application, we provide new Knockout bindings you can use in your custom content types:
@@ -106,3 +108,4 @@ Example Usage:
 app/code/Magento/PageBuilder/view/adminhtml/web/template/panel.html
 ```
 
+<!-- {% endraw %} -->

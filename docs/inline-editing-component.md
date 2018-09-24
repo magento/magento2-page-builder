@@ -1,5 +1,6 @@
 # Use the inline editing component
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
 
 This topic describes how to add a reusable inline text editing component to the PageBuilder stage for a content type.
@@ -221,3 +224,4 @@ To extend the inline text editor component:
 6. Specify the `minToolbarWidth` to limit the width of TinyMCE4. If a component is used with a content type configured to a small width, this will limit the width to match.
 7. Specify the `parentSelectorsToUnderlay` for TinyMCE4 to utilize an array of selectors for applying the z-index, which will prevent the toolbar from overlaying content type elements.
 
+<!-- {% endraw %} -->

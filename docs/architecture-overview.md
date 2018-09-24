@@ -1,5 +1,6 @@
 # Architecture overview
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,8 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
-
+<!-- {% raw %} -->
 ## What is PageBuilder?
 
 PageBuilder is tool that simplifies content creation by letting you drag and drop content types and configure them without writing a line of code.
@@ -185,3 +187,5 @@ Appearances allow you to make the following customization on existing content ty
 [TypeScript]: https://www.typescriptlang.org/
 [master format]: master-format.md
 [content type]: how-to-add-new-content-type.md
+
+<!-- {% endraw %} -->

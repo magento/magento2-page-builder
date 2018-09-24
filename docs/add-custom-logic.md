@@ -1,5 +1,6 @@
 # Add custom logic to content types
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 You can customize PageBuilder content types by adding your own logic on the frontend.
 
 To add custom logic to content types:
@@ -132,3 +135,5 @@ Add the following configuration to the `etc/di.xml` file in your custom module d
     </arguments>
 </type>
 ```
+
+<!-- {% endraw %} -->

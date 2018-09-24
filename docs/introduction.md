@@ -3,6 +3,7 @@
 PageBuilder is a Content Management System(CMS) module for Magento 2.3 and above.
 It replaces the default WYSIWYG Editor in the Admin area with a highly configurable drag-and-drop editing system.
 
+<!--{% comment %}-->
 ## Navigation
 
 1. **Introduction**
@@ -62,3 +63,4 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
