@@ -1,5 +1,6 @@
 # Store component master format as widget directive
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,8 +58,11 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## What's in this topic
+
 This topic describes how to store a component's master format as a `widget-directive`.
 
 ## Overview
@@ -122,3 +126,4 @@ To add the extended converter to your content type declaration XML file, 'Magent
 ```
 The preceding code samples utilize example file paths. Substitute the file path with values specific to your content type and component.
 
+<!-- {% endraw %} -->

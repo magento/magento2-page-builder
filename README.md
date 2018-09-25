@@ -1,5 +1,7 @@
 # magento2-page-builder
 
+<!-- {% raw %} -->
+
 ## PageBuilder Early Access Program
 
 The PageBuilder Early Access Program (EAP) gives partners the following perks:
@@ -87,3 +89,5 @@ For all other questions or requests, contact [Olena Tkacheva].
 
 [Slack]: https://magentocommeng.slack.com/
 [Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
+
+<!-- {% endraw %} -->

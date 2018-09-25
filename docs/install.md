@@ -1,5 +1,6 @@
 # Installation Guide
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -20,7 +21,9 @@
 [Developer documentation]: developer-documentation.md
 [Roadmap and known issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Overview
 
 Follow these steps to install Page Builder.
@@ -86,3 +89,5 @@ Check your composer keys in the `auth.json` file.
 If these keys are correct and you still encounter these errors, please contact [Igor Melnykov] or [Olena Tkacheva].
 
 [Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
+
+<!-- {% endraw %} -->

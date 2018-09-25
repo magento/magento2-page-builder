@@ -1,5 +1,6 @@
 # Module integration
 
+<!--{% comment %}-->
 ## Navigation
 
 1. [Introduction]
@@ -57,7 +58,9 @@
 [Add custom logic to content types]: add-custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
+<!--{% endcomment %}-->
 
+<!-- {% raw %} -->
 ## Product attribute fields
 
 The PageBuilder module is compatible with all product attributes fields that use an input of type `text`.
@@ -179,3 +182,5 @@ To prevent your form field from switching or using PageBuilder, set the `is_page
 [PageBuilder button]: images/pagebuilder-button.png
 [WYSIWYG UI Component]: https://devdocs.magento.com/guides/v2.2/ui_comp_guide/components/ui-wysiwyg.html
 [UI Component configuration file]: https://devdocs.magento.com/guides/v2.2/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html
+
+<!-- {% endraw %} -->
