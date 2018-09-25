@@ -28,6 +28,7 @@ class WidgetInitializerConfig
 
     /**
      * Retrieves the component-ready configuration for the widget initializer
+     *
      * @return array
      */
     public function getConfig(): array
