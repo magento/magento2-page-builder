@@ -298,6 +298,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this4.parent.children([]);
 
           _this4.parent.children(data);
+
+          _underscore.defer(function () {
+            _this4.buildSlick();
+          });
         }
       });
 

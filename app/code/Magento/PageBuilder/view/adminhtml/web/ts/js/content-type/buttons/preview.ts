@@ -10,36 +10,72 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import {SortableOptionsInterface} from "../../binding/sortable-options";
 import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
+import ContentTypeConfigInterface from "../../content-type-config";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import delayUntil from "../../utils/delay-until";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
+import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
 /**
  * @api
  */
 export default class Preview extends PreviewCollection {
-    public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
-
-    /**
-     * Keeps track of number of button item to disable sortable if there is only 1.
-     */
-    public disableSorting: KnockoutComputed<void> = ko.computed(() => {
-        const sortableElement = $(this.wrapperElement).find(".buttons-container");
-        if (this.parent.children().length <= 1) {
-            sortableElement.sortable("disable");
-        } else {
-            sortableElement.sortable("enable");
-        }
-    });
+    public focusedButton: KnockoutObservable<number> = ko.observable();
 
     private debouncedResizeHandler = _.debounce(() => {
         this.resizeChildButtons();
     }, 350);
 
+    /**
+     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    constructor(
+        parent: ContentTypeCollectionInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
+
+        // Keeps track of number of button item to disable sortable if there is only 1.
+        this.parent.children.subscribe(() => {
+            const sortableElement = $(this.wrapperElement).find(".buttons-container");
+            if (this.parent.children().length <= 1) {
+                sortableElement.sortable("disable");
+            } else {
+                sortableElement.sortable("enable");
+            }
+        });
+
+        // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+        this.focusedButton.subscribe(_.debounce((index: number) => {
+            if (index !== null) {
+                events.trigger("stage:interactionStart");
+                const focusedButton = this.parent.children()[index];
+                delayUntil(
+                    () => $(focusedButton.preview.wrapperElement).find("[contenteditable]").focus(),
+                    () => typeof focusedButton.preview.wrapperElement !== "undefined",
+                    10,
+                );
+            } else {
+                // We have to force the stop as the event firing is inconsistent for certain operations
+                events.trigger("stage:interactionStop", {force : true});
+            }
+        }, 1));
+    }
+
+    /**
+     * Bind events
+     */
     public bindEvents() {
         super.bindEvents();
 
@@ -68,19 +104,21 @@ export default class Preview extends PreviewCollection {
         events.on("contentType:redrawAfter", () => {
             this.debouncedResizeHandler();
         });
-    }
 
-    /**
-     * Set state based on mouseover event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
-    public onMouseOver(context: Preview, event: Event): void {
-        // Only run the mouse over action when the active element is not a child of buttons
-        if (!$.contains(this.wrapperElement, document.activeElement)) {
-            return super.onMouseOver(context, event);
-        }
+        // Capture when a content type is duplicated within the container
+        let duplicatedButton: ContentTypeInterface;
+        let duplicatedButtonIndex: number;
+        events.on("button-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
+            if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
+                duplicatedButton = args.duplicateContentType;
+                duplicatedButtonIndex = args.index;
+            }
+        });
+        events.on("button-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            if (duplicatedButton && args.id === duplicatedButton.id) {
+                this.focusedButton(duplicatedButtonIndex);
+            }
+        });
     }
 
     /**
@@ -114,7 +152,8 @@ export default class Preview extends PreviewCollection {
 
         createButtonItemPromise.then((button: ContentTypeInterface) => {
             this.parent.addChild(button);
-            this.isLiveEditing(this.parent.children().indexOf(button) !== -1);
+            const buttonIndex = this.parent.children().indexOf(button);
+            this.focusedButton(buttonIndex > -1 ? buttonIndex : null);
             return button;
         }).catch((error: Error) => {
             console.error(error);
@@ -128,11 +167,10 @@ export default class Preview extends PreviewCollection {
      * @param {string} tolerance
      * @returns {JQueryUI.Sortable}
      */
-    public buttonsSortableOptions(
+    public getSortableOptions(
         orientation: string = "width",
         tolerance: string = "intersect",
     ): SortableOptionsInterface {
-        let placeholderGhost: JQuery;
         return {
             handle: ".button-item-drag-handle",
             items: ".pagebuilder-content-type-wrapper",
@@ -141,6 +179,7 @@ export default class Preview extends PreviewCollection {
             tolerance,
             revert: 200,
             disabled: this.parent.children().length <= 1,
+
             /**
              * Provide custom helper element
              *
@@ -156,6 +195,7 @@ export default class Preview extends PreviewCollection {
                 helper[0].querySelector(".pagebuilder-options").remove();
                 return helper[0];
             },
+
             placeholder: {
                 /**
                  * Provide custom placeholder element
@@ -168,9 +208,7 @@ export default class Preview extends PreviewCollection {
                         .clone()
                         .css({
                             display: "inline-block",
-                            opacity: 0,
-                            width: item.width(),
-                            height: item.height(),
+                            opacity: "0.3",
                         })
                         .removeClass("focused")
                         .addClass("sortable-placeholder");
@@ -181,54 +219,18 @@ export default class Preview extends PreviewCollection {
                     return;
                 },
             },
+
             /**
-             * Logic for starting the sorting and adding the placeholderGhost
-             *
-             * @param {Event} event
-             * @param {JQueryUI.SortableUIParams} element
+             * Trigger interaction start on sort
              */
-            start(event: Event, element: JQueryUI.SortableUIParams) {
-                placeholderGhost = element.placeholder
-                    .clone()
-                    .css({
-                        opacity: 0.3,
-                        position: "absolute",
-                        left: element.placeholder.position().left,
-                        top: element.placeholder.position().top,
-                    });
-                element.item.parent().append(placeholderGhost);
+            start() {
                 events.trigger("stage:interactionStart");
             },
+
             /**
-             * Logic for changing element position
-             *
-             * Set the width and height of the moving placeholder animation
-             * and then add animation of placeholder ghost to the placeholder position.
-             *
-             * @param {Event} event
-             * @param {JQueryUI.SortableUIParams} element
+             * Stop stage interaction on stop
              */
-            change(event: Event, element: JQueryUI.SortableUIParams) {
-                element.placeholder.stop(true, false);
-                if (orientation === "height") {
-                    element.placeholder.css({height: element.item.height() / 1.2});
-                    element.placeholder.animate({height: element.item.height()}, 200, "linear");
-                }
-                if (orientation === "width") {
-                    element.placeholder.css({width: element.item.width() / 1.2});
-                    element.placeholder.animate({width: element.item.width()}, 200, "linear");
-                }
-                placeholderGhost.stop(true, false).animate({
-                    left: element.placeholder.position().left,
-                    top: element.placeholder.position().top,
-                }, 200);
-            },
-            /**
-             * Logic for post sorting and removing the placeholderGhost
-             */
-            stop(event: Event, element: JQueryUI.SortableUIParams) {
-                placeholderGhost.remove();
-                element.item.find(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
+            stop() {
                 events.trigger("stage:interactionStop");
             },
         };
