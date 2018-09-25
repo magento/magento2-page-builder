@@ -95,7 +95,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
        *
        * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
        *
-       * @param {any} event
+       * @param {JQueryEventObject} event
        */
 
 
@@ -119,8 +119,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       };
       /**
        * On key up update the view model to ensure all changes are saved
-       *
-       * @param {Event} event
        */
 
 

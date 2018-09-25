@@ -187,19 +187,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         if (this.element.getElementsByClassName("tab-name")[index]) {
           this.element.getElementsByClassName("tab-name")[index].focus();
         }
-
-        _underscore.defer(function () {
-          var $focusedElement = (0, _jquery)(":focus");
-
-          if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
-            // Selection alternative to execCommand to workaround issues with tinymce
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents($focusedElement.get(0));
-            selection.removeAllRanges();
-            selection.addRange(range);
-          }
-        });
       }
     };
     /**

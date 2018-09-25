@@ -48,8 +48,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
 
 
     _proto.onClick = function onClick(index, event) {
-      (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
-      event.stopPropagation();
+      var contentEditable = (0, _jquery)(event.currentTarget).find("[contenteditable]");
+
+      if (!(0, _jquery)(":focus").is(contentEditable)) {
+        (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
+        event.stopPropagation();
+      }
     };
     /**
      * Handle on focus out events, when the button item is focused out we need to set our focusedButton record on the

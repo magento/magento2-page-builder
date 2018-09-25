@@ -190,19 +190,6 @@ export default class Preview extends PreviewCollection {
             if (this.element.getElementsByClassName("tab-name")[index]) {
                 (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
             }
-            _.defer(() => {
-                const $focusedElement = $(":focus");
-
-                if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
-                    // Selection alternative to execCommand to workaround issues with tinymce
-                    const selection = window.getSelection();
-                    const range = document.createRange();
-
-                    range.selectNodeContents($focusedElement.get(0));
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                }
-            });
         }
     }
 

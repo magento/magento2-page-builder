@@ -41,8 +41,11 @@ export default class Preview extends BasePreview {
      * @param {JQueryEventObject} event
      */
     public onClick(index: number, event: JQueryEventObject): void {
-        $(event.currentTarget).find("[contenteditable]").focus();
-        event.stopPropagation();
+        const contentEditable = $(event.currentTarget).find("[contenteditable]");
+        if (!$(":focus").is(contentEditable)) {
+            $(event.currentTarget).find("[contenteditable]").focus();
+            event.stopPropagation();
+        }
     }
 
     /**

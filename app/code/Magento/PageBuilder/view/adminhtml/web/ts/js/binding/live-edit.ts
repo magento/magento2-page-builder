@@ -83,7 +83,7 @@ ko.bindingHandlers.liveEdit = {
          *
          * Prevent styling such as bold, italic, and underline using keyboard commands, and prevent multi-line entries
          *
-         * @param {any} event
+         * @param {JQueryEventObject} event
          */
         const onKeyDown = (event: JQueryEventObject) => {
             const key = keyCodes[event.keyCode];
@@ -105,8 +105,6 @@ ko.bindingHandlers.liveEdit = {
 
         /**
          * On key up update the view model to ensure all changes are saved
-         *
-         * @param {Event} event
          */
         const onKeyUp = () => {
             if (focusedValue !== stripHtml(element.innerHTML)) {
