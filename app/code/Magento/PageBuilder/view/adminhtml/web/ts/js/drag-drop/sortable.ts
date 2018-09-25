@@ -184,6 +184,9 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    const contentTypeConfig = getDraggedContentTypeConfig();
+    setDraggedContentTypeConfig(null);
+
     if ($(event.target)[0] !== this) {
         return;
     }
@@ -194,7 +197,6 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
         return;
     }
 
-    const contentTypeConfig = getDraggedContentTypeConfig();
     if (contentTypeConfig) {
         // If the sortable instance is disabled don't complete this operation
         if ($(this).sortable("option", "disabled") || $(this).parents(hiddenClass).length > 0) {

@@ -185,11 +185,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.onMouseOut = function onMouseOut(context, event) {
       var _this2 = this;
 
+      this.mouseover = false;
+
       if ((0, _registry.getDraggedContentTypeConfig)()) {
         return;
       }
-
-      this.mouseover = false;
 
       _underscore.delay(function () {
         if (!_this2.mouseover && _this2.mouseoverContext === context) {

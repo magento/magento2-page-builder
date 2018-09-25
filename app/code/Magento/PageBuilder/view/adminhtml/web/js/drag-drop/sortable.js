@@ -174,6 +174,9 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
 
   function onSortReceive(preview, event, ui) {
+    var contentTypeConfig = (0, _registry.getDraggedContentTypeConfig)();
+    (0, _registry.setDraggedContentTypeConfig)(null);
+
     if ((0, _jquery)(event.target)[0] !== this) {
       return;
     } // If the parent can't receive drops we need to cancel the operation
@@ -183,8 +186,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       (0, _jquery)(this).sortable("cancel");
       return;
     }
-
-    var contentTypeConfig = (0, _registry.getDraggedContentTypeConfig)();
 
     if (contentTypeConfig) {
       // If the sortable instance is disabled don't complete this operation

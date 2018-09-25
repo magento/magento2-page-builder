@@ -205,11 +205,12 @@ export default class Preview {
      * @param {Event} event
      */
     public onMouseOut(context: Preview, event: Event) {
+        this.mouseover = false;
+
         if (getDraggedContentTypeConfig()) {
             return;
         }
 
-        this.mouseover = false;
         _.delay(() => {
             if (!this.mouseover && this.mouseoverContext === context) {
                 const currentTarget = event.currentTarget;
