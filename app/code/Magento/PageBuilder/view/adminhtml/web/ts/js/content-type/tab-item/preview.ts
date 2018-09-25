@@ -3,15 +3,17 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
+import ko from "knockout";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import PreviewCollection from "../preview-collection";
+import TabsPreview from "../tabs/preview";
 
 /**
  * @api
  */
 export default class Preview extends PreviewCollection {
-
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
      *
@@ -19,6 +21,61 @@ export default class Preview extends PreviewCollection {
      * @type {[string]}
      */
     protected fieldsToIgnoreOnRemove: string[] = ["tab_name"];
+
+    /**
+     * Force the focus on the clicked tab header
+     *
+     * @param {number} index
+     * @param {JQueryEventObject} event
+     */
+    public onClick(index: number, event: JQueryEventObject): void {
+        $(event.currentTarget).find("[contenteditable]").focus();
+        event.stopPropagation();
+    }
+
+    /**
+     * On focus in set the focused button
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+    public onFocusIn(index: number, event: Event): void {
+        const parentPreview = this.parent.parent.preview as TabsPreview;
+        if (parentPreview.focusedTab() !== index) {
+            parentPreview.setFocusedTab(index, true);
+        }
+    }
+
+    /**
+     * On focus out set the focused tab to null
+     *
+     * @param {number} index
+     * @param {JQueryEventObject} event
+     */
+    public onFocusOut(index: number, event: JQueryEventObject): void {
+        if (this.parent && this.parent.parent) {
+            const parentPreview = this.parent.parent.preview as TabsPreview;
+            const unfocus = () => {
+                window.getSelection().removeAllRanges();
+                parentPreview.focusedTab(null);
+            };
+            if (event.relatedTarget && $.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+                // Verify the focus was not onto the options menu
+                if ($(event.relatedTarget).closest(".pagebuilder-options").length > 0) {
+                    unfocus();
+                } else {
+                    // Have we moved the focus onto another button in the current group?
+                    const tabItem = ko.dataFor(event.relatedTarget) as Preview;
+                    if (tabItem && tabItem.parent && tabItem.parent.parent) {
+                        const newIndex = tabItem.parent.parent.children().indexOf(tabItem.parent);
+                        parentPreview.setFocusedTab(newIndex, true);
+                    }
+                }
+            } else if (parentPreview.focusedTab() === index) {
+                unfocus();
+            }
+        }
+    }
 
     /**
      * Get the options instance

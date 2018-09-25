@@ -50,6 +50,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
           selectAll = _valueAccessor$select === void 0 ? false : _valueAccessor$select;
 
       var focusedValue = element.innerHTML;
+      var previouslyFocused = false;
+      var blurTimeout;
       /**
        * Strip HTML and return text
        *
@@ -68,17 +70,31 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
 
       var onFocus = function onFocus() {
+        clearTimeout(blurTimeout);
         focusedValue = stripHtml(element.innerHTML);
 
-        if (selectAll && element.innerHTML !== "") {
+        if (selectAll && element.innerHTML !== "" && !previouslyFocused) {
           _underscore.default.defer(function () {
             var selection = window.getSelection();
             var range = document.createRange();
             range.selectNodeContents(element);
             selection.removeAllRanges();
             selection.addRange(range);
+            previouslyFocused = true;
           });
         }
+      };
+      /**
+       * On blur change our timeout for previously focused. We require a flag to track whether the input has been
+       * focused and selected previously due to a bug in Firefox which doesn't handle focus events correctly when
+       * contenteditable is placed within an anchor.
+       */
+
+
+      var onBlur = function onBlur() {
+        blurTimeout = setTimeout(function () {
+          previouslyFocused = false;
+        }, 100);
       };
       /**
        * Mousedown event on element
@@ -150,6 +166,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       element.textContent = viewModel.parent.dataStore.get(field);
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
+      element.addEventListener("blur", onBlur);
       element.addEventListener("mousedown", onMouseDown);
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
@@ -161,7 +178,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       viewModel.parent.dataStore.subscribe(function () {
         element.textContent = viewModel.parent.dataStore.get(field);
         handlePlaceholderClass(element);
-      }, field);
+      }, field); // Resolve issues of content editable being within an anchor
+
+      if ((0, _jquery.default)(element).parent().is("a")) {
+        (0, _jquery.default)(element).parent().attr("draggable", "false");
+      }
     },
 
     /**

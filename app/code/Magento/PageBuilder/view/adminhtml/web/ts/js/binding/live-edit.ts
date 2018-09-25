@@ -38,6 +38,8 @@ ko.bindingHandlers.liveEdit = {
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field, placeholder, selectAll = false} = valueAccessor();
         let focusedValue = element.innerHTML;
+        let previouslyFocused: boolean = false;
+        let blurTimeout: number;
 
         /**
          * Strip HTML and return text
@@ -56,17 +58,30 @@ ko.bindingHandlers.liveEdit = {
          * Record the value on focus, only conduct an update when data changes
          */
         const onFocus = () => {
+            clearTimeout(blurTimeout);
             focusedValue = stripHtml(element.innerHTML);
 
-            if (selectAll && element.innerHTML !== "") {
+            if (selectAll && element.innerHTML !== "" && !previouslyFocused) {
                 _.defer(() => {
                     const selection = window.getSelection();
                     const range = document.createRange();
                     range.selectNodeContents(element);
                     selection.removeAllRanges();
                     selection.addRange(range);
+                    previouslyFocused = true;
                 });
             }
+        };
+
+        /**
+         * On blur change our timeout for previously focused. We require a flag to track whether the input has been
+         * focused and selected previously due to a bug in Firefox which doesn't handle focus events correctly when
+         * contenteditable is placed within an anchor.
+         */
+        const onBlur = () => {
+            blurTimeout = setTimeout(() => {
+                previouslyFocused = false;
+            }, 100);
         };
 
         /**
@@ -132,6 +147,7 @@ ko.bindingHandlers.liveEdit = {
         element.textContent = viewModel.parent.dataStore.get(field);
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
+        element.addEventListener("blur", onBlur);
         element.addEventListener("mousedown", onMouseDown);
         element.addEventListener("keydown", onKeyDown);
         element.addEventListener("keyup", onKeyUp);
@@ -146,6 +162,11 @@ ko.bindingHandlers.liveEdit = {
             element.textContent = viewModel.parent.dataStore.get(field);
             handlePlaceholderClass(element);
         }, field);
+
+        // Resolve issues of content editable being within an anchor
+        if ($(element).parent().is("a")) {
+            $(element).parent().attr("draggable", "false");
+        }
     },
 
     /**
