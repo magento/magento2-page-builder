@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _conditionalRemoveOption, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _conditionalRemoveOption, _preview) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -40,54 +40,65 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/content-type-menu/co
       return options;
     };
     /**
-     * Set state based on button click event for the preview
+     * Force the focus on the clicked button
      *
-     * @param {Preview} context
+     * @param {number} index
+     * @param {JQueryEventObject} event
+     */
+
+
+    _proto.onClick = function onClick(index, event) {
+      (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
+      event.stopPropagation();
+    };
+    /**
+     * Handle on focus out events, when the button item is focused out we need to set our focusedButton record on the
+     * buttons preview item to null. If we detect this focus out event is to focus into another button we need to ensure
+     * we update the record appropriately.
+     *
+     * @param {number} index
      * @param {Event} event
      */
 
 
-    _proto.onButtonClick = function onButtonClick(context, event) {
-      // Ensure no other options panel and button drag handles are displayed
-      (0, _jquery)(".pagebuilder-content-type-active").removeClass("pagebuilder-content-type-active");
-      (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-      var currentTarget = (0, _jquery)(event.currentTarget);
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
+    _proto.onFocusOut = function onFocusOut(index, event) {
+      if (this.parent && this.parent.parent) {
+        var parentPreview = this.parent.parent.preview;
 
-      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = optionsMenu.first();
+        var unfocus = function unfocus() {
+          window.getSelection().removeAllRanges();
+          parentPreview.focusedButton(null);
+        };
+
+        if (event.relatedTarget && _jquery.contains(parentPreview.wrapperElement, event.relatedTarget)) {
+          // Verify the focus was not onto the options menu
+          if ((0, _jquery)(event.relatedTarget).closest(".pagebuilder-options").length > 0) {
+            unfocus();
+          } else {
+            // Have we moved the focus onto another button in the current group?
+            var buttonItem = _knockout.dataFor(event.relatedTarget);
+
+            if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
+              var newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
+              parentPreview.focusedButton(newIndex);
+            }
+          }
+        } else if (parentPreview.focusedButton() === index) {
+          unfocus();
+        }
       }
-
-      (0, _jquery)(currentTarget).find("[data-element='link_text']").focus();
-      optionsMenu.parent().addClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
-     * Set state based on blur event for the preview
+     * On focus in set the focused button
      *
-     * @param {Preview} context
+     * @param {number} index
      * @param {Event} event
      */
 
 
-    _proto.onBlur = function onBlur(context, event) {
-      var currentTarget = event.currentTarget;
-      var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
-
-      if (!(0, _jquery)(currentTarget).hasClass("type-nested")) {
-        optionsMenu = optionsMenu.first();
-      }
-
-      optionsMenu.parent().removeClass("pagebuilder-options-visible");
-      (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
-    };
-    /**
-     * Focus out of the element
-     */
-
-
-    _proto.onFocusOut = function onFocusOut() {
-      this.parent.parent.preview.isLiveEditing(null);
+    _proto.onFocusIn = function onFocusIn(index, event) {
+      var parentPreview = this.parent.parent.preview;
+      parentPreview.focusedButton(index);
     };
     /**
      * If the button is displayed we need to show the options menu on hover

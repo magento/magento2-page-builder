@@ -29,7 +29,6 @@ export default class CreateValueForLinkType implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-
-        return data[name] ? data[name].type : "";
+        return data[name] && data[name].type ? data[name].type : "default";
     }
 }

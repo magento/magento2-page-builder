@@ -32,6 +32,7 @@
         <element name="tabsNavAligned" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'][contains(@style, 'text-align: {{arg1}};')])" parameterized="true"/>
         <element name="tabsContentAdvancedStyles" type="button" selector="//div[@class='tabs-content'][contains(@style, 'border-style: solid;')][contains(@style, 'border-color: rgb(0, 0, 0);')][contains(@style, 'border-width: 10px;')][contains(@style, 'border-radius: 12px;')][contains(@style, 'min-height: 300px;')]"/>
         <element name="tabsAlignment" type="text" selector="//div[@class='tabs-content'and contains(@style,'text-align: {{arg1}}')]" parameterized="true"/>
+        <element name="tabsContentHeightJS" type="button" selector="document.querySelectorAll('[class=tabs-content]')[{{arg1}}].clientHeight" parameterized="true"/>
     </section>
     <section name="TabOnStage">
         <element name="base" type="button" selector="(//div[@data-role='tab-item'])[{{arg1}}]" parameterized="true"/>
@@ -61,6 +62,7 @@
         <element name="tabContentBackgroundRepeat" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'background-repeat: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentBorderWidth" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'border-width: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentBorderRadius" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'border-radius: {{arg2}}')]" parameterized="true"/>
+        <element name="tabContentHeightJS" type="button" selector="document.querySelectorAll('[data-role=tab-item]')[{{arg1}}].clientHeight" parameterized="true"/>
         <element name="tabContentMargin" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'margin: {{arg2}}')]" parameterized="true"/>
         <element name="tabContentPadding" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')][contains(@style, 'padding: {{arg2}}')]" parameterized="true"/>
         <element name="container" type="button" selector="(//*[@role='tabpanel'])[{{arg1}}]//div[contains(@class, 'pagebuilder-tab-item')]//div[contains(@class, 'tab-item-container')]" parameterized="true"/>

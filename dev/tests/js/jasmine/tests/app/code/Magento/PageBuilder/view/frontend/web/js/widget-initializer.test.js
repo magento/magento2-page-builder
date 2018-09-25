@@ -15,25 +15,39 @@ define([
             'mage/apply/main': {
                 applyFor: jasmine.createSpy()
             }
-        };
+        },
+        loadWidgetInitializer,
+        removeCreatedElement;
 
-    beforeEach(function (done) {
+    /**
+     * Load the widget initializer for the tests
+     *
+     * @param {Function} done
+     */
+    loadWidgetInitializer = function (done) {
         injector.mock(mocks);
         injector.require(['Magento_PageBuilder/js/widget-initializer'], function (module) {
             widgetInitializer = module;
             done();
         });
-    });
+    };
 
-    afterEach(function () {
+    /**
+     * Remove any created elements
+     */
+    removeCreatedElement = function () {
         if (el !== undefined) {
             el.remove();
         }
-    });
+    };
 
     describe('Magento_PageBuilder/js/content-type/map/appearance/default/widget', function () {
+        beforeEach(loadWidgetInitializer);
+        afterEach(removeCreatedElement);
+
         it('Calls mage.applyFor on each element with each item present in config', function () {
-            var data;
+            var data,
+                applyForMock;
 
             el = $('<div class="unique-element-class-attr"></div>');
 
@@ -50,8 +64,11 @@ define([
 
             widgetInitializer(data);
 
-            expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el[0], true, 'awesome');
-            expect(mocks['mage/apply/main'].applyFor).toHaveBeenCalledWith(el[0], true, 'cool');
+            applyForMock = mocks['mage/apply/main'].applyFor;
+            expect(applyForMock).toHaveBeenCalledWith(jasmine.any(Object), true, 'awesome');
+            expect(applyForMock).toHaveBeenCalledWith(jasmine.any(Object), true, 'cool');
+            // Due to jQuery objects not being === we must use jQuery's is to validate if the elements are the same
+            expect(el.is(applyForMock.calls.mostRecent().args[0])).toBeTruthy();
         });
     });
 });
