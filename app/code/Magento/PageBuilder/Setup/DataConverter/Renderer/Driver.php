@@ -123,7 +123,7 @@ class Driver implements RendererInterface
 
         return '<div'
             . $this->printAttributes($rootElementAttributes)
-            . '><a'
+            . '><div'
             . $this->printAttributes($linkAttributes)
             . '>'
             . $imageElementHtml
@@ -135,7 +135,7 @@ class Driver implements RendererInterface
             . $overlayElementHtml
             . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
-            . '</div></div></div></a></div>';
+            . '</div></div></div></div></div>';
     }
 
     /**
