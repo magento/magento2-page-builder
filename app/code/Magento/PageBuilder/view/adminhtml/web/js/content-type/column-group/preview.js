@@ -87,7 +87,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("contentType:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
-          _this.spreadWidth(event, args);
+          _this.spreadWidth(args.index);
         }
       }); // Listen for resizing events from child columns
 
@@ -912,14 +912,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
-     * Spread any empty space across the other columns
+     * Spread any empty space across the other columns when a column is removed
      *
-     * @param {Event} event
-     * @param {ContentTypeRemovedEventParamsInterface} params
+     * @param {number} removedIndex
      */
 
 
-    _proto.spreadWidth = function spreadWidth(event, params) {
+    _proto.spreadWidth = function spreadWidth(removedIndex) {
       if (this.parent.children().length === 0) {
         return;
       }
@@ -958,12 +957,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       for (var _i3 = 1; _i3 <= spreadAcross; _i3++) {
         var columnToModify = void 0; // As the original column has been removed from the array, check the new index for a column
 
-        if (params.index <= this.parent.children().length && typeof this.parent.children()[params.index] !== "undefined") {
-          columnToModify = this.parent.children()[params.index];
+        if (removedIndex <= this.parent.children().length && typeof this.parent.children()[removedIndex] !== "undefined") {
+          columnToModify = this.parent.children()[removedIndex];
         }
 
-        if (!columnToModify && params.index - _i3 >= 0 && typeof this.parent.children()[params.index - _i3] !== "undefined") {
-          columnToModify = this.parent.children()[params.index - _i3];
+        if (!columnToModify && removedIndex - _i3 >= 0 && typeof this.parent.children()[removedIndex - _i3] !== "undefined") {
+          columnToModify = this.parent.children()[removedIndex - _i3];
         }
 
         if (columnToModify) {
