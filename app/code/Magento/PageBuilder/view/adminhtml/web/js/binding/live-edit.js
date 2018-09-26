@@ -19,15 +19,29 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
    */
 
   /**
+   * Strip HTML and return text
+   *
+   * @param {string} html
+   * @returns {string}
+   */
+  function stripHtml(html) {
+    var tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent;
+  }
+  /**
    * Add or remove the placeholder-text class from the element based on its content
    *
    * @param {Element} element
    */
+
+
   function handlePlaceholderClass(element) {
-    if (element.innerHTML.length === 0) {
-      (0, _jquery.default)(element).addClass("placeholder-text");
+    if (stripHtml(element.innerHTML).length === 0) {
+      element.innerHTML = "";
+      element.classList.add("placeholder-text");
     } else {
-      (0, _jquery.default)(element).removeClass("placeholder-text");
+      element.classList.remove("placeholder-text");
     }
   } // Custom Knockout binding for live editing text inputs
 
@@ -36,7 +50,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
     /**
      * Init the live edit binding on an element
      *
-     * @param {any} element
+     * @param {HTMLElement} element
      * @param {() => any} valueAccessor
      * @param {KnockoutAllBindingsAccessor} allBindings
      * @param {any} viewModel
@@ -53,21 +67,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var previouslyFocused = false;
       var blurTimeout;
       /**
-       * Strip HTML and return text
-       *
-       * @param {string} html
-       * @returns {string}
-       */
-
-      var stripHtml = function stripHtml(html) {
-        var tempDiv = document.createElement("div");
-        tempDiv.innerHTML = html;
-        return tempDiv.textContent;
-      };
-      /**
        * Record the value on focus, only conduct an update when data changes
        */
-
 
       var onFocus = function onFocus() {
         clearTimeout(blurTimeout);
@@ -161,10 +162,43 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var onInput = function onInput() {
         handlePlaceholderClass(element);
       };
+      /**
+       * On paste strip any HTML
+       */
+
+
+      var onPaste = function onPaste() {
+        // Record the original caret position so we can ensure we restore it at the correct position
+        var selection = window.getSelection();
+        var originalPositionStart = selection.getRangeAt(0).cloneRange().startOffset;
+        var originalPositionEnd = selection.getRangeAt(0).cloneRange().endOffset;
+        var originalContentLength = stripHtml(element.innerHTML).length; // Allow the paste action to update the content
+
+        _underscore.default.defer(function () {
+          var strippedValue = stripHtml(element.innerHTML);
+          element.innerHTML = strippedValue;
+          /**
+           * Calculate the position the caret should end up at, the difference in string length + the original
+           * end offset position
+           */
+
+          var restoredPosition = Math.abs(strippedValue.length - originalContentLength) + originalPositionStart; // If part of the text was selected adjust the position for the removed text
+
+          if (originalPositionStart !== originalPositionEnd) {
+            restoredPosition += Math.abs(originalPositionEnd - originalPositionStart);
+          }
+
+          var range = document.createRange();
+          range.setStart(element.childNodes[0], restoredPosition);
+          range.setEnd(element.childNodes[0], restoredPosition);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        });
+      };
 
       element.setAttribute("data-placeholder", placeholder);
       element.textContent = viewModel.parent.dataStore.get(field);
-      element.contentEditable = true;
+      element.contentEditable = "true";
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
       element.addEventListener("mousedown", onMouseDown);
@@ -172,6 +206,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       element.addEventListener("keyup", onKeyUp);
       element.addEventListener("input", onInput);
       element.addEventListener("drop", onDrop);
+      element.addEventListener("paste", onPaste);
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 

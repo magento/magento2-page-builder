@@ -11,15 +11,29 @@ import keyCodes from "Magento_Ui/js/lib/key-codes";
 import _ from "underscore";
 
 /**
+ * Strip HTML and return text
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+function stripHtml(html: string) {
+    const tempDiv = document.createElement("div");
+
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent;
+}
+
+/**
  * Add or remove the placeholder-text class from the element based on its content
  *
  * @param {Element} element
  */
 function handlePlaceholderClass(element: Element) {
-    if (element.innerHTML.length === 0) {
-        $(element).addClass("placeholder-text");
+    if (stripHtml(element.innerHTML).length === 0) {
+        element.innerHTML = "";
+        element.classList.add("placeholder-text");
     } else {
-        $(element).removeClass("placeholder-text");
+        element.classList.remove("placeholder-text");
     }
 }
 
@@ -29,30 +43,17 @@ ko.bindingHandlers.liveEdit = {
     /**
      * Init the live edit binding on an element
      *
-     * @param {any} element
+     * @param {HTMLElement} element
      * @param {() => any} valueAccessor
      * @param {KnockoutAllBindingsAccessor} allBindings
      * @param {any} viewModel
      * @param {KnockoutBindingContext} bindingContext
      */
-    init(element, valueAccessor, allBindings, viewModel, bindingContext) {
+    init(element: HTMLElement, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field, placeholder, selectAll = false} = valueAccessor();
         let focusedValue = element.innerHTML;
         let previouslyFocused: boolean = false;
         let blurTimeout: number;
-
-        /**
-         * Strip HTML and return text
-         *
-         * @param {string} html
-         * @returns {string}
-         */
-        const stripHtml = (html: string) => {
-            const tempDiv = document.createElement("div");
-
-            tempDiv.innerHTML = html;
-            return tempDiv.textContent;
-        };
 
         /**
          * Record the value on focus, only conduct an update when data changes
@@ -143,9 +144,39 @@ ko.bindingHandlers.liveEdit = {
             handlePlaceholderClass(element);
         };
 
+        /**
+         * On paste strip any HTML
+         */
+        const onPaste = () => {
+            // Record the original caret position so we can ensure we restore it at the correct position
+            const selection = window.getSelection();
+            const originalPositionStart = selection.getRangeAt(0).cloneRange().startOffset;
+            const originalPositionEnd = selection.getRangeAt(0).cloneRange().endOffset;
+            const originalContentLength = stripHtml(element.innerHTML).length;
+            // Allow the paste action to update the content
+            _.defer(() => {
+                const strippedValue = stripHtml(element.innerHTML);
+                element.innerHTML = strippedValue;
+                /**
+                 * Calculate the position the caret should end up at, the difference in string length + the original
+                 * end offset position
+                 */
+                let restoredPosition = Math.abs(strippedValue.length - originalContentLength) + originalPositionStart;
+                // If part of the text was selected adjust the position for the removed text
+                if (originalPositionStart !== originalPositionEnd) {
+                    restoredPosition += Math.abs(originalPositionEnd - originalPositionStart);
+                }
+                const range = document.createRange();
+                range.setStart(element.childNodes[0], restoredPosition);
+                range.setEnd(element.childNodes[0], restoredPosition);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            });
+        };
+
         element.setAttribute("data-placeholder", placeholder);
         element.textContent = viewModel.parent.dataStore.get(field);
-        element.contentEditable = true;
+        element.contentEditable = "true";
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
         element.addEventListener("mousedown", onMouseDown);
@@ -153,6 +184,7 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keyup", onKeyUp);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);
+        element.addEventListener("paste", onPaste);
 
         $(element).parent().css("cursor", "text");
         handlePlaceholderClass(element);
