@@ -34,7 +34,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] ? data[name].type : "";
+      return data[name] && data[name].type ? data[name].type : "default";
     };
 
     return CreateValueForLinkType;

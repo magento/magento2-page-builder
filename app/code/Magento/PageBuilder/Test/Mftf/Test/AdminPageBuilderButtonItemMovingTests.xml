@@ -179,6 +179,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -475,6 +478,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <!-- Select Inline Appearance -->
         <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -673,6 +679,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="addButton" stepKey="addButton"/>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
@@ -699,7 +708,7 @@
             <argument name="contentTypeIndex" value="2"/>
             <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
-        <click selector="{{ButtonItemOnStage.base('1')}}" stepKey="clickButton1"/>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton1"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
         <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle('2')}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderRowContentType.role, '2')}}" stepKey="dragAndDropButtonToRow"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
@@ -709,10 +718,13 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage2"/>
         <!-- Attempt To Move Button To Column -->
         <comment userInput="Attempt To Move Button To Column" stepKey="commentMoveButton2"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu1">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage3">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <click selector="{{ButtonItemOnStage.base('1')}}" stepKey="clickButton2"/>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton2"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle('2')}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderColumnContentType.role, '2')}}" stepKey="dragAndDropButtonToColumn"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
@@ -722,10 +734,13 @@
         <seeElement selector="{{ButtonItemOnStage.buttonItemTextByButtonGroup('1', '2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2Stage3"/>
         <!-- Attempt To Move Button To Tab -->
         <comment userInput="Attempt To Move Button To Tab" stepKey="commentMoveButton3"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu2">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage4">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <click selector="{{ButtonItemOnStage.base('1')}}" stepKey="clickButton3"/>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('2')}}" stepKey="clickButton3"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <dragAndDrop selector1="{{ButtonItemOnStage.moveHandle('2')}}" selector2="{{PageBuilderStage.contentTypeContainer(PageBuilderTabContentType.role, '1')}}" stepKey="dragAndDropButtonToTab"/>
         <waitForPageLoad stepKey="waitForPageLoad6"/>

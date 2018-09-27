@@ -112,8 +112,10 @@ define(["mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearan
           value = converterPool.get(attributeConfig.converter).fromDom(value);
         }
 
-        if (data[attributeConfig.var] === "object") {
-          value = _mageUtils.extend(value, data[attributeConfig.var]);
+        if ($.type(result[attributeConfig.var]) === "object") {
+          var _mageUtils$extend;
+
+          value = _mageUtils.extend((_mageUtils$extend = {}, _mageUtils$extend[attributeConfig.name] = value, _mageUtils$extend), result[attributeConfig.var]);
         }
 
         result[attributeConfig.var] = value;
@@ -160,7 +162,7 @@ define(["mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearan
           value = converterPool.get(propertyConfig.converter).fromDom(value);
         }
 
-        if (typeof result[propertyConfig.var] === "object") {
+        if ($.type(result[propertyConfig.var]) === "object") {
           value = _mageUtils.extend(result[propertyConfig.var], value);
         }
 

@@ -43,8 +43,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
      * @param {KnockoutBindingContext} bindingContext
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-      var _this = this;
-
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
           placeholder = _valueAccessor.placeholder,
@@ -71,25 +69,15 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
 
       var onFocus = function onFocus() {
         focusedValue = stripHtml(element.innerHTML);
-      };
-      /**
-       * Blur event on element
-       */
 
-
-      var onBlur = function onBlur() {
-        if (focusedValue !== stripHtml(element.innerHTML)) {
-          viewModel.updateData(field, stripHtml(element.innerHTML));
-        }
-      };
-      /**
-       * Click event on element
-       */
-
-
-      var onClick = function onClick() {
         if (selectAll && element.innerHTML !== "") {
-          document.execCommand("selectAll", false, null);
+          _underscore.default.defer(function () {
+            var selection = window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents(element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          });
         }
       };
       /**
@@ -128,43 +116,19 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
         if (key === "pageLeftKey" || key === "pageRightKey") {
           event.stopPropagation();
         }
-
-        debouncedUpdateHandler.call(_this);
       };
       /**
-       * Debounce the saving of the state to ensure that on save without first unfocusing will succeed
+       * On key up update the view model to ensure all changes are saved
+       *
+       * @param {Event} event
        */
 
 
-      var debouncedUpdateHandler = _underscore.default.debounce(function () {
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        var getCharPosition = function getCharPosition(editableDiv) {
-          var charPosition = 0;
-
-          if (window.getSelection) {
-            if (selection.rangeCount) {
-              if (selection.getRangeAt(0).commonAncestorContainer.parentNode === editableDiv) {
-                charPosition = selection.getRangeAt(0).endOffset;
-              }
-            }
-          }
-
-          return charPosition;
-        };
-
-        var pos = getCharPosition(element);
-
+      var onKeyUp = function onKeyUp() {
         if (focusedValue !== stripHtml(element.innerHTML)) {
           viewModel.updateData(field, stripHtml(element.innerHTML));
         }
-
-        range.setStart(element.childNodes[0], pos);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }, 300);
+      };
       /**
        * Prevent content from being dropped inside of inline edit area
        *
@@ -188,10 +152,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       element.textContent = viewModel.parent.dataStore.get(field);
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
-      element.addEventListener("blur", onBlur);
-      element.addEventListener("click", onClick);
       element.addEventListener("mousedown", onMouseDown);
       element.addEventListener("keydown", onKeyDown);
+      element.addEventListener("keyup", onKeyUp);
       element.addEventListener("input", onInput);
       element.addEventListener("drop", onDrop);
       (0, _jquery.default)(element).parent().css("cursor", "text");

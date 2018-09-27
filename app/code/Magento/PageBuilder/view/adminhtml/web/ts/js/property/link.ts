@@ -50,7 +50,7 @@ export default class Link implements PropertyReaderInterface {
         const attributeIdMatches = href.match(regexp);
 
         if (!attributeIdMatches) {
-            return href;
+            return "";
         }
 
         return attributeIdMatches[1];

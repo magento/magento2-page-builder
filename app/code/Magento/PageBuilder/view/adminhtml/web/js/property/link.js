@@ -52,7 +52,7 @@ define([], function () {
       var attributeIdMatches = href.match(regexp);
 
       if (!attributeIdMatches) {
-        return href;
+        return "";
       }
 
       return attributeIdMatches[1];
