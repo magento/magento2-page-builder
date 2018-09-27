@@ -48,8 +48,6 @@
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
 
-        <!-- Close, not save -->
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
 
@@ -98,6 +96,9 @@
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
@@ -168,6 +169,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
 
         <!-- Add both products from the created category -->
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
@@ -236,6 +240,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
 
         <!-- Add a category rule -->
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
@@ -251,7 +258,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
 
         <!-- Reopen the settings -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ProductsContentTypeForm.conditionsList}}" stepKey="waitForConditionsToLoad2"/>
@@ -316,7 +323,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -374,6 +383,9 @@
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
@@ -453,7 +465,6 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
@@ -492,6 +503,9 @@
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Add both products from the created category -->
@@ -623,6 +637,9 @@
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <!-- Add both products from the created category -->
@@ -912,7 +929,6 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="User sees Products displayed in column on Stage" stepKey="confirmProductsOnStage"/>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
@@ -985,6 +1001,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
@@ -1047,6 +1066,9 @@
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
