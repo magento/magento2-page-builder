@@ -26,6 +26,10 @@ class AdvancedSliderItem implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader
@@ -35,7 +39,7 @@ class AdvancedSliderItem implements RendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
