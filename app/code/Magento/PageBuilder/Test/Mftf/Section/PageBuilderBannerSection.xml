@@ -10,6 +10,7 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="base" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="overlay" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='overlay']" parameterized="true"/>
