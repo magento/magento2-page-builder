@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _underscore, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
+define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -112,7 +112,7 @@ define(["mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearan
           value = converterPool.get(attributeConfig.converter).fromDom(value);
         }
 
-        if ($.type(result[attributeConfig.var]) === "object") {
+        if (_jquery.type(result[attributeConfig.var]) === "object") {
           var _mageUtils$extend;
 
           value = _mageUtils.extend((_mageUtils$extend = {}, _mageUtils$extend[attributeConfig.name] = value, _mageUtils$extend), result[attributeConfig.var]);
@@ -162,7 +162,7 @@ define(["mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearan
           value = converterPool.get(propertyConfig.converter).fromDom(value);
         }
 
-        if ($.type(result[propertyConfig.var]) === "object") {
+        if (_jquery.type(result[propertyConfig.var]) === "object") {
           value = _mageUtils.extend(result[propertyConfig.var], value);
         }
 

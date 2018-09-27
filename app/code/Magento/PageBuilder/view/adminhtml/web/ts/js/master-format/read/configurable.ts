@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import mageUtils from "mageUtils";
 import _ from "underscore";
 import appearanceConfig from "../../content-type/appearance-config";
