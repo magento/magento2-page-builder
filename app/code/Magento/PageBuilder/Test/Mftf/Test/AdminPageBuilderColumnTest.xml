@@ -942,6 +942,7 @@
             <testCaseId value="MC-2746"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
+            <group value="m"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1026,7 +1027,7 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAignmentLeft">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
@@ -1035,8 +1036,28 @@
 
         <!-- Save form data -->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnBackend.column}}" stepKey="waitForBackEndColumn"/>
+        <seeElement selector="{{ColumnOnBackend.columnTextAlign(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seeColumnTextAlignStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnBorder(PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rgb, PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnBorderRadius(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeColumnMarginStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeColumnPaddingStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.columnClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStage"/>
+
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnTextAlign(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seeColumnTextAlignStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnBorder(PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rgb, PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnBorderRadius(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeColumnMarginStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeColumnPaddingStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.columnClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStageAfterSave"/>
 
         <!-- Validate form data has been persisted in the advanced section -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
