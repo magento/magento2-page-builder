@@ -3,13 +3,13 @@
  * See COPYING.txt for license details.
  */
 define([
-    'Magento_PageBuilder/js/widget/bind-click-to-data-link-element',
+    'Magento_PageBuilder/js/widget/click-event-binder',
     'jquery'
-], function (bindClickToLinkInitializerWidget, $) {
+], function (clickEventBinderInitializerWidget, $) {
     'use strict';
 
     var $el,
-        originalRedirectTo = bindClickToLinkInitializerWidget.redirectTo;
+        originalRedirectTo = clickEventBinderInitializerWidget.redirectTo;
 
     afterEach(function () {
         if ($el !== undefined) {
@@ -17,9 +17,9 @@ define([
         }
     });
 
-    describe('Magento_PageBuilder/js/widget/bind-click-to-data-link-element', function () {
+    describe('Magento_PageBuilder/js/widget/click-event-binder', function () {
         it('Should not navigate away from page if it is missing href attribute', function () {
-            spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
+            spyOn(clickEventBinderInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
             $el = $(
@@ -33,16 +33,16 @@ define([
 
             $el.appendTo('body');
 
-            bindClickToLinkInitializerWidget(null, $el);
+            clickEventBinderInitializerWidget(null, $el);
 
             $el.find('.span-outside-inner-anchor').click();
 
-            expect(bindClickToLinkInitializerWidget.redirectTo).not.toHaveBeenCalled();
+            expect(clickEventBinderInitializerWidget.redirectTo).not.toHaveBeenCalled();
             expect(window.open).not.toHaveBeenCalled();
         });
 
         it('Should not navigate away from page if href is javascript:void(0)', function () {
-            spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
+            spyOn(clickEventBinderInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
             $el = $(
@@ -56,16 +56,16 @@ define([
 
             $el.appendTo('body');
 
-            bindClickToLinkInitializerWidget(null, $el);
+            clickEventBinderInitializerWidget(null, $el);
 
             $el.find('.span-outside-inner-anchor').click();
 
-            expect(bindClickToLinkInitializerWidget.redirectTo).not.toHaveBeenCalled();
+            expect(clickEventBinderInitializerWidget.redirectTo).not.toHaveBeenCalled();
             expect(window.open).not.toHaveBeenCalled();
         });
 
         it('Should not navigate away from page if it is missing data-link-type attribute', function () {
-            spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
+            spyOn(clickEventBinderInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
             $el = $(
@@ -79,16 +79,16 @@ define([
 
             $el.appendTo('body');
 
-            bindClickToLinkInitializerWidget(null, $el);
+            clickEventBinderInitializerWidget(null, $el);
 
             $el.find('.span-outside-inner-anchor').click();
 
-            expect(bindClickToLinkInitializerWidget.redirectTo).not.toHaveBeenCalled();
+            expect(clickEventBinderInitializerWidget.redirectTo).not.toHaveBeenCalled();
             expect(window.open).not.toHaveBeenCalled();
         });
 
         it('Should not navigate to simulated anchor\'s href if clicked inside of nested anchor', function () {
-            spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
+            spyOn(clickEventBinderInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
             $el = $(
@@ -102,16 +102,16 @@ define([
 
             $el.appendTo('body');
 
-            bindClickToLinkInitializerWidget(null, $el);
+            clickEventBinderInitializerWidget(null, $el);
 
             $el.find('.inner-anchor').click();
 
-            expect(bindClickToLinkInitializerWidget.redirectTo).not.toHaveBeenCalled();
+            expect(clickEventBinderInitializerWidget.redirectTo).not.toHaveBeenCalled();
             expect(window.open).not.toHaveBeenCalled();
         });
 
         it('Should navigate to simulated anchor\'s href if clicked outside of nested anchor', function () {
-            spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
+            spyOn(clickEventBinderInitializerWidget, 'redirectTo');
             spyOn(window, 'open');
 
             $el = $(
@@ -125,11 +125,11 @@ define([
 
             $el.appendTo('body');
 
-            bindClickToLinkInitializerWidget(null, $el);
+            clickEventBinderInitializerWidget(null, $el);
 
             $el.find('.span-outside-inner-anchor').click();
 
-            expect(bindClickToLinkInitializerWidget.redirectTo).toHaveBeenCalledWith('https://adobe.com', '');
+            expect(clickEventBinderInitializerWidget.redirectTo).toHaveBeenCalledWith('https://adobe.com', '');
 
             originalRedirectTo('https://adobe.com', '');
             expect(window.open).not.toHaveBeenCalled();
@@ -137,7 +137,7 @@ define([
 
         it('Should call window.open if target is _blank', function () {
             spyOn(window, 'open');
-            spyOn(bindClickToLinkInitializerWidget, 'redirectTo');
+            spyOn(clickEventBinderInitializerWidget, 'redirectTo');
 
             $el = $(
                 '<div data-role="content-type">' +
@@ -150,11 +150,11 @@ define([
 
             $el.appendTo('body');
 
-            bindClickToLinkInitializerWidget(null, $el);
+            clickEventBinderInitializerWidget(null, $el);
 
             $el.find('.span-outside-inner-anchor').click();
 
-            expect(bindClickToLinkInitializerWidget.redirectTo).toHaveBeenCalledWith('https://adobe.com', '_blank');
+            expect(clickEventBinderInitializerWidget.redirectTo).toHaveBeenCalledWith('https://adobe.com', '_blank');
 
             originalRedirectTo('https://adobe.com', '_blank');
             expect(window.open).toHaveBeenCalledWith('https://adobe.com', '_blank');

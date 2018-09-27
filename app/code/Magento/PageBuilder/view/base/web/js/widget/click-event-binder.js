@@ -11,7 +11,7 @@ define(['jquery'], function ($) {
      * @param {Object|null} config
      * @param {Node} element
      */
-    function bindClickWidget(config, element) {
+    function clickEventBinder(config, element) {
         var $linkElements = $(element).find('[data-link-type]');
 
         $linkElements.each(function (idx, linkElement) {
@@ -31,7 +31,7 @@ define(['jquery'], function ($) {
                     return;
                 }
 
-                bindClickWidget.redirectTo(
+                clickEventBinder.redirectTo(
                     $linkElement.attr('href'),
                     $linkElement.attr('target')
                 );
@@ -44,7 +44,7 @@ define(['jquery'], function ($) {
      * @param {String} href
      * @param {String} target
      */
-    bindClickWidget.redirectTo = function (href, target) {
+    clickEventBinder.redirectTo = function (href, target) {
         if (target === '_blank') {
             window.open(href, target);
         } else {
@@ -52,5 +52,5 @@ define(['jquery'], function ($) {
         }
     };
 
-    return bindClickWidget;
+    return clickEventBinder;
 });
