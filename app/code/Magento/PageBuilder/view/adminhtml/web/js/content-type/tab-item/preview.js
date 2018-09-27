@@ -13,13 +13,15 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "M
     _inheritsLoose(Preview, _PreviewCollection);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.fieldsToIgnoreOnRemove = ["tab_name"], _temp) || _this;
+      _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this;
+      _this.fieldsToIgnoreOnRemove = ["tab_name"];
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -43,6 +45,8 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "M
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

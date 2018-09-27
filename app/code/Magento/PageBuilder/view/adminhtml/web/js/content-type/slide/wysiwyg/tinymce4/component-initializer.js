@@ -8,14 +8,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
   /*#__PURE__*/
   function () {
     function ComponentInitializer() {
-      this.$element = void 0;
-      this.config = void 0;
-      this.sliderTransform = void 0;
       this.sliderSelector = ".slick-list";
       this.sliderContentSelector = ".slick-track";
       this.slideSelector = ".slick-slide";
       this.activeSlideSelector = ".slick-current";
-      this.autoplay = void 0;
     }
 
     var _proto = ComponentInitializer.prototype;
@@ -95,6 +91,8 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
     return ComponentInitializer;
   }();
 
-  return ComponentInitializer;
+  return Object.assign(ComponentInitializer, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=component-initializer.js.map

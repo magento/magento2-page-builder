@@ -1,7 +1,9 @@
 /*eslint-disable */
 define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var ObservableUpdater =
   /*#__PURE__*/
   function () {
@@ -11,17 +13,14 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
-      this.converterPool = void 0;
-      this.massConverterPool = void 0;
-      this.converterResolver = void 0;
       this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
     }
     /**
-     * Update preview observables after data changed in data store
+     * Generate our data.ELEMENT.style Knockout observable objects for use within master and preview formats.
      *
-     * @param {object} viewModel
+     * @param {Preview} viewModel
      * @param {DataObject} data
      */
 
@@ -48,13 +47,42 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           viewModel.data[elementName] = {
             attributes: _knockout.observable({}),
             style: _knockout.observable({}),
+            styleNoReset: _knockout.observable({}),
             css: _knockout.observable({}),
             html: _knockout.observable({})
           };
         }
 
         if (config[elementName].style !== undefined) {
-          viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
+          var currentStyles = viewModel.data[elementName].style();
+          var newStyles = this.convertStyle(config[elementName], data);
+          /**
+           * There maybe instances when you need to interface with the styles without the reset applied, this is
+           * currently used when merging multiple elements styles together, as the reset can cause undesired
+           * effects if all elements attempt to apply.
+           */
+
+          viewModel.data[elementName].styleNoReset(newStyles);
+
+          if (currentStyles) {
+            /**
+             * If so we need to retrieve the previous styles applied to this element and create a new object
+             * which forces all of these styles to be "false". Knockout doesn't clean existing styles when
+             * applying new styles to an element. This resolves styles sticking around when they should be
+             * removed.
+             */
+            var removeCurrentStyles = Object.keys(currentStyles).reduce(function (object, styleName) {
+              var _Object$assign;
+
+              return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
+            }, {});
+
+            if (!_underscore.isEmpty(removeCurrentStyles)) {
+              newStyles = _underscore.extend(removeCurrentStyles, newStyles);
+            }
+          }
+
+          viewModel.data[elementName].style(newStyles);
         }
 
         if (config[elementName].attributes !== undefined) {
@@ -124,8 +152,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           _ref = _i3.value;
         }
 
-        var _converterConfig = _ref;
-        data = this.massConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
+        var converterConfig = _ref;
+        data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
       }
 
       return data;
@@ -154,20 +182,20 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           _ref2 = _i4.value;
         }
 
-        var _attributeConfig = _ref2;
+        var attributeConfig = _ref2;
 
-        if ("read" === _attributeConfig.persistence_mode) {
+        if ("read" === attributeConfig.persistence_mode) {
           continue;
         }
 
-        var value = data[_attributeConfig.var];
-        var converter = this.converterResolver(_attributeConfig);
+        var value = data[attributeConfig.var];
+        var converter = this.converterResolver(attributeConfig);
 
         if (this.converterPool.get(converter)) {
-          value = this.converterPool.get(converter).toDom(_attributeConfig.var, data);
+          value = this.converterPool.get(converter).toDom(attributeConfig.var, data);
         }
 
-        result[_attributeConfig.name] = value;
+        result[attributeConfig.name] = value;
       }
 
       return result;
@@ -197,31 +225,35 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
             _ref3 = _i5.value;
           }
 
-          var _propertyConfig = _ref3;
+          var propertyConfig = _ref3;
 
-          if ("read" === _propertyConfig.persistence_mode) {
+          if ("read" === propertyConfig.persistence_mode) {
             continue;
           }
 
-          var value = "";
+          var value = void 0;
 
-          if (!!_propertyConfig.static) {
-            value = _propertyConfig.value;
+          if (!!propertyConfig.static) {
+            value = propertyConfig.value;
           } else {
-            value = data[_propertyConfig.var];
-            var converter = this.converterResolver(_propertyConfig);
+            value = data[propertyConfig.var];
+            var converter = this.converterResolver(propertyConfig);
 
             if (this.converterPool.get(converter)) {
-              value = this.converterPool.get(converter).toDom(_propertyConfig.var, data);
+              value = this.converterPool.get(converter).toDom(propertyConfig.var, data);
             }
           }
 
-          if (_typeof(value) === "object") {
+          if (typeof value === "object") {
             _underscore.extend(result, value);
-          } else {
-            result[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)] = value;
+          } else if (typeof value !== "undefined") {
+            result[(0, _string.fromSnakeToCamelCase)(propertyConfig.name)] = value;
           }
         }
+      }
+
+      if (_underscore.isEmpty(result)) {
+        return null;
       }
 
       return result;
@@ -254,6 +286,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
     return ObservableUpdater;
   }();
 
-  return ObservableUpdater;
+  return Object.assign(ObservableUpdater, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=observable-updater.js.map

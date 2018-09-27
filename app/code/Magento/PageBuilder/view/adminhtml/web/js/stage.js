@@ -11,8 +11,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
      * @param {PageBuilderInterface} parent
      */
     function Stage(parent) {
-      this.parent = void 0;
-      this.id = void 0;
       this.config = {
         name: "stage",
         type: "restricted-container",
@@ -218,6 +216,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     return Stage;
   }();
 
-  return Stage;
+  return Object.assign(Stage, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=stage.js.map

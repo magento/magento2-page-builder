@@ -117,6 +117,8 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     return PreviewCollection;
   }(_preview);
 
-  return PreviewCollection;
+  return Object.assign(PreviewCollection, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview-collection.js.map

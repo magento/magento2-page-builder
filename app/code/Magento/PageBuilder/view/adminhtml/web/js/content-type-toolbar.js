@@ -18,7 +18,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
      */
     function Toolbar(preview, options) {
       this.options = _knockout.observableArray([]);
-      this.preview = void 0;
       this.preview = preview;
       this.options(options);
     }
@@ -82,6 +81,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
     return Toolbar;
   }();
 
-  return Toolbar;
+  return Object.assign(Toolbar, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type-toolbar.js.map

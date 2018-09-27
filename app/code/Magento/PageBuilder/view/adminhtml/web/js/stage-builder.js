@@ -203,6 +203,8 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     });
   }
 
-  return build;
+  return Object.assign(build, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=stage-builder.js.map

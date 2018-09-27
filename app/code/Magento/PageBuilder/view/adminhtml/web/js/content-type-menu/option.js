@@ -13,16 +13,10 @@ define(["knockout"], function (_knockout) {
     function Option(config) {
       var _this = this;
 
-      this.config = void 0;
-      this.preview = void 0;
-      this.code = void 0;
       this.icon = _knockout.observable("");
       this.title = _knockout.observable("");
       this.classes = _knockout.observable({});
-      this.sort = void 0;
-      this.action = void 0;
       this.isDisabled = _knockout.observable(false);
-      this.customTemplate = void 0;
       this.config = config;
       this.preview = config.preview;
       this.icon(config.icon);
@@ -68,6 +62,8 @@ define(["knockout"], function (_knockout) {
     return Option;
   }();
 
-  return Option;
+  return Object.assign(Option, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=option.js.map

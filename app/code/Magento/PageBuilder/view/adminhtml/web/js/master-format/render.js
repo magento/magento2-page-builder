@@ -49,6 +49,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     return MasterFormatRenderer;
   }();
 
-  return MasterFormatRenderer;
+  return Object.assign(MasterFormatRenderer, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=render.js.map

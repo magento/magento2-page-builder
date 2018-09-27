@@ -83,6 +83,8 @@ define(["underscore"], function (_underscore) {
     return WidgetDirectiveAbstract;
   }();
 
-  return WidgetDirectiveAbstract;
+  return Object.assign(WidgetDirectiveAbstract, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=widget-directive-abstract.js.map

@@ -8,7 +8,6 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /*#__PURE__*/
   function () {
     function Resize(columnGroup) {
-      this.columnGroup = void 0;
       this.columnGroup = columnGroup;
     }
     /**
@@ -432,6 +431,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   }
 
   return Object.assign(Resize, {
+    __esModule: true,
     getColumnIndexInGroup: getColumnIndexInGroup,
     getAdjacentColumn: getAdjacentColumn,
     determineMaxGhostWidth: determineMaxGhostWidth,

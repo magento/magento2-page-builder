@@ -12,7 +12,6 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
   /*#__PURE__*/
   function () {
     function Collection(children) {
-      this.children = void 0;
       this.children = children ? children : _knockout.observableArray([]);
     }
     /**
@@ -67,6 +66,8 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
     return Collection;
   }();
 
-  return Collection;
+  return Object.assign(Collection, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=collection.js.map

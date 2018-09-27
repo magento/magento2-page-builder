@@ -38,6 +38,8 @@ define(["jquery"], function (_jquery) {
     return element;
   }
 
-  return filterHtml;
+  return Object.assign(filterHtml, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=filter-html.js.map

@@ -16,8 +16,6 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
      */
     function Master(parent, observableUpdater) {
       this.data = {};
-      this.parent = void 0;
-      this.observableUpdater = void 0;
       this.parent = parent;
       this.observableUpdater = observableUpdater;
       this.bindEvents();
@@ -98,6 +96,8 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
     return Master;
   }();
 
-  return Master;
+  return Object.assign(Master, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=master.js.map

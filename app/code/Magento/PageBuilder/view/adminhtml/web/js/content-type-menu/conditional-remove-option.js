@@ -29,6 +29,8 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     return ConditionalRemoveOption;
   }(_option);
 
-  return ConditionalRemoveOption;
+  return Object.assign(ConditionalRemoveOption, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=conditional-remove-option.js.map

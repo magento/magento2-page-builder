@@ -38,6 +38,8 @@ define(["underscore"], function (_underscore) {
     return TagEscaper;
   }();
 
-  return TagEscaper;
+  return Object.assign(TagEscaper, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=tag-escaper.js.map

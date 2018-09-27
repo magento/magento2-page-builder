@@ -48,6 +48,8 @@ define([], function () {
     return EmptyMobileImage;
   }();
 
-  return EmptyMobileImage;
+  return Object.assign(EmptyMobileImage, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=empty-mobile-image.js.map

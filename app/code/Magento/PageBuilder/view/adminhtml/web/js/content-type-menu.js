@@ -19,7 +19,6 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
     function ContentTypeMenu(parent, options) {
       var _this = this;
 
-      this.parent = void 0;
       this.options = _knockout.observableArray([]);
       this.parent = parent;
 
@@ -68,6 +67,8 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
     return ContentTypeMenu;
   }();
 
-  return ContentTypeMenu;
+  return Object.assign(ContentTypeMenu, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type-menu.js.map

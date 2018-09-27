@@ -42,6 +42,8 @@ define([], function () {
     return RemovePx;
   }();
 
-  return RemovePx;
+  return Object.assign(RemovePx, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=remove-px.js.map

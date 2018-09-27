@@ -296,6 +296,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
   }
 
   return {
+    __esModule: true,
     getSortableOptions: getSortableOptions,
     hiddenClass: hiddenClass
   };

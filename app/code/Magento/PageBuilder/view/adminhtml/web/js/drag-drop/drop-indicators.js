@@ -46,6 +46,7 @@ define(["Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/j
   }
 
   return {
+    __esModule: true,
     showDropIndicators: showDropIndicators,
     hideDropIndicators: hideDropIndicators
   };

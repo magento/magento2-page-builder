@@ -293,6 +293,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

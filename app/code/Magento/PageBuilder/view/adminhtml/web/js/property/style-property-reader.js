@@ -30,6 +30,8 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
     return StylePropertyReader;
   }();
 
-  return StylePropertyReader;
+  return Object.assign(StylePropertyReader, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=style-property-reader.js.map

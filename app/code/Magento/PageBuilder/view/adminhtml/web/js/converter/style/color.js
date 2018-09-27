@@ -63,6 +63,8 @@ define([], function () {
     return Color;
   }();
 
-  return Color;
+  return Object.assign(Color, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=color.js.map

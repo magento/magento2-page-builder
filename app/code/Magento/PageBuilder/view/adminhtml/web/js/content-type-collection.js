@@ -97,6 +97,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     return ContentTypeCollection;
   }(_contentType);
 
-  return ContentTypeCollection;
+  return Object.assign(ContentTypeCollection, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type-collection.js.map

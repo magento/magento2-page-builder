@@ -44,6 +44,8 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
     return OverlayColorTransparency;
   }();
 
-  return OverlayColorTransparency;
+  return Object.assign(OverlayColorTransparency, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=overlay-color-transparency.js.map

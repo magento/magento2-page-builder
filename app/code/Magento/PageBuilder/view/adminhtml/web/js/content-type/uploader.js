@@ -37,8 +37,6 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
         onDeleteCallback = null;
       }
 
-      this.config = void 0;
-      this.dataStore = void 0;
       var config = Object.assign({}, uploaderConfig, {
         value: initialValue
       });
@@ -95,6 +93,8 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
     return Uploader;
   }();
 
-  return Uploader;
+  return Object.assign(Uploader, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=uploader.js.map

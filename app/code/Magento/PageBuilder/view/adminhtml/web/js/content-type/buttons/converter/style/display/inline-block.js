@@ -44,6 +44,8 @@ define([], function () {
     return InlineBlock;
   }();
 
-  return InlineBlock;
+  return Object.assign(InlineBlock, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=inline-block.js.map

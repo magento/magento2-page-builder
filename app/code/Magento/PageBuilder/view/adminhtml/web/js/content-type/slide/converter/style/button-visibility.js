@@ -36,6 +36,8 @@ define([], function () {
     return ButtonVisibility;
   }();
 
-  return ButtonVisibility;
+  return Object.assign(ButtonVisibility, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=button-visibility.js.map

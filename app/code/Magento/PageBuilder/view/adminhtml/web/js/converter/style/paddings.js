@@ -65,6 +65,8 @@ define([], function () {
     return Paddings;
   }();
 
-  return Paddings;
+  return Object.assign(Paddings, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=paddings.js.map

@@ -35,6 +35,8 @@ define([], function () {
     return Margins;
   }();
 
-  return Margins;
+  return Object.assign(Margins, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=margins.js.map

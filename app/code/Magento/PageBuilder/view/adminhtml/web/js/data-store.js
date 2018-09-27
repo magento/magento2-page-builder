@@ -96,6 +96,8 @@ define(["jquery"], function (_jquery) {
     return DataStore;
   }();
 
-  return DataStore;
+  return Object.assign(DataStore, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=data-store.js.map

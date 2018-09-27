@@ -36,6 +36,8 @@ define([], function () {
     return ButtonOpacity;
   }();
 
-  return ButtonOpacity;
+  return Object.assign(ButtonOpacity, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=button-opacity.js.map

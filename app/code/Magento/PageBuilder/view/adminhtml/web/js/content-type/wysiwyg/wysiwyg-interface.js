@@ -13,6 +13,8 @@ define([], function () {
    * Describes an instance of a WYSIWYG component not specific to a specific editor
    */
   var _default = WysiwygInterface;
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=wysiwyg-interface.js.map

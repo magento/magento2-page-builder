@@ -39,6 +39,8 @@ define([], function () {
 
   var _default = new DataConverterPool();
 
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=converter-pool.js.map

@@ -13,5 +13,5 @@ import ContentTypeInterface from "../content-type";
  */
 export default interface ContentTypeRedrawAfterEventParamsInterface {
     id: string,
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface
 }

@@ -5,6 +5,8 @@ define([], function () {
    * See COPYING.txt for license details.
    */
   var _default = WysiwygComponentInitializerInterface;
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=component-initializer-interface.js.map

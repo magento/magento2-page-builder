@@ -46,6 +46,8 @@ define([], function () {
     return BorderStyleDefault;
   }();
 
-  return BorderStyleDefault;
+  return Object.assign(BorderStyleDefault, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=border-style.js.map

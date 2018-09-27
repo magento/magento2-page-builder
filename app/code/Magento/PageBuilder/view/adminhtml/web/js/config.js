@@ -58,6 +58,8 @@ define(["underscore"], function (_underscore) {
   Config.config = {
     dataRoleAttributeName: "data-role"
   };
-  return Config;
+  return Object.assign(Config, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=config.js.map

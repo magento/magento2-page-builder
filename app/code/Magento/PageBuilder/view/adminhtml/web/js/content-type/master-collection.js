@@ -31,6 +31,8 @@ define(["Magento_PageBuilder/js/content-type/master"], function (_master) {
     return MasterCollection;
   }(_master);
 
-  return MasterCollection;
+  return Object.assign(MasterCollection, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=master-collection.js.map

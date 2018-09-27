@@ -40,6 +40,8 @@ define([], function () {
     return ContainerBackgroundImage;
   }();
 
-  return ContainerBackgroundImage;
+  return Object.assign(ContainerBackgroundImage, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=container-background-image.js.map

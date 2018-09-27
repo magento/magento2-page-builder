@@ -57,6 +57,8 @@ define([], function () {
     return CreateValueForHref;
   }();
 
-  return CreateValueForHref;
+  return Object.assign(CreateValueForHref, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=link-href.js.map

@@ -11,13 +11,15 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
     _inheritsLoose(Preview, _BasePreview);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _temp) || _this;
+      _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this;
+      _this.displayPreview = _knockout.observable(false);
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -47,6 +49,8 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/con
     return Preview;
   }(_preview);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

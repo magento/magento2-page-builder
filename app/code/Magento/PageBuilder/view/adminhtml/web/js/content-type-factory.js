@@ -26,11 +26,11 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
     }
 
     return new Promise(function (resolve) {
-      (0, _loader)([config.component], function (ContentTypeComponent) {
-        var contentType = new ContentTypeComponent(parent, config, stageId);
-        Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (resolvedPromises) {
-          var previewComponent = resolvedPromises[0],
-              masterComponent = resolvedPromises[1];
+      (0, _loader)([config.component], function (contentTypeComponent) {
+        var contentType = new contentTypeComponent(parent, config, stageId);
+        Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
+          var previewComponent = _ref[0],
+              masterComponent = _ref[1];
           contentType.preview = previewComponent;
           contentType.content = masterComponent;
           contentType.dataStore.update(prepareData(config, data));
@@ -52,6 +52,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
       return contentType;
     }).catch(function (error) {
       console.error(error);
+      return null;
     });
   }
   /**
@@ -119,6 +120,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
     }
   }
 
-  return createContentType;
+  return Object.assign(createContentType, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=content-type-factory.js.map

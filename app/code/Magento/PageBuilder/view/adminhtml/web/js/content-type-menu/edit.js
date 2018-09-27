@@ -14,8 +14,6 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
     function Edit(instance, dataStore) {
       var _this = this;
 
-      this.instance = void 0;
-      this.dataStore = void 0;
       this.instance = instance;
       this.dataStore = dataStore;
 
@@ -51,6 +49,8 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
     return Edit;
   }();
 
-  return Edit;
+  return Object.assign(Edit, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=edit.js.map

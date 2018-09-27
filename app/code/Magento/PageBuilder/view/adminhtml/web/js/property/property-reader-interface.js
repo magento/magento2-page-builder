@@ -9,6 +9,8 @@ define([], function () {
    * @api
    */
   var _default = PropertyReaderInterface;
-  return _default;
+  return Object.assign(_default, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=property-reader-interface.js.map

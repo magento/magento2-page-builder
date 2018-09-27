@@ -27,9 +27,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       var _this;
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
-      _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);
-      _this.element = void 0;
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
@@ -112,6 +110,8 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     return Preview;
   }(_previewCollection);
 
-  return Preview;
+  return Object.assign(Preview, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

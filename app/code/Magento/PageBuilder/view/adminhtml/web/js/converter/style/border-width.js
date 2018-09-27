@@ -42,6 +42,8 @@ define([], function () {
     return BorderWidth;
   }();
 
-  return BorderWidth;
+  return Object.assign(BorderWidth, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=border-width.js.map

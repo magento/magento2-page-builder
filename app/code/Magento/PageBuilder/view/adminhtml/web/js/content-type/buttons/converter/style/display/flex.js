@@ -44,6 +44,8 @@ define([], function () {
     return Flex;
   }();
 
-  return Flex;
+  return Object.assign(Flex, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=flex.js.map

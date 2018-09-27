@@ -51,6 +51,8 @@ define([], function () {
     return Src;
   }();
 
-  return Src;
+  return Object.assign(Src, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=src.js.map

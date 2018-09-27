@@ -36,6 +36,8 @@ define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extr
     return OverlayTransparency;
   }();
 
-  return OverlayTransparency;
+  return Object.assign(OverlayTransparency, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=overlay-transparency.js.map

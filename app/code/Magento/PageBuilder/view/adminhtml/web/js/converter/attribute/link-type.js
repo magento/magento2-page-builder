@@ -40,6 +40,8 @@ define([], function () {
     return CreateValueForLinkType;
   }();
 
-  return CreateValueForLinkType;
+  return Object.assign(CreateValueForLinkType, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=link-type.js.map

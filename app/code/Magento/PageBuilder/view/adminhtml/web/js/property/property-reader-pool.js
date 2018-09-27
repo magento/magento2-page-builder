@@ -40,6 +40,7 @@ define([], function () {
   var _default = new PropertyReaderPool();
 
   return Object.assign(_default, {
+    __esModule: true,
     PropertyReaderPool: PropertyReaderPool
   });
 });

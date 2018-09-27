@@ -2,6 +2,8 @@
 define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _contentTypeToolbar, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
   /**
    * @api
    */
@@ -19,9 +21,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      _this.toolbar = void 0;
-      _this.element = void 0;
-      _this.toolbar = new _contentTypeToolbar(_this, _this.getToolbarOptions());
+      _this.toolbar = new _contentTypeToolbar(_assertThisInitialized(_assertThisInitialized(_this)), _this.getToolbarOptions());
       return _this;
     }
     /**
@@ -110,6 +110,8 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     return Heading;
   }(_preview);
 
-  return Heading;
+  return Object.assign(Heading, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=preview.js.map

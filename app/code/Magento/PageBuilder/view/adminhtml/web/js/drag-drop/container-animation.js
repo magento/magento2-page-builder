@@ -119,6 +119,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore"], function (_jqu
   }
 
   return {
+    __esModule: true,
     lockContainerHeight: lockContainerHeight,
     bindAfterRenderForAnimation: bindAfterRenderForAnimation,
     animateContainerHeight: animateContainerHeight,

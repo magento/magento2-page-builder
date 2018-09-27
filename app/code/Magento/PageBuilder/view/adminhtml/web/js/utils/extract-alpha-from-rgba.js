@@ -16,6 +16,8 @@ define([], function () {
     return Math.floor(a * 100);
   }
 
-  return extractAlphaFromRgba;
+  return Object.assign(extractAlphaFromRgba, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=extract-alpha-from-rgba.js.map

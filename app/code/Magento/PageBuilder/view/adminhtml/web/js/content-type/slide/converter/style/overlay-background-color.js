@@ -42,6 +42,8 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
     return OverlayBackgroundColor;
   }();
 
-  return OverlayBackgroundColor;
+  return Object.assign(OverlayBackgroundColor, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=overlay-background-color.js.map

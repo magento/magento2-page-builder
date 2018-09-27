@@ -38,6 +38,8 @@ define([], function () {
     return HeaderAlignment;
   }();
 
-  return HeaderAlignment;
+  return Object.assign(HeaderAlignment, {
+    __esModule: true
+  });
 });
 //# sourceMappingURL=header-alignment.js.map

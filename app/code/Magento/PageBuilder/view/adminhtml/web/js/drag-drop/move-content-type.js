@@ -8,7 +8,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
   /**
    * Move a content type to a new index, with the option to move to a new container
    *
-   * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
+   * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
    * @param {number} targetIndex
    * @param {ContentTypeCollectionInterface} targetParent
    */
@@ -84,6 +84,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
   }
 
   return {
+    __esModule: true,
     moveContentType: moveContentType
   };
 });
