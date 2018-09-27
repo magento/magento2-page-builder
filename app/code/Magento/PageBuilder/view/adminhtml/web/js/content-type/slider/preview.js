@@ -212,8 +212,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           if (args.id === slide.id) {
             _underscore.delay(function () {
               _this3.navigateToSlide(_this3.parent.children().length - 1);
-
-              slide.preview.onOptionEdit();
             }, 500);
 
             _events.off("slide:" + slide.id + ":mountAfter");

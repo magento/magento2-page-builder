@@ -216,7 +216,6 @@ export default class Preview extends PreviewCollection {
                 if (args.id === slide.id) {
                     _.delay(() => {
                         this.navigateToSlide(this.parent.children().length - 1);
-                        slide.preview.onOptionEdit();
                     }, 500 );
                     events.off(`slide:${slide.id}:mountAfter`);
                 }

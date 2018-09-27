@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _config, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _preview) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -37,27 +37,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     var _proto = Preview.prototype;
 
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
-
-      _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
-
-
-      _events.on("products:dropAfter", function (args) {
-        if (args.id === _this2.parent.id) {
-          setTimeout(function () {
-            _this2.openEdit();
-          }, 300);
-        }
-      });
-    };
-    /**
-     * @inheritdoc
-     */
-
-
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
-      var _this3 = this;
+      var _this2 = this;
 
       _BasePreview.prototype.afterObservablesUpdated.call(this);
 
@@ -83,20 +64,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _jquery.ajax(url, requestConfig).done(function (response) {
         if (_typeof(response.data) !== "object" || !Boolean(response.data.content)) {
-          _this3.placeholderText(_this3.messages.NO_RESULTS);
+          _this2.placeholderText(_this2.messages.NO_RESULTS);
 
           return;
         }
 
         if (response.data.error) {
-          _this3.data.main.html(response.data.error);
+          _this2.data.main.html(response.data.error);
         } else {
-          _this3.data.main.html(response.data.content);
+          _this2.data.main.html(response.data.content);
 
-          _this3.displayPreview(true);
+          _this2.displayPreview(true);
         }
       }).fail(function () {
-        _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
+        _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
       });
     };
 
