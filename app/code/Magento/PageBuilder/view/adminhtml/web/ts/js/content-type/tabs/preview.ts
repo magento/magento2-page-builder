@@ -474,6 +474,14 @@ export default class Preview extends PreviewCollection {
                         }
                     }
                 },
+                /**
+                 * Trigger redraw event since new content is being displayed
+                 */
+                activate: () => {
+                    events.trigger("contentType:redrawAfter", {
+                        element: this.element,
+                    });
+                },
             });
         }
     }

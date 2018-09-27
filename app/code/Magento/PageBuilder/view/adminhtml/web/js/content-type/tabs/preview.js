@@ -486,6 +486,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
                 _this4.setActiveTab(activeTabIndex);
               }
             }
+          },
+
+          /**
+           * Trigger redraw event since new content is being displayed
+           */
+          activate: function activate() {
+            _events.trigger("contentType:redrawAfter", {
+              element: _this4.element
+            });
           }
         });
       }
