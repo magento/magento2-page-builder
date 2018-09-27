@@ -210,19 +210,21 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <!-- Validate desktop image is displayed before browser is resized -->
+        <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <dontSeeElement selector="{{BannerOnFrontend.backgroundMobileImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="dontSeeMobileImage"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
-            <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
+        <!-- Validate mobile image is displayed when browser is resized -->
+        <comment userInput="Validate mobile image is displayed when browser is resized" stepKey="commentMobileImage"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <dontSeeElement selector="{{BannerOnFrontend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageOnStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+            <argument name="pageNamePrefix" value="banner"/>
+        </actionGroup>
     </test>
     <test name="BannerCollageLeftMobileWithoutMobileImageValues">
         <annotations>
@@ -287,17 +289,20 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <!-- Validate desktop image is displayed before browser is resized -->
+        <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <!-- Validate Image Still Visible In Mobile -->
-        <comment userInput="Validate Image Still Visible In Mobile" stepKey="commentValidateStorefront2"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
-            <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Validate desktop image still visible in mobile view -->
+        <comment userInput="Validate desktop image still visible in mobile view" stepKey="commentDesktopImageMobileView"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront2">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
     <test name="BannerCollageLeftButtonNeverShow">
