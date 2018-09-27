@@ -24,9 +24,9 @@ define([
 
             $el = $(
                 '<div data-role="content-type">' +
-                    '<div data-link-type="link" href="" target>' +
+                    '<div data-link-type="link" data-href="" data-target>' +
                         '<span class="span-outside-inner-anchor">Hello world</span>' +
-                        '<a class="inner-anchor" href="https://something.com"><span>Something</span></a>' +
+                        '<a class="inner-anchor" data-href="https://something.com"><span>Something</span></a>' +
                     '</div>' +
                 '</div>'
             );
@@ -47,7 +47,7 @@ define([
 
             $el = $(
                 '<div data-role="content-type">' +
-                    '<div data-link-type="link" href="javascript:void(0)" target>' +
+                    '<div data-link-type="link" data-href="javascript:void(0)" data-target>' +
                         '<span class="span-outside-inner-anchor">Hello world</span>' +
                         '<a class="inner-anchor" href="https://something.com"><span>Something</span></a>' +
                     '</div>' +
@@ -70,7 +70,7 @@ define([
 
             $el = $(
                 '<div data-role="content-type">' +
-                    '<div href="https://adobe.com" target>' +
+                    '<div data-href="https://adobe.com" data-target>' +
                         '<span class="span-outside-inner-anchor">Hello world</span>' +
                         '<a class="inner-anchor" href="https://something.com"><span>Something</span></a>' +
                     '</div>' +
@@ -93,7 +93,7 @@ define([
 
             $el = $(
                 '<div data-role="content-type">' +
-                    '<div data-link-type="link" href="https://adobe.com" target>' +
+                    '<div data-link-type="link" data-href="https://adobe.com" data-target>' +
                         '<span class="span-outside-inner-anchor">Hello world</span>' +
                         '<a class="inner-anchor" href="https://something.com"><span>Something</span></a>' +
                     '</div>' +
@@ -116,7 +116,7 @@ define([
 
             $el = $(
                 '<div data-role="content-type">' +
-                    '<div data-link-type="link" href="https://adobe.com" target>' +
+                    '<div data-link-type="link" data-href="https://adobe.com" data-target>' +
                         '<span class="span-outside-inner-anchor">Hello world</span>' +
                         '<a class="inner-anchor" href="https://something.com"><span>Something</span></a>' +
                     '</div>' +
@@ -135,13 +135,13 @@ define([
             expect(window.open).not.toHaveBeenCalled();
         });
 
-        it('Should call window.open if target is _blank', function () {
+        it('Should call window.open if data-target is _blank', function () {
             spyOn(window, 'open');
             spyOn(clickEventBinderInitializerWidget, 'redirectTo');
 
             $el = $(
                 '<div data-role="content-type">' +
-                    '<div data-link-type="link" href="https://adobe.com" target="_blank">' +
+                    '<div data-link-type="link" data-href="https://adobe.com" data-target="_blank">' +
                         '<span class="span-outside-inner-anchor">Hello world</span>' +
                         '<a class="inner-anchor" href="https://something.com"><span>Something</span></a>' +
                     '</div>' +

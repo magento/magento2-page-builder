@@ -17,7 +17,7 @@ define(['jquery'], function ($) {
         $linkElements.each(function (idx, linkElement) {
             var $linkElement = $(linkElement),
                 isActualAnchorElement = $linkElement.prop('nodeName') === 'A',
-                href = ($linkElement.attr('href') || '').trim(),
+                href = ($linkElement.attr('data-href') || '').trim(),
                 isValidHref = ['javascript:void(0)', ''].indexOf(href) === -1;
 
             if (isActualAnchorElement || !isValidHref) {
@@ -32,8 +32,8 @@ define(['jquery'], function ($) {
                 }
 
                 clickEventBinder.redirectTo(
-                    $linkElement.attr('href'),
-                    $linkElement.attr('target')
+                    $linkElement.attr('data-href'),
+                    $linkElement.attr('data-target')
                 );
             });
         });
