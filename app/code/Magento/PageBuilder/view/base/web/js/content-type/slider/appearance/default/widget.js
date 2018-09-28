@@ -31,7 +31,7 @@ define([
 
         // Redraw slide after content type gets redrawn
         events.on('contentType:redrawAfter', function (args) {
-            if ($.contains(args.element, sliderElement)) {
+            if ($element.closest(args.element).length) {
                 $element.slick('setPosition');
             }
         });
