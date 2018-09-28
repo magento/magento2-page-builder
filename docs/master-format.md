@@ -882,8 +882,6 @@ Attributes
 3. data-appearance
 4. data-link-type
 5. data-overlay-color
-6. data-href
-7. data-target
 
 Inline styles
 1. background-color
