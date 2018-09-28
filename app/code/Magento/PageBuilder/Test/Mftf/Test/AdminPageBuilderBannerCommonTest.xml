@@ -640,6 +640,13 @@
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
             <argument name="section" value="BannerOnFrontend"/>
         </actionGroup>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageDesktop">
+            <argument name="section" value="BannerOnFrontend"/>
+        </actionGroup>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateNoBackgroundImage" stepKey="validateNoBackgroundImageMobile">
+            <argument name="section" value="BannerOnFrontend"/>
+        </actionGroup>
     </test>
     <test name="BannerValidateAdvancedConfigurationDefaultValues">
         <annotations>
