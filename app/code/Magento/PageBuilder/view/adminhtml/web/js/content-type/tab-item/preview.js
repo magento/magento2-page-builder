@@ -74,9 +74,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
             // Have we moved the focus onto another button in the current group?
             var tabItem = _knockout.dataFor(event.relatedTarget);
 
-            if (tabItem && tabItem.parent && tabItem.parent.parent) {
+            if (tabItem && tabItem.parent && tabItem.parent.parent && tabItem.parent.parent.id === this.parent.parent.id) {
               var newIndex = tabItem.parent.parent.children().indexOf(tabItem.parent);
               parentPreview.setFocusedTab(newIndex, true);
+            } else {
+              unfocus();
             }
           }
         } else if (parentPreview.focusedTab() === index) {

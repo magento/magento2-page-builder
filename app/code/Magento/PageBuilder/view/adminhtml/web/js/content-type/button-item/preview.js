@@ -78,9 +78,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
             // Have we moved the focus onto another button in the current group?
             var buttonItem = _knockout.dataFor(event.relatedTarget);
 
-            if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
+            if (buttonItem && buttonItem.parent && buttonItem.parent.parent && buttonItem.parent.parent.id === this.parent.parent.id) {
               var newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
               parentPreview.focusedButton(newIndex);
+            } else {
+              unfocus();
             }
           }
         } else if (parentPreview.focusedButton() === index) {

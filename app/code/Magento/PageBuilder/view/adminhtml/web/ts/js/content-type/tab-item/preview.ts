@@ -66,9 +66,13 @@ export default class Preview extends PreviewCollection {
                 } else {
                     // Have we moved the focus onto another button in the current group?
                     const tabItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (tabItem && tabItem.parent && tabItem.parent.parent) {
+                    if (tabItem && tabItem.parent && tabItem.parent.parent
+                        && tabItem.parent.parent.id === this.parent.parent.id
+                    ) {
                         const newIndex = tabItem.parent.parent.children().indexOf(tabItem.parent);
                         parentPreview.setFocusedTab(newIndex, true);
+                    } else {
+                        unfocus();
                     }
                 }
             } else if (parentPreview.focusedTab() === index) {
