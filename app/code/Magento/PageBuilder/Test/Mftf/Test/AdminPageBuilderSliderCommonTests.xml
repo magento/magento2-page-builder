@@ -484,6 +484,10 @@
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAddSlide">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE2">
             <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
@@ -599,7 +603,7 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainerAndExpectEditPanel" stepKey="dragSliderToColumn">
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderToColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
@@ -861,6 +865,10 @@
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText2">
             <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
@@ -1247,7 +1255,7 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupLayout">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoColumnAndExpectEditPanel">
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoColumn">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2" />
@@ -1478,7 +1486,6 @@
         <!-- Add 2nd Slide -->
         <comment userInput="Add 2nd Slide" stepKey="commentAddSlide"/>
         <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel2"/>
         <!-- Validate Slide 2 Is Shown -->
         <comment userInput="Validate Slide 2 Is Shown" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
@@ -1544,6 +1551,10 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutSlideTwoColour">
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
         </actionGroup>

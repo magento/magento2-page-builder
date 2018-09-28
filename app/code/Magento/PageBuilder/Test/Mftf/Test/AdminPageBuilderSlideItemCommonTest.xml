@@ -595,6 +595,10 @@
         <!-- Add Slide 2 -->
         <comment userInput="Add Slide 2" stepKey="commentAddSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <!-- Edit Slide 2 -->
         <comment userInput="Edit Slide 2" stepKey="commentEditSlide2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
@@ -728,7 +732,6 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel2"/>
         <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="2" stepKey="seeSlidesStage1"/>
         <!-- Remove Slide Before Page Save (No Confirmation Modal) -->
         <comment userInput="Remove Slide Before Page Save" stepKey="commentRemoveSlide1"/>
@@ -740,7 +743,6 @@
         <!-- Add Slide Again -->
         <comment userInput="Add Slide Again" stepKey="commentAddSlideAgain"/>
         <actionGroup ref="addSlide" stepKey="addSlide2"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel3"/>
         <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="2" stepKey="seeSlidesStage3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1383,8 +1385,11 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!--Upload image from local machine using image placeholder button-->
         <comment userInput="Upload image from local machine using image placeholder button on slide out" stepKey="commentUploadImage"/>
@@ -1703,6 +1708,10 @@
         <!-- Test removing added slide -->
         <comment userInput="Test removing added slide" stepKey="commentAddedSlide"/>
         <actionGroup ref="addSlide" stepKey="addNewSlide" />
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <!-- Fill first slide data -->
         <comment userInput="Fill second slide data." stepKey="fillSlide2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputSlideColorWhite">
