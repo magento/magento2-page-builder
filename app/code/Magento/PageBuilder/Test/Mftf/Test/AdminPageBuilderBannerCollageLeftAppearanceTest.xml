@@ -1230,10 +1230,10 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
@@ -1278,10 +1278,10 @@
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMobileMarginsStorefront"/>
         <seeElement selector="{{BannerOnFrontend.mobileCollagePadding('1', PageBuilderBannerCollageLeftPaddingPropertyUnique.value)}}" stepKey="seeMobilePaddingStorefront"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront2">
             <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <switchToNextTab stepKey="switchToNextTab"/>

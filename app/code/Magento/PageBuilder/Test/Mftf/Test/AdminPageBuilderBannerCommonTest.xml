@@ -1175,9 +1175,10 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
     <test name="BannerVerifyStageUploadImageButtonsForEachAppearance">
@@ -1812,7 +1813,7 @@
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
@@ -1862,10 +1863,10 @@
         <seeElement selector="{{BannerOnFrontend.margins('2', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMobileMarginsStorefront"/>
         <seeElement selector="{{BannerOnFrontend.mobileCollagePadding('2', PageBuilderBannerCollageCenterPaddingPropertyUnique.value)}}" stepKey="seeMobilePaddingStorefront"/>
         <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <click selector="{{BannerOnFrontend.linkUrl('2', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
