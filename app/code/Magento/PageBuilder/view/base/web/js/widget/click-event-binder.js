@@ -46,7 +46,7 @@ define(['jquery'], function ($) {
      */
     clickEventBinder.redirectTo = function (href, target) {
         if (!target) {
-            target = '_self';
+            target = '_top';
         }
 
         window.open(href, target, 'noopener');
