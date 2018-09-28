@@ -45,11 +45,11 @@ define(['jquery'], function ($) {
      * @param {String} target
      */
     clickEventBinder.redirectTo = function (href, target) {
-        if (target === '_blank') {
-            window.open(href, target);
-        } else {
-            window.location.href = href;
+        if (!target) {
+            target = '_self';
         }
+
+        window.open(href, target, 'noopener');
     };
 
     return clickEventBinder;
