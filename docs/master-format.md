@@ -878,10 +878,7 @@ Attributes
 
 Attributes
 1. data-element [overlay]
-2. data-role
-3. data-appearance
-4. data-link-type
-5. data-overlay-color
+2. data-overlay-color
 
 Inline styles
 1. background-color
