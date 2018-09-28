@@ -2053,7 +2053,7 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert not to see deleted image on stage -->
         <comment userInput="Assert not to see deleted image on stage" stepKey="assertNotToSeeImage1"/>
-        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder1"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeBannerPlaceholder1"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
@@ -2074,6 +2074,7 @@
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage3">
             <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut2"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
@@ -2081,7 +2082,7 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Verify image is removed from Banner stage -->
         <comment userInput="Verify image is removed from Banner stage" stepKey="commentVerifyBannerStage"/>
-        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeBannerPlaceholder2"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner('1')}}" stepKey="seeBannerPlaceholder2"/>
         <dontSeeElementInDOM selector="{{BannerOnBackend.imageOnStage('1',PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
     <test name="BannerInlineEditStaysFocusedWhileDraggingAndDropping">

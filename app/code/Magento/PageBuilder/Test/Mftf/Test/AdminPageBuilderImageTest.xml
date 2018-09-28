@@ -41,6 +41,7 @@
         <comment userInput="Attach image A to PageBuilder stage" stepKey="attachImageToStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
+            <argument name="section" value="ImageOnStage"/>
         </actionGroup>
         <!-- Go to Media Storage from stage-->
         <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage"/>
@@ -62,7 +63,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout1">
@@ -106,9 +107,14 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut2">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
+        <waitForText userInput="{{ImageFolder.name}}" stepKey="waitForNewFolder" />
+        <click userInput="{{ImageFolder.name}}" stepKey="clickOnCreatedFolder" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask" />
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut4"/>
+        <wait time="30" stepKey="customwait"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage1">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
