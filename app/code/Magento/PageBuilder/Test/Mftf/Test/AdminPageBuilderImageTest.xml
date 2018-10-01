@@ -20,7 +20,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
             <skip>
-                <issueId value="MC-4114"/>
+                <issueId value="MC-4306"/>
             </skip>
         </annotations>
         <before>
@@ -110,9 +110,9 @@
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut2">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForText userInput="{{ImageFolder.name}}" stepKey="waitForNewFolder" />
-        <click userInput="{{ImageFolder.name}}" stepKey="clickOnCreatedFolder" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask" />
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="navigateToMediaFolder">
+            <argument name="FolderName" value="{{ImageFolder.name}}"/>
+        </actionGroup>
         <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage4">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
