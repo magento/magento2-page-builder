@@ -19,6 +19,9 @@
             <testCaseId value="MC-3494"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
+            <skip>
+                <issueId value="MC-4114"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -114,7 +117,6 @@
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut4"/>
-        <wait time="30" stepKey="customwait"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage1">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
