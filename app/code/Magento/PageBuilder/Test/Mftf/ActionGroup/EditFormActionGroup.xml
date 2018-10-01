@@ -348,6 +348,12 @@
         </arguments>
         <dontSeeElementInDOM selector="{{EditPanelForm.panelFieldNoAfterLabelText(property.fieldName)}}" stepKey="dontSeeElementInDOM"/>
     </actionGroup>
+    <actionGroup name="validateSlideOutPanelFieldNotPresent">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <dontSee selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeField"/>
+    </actionGroup>
     <actionGroup name="validateAlignmentFieldIsNotDisabled">
         <arguments>
             <argument name="property"/>
