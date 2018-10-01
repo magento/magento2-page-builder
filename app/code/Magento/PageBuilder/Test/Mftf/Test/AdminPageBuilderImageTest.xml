@@ -57,7 +57,7 @@
         <!-- Assert don't see deleted image on stage -->
         <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
         <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
-        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -122,7 +122,7 @@
         <!-- Assert not to see image on stage -->
         <comment userInput="Assert not to see image on stage" stepKey="commentVerifyImageStage" />
         <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
-        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>

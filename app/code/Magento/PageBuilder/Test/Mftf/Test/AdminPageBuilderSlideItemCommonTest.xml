@@ -1381,8 +1381,10 @@
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromSlide"/>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="section" value="ImageOnStage"/>

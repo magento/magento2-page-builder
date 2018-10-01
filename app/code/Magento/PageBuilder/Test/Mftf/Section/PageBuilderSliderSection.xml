@@ -142,11 +142,13 @@
         <element name="base" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="emptySlide" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content'][contains(@class,'pagebuilder-empty-slide') and text()='Edit Slide Text']" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
+        <element name="imageSource" type="text" selector="(//div[@data-role='slide'])[1]/div[contains(@style,'{{arg1}}')]" parameterized="true"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="optionsMenuButtonDisabled" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
         <element name="optionsMenuTitle" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//div[contains(@class,'option-title')]" parameterized="true"/>
+        <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-role='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
