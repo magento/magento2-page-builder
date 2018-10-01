@@ -1832,4 +1832,56 @@
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
     </test>
+    <test name="RowMinimumHeightIsObeyedWhenParallaxIsEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Row - Minimum Height Obeyed when Parallax is enabled"/>
+            <description value="As a Content Manager I want minimum height of parallax-enabled row to reflect the same value configured by user"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4128"/>
+            <testCaseId value="MC-4304"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowParallax"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabledProperty">
+            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty">
+            <argument name="property" value="PageBuilderRowMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="computedHeight" />
+        <assertEquals stepKey="assertEqualToEnteredValue">
+            <expectedResult type="string">{{PageBuilderRowMinimumHeightProperty.value}}</expectedResult>
+            <actualResult type="variable">$computedHeight</actualResult>
+        </assertEquals>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty2">
+            <argument name="property" value="PageBuilderRowMinimumHeightProperty_2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="computedHeight2" />
+        <assertEquals stepKey="assertEqualToEnteredValue2">
+            <expectedResult type="string">{{PageBuilderRowMinimumHeightProperty_2.value}}</expectedResult>
+            <actualResult type="variable">$computedHeight2</actualResult>
+        </assertEquals>
+    </test>
 </tests>
