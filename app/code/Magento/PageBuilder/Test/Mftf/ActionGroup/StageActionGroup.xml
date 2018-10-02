@@ -98,7 +98,7 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector="{{section.uploadImageInput(index)}}" stepKey="attachImageFromLocalToStage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible selector="{{section.imageSource(property.fileName)}}" stepKey="waitForMainImageSource1"/>
+        <waitForElementVisible selector="{{section.imageSourceByIndex(index, property.fileName)}}" stepKey="waitForMainImageSource1"/>
     </actionGroup>
     <actionGroup name="inlineEditWYSIWYGFromStage">
         <arguments>
