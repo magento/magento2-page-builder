@@ -195,11 +195,11 @@
             <argument name="pageNamePrefix" value="slider"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <dontSeeElement selector="{{SlideOnFrontend.backgroundMobileImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="dontSeeMobileImage"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+        <dontSeeElement selector="{{SlideOnFrontend.backgroundImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="dontSeeMobileImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <dontSeeElement selector="{{SlideOnFrontend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeDesktopImage"/>
@@ -270,10 +270,10 @@
         </actionGroup>
         <!-- Validate Image Still Visible In Mobile -->
         <comment userInput="Validate Image Still Visible In Mobile" stepKey="commentValidateStorefront2"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
     <test name="SlideCollageCenteredButtonNeverShow" extends="SlideItemPosterButtonNeverShow">
@@ -481,7 +481,7 @@
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{SlideOnFrontend.collagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.desktopValue)}}" stepKey="seePaddingStorefront"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_CollageCentered.value)}}" stepKey="seeMobileAppearanceStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.mobileCollagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.mobileValue)}}" stepKey="seeMobilePaddingStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.collagePadding('1', PageBuilderSlideItemCollageCenterPadding_Unique.mobileValue)}}" stepKey="seeMobilePaddingStorefront"/>
     </test>
     <test name="SliderCollageCenterHtmlValueInButtons">
         <annotations>

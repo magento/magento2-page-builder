@@ -74,8 +74,8 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seePosterAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.slideName('1', PageBuilderSlideItemSlideName_Empty.value)}}" stepKey="seeSlideNameStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileMinimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.minimumHeight('1', PageBuilderSlideItemMinimumHeight_300.value)}}" stepKey="seeMinimumHeightStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparencyOverlayStorefrontMobile"/>
         <dontSeeInPageSource userInput="Edit Slide Text" stepKey="dontSeeDummyTextInPageSourceMobile"/>
     </test>
     <test name="SlideItemAppearanceSectionDefaults">
@@ -242,11 +242,11 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileNoBackgroundColor('1')}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileNoBackgroundImage('1')}}" stepKey="seeBackgroundImageStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileBackgroundSize('1', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeBackgroundSizeStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileBackgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeBackgroundPositionStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileBackgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.noBackgroundColor('1')}}" stepKey="seeBackgroundColorStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.noBackgroundImage('1')}}" stepKey="seeBackgroundImageStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundSize('1', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeBackgroundSizeStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeBackgroundPositionStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStorefrontMobile"/>
     </test>
     <test name="SlideItemContentSectionDefaults">
         <annotations>
@@ -390,17 +390,17 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.mobileNoMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefrontMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.mobileNoMessageContent('1')}}" stepKey="dontSeeMessageContentStorefrontMobile"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefrontMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="dontSeeMessageContentStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileNoButton('1')}}" stepKey="seeNoButtonTextStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile"/>
         <!-- Validate Storefront Mobile: No Overlay -->
         <comment userInput="Validate Storefront Mobile: No Overlay" stepKey="commentValidateNoOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile2"/>
+        <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeOverlayColorAndTransparencyStorefrontMobile2"/>
         <!-- Validate Storefront Mobile: Link -->
         <comment userInput="Validate Storefront Mobile: Link" stepKey="commentValidateLinkMobile"/>
         <grabFromCurrentUrl stepKey="currentUrl2"/>
@@ -526,8 +526,8 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.noAlignment('1')}}" stepKey="seeAlignmentStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.mobileNoAlignment('1')}}" stepKey="seeInDOMMobileAlignmentStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.mobileNoAlignment('1')}}" stepKey="dontSeeMobileAlignmentStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.noAlignment('1')}}" stepKey="seeInDOMMobileAlignmentStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.noAlignment('1')}}" stepKey="dontSeeMobileAlignmentStorefront"/>
         <seeElement selector="{{SlideOnFrontend.border('1', PageBuilderAdvancedBorderPropertyNone.value)}}" stepKey="seeBorderStorefront"/>
         <seeElement selector="{{SlideOnFrontend.noBorderColor('1')}}" stepKey="seeBorderColorStorefront"/>
         <seeElement selector="{{SlideOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeBorderWidthStorefront"/>
@@ -535,8 +535,8 @@
         <seeElement selector="{{SlideOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesDefaultProperty.value)}}" stepKey="seeCSSClassesStorefront"/>
         <seeElement selector="{{SlideOnFrontend.margins('1', PageBuilderMarginsPropertyDefault.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{SlideOnFrontend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="seePaddingStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.mobilePosterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.mobilePosterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="dontSeeMobilePaddingStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
+        <dontSeeElement selector="{{SlideOnFrontend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="dontSeeMobilePaddingStorefront"/>
     </test>
     <test name="SlideItemMoveSlideItemsToRearrange">
         <annotations>
@@ -1244,9 +1244,10 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateBackgroundImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateBackgroundImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="pageNamePrefix" value=""/>
         </actionGroup>
     </test>
     <test name="SlideItemVerifyStageUploadImageButtonsForEachAppearance">
