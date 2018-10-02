@@ -11,12 +11,12 @@ import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
 import Uploader from "../uploader";
-import WysiwygFactory from "../wysiwyg/factory";
-import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**
  * @api
