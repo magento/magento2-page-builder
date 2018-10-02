@@ -190,19 +190,21 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <!-- Validate desktop image is displayed before browser is resized -->
+        <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <dontSeeElement selector="{{SlideOnFrontend.backgroundImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="dontSeeMobileImage"/>
+        <!-- Validate mobile image is displayed when browser is resized -->
+        <comment userInput="Validate mobile image is displayed when browser is resized" stepKey="commentMobileImage"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
-        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeDesktopImage"/>
     </test>
     <test name="SlideCollageCenteredMobileWithoutMobileImageValues">
         <annotations>
@@ -263,13 +265,16 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <!-- Validate desktop image is displayed before browser is resized -->
+        <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <!-- Validate Image Still Visible In Mobile -->
-        <comment userInput="Validate Image Still Visible In Mobile" stepKey="commentValidateStorefront2"/>
+        <!-- Validate desktop image still visible in mobile view -->
+        <comment userInput="Validate desktop image still visible in mobile view" stepKey="commentDesktopImageMobileView"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageStorefront">
             <argument name="section" value="SlideOnFrontend"/>
             <argument name="pageNamePrefix" value="slider"/>
