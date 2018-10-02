@@ -1837,7 +1837,7 @@
             <features value="PageBuilder"/>
             <stories value="Row"/>
             <title value="Row - Minimum Height Obeyed when Parallax is enabled"/>
-            <description value="As a Content Manager I want minimum height of parallax-enabled row to reflect the same value configured by user"/>
+            <description value="As a Content Manager I want minimum height of parallax-enabled row to reflect the same value configured by me"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-4128"/>
             <testCaseId value="MC-4304"/>
@@ -1859,29 +1859,31 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabledProperty">
-            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabledProperty">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty">
-            <argument name="property" value="PageBuilderRowMinimumHeightProperty"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="computedHeight" />
+        <!-- Get value of assigned min height on element -->
+        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight" />
         <assertEquals stepKey="assertEqualToEnteredValue">
-            <expectedResult type="string">{{PageBuilderRowMinimumHeightProperty.value}}</expectedResult>
-            <actualResult type="variable">$computedHeight</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_300.value}}</expectedResult>
+            <actualResult type="variable">$assignedHeight</actualResult>
         </assertEquals>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty2">
-            <argument name="property" value="PageBuilderRowMinimumHeightProperty_2"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
-        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="computedHeight2" />
+        <!-- Get value of assigned min height on element -->
+        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight2" />
         <assertEquals stepKey="assertEqualToEnteredValue2">
-            <expectedResult type="string">{{PageBuilderRowMinimumHeightProperty_2.value}}</expectedResult>
-            <actualResult type="variable">$computedHeight2</actualResult>
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500.value}}</expectedResult>
+            <actualResult type="variable">$assignedHeight2</actualResult>
         </assertEquals>
     </test>
 </tests>
