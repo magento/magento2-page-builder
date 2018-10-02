@@ -101,8 +101,12 @@
                 <additionalClasses>
                     <class name="admin__field-small">true</class>
                 </additionalClasses>
-                <notice translate="true">Defaults to 5.</notice>
                 <dataScope>products_count</dataScope>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">999</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">1</rule>
+                </validation>
             </settings>
         </field>
     </fieldset>
