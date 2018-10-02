@@ -9,7 +9,7 @@ define([
     'mage/translate',
     'Magento_PageBuilder/js/events',
     'Magento_PageBuilder/js/page-builder'
-], function (jquery, Wysiwyg, $t, events, PageBuilder) {
+], function ($, Wysiwyg, $t, events, PageBuilder) {
     'use strict';
 
     /**
@@ -22,10 +22,14 @@ define([
             visiblePageBuilder: false,
             isComponentInitialized: false,
             wysiwygConfigData: {},
-            pageBuilderEditButtonText: $t('Edit with Page Builder')
+            pageBuilderEditButtonText: $t('Edit with Page Builder'),
+            isWithinModal: false,
+            modal: false,
         },
 
-        /** @inheritdoc */
+        /**
+         * @inheritdoc
+         */
         initialize: function () {
             this._super();
 
@@ -36,7 +40,9 @@ define([
             return this;
         },
 
-        /** @inheritdoc */
+        /**
+         * @inheritdoc
+         */
         initObservable: function () {
             this._super()
                 .observe('visiblePageBuilder wysiwygConfigData loading');
@@ -44,13 +50,25 @@ define([
             return this;
         },
 
-        /** Handle button click. */
-        pageBuilderEditButtonClick: function () {
+        /**
+         * Handle button click, init the Page Builder application
+         */
+        pageBuilderEditButtonClick: function (context, event) {
+            var modalInnerWrap = $(event.currentTarget).parents(".modal-inner-wrap");
+
+            // Determine if the Page Builder instance is within a modal
+            this.isWithinModal = modalInnerWrap.length === 1;
+            if (this.isWithinModal) {
+                this.modal = modalInnerWrap;
+            }
+
             this.initPageBuilder();
             this.toggleFullScreen();
         },
 
-        /** Init PageBuilder. */
+        /**
+         * Init Page Builder
+         */
         initPageBuilder: function () {
             if (!this.isComponentInitialized) {
                 this.loading(true);
@@ -63,12 +81,16 @@ define([
             }
         },
 
-        /** Toggle PageBuilder full screen. */
+        /**
+         * Toggle Page Builder full screen mode
+         */
         toggleFullScreen: function () {
             events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {});
         },
 
-        /** Init listeners of stage. */
+        /**
+         * Init various listeners on the stage
+         */
         initPageBuilderListeners: function () {
             var id = this.pageBuilder.id;
 
@@ -76,16 +98,30 @@ define([
                 this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
+
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
             }.bind(this));
+
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
                 if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
-                    jquery('.modal-inner-wrap').removeClass('un-transform');
+
+                    if (this.isWithinModal && this.modal) {
+                        this.modal.css({
+                            transform: "",
+                            transition: ""
+                        });
+                    }
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(true);
-                    jquery('.modal-inner-wrap').addClass('un-transform');
+
+                    if (this.isWithinModal && this.modal) {
+                        this.modal.css({
+                            transform: "none",
+                            transition: "none"
+                        });
+                    }
                 }
             }.bind(this));
         }
