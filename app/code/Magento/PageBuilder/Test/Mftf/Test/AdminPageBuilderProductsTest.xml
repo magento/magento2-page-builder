@@ -1128,9 +1128,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Make first column to 1/12 -->
-        <comment userInput="Make first column to 1/12" stepKey="commentMakeFirstColumnSmall"/>
-        <comment userInput="Drag new column onto first group" stepKey="commentDragColumnToFirstColumnGroup"/>
+        <!-- Drag new column onto column group to make 1/12 column -->
+        <comment userInput="Drag new column onto column group to make 1/12 column" stepKey="commentDragNewColumnToGroupMakeFirstColumnSmall"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoFirstColumnGroup">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
@@ -1156,7 +1155,6 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForPageLoad" />
         <!-- Validating products is smaller than column -->
         <comment userInput="Validating products is smaller than column" stepKey="commentValidatingProductsIsSmallerThanColumn"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth"/>
