@@ -1094,7 +1094,6 @@
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ProductsOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
-
     <test name="ProductsWrapsInsideTinyColumn">
         <annotations>
             <features value="PageBuilder"/>
@@ -1129,6 +1128,15 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
+        <!-- Make first column to 1/12 -->
+        <comment userInput="Make first column to 1/12" stepKey="commentMakeFirstColumnSmall"/>
+        <comment userInput="Drag new column onto first group" stepKey="commentDragColumnToFirstColumnGroup"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoFirstColumnGroup">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
         <!-- Add Products to Stage -->
         <comment userInput="Add Products to Stage" stepKey="addProductsToStage"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
@@ -1148,17 +1156,14 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <!-- Resizing first column to 1/12 -->
-        <comment userInput="Resizing first column to 1/12" stepKey="commentInitialResize"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
-        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
         <waitForPageLoad stepKey="waitForPageLoad" />
+        <!-- Validating products is smaller than column -->
+        <comment userInput="Validating products is smaller than column" stepKey="commentValidatingProductsIsSmallerThanColumn"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth"/>
-        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','11/12')}}" stepKey="validateSecondColumnWidth"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="firstColumnWidth"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStage.productImageCSS}}').clientWidth" stepKey="productImageWidth"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStage.productPriceContainer}}').clientWidth" stepKey="productPriceContainerWidth"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStage.productActions}}').clientWidth" stepKey="productActionsWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ColumnOnBackend.columnX('1')}}')[0].clientWidth" stepKey="firstColumnWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidth"/>
         <assertGreaterThan stepKey="assertColumnIsWiderThanProductImage">
             <actualResult type="variable">firstColumnWidth</actualResult>
             <expectedResult type="variable">productImageWidth</expectedResult>
@@ -1181,12 +1186,13 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
+        <!-- Validating products is smaller than column after save -->
+        <comment userInput="Validating products is smaller than column after save" stepKey="commentValidatingProductsIsSmallerThanColumnAfterSave"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidthAfterSave"/>
-        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','11/12')}}" stepKey="validateSecondColumnWidthAfterSave"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="firstColumnWidthAfterSave"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStage.productImageCSS}}').clientWidth" stepKey="productImageWidthAfterSave"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStage.productPriceContainer}}').clientWidth" stepKey="productPriceContainerWidthAfterSave"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStage.productActions}}').clientWidth" stepKey="productActionsWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ColumnOnBackend.columnX('1')}}')[0].clientWidth" stepKey="firstColumnWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidthAfterSave"/>
         <assertGreaterThan stepKey="assertColumnIsWiderThanProductImageAfterSave">
             <actualResult type="variable">firstColumnWidthAfterSave</actualResult>
             <expectedResult type="variable">productImageWidthAfterSave</expectedResult>
@@ -1204,16 +1210,12 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateContentTypeInsideContainerStorefrontInDOM" stepKey="checkContentTypeInContainerStorefront">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
-            <argument name="containerTargetIndex" value="1"/>
-        </actionGroup>
-        <executeJS function="return document.querySelector('{{ColumnOnFrontend.columnX('1')}}').clientWidth" stepKey="firstColumnWidthFrontend"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStorefront.productImageCSS}}').clientWidth" stepKey="productImageWidthFrontend"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStorefront.productPriceContainer}}').clientWidth" stepKey="productPriceContainerWidthFrontend"/>
-        <executeJS function="return document.querySelector('{{ProductsOnStorefront.productActions}}').clientWidth" stepKey="productActionsWidthFrontend"/>
+        <!-- Validating products is smaller than column Storefront -->
+        <comment userInput="Validating products is smaller than column storefront" stepKey="commentValidatingProductsIsSmallerThanColumnStoreFront"/>
+        <executeJS function="return document.querySelectorAll('{{ColumnOnFrontend.columnX('1')}}')[0].clientWidth" stepKey="firstColumnWidthFrontend"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthFrontend"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthFrontend"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productActions}}')[0].clientWidth" stepKey="productActionsWidthFrontend"/>
         <assertGreaterThan stepKey="assertColumnIsWiderThanProductImageFrontend">
             <actualResult type="variable">firstColumnWidthFrontend</actualResult>
             <expectedResult type="variable">productImageWidthFrontend</expectedResult>
