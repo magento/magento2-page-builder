@@ -4,5 +4,7 @@
  */
 
 export default interface ObservableObject {
-    [key: string]: KnockoutObservable<{}>;
+    [key: string]: {
+        [key: string]: KnockoutObservable<any>;
+    };
 }
