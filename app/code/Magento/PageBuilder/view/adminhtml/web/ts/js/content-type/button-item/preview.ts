@@ -67,9 +67,13 @@ export default class Preview extends BasePreview {
                 } else {
                     // Have we moved the focus onto another button in the current group?
                     const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (buttonItem && buttonItem.parent && buttonItem.parent.parent) {
+                    if (buttonItem && buttonItem.parent && buttonItem.parent.parent
+                        && buttonItem.parent.parent.id === this.parent.parent.id
+                    ) {
                         const newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
                         parentPreview.focusedButton(newIndex);
+                    } else {
+                        unfocus();
                     }
                 }
             } else if (parentPreview.focusedButton() === index) {
@@ -86,7 +90,9 @@ export default class Preview extends BasePreview {
      */
     public onFocusIn(index: number, event: Event): void {
         const parentPreview = this.parent.parent.preview as ButtonsPreview;
-        parentPreview.focusedButton(index);
+        if (parentPreview.focusedButton() !== index) {
+            parentPreview.focusedButton(index);
+        }
     }
 
     /**
