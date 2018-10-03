@@ -1,28 +1,28 @@
 /*eslint-disable */
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 define(["knockout"], function (_knockout) {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var Option =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * @param {OptionConfigInterface} config
      */
     function Option(config) {
       var _this = this;
 
-      this.config = void 0;
-      this.preview = void 0;
-      this.code = void 0;
       this.icon = _knockout.observable("");
       this.title = _knockout.observable("");
       this.classes = _knockout.observable({});
-      this.sort = void 0;
-      this.action = void 0;
       this.isDisabled = _knockout.observable(false);
-      this.customTemplate = void 0;
       this.config = config;
       this.preview = config.preview;
       this.icon(config.icon);

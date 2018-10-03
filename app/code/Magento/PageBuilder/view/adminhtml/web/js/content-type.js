@@ -7,6 +7,8 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
   var ContentType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
@@ -14,17 +16,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
      */
     function ContentType(parent, config, stageId) {
       this.id = _mageUtils.uniqueid();
-      this.parent = void 0;
-      this.stageId = void 0;
-      this.config = void 0;
       this.data = {};
       this.wrapperStyle = _knockout.observable({
         width: "100%"
       });
-      this.element = void 0;
       this.dataStore = new _dataStore();
-      this.preview = void 0;
-      this.content = void 0;
       this.dropped = false;
       this.parent = parent;
       this.config = config;

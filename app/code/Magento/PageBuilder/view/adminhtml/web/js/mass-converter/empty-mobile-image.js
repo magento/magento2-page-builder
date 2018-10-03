@@ -7,6 +7,8 @@ define([], function () {
   var EmptyMobileImage =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function EmptyMobileImage() {}
 
     var _proto = EmptyMobileImage.prototype;

@@ -10,7 +10,7 @@ import ContentTypeInterface from "../content-type.d";
  * @api
  */
 export interface ContentTypeBeforeMoveEventParams {
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface;
     sourceParent: ContentTypeCollectionInterface;
     targetParent: ContentTypeCollectionInterface;
     targetIndex: number;

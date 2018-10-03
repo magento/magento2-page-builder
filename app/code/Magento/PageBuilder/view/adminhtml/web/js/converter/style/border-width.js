@@ -11,6 +11,8 @@ define([], function () {
   var BorderWidth =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function BorderWidth() {}
 
     var _proto = BorderWidth.prototype;

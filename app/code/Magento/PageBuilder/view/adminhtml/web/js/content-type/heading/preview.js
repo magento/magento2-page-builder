@@ -1,14 +1,23 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _contentTypeToolbar, _preview) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Heading =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Heading, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Heading, _preview2);
 
     /**
      * @param {ContentTypeInterface} parent
@@ -18,10 +27,8 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     function Heading(parent, config, observableUpdater) {
       var _this;
 
-      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
-      _this.toolbar = void 0;
-      _this.element = void 0;
-      _this.toolbar = new _contentTypeToolbar(_this, _this.getToolbarOptions());
+      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this.toolbar = new _contentTypeToolbar(_assertThisInitialized(_assertThisInitialized(_this)), _this.getToolbarOptions());
       return _this;
     }
     /**
@@ -40,7 +47,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _BasePreview.prototype.bindEvents.call(this); // When a heading is dropped for the first time show heading toolbar
+      _preview2.prototype.bindEvents.call(this); // When a heading is dropped for the first time show heading toolbar
 
 
       _events.on("heading:dropAfter", function (args) {

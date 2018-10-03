@@ -4,8 +4,9 @@
  */
 define([
     'Magento_PageBuilder/js/content-type/slider/appearance/default/widget',
+    'Magento_PageBuilder/js/events',
     'jquery'
-], function (sliderWidgetInitializer, $) {
+], function (sliderWidgetInitializer, uiEvents, $) {
     'use strict';
 
     describe('Magento_PageBuilder/js/content-type/slider/appearance/default/widget', function () {
@@ -51,6 +52,12 @@ define([
                 arrows: true,
                 dots: true
             });
+        });
+
+        it('Should bind to contentType:redrawAfter event', function () {
+            spyOn(uiEvents, 'on');
+            sliderWidgetInitializer(undefined, el);
+            expect(uiEvents.on).toHaveBeenCalledWith('contentType:redrawAfter', jasmine.any(Function));
         });
     });
 });

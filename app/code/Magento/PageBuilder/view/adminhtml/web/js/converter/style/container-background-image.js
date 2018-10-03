@@ -11,6 +11,8 @@ define([], function () {
   var ContainerBackgroundImage =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function ContainerBackgroundImage() {}
 
     var _proto = ContainerBackgroundImage.prototype;
