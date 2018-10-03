@@ -7,6 +7,8 @@ define([], function () {
   var Src =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Src() {}
 
     var _proto = Src.prototype;

@@ -19,15 +19,15 @@ define(["Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/j
     var acceptedContainers = (0, _matrix.getContainersFor)(contentType);
 
     if (acceptedContainers.length > 0) {
-      var _createStyleSheet;
+      var _ref;
 
       var classNames = acceptedContainers.map(function (container) {
         return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator, " + ".pagebuilder-content-type.type-container.empty-container > .content-type-container." + container + "-container:before";
       });
-      var styles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classNames.join(", ")] = {
+      var styles = (0, _createStylesheet.createStyleSheet)((_ref = {}, _ref[classNames.join(", ")] = {
         opacity: 1,
         visibility: "visible"
-      }, _createStyleSheet));
+      }, _ref));
       document.head.appendChild(styles);
       headDropIndicatorStyles = styles;
       return styles;

@@ -13,6 +13,8 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
   var Wysiwyg =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * The id of the editor element
      */
@@ -45,12 +47,6 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
      * @param {String} fieldName The key in the provided datastore to set the data.
      */
     function Wysiwyg(contentTypeId, elementId, config, dataStore, fieldName) {
-      this.elementId = void 0;
-      this.config = void 0;
-      this.contentTypeId = void 0;
-      this.wysiwygAdapter = void 0;
-      this.dataStore = void 0;
-      this.fieldName = void 0;
       this.contentTypeId = contentTypeId;
       this.elementId = elementId;
       this.fieldName = fieldName;

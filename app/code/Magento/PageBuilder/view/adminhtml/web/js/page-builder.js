@@ -7,12 +7,10 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
   var PageBuilder =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function PageBuilder(config, initialValue) {
       this.template = "Magento_PageBuilder/page-builder";
-      this.panel = void 0;
-      this.stage = void 0;
-      this.config = void 0;
-      this.initialValue = void 0;
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);

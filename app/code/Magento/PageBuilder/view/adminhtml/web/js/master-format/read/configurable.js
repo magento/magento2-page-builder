@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
+define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -11,6 +11,8 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
   var Configurable =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Configurable() {}
 
     var _proto = Configurable.prototype;
@@ -77,11 +79,11 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
      * Read attributes for element
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
-     * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ConverterPool} converterPool
-     * @returns {object}
+     * @param {typeof PropertyReaderPool} propertyReaderPool
+     * @param {typeof ConverterPool} converterPool
+     * @returns {any}
      */
 
 
@@ -100,43 +102,43 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
           _ref = _i2.value;
         }
 
-        var _attributeConfig = _ref;
+        var attributeConfig = _ref;
 
-        if ("write" === _attributeConfig.persistence_mode) {
+        if ("write" === attributeConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!_attributeConfig.static ? _attributeConfig.value : propertyReaderPool.get(_attributeConfig.reader).read(element, _attributeConfig.name);
+        var value = !!attributeConfig.static ? attributeConfig.value : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);
 
-        if (converterPool.get(_attributeConfig.converter)) {
-          value = converterPool.get(_attributeConfig.converter).fromDom(value);
+        if (converterPool.get(attributeConfig.converter)) {
+          value = converterPool.get(attributeConfig.converter).fromDom(value);
         }
 
-        if (_jquery.type(result[_attributeConfig.var]) === "object") {
+        if (_jquery.type(result[attributeConfig.var]) === "object") {
           var _mageUtils$extend;
 
-          value = _mageUtils.extend((_mageUtils$extend = {}, _mageUtils$extend[_attributeConfig.name] = value, _mageUtils$extend), result[_attributeConfig.var]);
+          value = _mageUtils.extend((_mageUtils$extend = {}, _mageUtils$extend[attributeConfig.name] = value, _mageUtils$extend), result[attributeConfig.var]);
         }
 
-        result[_attributeConfig.var] = value;
+        result[attributeConfig.var] = value;
       }
 
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Read style properties for element
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
-     * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ConverterPool} converterPool
+     * @param {typeof PropertyReaderPool} propertyReaderPool
+     * @param {typeof ConverterPool} converterPool
      * @returns {object}
      */
 
 
     _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
-      var result = _.extend({}, data);
+      var result = _underscore.extend({}, data);
 
       for (var _iterator2 = config, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
         var _ref2;
@@ -150,23 +152,23 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
           _ref2 = _i3.value;
         }
 
-        var _propertyConfig = _ref2;
+        var propertyConfig = _ref2;
 
-        if ("write" === _propertyConfig.persistence_mode) {
+        if ("write" === propertyConfig.persistence_mode) {
           continue;
         }
 
-        var value = !!_propertyConfig.static ? _propertyConfig.value : propertyReaderPool.get(_propertyConfig.reader).read(element, _propertyConfig.name);
+        var value = !!propertyConfig.static ? propertyConfig.value : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);
 
-        if (converterPool.get(_propertyConfig.converter)) {
-          value = converterPool.get(_propertyConfig.converter).fromDom(value);
+        if (converterPool.get(propertyConfig.converter)) {
+          value = converterPool.get(propertyConfig.converter).fromDom(value);
         }
 
-        if (_jquery.type(result[_propertyConfig.var]) === "object") {
-          value = _mageUtils.extend(result[_propertyConfig.var], value);
+        if (_jquery.type(result[propertyConfig.var]) === "object") {
+          value = _mageUtils.extend(result[propertyConfig.var], value);
         }
 
-        result[_propertyConfig.var] = value;
+        result[propertyConfig.var] = value;
       }
 
       return result;
@@ -175,7 +177,7 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
      * Read element's tag
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
      * @returns {object}
      */
@@ -184,13 +186,13 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
     _proto.readHtmlTag = function readHtmlTag(config, element, data) {
       var result = {};
       result[config.tag.var] = element.nodeName.toLowerCase();
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Read element's css
      *
      * @param {object} config
-     * @param {Node} element
+     * @param {HTMLElement} element
      * @param {object} data
      * @returns {object}
      */
@@ -213,20 +215,21 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
             _ref3 = _i4.value;
           }
 
-          var _filterClass = _ref3;
-          css = css.replace(_filterClass, "");
+          var filterClass = _ref3;
+          css = css.replace(filterClass, "");
         }
       }
 
       result[config.css.var] = css.replace(/\s{2,}/g, " ").trim();
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Read element's content
      *
-     * @param {object} config
-     * @param {Node} element
+     * @param config
+     * @param {HTMLElement} element
      * @param {object} data
+     * @param {typeof ConverterPool} converterPool
      * @returns {object}
      */
 
@@ -240,14 +243,14 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
       }
 
       result[config.html.var] = value;
-      return _.extend(data, result);
+      return _underscore.extend(data, result);
     };
     /**
      * Convert data after it's read for all elements
      *
-     * @param {object} config
+     * @param config
      * @param {object} data
-     * @param {MassConverterPool} massConverterPool
+     * @param {typeof MassConverterPool} massConverterPool
      * @returns {object}
      */
 
@@ -265,10 +268,10 @@ define(["jquery", "mageUtils", "Magento_PageBuilder/js/content-type/appearance-c
           _ref4 = _i5.value;
         }
 
-        var _converterConfig = _ref4;
+        var converterConfig = _ref4;
 
-        if (massConverterPool.get(_converterConfig.component)) {
-          data = massConverterPool.get(_converterConfig.component).fromDom(data, _converterConfig.config);
+        if (massConverterPool.get(converterConfig.component)) {
+          data = massConverterPool.get(converterConfig.component).fromDom(data, converterConfig.config);
         }
       }
 
