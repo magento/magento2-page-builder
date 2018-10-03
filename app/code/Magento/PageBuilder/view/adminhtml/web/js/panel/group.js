@@ -7,6 +7,8 @@ define(["knockout"], function (_knockout) {
   var Group =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * Group constructor
      *

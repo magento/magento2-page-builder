@@ -1,25 +1,34 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemoveOption, _previewCollection) {
-  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_conditionalRemoveOption, _previewCollection) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.fieldsToIgnoreOnRemove = ["tab_name"], _temp) || _this;
+      _this = _previewCollection2.call.apply(_previewCollection2, [this].concat(args)) || this;
+      _this.fieldsToIgnoreOnRemove = ["tab_name"];
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -30,7 +39,7 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "M
      * @returns {OptionsInterface}
      */
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       delete options.move;
       delete options.title;

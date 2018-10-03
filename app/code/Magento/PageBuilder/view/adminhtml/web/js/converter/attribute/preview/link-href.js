@@ -11,6 +11,8 @@ define([], function () {
   var CreateValueForHref =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForHref() {}
 
     var _proto = CreateValueForHref.prototype;

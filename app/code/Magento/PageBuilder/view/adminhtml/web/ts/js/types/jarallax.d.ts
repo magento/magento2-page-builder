@@ -139,30 +139,30 @@ interface JarallaxOptions {
 /**
  * Void callable methods
  *
- * @param {Element | Element[] | NodeListOf<Element> | JQuery<Element>} elements
+ * @param {Element | Element[] | NodeListOf<Element> | JQuery} elements
  * @param {"destroy" | "onResize" | "onScroll"} methodName
  */
 declare function jarallax(
-    elements: Element | Element[] | NodeListOf<Element> | JQuery<Element>,
+    elements: Element | Element[] | NodeListOf<Element> | JQuery,
     methodName: "destroy" | "onResize" | "onScroll",
 ): void;
 
 /**
  * Is visible method
  *
- * @param {Element | Element[] | NodeListOf<Element> | JQuery<Element>} elements
+ * @param {Element | Element[] | NodeListOf<Element> | JQuery} elements
  * @param {"isVisible"} methodName
  * @returns {boolean}
  */
 declare function jarallax(
-    elements: Element | Element[] | NodeListOf<Element> | JQuery<Element>,
+    elements: Element | Element[] | NodeListOf<Element> | JQuery,
     methodName: "isVisible",
 ): boolean;
 
 /**
  * Main invocation of Jarallax
  *
- * @param {Element | Element[] | NodeListOf<Element> | JQuery<Element>} elements
+ * @param {Element | Element[] | NodeListOf<Element> | JQuery} elements
  * @param {JarallaxOptions} userOptions
  */
 declare function jarallax(
