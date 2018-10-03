@@ -1,16 +1,21 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _widgetInitializer, _config, _preview) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     /**
      * @inheritdoc
@@ -18,7 +23,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, parent, config, observableUpdater) || this;
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.messages = {
@@ -65,7 +70,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _BasePreview.prototype.bindEvents.call(this); // When a block type is dropped for the first time open the edit panel
+      _preview2.prototype.bindEvents.call(this); // When a block type is dropped for the first time open the edit panel
 
 
       _events.on("block:dropAfter", function (args) {
@@ -82,7 +87,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
-      _BasePreview.prototype.afterObservablesUpdated.call(this);
+      _preview2.prototype.afterObservablesUpdated.call(this);
 
       var data = this.parent.dataStore.get(); // Only load if something changed
 
@@ -191,8 +196,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_preview);
 
-  return _extends(Preview, {
-    __esModule: true
-  });
+  return Preview;
 });
 //# sourceMappingURL=preview.js.map

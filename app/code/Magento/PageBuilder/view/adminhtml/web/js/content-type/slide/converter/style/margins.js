@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define([], function () {
   var Margins =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Margins() {}
 
     var _proto = Margins.prototype;
@@ -63,8 +63,6 @@ define([], function () {
     return Margins;
   }();
 
-  return _extends(Margins, {
-    __esModule: true
-  });
+  return Margins;
 });
 //# sourceMappingURL=margins.js.map

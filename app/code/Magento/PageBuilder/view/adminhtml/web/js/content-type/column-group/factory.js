@@ -23,7 +23,6 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
   }
 
   return {
-    __esModule: true,
     createColumn: createColumn
   };
 });

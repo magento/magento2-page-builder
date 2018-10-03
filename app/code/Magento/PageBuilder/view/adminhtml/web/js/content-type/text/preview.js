@@ -1,19 +1,24 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _events, _underscore, _config, _preview, _factory) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      return _BasePreview.apply(this, arguments) || this;
+      return _preview2.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
@@ -135,8 +140,6 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     return Preview;
   }(_preview);
 
-  return _extends(Preview, {
-    __esModule: true
-  });
+  return Preview;
 });
 //# sourceMappingURL=preview.js.map

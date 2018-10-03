@@ -1,17 +1,21 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type"], function (_events, _underscore, _collection, _contentType) {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var ContentTypeCollection =
   /*#__PURE__*/
-  function (_ContentType) {
-    _inheritsLoose(ContentTypeCollection, _ContentType);
+  function (_contentType2) {
+    "use strict";
+
+    _inheritsLoose(ContentTypeCollection, _contentType2);
 
     /**
      * @param {ContentTypeInterface} parent
@@ -21,7 +25,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     function ContentTypeCollection(parent, config, stageId) {
       var _this;
 
-      _this = _ContentType.call(this, parent, config, stageId) || this;
+      _this = _contentType2.call(this, parent, config, stageId) || this;
       _this.collection = new _collection();
 
       _this.collection.getChildren().subscribe(function () {
@@ -99,8 +103,6 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     return ContentTypeCollection;
   }(_contentType);
 
-  return _extends(ContentTypeCollection, {
-    __esModule: true
-  });
+  return ContentTypeCollection;
 });
 //# sourceMappingURL=content-type-collection.js.map

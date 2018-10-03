@@ -42,7 +42,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     convertUrlToPathIfOtherUrlIsOnlyAPath: convertUrlToPathIfOtherUrlIsOnlyAPath
   };
 });

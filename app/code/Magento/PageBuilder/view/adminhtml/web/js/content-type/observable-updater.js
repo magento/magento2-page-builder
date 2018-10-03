@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
   var ObservableUpdater =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * @param {typeof ConverterPool} converterPool
      * @param {typeof MassConverterPool} massConverterPool
@@ -76,7 +76,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
             var removeCurrentStyles = Object.keys(currentStyles).reduce(function (object, styleName) {
               var _Object$assign;
 
-              return _extends(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
+              return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
             }, {});
 
             if (!_underscore.isEmpty(removeCurrentStyles)) {
@@ -288,8 +288,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
     return ObservableUpdater;
   }();
 
-  return _extends(ObservableUpdater, {
-    __esModule: true
-  });
+  return ObservableUpdater;
 });
 //# sourceMappingURL=observable-updater.js.map

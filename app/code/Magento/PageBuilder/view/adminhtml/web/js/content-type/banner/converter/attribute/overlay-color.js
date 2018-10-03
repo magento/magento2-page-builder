@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConverter) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConvert
   var OverlayColor =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function OverlayColor() {}
 
     var _proto = OverlayColor.prototype;
@@ -38,8 +38,6 @@ define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConvert
     return OverlayColor;
   }();
 
-  return _extends(OverlayColor, {
-    __esModule: true
-  });
+  return OverlayColor;
 });
 //# sourceMappingURL=overlay-color.js.map

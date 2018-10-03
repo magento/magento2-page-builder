@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -13,6 +11,8 @@ define([], function () {
   var AttributeReader =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function AttributeReader() {}
 
     var _proto = AttributeReader.prototype;
@@ -31,8 +31,6 @@ define([], function () {
     return AttributeReader;
   }();
 
-  return _extends(AttributeReader, {
-    __esModule: true
-  });
+  return AttributeReader;
 });
 //# sourceMappingURL=attribute-reader.js.map

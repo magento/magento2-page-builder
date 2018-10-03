@@ -14,6 +14,12 @@ module.exports = {
             ]
         },
         [
+            'es6-to-magento-amd',
+            {
+                magentoClasses: ['uiComponent', 'uiElement', 'uiClass']
+            }
+        ],
+        [
             '@babel/preset-env',
             {
                 loose: true,
@@ -22,18 +28,7 @@ module.exports = {
                 },
                 modules: 'amd'
             }
-        ],
-        [
-            'es6-to-magento-amd',
-            {
-                magentoClasses: ['uiComponent', 'uiElement', 'uiClass']
-            }
-        ],
-        {
-            plugins: [
-                '@babel/plugin-transform-object-assign'
-            ]
-        },
+        ]
     ],
     plugins: [
         '@babel/plugin-transform-typescript',

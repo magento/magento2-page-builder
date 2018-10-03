@@ -1,16 +1,23 @@
 /*eslint-disable */
-define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _previewCollection) {
-  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _previewCollection) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
      * Debounce and defer the init of Jarallax
@@ -26,7 +33,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this;
       _this.wrapClass = _knockout.observable(false);
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
@@ -75,7 +82,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     var _proto = Preview.prototype;
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
         preview: this
@@ -110,8 +117,6 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
     return Preview;
   }(_previewCollection);
 
-  return _extends(Preview, {
-    __esModule: true
-  });
+  return Preview;
 });
 //# sourceMappingURL=preview.js.map

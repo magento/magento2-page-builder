@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define([], function () {
   var Locations =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Locations() {}
 
     var _proto = Locations.prototype;
@@ -58,8 +58,6 @@ define([], function () {
     return Locations;
   }();
 
-  return _extends(Locations, {
-    __esModule: true
-  });
+  return Locations;
 });
 //# sourceMappingURL=locations.js.map

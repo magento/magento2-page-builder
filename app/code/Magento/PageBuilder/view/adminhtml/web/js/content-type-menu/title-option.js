@@ -1,13 +1,17 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var TitleOption =
   /*#__PURE__*/
-  function (_Option) {
-    _inheritsLoose(TitleOption, _Option);
+  function (_option2) {
+    "use strict";
+
+    _inheritsLoose(TitleOption, _option2);
 
     /**
      * @param {OptionConfigInterface} options
@@ -15,7 +19,7 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     function TitleOption(options) {
       var _this;
 
-      _this = _Option.call(this, options) || this; // Modify the icon when changes are made to display in the data store
+      _this = _option2.call(this, options) || this; // Modify the icon when changes are made to display in the data store
 
       _this.preview.displayLabel.subscribe(function (label) {
         _this.title(label);
@@ -27,8 +31,6 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     return TitleOption;
   }(_option);
 
-  return _extends(TitleOption, {
-    __esModule: true
-  });
+  return TitleOption;
 });
 //# sourceMappingURL=title-option.js.map

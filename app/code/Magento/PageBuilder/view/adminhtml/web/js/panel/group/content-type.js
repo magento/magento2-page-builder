@@ -7,6 +7,8 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
   var ContentType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * @param {string} identifier
      * @param {ContentTypeConfigInterface} config
@@ -50,7 +52,6 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
   }();
 
   return {
-    __esModule: true,
     ContentType: ContentType
   };
 });

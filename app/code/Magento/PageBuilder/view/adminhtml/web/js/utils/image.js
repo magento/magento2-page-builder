@@ -59,7 +59,6 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
   }
 
   return {
-    __esModule: true,
     decodeUrl: decodeUrl,
     urlToDirective: urlToDirective,
     imageToBackgroundImageDataUrl: imageToBackgroundImageDataUrl

@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["Magento_PageBuilder/js/utils/string"], function (_string) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -13,6 +11,8 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
   var StylePropertyReader =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function StylePropertyReader() {}
 
     var _proto = StylePropertyReader.prototype;
@@ -32,8 +32,6 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
     return StylePropertyReader;
   }();
 
-  return _extends(StylePropertyReader, {
-    __esModule: true
-  });
+  return StylePropertyReader;
 });
 //# sourceMappingURL=style-property-reader.js.map

@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_events, _uiLayout, _uiRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -13,6 +11,8 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
   var Uploader =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * Config data of uploader instance
      */
@@ -39,10 +39,9 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
         onDeleteCallback = null;
       }
 
-      var config = _extends({}, uploaderConfig, {
+      var config = Object.assign({}, uploaderConfig, {
         value: initialValue
       });
-
       config.id = contentTypeId;
       config.name = name;
       this.dataStore = dataStore;
@@ -96,8 +95,6 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
     return Uploader;
   }();
 
-  return _extends(Uploader, {
-    __esModule: true
-  });
+  return Uploader;
 });
 //# sourceMappingURL=uploader.js.map

@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -13,6 +11,8 @@ define([], function () {
   var Flex =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Flex() {}
 
     var _proto = Flex.prototype;
@@ -46,8 +46,6 @@ define([], function () {
     return Flex;
   }();
 
-  return _extends(Flex, {
-    __esModule: true
-  });
+  return Flex;
 });
 //# sourceMappingURL=flex.js.map

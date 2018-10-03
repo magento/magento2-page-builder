@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -50,8 +48,6 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
     });
   }
 
-  return _extends(create, {
-    __esModule: true
-  });
+  return create;
 });
 //# sourceMappingURL=factory.js.map

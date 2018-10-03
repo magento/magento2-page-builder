@@ -61,7 +61,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     createStyleSheet: createStyleSheet
   };
 });

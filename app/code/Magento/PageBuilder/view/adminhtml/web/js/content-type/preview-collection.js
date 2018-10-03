@@ -1,20 +1,24 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/preview"], function (_contentTypeFactory, _preview) {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var PreviewCollection =
   /*#__PURE__*/
-  function (_Preview) {
-    _inheritsLoose(PreviewCollection, _Preview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(PreviewCollection, _preview2);
 
     function PreviewCollection() {
-      return _Preview.apply(this, arguments) || this;
+      return _preview2.apply(this, arguments) || this;
     }
 
     var _proto = PreviewCollection.prototype;
@@ -76,13 +80,13 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
 
 
     _proto.delegate = function delegate() {
-      var _Preview$prototype$de;
+      var _preview2$prototype$d;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      (_Preview$prototype$de = _Preview.prototype.delegate).call.apply(_Preview$prototype$de, [this].concat(args));
+      (_preview2$prototype$d = _preview2.prototype.delegate).call.apply(_preview2$prototype$d, [this].concat(args));
 
       this.parent.getChildren().each(function (elem) {
         elem.preview.delegate.apply(elem.preview, args);
@@ -100,7 +104,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
         return true;
       }
 
-      return _Preview.prototype.isConfigured.call(this);
+      return _preview2.prototype.isConfigured.call(this);
     };
 
     _createClass(PreviewCollection, [{
@@ -119,8 +123,6 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     return PreviewCollection;
   }(_preview);
 
-  return _extends(PreviewCollection, {
-    __esModule: true
-  });
+  return PreviewCollection;
 });
 //# sourceMappingURL=preview-collection.js.map

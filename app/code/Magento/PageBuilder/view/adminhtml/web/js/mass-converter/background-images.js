@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["Magento_PageBuilder/js/utils/image"], function (_image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
   var BackgroundImages =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function BackgroundImages() {}
 
     var _proto = BackgroundImages.prototype;
@@ -67,8 +67,6 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
     return BackgroundImages;
   }();
 
-  return _extends(BackgroundImages, {
-    __esModule: true
-  });
+  return BackgroundImages;
 });
 //# sourceMappingURL=background-images.js.map

@@ -34,7 +34,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     getDragColumn: getDragColumn,
     removeDragColumn: removeDragColumn,
     setDragColumn: setDragColumn

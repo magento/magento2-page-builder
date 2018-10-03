@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/master-format/filter-html"], function (_jquery, _knockout, _engine, _directives, _filterHtml) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   var MasterFormatRenderer =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function MasterFormatRenderer() {
       this.rootTemplate = "Magento_PageBuilder/content-type/master";
     }
@@ -51,8 +51,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     return MasterFormatRenderer;
   }();
 
-  return _extends(MasterFormatRenderer, {
-    __esModule: true
-  });
+  return MasterFormatRenderer;
 });
 //# sourceMappingURL=render.js.map

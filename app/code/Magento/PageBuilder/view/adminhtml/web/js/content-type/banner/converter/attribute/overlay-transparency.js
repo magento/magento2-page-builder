@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extractAlphaFromRgba) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extr
   var OverlayTransparency =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function OverlayTransparency() {}
 
     var _proto = OverlayTransparency.prototype;
@@ -38,8 +38,6 @@ define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extr
     return OverlayTransparency;
   }();
 
-  return _extends(OverlayTransparency, {
-    __esModule: true
-  });
+  return OverlayTransparency;
 });
 //# sourceMappingURL=overlay-transparency.js.map

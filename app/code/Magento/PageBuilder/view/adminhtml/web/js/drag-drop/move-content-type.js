@@ -84,7 +84,6 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
   }
 
   return {
-    __esModule: true,
     moveContentType: moveContentType
   };
 });

@@ -26,7 +26,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     setDraggedContentTypeConfig: setDraggedContentTypeConfig,
     getDraggedContentTypeConfig: getDraggedContentTypeConfig
   };

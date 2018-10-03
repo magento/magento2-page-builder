@@ -1,13 +1,17 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var ConditionalRemoveOption =
   /*#__PURE__*/
-  function (_Option) {
-    _inheritsLoose(ConditionalRemoveOption, _Option);
+  function (_option2) {
+    "use strict";
+
+    _inheritsLoose(ConditionalRemoveOption, _option2);
 
     /**
      * @param {OptionConfigInterface} config
@@ -15,7 +19,7 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     function ConditionalRemoveOption(config) {
       var _this;
 
-      _this = _Option.call(this, config) || this;
+      _this = _option2.call(this, config) || this;
       var parentContentType = _this.preview.parent.parent;
 
       if (parentContentType.children().length < 2) {
@@ -31,8 +35,6 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     return ConditionalRemoveOption;
   }(_option);
 
-  return _extends(ConditionalRemoveOption, {
-    __esModule: true
-  });
+  return ConditionalRemoveOption;
 });
 //# sourceMappingURL=conditional-remove-option.js.map

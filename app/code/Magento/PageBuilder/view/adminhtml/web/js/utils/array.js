@@ -111,7 +111,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     moveArrayItem: moveArrayItem,
     moveArrayItemIntoArray: moveArrayItemIntoArray,
     removeArrayItem: removeArrayItem,

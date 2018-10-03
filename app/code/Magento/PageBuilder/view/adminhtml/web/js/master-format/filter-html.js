@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["jquery"], function (_jquery) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -40,8 +38,6 @@ define(["jquery"], function (_jquery) {
     return element;
   }
 
-  return _extends(filterHtml, {
-    __esModule: true
-  });
+  return filterHtml;
 });
 //# sourceMappingURL=filter-html.js.map

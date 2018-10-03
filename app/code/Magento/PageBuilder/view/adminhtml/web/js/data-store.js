@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["jquery"], function (_jquery) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["jquery"], function (_jquery) {
   var DataStore =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function DataStore() {
       this.state = {};
       this.events = (0, _jquery)({});
@@ -39,7 +39,7 @@ define(["jquery"], function (_jquery) {
 
 
     _proto.update = function update(data, key) {
-      this.previousState = _extends({}, this.state);
+      this.previousState = Object.assign({}, this.state);
 
       if (key) {
         this.state[key] = data;
@@ -98,8 +98,6 @@ define(["jquery"], function (_jquery) {
     return DataStore;
   }();
 
-  return _extends(DataStore, {
-    __esModule: true
-  });
+  return DataStore;
 });
 //# sourceMappingURL=data-store.js.map

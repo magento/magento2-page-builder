@@ -1,6 +1,4 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -9,6 +7,8 @@ define(["underscore"], function (_underscore) {
   var Config =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Config() {}
 
     /**
@@ -60,8 +60,6 @@ define(["underscore"], function (_underscore) {
   Config.config = {
     dataRoleAttributeName: "data-role"
   };
-  return _extends(Config, {
-    __esModule: true
-  });
+  return Config;
 });
 //# sourceMappingURL=config.js.map

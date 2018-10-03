@@ -66,7 +66,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     fromHex: fromHex,
     toHex: toHex
   };

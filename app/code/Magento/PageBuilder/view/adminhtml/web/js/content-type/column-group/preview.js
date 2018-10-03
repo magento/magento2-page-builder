@@ -1,18 +1,23 @@
 /*eslint-disable */
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _containerAnimation, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
      *
@@ -23,7 +28,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
       _this.hasEmptyChild = _knockout.computed(function () {
         var empty = false;
@@ -861,7 +866,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         },
         activate: function activate() {
           if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
-            var _createStyleSheet;
+            var _ref;
 
             group.find(".ui-sortable").each(function () {
               if ((0, _jquery)(this).data("sortable")) {
@@ -870,9 +875,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             });
             var classes = [".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator", ".pagebuilder-content-type.pagebuilder-column .empty-container .content-type-container:before"]; // Ensure we don't display any drop indicators inside the column
 
-            headStyles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classes.join(", ")] = {
+            headStyles = (0, _createStylesheet.createStyleSheet)((_ref = {}, _ref[classes.join(", ")] = {
               display: "none!important"
-            }, _createStyleSheet));
+            }, _ref));
             document.head.appendChild(headStyles);
           } else if (headStyles) {
             headStyles.remove();
@@ -991,8 +996,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_previewCollection);
 
-  return _extends(Preview, {
-    __esModule: true
-  });
+  return Preview;
 });
 //# sourceMappingURL=preview.js.map

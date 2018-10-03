@@ -38,7 +38,6 @@ define([], function () {
   }
 
   return {
-    __esModule: true,
     calculateDropPositions: calculateDropPositions
   };
 });
