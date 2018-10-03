@@ -7,6 +7,8 @@ define([], function () {
   var HeaderAlignment =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function HeaderAlignment() {}
 
     var _proto = HeaderAlignment.prototype;

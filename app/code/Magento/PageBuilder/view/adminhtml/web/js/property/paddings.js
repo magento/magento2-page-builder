@@ -11,6 +11,8 @@ define([], function () {
   var Paddings =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Paddings() {}
 
     var _proto = Paddings.prototype;

@@ -7,6 +7,8 @@ define(["underscore"], function (_underscore) {
   var Config =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Config() {}
 
     /**

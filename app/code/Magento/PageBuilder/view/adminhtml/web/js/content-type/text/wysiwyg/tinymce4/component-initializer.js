@@ -7,12 +7,19 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
   var ComponentInitializer =
   /*#__PURE__*/
   function () {
-    function ComponentInitializer() {
-      this.$element = void 0;
-      this.config = void 0;
-    }
+    "use strict";
+
+    function ComponentInitializer() {}
 
     var _proto = ComponentInitializer.prototype;
+
+    /**
+     * The editor element
+     */
+
+    /**
+     * The configuration of the wysiwyg content type
+     */
 
     /**
      * Initialize the instance

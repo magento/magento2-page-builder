@@ -20,6 +20,7 @@ import {getSortableOptions} from "./drag-drop/sortable";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";
+import StageUpdateAfterParamsInterface from "./stage-update-after-params";
 import deferred from "./utils/promise-deferred";
 import DeferredInterface from "./utils/promise-deferred.d";
 
@@ -164,7 +165,7 @@ export default class Stage {
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
-        events.on("stage:updateAfter", (args) => {
+        events.on("stage:updateAfter", (args: StageUpdateAfterParamsInterface) => {
             if (args.stageId === this.id) {
                 _.debounce(() => {
                     this.render.applyBindings(this.children)
