@@ -11,8 +11,9 @@ define(["knockout", "Magento_PageBuilder/js/utils/array"], function (_knockout, 
   var Collection =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Collection(children) {
-      this.children = void 0;
       this.children = children ? children : _knockout.observableArray([]);
     }
     /**

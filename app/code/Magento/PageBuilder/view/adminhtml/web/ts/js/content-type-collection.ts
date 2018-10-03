@@ -10,8 +10,12 @@ import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
+import MasterCollection from "./content-type/master-collection";
+import PreviewCollection from "./content-type/preview-collection";
 
 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
+    public preview: PreviewCollection;
+    public content: MasterCollection;
     private collection: Collection = new Collection();
 
     /**

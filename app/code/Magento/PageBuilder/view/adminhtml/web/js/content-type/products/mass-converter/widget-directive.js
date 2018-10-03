@@ -1,17 +1,24 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], function (_widgetDirectiveAbstract) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var WidgetDirective =
   /*#__PURE__*/
-  function (_BaseWidgetDirective) {
-    _inheritsLoose(WidgetDirective, _BaseWidgetDirective);
+  function (_widgetDirectiveAbstr) {
+    "use strict";
+
+    _inheritsLoose(WidgetDirective, _widgetDirectiveAbstr);
 
     function WidgetDirective() {
-      return _BaseWidgetDirective.apply(this, arguments) || this;
+      return _widgetDirectiveAbstr.apply(this, arguments) || this;
     }
 
     var _proto = WidgetDirective.prototype;
@@ -24,7 +31,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
-      var attributes = _BaseWidgetDirective.prototype.fromDom.call(this, data, config);
+      var attributes = _widgetDirectiveAbstr.prototype.fromDom.call(this, data, config);
 
       data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
       data.products_count = attributes.products_count;

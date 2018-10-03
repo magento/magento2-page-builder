@@ -11,6 +11,8 @@ define([], function () {
   var Display =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Display() {}
 
     var _proto = Display.prototype;

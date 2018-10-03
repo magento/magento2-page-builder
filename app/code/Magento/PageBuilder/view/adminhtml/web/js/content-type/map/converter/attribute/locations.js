@@ -7,6 +7,8 @@ define([], function () {
   var Locations =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Locations() {}
 
     var _proto = Locations.prototype;

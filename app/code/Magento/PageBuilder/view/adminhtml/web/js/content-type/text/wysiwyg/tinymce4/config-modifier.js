@@ -7,6 +7,8 @@ define([], function () {
   var ConfigModifier =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function ConfigModifier() {}
 
     var _proto = ConfigModifier.prototype;

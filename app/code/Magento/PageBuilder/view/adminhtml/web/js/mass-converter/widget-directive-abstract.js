@@ -7,6 +7,8 @@ define(["underscore"], function (_underscore) {
   var WidgetDirectiveAbstract =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function WidgetDirectiveAbstract() {}
 
     var _proto = WidgetDirectiveAbstract.prototype;

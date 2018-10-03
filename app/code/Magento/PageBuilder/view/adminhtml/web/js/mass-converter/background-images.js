@@ -7,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
   var BackgroundImages =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function BackgroundImages() {}
 
     var _proto = BackgroundImages.prototype;
