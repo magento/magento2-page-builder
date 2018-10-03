@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _conditionalRemoveOption, _preview, _uploader, _factory) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _conditionalRemoveOption, _preview, _uploader, _factory) {
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -19,7 +19,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.slideChanged = true, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.uploader = void 0, _this.slideChanged = true, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -103,10 +103,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.getUploader = function getUploader() {
-      var dataStore = this.parent.dataStore.get();
-      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
+      return this.uploader;
     };
     /**
      * Makes WYSIWYG active
@@ -222,7 +219,12 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       _events.on(this.config.name + ":mountAfter", function (args) {
         if (args.id === _this4.parent.id) {
-          // Update the display label for the slide
+          var dataStore = _this4.parent.dataStore.get();
+
+          var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+          _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue); // Update the display label for the slide
+
           var slider = _this4.parent.parent;
 
           _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));

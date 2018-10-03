@@ -11,7 +11,7 @@ import {DataObject} from "../../data-store";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
-import Uploader from "../uploader";
+import Uploader from "../../uploader";
 
 /**
  * @api

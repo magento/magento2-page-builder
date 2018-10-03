@@ -11,12 +11,12 @@ import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
-import WysiwygFactory from "../../wysiwyg/factory";
-import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
-import Uploader from "../uploader";
+import Uploader from "../../uploader";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 
 /**
  * @api
@@ -37,6 +37,11 @@ export default class Preview extends BasePreview {
      * The element the text content type is bound to
      */
     private element: HTMLElement;
+
+    /**
+     * Uploader instance
+     */
+    private uploader: Uploader;
 
     /**
      * Slide flag
@@ -135,17 +140,7 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const dataStore = this.parent.dataStore.get();
-        const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
-
-        // Create uploader
-        return new Uploader(
-            "imageuploader_" + this.parent.id,
-            this.config.additional_data.uploaderConfig,
-            this.parent.id,
-            this.parent.dataStore,
-            initialImageValue,
-        );
+        return this.uploader;
     }
 
     /**
@@ -256,6 +251,18 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:mountAfter`, (args: ContentTypeMountEventParamsInterface) => {
             if (args.id === this.parent.id) {
+                const dataStore = this.parent.dataStore.get();
+                const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+                // Create uploader
+                this.uploader = new Uploader(
+                    "imageuploader_" + this.parent.id,
+                    this.config.additional_data.uploaderConfig,
+                    this.parent.id,
+                    this.parent.dataStore,
+                    initialImageValue,
+                );
+
                 // Update the display label for the slide
                 const slider = this.parent.parent;
                 this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
