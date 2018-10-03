@@ -7,7 +7,6 @@
 /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
 define([
     'jquery',
-    'Magento_PageBuilder/js/unit/object-assign-polyfill',
     'Magento_PageBuilder/js/content-type/block/mass-converter/widget-directive'
 ], function ($, polyfill, WidgetDirective) {
     'use strict';
