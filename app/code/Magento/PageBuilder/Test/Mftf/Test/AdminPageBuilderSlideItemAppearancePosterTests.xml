@@ -566,6 +566,17 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayTransparency">
             <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
         </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
+            <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderSlideItemLinkNewTab_False"/>
+        </actionGroup>
+        <!-- Add Link To WYSIWYG -->
+        <comment userInput="Add Link To WYSIWYG" stepKey="commentAddLink"/>
+        <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInWYSIWYG">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -592,17 +603,48 @@
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
         <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefront"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromSlide"/>
+        <!-- Click slide anchor -->
+        <comment userInput="Click slide anchor" stepKey="clickSlideAnchorStorefront" />
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront" />
+        <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront" />
+        <!-- Click wysiwyg anchor -->
+        <comment userInput="Click wysiwyg anchor" stepKey="clickWysiwygLinkAnchorStorefront" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="seeWysiwygLinkUrlStorefront"/>
+        <click selector="{{SlideOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="clickWysiwygLinkUrlStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront2" />
+        <seeCurrentUrlEquals url="{{ExternalLink.googleUrl}}" stepKey="seeThatUrlIsChangedToWysiwygLinkUrlStorefront" />
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{SlideOnFrontend.appearance('1', PageBuilderAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
         <seeElementInDOM selector="{{SlideOnFrontend.mobileButton('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
+        <dontSeeElement selector="{{SlideOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
+        <!-- Click mobile slide anchor -->
+        <comment userInput="Click mobile slide anchor" stepKey="clickMobileSlideAnchorStorefront" />
+        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile" />
+        <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefrontMobile" />
+        <!-- Click mobile wysiwyg anchor -->
+        <comment userInput="Click mobile wysiwyg anchor" stepKey="clickMobileWysiwygLinkAnchorStorefront" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnFrontend.mobileWysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="seeMobileWysiwygLinkUrlStorefront"/>
+        <click selector="{{SlideOnFrontend.mobileWysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="clickMobileWysiwygLinkUrlStorefront"/>
+        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile2" />
+        <seeCurrentUrlEquals url="{{ExternalLink.googleUrl}}" stepKey="seeThatUrlIsChangedToMobileWysiwygLinkUrlStorefront" />
     </test>
     <test name="SliderItemPosterButtonsCanBeEditedInline">
         <annotations>
