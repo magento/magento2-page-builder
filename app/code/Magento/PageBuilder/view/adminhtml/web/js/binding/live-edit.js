@@ -140,6 +140,16 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
         event.preventDefault();
       };
       /**
+       * Prevent content from being dragged
+       *
+       * @param {DragEvent} event
+       */
+
+
+      var onDragStart = function onDragStart(event) {
+        event.preventDefault();
+      };
+      /**
        * Input event on element
        */
 
@@ -157,6 +167,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       element.addEventListener("keyup", onKeyUp);
       element.addEventListener("input", onInput);
       element.addEventListener("drop", onDrop);
+      element.addEventListener("dragstart", onDragStart);
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 

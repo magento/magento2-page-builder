@@ -57,7 +57,7 @@ define([
 
             this._super();
 
-            events.on('image:' + this.id +':assignAfter', this.onAssignedFile.bind(this));
+            events.on('image:' + this.id + ':assignAfter', this.onAssignedFile.bind(this));
 
             // bind dropzone highlighting using event delegation only once
             if (!initializedOnce) {
@@ -95,19 +95,26 @@ define([
          * @param {jQuery.event} e
          */
         highlightDropzone: function (e) {
-            var $dropzone = $(e.target).closest(this.dropZone),
+            var draggedItem = e.originalEvent.dataTransfer.items[0],
+                $dropzone = $(e.target).closest(this.dropZone),
                 $otherDropzones = $(this.dropZone).not($dropzone),
                 isInsideDropzone = !!$dropzone.length;
 
-            if (isInsideDropzone) {
-                $dropzone
-                    .removeClass(this.classes.draggingOutside)
-                    .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
-            }
+            if (draggedItem.kind === 'file' &&
+                (draggedItem.type === 'image/png' ||
+                draggedItem.type === 'image/gif' ||
+                draggedItem.type === 'image/jpg')
+            ) {
+                if (isInsideDropzone) {
+                    $dropzone
+                        .removeClass(this.classes.draggingOutside)
+                        .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
+                }
 
-            $otherDropzones
-                .removeClass(this.classes.draggingInside)
-                .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
+                $otherDropzones
+                    .removeClass(this.classes.draggingInside)
+                    .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
+            }
         },
 
         /**
@@ -178,7 +185,6 @@ define([
          */
         updateResponsiveClasses: function () {
             var classesToAdd = [],
-                classConfig,
                 elementWidth = this.$uploadArea.width(),
                 modifierClass;
 
@@ -189,16 +195,17 @@ define([
             this.$uploadArea.removeClass(Object.keys(this.elementWidthModifierClasses).join(' '));
 
             for (modifierClass in this.elementWidthModifierClasses) {
-                if (!this.elementWidthModifierClasses.hasOwnProperty(modifierClass)) {
-                    continue;
-                }
-
-                classConfig = this.elementWidthModifierClasses[modifierClass];
-
-                if (classConfig.minWidth && classConfig.maxWidth &&
-                    (classConfig.minWidth <= elementWidth && elementWidth <= classConfig.maxWidth) ||
-                    classConfig.minWidth && !classConfig.maxWidth && classConfig.minWidth <= elementWidth ||
-                    classConfig.maxWidth && !classConfig.minWidth && elementWidth <= classConfig.maxWidth
+                if (this.elementWidthModifierClasses.hasOwnProperty(modifierClass) && (
+                    this.elementWidthModifierClasses[modifierClass].minWidth &&
+                    this.elementWidthModifierClasses[modifierClass].maxWidth &&
+                    (this.elementWidthModifierClasses[modifierClass].minWidth <= elementWidth &&
+                    elementWidth <= this.elementWidthModifierClasses[modifierClass].maxWidth) ||
+                    this.elementWidthModifierClasses[modifierClass].minWidth &&
+                    !this.elementWidthModifierClasses[modifierClass].maxWidth &&
+                    this.elementWidthModifierClasses[modifierClass].minWidth <= elementWidth ||
+                    this.elementWidthModifierClasses[modifierClass].maxWidth &&
+                    !this.elementWidthModifierClasses[modifierClass].minWidth &&
+                    elementWidth <= this.elementWidthModifierClasses[modifierClass].maxWidth)
                 ) {
                     classesToAdd.push(modifierClass);
                 }
@@ -212,7 +219,7 @@ define([
         /**
          * {@inheritDoc}
          */
-        hasData: function() {
+        hasData: function () {
             // Some of the components automatically add an empty object if the value is unset.
             return this._super() && !$.isEmptyObject(this.value()[0]);
         }

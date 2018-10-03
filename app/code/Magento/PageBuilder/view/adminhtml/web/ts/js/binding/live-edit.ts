@@ -124,6 +124,15 @@ ko.bindingHandlers.liveEdit = {
         };
 
         /**
+         * Prevent content from being dragged
+         *
+         * @param {DragEvent} event
+         */
+        const onDragStart = (event: DragEvent) => {
+            event.preventDefault();
+        };
+
+        /**
          * Input event on element
          */
         const onInput = () => {
@@ -139,6 +148,7 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keyup", onKeyUp);
         element.addEventListener("input", onInput);
         element.addEventListener("drop", onDrop);
+        element.addEventListener("dragstart", onDragStart);
 
         $(element).parent().css("cursor", "text");
         handlePlaceholderClass(element);
