@@ -515,7 +515,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     originalTabKeyDown.call(this, event);
   };
 
-  return Object.assign(Preview, {
+  return _extends(Preview, {
     __esModule: true
   });
 });

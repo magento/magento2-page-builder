@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore"], function (_jquery, _events, _setup, _events2, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -136,7 +138,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     return Wysiwyg;
   }();
 
-  return Object.assign(Wysiwyg, {
+  return _extends(Wysiwyg, {
     __esModule: true
   });
 });

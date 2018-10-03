@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -268,7 +270,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Panel;
   }();
 
-  return Object.assign(Panel, {
+  return _extends(Panel, {
     __esModule: true
   });
 });

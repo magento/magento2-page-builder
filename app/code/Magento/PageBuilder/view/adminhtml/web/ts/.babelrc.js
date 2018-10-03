@@ -18,7 +18,7 @@ module.exports = {
             {
                 loose: true,
                 targets: {
-                    browsers: ['last 2 versions', 'ie >= 11']
+                    browsers: ['last 2 versions', 'ie >= 10']
                 },
                 modules: 'amd'
             }
@@ -28,7 +28,12 @@ module.exports = {
             {
                 magentoClasses: ['uiComponent', 'uiElement', 'uiClass']
             }
-        ]
+        ],
+        {
+            plugins: [
+                '@babel/plugin-transform-object-assign'
+            ]
+        },
     ],
     plugins: [
         '@babel/plugin-transform-typescript',

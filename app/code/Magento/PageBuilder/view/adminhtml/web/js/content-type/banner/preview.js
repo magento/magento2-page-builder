@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _preview, _uploader, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -69,16 +71,16 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {
-        this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
+        this.data.overlay.attributes(_extends(this.data.overlay.attributes(), {
           "data-background-color-orig": this.data.overlay.style().backgroundColor
         }));
-        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+        this.data.overlay.style(_extends(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-overlay-color"]
         }));
       }
 
       if (this.data.main.attributes()["data-show-button"] === "hover") {
-        this.data.button.style(Object.assign(this.data.button.style(), {
+        this.data.button.style(_extends(this.data.button.style(), {
           opacity: 1,
           visibility: "visible"
         }));
@@ -91,13 +93,13 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {
-        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+        this.data.overlay.style(_extends(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
         }));
       }
 
       if (this.data.main.attributes()["data-show-button"] === "hover") {
-        this.data.button.style(Object.assign(this.data.button.style(), {
+        this.data.button.style(_extends(this.data.button.style(), {
           opacity: 0,
           visibility: "hidden"
         }));
@@ -222,7 +224,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     return Preview;
   }(_preview);
 
-  return Object.assign(Preview, {
+  return _extends(Preview, {
     __esModule: true
   });
 });

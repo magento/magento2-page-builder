@@ -47,16 +47,16 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       // Triggers the visibility of the overlay content to show
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {
-        this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
+        this.data.overlay.attributes(_extends(this.data.overlay.attributes(), {
           "data-background-color-orig": this.data.overlay.style().backgroundColor
         }));
-        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+        this.data.overlay.style(_extends(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-overlay-color"]
         }));
       }
 
       if (this.data.main.attributes()["data-show-button"] === "hover") {
-        this.data.button.style(Object.assign(this.data.button.style(), {
+        this.data.button.style(_extends(this.data.button.style(), {
           opacity: 1,
           visibility: "visible"
         }));
@@ -70,13 +70,13 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
       // Triggers the visibility of the overlay content to hide
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {
-        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+        this.data.overlay.style(_extends(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
         }));
       }
 
       if (this.data.main.attributes()["data-show-button"] === "hover") {
-        this.data.button.style(Object.assign(this.data.button.style(), {
+        this.data.button.style(_extends(this.data.button.style(), {
           opacity: 0,
           visibility: "hidden"
         }));
@@ -281,7 +281,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     return Preview;
   }(_preview);
 
-  return Object.assign(Preview, {
+  return _extends(Preview, {
     __esModule: true
   });
 });

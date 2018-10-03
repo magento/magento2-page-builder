@@ -45,7 +45,7 @@ define(["Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "M
     return Preview;
   }(_previewCollection);
 
-  return Object.assign(Preview, {
+  return _extends(Preview, {
     __esModule: true
   });
 });

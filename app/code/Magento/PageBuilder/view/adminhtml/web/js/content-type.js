@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_knockout, _events, _mageUtils, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -47,7 +49,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
     return ContentType;
   }();
 
-  return Object.assign(ContentType, {
+  return _extends(ContentType, {
     __esModule: true
   });
 });

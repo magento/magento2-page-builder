@@ -132,7 +132,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     return Preview;
   }(_preview);
 
-  return Object.assign(Preview, {
+  return _extends(Preview, {
     __esModule: true
   });
 });

@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], function (_widgetDirectiveAbstract) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -60,7 +62,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
     return WidgetDirective;
   }(_widgetDirectiveAbstract);
 
-  return Object.assign(WidgetDirective, {
+  return _extends(WidgetDirective, {
     __esModule: true
   });
 });

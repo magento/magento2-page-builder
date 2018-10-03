@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], function (_translate, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -49,7 +51,7 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option"], fu
   HideShowOption.showIcon = "<i class='icon-pagebuilder-show'></i>";
   HideShowOption.hideText = (0, _translate)("Hide");
   HideShowOption.hideIcon = "<i class='icon-pagebuilder-hide'></i>";
-  return Object.assign(HideShowOption, {
+  return _extends(HideShowOption, {
     __esModule: true
   });
 });

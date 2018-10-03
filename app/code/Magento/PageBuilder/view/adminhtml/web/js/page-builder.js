@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_knockout, _events, _mageUtils, _underscore, _config, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -87,7 +89,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
     return PageBuilder;
   }();
 
-  return Object.assign(PageBuilder, {
+  return _extends(PageBuilder, {
     __esModule: true
   });
 });

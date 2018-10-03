@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -389,7 +391,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this5.ready = true;
         }); // Build slick
 
-        (0, _jquery)(this.element).slick(Object.assign({
+        (0, _jquery)(this.element).slick(_extends({
           initialSlide: this.activeSlide() || 0
         }, this.buildSlickConfig())); // Update our KO pointer to the active slide on change
 
@@ -483,7 +485,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     return Preview;
   }(_previewCollection);
 
-  return Object.assign(Preview, {
+  return _extends(Preview, {
     __esModule: true
   });
 });

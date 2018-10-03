@@ -1,4 +1,6 @@
 /*eslint-disable */
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -279,7 +281,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
     return Configurable;
   }();
 
-  return Object.assign(Configurable, {
+  return _extends(Configurable, {
     __esModule: true
   });
 });
