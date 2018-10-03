@@ -8,7 +8,7 @@
 define([
     'jquery',
     'Magento_PageBuilder/js/content-type/block/mass-converter/widget-directive'
-], function ($, polyfill, WidgetDirective) {
+], function ($, WidgetDirective) {
     'use strict';
 
     describe('Magento_PageBuilder/js/content-type/block/mass-converter/widget-directive', function () {
