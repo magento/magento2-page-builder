@@ -11,6 +11,8 @@ define([], function () {
   var RemovePx =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function RemovePx() {}
 
     var _proto = RemovePx.prototype;

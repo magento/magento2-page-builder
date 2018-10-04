@@ -7,6 +7,8 @@ define(["underscore"], function (_underscore) {
   var TagEscaper =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function TagEscaper() {}
 
     var _proto = TagEscaper.prototype;

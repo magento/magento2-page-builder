@@ -1,14 +1,23 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
      *
@@ -19,7 +28,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
       _this.hasEmptyChild = _knockout.computed(function () {
         var empty = false;
@@ -39,28 +48,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.gridSizeMax = _knockout.observable((0, _gridSize.getMaxGridSize)());
       _this.gridFormOpen = _knockout.observable(false);
       _this.gridChange = _knockout.observable(false);
-      _this.dropPlaceholder = void 0;
-      _this.movePlaceholder = void 0;
-      _this.groupElement = void 0;
-      _this.resizeGhost = void 0;
-      _this.resizeColumnInstance = void 0;
       _this.resizeColumnWidths = [];
-      _this.resizeMaxGhostWidth = void 0;
-      _this.resizeMouseDown = void 0;
-      _this.resizeLeftLastColumnShrunk = void 0;
-      _this.resizeRightLastColumnShrunk = void 0;
-      _this.resizeLastPosition = void 0;
-      _this.resizeLastColumnInPair = void 0;
       _this.resizeHistory = {
         left: [],
         right: []
       };
-      _this.dropOverElement = void 0;
       _this.dropPositions = [];
-      _this.dropPosition = void 0;
-      _this.movePosition = void 0;
-      _this.groupPositionCache = void 0;
-      _this.resizeUtils = void 0;
       _this.gridSizeHistory = new Map();
       _this.interactionLevel = 0;
 
@@ -88,7 +81,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("contentType:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
           _underscore.defer(function () {
-            _this.spreadWidth(event, args);
+            _this.spreadWidth(args.index);
           });
         }
       }); // Listen for resizing events from child columns
@@ -108,7 +101,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
-      _this.parent.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
+      _this.parent.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_assertThisInitialized(_assertThisInitialized(_this))), 50));
 
       return _this;
     }
@@ -695,11 +688,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var usedHistory; // Was the adjusted column pulled from history?
         // Determine which column in the group should be adjusted for this action
 
-        var _resizeUtils$determin = this.resizeUtils.determineAdjustedColumn(currentPos, this.resizeColumnInstance, this.resizeHistory);
+        var _this$resizeUtils$det = this.resizeUtils.determineAdjustedColumn(currentPos, this.resizeColumnInstance, this.resizeHistory);
 
-        _adjustedColumn = _resizeUtils$determin[0];
-        _modifyColumnInPair = _resizeUtils$determin[1];
-        usedHistory = _resizeUtils$determin[2];
+        _adjustedColumn = _this$resizeUtils$det[0];
+        _modifyColumnInPair = _this$resizeUtils$det[1];
+        usedHistory = _this$resizeUtils$det[2];
         // Calculate the ghost width based on mouse position and bounds of allowed sizes
         var ghostWidth = this.resizeUtils.calculateGhostWidth(groupPosition, currentPos, this.resizeColumnInstance, _modifyColumnInPair, this.resizeMaxGhostWidth);
         this.resizeGhost.width(ghostWidth - 15 + "px").addClass("active");
@@ -875,7 +868,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         },
         activate: function activate() {
           if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
-            var _createStyleSheet;
+            var _ref;
 
             group.find(".ui-sortable").each(function () {
               if ((0, _jquery)(this).data("sortable")) {
@@ -884,9 +877,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             });
             var classes = [".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator", ".pagebuilder-content-type.pagebuilder-column .empty-container .content-type-container:before"]; // Ensure we don't display any drop indicators inside the column
 
-            headStyles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classes.join(", ")] = {
+            headStyles = (0, _createStylesheet.createStyleSheet)((_ref = {}, _ref[classes.join(", ")] = {
               display: "none!important"
-            }, _createStyleSheet));
+            }, _ref));
             document.head.appendChild(headStyles);
           } else if (headStyles) {
             headStyles.remove();
@@ -914,14 +907,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
-     * Spread any empty space across the other columns
+     * Spread any empty space across the other columns when a column is removed
      *
-     * @param {Event} event
-     * @param {ContentTypeRemovedEventParamsInterface} params
+     * @param {number} removedIndex
      */
 
 
-    _proto.spreadWidth = function spreadWidth(event, params) {
+    _proto.spreadWidth = function spreadWidth(removedIndex) {
       if (this.parent.children().length === 0) {
         return;
       }
@@ -960,12 +952,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       for (var _i3 = 1; _i3 <= spreadAcross; _i3++) {
         var columnToModify = void 0; // As the original column has been removed from the array, check the new index for a column
 
-        if (params.index <= this.parent.children().length && typeof this.parent.children()[params.index] !== "undefined") {
-          columnToModify = this.parent.children()[params.index];
+        if (removedIndex <= this.parent.children().length && typeof this.parent.children()[removedIndex] !== "undefined") {
+          columnToModify = this.parent.children()[removedIndex];
         }
 
-        if (!columnToModify && params.index - _i3 >= 0 && typeof this.parent.children()[params.index - _i3] !== "undefined") {
-          columnToModify = this.parent.children()[params.index - _i3];
+        if (!columnToModify && removedIndex - _i3 >= 0 && typeof this.parent.children()[removedIndex - _i3] !== "undefined") {
+          columnToModify = this.parent.children()[removedIndex - _i3];
         }
 
         if (columnToModify) {

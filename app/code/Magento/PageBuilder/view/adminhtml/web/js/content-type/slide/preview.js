@@ -1,25 +1,35 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _delayUntil, _preview, _uploader, _factory) {
-  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _delayUntil, _preview, _uploader, _factory) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _this.wysiwyg = void 0, _this.textarea = void 0, _this.element = void 0, _this.slideChanged = true, _temp) || _this;
+      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
+      _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      _this.slideChanged = true;
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -89,7 +99,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _BasePreview.prototype.retrieveOptions.call(this);
+      var options = _preview2.prototype.retrieveOptions.call(this);
 
       delete options.move;
       options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
@@ -252,7 +262,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     _proto.bindEvents = function bindEvents() {
       var _this5 = this;
 
-      _BasePreview.prototype.bindEvents.call(this);
+      _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this5.parent.dataStore.get();

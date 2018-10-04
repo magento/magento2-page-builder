@@ -11,6 +11,8 @@ define([], function () {
   var CreateValueForTarget =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForTarget() {}
 
     var _proto = CreateValueForTarget.prototype;

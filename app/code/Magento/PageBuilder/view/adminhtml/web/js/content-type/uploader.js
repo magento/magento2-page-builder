@@ -11,6 +11,8 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
   var Uploader =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * Config data of uploader instance
      */
@@ -37,8 +39,6 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
         onDeleteCallback = null;
       }
 
-      this.config = void 0;
-      this.dataStore = void 0;
       var config = Object.assign({}, uploaderConfig, {
         value: initialValue
       });

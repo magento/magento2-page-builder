@@ -1,16 +1,21 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _config, _preview) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _config, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     /**
      * @inheritdoc
@@ -18,9 +23,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, parent, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
-      _this.placeholderText = void 0;
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
         NO_RESULTS: (0, _translate)("No products were found matching your condition"),
@@ -40,7 +44,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
+      _preview2.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
 
 
       _events.on("products:dropAfter", function (args) {
@@ -59,7 +63,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this3 = this;
 
-      _BasePreview.prototype.afterObservablesUpdated.call(this);
+      _preview2.prototype.afterObservablesUpdated.call(this);
 
       this.displayPreview(false);
       var data = this.parent.dataStore.get();
@@ -82,7 +86,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.placeholderText(this.messages.LOADING);
 
       _jquery.ajax(url, requestConfig).done(function (response) {
-        if (_typeof(response.data) !== "object" || !Boolean(response.data.content)) {
+        if (typeof response.data !== "object" || !Boolean(response.data.content)) {
           _this3.placeholderText(_this3.messages.NO_RESULTS);
 
           return;

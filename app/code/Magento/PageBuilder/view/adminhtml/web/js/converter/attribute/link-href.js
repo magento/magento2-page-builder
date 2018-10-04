@@ -11,6 +11,8 @@ define(["underscore"], function (_underscore) {
   var CreateValueForHref =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForHref() {
       this.widgetParamsByLinkType = {
         category: {
