@@ -11,6 +11,8 @@ define([], function () {
   var CreateValueForLinkType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForLinkType() {}
 
     var _proto = CreateValueForLinkType.prototype;
@@ -34,7 +36,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] ? data[name].type : "";
+      return data[name] && data[name].type ? data[name].type : "default";
     };
 
     return CreateValueForLinkType;

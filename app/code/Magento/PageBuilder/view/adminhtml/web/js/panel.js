@@ -11,6 +11,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   var Panel =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Panel(parent) {
       this.groups = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
@@ -24,9 +26,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchNoResult = (0, _translate)("Nothing found");
       this.fullScreenTitle = (0, _translate)("Full Screen");
       this.searchTitle = (0, _translate)("Clear Search");
-      this.parent = void 0;
-      this.id = void 0;
-      this.element = void 0;
       this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
       this.id = this.parent.id;

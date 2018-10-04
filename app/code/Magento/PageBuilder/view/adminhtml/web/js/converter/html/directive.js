@@ -11,6 +11,8 @@ define(["Magento_PageBuilder/js/utils/directives"], function (_directives) {
   var Directives =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Directives() {}
 
     var _proto = Directives.prototype;

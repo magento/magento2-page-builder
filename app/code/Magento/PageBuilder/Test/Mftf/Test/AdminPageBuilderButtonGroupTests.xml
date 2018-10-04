@@ -87,6 +87,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -126,6 +129,9 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
@@ -379,6 +385,7 @@
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Storefront2">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
@@ -413,6 +420,9 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
@@ -514,6 +524,9 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
@@ -1029,9 +1042,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton" />
         <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
@@ -1043,10 +1061,12 @@
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <seeElement selector="{{ButtonGroupOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <seeElement selector="{{ButtonItemOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenButtonItem" />
+        <seeElement selector="{{ButtonItemOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenButtonItem2" />
         <!-- Verify we cannot interact with the internal button after save -->
         <comment userInput="Verify we cannot interact with the internal button after save" stepKey="commentVerifyButtonItemIsDisabledAfterSave"/>
         <seeElementInDOM selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="seeDomButtonItemOptionsMenu"/>
         <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="dontSeeButtonItemOptionsMenu"/>
+        <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('2')}}" stepKey="dontSeeButtonItem2OptionsMenu"/>
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
@@ -1058,6 +1078,7 @@
         <seeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
         <waitForElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemNotVisible" />
         <dontSeeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="dontSeeButtonItem" />
+        <dontSeeElement selector="{{ButtonItemOnStorefront.base('2')}}" stepKey="dontSeeButtonItem2" />
         <!-- Set content to visible in admin -->
         <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
@@ -1077,5 +1098,33 @@
         <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible" />
         <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible" />
+        <seeElement selector="{{ButtonItemOnStorefront.base('2')}}" stepKey="waitForButtonItem2Visible" />
+    </test>
+    <test name="ValidateShowHideOnButtonsOnStackedAppearance" extends="ValidateShowHideOnButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Buttons has hide show capabilities on stacked appearance"/>
+            <description value="A user is able to hide and show the buttons successfully when using stacked appearance"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4093"/>
+            <testCaseId value="MC-4230"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu" after="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Select Stacked Appearance -->
+        <comment userInput="Select Stacked Appearances" stepKey="commentSelectStackedAppearance" after="openEditMenuOnStage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance" after="commentSelectStackedAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
     </test>
 </tests>
