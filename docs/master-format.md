@@ -778,8 +778,8 @@ Collage Left
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
     <a data-element="link" href="" target="">
-        <div data-element="wrapper" data-background-images {"desktop_image":"{{media url}}","mobile_image":"{{media url}}"} style="" class="wrapper">
-            <div data-element="overlay" style="" class="overlay>
+        <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
+            <div data-element="overlay" style="" class="overlay">
                 <div class="content">
                     <div data-element="content">Banner content</div>
                     <button data-element="button" style="" class="action primary">Banner Text</button>
@@ -795,7 +795,7 @@ Collage Centered
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
     <a data-element="link" href="" target="">
-        <div data-element="wrapper" data-background-images {"desktop_image":"{{media url}}","mobile_image":"{{media url}}"} style="" class="wrapper">
+        <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" class="overlay">
                 <div class="content">
                     <div data-element="content">Button content</div>
@@ -811,7 +811,7 @@ Collage Right
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
     <a data-element="link" href="" target="">
-        <div data-element="wrapper" data-background-images {"desktop_image":"{{media url}}","mobile_image":"{{media url}}"} style="" class="wrapper">
+        <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" style="" class="overlay">
                 <div class="content">
                     <div data-element="content" data-bind="html: getContentHtml()"></div>
