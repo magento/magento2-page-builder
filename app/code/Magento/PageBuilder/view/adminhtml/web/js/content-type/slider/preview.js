@@ -1,14 +1,23 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
      * Define keys which when changed should not trigger the slider to be rebuilt
@@ -24,22 +33,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
-      _this.element = void 0;
       _this.events = {
         columnWidthChangeAfter: "onColumnResize"
       };
       _this.ready = false;
-      _this.childSubscribe = void 0;
-      _this.contentTypeHeightReset = void 0;
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
-      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_this), 10);
+      _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_assertThisInitialized(_this))), 10);
       _this.ignoredKeysForBuild = ["display", "margins_and_padding", "border", "border_color", "border_radius", "border_width", "css_classes", "name", "text_align"];
-      _this.previousData = void 0;
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];
@@ -59,7 +64,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             _this.previousData = data;
           });
 
-          _this.buildSlick(); // Set the stage to interacting when a slide is focused
+          _this.buildSlick(); // Redraw slide after content type gets redrawn
+
+
+          _events.on("contentType:redrawAfter", function (args) {
+            if (_jquery.contains(args.element, this.element)) {
+              (0, _jquery)(this.element).slick("setPosition");
+            }
+          }.bind(_assertThisInitialized(_assertThisInitialized(_this)))); // Set the stage to interacting when a slide is focused
 
 
           _this.focusedSlide.subscribe(function (value) {
@@ -85,7 +97,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Preview.prototype;
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       options.add = new _option({
         preview: this,
@@ -171,7 +183,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _PreviewCollection.prototype.afterChildrenRender.call(this, element);
+      _previewCollection2.prototype.afterChildrenRender.call(this, element);
 
       this.afterChildrenRenderDeferred.resolve(element);
     };
@@ -276,7 +288,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this);
+      _previewCollection2.prototype.bindEvents.call(this);
 
       _events.on("slider:mountAfter", function (args) {
         if (args.id === _this4.parent.id) {
@@ -459,7 +471,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
-     * Build the slack config object
+     * Build the slick config object
      *
      * @returns {{autoplay: boolean; autoplaySpeed: (any | number);
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}

@@ -10,7 +10,7 @@ import ContentTypeInterface from "../content-type.d";
 /**
  * Move a content type to a new index, with the option to move to a new container
  *
- * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
+ * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
  * @param {number} targetIndex
  * @param {ContentTypeCollectionInterface} targetParent
  */

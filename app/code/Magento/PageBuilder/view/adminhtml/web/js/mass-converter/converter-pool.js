@@ -7,6 +7,8 @@ define([], function () {
   var DataConverterPool =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function DataConverterPool() {
       this.converters = {};
     }

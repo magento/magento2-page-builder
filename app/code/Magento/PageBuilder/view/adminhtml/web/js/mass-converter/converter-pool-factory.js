@@ -33,10 +33,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
             _ref = _i2.value;
           }
 
-          var _converterConfig = _ref;
+          var converterConfig = _ref;
 
-          if (!!_converterConfig.component && !_converterPool.get(_converterConfig.component)) {
-            converters.push(_converterConfig.component);
+          if (!!converterConfig.component && !_converterPool.get(converterConfig.component)) {
+            converters.push(converterConfig.component);
           }
         }
       }

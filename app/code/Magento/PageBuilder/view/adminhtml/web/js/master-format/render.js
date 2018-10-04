@@ -7,6 +7,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   var MasterFormatRenderer =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function MasterFormatRenderer() {
       this.rootTemplate = "Magento_PageBuilder/content-type/master";
     }

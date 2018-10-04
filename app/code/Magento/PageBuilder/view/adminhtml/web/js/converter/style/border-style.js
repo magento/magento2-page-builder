@@ -11,6 +11,8 @@ define([], function () {
   var BorderStyleDefault =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function BorderStyleDefault() {}
 
     var _proto = BorderStyleDefault.prototype;

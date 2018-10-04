@@ -1,12 +1,18 @@
 /*eslint-disable */
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/lib/view/utils/dom-observer", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _domObserver, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var Stage =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * Debounce the applyBindings call by 500ms to stop duplicate calls
      *
@@ -19,8 +25,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     function Stage(parent) {
       var _this = this;
 
-      this.parent = void 0;
-      this.id = void 0;
       this.config = {
         name: "stage",
         type: "restricted-container",

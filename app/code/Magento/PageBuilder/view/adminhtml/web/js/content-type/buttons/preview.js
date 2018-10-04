@@ -1,14 +1,21 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _delayUntil, _previewCollection) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
      * @param {ContentTypeCollectionInterface} parent
@@ -18,7 +25,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Keeps track of number of button item to disable sortable if there is only 1.
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Keeps track of number of button item to disable sortable if there is only 1.
 
       _this.focusedButton = _knockout.observable();
       _this.debouncedResizeHandler = _underscore.debounce(function () {
@@ -67,7 +74,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this);
+      _previewCollection2.prototype.bindEvents.call(this);
 
       _events.on("buttons:dropAfter", function (args) {
         if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
@@ -120,7 +127,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       options.add = new _option({
         preview: this,
