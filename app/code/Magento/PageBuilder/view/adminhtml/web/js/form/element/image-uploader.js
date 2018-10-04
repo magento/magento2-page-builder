@@ -95,16 +95,19 @@ define([
          * @param {jQuery.event} e
          */
         highlightDropzone: function (e) {
-            var draggedItem = e.originalEvent.dataTransfer.items[0],
+            var draggedItem,
                 $dropzone = $(e.target).closest(this.dropZone),
                 $otherDropzones = $(this.dropZone).not($dropzone),
                 isInsideDropzone = !!$dropzone.length;
 
-            if (draggedItem.kind === 'file' &&
-                (draggedItem.type === 'image/png' ||
-                draggedItem.type === 'image/gif' ||
-                draggedItem.type === 'image/jpg')
+            if (!e.originalEvent.dataTransfer.items.length
             ) {
+                return false;
+            }
+
+            draggedItem = e.originalEvent.dataTransfer.items[0];
+
+            if (draggedItem.kind === 'file' && /image\//.test(draggedItem.type)) {
                 if (isInsideDropzone) {
                     $dropzone
                         .removeClass(this.classes.draggingOutside)
@@ -185,6 +188,7 @@ define([
          */
         updateResponsiveClasses: function () {
             var classesToAdd = [],
+                classConfig,
                 elementWidth = this.$uploadArea.width(),
                 modifierClass;
 
@@ -195,17 +199,16 @@ define([
             this.$uploadArea.removeClass(Object.keys(this.elementWidthModifierClasses).join(' '));
 
             for (modifierClass in this.elementWidthModifierClasses) {
-                if (this.elementWidthModifierClasses.hasOwnProperty(modifierClass) && (
-                    this.elementWidthModifierClasses[modifierClass].minWidth &&
-                    this.elementWidthModifierClasses[modifierClass].maxWidth &&
-                    (this.elementWidthModifierClasses[modifierClass].minWidth <= elementWidth &&
-                    elementWidth <= this.elementWidthModifierClasses[modifierClass].maxWidth) ||
-                    this.elementWidthModifierClasses[modifierClass].minWidth &&
-                    !this.elementWidthModifierClasses[modifierClass].maxWidth &&
-                    this.elementWidthModifierClasses[modifierClass].minWidth <= elementWidth ||
-                    this.elementWidthModifierClasses[modifierClass].maxWidth &&
-                    !this.elementWidthModifierClasses[modifierClass].minWidth &&
-                    elementWidth <= this.elementWidthModifierClasses[modifierClass].maxWidth)
+                if (!this.elementWidthModifierClasses.hasOwnProperty(modifierClass)) {
+                    continue;
+                }
+
+                classConfig = this.elementWidthModifierClasses[modifierClass];
+
+                if (classConfig.minWidth && classConfig.maxWidth &&
+                    (classConfig.minWidth <= elementWidth && elementWidth <= classConfig.maxWidth) ||
+                    classConfig.minWidth && !classConfig.maxWidth && classConfig.minWidth <= elementWidth ||
+                    classConfig.maxWidth && !classConfig.minWidth && elementWidth <= classConfig.maxWidth
                 ) {
                     classesToAdd.push(modifierClass);
                 }
