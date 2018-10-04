@@ -133,7 +133,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Preview.prototype;
 
     _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
-      if (this.ready) {
+      try {
         (0, _jquery)(this.element).tabs("refresh");
 
         if (focusIndex >= 0) {
@@ -152,6 +152,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             sortableElement.sortable("enable");
           }
         }
+      } catch (e) {
+        this.buildTabs();
       }
     };
     /**
@@ -257,6 +259,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onContainerRender = function onContainerRender(element) {
+      this.element = element;
       this.onContainerRenderDeferred.resolve(element);
     };
     /**
@@ -508,7 +511,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     };
 
     return Preview;
-  }(_previewCollection); // Resolve issue with jQuery UI tabs content typeing events on content editable areas
+  }(_previewCollection); // Resolve issue with jQuery UI tabs content typing events on content editable areas
 
 
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;

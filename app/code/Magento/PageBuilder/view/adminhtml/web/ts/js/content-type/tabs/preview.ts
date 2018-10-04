@@ -143,7 +143,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} activeIndex
      */
     public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
-        if (this.ready) {
+        try {
             $(this.element).tabs("refresh");
             if (focusIndex >= 0) {
                 this.setFocusedTab(focusIndex, forceFocus);
@@ -159,6 +159,8 @@ export default class Preview extends PreviewCollection {
                     sortableElement.sortable("enable");
                 }
             }
+        } catch (e) {
+            this.buildTabs();
         }
     }
 
@@ -255,6 +257,7 @@ export default class Preview extends PreviewCollection {
      * @param {Element} element
      */
     public onContainerRender(element: Element) {
+        this.element = element;
         this.onContainerRenderDeferred.resolve(element);
     }
 
@@ -487,7 +490,7 @@ export default class Preview extends PreviewCollection {
     }
 }
 
-// Resolve issue with jQuery UI tabs content typeing events on content editable areas
+// Resolve issue with jQuery UI tabs content typing events on content editable areas
 const originalTabKeyDown = $.ui.tabs.prototype._tabKeydown;
 $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     // If the target is content editable don't handle any events
