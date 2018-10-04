@@ -15,9 +15,9 @@ The PageBuilder Early Access Program (EAP) gives partners the following perks:
 
 ## Installation
 
-We offer two methods for installing PageBuilder:
+We offer one method for installing PageBuilder:
 
-* As a [Composer package] - use this option if you do not plan to contribute to the PageBuilder code repository 
+
 * Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code 
 
 [Composer package]: docs/install.md#composer-installation
