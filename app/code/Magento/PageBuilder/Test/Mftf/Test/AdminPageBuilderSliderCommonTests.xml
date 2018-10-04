@@ -1552,4 +1552,36 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSliderDot3"/>
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideOneVisible"/>
     </test>
+    <test name="SlideInlineWYSIWYGWidgetAndVariableStyle" extends="TextInlineWYSIWYGWidgetAndVariableStyle">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide widget placeholder and variable placeholder styling works on inline editing"/>
+            <description value="Verify that widget placeholder and variable placeholder styling works on inline editing"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4150"/>
+            <testCaseId value="MC-4948"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <!-- Add Slider -->
+        <comment userInput="Add Slider" stepKey="commentAddSlider" />
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="dragContentTypeIntoStage" stepKey="saveEditPanelSettings"/>
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <waitForElementVisible selector="{{SlideOnBackend.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
+        <waitForElementVisible selector="{{SlideOnBackend.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle" />
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle" />
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave" />
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave" />
+        <seeElement selector="{{SlideOnFrontend.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+    </test>
 </tests>
