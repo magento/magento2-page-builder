@@ -102,11 +102,11 @@ export default class Preview extends PreviewCollection {
                     this.buildSlick();
 
                     // Redraw slide after content type gets redrawn
-                    events.on("contentType:redrawAfter", function(args: ContentTypeAfterRenderEventParamsInterface) {
-                        if ($.contains(args.element, this.element)) {
+                    events.on("contentType:redrawAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+                        if (args.element && this.element && $.contains(args.element, this.element)) {
                             $(this.element).slick("setPosition");
                         }
-                    }.bind(this));
+                    });
 
                     // Set the stage to interacting when a slide is focused
                     this.focusedSlide.subscribe((value: number) => {
