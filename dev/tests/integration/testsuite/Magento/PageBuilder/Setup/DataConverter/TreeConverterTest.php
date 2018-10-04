@@ -971,9 +971,10 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
-                            'image' => '/m/a/magento.png',
+                            'image' => '/m/a/magento1.png',
                             'link_url' => 'http://domain.com/',
                             'link_text' => 'Link Text',
+                            'mobile_image' => '/m/a/magento2.png',
                             'target_blank' => '0'
                         ]
                     ]
@@ -988,8 +989,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'entity_id' => 1,
                             'css_classes' => 'one two',
                             'image' => '/m/a/magento1.png',
-                            'mobile_image' => '/m/a/magento2.png',
                             'link_url' => 'http://domain.com/',
+                            'mobile_image' => '/m/a/magento2.png',
                             'target_blank' => '0'
                         ]
                     ]
@@ -1003,8 +1004,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
-                            'image' => '/m/a/magento.png',
+                            'image' => '/m/a/magento1.png',
                             'link_url' => 'http://domain.com/',
+                            'mobile_image' => '/m/a/magento2.png',
                             'target_blank' => '1',
                         ]
                     ]
