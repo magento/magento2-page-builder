@@ -9,8 +9,9 @@
 define([
     'underscore',
     'jquery',
-    'mage/apply/main'
-], function (_, $, mage) {
+    'mage/apply/main',
+    'Magento_Ui/js/lib/view/utils/dom-observer'
+], function (_, $, mage, domObserver) {
     'use strict';
 
     /**
@@ -28,17 +29,20 @@ define([
 
     return function (data, contextElement) {
         _.each(data.config, function (componentConfiguration, elementPath) {
-            $(elementPath).each(function (index, element) {
-                var $element = $(element);
+            domObserver.get(
+                elementPath,
+                function (element) {
+                    var $element = $(element);
 
-                if (contextElement) {
-                    $element = $(contextElement).find(element);
-                }
+                    if (contextElement) {
+                        $element = $(contextElement).find(element);
+                    }
 
-                if ($element.length) {
-                    initializeWidget($element, componentConfiguration);
+                    if ($element.length) {
+                        initializeWidget($element, componentConfiguration);
+                    }
                 }
-            });
+            );
         });
     };
 });

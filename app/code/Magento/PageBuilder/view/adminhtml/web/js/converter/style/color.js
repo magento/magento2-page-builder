@@ -11,6 +11,8 @@ define([], function () {
   var Color =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Color() {}
 
     var _proto = Color.prototype;

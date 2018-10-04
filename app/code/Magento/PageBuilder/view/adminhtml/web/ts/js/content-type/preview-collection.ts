@@ -10,6 +10,8 @@ import {DataObject} from "../data-store";
 import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
+    public parent: ContentTypeCollectionInterface;
+
     /**
      * Retrieve the preview child template
      *
@@ -46,11 +48,11 @@ export default class PreviewCollection extends Preview {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
                     contentType.children().forEach(
-                        (subChild: ContentTypeInterface & ContentTypeCollectionInterface) => {
+                        (subChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
                             const subChildClone = duplicate.preview.clone(subChild, false);
                             if (subChildClone) {
                                 subChildClone.then(
-                                    (duplicateSubChild: ContentTypeInterface & ContentTypeCollectionInterface) => {
+                                    (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
                                         duplicateSubChild.parent = duplicate;
                                         duplicate.addChild(duplicateSubChild);
                                     },

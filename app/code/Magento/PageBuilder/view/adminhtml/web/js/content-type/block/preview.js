@@ -1,16 +1,21 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _preview) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     /**
      * @inheritdoc
@@ -18,18 +23,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, parent, config, observableUpdater) || this;
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
-      _this.placeholderText = void 0;
-      _this.element = void 0;
       _this.messages = {
         NOT_SELECTED: (0, _translate)("Empty Block"),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
       };
-      _this.lastBlockId = void 0;
-      _this.lastTemplate = void 0;
-      _this.lastRenderedHtml = void 0;
       _this.placeholderText = _knockout.observable(_this.messages.NOT_SELECTED);
       return _this;
     }
@@ -68,7 +68,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
-      _BasePreview.prototype.afterObservablesUpdated.call(this);
+      _preview2.prototype.afterObservablesUpdated.call(this);
 
       var data = this.parent.dataStore.get(); // Only load if something changed
 
@@ -130,7 +130,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       _jquery.ajax(url, requestConfig) // The state object will contain the block name and either html or a message why there isn't any.
       .done(function (response) {
         // Empty content means something bad happened in the controller that didn't trigger a 5xx
-        if (_typeof(response.data) !== "object") {
+        if (typeof response.data !== "object") {
           _this2.showBlockPreview(false);
 
           _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);

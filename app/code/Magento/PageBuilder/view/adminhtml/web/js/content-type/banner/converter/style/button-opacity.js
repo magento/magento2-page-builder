@@ -7,6 +7,8 @@ define([], function () {
   var ButtonOpacity =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function ButtonOpacity() {}
 
     var _proto = ButtonOpacity.prototype;
