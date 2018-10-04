@@ -39,6 +39,10 @@
             display: flex;
             justify-content: center;
         }
+
+        &:not(.pagebuilder-poster-overlay) {
+            max-width: 50%;
+        }
     }
 
     [data-element='content'] {
@@ -52,5 +56,17 @@
         -webkit-transition: opacity 500ms ease;
         margin: 20px 0 0 0;
         transition: opacity 500ms ease;
+    }
+}
+
+//
+//  Responsive Classes
+//  _____________________________________________
+
+@media only screen and (max-width: @screen__m) {
+    .pagebuilder-banner-wrapper {
+        .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+            max-width: none;
+        }
     }
 }
