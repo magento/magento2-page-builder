@@ -1,9 +1,13 @@
-# PageBuilder Module Documentation
+# Getting Started with PageBuilder
 
 PageBuilder is a Content Management System(CMS) module for Magento 2.3 and above.
 It replaces the default WYSIWYG Editor in the Admin area with a highly configurable drag-and-drop editing system.
 
-<!--{% comment %}-->
+This page should serve as a guide to introducing what will be covered in this documentation.
+
+TBW
+
+<!-- {% comment %} -->
 ## Navigation
 
 1. **Introduction**
@@ -12,7 +16,6 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 4. [Developer documentation]
     1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
-    1. [Custom theme integration]
     1. [Third-party content type migration]
     1. [Iconography]
     1. [Add image uploader to content type]
@@ -31,17 +34,15 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
     1. [Render a backend content type preview]
     1. [Custom Toolbar]
     1. [Full width page layouts]
-    1. [Add custom logic to content types]
 5. [Roadmap and known issues]
 6. [How to create custom PageBuilder content type container]
 
 [Introduction]: introduction.md
-[Contribution guide]: ../CONTRIBUTING.md
+[Contribution guide]: CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Custom theme integration]: custom-themes.md
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
 [Add image uploader to content type]: image-uploader.md
@@ -60,7 +61,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Render a backend content type preview]: content-type-preview.md
 [Custom Toolbar]: toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
+[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
-<!--{% endcomment %}-->
+<!-- {% endcomment %} -->
