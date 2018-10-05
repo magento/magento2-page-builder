@@ -111,6 +111,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.focusedTab.subscribe(_underscore.debounce(function (index) {
         if (index !== null) {
           _events.trigger("stage:interactionStart");
+
+          (0, _delayUntil)(function () {
+            return (0, _jquery)((0, _jquery)(_this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").focus();
+          }, function () {
+            return (0, _jquery)((0, _jquery)(_this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").length > 0;
+          }, 10);
         } else {
           // We have to force the stop as the event firing is inconsistent for certain operations
           _events.trigger("stage:interactionStop", {
@@ -166,6 +172,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.setActiveTab = function setActiveTab(index) {
       if (index !== null) {
         (0, _jquery)(this.element).tabs("option", "active", index);
+
+        _events.trigger("contentType:redrawAfter", {
+          id: this.parent.id,
+          contentType: this
+        });
       }
     };
     /**
@@ -188,25 +199,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       this.focusedTab(index);
-
-      if (this.ready && index !== null) {
-        if (this.element.getElementsByClassName("tab-name")[index]) {
-          this.element.getElementsByClassName("tab-name")[index].focus();
-        }
-
-        _underscore.defer(function () {
-          var $focusedElement = (0, _jquery)(":focus");
-
-          if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
-            // Selection alternative to execCommand to workaround issues with tinymce
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents($focusedElement.get(0));
-            selection.removeAllRanges();
-            selection.addRange(range);
-          }
-        });
-      }
     };
     /**
      * Return an array of options
@@ -261,27 +253,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.onContainerRender = function onContainerRender(element) {
       this.element = element;
       this.onContainerRenderDeferred.resolve(element);
-    };
-    /**
-     * Handle clicking on a tab
-     *
-     * @param {number} index
-     * @param {Event} event
-     */
-
-
-    _proto.onTabClick = function onTabClick(index, event) {
-      // The options menu is within the tab, so don't change the focus if we click an item within
-      if ((0, _jquery)(event.target).parents(".pagebuilder-options").length > 0) {
-        return;
-      }
-
-      this.setFocusedTab(index);
-
-      _events.trigger("contentType:redrawAfter", {
-        id: this.parent.id,
-        contentType: this
-      });
     };
     /**
      * Copy over border styles to the tab headers
