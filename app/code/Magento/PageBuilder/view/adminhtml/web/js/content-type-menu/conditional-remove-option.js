@@ -1,11 +1,17 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   var ConditionalRemoveOption =
   /*#__PURE__*/
-  function (_Option) {
-    _inheritsLoose(ConditionalRemoveOption, _Option);
+  function (_option2) {
+    "use strict";
+
+    _inheritsLoose(ConditionalRemoveOption, _option2);
 
     /**
      * @param {OptionConfigInterface} config
@@ -13,7 +19,7 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
     function ConditionalRemoveOption(config) {
       var _this;
 
-      _this = _Option.call(this, config) || this;
+      _this = _option2.call(this, config) || this;
       var parentContentType = _this.preview.parent.parent;
 
       if (parentContentType.children().length < 2) {

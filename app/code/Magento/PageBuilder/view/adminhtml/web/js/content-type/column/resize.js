@@ -7,8 +7,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   var Resize =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Resize(columnGroup) {
-      this.columnGroup = void 0;
       this.columnGroup = columnGroup;
     }
     /**

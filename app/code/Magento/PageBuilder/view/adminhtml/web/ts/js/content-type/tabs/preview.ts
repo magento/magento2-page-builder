@@ -452,7 +452,7 @@ export default class Preview extends PreviewCollection {
      *
      * @type {(() => void) & _.Cancelable}
      */
-    private buildTabs(activeTabIndex = this.previewData.default_active() || 0) {
+    private buildTabs(activeTabIndex = this.previewData.default_active() as number || 0) {
         this.ready = false;
         if (this.element && this.element.children.length > 0) {
             const focusedTab = this.focusedTab();
@@ -469,10 +469,18 @@ export default class Preview extends PreviewCollection {
                         this.setFocusedTab(focusedTab, true);
                     } else {
                         this.setFocusedTab(null);
-                        if (activeTabIndex !== false) {
+                        if (activeTabIndex) {
                             this.setActiveTab(activeTabIndex);
                         }
                     }
+                },
+                /**
+                 * Trigger redraw event since new content is being displayed
+                 */
+                activate: () => {
+                    events.trigger("contentType:redrawAfter", {
+                        element: this.element,
+                    });
                 },
             });
         }
