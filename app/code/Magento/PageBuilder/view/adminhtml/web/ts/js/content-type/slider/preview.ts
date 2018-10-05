@@ -173,7 +173,14 @@ export default class Preview extends PreviewCollection {
      */
     public afterChildrenRender(element: HTMLElement): void {
         this.element = element;
-        this.buildSlick();
+
+        const isARerenderingOfSlider = this.ready;
+
+        // if slider has been re-rendered previously on this element, re-build
+        if (isARerenderingOfSlider) {
+            this.buildSlick();
+        }
+
         super.afterChildrenRender(element);
         this.afterChildrenRenderDeferred.resolve(element);
     }

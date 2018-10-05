@@ -168,7 +168,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
       this.element = element;
-      this.buildSlick();
+      var isARerenderingOfSlider = this.ready; // if slider has been re-rendered previously on this element, re-build
+
+      if (isARerenderingOfSlider) {
+        this.buildSlick();
+      }
 
       _previewCollection2.prototype.afterChildrenRender.call(this, element);
 
