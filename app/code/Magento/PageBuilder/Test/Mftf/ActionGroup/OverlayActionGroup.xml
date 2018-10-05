@@ -15,11 +15,12 @@
         </arguments>
         <!-- Validate overlay position is left -->
         <comment userInput="Validate overlay position is left" stepKey="commentValidateOverlayPositionIsLeft"/>
-        <executeJS function="return Math.round({{page.wrapperJS('1')}}.getBoundingClientRect().right) - Math.round({{page.wrapperJS('1')}}.getBoundingClientRect().width / 2)" stepKey="wrapperRightPositionMinusWidth50Percent"/>
-        <executeJS function="return Math.round({{page.overlayJS('1')}}.getBoundingClientRect().right)" stepKey="overlayRightPosition"/>
-        <assertEquals stepKey="assertOverlayIsPositionedLeftBeforeSave">
-            <expectedResult type="variable">wrapperRightPositionMinusWidth50Percent</expectedResult>
-            <actualResult type="variable">overlayRightPosition</actualResult>
+        <executeJS function="return {{page.wrapperJS('1')}}.getBoundingClientRect().right-{{page.wrapperJS('1')}}.getBoundingClientRect().width/2" stepKey="wrapperRightPositionMinusWidth50Percent"/>
+        <executeJS function="return {{page.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
+        <executeJS function="return Math.round(({$wrapperRightPositionMinusWidth50Percent}/{$overlayRightPosition})*100)/100" stepKey="overlayRatio"/>
+        <assertEquals stepKey="assertOverlayRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">overlayRatio</actualResult>
         </assertEquals>
     </actionGroup>
 </actionGroups>
