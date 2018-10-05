@@ -80,8 +80,10 @@ export default class Preview extends PreviewCollection {
 
                     // Redraw slide after content type gets redrawn
                     events.on("contentType:redrawAfter", function(args: ContentTypeAfterRenderEventParamsInterface) {
-                        if ($.contains(args.element, this.element)) {
-                            $(this.element).slick("setPosition");
+                        const $element = $(this.element);
+
+                        if ($element.closest(args.element).length) {
+                            $element.slick("setPosition");
                         }
                     }.bind(this));
 
