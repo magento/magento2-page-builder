@@ -32,6 +32,12 @@ class Driver implements RendererInterface
      */
     private $serializer;
 
+    /**
+     * Driver constructor.
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     * @param Json $serializer
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader,
@@ -43,7 +49,7 @@ class Driver implements RendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
