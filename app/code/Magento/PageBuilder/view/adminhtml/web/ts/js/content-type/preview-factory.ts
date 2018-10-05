@@ -21,8 +21,8 @@ import previewConverterResolver from "./preview-converter-resolver";
 export default function create(
     contentType: ContentTypeInterface,
     config: ContentTypeConfigInterface,
-): Promise<ContentTypeInterface> {
-    return new Promise((resolve: (previewComponent: any) => void) => {
+): Promise<Preview | PreviewCollection> {
+    return new Promise((resolve: (previewComponent: Preview | PreviewCollection) => void) => {
         observableUpdaterFactory(config, previewConverterResolver).then((observableUpdater) => {
             loadModule([config.preview_component], (previewComponent: typeof Preview | typeof PreviewCollection) => {
                 resolve(
