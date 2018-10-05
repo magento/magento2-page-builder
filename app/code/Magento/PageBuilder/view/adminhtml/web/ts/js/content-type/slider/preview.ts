@@ -172,6 +172,8 @@ export default class Preview extends PreviewCollection {
      * @param {HTMLElement} element
      */
     public afterChildrenRender(element: HTMLElement): void {
+        this.element = element;
+        this.buildSlick();
         super.afterChildrenRender(element);
         this.afterChildrenRenderDeferred.resolve(element);
     }
@@ -359,7 +361,9 @@ export default class Preview extends PreviewCollection {
             }
 
             // Dispose current subscription in order to prevent infinite loop
-            this.childSubscribe.dispose();
+            if (this.childSubscribe) {
+                this.childSubscribe.dispose();
+            }
 
             // Force an update on all children, ko tries to intelligently re-render but fails
             const data = this.parent.children().slice(0);

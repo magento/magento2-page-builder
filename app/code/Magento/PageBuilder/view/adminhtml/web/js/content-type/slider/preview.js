@@ -167,6 +167,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
+      this.element = element;
+      this.buildSlick();
+
       _previewCollection2.prototype.afterChildrenRender.call(this, element);
 
       this.afterChildrenRenderDeferred.resolve(element);
@@ -383,7 +386,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Dispose current subscription in order to prevent infinite loop
 
 
-        this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
+        if (this.childSubscribe) {
+          this.childSubscribe.dispose();
+        } // Force an update on all children, ko tries to intelligently re-render but fails
+
 
         var data = this.parent.children().slice(0);
         this.parent.children([]);
