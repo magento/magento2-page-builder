@@ -745,6 +745,10 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+            <argument name="section" value="BannerOnConfigurationPanel"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowOverlay">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
@@ -758,14 +762,26 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateOverlayPositionLeft" stepKey="validateOverlayPositionStage">
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStage">
             <argument name="page" value="BannerOnBackend"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateOverlayPositionLeft" stepKey="validateOverlayPositionAfterStage">
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStageAfterSave">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStageAfterSave">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStageAfterSave">
             <argument name="page" value="BannerOnBackend"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -773,7 +789,13 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateOverlayPositionLeft" stepKey="validateOverlayPositionStorefront">
+        <actionGroup ref="validateOverlayPositionCollageLeft" stepKey="validateOverlayPositionStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionTop" stepKey="validateOverlayPositionTopStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionBottom" stepKey="validateOverlayPositionBottomStorefront">
             <argument name="page" value="BannerOnFrontend"/>
         </actionGroup>
     </test>
