@@ -30,6 +30,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
       _this.focusedTab = _knockout.observable(null);
+      _this.activeTab = _knockout.observable(0);
       _this.onContainerRenderDeferred = (0, _promiseDeferred)();
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       Promise.all([_this.onContainerRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
@@ -172,6 +173,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.setActiveTab = function setActiveTab(index) {
       if (index !== null) {
         (0, _jquery)(this.element).tabs("option", "active", index);
+        this.activeTab(index);
 
         _events.trigger("contentType:redrawAfter", {
           id: this.parent.id,
@@ -441,7 +443,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this4 = this;
 
       if (activeTabIndex === void 0) {
-        activeTabIndex = this.previewData.default_active() || 0;
+        activeTabIndex = this.activeTab() || this.previewData.default_active() || 0;
       }
 
       this.ready = false;
