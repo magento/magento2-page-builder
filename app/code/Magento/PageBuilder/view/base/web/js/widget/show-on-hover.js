@@ -56,10 +56,10 @@ define(['jquery'], function ($) {
     return function (config) {
 
         var buttonSelector = config.buttonSelector,
-            overlayHoverSelector = 'div[data-role="%s"][data-show-overlay="%s"] > a'
+            overlayHoverSelector = 'div[data-role="%s"][data-show-overlay="%s"]'
                 .replace('%s', config.dataRole)
                 .replace('%s', config.showOverlay),
-            overlayButtonSelector = 'div[data-role="%s"][data-show-button="%s"] > a'
+            overlayButtonSelector = 'div[data-role="%s"][data-show-button="%s"]'
                 .replace('%s', config.dataRole)
                 .replace('%s', config.showOverlay);
 

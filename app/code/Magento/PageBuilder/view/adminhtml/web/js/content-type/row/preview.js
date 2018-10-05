@@ -38,7 +38,12 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
+          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+          var style = _this.element.getAttribute("style");
+
           jarallax(_this.element, "destroy");
+
+          _this.element.setAttribute("style", style);
         } catch (e) {// Failure of destroying is acceptable
         }
 

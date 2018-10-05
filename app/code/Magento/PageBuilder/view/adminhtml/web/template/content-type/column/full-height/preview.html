@@ -9,7 +9,7 @@
      attr="data.main.attributes"
      ko-style="data.main.style"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-     css="{'empty-container': $parent.children().length == 0}"
+     css="Object.assign(data.main.css(), {'empty-container': $parent.children().length == 0})"
      afterRender="initColumn">
     <div class="pagebuilder-column-resize-handle"
          afterRender="bindResizeHandle"
