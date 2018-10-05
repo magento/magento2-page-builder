@@ -20,14 +20,14 @@
                     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
                     <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent}" attr="placeholder: $t('Edit Banner Text')"/>
                 </div>
-                <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                <a if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"
                    class="pagebuilder-banner-button"
                    css="data.button.css"
                    attr="data.button.attributes"
                    ko-style="data.button.style">
                     <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
