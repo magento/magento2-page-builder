@@ -2404,7 +2404,7 @@
             <stories value="Text"/>
             <title value="Text widget placeholder and variable placeholder styling works on inline editing"/>
             <description value="Verify that widget placeholder and variable placeholder styling works on inline editing"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4150"/>
             <testCaseId value="MC-4946"/>
             <group value="pagebuilder"/>
@@ -2412,20 +2412,20 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <createData entity="_defaultCmsPage" stepKey="createCMSPageB" />
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
             <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
         <!-- Add Text -->
-        <comment userInput="Add Text to Tab" stepKey="commentAddText" />
+        <comment userInput="Add Text" stepKey="commentAddContentType"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -2438,23 +2438,23 @@
         <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
         <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+        <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
         <!-- Validate stage -->
         <comment userInput="Validate stage" stepKey="commentValidateStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle" />
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle" />
-        <assertEquals stepKey="assertEquals1" message="pass">
+        <assertEquals stepKey="assertWidgetPlaceholderBackgroundColorIsApplied">
             <expectedResult type="string">rgb(223, 247, 255)</expectedResult>
             <actualResult type="variable">getWidgetStyle</actualResult>
         </assertEquals>
-        <assertEquals stepKey="assertEquals2" message="pass">
+        <assertEquals stepKey="assertVariablePlaceholderBackgroundColorIsApplied">
             <expectedResult type="string">rgb(223, 247, 255)</expectedResult>
             <actualResult type="variable">getVariableStyle</actualResult>
         </assertEquals>
@@ -2464,18 +2464,28 @@
         <comment userInput="Validate stage after save" stepKey="commentValidateStageAfterSave"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave" />
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave" />
-        <assertEquals stepKey="assertEquals1AfterSave" message="pass">
+        <assertEquals stepKey="assertWidgetPlaceholderBackgroundColorIsAppliedAfterSave">
             <expectedResult type="string">rgb(223, 247, 255)</expectedResult>
             <actualResult type="variable">getWidgetStyleAfterSave</actualResult>
         </assertEquals>
-        <assertEquals stepKey="assertEquals2AfterSave" message="pass">
+        <assertEquals stepKey="assertVariablePlaceholderBackgroundColorIsAppliedAfterSave">
             <expectedResult type="string">rgb(223, 247, 255)</expectedResult>
             <actualResult type="variable">getVariableStyleAfterSave</actualResult>
         </assertEquals>
         <!-- Verify on storefront -->
+        <amOnPage url="$$createCMSPageB.identifier$$" stepKey="goToPage2URL"/>
+        <grabFromCurrentUrl stepKey="grabPage2URL"/>
         <comment userInput="View on storefront" stepKey="viewOnStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableStorefront"/>
+        <seeElement selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
+        <click selector="{{TextOnStorefront.textWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <grabFromCurrentUrl stepKey="currentUrl"/>
+        <assertEquals stepKey="assertUrlEquals">
+            <actualResult type="variable">grabPage2URL</actualResult>
+            <expectedResult type="variable">currentUrl</expectedResult>
+        </assertEquals>
     </test>
 </tests>

@@ -2235,14 +2235,14 @@
             <stories value="Banner"/>
             <title value="Banner widget placeholder and variable placeholder styling works on inline editing"/>
             <description value="Verify that widget placeholder and variable placeholder styling works on inline editing"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4150"/>
             <testCaseId value="MC-4947"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
         </annotations>
         <!-- Add Banner -->
-        <comment userInput="Add Banner" stepKey="commentAddBanner" />
+        <comment userInput="Add Banner" stepKey="commentAddContentType"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -2250,13 +2250,14 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <click selector="{{BannerOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <waitForElementVisible selector="{{BannerOnBackend.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.messageContentText('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.messageContentText('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle" />
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle" />
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave" />
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave" />
-        <seeElement selector="{{BannerOnFrontend.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="waitForWidgetStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentText('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="seeVariableStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
+        <click selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
     </test>
 </tests>
