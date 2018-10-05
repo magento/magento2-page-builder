@@ -100,8 +100,7 @@ define([
                 $otherDropzones = $(this.dropZone).not($dropzone),
                 isInsideDropzone = !!$dropzone.length;
 
-            if (!e.originalEvent.dataTransfer.items.length
-            ) {
+            if (e.originalEvent.dataTransfer.items.length === 0) {
                 return false;
             }
 
