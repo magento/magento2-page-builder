@@ -34,7 +34,10 @@ export default class Preview extends PreviewCollection {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
+            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+            const style = this.element.getAttribute("style");
             jarallax(this.element, "destroy");
+            this.element.setAttribute("style", style);
         } catch (e) {
             // Failure of destroying is acceptable
         }
