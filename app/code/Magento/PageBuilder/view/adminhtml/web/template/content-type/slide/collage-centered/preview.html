@@ -5,11 +5,11 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-slide"
+<div class="pagebuilder-content-type pagebuilder-slide pagebuilder-collage-centered"
      attr="data.main.attributes"
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <div ko-style="Object.assign(data.main.style(), data.wrapper.style(), {paddingLeft: 'calc(25% + ' + data.wrapper.style().paddingLeft + ')', paddingRight: 'calc(25% + ' + data.wrapper.style().paddingRight + ')'})"
+    <div ko-style="data.wrapper.style"
          event="mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor">
         <scope args="getUploader().getUiComponent()">
             <render />
