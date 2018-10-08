@@ -140,6 +140,7 @@
             <testCaseId value="MC-4028"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <group value="m"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -160,12 +161,12 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeTab"/>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
             <deleteData createDataKey="createPreReqProduct3" stepKey="deletePreReqProduct3"/>
             <deleteData createDataKey="createPreReqProduct4" stepKey="deletePreReqProduct4"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -191,6 +192,12 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMinCount">
             <argument name="property" value="PageBuilderProductsInvalidMinCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidEmptyProductsCount">
+            <argument name="property" value="PageBuilderProductsInvalidEmptyCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidEmptyCount">
+            <argument name="property" value="PageBuilderProductsInvalidEmptyCountProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMaxProductsCount">
             <argument name="property" value="PageBuilderProductsInvalidMaxCountProperty"/>
