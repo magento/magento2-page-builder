@@ -11,6 +11,8 @@ namespace Magento\PageBuilder\Block\Adminhtml\Html\Head;
 use Magento\Framework\View\Element\Template;
 
 /**
+ * Babel polyfill is required for IE 11 compatibility
+ *
  * @api
  */
 class BabelPolyfill extends Template
