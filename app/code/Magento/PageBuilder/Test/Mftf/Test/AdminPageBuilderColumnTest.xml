@@ -1341,11 +1341,13 @@
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
         <comment userInput="Resize first column to 4/12" stepKey="commentResizeFirstColumn"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Resize second column to 4/12 -->
         <comment userInput="Grab grid guide width for 4/12 for second column" stepKey="commentRetrieveGuideWidthForSecond"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
         <comment userInput="Resize second column to 4/12" stepKey="commentResizeSecondColumn"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <!-- Check all columns have the same width -->
         <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>

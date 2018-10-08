@@ -2381,6 +2381,7 @@
         <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumnToOne"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate height of variable in storefront -->
@@ -2397,7 +2398,6 @@
             <actualResult type="variable">columnOneTextHeight</actualResult>
         </assertGreaterThan>
     </test>
-
     <test name="TextInlineWYSIWYGWidgetAndVariableStyle">
         <annotations>
             <features value="PageBuilder"/>
@@ -2448,8 +2448,8 @@
         <seeElement selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetStage"/>
         <!-- Validate stage -->
         <comment userInput="Validate stage" stepKey="commentValidateStage"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle" />
-        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle" />
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle"/>
         <assertEquals stepKey="assertWidgetPlaceholderBackgroundColorIsApplied">
             <expectedResult type="string">rgb(223, 247, 255)</expectedResult>
             <actualResult type="variable">getWidgetStyle</actualResult>
@@ -2462,8 +2462,10 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate stage After Save-->
         <comment userInput="Validate stage after save" stepKey="commentValidateStageAfterSave"/>
-        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave" />
-        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave" />
+        <waitForElement selector="{{TextOnStage.variablePlaceholder('1')}}" stepKey="waitForVariableElement"/>
+        <waitForElement selector="{{TextOnStage.widgetPlaceholder('1')}}" stepKey="waitForWidgetElement"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{TextOnStage.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyleAfterSave"/>
         <assertEquals stepKey="assertWidgetPlaceholderBackgroundColorIsAppliedAfterSave">
             <expectedResult type="string">rgb(223, 247, 255)</expectedResult>
             <actualResult type="variable">getWidgetStyleAfterSave</actualResult>
