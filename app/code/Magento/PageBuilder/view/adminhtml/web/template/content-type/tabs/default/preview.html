@@ -17,7 +17,7 @@
                     click="function (context, event) { parent.parent.preview.onTabClick($index(), event); }"
                     ko-style="parent.parent.preview.getTabHeaderStyles()"
                     event="{ focusin: function () { parent.parent.preview.setFocusedTab($index(), true) }, focusout: function () { window.getSelection().removeAllRanges(); parent.parent.preview.setFocusedTab(null); } }">
-                    <a href="#no-tab" class="tab-title focus-options" attr="{ href: '#' + parent.id }">
+                    <a href="#no-tab" class="tab-title focus-options" attr="{ href: '#' + parent.id }" event="{ dragstart: function(context, event) { event.preventDefault(); }}">
                         <render args="getOptions().template" />
                         <span class="tab-drag-handle" css="{disabled: parent.parent.children().length <= 1}"></span>
                         <span class="tab-title tab-name" data-tab-title="true" data-bind="liveEdit: { field: 'tab_name', placeholder: $t('...'), selectAll: true }, hasFocusNoScroll: parent.parent.preview.focusedTab() === $index()"></span>
