@@ -8,9 +8,11 @@
 <div class="pagebuilder-content-type pagebuilder-image type-nested" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
     <figure attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-        <scope args="getUploader().getUiComponent()">
-            <render />
-        </scope>
+        <div attr="!data.desktop_image.attributes().src ? data.uploader.attributes : {}" ko-style="!data.desktop_image.attributes().src ? data.uploader.style : {}" css="!data.desktop_image.attributes().src ? data.uploader.css : {}">
+            <scope args="getUploader().getUiComponent()">
+                <render />
+            </scope>
+        </div>
         <img if="data.desktop_image.attributes().src"
              attr="data.desktop_image.attributes"
              class="preview-image"
