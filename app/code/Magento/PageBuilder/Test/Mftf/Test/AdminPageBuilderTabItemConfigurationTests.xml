@@ -428,7 +428,7 @@
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('1', PageBuilderAdvancedAlignmentPropertyCenter.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft, PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft)}}" stepKey="seeTabContentAdvancedStylesInStorefront1"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('1', PageBuilderAdvancedBorderPropertySolid.value, PageBuilderAdvancedBorderColorProperty.rbg, PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront1"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('1', PageBuilderAdvancedBorderPropertySolid.value, PageBuilderAdvancedBorderColorProperty.rgb, PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront1"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeTabContentClassInStorefront1"/>
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
@@ -436,7 +436,7 @@
         <waitForElementVisible selector="{{TabOnStorefront.container('2')}}" stepKey="seeNewTabContent"/>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('2', PageBuilderAdvancedAlignmentPropertyRight.value, PageBuilderMarginsPropertyUnique.value, PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront2"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('2', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rbg, PageBuilderAdvancedBorderWidthProperty500.value, PageBuilderAdvancedBorderRadiusProperty500.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStylesBorder('2', PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_FF0000.rgb, PageBuilderAdvancedBorderWidthProperty500.value, PageBuilderAdvancedBorderRadiusProperty500.value)}}" stepKey="seeTabContentAdvancedStylesBorderInStorefront2"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedClass('2', PageBuilderAdvancedCssClassesPropertyOneClass.value)}}" stepKey="seeTabContentClassInStorefront2"/>
     </test>
     <test name="EditTabNameByClickingOnHeaderInStage">
@@ -474,7 +474,6 @@
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEdit"/>
         <comment userInput="Edit tab name inline on stage" stepKey="AC2"/>
-        <click selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" stepKey="clickTabTitle"/>
         <pressKey selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="enterTabTitle"/>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin"/>
         <comment userInput="Check new tab name saved in form" stepKey="AC3"/>
