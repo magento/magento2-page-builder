@@ -140,7 +140,7 @@ body {
 
     pre {
         background-color: @color-white-smoke;
-        border: @pre__border-width solid #ccc;
+        border: @pre__border-width solid @color-gray80;
         color: @color-black;
         font-family: @font-family__monospace;
         font-size: @code__font-size;
@@ -164,9 +164,9 @@ body {
     }
 
     .magento-placeholder {
-        background: #dff7ff;
+        background: @placeholder-background;
         box-sizing: initial;
-        color: #000;
+        color: @color-black;
         cursor: pointer !important;
         display: inline-block;
         font-size: 14px;
@@ -174,7 +174,7 @@ body {
         font-weight: normal;
         height: 20px;
         margin: 0 5px;
-        outline: 2px solid #c0dffa;
+        outline: 2px solid @placeholder-outline;
         padding: 2px 4px;
         vertical-align: bottom;
         word-break: break-all;
@@ -184,7 +184,7 @@ body {
         display: inline-block;
         height: 20px;
         margin: 0 5px;
-        outline: 2px solid #f7aaaa !important;
+        outline: 2px solid @placeholder-error-outline !important;
         padding: 2px 4px;
         vertical-align: bottom;
     }
@@ -207,7 +207,7 @@ body {
     }
 
     .magento-placeholder-error[data-mce-selected] {
-        outline: 2px solid #e12525 !important;
+        outline: 2px solid @placeholder-error-outline-mce !important;
     }
 
     .magento-placeholder-error img,
