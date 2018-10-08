@@ -856,11 +856,11 @@ Attributes
 
 Inline Styles
 1. background-color
-2. backgroun-image
-3. backgroun-position
-4. backgroun-size
-5. backgroun-repeat
-6. backgroun-attachment"
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
 7. padding
 8. min-height
 9. text-align
