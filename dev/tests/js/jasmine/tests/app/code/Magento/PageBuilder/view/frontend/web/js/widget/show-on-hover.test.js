@@ -60,7 +60,7 @@ define([
 
             spyOn($.fn, 'hover');
 
-            showOnHoverInitializerWidget(config, el);
+            showOnHoverInitializerWidget(config);
 
             expect($.fn.hover).not.toHaveBeenCalled();
         });

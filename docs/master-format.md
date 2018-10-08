@@ -573,7 +573,7 @@ Poster
 
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="poster" data-show-button="hover" data-show-overlay="always" style="...">
-    <a data-element="link" href="" target="" data-link-type="default">
+    <div data-element="link" data-href="" data-target="" data-link-type="default">
         <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
             <div data-element="overlay" class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-poster-content">
@@ -590,7 +590,7 @@ Poster
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -598,7 +598,7 @@ Collage Left
 
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="collage-left" data-show-button="hover" data-show-overlay="always" style="...">
-    <a data-element="link" href="" target="" data-link-type="default">
+    <div data-element="link" data-href="" data-target="" data-link-type="default">
         <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
             <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-collage-content">
@@ -615,7 +615,7 @@ Collage Left
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -623,7 +623,7 @@ Collage Centered
 
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="collage-centered" data-show-button="hover" data-show-overlay="always" style="...">
-    <a data-element="link" href="" target="" data-link-type="default">
+    <div data-element="link" data-href="" data-target="" data-link-type="default">
         <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
             <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-collage-content">
@@ -640,7 +640,7 @@ Collage Centered
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -648,7 +648,7 @@ Collage Right
 
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="collage-right" data-show-button="hover" data-show-overlay="always" style="...">
-    <a data-element="link" href="" target="" data-link-type="default">
+    <div data-element="link" data-href="" data-target="" data-link-type="default">
         <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
             <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-collage-content">
@@ -665,7 +665,7 @@ Collage Right
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -689,8 +689,8 @@ Inline styles
 
 Attributes
 1. data-element [link]
-2. href
-3. target
+2. data-href
+3. data-target
 4. data-link-type
 
 ### overlay element
@@ -760,8 +760,8 @@ Poster
 
 ```
 <div data-element="main" data-role="banner" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
-    <a data-element="link" href="" target="">
-        <div data-element="wrapper" data-background-images {"desktop_image":"{{media url}}","mobile_image":"{{media url}}"} class="wrapper">
+    <div data-element="link" data-href="" data-target="">
+        <div data-element="wrapper" data-background-images={} class="wrapper">
             <div data-element="overlay" style="" class="overlay">
                 <div class="content">
                     <div data-element="content">Content</div>
@@ -769,7 +769,7 @@ Poster
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -777,16 +777,16 @@ Collage Left
 
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
-    <a data-element="link" href="" target="">
+    <div data-element="link" data-href="" data-target="">
         <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
-            <div data-element="overlay" style="" class="overlay">
+            <div data-element="overlay" style="" class="overlay>
                 <div class="content">
                     <div data-element="content">Banner content</div>
                     <button data-element="button" style="" class="action primary">Banner Text</button>
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -794,7 +794,7 @@ Collage Centered
 
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
-    <a data-element="link" href="" target="">
+    <div data-element="link" data-href="" data-target="">
         <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" class="overlay">
                 <div class="content">
@@ -803,14 +803,14 @@ Collage Centered
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 Collage Right
 
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
-    <a data-element="link" href="" target="">
+    <div data-element="link" data-href="" data-target="">
         <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" style="" class="overlay">
                 <div class="content">
@@ -819,7 +819,7 @@ Collage Right
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 ```
 
@@ -846,11 +846,13 @@ Attributes
 1. data-element [link]
 2. data-role
 3. data-appearance
-4. href
-5. target
+4. data-href
+5. data-target
 6. data-link-type
 
+<<<<<<< HEAD
 ### wrapper element
+
 Attributes
 1. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
 
@@ -865,16 +867,12 @@ Inline Styles
 8. min-height
 9. text-align
 
+=======
 ### overlay element
 
 Attributes
 1. data-element [overlay]
-2. data-role
-3. data-appearance
-4. data-link-type
-5. data-overlay-color
-6. href
-7. target
+2. data-overlay-color
 
 Inline styles
 1. background-color

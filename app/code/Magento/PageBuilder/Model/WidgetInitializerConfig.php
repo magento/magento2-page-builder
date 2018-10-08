@@ -28,6 +28,7 @@ class WidgetInitializerConfig
 
     /**
      * Retrieves the component-ready configuration for the widget initializer
+     *
      * @return array
      */
     public function getConfig(): array
@@ -43,7 +44,7 @@ class WidgetInitializerConfig
                     $selector .= sprintf('[data-appearance="%s"]', $item['appearance']);
                 }
                 $componentConfig = isset($item['config']) ? $item['config'] : '{}';
-                $resultConfig[$selector] = [$item['component'] => $componentConfig];
+                $resultConfig[$selector][$item['component']] = $componentConfig;
             }
         }
         return $resultConfig;
