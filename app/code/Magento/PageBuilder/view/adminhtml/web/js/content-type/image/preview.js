@@ -1,16 +1,11 @@
 /*eslint-disable */
-<<<<<<< HEAD
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/uploader"], function (_events, _preview, _uploader) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-=======
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_events, _preview, _uploader) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/content-type/preview"], function (_events, _uploader, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
->>>>>>> upstream/develop
 
   /**
    * @api

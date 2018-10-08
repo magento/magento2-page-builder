@@ -4,7 +4,7 @@
  */
 
 /**
- * Application entry point.
+ * Application entry point
  *
  * @param {Object} nodes
  * @param {Object} parent
