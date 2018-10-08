@@ -11,9 +11,7 @@ namespace Magento\PageBuilder\Block\Adminhtml\Html\Head;
 use Magento\Framework\View\Element\Template;
 
 /**
- * Class BabelPolyfill
- *
- * @package Magento\PageBuilder\Block
+ * @api
  */
 class BabelPolyfill extends Template
 {

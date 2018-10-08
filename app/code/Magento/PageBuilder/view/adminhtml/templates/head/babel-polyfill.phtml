@@ -6,10 +6,10 @@
 
 /* @var $block \Magento\PageBuilder\Block\Adminhtml\Html\Head\BabelPolyfill */
 
-if ($block->shouldLoadPolyfill()): ?>
-<script type="text/javascript">
+if ($block->shouldLoadPolyfill()) : ?>
+<script>
     if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-        document.write('<script src="<?= $block->getJsUrl() ?>"><\/script>');
+        document.write('<script src="<?= $block->escapeUrl($block->getJsUrl()) ?>"><\/script>');
     }
 </script>
 <?php endif; ?>
