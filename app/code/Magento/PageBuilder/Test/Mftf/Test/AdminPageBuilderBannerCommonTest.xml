@@ -2251,8 +2251,8 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <click selector="{{BannerOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <waitForElementVisible selector="{{BannerOnBackend.messageContentText('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.messageContentText('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="waitForWidgetStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContentText('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="seeVariableBaseURLStage"/>
+        <seeElement selector="{{BannerOnBackend.messageContentText('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle"/>
         <waitForElement selector="{{BannerOnBackend.variablePlaceholder('1')}}" stepKey="waitForVariableElement"/>
