@@ -1552,4 +1552,86 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSliderDot3"/>
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideOneVisible"/>
     </test>
+    <test name="SliderRendersAndIsInteractiveAfterMovingToAnotherContainer">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider - Validate Proper Rendering and Interactivity After Moving To Different Container"/>
+            <description value="Validate that slider renders itself properly and retains its interactivity after moving to a different parent container."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4294"/>
+            <testCaseId value="MC-4996"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowContentTypeToStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderContentTypeToSecondRow">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollUpSoRowIsInView" />
+        <actionGroup ref="dragContentTypeToStageByIndex" stepKey="dragColumnContentTypeToSecondRowContentTypeOnStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
+        </actionGroup>
+        <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollUpSoRowIsInView2" />
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus"/>
+        <!-- Move slider into first column -->
+        <comment userInput="Move slider into first column" stepKey="commentMoveSliderIntoFirstColumn"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveSliderIntoFirstColumn">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentSlideItem1Stage"/>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <executeJS function="tinyMCE.get('pagebuilder_slide_form_content').setContent('');" stepKey="executeJSClearTinyMCE"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE2">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide2"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Stage"/>
+        <!-- Change appearance of row and re-evaluate -->
+        <comment userInput="Change appearance of row and re-evaluate" stepKey="commentChangeAppearanceOfRowAndReevaluate"/>
+        <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollUpSoRowIsInView3" />
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageForFirstRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow1">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForFirstRow"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Stage2"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="switchToDefaultSlide"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentSlideItem1Stage2"/>
+    </test>
 </tests>
