@@ -850,7 +850,6 @@ Attributes
 5. data-target
 6. data-link-type
 
-<<<<<<< HEAD
 ### wrapper element
 
 Attributes
