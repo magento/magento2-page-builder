@@ -68,6 +68,8 @@
         <element name="all" type="text" selector="div[data-role=slide]"/>
         <element name="base" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="button" selector="document.querySelectorAll('[data-role=slide] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=slide] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=slide] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
         <element name="slickSlideIndex" type="text" selector="[data-slick-index='{{arg1}}']" parameterized="true"/>
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
         <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//a[@href='{{arg2}}']" parameterized="true"/>
@@ -116,6 +118,8 @@
         <element name="all" type="button" selector=".pagebuilder-slide"/>
         <element name="base" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="emptySlide" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content'][contains(@class,'pagebuilder-empty-slide') and text()='Edit Slide Text']" parameterized="true"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=slider] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=slider] div.pagebuilder-collage-overlay')[{{arg1}} - 1]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
