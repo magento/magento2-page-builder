@@ -111,7 +111,7 @@
         <!-- Bottom edge validation is skipped until MC-4116 -->
         <!-- Validate bottom edge of overlay -->
         <!--<comment userInput="Validate bottom edge of overlay" stepKey="commentValidateBottomEdgeOfOverlay"/>-->
-        <!--<executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top+{{padding.value}}+120" stepKey="wrapperTopPaddingContent"/>-->
+        <!--<executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().top+{{padding.paddingTop}}+120" stepKey="wrapperTopPaddingContent"/>-->
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().bottom" stepKey="overlayBottomPosition"/>
         <!--<assertEquals stepKey="assertOverlayBottomRatio">-->
         <!--<expectedResult type="variable">wrapperTopPaddingContent</expectedResult>-->

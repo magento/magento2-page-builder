@@ -86,8 +86,8 @@ class Driver implements RendererInterface
         $rootElementAttributes['style'] .= $margin;
         $linkAttributes = [
             'data-element' => 'link',
-            'href' => $eavData['link_url'] ?? '',
-            'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
+            'data-href' => $eavData['link_url'] ?? '',
+            'data-target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
         $imageAttributes = [
             'data-element' => 'wrapper',
@@ -121,7 +121,7 @@ class Driver implements RendererInterface
 
         return '<div'
             . $this->printAttributes($rootElementAttributes)
-            . '><a'
+            . '><div'
             . $this->printAttributes($linkAttributes)
             . '>'
             . $imageElementHtml
@@ -132,7 +132,7 @@ class Driver implements RendererInterface
             . $overlayElementHtml
             . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
-            . '</div></div></div></a></div>';
+            . '</div></div></div></div></div>';
     }
 
     /**

@@ -1,14 +1,23 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _events, _alert, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
@@ -25,19 +34,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
 
       _this.resizing = _knockout.observable(false);
-      _this.element = void 0;
       _this.fieldsToIgnoreOnRemove = ["width"];
 
-      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_this), "width");
+      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
+      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.dataStore.subscribe(_this.triggerChildren.bind(_this), "width");
+      _this.parent.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "grid_size");
+      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "grid_size");
 
       return _this;
     }
@@ -51,7 +59,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this);
+      _previewCollection2.prototype.bindEvents.call(this);
 
       _events.on("column:moveAfter", function (args) {
         if (args.contentType.id === _this2.parent.id) {
@@ -92,7 +100,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       options.move = new _option({
         preview: this,
@@ -171,14 +179,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var resizeUtils = this.parent.parent.preview.getResizeUtils(); // Are we duplicating from a parent?
 
       if (contentType.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
-        return _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
+        return _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
       } // Attempt to split the current column into parts
 
 
       var splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
 
       if (splitTimes > 1) {
-        var splitClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
+        var splitClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
 
         if (splitClone) {
           splitClone.then(function (duplicateContentType) {
@@ -198,7 +206,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
 
         if (shrinkableColumn) {
-          var shrinkableClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
+          var shrinkableClone = _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
 
           if (shrinkableClone) {
             shrinkableClone.then(function (duplicateContentType) {

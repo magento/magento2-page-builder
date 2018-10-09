@@ -26,6 +26,10 @@ class AdvancedSliderItem implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader
@@ -35,7 +39,7 @@ class AdvancedSliderItem implements RendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -68,7 +72,7 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         $wrapperDivElementAttributes = [
-            'data-element' => 'mobile_image',
+            'data-element' => 'desktop_image',
             'class' => 'pagebuilder-slide-wrapper'
         ];
         $style = $this->styleExtractor->extractStyle($formData);
@@ -103,8 +107,8 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         // mobile wrapper div
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '><a data-element="link"';
-        $rootElementHtml .= isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '">' : '>';
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '><div data-element="link"';
+        $rootElementHtml .= isset($eavData['link_url']) ? ' data-href="' . $eavData['link_url'] . '">' : '>';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
             . '><div'
@@ -119,7 +123,7 @@ class AdvancedSliderItem implements RendererInterface
             . '</div></div></div>';
 
         // non-mobile wrapper div
-        $wrapperDivElementAttributes['data-element'] = 'wrapper';
+        $wrapperDivElementAttributes['data-element'] = 'mobile_image';
         $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
@@ -133,7 +137,7 @@ class AdvancedSliderItem implements RendererInterface
             . $buttonElementHtml
             . '</div></div></div>';
 
-        $rootElementHtml .= '</a></div>';
+        $rootElementHtml .= '</div></div>';
 
         return $rootElementHtml;
     }

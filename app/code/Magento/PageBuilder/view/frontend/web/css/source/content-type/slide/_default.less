@@ -11,17 +11,21 @@
     box-sizing: border-box;
     overflow: hidden;
 
-    [data-element='link'][href='javascript:void(0)'] {
-        cursor: auto;
-    }
-
-    > a {
+    > [data-element='link'] {
         color: inherit;
         text-decoration: inherit;
 
         &:hover {
             color: inherit;
             text-decoration: inherit;
+        }
+
+        &[data-href='javascript:void(0)'] {
+            cursor: auto;
+        }
+
+        &:not([data-href='javascript:void(0)']) {
+            cursor: pointer;
         }
     }
 }

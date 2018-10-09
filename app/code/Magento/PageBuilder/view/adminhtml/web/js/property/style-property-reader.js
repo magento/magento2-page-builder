@@ -11,6 +11,8 @@ define(["Magento_PageBuilder/js/utils/string"], function (_string) {
   var StylePropertyReader =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function StylePropertyReader() {}
 
     var _proto = StylePropertyReader.prototype;

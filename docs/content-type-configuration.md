@@ -142,7 +142,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                 </element>
                 <element name="wrapper">
                     <style name="background_color" source="background_color"/>
-                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
+                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
                     <style name="background_position" source="background_position"/>
                     <style name="background_size" source="background_size"/>
                     <style name="background_repeat" source="background_repeat"/>
