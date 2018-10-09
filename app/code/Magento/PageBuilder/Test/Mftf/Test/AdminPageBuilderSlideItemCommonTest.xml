@@ -1741,11 +1741,11 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add Slider -->
-        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
+        <comment userInput="Add Slider" stepKey="commentAddContentType"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
@@ -1754,7 +1754,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="initialSaveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="initialSwitchToPageBuilderStage"/>
         <!-- Add Image to Slide -->
-        <comment userInput="Add Image to Slide" stepKey="commentAddImageToSlide"/>
+        <comment userInput="Add Image to Slide" stepKey="commentAddImageToContentType"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
         <waitForPageLoad stepKey="waitforInlineWYSIWYGEditor"/>
         <click selector="{{WYSIWYGInsertImageModal.imageSelector}}" stepKey="clickWYSIWYGImageSelector"/>
@@ -1775,7 +1775,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Validated Backend -->
         <comment userInput="Validated Backend" stepKey="commentValidateBackend"/>
-        <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="alidateImageInEditor"/>
+        <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validated Backend After Save -->
