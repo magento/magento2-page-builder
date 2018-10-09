@@ -58,8 +58,8 @@
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut1"/>
         <!-- Assert don't see deleted image on stage -->
         <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
-        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
-        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
+        <seeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStageWithoutImageUploaded.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -84,7 +84,7 @@
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage2"/>
+        <seeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imageEmptyPreview}}" stepKey="dontSeeImageOnStage2"/>
         <!-- Attach image B to Image slideout form from Media Storage -->
         <comment userInput="Attach image B to Image slideout form from Media Storage" stepKey="attachImageBToSlideout"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -118,8 +118,8 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!-- Assert not to see image on stage -->
         <comment userInput="Assert not to see image on stage" stepKey="commentVerifyImageStage" />
-        <seeElementInDOM selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
-        <dontSeeElementInDOM  selector="{{ImageOnStage.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
+        <seeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStageWithoutImageUploaded.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>
@@ -165,8 +165,8 @@
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.uploadImageBtn}}" stepKey="seeUploadImageBtn1" />
-        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn1" />
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.uploadImageBtn}}" stepKey="seeUploadImageBtn1" />
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn1" />
         <!-- Attach image A to PageBuilder stage -->
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
@@ -175,7 +175,7 @@
         <comment userInput="verify Upload Image Buttons" stepKey="commentVerifyUploadImageButtons"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
             <argument name="contentType" value="PageBuilderImageContentType"/>
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
         </actionGroup>
         <!-- Duplicate Image Content Type -->
         <comment userInput="Duplicate Image Content Type" stepKey="commentDuplicate"/>
@@ -207,8 +207,8 @@
             <argument name="property" value="PageBuilderImageProperty_JPG2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderImageContentType"/>
@@ -374,7 +374,7 @@
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Duplicate -->
@@ -384,27 +384,27 @@
         </actionGroup>
         <!-- Validate content type is disabled -->
         <comment userInput="Validate content type is disabled" stepKey="commentValidateHiddenStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
-        <waitForElementVisible selector="{{ImageOnStage.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.hidden('1')}}" stepKey="waitForContentTypeHidden1"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.hidden('2')}}" stepKey="waitForContentTypeHidden2"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
-        <waitForElementVisible selector="{{ImageOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.hidden('1')}}" stepKey="waitForContentTypeHiddenAfterSave1"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.hidden('2')}}" stepKey="waitForContentTypeHiddenAfterSave2"/>
         <!-- Reset Stage and Verify Settings -->
         <comment userInput="Reset stage and verify settings" stepKey="CommentResetStage"/>
         <actionGroup ref="showContentType" stepKey="showContentTypeFirstImage">
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="showContentType" stepKey="showContentTypeSecondImage">
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStage.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
-        <waitForElementVisible selector="{{ImageOnStage.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.notHidden('1')}}" stepKey="waitForContentTypeHiddenReset1"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.notHidden('2')}}" stepKey="waitForContentTypeHiddenReset2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterReset"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderImageContentType"/>
@@ -557,7 +557,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
-            <argument name="page" value="ImageOnStage"/>
+            <argument name="page" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
@@ -570,7 +570,7 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage2">
-            <argument name="page" value="ImageOnStage"/>
+            <argument name="page" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
@@ -685,7 +685,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
-            <argument name="page" value="ImageOnStage"/>
+            <argument name="page" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -731,7 +731,7 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
-            <argument name="page" value="ImageOnStage"/>
+            <argument name="page" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -820,7 +820,7 @@
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElement selector="{{ImageOnStage.imageEmptyPreview}}" stepKey="seeImageEmptyPreview"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageEmptyPreview}}" stepKey="seeImageEmptyPreview"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderImageContentType"/>
@@ -857,7 +857,7 @@
             <argument name="contentType" value="PageBuilderImageContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{ImageOnStage.base('1')}}" stepKey="dontSeeImage"/>
+        <dontSeeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="dontSeeImage"/>
     </test>
     <test name="ImageCanAddToColumn">
         <annotations>
@@ -964,12 +964,12 @@
         </actionGroup>
         <!-- Stage: Validate Default Show/Hide State - Before Save -->
         <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
-        <seeElement selector="{{ImageOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
         <!-- Stage: Validate Default Show/Hide State - After Save -->
         <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{ImageOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
         <!-- Storefront: Validate Default Show/Hide State -->
         <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -1019,14 +1019,14 @@
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate content type remains disabled after save -->
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
-        <seeElement selector="{{ImageOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
@@ -1043,7 +1043,7 @@
         <waitForPageLoad stepKey="waitForAdminReload" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="showContentType" stepKey="showContentType">
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
@@ -1098,16 +1098,16 @@
         <comment userInput="Upload image from stage" stepKey="uploadImageFromStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
         </actionGroup>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="onMouseOverSliderStage"/>
+        <moveMouseOver selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="onMouseOverSliderStage"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderImageContentType.role, '1')}}" stepKey="waitForGalleryButtonNotVisible"/>
         <dontSeeElement selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderImageContentType.role, '1')}}" stepKey="dontSeeSelectFromGallery"/>
-        <waitForElementNotVisible selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
-        <dontSeeElement selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
+        <waitForElementNotVisible selector="{{ImageOnStageWithoutImageUploaded.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
+        <dontSeeElement selector="{{ImageOnStageWithoutImageUploaded.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
     </test>
 </tests>
