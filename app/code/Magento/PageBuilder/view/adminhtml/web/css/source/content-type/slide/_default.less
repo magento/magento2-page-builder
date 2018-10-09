@@ -16,7 +16,7 @@
         font-size: 14px;
         font-weight: lighter;
     }
-    .pagebuilder-collage-overlay:not(.pagebuilder-poster-overlay) {
+    .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
         max-width: 50%;
     }
 
@@ -87,5 +87,23 @@
             box-shadow: 0 0 0 1px @color-gray80;
             resize: vertical;
         }
+    }
+}
+
+//
+//  Default appearance styles rendered through Block
+//  ________________________________________________
+
+[data-role='slide'] {
+    .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+        max-width: 50%;
+    }
+
+    [data-element='content'] {
+        min-height: 50px;
+    }
+
+    .pagebuilder-slide-button {
+        margin: 20px 0 0 0;
     }
 }

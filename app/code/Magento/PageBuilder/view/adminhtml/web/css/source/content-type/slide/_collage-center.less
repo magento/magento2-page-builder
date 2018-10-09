@@ -8,7 +8,7 @@
 //  _____________________________________________
 
 .pagebuilder-slide.pagebuilder-collage-centered {
-    .pagebuilder-collage-overlay {
+    .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
         -o-transition: background-color 500ms ease;
         -webkit-transition: background-color 500ms ease;
@@ -16,5 +16,23 @@
         margin-right: auto;
         padding: 30px;
         transition: background-color 500ms ease;
+    }
+}
+
+//
+//  Collage center appearance styles rendered through Block
+//  _______________________________________________________
+
+
+[data-appearance='collage-centered'] {
+    .pagebuilder-slide-wrapper {
+        .pagebuilder-overlay {
+            margin-left: auto;
+            margin-right: auto;
+
+            .pagebuilder-collage-content {
+                padding: 30px;
+            }
+        }
     }
 }
