@@ -3,13 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import ConverterInterface from "../../../../converter/converter-interface";
-import {DataObject} from "../../../../data-store";
+import ConverterInterface from "../../../../../converter/converter-interface";
+import {DataObject} from "../../../../../data-store";
 
 /**
  * @api
  */
-export default class Display implements ConverterInterface {
+export default class Flex implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -31,6 +31,6 @@ export default class Display implements ConverterInterface {
         if (typeof data[name] !== "undefined" && data[name] === false) {
             return "none";
         }
-        return "inline-block";
+        return "flex";
     }
 }

@@ -7,6 +7,8 @@ define(["jquery"], function (_jquery) {
   var DataStore =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function DataStore() {
       this.state = {};
       this.events = (0, _jquery)({});

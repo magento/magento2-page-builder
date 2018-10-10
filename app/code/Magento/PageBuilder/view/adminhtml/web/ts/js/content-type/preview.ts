@@ -12,6 +12,7 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
+import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
@@ -33,7 +34,7 @@ import ObservableUpdater from "./observable-updater";
  * @api
  */
 export default class Preview {
-    public parent: ContentTypeCollectionInterface;
+    public parent: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
@@ -93,7 +94,7 @@ export default class Preview {
      * @returns {string}
      */
     get previewTemplate(): string {
-        const appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
+        const appearance = this.previewData.appearance ? this.previewData.appearance() as string : undefined;
         return appearanceConfig(this.config.name, appearance).preview_template;
     }
 
@@ -509,7 +510,7 @@ export default class Preview {
                 this.display(!!data.display);
             },
         );
-        if (this.parent.children) {
+        if (this.parent instanceof ContentTypeCollection) {
             this.parent.children.subscribe(
                 (children: any[]) => {
                     this.isEmpty(!children.length);

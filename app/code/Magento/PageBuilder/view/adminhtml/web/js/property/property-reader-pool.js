@@ -7,6 +7,8 @@ define([], function () {
   var PropertyReaderPool =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function PropertyReaderPool() {
       this.propertyReaders = {};
     }

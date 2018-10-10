@@ -7,6 +7,8 @@ define([], function () {
   var ButtonVisibility =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function ButtonVisibility() {}
 
     var _proto = ButtonVisibility.prototype;

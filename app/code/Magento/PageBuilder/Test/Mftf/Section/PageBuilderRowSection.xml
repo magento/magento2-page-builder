@@ -36,7 +36,6 @@
         <element name="rowH2ChildWidthJS" type="text" selector="document.querySelectorAll('div[data-appearance~=\'{{arg1}}\'] .element-children')[{{arg2}}].clientWidth" parameterized="true"/>
         <element name="appearanceContained" type="text" selector="(//div[@data-role='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="appearanceFullWidthFullBleed" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
-
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
@@ -66,6 +65,11 @@
         <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-row')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+    </section>
+    <section name="RowOnStage_Contained_Invalid">
+        <element name="border" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="RowOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div" parameterized="true"/>

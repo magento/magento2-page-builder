@@ -140,34 +140,36 @@ export default class Panel implements PanelInterface {
         const panel = $(this.element);
         const stage = panel.siblings(".pagebuilder-stage");
         $(window).scroll(function() {
-            const panelOffsetTop = panel.offset().top;
-            const stageOffsetTop = stage.offset().top;
-            const panelHeight = panel.outerHeight();
-            const stageHeight = stage.outerHeight();
-            const currentPanelBottom = Math.round(panelOffsetTop + panel.outerHeight(true) - $(this).scrollTop());
-            const currentStageBottom = Math.round(stageOffsetTop + stage.outerHeight(true) - $(this).scrollTop());
-            const currentPanelTop = Math.round(panelOffsetTop - $(this).scrollTop());
-            const currentStageTop = Math.round(stageOffsetTop - $(this).scrollTop());
-            // When panel height is less than stage, begin stickiness
-            if (panelHeight <= stageHeight && pageActions.hasClass("_fixed")) {
-                const pageActionsHeight = pageActions.outerHeight() + 15;
-                // When scroll reaches top of stage, stick panel to top
-                if (currentStageTop <= pageActionsHeight) {
-                    // When panel reaches bottom of stage, stick panel to bottom of stage
-                    if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
-                        self.isStickyBottom(true);
-                        self.isStickyTop(false);
+            if (panel && panel.offset()) {
+                const panelOffsetTop = panel.offset().top;
+                const stageOffsetTop = stage.offset().top;
+                const panelHeight = panel.outerHeight();
+                const stageHeight = stage.outerHeight();
+                const currentPanelBottom = Math.round(panelOffsetTop + panel.outerHeight(true) - $(this).scrollTop());
+                const currentStageBottom = Math.round(stageOffsetTop + stage.outerHeight(true) - $(this).scrollTop());
+                const currentPanelTop = Math.round(panelOffsetTop - $(this).scrollTop());
+                const currentStageTop = Math.round(stageOffsetTop - $(this).scrollTop());
+                // When panel height is less than stage, begin stickiness
+                if (panelHeight <= stageHeight && pageActions.hasClass("_fixed")) {
+                    const pageActionsHeight = pageActions.outerHeight() + 15;
+                    // When scroll reaches top of stage, stick panel to top
+                    if (currentStageTop <= pageActionsHeight) {
+                        // When panel reaches bottom of stage, stick panel to bottom of stage
+                        if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
+                            self.isStickyBottom(true);
+                            self.isStickyTop(false);
+                        } else {
+                            self.isStickyBottom(false);
+                            self.isStickyTop(true);
+                        }
                     } else {
                         self.isStickyBottom(false);
-                        self.isStickyTop(true);
+                        self.isStickyTop(false);
                     }
                 } else {
                     self.isStickyBottom(false);
                     self.isStickyTop(false);
                 }
-            } else {
-                self.isStickyBottom(false);
-                self.isStickyTop(false);
             }
         });
     }

@@ -11,6 +11,8 @@ define([], function () {
   var AttributeReader =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function AttributeReader() {}
 
     var _proto = AttributeReader.prototype;
