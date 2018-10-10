@@ -1128,6 +1128,13 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1193,6 +1200,13 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1203,7 +1217,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <!-- Add Image to Stage -->
+        <!-- Add Image to Column -->
         <comment userInput="Add Image to Column" stepKey="commentAddImageToColumn"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderImageContentType"/>
@@ -1221,6 +1235,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeXCoordinate" value="5"/>
             <argument name="contentTypeYCoordinate" value="5"/>
+            <argument name="expectedIndex" value="3"/>
         </actionGroup>
         <!-- Validate content type is duplicated -->
         <comment userInput="Validate content type is duplicated" stepKey="commentValidateDuplicateOnStage"/>
@@ -1264,6 +1279,13 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1274,7 +1296,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <!-- Add Image to Stage -->
+        <!-- Add Image to Tab -->
         <comment userInput="Add Image to Tab" stepKey="commentAddImageToTab"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderImageContentType"/>
@@ -1292,7 +1314,7 @@
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="unfocusTabsOptions"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusTabOptions"/>
         <!-- Validate Tab Item is duplicated -->
         <comment userInput="Validate Tab Item is duplicated" stepKey="commentValidateTabItemDuplicateOnStage"/>
         <seeElement selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2"/>
@@ -1309,8 +1331,10 @@
         <seeElement selector="{{TabsOnStage.base('2')}}" stepKey="seeTabGroup1"/>
         <seeElement selector="{{TabOnStage.base('3')}}" stepKey="seeTab3"/>
         <seeElement selector="{{ImageOnStage.base('3')}}" stepKey="seeImage3"/>
-        <seeElementInDOM selector="{{TabOnStage.base('4')}}" stepKey="seeTab4"/>
-        <seeElementInDOM selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4"/>
+        <click selector="{{TabOnStage.tabHeader('4')}}" stepKey="switchToTab4Stage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{TabOnStage.base('4')}}" stepKey="seeTab4"/>
+        <seeElement selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4"/>
         <!-- Stage: Validate After Save -->
         <comment userInput="Stage: Validate After Save" stepKey="CommentValidateOnStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1318,13 +1342,20 @@
         <seeElement selector="{{TabsOnStage.base('1')}}" stepKey="seeTabGroup1AfterSave"/>
         <seeElement selector="{{TabOnStage.base('1')}}" stepKey="seeTab1AfterSave"/>
         <seeElement selector="{{ImageOnStage.base('1')}}" stepKey="seeImage1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.base('2')}}" stepKey="seeTab2AfterSave"/>
-        <seeElementInDOM selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2AfterSave"/>
+        <actionGroup ref="switchTabs" stepKey="switchToTab2StageAfterSave">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="from" value="1"/>
+            <argument name="to" value="2"/>
+        </actionGroup>
+        <seeElement selector="{{TabOnStage.base('2')}}" stepKey="seeTab2AfterSave"/>
+        <seeElement selector="{{ImageOnStage.base('2')}}" stepKey="seeImage2AfterSave"/>
         <seeElement selector="{{TabsOnStage.base('2')}}" stepKey="seeTabGroup2AfterSave"/>
         <seeElement selector="{{TabOnStage.base('3')}}" stepKey="seeTab3AfterSave"/>
         <seeElement selector="{{ImageOnStage.base('3')}}" stepKey="seeImage3AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.base('4')}}" stepKey="seeTab4AfterSave"/>
-        <seeElementInDOM selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4AfterSave"/>
+        <click selector="{{TabOnStage.tabHeader('4')}}" stepKey="switchToTab4StageAfterSave"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <seeElement selector="{{TabOnStage.base('4')}}" stepKey="seeTab4AfterSave"/>
+        <seeElement selector="{{ImageOnStage.base('4')}}" stepKey="seeImage4AfterSave"/>
         <!-- Validate content type is duplicated in Storefront -->
         <comment userInput="Validate content type is duplicated in Storefront" stepKey="commentValidateDuplicatedStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -1333,12 +1364,19 @@
         <seeElement selector="{{TabsOnFrontend.base('1')}}" stepKey="seeTabGroup1Storefront"/>
         <seeElement selector="{{TabOnStorefront.base('1')}}" stepKey="seeTab1Storefront"/>
         <seeElement selector="{{ImageOnStorefront.base('1')}}" stepKey="seeImage1Storefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.base('2')}}" stepKey="seeTab2Storefront"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
+        <actionGroup ref="switchTabs" stepKey="switchToTab2Storefront">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="from" value="1"/>
+            <argument name="to" value="2"/>
+        </actionGroup>
+        <seeElement selector="{{TabOnStorefront.base('2')}}" stepKey="seeTab2Storefront"/>
+        <seeElement selector="{{ImageOnStorefront.base('2')}}" stepKey="seeImage2Storefront"/>
         <seeElement selector="{{TabsOnFrontend.base('2')}}" stepKey="seeTabGroup2Storefront"/>
         <seeElement selector="{{TabOnStorefront.base('3')}}" stepKey="seeTab3Storefront"/>
         <seeElement selector="{{ImageOnStorefront.base('3')}}" stepKey="seeImage3Storefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.base('4')}}" stepKey="seeTab4Storefront"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.base('4')}}" stepKey="seeImage4Storefront"/>
+        <click selector="{{TabOnStorefront.tabHeader('4')}}" stepKey="switchToTab4Storefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{TabOnStorefront.base('4')}}" stepKey="seeTab4Storefront"/>
+        <seeElement selector="{{ImageOnStorefront.base('4')}}" stepKey="seeImage4Storefront"/>
     </test>
 </tests>
