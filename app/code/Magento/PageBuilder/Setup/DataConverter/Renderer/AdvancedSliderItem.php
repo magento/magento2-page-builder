@@ -60,6 +60,8 @@ class AdvancedSliderItem implements RendererInterface
 
         $formData = $itemData['formData'] ?? [];
         $backgroundImages = '';
+        $backgroundImagesAttr = '{}';
+
         if (isset($eavData['background_image'])) {
             $backgroundImages = $eavData['background_image'];
         } elseif (isset($eavData['image'])) {
@@ -72,12 +74,6 @@ class AdvancedSliderItem implements RendererInterface
                 . '{{media url=wysiwyg'
                 . $backgroundImages
                 . '}}\&quot;,\&quot;'
-                . 'mobile_image\&quot;:\&quot;'
-                . '{}\&quot;}';
-        } else {
-            $backgroundImagesAttr = '{\&quot;'
-                . 'desktop_image\&quot;:\&quot;'
-                . '{}\&quot;,\&quot;'
                 . 'mobile_image\&quot;:\&quot;'
                 . '{}\&quot;}';
         }
