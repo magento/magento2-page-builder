@@ -3,7 +3,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _containerAnimation, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -80,7 +80,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("contentType:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
-          _this.spreadWidth(args.index);
+          _underscore.defer(function () {
+            _this.spreadWidth(args.index);
+          });
         }
       }); // Listen for resizing events from child columns
 
@@ -477,7 +479,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       columns.forEach(function (column) {
         column.preview.resizing(true);
         column.preview.element.css({
-          transition: "width " + _containerAnimation.animationTime + "ms ease-in-out"
+          transition: "width 350ms ease-in-out"
         });
       });
     };
@@ -893,10 +895,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           self.dropPlaceholder.removeClass("left right");
         },
         over: function over() {
-          // Always calculate drop positions when an element is dragged over
-          self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.parent); // Is the element currently being dragged a column?
-
+          // Is the element currently being dragged a column?
           if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
+            // Always calculate drop positions when an element is dragged over
+            self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.parent);
             self.dropOverElement = true;
           } else {
             self.dropOverElement = null;
