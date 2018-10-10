@@ -2397,7 +2397,6 @@
             <actualResult type="variable">columnOneTextHeight</actualResult>
         </assertGreaterThan>
     </test>
-
     <test name="TextInlineWysiwygUploadImage" extends="SlideItemInlineWysiwygUploadImage">
         <annotations>
             <features value="PageBuilder"/>
@@ -2418,13 +2417,12 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor" after="dragContentTypeOntoStage"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel" after="unFocusEditor">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2" after="dragContentTypeOntoStage"/>
+        <comment userInput="Removed closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Add Image to Text -->
         <comment userInput="Add Image to Text" stepKey="commentAddImageToContentType"/>
-        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea" after="commentAddImageToContentType"/>
+        <actionGroup ref="openMediaGalleryFromCustomTinyMCEInlineEditor" stepKey="openMediaGalleryFromTinyMCEInlineEditor"/>
         <!-- Validated Backend -->
         <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
         <!-- Validated Backend After Save -->

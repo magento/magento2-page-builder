@@ -2249,12 +2249,12 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel" after="dragContentTypeOntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
+        <comment userInput="Removed closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Add Image to Banner -->
         <comment userInput="Add Image to Banner" stepKey="commentAddImageToContentType"/>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <actionGroup ref="openMediaGalleryFromTinyMCEInlineEditor" stepKey="openMediaGalleryFromTinyMCEInlineEditor">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
         <!-- Validated Backend -->
         <seeElement selector="{{BannerOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
         <!-- Validated Backend After Save -->

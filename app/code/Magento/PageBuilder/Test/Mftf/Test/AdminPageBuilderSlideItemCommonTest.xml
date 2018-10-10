@@ -1753,24 +1753,20 @@
         <comment userInput="Initial Save" stepKey="commentInitialSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="initialSaveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="initialSwitchToPageBuilderStage"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Add Image to Slide -->
         <comment userInput="Add Image to Slide" stepKey="commentAddImageToContentType"/>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
-        <waitForPageLoad stepKey="waitforInlineWYSIWYGEditor"/>
-        <click selector="{{WYSIWYGInsertImageModal.imageSelector}}" stepKey="clickWYSIWYGImageSelector"/>
-        <waitForPageLoad stepKey="waitforImageSelectorModal"/>
-        <click selector="{{WYSIWYGInsertImageModal.imageSelectorBrowse}}" stepKey="clickWYSIWYGImageSelectorBrowseButton"/>
-        <waitForPageLoad stepKey="waitforImageSelectorBrowseModal"/>
+        <actionGroup ref="openMediaGalleryFromTinyMCEInlineEditor" stepKey="openMediaGalleryFromTinyMCEInlineEditor">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+        </actionGroup>
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
             <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderBackgroundImage_JPG.value)}}" stepKey="wait" />
+        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForImageVisible" />
         <click selector="{{MediaGallerySection.image(PageBuilderBackgroundImage_JPG.value)}}" stepKey="clickImage" />
         <waitForPageLoad stepKey="waitForAddSelectButton"/>
-        <click selector="{{BlockOnGrid.addSelectedBtn}}" stepKey="clickAddSelectedButton" />
-        <waitForPageLoad stepKey="waitForImageSelector"/>
-        <click selector="{{WYSIWYGInsertImageModal.imageSelectorOk}}" stepKey="clickWYSIWYGImageSelectorOkButton"/>
-        <waitForPageLoad stepKey="waitForStageReload"/>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Validated Backend -->
