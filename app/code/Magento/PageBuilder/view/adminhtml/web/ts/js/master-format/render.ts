@@ -21,7 +21,7 @@ export default class MasterFormatRenderer {
      */
     public applyBindings(tree: KnockoutObservableArray<ContentTypeInterface>): Promise<string> {
         const element = $("<div>");
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             engine.waitForFinishRender().then(() => {
                 ko.cleanNode(element[0]);
                 const filtered: JQuery = filterHtml(element);

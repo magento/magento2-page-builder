@@ -1,9 +1,10 @@
 /*eslint-disable */
-define(["jquery", "knockout"], function (_jquery, _knockout) {
+define(["jquery", "knockout", "underscore"], function (_jquery, _knockout, _underscore) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
+  _underscore = _interopRequireDefault(_underscore);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19,7 +20,9 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
         return;
       }
 
-      (0, _jquery.default)(element).sortable(valueAccessor());
+      _underscore.default.defer(function () {
+        (0, _jquery.default)(element).sortable(valueAccessor());
+      });
     }
   };
 });
