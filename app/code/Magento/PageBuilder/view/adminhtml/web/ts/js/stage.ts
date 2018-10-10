@@ -7,6 +7,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
+import domObserver from "Magento_Ui/js/lib/view/utils/dom-observer";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import "./binding/sortable";
@@ -47,17 +48,30 @@ export default class Stage {
     private collection: Collection = new Collection();
 
     /**
+     * Debounce the applyBindings call by 500ms to stop duplicate calls
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private applyBindingsDebounce = _.debounce(() => {
+        this.render.applyBindings(this.children)
+            .then((renderedOutput) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
+                value: renderedOutput,
+            }));
+    }, 500);
+
+    /**
      * @param {PageBuilderInterface} parent
      */
     constructor(parent: PageBuilderInterface) {
         this.parent = parent;
         this.id = parent.id;
-        this.initListeners();
+        generateAllowedParents();
+
+        // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
-            buildStage(this, parent.initialValue),
+            buildStage(this, this.parent.initialValue),
             this.afterRenderDeferred.promise,
         ]).then(this.ready.bind(this));
-        generateAllowedParents();
     }
 
     /**
@@ -72,10 +86,16 @@ export default class Stage {
     /**
      * The stage has been initiated fully and is ready
      */
-    public ready() {
+    public ready([buildResults, canvasElement]: [any[], HTMLElement]) {
+        // Disable the dom observer from running on our canvas
+        domObserver.disableNode(canvasElement);
+
         events.trigger(`stage:${ this.id }:readyAfter`, {stage: this});
-        this.collection.getChildren().valueHasMutated();
         this.loading(false);
+        this.initListeners();
+
+        // Ensure we complete an initial save of the data within the stage once we're ready
+        events.trigger("stage:updateAfter", {stageId: this.id});
     }
 
     /**
@@ -167,12 +187,7 @@ export default class Stage {
         // can occur concurrently.
         events.on("stage:updateAfter", (args: StageUpdateAfterParamsInterface) => {
             if (args.stageId === this.id) {
-                _.debounce(() => {
-                    this.render.applyBindings(this.children)
-                        .then((renderedOutput) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
-                            value: renderedOutput,
-                        }));
-                }, 500).call(this);
+                this.applyBindingsDebounce();
             }
         });
 
