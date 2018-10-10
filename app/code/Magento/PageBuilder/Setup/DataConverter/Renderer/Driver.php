@@ -89,6 +89,7 @@ class Driver implements RendererInterface
             'data-href' => $eavData['link_url'] ?? '',
             'data-target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
+
         $imageAttributes = [
             'data-element' => 'wrapper',
             'data-background-images' => '{\&quot;'
@@ -98,7 +99,7 @@ class Driver implements RendererInterface
                 . '}}\&quot;,\&quot;'
                 . 'mobile_image\&quot;:\&quot;'
                 . '{{media url=wysiwyg'
-                . $eavData['mobile_image']
+                . $eavData['image']
                 . '}}\&quot;}',
             'style' => 'min-height: 300px; background-size: auto; '
                 . 'background-repeat: no-repeat; background-attachment: scroll;'
