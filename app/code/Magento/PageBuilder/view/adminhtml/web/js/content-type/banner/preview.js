@@ -1,23 +1,32 @@
 /*eslint-disable */
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _config, _preview, _uploader, _factory) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      var _temp, _this;
+      var _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _this.textarea = void 0, _this.uploader = void 0, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _temp) || _this;
+      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
+      _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      return _this;
     }
 
     var _proto = Preview.prototype;
@@ -28,7 +37,10 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
      * @returns {Uploader}
      */
     _proto.getUploader = function getUploader() {
-      return this.uploader;
+      var dataStore = this.parent.dataStore.get();
+      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
     /**
      * Makes WYSIWYG active
@@ -181,7 +193,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      _BasePreview.prototype.bindEvents.call(this);
+      _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this4.parent.dataStore.get();
@@ -189,14 +201,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
-      });
-
-      _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this4.parent.dataStore.get();
-
-        var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-        _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue);
       });
     };
     /**

@@ -11,6 +11,8 @@ define(["underscore"], function (_underscore) {
   var CreateValueForHref =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForHref() {
       this.widgetParamsByLinkType = {
         category: {
@@ -61,7 +63,7 @@ define(["underscore"], function (_underscore) {
     _proto.toDom = function toDom(name, data) {
       var link = data[name];
 
-      if (typeof link === "undefined" || !link[link.type].length) {
+      if (typeof link === "undefined" || typeof link[link.type] === "string" && !link[link.type].length) {
         return "javascript:void(0)";
       }
 

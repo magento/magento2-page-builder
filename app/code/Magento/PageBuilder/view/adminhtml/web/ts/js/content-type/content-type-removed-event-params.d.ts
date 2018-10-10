@@ -10,7 +10,7 @@ import ContentTypeInterface from "../content-type.d";
  * @api
  */
 export default interface ContentTypeRemovedEventParamsInterface {
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface;
     index: number;
     parent: ContentTypeCollectionInterface;
     stageId: string;

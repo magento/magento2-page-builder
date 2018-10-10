@@ -12,6 +12,7 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
+import ContentTypeCollection from "../content-type-collection";
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
@@ -23,7 +24,7 @@ import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
-import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
+import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
@@ -33,7 +34,7 @@ import ObservableUpdater from "./observable-updater";
  * @api
  */
 export default class Preview {
-    public parent: ContentTypeCollectionInterface;
+    public parent: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
@@ -93,7 +94,7 @@ export default class Preview {
      * @returns {string}
      */
     get previewTemplate(): string {
-        const appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
+        const appearance = this.previewData.appearance ? this.previewData.appearance() as string : undefined;
         return appearanceConfig(this.config.name, appearance).preview_template;
     }
 
@@ -177,7 +178,7 @@ export default class Preview {
      * @param {Event} event
      */
     public onMouseOver(context: Preview, event: Event): void {
-        if (this.mouseover) {
+        if (this.mouseover || getDraggedContentTypeConfig()) {
             return;
         }
 
@@ -206,6 +207,11 @@ export default class Preview {
      */
     public onMouseOut(context: Preview, event: Event) {
         this.mouseover = false;
+
+        if (getDraggedContentTypeConfig()) {
+            return;
+        }
+
         _.delay(() => {
             if (!this.mouseover && this.mouseoverContext === context) {
                 const currentTarget = event.currentTarget;
@@ -346,16 +352,9 @@ export default class Preview {
             };
 
             if (this.wrapperElement) {
-                const parentContainerElement = $(this.wrapperElement).parents(".type-container");
-                const containerLocked =
-                    (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
-                    lockContainerHeight(parentContainerElement);
-
                 // Fade out the content type
-                $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+                $(this.wrapperElement).fadeOut(350 / 2, () => {
                     dispatchRemoveEvent();
-                    // Prepare the event handler to animate the container height on render
-                    animateContainerHeight(containerLocked, parentContainerElement);
                 });
             } else {
                 dispatchRemoveEvent();
@@ -509,7 +508,7 @@ export default class Preview {
                 this.display(!!data.display);
             },
         );
-        if (this.parent.children) {
+        if (this.parent instanceof ContentTypeCollection) {
             this.parent.children.subscribe(
                 (children: any[]) => {
                     this.isEmpty(!children.length);

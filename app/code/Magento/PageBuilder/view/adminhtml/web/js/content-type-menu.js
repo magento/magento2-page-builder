@@ -1,8 +1,13 @@
 /*eslint-disable */
-define(["knockout", "underscore"], function (_knockout, _underscore) {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+define(["knockout", "underscore"], function (_knockout, _underscore) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
@@ -10,6 +15,8 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
   var ContentTypeMenu =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * Options constructor
      *
@@ -19,7 +26,6 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
     function ContentTypeMenu(parent, options) {
       var _this = this;
 
-      this.parent = void 0;
       this.options = _knockout.observableArray([]);
       this.parent = parent;
 

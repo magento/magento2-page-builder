@@ -7,6 +7,8 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
   var Edit =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * @param {ContentTypeInterface} instance
      * @param {DataStore} dataStore
@@ -14,8 +16,6 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
     function Edit(instance, dataStore) {
       var _this = this;
 
-      this.instance = void 0;
-      this.dataStore = void 0;
       this.instance = instance;
       this.dataStore = dataStore;
 

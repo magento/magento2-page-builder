@@ -7,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extr
   var OverlayTransparency =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function OverlayTransparency() {}
 
     var _proto = OverlayTransparency.prototype;

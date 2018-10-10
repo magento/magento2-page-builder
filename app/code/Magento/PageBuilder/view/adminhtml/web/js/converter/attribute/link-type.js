@@ -11,6 +11,8 @@ define([], function () {
   var CreateValueForLinkType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForLinkType() {}
 
     var _proto = CreateValueForLinkType.prototype;
