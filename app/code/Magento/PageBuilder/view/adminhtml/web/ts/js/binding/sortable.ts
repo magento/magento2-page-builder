@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import _ from "underscore";
 
 // Create a new sortable Knockout binding
 ko.bindingHandlers.sortable = {
@@ -14,6 +15,8 @@ ko.bindingHandlers.sortable = {
             return;
         }
 
-        $(element).sortable(valueAccessor());
+        _.defer(() => {
+            $(element).sortable(valueAccessor());
+        });
     },
 };

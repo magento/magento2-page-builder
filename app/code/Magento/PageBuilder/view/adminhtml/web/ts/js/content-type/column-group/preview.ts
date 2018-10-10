@@ -13,7 +13,6 @@ import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import {DataObject} from "../../data-store";
-import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
@@ -108,7 +107,9 @@ export default class Preview extends PreviewCollection {
 
         events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
-                this.spreadWidth(args.index);
+                _.defer(() => {
+                    this.spreadWidth(args.index);
+                });
             }
         });
 
@@ -490,7 +491,7 @@ export default class Preview extends PreviewCollection {
     private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>): void {
         columns.forEach((column) => {
             column.preview.resizing(true);
-            column.preview.element.css({transition: `width ${animationTime}ms ease-in-out`});
+            column.preview.element.css({transition: `width 350ms ease-in-out`});
         });
     }
 
@@ -933,13 +934,13 @@ export default class Preview extends PreviewCollection {
                 self.dropPlaceholder.removeClass("left right");
             },
             over() {
-                // Always calculate drop positions when an element is dragged over
-                self.dropPositions = calculateDropPositions(
-                    self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                );
-
                 // Is the element currently being dragged a column?
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                    // Always calculate drop positions when an element is dragged over
+                    self.dropPositions = calculateDropPositions(
+                        self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
+                    );
+
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;
