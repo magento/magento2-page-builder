@@ -5,9 +5,11 @@
 /**
  * @api
  */
+
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import {moveContentType} from "../drag-drop/move-content-type";
 import {moveArrayItem} from "../utils/array";
@@ -51,7 +53,9 @@ ko.bindingHandlers.sortableChildren = {
                 if (this === ui.item.parent()[0]) {
                     const index = ui.item.index();
                     const targetParent = ko.dataFor(ui.item.parent()[0]).parent;
-                    if (targetParent && (originalPosition !== index || draggedContentType.parent !== targetParent)) {
+                    if (targetParent &&
+                        (originalPosition !== index || draggedContentType.parent !== targetParent)
+                    ) {
                         ui.item.remove();
                         if (draggedContentType.parent === targetParent) {
                             moveArrayItem(instance.children, originalPosition, index);
