@@ -655,6 +655,18 @@
         </actionGroup>
         <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorForSlideItem2OnStageAfterMoving"/>
         <dontSeeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterMoving"/>
+        <!-- Change appearance of row and re-evaluate -->
+        <comment userInput="Change appearance of row and re-evaluate" stepKey="commentChangeAppearanceOfRowAndReevaluate"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageForFirstRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow1">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow1"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorForSlideItem2OnStageAfterChangingRowAppearance"/>
+        <dontSeeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="dontSeeBackgroundColorForSlideItem1OnStageAfterChangingRowAppearance"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -675,8 +687,8 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="seeBackgroundColorForSlideItem1OnStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.backgroundColor('2', PageBuilderBackgroundColor_Hex_Grey.rgb)}}" stepKey="dontSeeBackgroundColorForSlideItem2OnStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.slideNavigationDot('1', '1')}}" stepKey="seeSlideItem1NavigationDotOnStorefront"/>
+        <seeElement selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="seeSlideItem2NavigationDotOnStorefront"/>
     </test>
     <test name="SliderValidateShowHideOnSliderDefaultState">
         <annotations>
