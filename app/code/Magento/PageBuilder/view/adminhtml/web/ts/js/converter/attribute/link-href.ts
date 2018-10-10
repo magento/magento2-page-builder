@@ -66,7 +66,7 @@ export default class CreateValueForHref implements ConverterInterface {
     public toDom(name: string, data: DataObject): string {
         const link = data[name] as any;
 
-        if (typeof link === "undefined" || !link[link.type].length) {
+        if (typeof link === "undefined" || (typeof link[link.type] === "string" && !link[link.type].length)) {
             return "javascript:void(0)";
         }
 

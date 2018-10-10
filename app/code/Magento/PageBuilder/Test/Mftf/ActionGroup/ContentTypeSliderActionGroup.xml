@@ -14,6 +14,7 @@
         </arguments>
         <comment userInput="Adding Slide" stepKey="comment"/>
         <executeJS function="return document.getElementsByClassName('pagebuilder-slide').length+1" stepKey="initialNumberOfSlidesPlusOne"/>
+        <scrollTo selector="{{PageBuilderPanel.searchPanel}}" x="0" y="-150" stepKey="scrollToSearchPanel"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, slideGroupIndex)}}" stepKey="mouseOverSlider"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
