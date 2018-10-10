@@ -161,23 +161,4 @@
             <actualResult type="variable">textareaValue</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="openMediaGalleryFromTinyMCEInlineEditor">
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="index" type="string" defaultValue="1"/>
-        </arguments>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
-        <waitForPageLoad stepKey="waitForInlineWYSIWYGEditor"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelector}}" stepKey="clickWYSIWYGImageSelector"/>
-        <waitForPageLoad stepKey="waitForImageSelectorModal"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelectorBrowse}}" stepKey="clickWYSIWYGImageSelectorBrowseButton"/>
-        <waitForPageLoad stepKey="waitForImageSelectorBrowseModal"/>
-    </actionGroup>
-    <actionGroup name="openMediaGalleryFromCustomTinyMCEInlineEditor">
-        <waitForPageLoad stepKey="waitForInlineWYSIWYGEditor"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelector}}" stepKey="clickWYSIWYGImageSelector"/>
-        <waitForPageLoad stepKey="waitForImageSelectorModal"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelectorBrowse}}" stepKey="clickWYSIWYGImageSelectorBrowseButton"/>
-        <waitForPageLoad stepKey="waitForImageSelectorBrowseModal"/>
-    </actionGroup>
 </actionGroups>

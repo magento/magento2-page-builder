@@ -1756,9 +1756,12 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Add Image to Slide -->
         <comment userInput="Add Image to Slide" stepKey="commentAddImageToContentType"/>
-        <actionGroup ref="openMediaGalleryFromTinyMCEInlineEditor" stepKey="openMediaGalleryFromTinyMCEInlineEditor">
-            <argument name="contentType" value="PageBuilderSlideContentType"/>
-        </actionGroup>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <waitForPageLoad stepKey="waitForInlineWYSIWYGEditor"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelector}}" stepKey="clickWYSIWYGImageSelector"/>
+        <waitForPageLoad stepKey="waitForImageSelectorModal"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelectorBrowse}}" stepKey="clickWYSIWYGImageSelectorBrowseButton"/>
+        <waitForPageLoad stepKey="waitForImageSelectorBrowseModal"/>
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
             <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
         </actionGroup>
