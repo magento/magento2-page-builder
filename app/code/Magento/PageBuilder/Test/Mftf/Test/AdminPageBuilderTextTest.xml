@@ -2422,11 +2422,11 @@
         <!-- Add Image to Text -->
         <comment userInput="Add Image to Text" stepKey="commentAddImageToContentType"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
-        <!-- Validated Backend -->
+        <!-- Validate Image Editor On Backend -->
         <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
-        <!-- Validated Backend After Save -->
+        <!-- Validate Image Editor On Backend After Save -->
         <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
-        <!-- Validate Storefront -->
+        <!-- Validate Image Editor On Storefront -->
         <seeElement selector="{{TextOnStorefront.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
 </tests>

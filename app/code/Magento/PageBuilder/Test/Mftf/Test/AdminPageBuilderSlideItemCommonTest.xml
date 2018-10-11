@@ -1780,16 +1780,16 @@
         <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <!-- Validated Backend -->
-        <comment userInput="Validated Backend" stepKey="commentValidateBackend"/>
+        <!-- Validate Image Editor On Backend -->
+        <comment userInput="Validate Image Editor On Backend" stepKey="commentValidateBackend"/>
         <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validated Backend After Save -->
-        <comment userInput="Validated Backend After Save" stepKey="commentValidateBackendAfterSave"/>
+        <!-- Validate Image Editor On Backend After Save Page -->
+        <comment userInput="Validate Image Editor On Backend After Save" stepKey="commentValidateBackendAfterSave"/>
         <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <!-- Validate Image Editor On Storefront -->
+        <comment userInput="Validate Image Editor On Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{SlideOnFrontend.messageContentTextAreaImage('1', PageBuilderImageProperty_StageJPG.value)}}" stepKey="validateImageFrontEnd"/>

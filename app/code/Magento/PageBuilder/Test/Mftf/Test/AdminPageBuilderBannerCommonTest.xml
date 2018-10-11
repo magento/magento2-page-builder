@@ -2256,11 +2256,11 @@
         <!-- Add Image to Banner -->
         <comment userInput="Add Image to Banner" stepKey="commentAddImageToContentType"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
-        <!-- Validated Backend -->
+        <!-- Validate Image Editor On Backend -->
         <seeElement selector="{{BannerOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
-        <!-- Validated Backend After Save -->
+        <!-- Validate Image Editor On Backend After Save -->
         <seeElement selector="{{BannerOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
-        <!-- Validate Storefront -->
+        <!-- Validate Image Editor On Storefront -->
         <seeElement selector="{{BannerOnFrontend.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
 </tests>
