@@ -1175,7 +1175,7 @@
     <test name="TabsMovesTabs">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Tab"/>
+            <stories value="Tabs"/>
             <title value="Tab Group - Validate Proper Rendering and Interactivity After Moving To Different Container"/>
             <description value="Validate that tabs renders itself properly and retains its interactivity after moving to a different parent container."/>
             <severity value="MAJOR"/>
@@ -1214,9 +1214,11 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageByIndex" stepKey="dragColumnContentTypeToSecondRowContentTypeOnStage">
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnContentTypeToFirstRowContentTypeOnStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="contentTypeNumber" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus"/>
         <actionGroup ref="moveContentTypeToContainer" stepKey="moveTabsIntoFirstColumn">
@@ -1231,33 +1233,43 @@
             <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeFirstTabAsActive"/>
+        <seeElement selector="{{TabOnStage.tabHeaderItemActive('1')}}" stepKey="seeFirstTabAsActive"/>
         <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType">
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabAsActiveAfterDuplicating"/>
+        <seeElement selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabAsActiveAfterDuplicating"/>
         <!-- Change appearance of row and re-evaluate -->
         <comment userInput="Change appearance of row and re-evaluate" stepKey="commentChangeAppearanceOfRowAndReevaluate"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageForFirstRow">
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStageForFirstRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow1">
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow1"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabAsActiveAfterChangingRowAppearance"/>
+        <seeElement selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabAsActiveAfterChangingRowAppearance"/>
         <actionGroup ref="switchTabs" stepKey="switchTabsStage">
             <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateTabsInsideFirstColumnOnStorefront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
         <actionGroup ref="switchTabs" stepKey="switchTabsStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="from" value="1"/>
