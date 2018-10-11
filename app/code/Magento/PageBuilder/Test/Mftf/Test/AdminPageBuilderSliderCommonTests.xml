@@ -1581,6 +1581,7 @@
         <seeElement selector="{{SlideOnBackend.messageContentText('1', TinyMCEWidgetCMSPageLink.editPanelValue)}}" stepKey="seeWidgetStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyle" />
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.widgetPlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getWidgetStyle" />
+        <click selector="{{SlideOnBackend.tinymce('1')}}" stepKey="focusOnEditorArea2" after="commentValidateStageAfterSave"/>
         <waitForElement selector="{{SlideOnBackend.variablePlaceholder('1')}}" stepKey="waitForVariableElement"/>
         <waitForElement selector="{{SlideOnBackend.widgetPlaceholder('1')}}" stepKey="waitForWidgetElement"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.variablePlaceholder('1')}}&quot;, document.body).iterateNext()).getPropertyValue('background-color')" stepKey="getVariableStyleAfterSave" />
