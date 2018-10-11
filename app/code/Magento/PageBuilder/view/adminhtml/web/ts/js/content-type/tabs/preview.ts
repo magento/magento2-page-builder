@@ -333,7 +333,6 @@ export default class Preview extends PreviewCollection {
                 element(item: JQuery) {
                     const placeholder = item
                         .clone()
-                        .show()
                         .css({
                             display: "inline-block",
                             opacity: "0.3",
