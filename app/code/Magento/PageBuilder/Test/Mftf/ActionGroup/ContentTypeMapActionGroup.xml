@@ -18,6 +18,7 @@
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
     </actionGroup>
     <actionGroup name="saveLocationForm">
         <comment userInput="saveLocationForm" stepKey="comment"/>
@@ -48,6 +49,7 @@
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
     </actionGroup>
     <actionGroup name="clickEditButtonOnLocationGrid">
         <arguments>
@@ -63,6 +65,7 @@
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
     </actionGroup>
     <actionGroup name="deleteLocationFromGrid">
         <arguments>
@@ -106,6 +109,7 @@
         </arguments>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForMapVisible"/>
         <clickWithLeftButton selector="{{AddLocationForm.base}}" x="{{x}}" y="{{y}}" stepKey="clickMapToMovePin"/>
         <waitForElementVisible selector="{{AddLocationForm.pin}}" stepKey="waitForPinVisible"/>
@@ -118,8 +122,11 @@
         </arguments>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{AddLocationForm.clickablePin}}" stepKey="waitForMapVisible"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
+        <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone2"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <dragAndDrop selector1="{{AddLocationForm.clickablePin}}" selector2="{{AddLocationForm.clickablePin}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropOnMapToMovePin"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
@@ -130,6 +137,7 @@
         </arguments>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.pin(index)}}" stepKey="waitForMapWithPin"/>
     </actionGroup>
     <actionGroup name="verifyNumberOfPinsOnMap">
@@ -140,6 +148,7 @@
         </arguments>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.base(mapIndex)}}" stepKey="waitForMap"/>
         <waitForElementVisible selector="{{page.pin(mapIndex)}}" stepKey="waitForMapPin"/>
         <seeNumberOfElements selector="{{page.pin(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
@@ -151,6 +160,7 @@
         </arguments>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <dontSeeElement selector="{{page.pin(index)}}" stepKey="dontSeeMapPin"/>
     </actionGroup>
     <actionGroup name="validateMapButtons">
@@ -161,6 +171,7 @@
         <comment userInput="validateMapButtons" stepKey="comment"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
         <waitForElementVisible selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
         <waitForElementVisible selector="{{page.zoomIn(index)}}" stepKey="waitForMapZoomIn"/>
@@ -174,6 +185,7 @@
         <comment userInput="validateNoMapButtons" stepKey="comment"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
         <waitForElement selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
         <dontSeeElement selector="{{page.fullScreen(index)}}" stepKey="dontSeeFullScreenButton"/>
@@ -218,8 +230,11 @@
         <comment userInput="openMapPinTooltipWindow" stepKey="comment"/>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
-        <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
+        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton2"/>
+        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone2"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
     </actionGroup>
@@ -251,8 +266,11 @@
         <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
-        <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
+        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton2"/>
+        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone2"/>
+        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
         <waitForElementVisible selector="{{page.locationName(mapIndex, locationName.value)}}" stepKey="waitForLocationName"/>
@@ -268,8 +286,11 @@
         <comment userInput="validateNoPinTooltip" stepKey="comment"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{AddLocationForm.clickablePin}}" stepKey="waitForPin"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
+        <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone2"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <click selector="{{AddLocationForm.clickablePin}}" stepKey="clickPin"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.tooltipWindow}}" stepKey="dontSeeTooltip"/>
     </actionGroup>
