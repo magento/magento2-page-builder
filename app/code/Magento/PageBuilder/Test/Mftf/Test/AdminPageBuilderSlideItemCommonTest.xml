@@ -1739,7 +1739,7 @@
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
                 <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
@@ -1760,6 +1760,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="initialSaveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="initialSwitchToPageBuilderStage"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Add Image to Slide -->
         <comment userInput="Add Image to Slide" stepKey="commentAddImageToContentType"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
@@ -1770,16 +1771,16 @@
         <waitForPageLoad stepKey="waitForImageSelectorBrowseModal"/>
         <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
         <waitForPageLoad stepKey="waitForStorageRoot"/>
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
             <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageProperty_StageJPG.value)}}" stepKey="waitForImageVisible" />
-        <click selector="{{MediaGallerySection.image(PageBuilderImageProperty_StageJPG.value)}}" stepKey="clickImage" />
-        <waitForPageLoad stepKey="waitForAddSelectButton"/>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForSlideToUnFocus"/>
         <!-- Validate Image Editor On Backend -->
         <comment userInput="Validate Image Editor On Backend" stepKey="commentValidateBackend"/>
         <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
