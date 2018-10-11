@@ -1747,22 +1747,6 @@
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add Image To Add An Image to Image Gallery -->
-        <comment userInput="Add Image To Add An Image to Image Gallery" stepKey="commentAddImageToImageGallery"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup2">
-            <argument name="group" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage2">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
-            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-            <argument name="section" value="ImageOnStage"/>
-        </actionGroup>
-        <actionGroup ref="removeContentTypeFromStage" stepKey="removeImage">
-            <argument name="contentType" value="PageBuilderImageContentType"/>
-        </actionGroup>
-        <!-- Add Slider -->
         <comment userInput="Add Slider" stepKey="commentAddContentType"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
@@ -1784,6 +1768,11 @@
         <waitForPageLoad stepKey="waitForImageSelectorModal"/>
         <click selector="{{WYSIWYGOnPageBuilderInline.imageSelectorBrowse}}" stepKey="clickWYSIWYGImageSelectorBrowseButton"/>
         <waitForPageLoad stepKey="waitForImageSelectorBrowseModal"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForStorageRoot"/>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
         <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageProperty_StageJPG.value)}}" stepKey="waitForImageVisible" />
         <click selector="{{MediaGallerySection.image(PageBuilderImageProperty_StageJPG.value)}}" stepKey="clickImage" />
         <waitForPageLoad stepKey="waitForAddSelectButton"/>
