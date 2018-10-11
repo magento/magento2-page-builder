@@ -1439,6 +1439,7 @@
         <comment userInput="Validate Slide 1 Is Shown" stepKey="commentValidateStage1"/>
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeFirstSlideOnStage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
+        <waitForPageLoad stepKey="waitForOptionMenu"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu"/>
         <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" stepKey="assertFirstDotActive">
             <expectedResult type="string">active</expectedResult>
@@ -1478,6 +1479,7 @@
         <comment userInput="Validate Slide 2 Is Shown" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2OptionsMenu"/>
+        <waitForPageLoad stepKey="waitForOptionMenu2"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsMenu4"/>
         <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" stepKey="assertSecondDotActive">
             <expectedResult type="string">active</expectedResult>
