@@ -13,9 +13,9 @@ import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
+import delayUntil from "../../utils/delay-until";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import delayUntil from "../../utils/delay-until";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
