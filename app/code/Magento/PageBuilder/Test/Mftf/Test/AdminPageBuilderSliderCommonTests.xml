@@ -1554,4 +1554,72 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSliderDot3"/>
         <waitForElementVisible selector="{{SlideOnBackend.base('1')}}" stepKey="waitForSlideOneVisible"/>
     </test>
+    <test name="SliderFadeCanBeInlineEdited">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider - Fade can be inline edited"/>
+            <description value="A user should be able to inline edit a fade slide"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC0-4156"/>
+            <testCaseId value="MC-5058"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+        <!-- Open Slider settings -->
+        <comment userInput="Open Slider settings" stepKey="EditSlider"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterFade">
+            <argument name="property" value="PageBuilderSliderFade_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterShowDots">
+            <argument name="property" value="PageBuilderSliderShowDots_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <!-- Add second slide -->
+        <comment userInput="Add second slide" stepKey="addSecondSlide"/>
+        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+        <!-- Switch to Slide 2 -->
+        <comment userInput="Switch to Slide 2" stepKey="commentSwitchToSlide2Stage"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Stage"/>
+        <waitForPageLoad stepKey="waitForSlideAnimation"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '2')}}" stepKey="focusOnEditorArea"/>
+        <waitForPageLoad stepKey="waitForWysiwyg"/>
+        <executeJS function="return document.querySelectorAll('[data-role=slide]')[1].getBoundingClientRect().left" stepKey="slideLeftPosition"/>
+        <executeJS function="return document.querySelectorAll('[data-role=slide]')[1].getBoundingClientRect().right" stepKey="slideRightPosition"/>
+        <executeJS function="return document.querySelectorAll('.slider-container')[1].getBoundingClientRect().left" stepKey="sliderLeftPosition"/>
+        <executeJS function="return document.querySelectorAll('.slider-container')[1].getBoundingClientRect().right" stepKey="sliderRightPosition"/>
+        <assertLessThan stepKey="assertSlideRightSideIsLessThanSliderRightSide">
+            <expectedResult type="variable">slideRightPosition</expectedResult>
+            <actualResult type="variable">sliderRightPosition</actualResult>
+        </assertLessThan>
+        <assertGreaterThan stepKey="assertSlideLeftSideIsGreaterThanSliderLeftSide">
+            <expectedResult type="variable">sliderLeftPosition</expectedResult>
+            <actualResult type="variable">slideLeftPosition</actualResult>
+        </assertGreaterThan>
+    </test>
 </tests>

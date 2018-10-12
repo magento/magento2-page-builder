@@ -63,8 +63,6 @@ define([], function () {
     return Link;
   }();
 
-  return Object.assign(Link, {
-    __esModule: true
-  });
+  return Link;
 });
 //# sourceMappingURL=link.js.map

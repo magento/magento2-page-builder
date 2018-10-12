@@ -51,12 +51,16 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
 
       (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false);
       this.autoplay = (0, _jquery)($slider.parent()).slick("slickGetOption", "autoplay");
+      this.fade = (0, _jquery)($slider.parent()).slick("slickGetOption", "fade");
 
       if (this.autoplay) {
         (0, _jquery)($slider.parent()).slick("slickPause");
       }
 
-      $notActiveSlides.css("display", "none");
+      if (!this.fade) {
+        $notActiveSlides.css("display", "none");
+      }
+
       this.sliderTransform = sliderContent.style.transform;
       sliderContent.style.transform = "";
       $slider.css("overflow", "visible");
