@@ -14,10 +14,6 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    /**
-     * Uploader instance
-     */
-    private uploader: Uploader;
 
     /**
      * Get registry callback reference to uploader UI component
@@ -25,7 +21,16 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        return this.uploader;
+        const dataStore = this.parent.dataStore.get() as DataObject;
+        const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+        return new Uploader(
+            "imageuploader_" + this.parent.id,
+            this.config.additional_data.uploaderConfig,
+            this.parent.id,
+            this.parent.dataStore,
+            (initialImageValue as object[]),
+        );
     }
 
     /**
@@ -39,20 +44,6 @@ export default class Preview extends BasePreview {
             const files: object[] = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[]);
             const imageObject: object = files ? (files[0] as object) : {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
-        });
-
-        events.on(`${this.config.name}:mountAfter`, () => {
-            const dataStore = this.parent.dataStore.get() as DataObject;
-            const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
-
-            // Create uploader
-            this.uploader = new Uploader(
-                "imageuploader_" + this.parent.id,
-                this.config.additional_data.uploaderConfig,
-                this.parent.id,
-                this.parent.dataStore,
-                (initialImageValue as object[]),
-            );
         });
     }
 }

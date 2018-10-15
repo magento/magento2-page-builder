@@ -85,7 +85,7 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         if (this.autoplay) {
             $($slider.parent()).slick("slickPause");
         }
-        $notActiveSlides.hide();
+        $notActiveSlides.css("display", "none");
         this.sliderTransform = sliderContent.style.transform;
         sliderContent.style.transform = "";
         $slider.css("overflow", "visible");
@@ -108,7 +108,7 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         // Enable slider keyboard events and revert changes made in onFocus
         $slider.css("overflow", "hidden");
         sliderContent.style.transform = this.sliderTransform;
-        $notActiveSlides.show();
+        $notActiveSlides.css("display", "block");
         $($slider.parent()).slick("slickSetOption", "accessibility", true);
         if (this.autoplay) {
             $($slider.parent()).slick("slickPlay");

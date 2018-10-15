@@ -3,7 +3,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _config, _conditionalRemoveOption, _uploader, _factory, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -37,14 +37,16 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     /**
      * @param {HTMLElement} element
      */
-    _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
-
+    _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
       element.id = this.parent.id + "-editor";
-      (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
-      });
+      /**
+       * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+       * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+       * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+       */
+
+      this.wysiwyg = null;
     };
     /**
      * Set state based on overlay mouseover event for the preview
@@ -128,13 +130,34 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
 
     _proto.activateEditor = function activateEditor(preview, event) {
-      var element = this.wysiwyg && this.element || this.textarea;
+      var _this2 = this;
 
-      if (!element || !this.slideChanged || event.currentTarget !== event.target && event.target !== element && !element.contains(event.target)) {
-        return false;
+      var activate = function activate() {
+        var element = _this2.wysiwyg && _this2.element || _this2.textarea;
+        element.focus();
+      };
+
+      if (!this.wysiwyg) {
+        var selection = this.saveSelection();
+        this.element.removeAttribute("contenteditable");
+
+        _underscore.defer(function () {
+          _this2.initWysiwyg(true).then(function () {
+            return (0, _delayUntil)(function () {
+              activate();
+
+              _this2.restoreSelection(_this2.element, selection);
+            }, function () {
+              return _this2.element.classList.contains("mce-edit-focus");
+            }, 10);
+          }).catch(function (error) {
+            // If there's an error with init of WYSIWYG editor push into the console to aid support
+            console.error(error);
+          });
+        });
+      } else {
+        activate();
       }
-
-      element.focus();
     };
     /**
      * Stop event to prevent execution of action when editing textarea.
@@ -206,53 +229,79 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       _events.trigger("stage:interactionStop");
     };
     /**
+     * Init the WYSIWYG
+     */
+
+
+    _proto.initWysiwyg = function initWysiwyg(focus) {
+      var _this4 = this;
+
+      if (focus === void 0) {
+        focus = false;
+      }
+
+      if (this.wysiwyg) {
+        return;
+      }
+
+      var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+      if (focus) {
+        wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+      }
+
+      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+        _this4.wysiwyg = wysiwyg;
+      });
+    };
+    /**
      * @inheritDoc
      */
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this4 = this;
+      var _this5 = this;
 
       _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this4.parent.dataStore.get();
+        var dataStore = _this5.parent.dataStore.get();
 
-        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
       }); // Remove wysiwyg before assign new instance.
 
 
       _events.on("childContentType:sortUpdate", function (args) {
-        if (args.instance.id === _this4.parent.parent.id) {
-          _this4.wysiwyg = null;
+        if (args.instance.id === _this5.parent.parent.id) {
+          _this5.wysiwyg = null;
         }
       });
 
       _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this4.parent.id) {
+        if (args.id === _this5.parent.id) {
           // Update the display label for the slide
-          var slider = _this4.parent.parent;
+          var slider = _this5.parent.parent;
 
-          _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
+          _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
 
           slider.children.subscribe(function (children) {
-            var index = children.indexOf(_this4.parent);
+            var index = children.indexOf(_this5.parent);
 
-            _this4.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this4.parent) + 1)));
+            _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
           });
         }
       });
 
       _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.id === _this4.parent.id) {
-          var slider = _this4.parent.parent;
+        if (args.id === _this5.parent.id) {
+          var slider = _this5.parent.parent;
           (0, _jquery)(slider.preview.element).on("beforeChange", function () {
-            _this4.slideChanged = false;
+            _this5.slideChanged = false;
           });
           (0, _jquery)(slider.preview.element).on("afterChange", function () {
-            _this4.slideChanged = true;
+            _this5.slideChanged = true;
           });
         }
       });
@@ -283,6 +332,82 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       }
 
       (0, _jquery)(this.textarea).height(scrollHeight);
+    };
+    /**
+     * Save the current selection to be restored at a later point
+     *
+     * @returns {Selection}
+     */
+
+
+    _proto.saveSelection = function saveSelection() {
+      if (window.getSelection) {
+        var selection = window.getSelection();
+
+        if (selection.getRangeAt && selection.rangeCount) {
+          var range = selection.getRangeAt(0).cloneRange();
+          (0, _jquery)(range.startContainer.parentNode).attr("data-startContainer", "true");
+          (0, _jquery)(range.endContainer.parentNode).attr("data-endContainer", "true");
+          return {
+            startContainer: range.startContainer,
+            startOffset: range.startOffset,
+            endContainer: range.endContainer,
+            endOffset: range.endOffset
+          };
+        }
+      }
+
+      return null;
+    };
+    /**
+     * Restore the original selection
+     *
+     * @param {HTMLElement} element
+     * @param {Selection} selection
+     */
+
+
+    _proto.restoreSelection = function restoreSelection(element, selection) {
+      if (window.getSelection) {
+        // Find the original container that had the selection
+        var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
+        startContainerParent.removeAttr("data-startContainer");
+
+        var _startContainer = this.findTextNode(startContainerParent, selection.startContainer.nodeValue);
+
+        var endContainerParent = (0, _jquery)(element).find("[data-endContainer]");
+        endContainerParent.removeAttr("data-endContainer");
+        var _endContainer = _startContainer;
+
+        if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+          _endContainer = this.findTextNode(endContainerParent, selection.endContainer.nodeValue);
+        }
+
+        if (_startContainer && _endContainer) {
+          var newSelection = window.getSelection();
+          newSelection.removeAllRanges();
+          var range = document.createRange();
+          range.setStart(_startContainer, selection.startOffset);
+          range.setEnd(_endContainer, selection.endOffset);
+          newSelection.addRange(range);
+        }
+      }
+    };
+    /**
+     * Find a text node within an existing element
+     *
+     * @param {HTMLElement} element
+     * @param {string} text
+     * @returns {HTMLElement}
+     */
+
+
+    _proto.findTextNode = function findTextNode(element, text) {
+      if (text && text.trim().length > 0) {
+        return element.contents().toArray().find(function (node) {
+          return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+        });
+      }
     };
 
     return Preview;

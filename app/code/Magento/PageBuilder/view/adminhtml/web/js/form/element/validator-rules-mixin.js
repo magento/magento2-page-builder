@@ -127,23 +127,23 @@ define([
         validator.addRule(
             'required-entry',
             function (value) {
-                var allFilled = true;
+                // Validation only for margins and paddings
+                if (typeof value === 'object' && !!(value.padding || value.margin)) {
+                    var allFilled = true;
 
-                if (typeof value !== 'object') {
-                    return requiredInputRule.handler(value);
+                    _.flatten(_.map(value, _.values)).forEach(function(val) {
+                        if (utils.isEmpty(val)) {
+                            return allFilled = false;
+                        }
+                    });
+
+                    return allFilled;
                 }
 
-                _.flatten(_.map(value, _.values)).forEach(function(val) {
-                   if (utils.isEmpty(val)) {
-                       return allFilled = false;
-                   }
-                });
-
-                return allFilled;
+                return requiredInputRule.handler(value);
             },
             $.mage.__(requiredInputRule.message)
         );
-
         validateObjectField(validator, 'validate-number');
         validateObjectField(validator, 'less-than-equals-to');
         validateObjectField(validator, 'greater-than-equals-to');

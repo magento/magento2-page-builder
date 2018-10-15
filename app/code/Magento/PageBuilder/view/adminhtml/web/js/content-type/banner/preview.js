@@ -37,7 +37,10 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
      * @returns {Uploader}
      */
     _proto.getUploader = function getUploader() {
-      return this.uploader;
+      var dataStore = this.parent.dataStore.get();
+      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
     /**
      * Makes WYSIWYG active
@@ -198,14 +201,6 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
-      });
-
-      _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this4.parent.dataStore.get();
-
-        var initialImageValue = dataStore[_this4.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-        _this4.uploader = new _uploader("imageuploader_" + _this4.parent.id, _this4.config.additional_data.uploaderConfig, _this4.parent.id, _this4.parent.dataStore, initialImageValue);
       });
     };
     /**
