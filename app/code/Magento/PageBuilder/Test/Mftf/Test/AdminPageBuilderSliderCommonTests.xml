@@ -1558,10 +1558,10 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Slider - Fade can be inline edited"/>
-            <description value="A user should be able to inline edit a fade slide"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC0-4156"/>
+            <title value="Slider - Slide Items Can Be Inline Edited When Slider Has Fade Enabled"/>
+            <description value="A user should be able to inline edit a slide when the slider has fade enabled"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4156"/>
             <testCaseId value="MC-5058"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
@@ -1611,8 +1611,8 @@
         <waitForPageLoad stepKey="waitForWysiwyg"/>
         <executeJS function="return document.querySelectorAll('[data-role=slide]')[1].getBoundingClientRect().left" stepKey="slideLeftPosition"/>
         <executeJS function="return document.querySelectorAll('[data-role=slide]')[1].getBoundingClientRect().right" stepKey="slideRightPosition"/>
-        <executeJS function="return document.querySelectorAll('.slider-container')[1].getBoundingClientRect().left" stepKey="sliderLeftPosition"/>
-        <executeJS function="return document.querySelectorAll('.slider-container')[1].getBoundingClientRect().right" stepKey="sliderRightPosition"/>
+        <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().left" stepKey="sliderLeftPosition"/>
+        <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().right" stepKey="sliderRightPosition"/>
         <assertLessThan stepKey="assertSlideRightSideIsLessThanSliderRightSide">
             <expectedResult type="variable">slideRightPosition</expectedResult>
             <actualResult type="variable">sliderRightPosition</actualResult>
@@ -1621,5 +1621,19 @@
             <expectedResult type="variable">sliderLeftPosition</expectedResult>
             <actualResult type="variable">slideLeftPosition</actualResult>
         </assertGreaterThan>
+        <!-- Add Content To Slide 2 -->
+        <comment userInput="Add Content To Slide 2" stepKey="commentAddContentToSlide2"/>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSlideContentType"/>
+            <argument name="content" value="{{PageBuilderSlideItemContent_Slide1.value}}"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2StageAfterSave"/>
+        <waitForPageLoad stepKey="waitForSlideFadeAnimationAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStage"/>
     </test>
 </tests>

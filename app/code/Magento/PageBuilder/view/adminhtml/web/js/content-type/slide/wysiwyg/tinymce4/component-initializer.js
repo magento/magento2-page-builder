@@ -49,12 +49,12 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       }); // Disable slider keyboard events and fix problem with overflow hidden issue
 
 
-      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false);
-      this.autoplay = (0, _jquery)($slider.parent()).slick("slickGetOption", "autoplay");
-      this.fade = (0, _jquery)($slider.parent()).slick("slickGetOption", "fade");
+      $slider.parent().slick("slickSetOption", "accessibility", false);
+      this.autoplay = $slider.parent().slick("slickGetOption", "autoplay");
+      this.fade = $slider.parent().slick("slickGetOption", "fade");
 
       if (this.autoplay) {
-        (0, _jquery)($slider.parent()).slick("slickPause");
+        $slider.parent().slick("slickPause");
       }
 
       if (!this.fade) {
@@ -87,10 +87,10 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       $slider.css("overflow", "hidden");
       sliderContent.style.transform = this.sliderTransform;
       $notActiveSlides.css("display", "block");
-      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", true);
+      $slider.parent().slick("slickSetOption", "accessibility", true);
 
       if (this.autoplay) {
-        (0, _jquery)($slider.parent()).slick("slickPlay");
+        $slider.parent().slick("slickPlay");
       }
     };
 
