@@ -49,6 +49,24 @@ export default class Preview extends PreviewCollection {
     private buildSlickDebounce = _.debounce(this.buildSlick.bind(this), 10);
 
     /**
+     * Define keys which when changed should not trigger the slider to be rebuilt
+     *
+     * @type {string[]}
+     */
+    private ignoredKeysForBuild: string[] = [
+        "display",
+        "margins_and_padding",
+        "border",
+        "border_color",
+        "border_radius",
+        "border_width",
+        "css_classes",
+        "name",
+        "text_align",
+    ];
+    private previousData: DataObject;
+
+    /**
      * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -73,16 +91,22 @@ export default class Preview extends PreviewCollection {
                     this.element = element as HTMLElement;
 
                     this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
-                    this.parent.dataStore.subscribe(this.buildSlickDebounce);
+                    this.previousData = this.parent.dataStore.get() as DataObject;
+                    this.parent.dataStore.subscribe((data: DataObject) => {
+                        if (this.hasDataChanged(this.previousData, data)) {
+                            this.buildSlickDebounce();
+                        }
+                        this.previousData = data;
+                    });
 
                     this.buildSlick();
 
                     // Redraw slide after content type gets redrawn
-                    events.on("contentType:redrawAfter", function(args: ContentTypeAfterRenderEventParamsInterface) {
-                        if ($.contains(args.element, this.element)) {
+                    events.on("contentType:redrawAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
+                        if (args.element && this.element && $.contains(args.element, this.element)) {
                             $(this.element).slick("setPosition");
                         }
-                    }.bind(this));
+                    });
 
                     // Set the stage to interacting when a slide is focused
                     this.focusedSlide.subscribe((value: number) => {
@@ -351,6 +375,19 @@ export default class Preview extends PreviewCollection {
                 });
             }
         });
+    }
+
+    /**
+     * Determine if the data has changed, whilst ignoring certain keys which don't require a rebuild
+     *
+     * @param {DataObject} previousData
+     * @param {DataObject} newData
+     * @returns {boolean}
+     */
+    private hasDataChanged(previousData: DataObject, newData: DataObject) {
+        previousData = _.omit(previousData, this.ignoredKeysForBuild);
+        newData = _.omit(newData, this.ignoredKeysForBuild);
+        return !_.isEqual(previousData, newData);
     }
 
     /**

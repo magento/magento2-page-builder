@@ -137,7 +137,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         element.focus();
       };
 
-      if (!this.wysiwyg) {
+      if (this.element && !this.wysiwyg) {
         var selection = this.saveSelection();
         this.element.removeAttribute("contenteditable");
 
@@ -368,7 +368,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
 
     _proto.restoreSelection = function restoreSelection(element, selection) {
-      if (window.getSelection) {
+      if (selection && window.getSelection) {
         // Find the original container that had the selection
         var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
         startContainerParent.removeAttr("data-startContainer");
