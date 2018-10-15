@@ -924,6 +924,7 @@
         <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
         <executeJS function="return Math.round({{MapOnStage.computedHeight}}/4)" stepKey="quarterMapHeightStage"/>
         <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="comparedPinLocation" value="initialPinLocationStage"/>
@@ -938,6 +939,7 @@
         <!-- Stage: Tooltip Stays Open When Map Moves After Save -->
         <comment userInput="Stage: Tooltip Stays Open When Map Moves After Save" stepKey="commentMoveStage2"/>
         <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage2"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="comparedPinLocation" value="initialPinLocationStage"/>
@@ -956,6 +958,7 @@
         <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
         <executeJS function="return Math.round({{MapOnStorefront.computedHeight}}/4)" stepKey="quarterMapHeightStorefront"/>
         <dragAndDrop selector1="{{MapOnStorefront.base('1')}}" selector2="{{MapOnStorefront.base('1')}}" x="$quarterMapHeightStorefront" stepKey="moveMapStorefront"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop3"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
