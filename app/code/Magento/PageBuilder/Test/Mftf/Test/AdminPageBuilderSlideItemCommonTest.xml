@@ -1714,4 +1714,85 @@
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlideContentAfterHideShow"/>
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundColorAfterHideShow"/>
     </test>
+    <test name="SlideItemInlineWysiwygUploadImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Can Add Slider WYSIWYG Image From Gallery or Link to Image in Gallery After Page Has Been Saved"/>
+            <description value="A user should be able to upload image to inline wysiwyg after a slider has been saved to a page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4323"/>
+            <testCaseId value="MC-5014"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+                <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{ImageFolder.name}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+            </actionGroup>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Add Slider" stepKey="commentAddContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Initial Save -->
+        <comment userInput="Initial Save" stepKey="commentInitialSave"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="initialSaveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="initialSwitchToPageBuilderStage"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <!-- Add Image to Slide -->
+        <comment userInput="Add Image to Slide" stepKey="commentAddImageToContentType"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <waitForPageLoad stepKey="waitForInlineWYSIWYGEditor"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelector}}" stepKey="clickWYSIWYGImageSelector"/>
+        <waitForPageLoad stepKey="waitForImageSelectorModal"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.imageSelectorBrowse}}" stepKey="clickWYSIWYGImageSelectorBrowseButton"/>
+        <waitForPageLoad stepKey="waitForImageSelectorBrowseModal"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForStorageRoot"/>
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
+            <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <actionGroup ref="fillOutUploadImagePopup" stepKey="fillOutUploadImagePopup"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
+        <waitForPageLoad stepKey="waitForSlideToUnFocus"/>
+        <!-- Validate Image Editor On Backend -->
+        <comment userInput="Validate Image Editor On Backend" stepKey="commentValidateBackend"/>
+        <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Image Editor On Backend After Save Page -->
+        <comment userInput="Validate Image Editor On Backend After Save" stepKey="commentValidateBackendAfterSave"/>
+        <seeElement selector="{{SlideOnBackend.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
+        <!-- Validate Image Editor On Storefront -->
+        <comment userInput="Validate Image Editor On Storefront" stepKey="commentValidateStorefront"/>
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <seeElement selector="{{SlideOnFrontend.messageContentTextAreaImage('1', PageBuilderImageProperty_StageJPG.value)}}" stepKey="validateImageFrontEnd"/>
+    </test>
 </tests>
