@@ -19,9 +19,6 @@
             <testCaseId value="MC-2859"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-googleMapsStyle"/>
-            <skip>
-                <issueId value="MC-4257"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -34,6 +31,7 @@
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Validate Global Scope -->
         <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
         <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(googleMapsStyle.section, googleMapsStyle.row, googleMapsStyle.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
@@ -45,6 +43,7 @@
         <comment userInput="Validate Create Map Style Link" stepKey="commentValidateLink"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsCreateMapStyleLink}}" stepKey="waitForLink"/>
         <click selector="{{ContentManagementSection.GoogleMapsCreateMapStyleLink}}" stepKey="clickLink"/>
+        <wait time="2" stepKey="waitForTabCreation"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="https://mapstyle.withgoogle.com/" stepKey="validateURL"/>
     </test>
