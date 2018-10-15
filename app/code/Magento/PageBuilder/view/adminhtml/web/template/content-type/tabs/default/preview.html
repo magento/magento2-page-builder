@@ -19,7 +19,7 @@
                     event="{ focusin: function (context, event) { onFocusIn($index(), event); }, focusout: function (context, event) { onFocusOut($index(), event); } }">
                     <a href="#no-tab"
                        class="tab-title focus-options"
-                       attr="{ href: '#' + parent.id }">
+                       attr="{ href: '#' + parent.id }" event="{ dragstart: function(context, event) { event.preventDefault(); }}">
                         <render args="getOptions().template" />
                         <span class="tab-drag-handle" css="{disabled: parent.parent.children().length <= 1}"></span>
                         <span class="tab-title tab-name"
