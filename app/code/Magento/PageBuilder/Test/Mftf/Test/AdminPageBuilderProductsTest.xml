@@ -150,13 +150,22 @@
             <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct3">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct4">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
             <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqProduct3" stepKey="deletePreReqProduct3"/>
+            <deleteData createDataKey="createPreReqProduct4" stepKey="deletePreReqProduct4"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -168,22 +177,55 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-
         <!-- Add both products from the created category -->
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-
-        <!-- Only one of them should be showing -->
         <waitForElementVisible selector="{{ProductsContentTypeForm.productsCountInput}}" stepKey="waitForProductCountToBeVisible"/>
         <waitForLoadingMaskToDisappear stepKey="waitForConditionsToLoad"/>
-        <fillField selector="{{ProductsContentTypeForm.productsCountInput}}" userInput="1" stepKey="fillProductsCountField"/>
-
+        <!-- Check form field validations -->
+        <comment userInput="Check form field validations" stepKey="commentCheckFormFieldValidations"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMinProductsCount">
+            <argument name="property" value="PageBuilderProductsInvalidMinCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMinCount">
+            <argument name="property" value="PageBuilderProductsInvalidMinCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidEmptyProductsCount">
+            <argument name="property" value="PageBuilderProductsInvalidEmptyCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidEmptyCount">
+            <argument name="property" value="PageBuilderProductsInvalidEmptyCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidMaxProductsCount">
+            <argument name="property" value="PageBuilderProductsInvalidMaxCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidMaxCount">
+            <argument name="property" value="PageBuilderProductsInvalidMaxCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterInvalidTypeProductsCount">
+            <argument name="property" value="PageBuilderProductsInvalidTypeCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateInvalidTypeProductsCount">
+            <argument name="property" value="PageBuilderProductsInvalidTypeCountProperty"/>
+        </actionGroup>
+        <!-- Validate 999 max is valid -->
+        <comment userInput="Validate 999 max is valid" stepKey="commentValidateMax"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMaxProductsCount">
+            <argument name="property" value="PageBuilderProductsCountPropertyMax"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveValidationEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Only one of them should be showing -->
+        <comment userInput="Set only one of them should be showing" stepKey="commentSetOnlyOneShouldBeShowing"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOneProductsCount">
+            <argument name="property" value="PageBuilderProductsCountPropertyOne"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage After Save -->
+        <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
             <argument name="page" value="ProductsOnStage"/>
@@ -192,16 +234,78 @@
         <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
             <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStageAfterSave">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStageAfterSave">
+            <argument name="page" value="ProductsOnStage"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="1"/>
         </actionGroup>
         <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront">
+            <argument name="page" value="ProductsOnStorefront"/>
+        </actionGroup>
+        <!-- Switch Back To Backend -->
+        <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Four products should be showing -->
+        <comment userInput="Four products should be showing" stepKey="commentFourProductsShouldBeShowing"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFourProductsCount">
+            <argument name="property" value="PageBuilderProductsCountPropertyFour"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2">
+            <argument name="page" value="ProductsOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage2AfterSave"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2AfterSave">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2AfterSave">
+            <argument name="page" value="ProductsOnStage"/>
+        </actionGroup>
+        <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
+        <!-- Switch Back To Frontend -->
+        <comment userInput="Switch Back To Frontend" stepKey="commentSwitchToFrontend"/>
+        <switchToNextTab stepKey="switchToNextTab2"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="4"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProducts" stepKey="validateProductsStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
         </actionGroup>
     </test>
