@@ -879,73 +879,73 @@
             <testCaseId value="MC-4031"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
-            <skip>
-                <issueId value="MC-4257"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="displayOutOfStockProduct" stepKey="displayOutOfStockProduct"/>
+            <magentoCLI command="config:set cataloginventory/options/show_out_of_stock 1" stepKey="displayOutOfStockProduct"/>
             <createData entity="_defaultCmsPage" stepKey="createdCMSPage" />
             <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="SimpleProduct3" stepKey="createPreReqProductA">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <!--Create product quantity = 0-->
             <createData entity="SimpleProduct4" stepKey="createPreReqProductB">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage1">
+                <argument name="CMSPage" value="$$createdCMSPage$$"/>
+            </actionGroup>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <magentoCLI command="config:set cataloginventory/options/show_out_of_stock 0" stepKey="dontDisplayOutOfStockProduct"/>
             <deleteData createDataKey="createPreReqProductA" stepKey="deletePreReqProductA"/>
             <deleteData createDataKey="createPreReqProductB" stepKey="deletePreReqProductB"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <deleteData createDataKey="createdCMSPage" stepKey="deleteCreatedCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage1">
-            <argument name="CMSPage" value="$$createdCMSPage$$"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderProductsContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <!-- Add both products from the created category -->
         <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Stage After Save Setting -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <!-- Validate Stage: Show Out of Stock -->
+        <comment userInput="Validate Stage: Show Out of Stock" stepKey="commentValidateStage1"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront1"/>
+        <!-- Validate Storefront: Show Out of Stock -->
+        <comment userInput="Validate Storefront: Show Out of Stock" stepKey="commentValidateStorefront1"/>
         <amOnPage url="$$createdCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <!-- Validate Storefront -->
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront1">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="noDisplayOutOfStockProduct" stepKey="dontDisplayOutOfStockProduct"/>
+        <magentoCLI command="config:set cataloginventory/options/show_out_of_stock 0" stepKey="dontDisplayOutOfStockProduct"/>
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage2">
             <argument name="CMSPage" value="$$createdCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <comment userInput="Validate Stage" stepKey="commentValidateStage2"/>
+        <!-- Validate Stage: Don't Show Out of Stock -->
+        <comment userInput="Validate Stage: Don't Show Out of Stock" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="1"/>
         </actionGroup>
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
+        <!-- Validate Storefront: Don't Show Out of Stock -->
+        <comment userInput="Validate Storefront: Don't Show Out of Stock" stepKey="commentValidateStorefront2"/>
+        <amOnPage url="$$createdCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="1"/>
