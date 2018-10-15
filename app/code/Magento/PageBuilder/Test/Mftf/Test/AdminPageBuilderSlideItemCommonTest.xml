@@ -55,6 +55,7 @@
         <!-- Validate Stage: Slide Title On Option Menu -->
         <comment userInput="Validate Stage: Slide Title On Option Menu" stepKey="commentSlideTitleOptionMenuStage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForOptionMenu"/>
         <see userInput="Slide 1" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideTitleOnOptionsMenu"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>

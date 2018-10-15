@@ -512,10 +512,12 @@
         <!-- Validate Stage: Slide 1 -->
         <comment userInput="Validate Stage: Slide 1" stepKey="commentValidateSlide1Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlide1Stage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentStage"/>
         <!-- Validate Stage: Slide 2 -->
         <comment userInput="Validate Stage: Slide 2" stepKey="commentValidateSlide2Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Stage"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('2', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -957,8 +959,10 @@
         <!-- Validate Stage: Slide Items -->
         <comment userInput="Validate Stage: Slide Items" stepKey="commentValidateSlideItemsStage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('2', '1')}}" stepKey="clickSlide1NavigationDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{SlideOnBackend.messageContent('3', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentSlideItem1Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('2', '2')}}" stepKey="clickSlide2NavigationDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('4', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Stage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
@@ -983,8 +987,10 @@
         <!-- Validate Stage After Save: Slide Items -->
         <comment userInput="Validate Stage After Save: Slide Items" stepKey="commentValidateSlideItemsStage2"/>
         <click selector="{{SliderOnStage.slideNavigationDot('2', '1')}}" stepKey="clickSlide1NavigationDot2"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <seeElement selector="{{SlideOnBackend.messageContent('3', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentSlideItem1Stage2"/>
         <click selector="{{SliderOnStage.slideNavigationDot('2', '2')}}" stepKey="clickSlide2NavigationDot2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
         <seeElement selector="{{SlideOnBackend.messageContent('4', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Stage2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide4"/>
         <!-- Validate Edit Panel After Save -->
@@ -1068,8 +1074,10 @@
         <!-- Validate Storefront: Slide Items -->
         <comment userInput="Validate Storefront: Slide Items" stepKey="commentValidateSlideItemsStorefront"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('2', '1')}}" stepKey="clickSlide1NavigationDotStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('3', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentSlideItem1Storefront"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('2', '2')}}" stepKey="clickSlide2NavigationDotStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('4', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeMessageContentSlideItem2Storefront"/>
     </test>
     <test name="SliderDelete">
@@ -1440,6 +1448,7 @@
         <seeElement selector="{{SlideOnBackend.emptySlide('1')}}" stepKey="seeFirstSlideOnStage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu"/>
         <waitForPageLoad stepKey="waitForOptionMenu"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu"/>
         <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" attribute="class" stepKey="assertFirstDotActive">
             <expectedResult type="string">active</expectedResult>
@@ -1457,17 +1466,17 @@
         <!-- User Still Sees Slide Item Option Menu If Hovering Over Slider -->
         <comment userInput="User Still Sees Slide Item Option Menu If Hovering Over Slider" stepKey="commentHoverSlider"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideOptionsMenu1"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu2"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsMenu3"/>
         <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="dontSeeSliderOptionsMenu"/>
         <!-- User Sees Slider Option Menu After Unfocusing Slide Item -->
         <comment userInput="User Sees Slider Option Menu After Unfocusing Slide Item" stepKey="commentHoverSlider2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="mouseOverSlider2"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForPageLoad stepKey="waitForPageLoad4"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="waitForContentTypeOptionsMenu"/>
         <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderSliderContentType.role, '1')}}" stepKey="seeOptionsMenu"/>
         <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="dontSeeSlideOptionsMenu"/>
@@ -1480,6 +1489,7 @@
         <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2OptionsMenu"/>
         <waitForPageLoad stepKey="waitForOptionMenu2"/>
+        <waitForPageLoad stepKey="waitForPageLoad5"/>
         <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsMenu4"/>
         <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" stepKey="assertSecondDotActive">
             <expectedResult type="string">active</expectedResult>
@@ -1499,12 +1509,12 @@
         <!-- Validate On Hover Tooltips -->
         <comment userInput="Validate On Hover Tooltips" stepKey="commentValidateTooltips"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide3"/>
-        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <waitForPageLoad stepKey="waitForPageLoad6"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
-        <waitForPageLoad stepKey="waitForPageLoad4"/>
+        <waitForPageLoad stepKey="waitForPageLoad7"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
-        <waitForPageLoad stepKey="waitForPageLoad5"/>
+        <waitForPageLoad stepKey="waitForPageLoad8"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltip"/>
     </test>
     <test name="SliderCanBeNavigatedQuickly">
