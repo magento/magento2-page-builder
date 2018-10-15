@@ -35,7 +35,8 @@ export default class Preview extends PreviewCollection {
         // Destroy all instances of the plugin prior
         try {
             // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.element.getAttribute("style");
+            const style = this.element.getAttribute("data-jarallax-original-styles") ||
+                this.element.getAttribute("style");
             jarallax(this.element, "destroy");
             this.element.setAttribute("style", style);
         } catch (e) {
@@ -47,10 +48,10 @@ export default class Preview extends PreviewCollection {
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.main.style().backgroundSize || "cover",
-                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
+                        imgPosition: this.data.inner.style().backgroundPosition || "50% 50%",
+                        imgRepeat: this.data.inner.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.inner.style().backgroundSize || "cover",
+                        speed: this.data.inner.attributes()["data-parallax-speed"] || 0.5,
                     },
                 );
                 jarallax(this.element, "onResize");
