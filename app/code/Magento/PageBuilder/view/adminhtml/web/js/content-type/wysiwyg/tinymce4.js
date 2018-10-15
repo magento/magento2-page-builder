@@ -95,8 +95,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
     _proto.onFocus = function onFocus() {
       var _this = this;
 
-      // Clear any existing document selections
-      window.getSelection().empty();
+      this.clearSelection();
       (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container).addClass("pagebuilder-toolbar-active");
 
       _events2.trigger("stage:interactionStart"); // Wait for everything else to finish
@@ -112,8 +111,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
 
     _proto.onBlur = function onBlur() {
-      // Clear any selections in the editable area
-      window.getSelection().empty();
+      this.clearSelection();
       (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container).removeClass("pagebuilder-toolbar-active");
 
       _events2.trigger("stage:interactionStop");
@@ -133,6 +131,25 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
       this.getAdapter().setContent(this.dataStore.get(this.fieldName));
+    };
+    /**
+     * Clear any selections in the editable area
+     */
+
+
+    _proto.clearSelection = function clearSelection() {
+      if (window.getSelection) {
+        if (window.getSelection().empty) {
+          // Chrome
+          window.getSelection().empty();
+        } else if (window.getSelection().removeAllRanges) {
+          // Firefox
+          window.getSelection().removeAllRanges();
+        }
+      } else if (document.selection) {
+        // IE?
+        document.selection.empty();
+      }
     };
 
     return Wysiwyg;

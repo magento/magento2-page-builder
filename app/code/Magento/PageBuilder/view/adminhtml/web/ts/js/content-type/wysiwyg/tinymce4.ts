@@ -118,8 +118,7 @@ export default class Wysiwyg implements WysiwygInterface {
      * Called for the onFocus event
      */
     private onFocus() {
-        // Clear any existing document selections
-        window.getSelection().empty();
+        this.clearSelection();
 
         $(`#${this.elementId}`)
             .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
@@ -138,8 +137,8 @@ export default class Wysiwyg implements WysiwygInterface {
      * Called for the onBlur events
      */
     private onBlur() {
-        // Clear any selections in the editable area
-        window.getSelection().empty();
+        this.clearSelection();
+
         $(`#${this.elementId}`)
             .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
             .removeClass("pagebuilder-toolbar-active");
@@ -163,5 +162,20 @@ export default class Wysiwyg implements WysiwygInterface {
         this.getAdapter().setContent(
             this.dataStore.get(this.fieldName) as string,
         );
+    }
+
+    /**
+     * Clear any selections in the editable area
+     */
+    private clearSelection(): void {
+        if (window.getSelection) {
+            if (window.getSelection().empty) {  // Chrome
+                window.getSelection().empty();
+            } else if (window.getSelection().removeAllRanges) {  // Firefox
+                window.getSelection().removeAllRanges();
+            }
+        } else if ((document as any).selection) {  // IE?
+            (document as any).selection.empty();
+        }
     }
 }
