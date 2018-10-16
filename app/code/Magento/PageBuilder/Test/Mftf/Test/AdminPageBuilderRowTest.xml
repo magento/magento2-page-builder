@@ -1876,7 +1876,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible"/>
         <seeElement selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible"/>
-        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="waitForBorderColorVisible"/>
+        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="waitForBorderColorVisible"/>
         <seeElement selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible"/>
         <!-- Change appearance to contained -->
         <comment userInput="Change appearance to contained" stepKey="commentContained"/>
@@ -1889,12 +1889,66 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <seeElement selector="{{RowOnStage.base('1')}}" stepKey="waitForElementVisible1"/>
         <seeElement selector="{{RowOnStage.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="waitForBorderVisible1"/>
-        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="waitForBorderColorVisible1"/>
+        <seeElement selector="{{RowOnStage.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="waitForBorderColorVisible1"/>
         <seeElement selector="{{RowOnStage.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="waitForBorderWidthVisible1"/>
         <!-- Verify the border is not on the outside of the contained row -->
         <comment userInput="Verify the border is not on the outside of the contained row" stepKey="commentVerifyBorder"/>
         <dontSeeElement selector="{{RowOnStage_Contained_Invalid.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="dontSeeBorderOnOutside" />
-        <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="dontSeeBorderColorOnOutside" />
+        <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="dontSeeBorderColorOnOutside" />
         <dontSeeElement selector="{{RowOnStage_Contained_Invalid.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="dontSeeBorderWidthOnOutside" />
+    </test>
+    <test name="RowMinimumHeightIsObeyedWhenParallaxIsEnabled">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Row - Minimum Height Obeyed when Parallax is enabled"/>
+            <description value="As a Content Manager I want minimum height of parallax-enabled row to reflect the same value configured by me"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4128"/>
+            <testCaseId value="MC-4304"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowParallax"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabledProperty">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty">
+            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Get value of assigned min height on element -->
+        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight" />
+        <assertEquals stepKey="assertEqualToEnteredValue">
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_300.value}}</expectedResult>
+            <actualResult type="variable">$assignedHeight</actualResult>
+        </assertEquals>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeightProperty2">
+            <argument name="property" value="PageBuilderMinHeightProperty_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
+        <!-- Get value of assigned min height on element -->
+        <executeJS function="return parseInt(document.evaluate(&quot;{{RowOnStage.base('1')}}&quot;, document.body).iterateNext().style.minHeight, 10)" stepKey="assignedHeight2" />
+        <assertEquals stepKey="assertEqualToEnteredValue2">
+            <expectedResult type="string">{{PageBuilderMinHeightProperty_500.value}}</expectedResult>
+            <actualResult type="variable">$assignedHeight2</actualResult>
+        </assertEquals>
     </test>
 </tests>

@@ -30,7 +30,6 @@ import ContentTypeMountEventParamsInterface from "../content-type-mount-event-pa
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import {default as SliderPreview} from "../slider/preview";
 
 /**
  * @api
@@ -161,9 +160,11 @@ export default class Preview extends PreviewCollection {
      * @param {boolean} force
      */
     public navigateToSlide(slideIndex: number, dontAnimate: boolean = false, force: boolean = false): void {
-        $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
-        this.setActiveSlide(slideIndex);
-        this.setFocusedSlide(slideIndex, force);
+        if ($(this.element).hasClass("slick-initialized")) {
+            $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
+            this.setActiveSlide(slideIndex);
+            this.setFocusedSlide(slideIndex, force);
+        }
     }
 
     /**
@@ -221,9 +222,14 @@ export default class Preview extends PreviewCollection {
         ).then((slide) => {
             events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
-                    _.delay(() => {
-                        this.navigateToSlide(this.parent.children().length - 1);
-                    }, 500 );
+                    _.defer(() => {
+                        // Wait until slick is initialized before trying to navigate
+                        delayUntil(
+                            () => this.navigateToSlide(this.parent.children().length - 1),
+                            () => $(this.element).hasClass("slick-initialized"),
+                            10,
+                        );
+                    });
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
             }, `slide:${slide.id}:mountAfter`);
@@ -302,7 +308,7 @@ export default class Preview extends PreviewCollection {
                 _.defer(() => {
                     if (newItemIndex !== null) {
                         newItemIndex = null;
-                        (this as SliderPreview).navigateToSlide(itemIndex, true, true);
+                        this.navigateToSlide(itemIndex, true, true);
                         _.defer(() => {
                             this.focusedSlide(null);
                             this.focusedSlide(itemIndex);
@@ -339,7 +345,7 @@ export default class Preview extends PreviewCollection {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 _.defer(() => {
                     // Mark the new duplicate slide as active
-                    (this as SliderPreview).navigateToSlide(duplicatedSlideIndex, true, true);
+                    this.navigateToSlide(duplicatedSlideIndex, true, true);
                     duplicatedSlide = duplicatedSlideIndex = null;
                 });
             }

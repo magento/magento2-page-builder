@@ -64,7 +64,7 @@
 This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainer`.
 
 The module creates a new custom container group content type with a `left` and `right` appearance.
-It also creates a new custon container content type for the container group.
+It also creates a new custom container content type for the container group.
 
 Each container group has 3 containers in a grid and styled differently based on the appearance of the container group.
 
