@@ -77,7 +77,7 @@
         <element name="hidden" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=row]')).width)"/>
-        <element name="rowStyle" type="button" selector="(//div[@data-role='row'])[{{arg1}}]/div[contains(@style, '{{arg2}}')]" parameterized="true"/>
+        <element name="rowStyle" type="button" selector="(//div[@data-role='row'])[{{arg1}}]//div[@data-element='inner'][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="rowWidthJS" type="text" selector="document.querySelectorAll('[data-appearance=\'{{arg1}}\']')[{{arg2}}].clientWidth" parameterized="true"/>
         <element name="rowH2ChildWidthJS" type="text" selector="document.querySelectorAll('div[data-appearance~=\'{{arg1}}\'] h2')[{{arg2}}].clientWidth" parameterized="true"/>
         <element name="appearance" type="text" selector="(//div[@data-role='row'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>

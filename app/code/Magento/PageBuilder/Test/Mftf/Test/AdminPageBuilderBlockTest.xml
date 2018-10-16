@@ -1114,26 +1114,25 @@
             <title value="Row Content Can Be Vertically Aligned In Block"/>
             <description value="A user can vertically align row contents in a Block"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MC-914"/>
+            <useCaseId value="MC-4280"/>
             <testCaseId value="MC-5061"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting" />
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+            </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Edit Block and configure Row - Vertical Align Bottom -->
         <comment userInput="Edit Block and configure row vertical align bottom" stepKey="commentConfigureRowVerticalAlignBottom"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
-        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
@@ -1145,6 +1144,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
         <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="saveBlock"/>
+        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <!-- Go to CMS Page and choose Block -->
         <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
@@ -1164,20 +1164,20 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Vertical Alignment On Stage - Before Save -->
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
-        <seeElement selector="{{BlockOnStage.rowInnerStyle('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeRowMinHeightBeforeSave"/>
-        <seeElement selector="{{BlockOnStage.rowInnerStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeRowVerticalAlignmentBottomBeforeSave"/>
+        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightBeforeSave"/>
+        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomBeforeSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
-        <seeElement selector="{{BlockOnStage.rowInnerStyle('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeRowMinHeightAfterSave"/>
-        <seeElement selector="{{BlockOnStage.rowInnerStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeRowVerticalAlignmentBottomAfterSave"/>
+        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightAfterSave"/>
+        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomAfterSave"/>
         <!-- Verify Min Height and Vertical Alignment In Storefront -->
         <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <seeElement selector="{{BlockOnStorefront.rowInnerStyle('1', PageBuilderMinHeightProperty_500.value)}}" stepKey="seeRowMinHeightStorefront"/>
-        <seeElement selector="{{BlockOnStorefront.rowInnerStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}" stepKey="seeRowVerticalAlignmentBottomStorefront"/>
+        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightStorefront"/>
+        <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomStorefront"/>
     </test>
 </tests>

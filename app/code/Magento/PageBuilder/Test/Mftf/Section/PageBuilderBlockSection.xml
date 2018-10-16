@@ -31,8 +31,6 @@
         <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <element name="overlay" type="text" selector="(//div[contains(@class,'pagebuilder-block') and contains(@class,'pagebuilder-block-overlay')])[{{arg1}}]" parameterized="true"/>
-        <!-- Row -->
-        <element name="rowInnerStyle" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[@data-role='row']//div[@data-element='inner'][contains(@style, '{{arg2}}')]" parameterized="true"/>
     </section>
     <section name="BlockOnGrid">
         <element name="searchBox" type="text" selector="//input[contains(@class,'data-grid-search-control')]"/>
@@ -45,6 +43,7 @@
         <element name="selectBlockBtn" type="button" selector="(//div[contains(@class,'pagebuilder-block')]//button/span[text()='Select Block'])"/>
     </section>
     <section name="BlockOnStorefront">
+        <element name="ancestor" type="text" selector="[ancestor::div[@data-role='block']]"/>
         <element name="html" type="text" selector="(//div[@data-role='html'])[{{arg1}}]//a[contains(@class,'pagebuilder-button-primary')]" parameterized="true"/>
         <element name="base" type="text" selector="(//div[@data-role='block'])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[@data-role='block'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
@@ -63,7 +62,5 @@
         <element name="noCssClasses" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-role='block'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-role='block'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
-        <!-- Row -->
-        <element name="rowInnerStyle" type="text" selector="(//div[@data-role='block'])[{{arg1}}]//div[@data-role='row']//div[@data-element='inner'][contains(@style, '{{arg2}}')]" parameterized="true"/>
     </section>
 </sections>
