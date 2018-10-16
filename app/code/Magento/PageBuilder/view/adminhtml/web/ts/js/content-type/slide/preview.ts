@@ -159,15 +159,18 @@ export default class Preview extends BasePreview {
             element.focus();
         };
 
+        if (!this.slideChanged) {
+            event.preventDefault();
+            return false;
+        }
         if (!this.wysiwyg) {
-            const selection = this.saveSelection();
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)
                     .then(() => delayUntil(
                         () => {
                             activate();
-                            this.restoreSelection(this.element, selection);
+                            this.restoreSelection(this.element, this.saveSelection());
                         },
                         () => this.element.classList.contains("mce-edit-focus"),
                         10,

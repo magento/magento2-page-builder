@@ -6,6 +6,7 @@
 import $ from "jquery";
 import WysiwygEvents from "mage/adminhtml/wysiwyg/events";
 import {AdditionalDataConfigInterface} from "../../../../content-type-config";
+import delayUntil from "../../../../utils/delay-until";
 import WysiwygComponentInitializerInterface from "../../../wysiwyg/component-initializer-interface";
 import WysiwygInterface from "../../../wysiwyg/wysiwyg-interface";
 
@@ -56,6 +57,11 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
     private fade: boolean;
 
     /**
+     * Slider changing flag
+     */
+    private slideChanging: boolean = false;
+
+    /**
      * Initialize the instance
      *
      * @param {Wysiwyg} wysiwyg
@@ -67,6 +73,15 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
 
         tinymce.eventBus.attachEventHandler(WysiwygEvents.afterFocus, this.onFocus.bind(this));
         tinymce.eventBus.attachEventHandler(WysiwygEvents.afterBlur, this.onBlur.bind(this));
+        // Update our KO pointer to the active slide on change
+        $(this.$element.parents(this.sliderSelector)).parent().on(
+            "beforeChange",
+            () => {
+                this.slideChanging = true;
+            },
+        ).on("afterChange", () => {
+            this.slideChanging = false;
+        });
     }
 
     /**
@@ -79,23 +94,29 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         const sliderContent = this.$element.parents(this.sliderContentSelector)[0];
         const $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
 
-        $.each(this.config.adapter_config.parentSelectorsToUnderlay, (i, selector) => {
-            this.$element.closest(selector as string).css("z-index", 100);
-        });
+        delayUntil(
+            () => {
+                $.each(this.config.adapter_config.parentSelectorsToUnderlay, (i, selector) => {
+                    this.$element.closest(selector as string).css("z-index", 100);
+                });
 
-        // Disable slider keyboard events and fix problem with overflow hidden issue
-        $slider.parent().slick("slickSetOption", "accessibility", false);
-        this.autoplay = $slider.parent().slick("slickGetOption", "autoplay") as boolean;
-        this.fade = $slider.parent().slick("slickGetOption", "fade") as boolean;
-        if (this.autoplay) {
-            $slider.parent().slick("slickPause");
-        }
-        if (!this.fade) {
-            $notActiveSlides.css("display", "none");
-        }
-        this.sliderTransform = sliderContent.style.transform;
-        sliderContent.style.transform = "";
-        $slider.css("overflow", "visible");
+                // Disable slider keyboard events and fix problem with overflow hidden issue
+                $slider.parent().slick("slickSetOption", "accessibility", false);
+                this.autoplay = $slider.parent().slick("slickGetOption", "autoplay") as boolean;
+                this.fade = $slider.parent().slick("slickGetOption", "fade") as boolean;
+                if (this.autoplay) {
+                    $slider.parent().slick("slickPause");
+                }
+                if (!this.fade) {
+                    $notActiveSlides.css("display", "none");
+                }
+                this.sliderTransform = sliderContent.style.transform;
+                sliderContent.style.transform = "";
+                $slider.css("overflow", "visible");
+            },
+            () => !this.slideChanging,
+            10,
+        );
     }
 
     /**
