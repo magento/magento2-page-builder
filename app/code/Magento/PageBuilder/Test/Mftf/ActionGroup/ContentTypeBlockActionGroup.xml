@@ -36,4 +36,25 @@
         <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
+    <actionGroup name="verifyVerticalAlignmentBottomInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container" defaultValue="RowOnStorefront"/>
+            <argument name="content" defaultValue="HtmlOnStorefront"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[0].clientHeight;" stepKey="containerHeight"/>
+        <executeJS function="return {$containerHeight}-{{padding.paddingTop}}-{{padding.paddingBottom}}" stepKey="minusPadding"/>
+        <assertEquals stepKey="assertRowHeightEqualsMinHeight">
+            <expectedResult type="int">{{PageBuilderMinHeightProperty_500.value}}</expectedResult>
+            <actualResult type="variable">minusPadding</actualResult>
+        </assertEquals>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[0].getBoundingClientRect().bottom - 10" stepKey="rowBottomPositionMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[0].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
+        <executeJS function="return Math.round(({$rowBottomPositionMinusPadding}/{$contentBottomPosition})*100)/100" stepKey="bottomPositionRatio"/>
+        <assertEquals stepKey="assertBottomPositionRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">bottomPositionRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
 </actionGroups>
