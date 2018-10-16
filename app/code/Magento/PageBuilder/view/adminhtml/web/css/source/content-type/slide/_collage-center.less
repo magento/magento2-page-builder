@@ -7,7 +7,7 @@
 //  Collage center appearance styles
 //  _____________________________________________
 
-.pagebuilder-slide.pagebuilder-collage-centered {
+.pagebuilder-slide[data-appearance='collage-centered'] {
     .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
         -o-transition: background-color 500ms ease;
@@ -15,6 +15,14 @@
         margin-left: auto;
         margin-right: auto;
         transition: background-color 500ms ease;
+
+        &.wysiwyg-container {
+            .mce-tinymce-inline {
+                left: 29px !important;
+                right: 29px;
+                top: 30px !important;
+            }
+        }
     }
 }
 

@@ -7,9 +7,19 @@
 //  Collage left appearance styles
 //  _____________________________________________
 
-.pagebuilder-slide .pagebuilder-overlay {
-    -moz-transition: background-color 500ms ease;
-    -o-transition: background-color 500ms ease;
-    -webkit-transition: background-color 500ms ease;
-    transition: background-color 500ms ease;
+.pagebuilder-slide[data-appearance='collage-left'] {
+    .pagebuilder-overlay {
+        -moz-transition: background-color 500ms ease;
+        -o-transition: background-color 500ms ease;
+        -webkit-transition: background-color 500ms ease;
+        transition: background-color 500ms ease;
+
+        &.wysiwyg-container {
+            .mce-tinymce-inline {
+                left: 29px !important;
+                right: 29px;
+                top: 30px !important;
+            }
+        }
+    }
 }
