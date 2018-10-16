@@ -3,7 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Test\Unit\Controller\Adminhtml\ContentType\Image;
+
+declare(strict_types=1);
+
+namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 
 use Magento\Framework\File\Mime;
 use Magento\PageBuilder\Controller\Adminhtml\ContentType\Image\Upload as Controller;
@@ -14,13 +17,12 @@ use Magento\PageBuilder\Controller\Adminhtml\ContentType\Image\Upload as Control
 class UploadTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Subject under test
      * @var \Magento\PageBuilder\Controller\Adminhtml\ContentType\Image\Upload
      */
     private $controller;
 
     /**
-     * @var \Magento\Framework\TestFramework\Unit\Helper\ObjectManager
+     * @var \Magento\Framework\ObjectManagerInterface
      */
     private $objectManager;
 
@@ -39,9 +41,12 @@ class UploadTest extends \PHPUnit\Framework\TestCase
      */
     private $resultJsonFactory;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
-        $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $this->objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 
         $this->uploaderFactory = $this->createPartialMock(\Magento\Framework\File\UploaderFactory::class, ['create']);
 
@@ -57,15 +62,26 @@ class UploadTest extends \PHPUnit\Framework\TestCase
 
         $this->resultJsonFactory->expects($this->once())->method('create')->willReturn($this->resultJson);
 
-        $this->controller = $this->objectManager->getObject(Controller::class, [
+        $this->controller = $this->objectManager->create(Controller::class, [
             'resultJsonFactory' => $this->resultJsonFactory,
             'uploaderFactory' => $this->uploaderFactory
         ]);
     }
 
+    /**
+     * @inheritdoc
+     */
+    protected function tearDown()
+    {
+        $_FILES = [];
+    }
+
+    /**
+     * Assert that file validation passes when uploaded file has correct extension and valid mime type
+     */
     public function testFileValidationPassesWhenFileHasCorrectExtensionAndValidMimeType()
     {
-        $valid_file_pathname = realpath(dirname(__FILE__) . '/../../../../_files/a.png');
+        $valid_file_pathname = realpath(dirname(__FILE__) . '/../../../../_files/uploader/a.png');
 
         $_FILES = [
             'background_image' => [
@@ -77,9 +93,9 @@ class UploadTest extends \PHPUnit\Framework\TestCase
             ]
         ];
 
-        $uploader = $this->objectManager->getObject(\Magento\Framework\File\Uploader::class, [
+        $uploader = $this->objectManager->create(\Magento\Framework\File\Uploader::class, [
             'fileId' => 'background_image',
-            'fileMime' => $this->objectManager->getObject(Mime::class),
+            'fileMime' => $this->objectManager->create(Mime::class),
         ]);
 
         $this->uploaderFactory
@@ -97,9 +113,12 @@ class UploadTest extends \PHPUnit\Framework\TestCase
         $this->controller->execute();
     }
 
+    /**
+     * Assert that file validation fails when uploaded file has correct extension but invalid mime type
+     */
     public function testFileValidationFailsWhenFileHasCorrectExtensionButInvalidMimeType()
     {
-        $invalid_file_pathname = realpath(dirname(__FILE__) . '/../../../../_files/not-a.png');
+        $invalid_file_pathname = realpath(dirname(__FILE__) . '/../../../../_files/uploader/not-a.png');
 
         $_FILES = [
             'background_image' => [
@@ -111,9 +130,9 @@ class UploadTest extends \PHPUnit\Framework\TestCase
             ]
         ];
 
-        $uploader = $this->objectManager->getObject(\Magento\Framework\File\Uploader::class, [
+        $uploader = $this->objectManager->create(\Magento\Framework\File\Uploader::class, [
             'fileId' => 'background_image',
-            'fileMime' => $this->objectManager->getObject(Mime::class),
+            'fileMime' => $this->objectManager->create(Mime::class),
         ]);
 
         $this->uploaderFactory
