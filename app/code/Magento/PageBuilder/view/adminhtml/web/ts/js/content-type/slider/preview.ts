@@ -103,8 +103,10 @@ export default class Preview extends PreviewCollection {
 
                     // Redraw slide after content type gets redrawn
                     events.on("contentType:redrawAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-                        if (args.element && this.element && $.contains(args.element, this.element)) {
-                            $(this.element).slick("setPosition");
+                        const $element = $(this.element);
+
+                        if (args.element && this.element && $element.closest(args.element).length) {
+                            $element.slick("setPosition");
                         }
                     });
 
@@ -197,6 +199,13 @@ export default class Preview extends PreviewCollection {
      * @param {HTMLElement} element
      */
     public afterChildrenRender(element: HTMLElement): void {
+        this.element = element;
+
+        // if slider has been re-rendered previously on this element, re-build
+        if (this.ready) {
+            this.buildSlick();
+        }
+
         super.afterChildrenRender(element);
         this.afterChildrenRenderDeferred.resolve(element);
     }
@@ -402,7 +411,9 @@ export default class Preview extends PreviewCollection {
             }
 
             // Dispose current subscription in order to prevent infinite loop
-            this.childSubscribe.dispose();
+            if (this.childSubscribe) {
+                this.childSubscribe.dispose();
+            }
 
             // Force an update on all children, ko tries to intelligently re-render but fails
             const data = this.parent.children().slice(0);

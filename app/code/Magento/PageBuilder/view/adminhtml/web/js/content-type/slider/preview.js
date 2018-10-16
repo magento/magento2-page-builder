@@ -70,6 +70,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _events.on("contentType:redrawAfter", function (args) {
             if (args.element && _this.element && _jquery.contains(args.element, _this.element)) {
               (0, _jquery)(_this.element).slick("setPosition");
+            var $element = (0, _jquery)(this.element);
+
+            if ($element.closest(args.element).length) {
+              $element.slick("setPosition");
             }
           }); // Set the stage to interacting when a slide is focused
 
@@ -183,6 +187,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
+      this.element = element; // if slider has been re-rendered previously on this element, re-build
+
+      if (this.ready) {
+        this.buildSlick();
+      }
+
       _previewCollection2.prototype.afterChildrenRender.call(this, element);
 
       this.afterChildrenRenderDeferred.resolve(element);
@@ -417,7 +427,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Dispose current subscription in order to prevent infinite loop
 
 
-        this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
+        if (this.childSubscribe) {
+          this.childSubscribe.dispose();
+        } // Force an update on all children, ko tries to intelligently re-render but fails
+
 
         var data = this.parent.children().slice(0);
         this.parent.children([]);
