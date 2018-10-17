@@ -1166,14 +1166,24 @@
         <comment userInput="Verify min height and vertical alignment on stage before save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageBeforeSave"/>
         <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightBeforeSave"/>
         <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomBeforeSave"/>
-        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentBeforeSave"/>
+        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentBeforeSave">
+            <argument name="container" value="RowOnStorefront"/>
+            <argument name="content" value="HtmlOnStorefront"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
         <!-- Verify Vertical Alignment On Stage - After Save -->
         <comment userInput="Verify min height and vertical alignment on stage after save" stepKey="commentVerifyMinHeightAndVerticalAlignmentOnStageAfterSave"/>
         <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightAfterSave"/>
         <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomAfterSave"/>
-        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentAfterSave"/>
+        <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentAfterSave">
+            <argument name="container" value="RowOnStorefront"/>
+            <argument name="content" value="HtmlOnStorefront"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
+        </actionGroup>
         <!-- Verify Min Height and Vertical Alignment In Storefront -->
         <comment userInput="Verify min height and vertical alignment in storefront" stepKey="commentVerifyMinHeightAndVerticalAlignmentInStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -1182,7 +1192,11 @@
         <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderMinHeightProperty_500.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowMinHeightStorefront"/>
         <seeElement selector="({{RowOnStorefront.rowStyle('1', PageBuilderVerticalAlignmentPropertyBottom.style)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeRowVerticalAlignmentBottomStorefront"/>
         <actionGroup ref="verifyVerticalAlignmentBottomInBlock" stepKey="verifyBottomAlignmentStorefront">
+            <argument name="container" value="RowOnStorefront"/>
+            <argument name="content" value="HtmlOnStorefront"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
+            <argument name="storefrontBugOffset" value="20"/>
         </actionGroup>
     </test>
 </tests>

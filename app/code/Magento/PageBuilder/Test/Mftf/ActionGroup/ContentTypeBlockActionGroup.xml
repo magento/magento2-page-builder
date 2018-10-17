@@ -39,19 +39,23 @@
     <actionGroup name="verifyVerticalAlignmentBottomInBlock">
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
-            <argument name="container" defaultValue="RowOnStorefront"/>
-            <argument name="content" defaultValue="HtmlOnStorefront"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="container"/>
+            <argument name="content"/>
+            <argument name="minHeight"/>
+            <argument name="padding"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <!-- Remove storefrontBugOffset when MC-5079 is resolved -->
+            <argument name="storefrontBugOffset" defaultValue="0" type="string"/>
         </arguments>
-        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[0].clientHeight;" stepKey="containerHeight"/>
-        <executeJS function="return {$containerHeight}-{{padding.paddingTop}}-{{padding.paddingBottom}}" stepKey="minusPadding"/>
-        <assertEquals stepKey="assertRowHeightEqualsMinHeight">
-            <expectedResult type="int">{{PageBuilderMinHeightProperty_500.value}}</expectedResult>
-            <actualResult type="variable">minusPadding</actualResult>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
+        <executeJS function="return {$containerHeight}-{{storefrontBugOffset}}" stepKey="minusBugOffset"/>
+        <assertEquals stepKey="assertContainerHeightEqualsMinHeight">
+            <expectedResult type="string">{{minHeight}}</expectedResult>
+            <actualResult type="variable">minusBugOffset</actualResult>
         </assertEquals>
-        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[0].getBoundingClientRect().bottom - 10" stepKey="rowBottomPositionMinusPadding"/>
-        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[0].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
-        <executeJS function="return Math.round(({$rowBottomPositionMinusPadding}/{$contentBottomPosition})*100)/100" stepKey="bottomPositionRatio"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="containerBottomPositionMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
+        <executeJS function="return Math.round(({$containerBottomPositionMinusPadding}/{$contentBottomPosition})*100)/100" stepKey="bottomPositionRatio"/>
         <assertEquals stepKey="assertBottomPositionRatio">
             <expectedResult type="int">1</expectedResult>
             <actualResult type="variable">bottomPositionRatio</actualResult>
