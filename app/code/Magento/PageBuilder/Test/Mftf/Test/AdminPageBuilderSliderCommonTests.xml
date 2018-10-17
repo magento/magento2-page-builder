@@ -1491,8 +1491,9 @@
         <!-- Validate Slide 2 Is Shown -->
         <comment userInput="Validate Slide 2 Is Shown" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
-        <waitForPageLoad stepKey="waitForPageLoadAfterClickingSlideNavigationDot2" />
+        <waitForPageLoad stepKey="waitForPageLoadAfterSeeingSlideNavigationDot2" />
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2OptionsMenu"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickingSlideNavigationDot2" />
         <seeElement selector="{{SlideOnBackend.optionsMenu('2')}}" stepKey="seeSlideOptionsMenu4"/>
         <assertElementContainsAttribute selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" attribute="class" stepKey="assertSecondDotActive">
             <expectedResult type="string">active</expectedResult>
