@@ -49,10 +49,10 @@
         </arguments>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
         <executeJS function="return {$containerHeight}-{{storefrontBugOffset}}" stepKey="minusBugOffset"/>
-        <assertEquals stepKey="assertContainerHeightEqualsMinHeight">
+        <assertGreaterThanOrEqual stepKey="assertContainerHeightEqualsMinHeight">
             <expectedResult type="string">{{minHeight}}</expectedResult>
             <actualResult type="variable">minusBugOffset</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="containerBottomPositionMinusPadding"/>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
         <executeJS function="return Math.round(({$containerBottomPositionMinusPadding}/{$contentBottomPosition})*100)/100" stepKey="bottomPositionRatio"/>
