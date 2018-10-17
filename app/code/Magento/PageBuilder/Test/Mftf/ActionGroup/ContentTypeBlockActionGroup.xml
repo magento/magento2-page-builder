@@ -49,7 +49,7 @@
         </arguments>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
         <executeJS function="return {$containerHeight}-{{storefrontBugOffset}}" stepKey="minusBugOffset"/>
-        <assertGreaterThanOrEqual stepKey="assertContainerHeightEqualsMinHeight">
+        <assertGreaterThanOrEqual stepKey="assertContainerHeightGreaterThanOrEqualMinHeight">
             <expectedResult type="string">{{minHeight}}</expectedResult>
             <actualResult type="variable">minusBugOffset</actualResult>
         </assertGreaterThanOrEqual>
