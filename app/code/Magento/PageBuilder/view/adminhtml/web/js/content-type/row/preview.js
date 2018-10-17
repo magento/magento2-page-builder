@@ -51,10 +51,10 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
-              imgPosition: _this.data.main.style().backgroundPosition || "50% 50%",
-              imgRepeat: _this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-              imgSize: _this.data.main.style().backgroundSize || "cover",
-              speed: _this.data.main.attributes()["data-parallax-speed"] || 0.5
+              imgPosition: _this.data.inner.style().backgroundPosition || "50% 50%",
+              imgRepeat: _this.data.inner.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+              imgSize: _this.data.inner.style().backgroundSize || "cover",
+              speed: _this.data.inner.attributes()["data-parallax-speed"] || 0.5
             });
             jarallax(_this.element, "onResize");
           });

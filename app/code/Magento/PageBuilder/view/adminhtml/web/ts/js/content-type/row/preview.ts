@@ -47,10 +47,10 @@ export default class Preview extends PreviewCollection {
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.main.style().backgroundSize || "cover",
-                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
+                        imgPosition: this.data.inner.style().backgroundPosition || "50% 50%",
+                        imgRepeat: this.data.inner.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.inner.style().backgroundSize || "cover",
+                        speed: this.data.inner.attributes()["data-parallax-speed"] || 0.5,
                     },
                 );
                 jarallax(this.element, "onResize");
