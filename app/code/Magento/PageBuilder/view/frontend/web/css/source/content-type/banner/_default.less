@@ -7,7 +7,7 @@
 //  Default appearance styles
 //  _____________________________________________
 
-[data-role='banner'] > a {
+[data-role='banner'] > [data-element='link'] {
     color: inherit;
     text-decoration: inherit;
 
@@ -15,21 +15,36 @@
         color: inherit;
         text-decoration: inherit;
     }
+
+    &[data-href='javascript:void(0)'] {
+        cursor: auto;
+    }
+
+    &:not([data-href='javascript:void(0)']) {
+        cursor: pointer;
+    }
 }
 
 .pagebuilder-banner-wrapper {
     box-sizing: border-box;
+    word-break: break-all;
+
     .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
         -o-transition: background-color 500ms ease;
         -webkit-transition: background-color 500ms ease;
         box-sizing: border-box;
         transition: background-color 500ms ease;
+
         &.pagebuilder-poster-overlay {
             align-items: center;
             display: flex;
             justify-content: center;
         }
+    }
+
+    [data-element='content'] {
+        word-wrap: break-word;
     }
 
     .pagebuilder-banner-button {

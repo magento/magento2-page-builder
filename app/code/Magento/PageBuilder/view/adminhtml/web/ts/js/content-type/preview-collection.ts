@@ -10,6 +10,8 @@ import {DataObject} from "../data-store";
 import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
+    public parent: ContentTypeCollectionInterface;
+
     /**
      * Retrieve the preview child template
      *
@@ -22,15 +24,18 @@ export default class PreviewCollection extends Preview {
     /**
      * Duplicate a collection content type
      *
-     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
+     * @param {boolean} direct
      * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
     public clone(
         contentType: ContentTypeCollectionInterface,
         autoAppend: boolean = true,
+        direct: boolean = false,
     ): Promise<ContentTypeCollectionInterface> | void {
         const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+        const childrenLength = contentType.children ? contentType.children().length : null;
 
         return new Promise((resolve, reject) => {
             createContentType(
@@ -38,15 +43,16 @@ export default class PreviewCollection extends Preview {
                 contentType.parent,
                 contentType.stageId,
                 contentType.dataStore.get() as DataObject,
+                childrenLength,
             ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
                     contentType.children().forEach(
-                        (subChild: ContentTypeInterface & ContentTypeCollectionInterface) => {
+                        (subChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
                             const subChildClone = duplicate.preview.clone(subChild, false);
                             if (subChildClone) {
                                 subChildClone.then(
-                                    (duplicateSubChild: ContentTypeInterface & ContentTypeCollectionInterface) => {
+                                    (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
                                         duplicateSubChild.parent = duplicate;
                                         duplicate.addChild(duplicateSubChild);
                                     },
@@ -61,10 +67,23 @@ export default class PreviewCollection extends Preview {
                 if (autoAppend) {
                     contentType.parent.addChild(duplicate, index);
                 }
-                this.dispatchContentTypeCloneEvents(contentType, duplicate, index);
+                this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
 
                 resolve(duplicate);
             });
+        });
+    }
+
+    /**
+     * Tries to call specified method of a current content type,
+     * and delegates attempt to its' children.
+     * @param args
+     */
+    public delegate(...args: any[]) {
+        super.delegate(...args);
+
+        this.parent.getChildren().each((elem: ContentTypeInterface) => {
+            elem.preview.delegate.apply(elem.preview, args);
         });
     }
 

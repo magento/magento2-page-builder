@@ -4,12 +4,18 @@
  */
 define([
     'jquery',
+    'Magento_PageBuilder/js/events',
     'jquery/ui'
-], function ($) {
+], function ($, events) {
     'use strict';
 
     return function (config, element) {
         var $element = $(element);
+
+        // Ignore stage builder preview tabs
+        if ($element.is('.pagebuilder-tabs')) {
+            return;
+        }
 
         // Disambiguate between the mage/tabs component which is loaded randomly depending on requirejs order.
         $.ui.tabs({
@@ -24,6 +30,16 @@ define([
 
                     $element.find('.tabs-navigation').css('marginBottom', -borderWidth);
                     $element.find('.tabs-navigation li:not(:first-child)').css('marginLeft', -borderWidth);
+                },
+            activate:
+
+                /**
+                 * Trigger redraw event since new content is being displayed
+                 */
+                function () {
+                    events.trigger('contentType:redrawAfter', {
+                        element: element
+                    });
                 }
         }, element);
     };

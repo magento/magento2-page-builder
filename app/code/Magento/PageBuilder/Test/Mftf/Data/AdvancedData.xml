@@ -122,7 +122,7 @@
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">#000000</data>
-        <data key="rbg">rgb(0, 0, 0)</data>
+        <data key="rgb">rgb(0, 0, 0)</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorDefaultProperty" type="pagebuilder_advanced_border_color_property">
         <data key="name">Border Color</data>
@@ -142,7 +142,7 @@
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">#ffffff</data>
-        <data key="rbg">rgb(255, 255, 255)</data>
+        <data key="rgb">rgb(255, 255, 255)</data>
         <data key="editPanelValue">#ffffff</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorProperty_FF0000" type="pagebuilder_advanced_border_color_property">
@@ -150,21 +150,21 @@
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">#FF0000</data>
-        <data key="rbg">rgb(255, 0, 0)</data>
+        <data key="rgb">rgb(255, 0, 0)</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorProperty_FF0000_rgb" type="pagebuilder_advanced_border_color_property">
         <data key="name">Border Color</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">rgb(255, 0, 0)</data>
-        <data key="rbg">rgb(255, 0, 0)</data>
+        <data key="rgb">rgb(255, 0, 0)</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorProperty_green" type="pagebuilder_advanced_border_color_property">
         <data key="name">Border Color</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">#008000</data>
-        <data key="rbg">rgb(0, 128, 0)</data>
+        <data key="rgb">rgb(0, 128, 0)</data>
         <data key="editPanelValue">#008000</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255" type="pagebuilder_advanced_border_color_property">
@@ -172,14 +172,14 @@
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">rgb(0, 0, 255)</data>
-        <data key="rbg">rgb(0, 0, 255)</data>
+        <data key="rgb">rgb(0, 0, 255)</data>
     </entity>
     <entity name="PageBuilderAdvancedBorderColorProperty_invalid" type="pagebuilder_advanced_border_color_property">
         <data key="name">Border Color</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_color</data>
         <data key="value">invalid</data>
-        <data key="rbg">rgb(0, 0, 0)</data>
+        <data key="rgb">rgb(0, 0, 0)</data>
         <data key="errorMessage">Wrong color format. Please specify color in HEX, RGBa, HSVa, HSLa or use color name.</data>
     </entity>
     <!-- Border Width -->
@@ -215,11 +215,19 @@
         <data key="fieldName">border_width</data>
         <data key="value"/>
     </entity>
-    <entity name="PageBuilderAdvancedBorderWidthPropertyInvalid" type="pagebuilder_advanced_border_width_property">
+    <entity name="PageBuilderAdvancedBorderWidthProperty_NonNumeric" type="pagebuilder_advanced_border_width_property">
         <data key="name">Border Width</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_width</data>
         <data key="value">garbage</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <entity name="PageBuilderAdvancedBorderWidthProperty_Negative" type="pagebuilder_advanced_border_width_property">
+        <data key="name">Border Width</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">border_width</data>
+        <data key="value">-1</data>
+        <data key="errorMessage">Please enter a value greater than or equal to 0.</data>
     </entity>
     <!-- Border Radius -->
     <entity name="PageBuilderAdvancedBorderRadiusDefaultProperty" type="pagebuilder_advanced_border_radius_property">
@@ -254,11 +262,19 @@
         <data key="fieldName">border_radius</data>
         <data key="value">500</data>
     </entity>
-    <entity name="PageBuilderAdvancedBorderRadiusPropertyInvalid" type="pagebuilder_advanced_border_radius_property">
+    <entity name="PageBuilderAdvancedBorderRadiusProperty_NonNumeric" type="pagebuilder_advanced_border_radius_property">
         <data key="name">Border Radius</data>
         <data key="section">advanced</data>
         <data key="fieldName">border_radius</data>
         <data key="value">garbage</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <entity name="PageBuilderAdvancedBorderRadiusProperty_Negative" type="pagebuilder_advanced_border_radius_property">
+        <data key="name">Border Radius</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">border_radius</data>
+        <data key="value">-1</data>
+        <data key="errorMessage">Please enter a value greater than or equal to 0.</data>
     </entity>
     <!-- CSS Classes -->
     <entity name="PageBuilderAdvancedCssClassesDefaultProperty" type="pagebuilder_advanced_css_classes_property">
@@ -349,7 +365,7 @@
         <data key="marginBottom">3</data>
         <data key="marginLeft">4</data>
     </entity>
-    <entity name="PageBuilderMarginsPropertyInvalid" type="pagebuilder_margins_property">
+    <entity name="PageBuilderMarginsProperty_NonNumeric" type="pagebuilder_margins_property">
         <data key="name">Margins and Padding</data>
         <data key="section">advanced</data>
         <data key="fieldName">margins_and_padding</data>
@@ -357,6 +373,7 @@
         <data key="marginRight">garbage</data>
         <data key="marginBottom">garbage</data>
         <data key="marginLeft">garbage</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
     </entity>
     <entity name="PageBuilderMarginsPropertyRowDefault" type="pagebuilder_margins_property">
         <data key="name">Margins and Padding</data>
@@ -506,6 +523,7 @@
         <data key="name">Margins and Padding</data>
         <data key="section">advanced</data>
         <data key="fieldName">margins_and_padding</data>
+        <data key="value">5</data>
         <data key="marginTop">5</data>
         <data key="marginRight">5</data>
         <data key="marginBottom">5</data>
@@ -527,5 +545,16 @@
         <data key="paddingRight">0</data>
         <data key="paddingBottom">0</data>
         <data key="paddingLeft">0</data>
+    </entity>
+    <entity name="PageBuilderAdvancedMarginsAndPaddingBoundaryData" type="pagebuilder_advanced_margins_and_padding_property">
+        <data key="name">Margins and Padding</data>
+        <data key="section">advanced</data>
+        <data key="fieldName">margins_and_padding</data>
+        <data key="invalidString">garbage</data>
+        <data key="invalidMin">-1000</data>
+        <data key="invalidMax">1000</data>
+        <data key="invalidStringError">Please enter a valid number in this field.</data>
+        <data key="invalidMinError">Please enter a value greater than or equal to -999.</data>
+        <data key="invalidMaxError">Please enter a value less than or equal to 999.</data>
     </entity>
 </entities>

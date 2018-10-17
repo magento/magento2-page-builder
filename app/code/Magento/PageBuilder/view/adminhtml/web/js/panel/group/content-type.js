@@ -7,13 +7,14 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
   var ContentType =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     /**
      * @param {string} identifier
      * @param {ContentTypeConfigInterface} config
      */
     function ContentType(identifier, config) {
       this.droppable = true;
-      this.config = void 0;
       this.icon = _knockout.observable("");
       this.identifier = _knockout.observable("");
       this.label = _knockout.observable("");

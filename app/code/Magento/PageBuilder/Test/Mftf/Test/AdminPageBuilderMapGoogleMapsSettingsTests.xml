@@ -16,7 +16,7 @@
             <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91906"/>
+            <testCaseId value="MC-2741"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
@@ -79,12 +79,10 @@
             <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront on existing page."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91904"/>
+            <testCaseId value="MC-2497"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -159,7 +157,7 @@
             <description value="A user should see a warning message on the configuration panel with a link that takes you to the configuration page."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91903"/>
+            <testCaseId value="MC-2768"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
@@ -196,7 +194,7 @@
             <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91913"/>
+            <testCaseId value="MC-2755"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
@@ -247,12 +245,10 @@
             <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront on existing page."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91914"/>
+            <testCaseId value="MC-2536"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -337,7 +333,7 @@
             <description value="A user should not be able to add a new location with an invalid API key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92236"/>
+            <testCaseId value="MC-2462"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
@@ -370,12 +366,10 @@
             <description value="A user should be able to edit a location with an invalid API key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92237"/>
+            <testCaseId value="MC-2463"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -486,12 +480,10 @@
             <description value="A user should be able to delete a location with an invalid API key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92238"/>
+            <testCaseId value="MC-2439"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsAPIKey"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -580,12 +572,10 @@
             <description value="A change to the Google Maps Style should not take affect on the storefront until a page save or a cache refresh"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92776"/>
+            <testCaseId value="MC-2523"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsStyle"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
@@ -641,13 +631,14 @@
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Storefront: Validate Map Style Changed -->
         <comment userInput="Storefront: Validate Map Style Changed" stepKey="commentValidate2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
         <assertEquals stepKey="assertMapStyle2">
             <actualResult type="variable">$mapStyle2</actualResult>
@@ -686,7 +677,7 @@
             <description value="A change to the Google Maps Style should immediately take affect on the stage without a cache refresh"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89028"/>
-            <testCaseId value="MAGETWO-92778"/>
+            <testCaseId value="MC-2747"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-googleMapsStyle"/>

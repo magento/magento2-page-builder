@@ -15,7 +15,9 @@ export default class TagEscaper implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return unescape(unescape(value));
+        const result = unescape(value);
+        // Have to do a manual &nbsp; replace since underscore un-escape does not un-escape &nbsp;
+        return result.replace(/&nbsp;/g, String.fromCharCode(160));
     }
 
     /**
@@ -26,6 +28,6 @@ export default class TagEscaper implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return escape(escape(data[name].toString()));
+        return escape(data[name].toString());
     }
 }

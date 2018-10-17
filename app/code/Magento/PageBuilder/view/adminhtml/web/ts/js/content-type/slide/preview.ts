@@ -3,87 +3,61 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
+import Uploader from "../../uploader";
+import delayUntil from "../../utils/delay-until";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
-import Uploader from "../uploader";
+import SliderPreview from "../slider/preview";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
     private buttonPlaceholder: string = $t("Edit Button Text");
+    /**
+     * Wysiwyg instance
+     */
+    private wysiwyg: WysiwygInterface;
 
     /**
-     * Uploader instance
+     * The textarea element in disabled mode
      */
-    private uploader: Uploader;
+    private textarea: HTMLTextAreaElement;
 
     /**
-     * Get the background wrapper attributes for the preview
-     *
-     * @returns {any}
+     * The element the text content type is bound to
      */
-    public getBackgroundStyles() {
-        const desktopStyles = this.data.desktop_image.style();
-        return {
-            ...desktopStyles,
-            paddingBottom: "",
-            paddingLeft: "",
-            paddingRight: "",
-            paddingTop: "",
-            borderStyle: "none",
-            borderRadius: "0px",
-        };
-    }
+    private element: HTMLElement;
 
     /**
-     * Get the slide wrapper attributes for the preview
-     *
-     * @returns {any}
+     * Slide flag
      */
-    public getPaddingStyles() {
-        const previewData = this.previewData;
-        const appearance = this.data.main.attributes()["data-appearance"];
-        const paddingData: any =  {};
-        switch (appearance) {
-            case "collage-centered":
-                paddingData.paddingLeft = `calc(25% + ${this.data.desktop_image.style().paddingLeft})`;
-                paddingData.paddingRight = `calc(25% + ${this.data.desktop_image.style().paddingRight})`;
-                break;
-            case "collage-left":
-                paddingData.paddingRight = `calc(50% + ${this.data.desktop_image.style().paddingRight})`;
-                break;
-            case "collage-right":
-                paddingData.paddingLeft = `calc(50% + ${this.data.desktop_image.style().paddingLeft})`;
-                break;
-            default:
-                break;
-        }
-        let backgroundImage: string = "none";
-        if (previewData.background_image() && previewData.background_image() !== "" &&
-            previewData.background_image() !== undefined &&
-            previewData.background_image()[0] !== undefined) {
-            backgroundImage = "url(" + previewData.background_image()[0].url + ")";
-        }
-        const styles =  {
-            backgroundImage,
-            backgroundSize: previewData.background_size(),
-            minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
-            overflow: "hidden",
-            paddingBottom: this.data.desktop_image.style().paddingBottom || "",
-            paddingLeft: this.data.desktop_image.style().paddingLeft || "",
-            paddingRight: this.data.desktop_image.style().paddingRight || "",
-            paddingTop: this.data.desktop_image.style().paddingTop || "",
-        };
-        return {
-            ...styles,
-            ...paddingData,
-        };
+    private slideChanged: boolean = true;
+
+    /**
+     * @param {HTMLElement} element
+     */
+    public afterRenderWysiwyg(element: HTMLElement) {
+        this.element = element;
+        element.id = this.parent.id + "-editor";
+
+        /**
+         * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
+         * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
+         * WYSIWYG instance will be detached from this slide and we need to re-initialize on click.
+         */
+        this.wysiwyg = null;
     }
 
     /**
@@ -159,7 +133,143 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        return this.uploader;
+        const dataStore = this.parent.dataStore.get();
+        const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+        // Create uploader
+        return new Uploader(
+            "imageuploader_" + this.parent.id,
+            this.config.additional_data.uploaderConfig,
+            this.parent.id,
+            this.parent.dataStore,
+            initialImageValue,
+        );
+    }
+
+    /**
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public activateEditor(preview: Preview, event: JQueryEventObject) {
+        const activate = () => {
+            const element = this.wysiwyg && this.element || this.textarea;
+            element.focus();
+        };
+
+        if (!this.wysiwyg) {
+            const selection = this.saveSelection();
+            this.element.removeAttribute("contenteditable");
+            _.defer(() => {
+                this.initWysiwyg(true)
+                    .then(() => delayUntil(
+                        () => {
+                            activate();
+                            this.restoreSelection(this.element, selection);
+                        },
+                        () => this.element.classList.contains("mce-edit-focus"),
+                        10,
+                    )).catch((error) => {
+                        // If there's an error with init of WYSIWYG editor push into the console to aid support
+                        console.error(error);
+                    });
+            });
+        } else {
+            activate();
+        }
+    }
+
+    /**
+     * Stop event to prevent execution of action when editing textarea.
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public stopEvent(preview: Preview, event: JQueryEventObject) {
+        event.stopPropagation();
+
+        return true;
+    }
+
+    /**
+     * @returns {Boolean}
+     */
+    public isWysiwygSupported(): boolean {
+        return Config.getConfig("can_use_inline_editing_on_stage");
+    }
+
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+    public initTextarea(element: HTMLTextAreaElement)
+    {
+        this.textarea = element;
+
+        // set initial value of textarea based on data store
+        this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.adjustTextareaHeightBasedOnScrollHeight();
+
+        // Update content in our stage preview textarea after its slideout counterpart gets updated
+        events.on(`form:${this.parent.id}:saveAfter`, () => {
+            this.textarea.value = this.parent.dataStore.get("content") as string;
+            this.adjustTextareaHeightBasedOnScrollHeight();
+        });
+    }
+
+    /**
+     * Save current value of textarea in data store
+     */
+    public onTextareaKeyUp()
+    {
+        this.adjustTextareaHeightBasedOnScrollHeight();
+        this.parent.dataStore.update(this.textarea.value, "content");
+    }
+
+    /**
+     * Start stage interaction on textarea blur
+     */
+    public onTextareaFocus()
+    {
+        $(this.textarea).closest(".pagebuilder-content-type").addClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStart");
+    }
+
+    /**
+     * Stop stage interaction on textarea blur
+     */
+    public onTextareaBlur()
+    {
+        $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStop");
+    }
+
+    /**
+     * Init the WYSIWYG
+     */
+    public initWysiwyg(focus: boolean = false) {
+        if (this.wysiwyg) {
+            return;
+        }
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+
+        if (focus) {
+            wysiwygConfig.adapter.settings.auto_focus = this.element.id;
+        }
+
+        return WysiwygFactory(
+            this.parent.id,
+            this.element.id,
+            this.config.name,
+            wysiwygConfig,
+            this.parent.dataStore,
+            "content",
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
+        });
     }
 
     /**
@@ -174,26 +284,34 @@ export default class Preview extends BasePreview {
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
+        // Remove wysiwyg before assign new instance.
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.parent.parent.id) {
+               this.wysiwyg = null;
+            }
+        });
+
         events.on(`${this.config.name}:mountAfter`, (args: ContentTypeMountEventParamsInterface) => {
             if (args.id === this.parent.id) {
-                const dataStore = this.parent.dataStore.get();
-                const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
-
-                // Create uploader
-                this.uploader = new Uploader(
-                    "imageuploader_" + this.parent.id,
-                    this.config.additional_data.uploaderConfig,
-                    this.parent.id,
-                    this.parent.dataStore,
-                    initialImageValue,
-                );
-
                 // Update the display label for the slide
                 const slider = this.parent.parent;
                 this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
                 slider.children.subscribe((children) => {
                     const index = children.indexOf(this.parent);
                     this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
+                });
+            }
+        });
+
+        events.on(`${this.config.name}:renderAfter`, (args: ContentTypeMountEventParamsInterface) => {
+            if (args.id === this.parent.id) {
+                const slider = this.parent.parent;
+
+                $((slider.preview as SliderPreview).element).on("beforeChange", () => {
+                    this.slideChanged = false;
+                });
+                $((slider.preview as SliderPreview).element).on("afterChange", () => {
+                    this.slideChanged = true;
                 });
             }
         });
@@ -210,4 +328,102 @@ export default class Preview extends BasePreview {
             this.config.additional_data.uploaderConfig.dataScope,
         );
     }
+
+    /**
+     * Adjust textarea's height based on scrollHeight
+     */
+    private adjustTextareaHeightBasedOnScrollHeight()
+    {
+        this.textarea.style.height = "";
+        const scrollHeight = this.textarea.scrollHeight;
+        const minHeight = parseInt($(this.textarea).css("min-height"), 10);
+
+        if (scrollHeight === minHeight) { // leave height at 'auto'
+            return;
+        }
+
+        $(this.textarea).height(scrollHeight);
+    }
+
+    /**
+     * Save the current selection to be restored at a later point
+     *
+     * @returns {Selection}
+     */
+    private saveSelection(): Selection {
+        if (window.getSelection) {
+            const selection = window.getSelection();
+            if (selection.getRangeAt && selection.rangeCount) {
+                const range = selection.getRangeAt(0).cloneRange();
+                $(range.startContainer.parentNode).attr("data-startContainer", "true");
+                $(range.endContainer.parentNode).attr("data-endContainer", "true");
+                return {
+                    startContainer: range.startContainer,
+                    startOffset: range.startOffset,
+                    endContainer: range.endContainer,
+                    endOffset: range.endOffset,
+                };
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restore the original selection
+     *
+     * @param {HTMLElement} element
+     * @param {Selection} selection
+     */
+    private restoreSelection(element: HTMLElement, selection: Selection) {
+        if (window.getSelection) {
+            // Find the original container that had the selection
+            const startContainerParent = $(element).find("[data-startContainer]");
+            startContainerParent.removeAttr("data-startContainer");
+            const startContainer: HTMLElement = this.findTextNode(
+                startContainerParent,
+                selection.startContainer.nodeValue,
+            );
+            const endContainerParent = $(element).find("[data-endContainer]");
+            endContainerParent.removeAttr("data-endContainer");
+            let endContainer: HTMLElement = startContainer;
+            if (selection.endContainer.nodeValue !== selection.startContainer.nodeValue) {
+                endContainer = this.findTextNode(
+                    endContainerParent,
+                    selection.endContainer.nodeValue,
+                );
+            }
+
+            if (startContainer && endContainer) {
+                const newSelection = window.getSelection();
+                newSelection.removeAllRanges();
+
+                const range = document.createRange();
+                range.setStart(startContainer, selection.startOffset);
+                range.setEnd(endContainer, selection.endOffset);
+                newSelection.addRange(range);
+            }
+        }
+    }
+
+    /**
+     * Find a text node within an existing element
+     *
+     * @param {HTMLElement} element
+     * @param {string} text
+     * @returns {HTMLElement}
+     */
+    private findTextNode(element: JQuery, text: string): HTMLElement {
+        if (text && text.trim().length > 0) {
+            return element.contents().toArray().find((node: HTMLElement) => {
+                return node.nodeType === Node.TEXT_NODE && text === node.nodeValue;
+            });
+        }
+    }
+}
+
+interface Selection {
+    startContainer: Node;
+    startOffset: number;
+    endContainer: Node;
+    endOffset: number;
 }

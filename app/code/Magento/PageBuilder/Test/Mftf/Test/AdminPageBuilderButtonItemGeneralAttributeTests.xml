@@ -16,7 +16,7 @@
             <description value="A user should be able to enter empty text for the button text attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92104"/>
+            <testCaseId value="MC-2443"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -82,7 +82,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
     </test>
     <test name="ButtonItemOneCharacterButtonText">
@@ -93,7 +93,7 @@
             <description value="A user should be able to enter one character for the button text attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92105"/>
+            <testCaseId value="MC-2470"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -159,6 +159,7 @@
         <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
+            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
     </test>
     <test name="ButtonItemCommonCharactersButtonText">
@@ -169,7 +170,7 @@
             <description value="A user should be able to enter common characters for the button text attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92106"/>
+            <testCaseId value="MC-2451"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -235,6 +236,7 @@
         <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
+            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
     </test>
     <test name="ButtonItemSpecialCharactersButtonText">
@@ -246,7 +248,7 @@
             <!-- Add special characters in MAGETWO-92103 after bug is resolved -->
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92107"/>
+            <testCaseId value="MC-2457"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -312,6 +314,7 @@
         <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_SpecialCharacters"/>
+            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
     </test>
     <test name="ButtonItemLongButtonText">
@@ -322,7 +325,7 @@
             <description value="A user should be able to enter a long string for the button text attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92108"/>
+            <testCaseId value="MC-2481"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -400,6 +403,7 @@
         <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
+            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
         <!-- Get Width Of Button on Store Front -->
         <executeJS function="return Math.round({{ButtonItemOnStorefront.jsButtonSelector('1')}}.clientWidth)" stepKey="buttonWidthStoreFront"/>
@@ -422,7 +426,7 @@
             <description value="A user should be able to enter primary for the button type attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92110"/>
+            <testCaseId value="MC-2485"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -488,7 +492,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
     </test>
     <test name="ButtonItemSecondaryButtonType">
@@ -499,7 +503,7 @@
             <description value="A user should be able to enter secondary for the button type attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92111"/>
+            <testCaseId value="MC-2471"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -565,7 +569,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Secondary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
     </test>
     <test name="ButtonItemLinkButtonType">
@@ -576,7 +580,7 @@
             <description value="A user should be able to enter link for the button type attribute on a button item."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90474"/>
-            <testCaseId value="MAGETWO-92112"/>
+            <testCaseId value="MC-2484"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -642,7 +646,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Link.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
     </test>
 </tests>

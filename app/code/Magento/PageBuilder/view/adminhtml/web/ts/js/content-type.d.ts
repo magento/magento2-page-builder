@@ -17,4 +17,5 @@ export default interface ContentTypeInterface<P = Preview, M = Master> {
     preview: P;
     content: M;
     dataStore: DataStore;
+    dropped: boolean;
 }

@@ -15,7 +15,7 @@
             <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
         </arguments>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptions"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEdit(contentType.role)}}" stepKey="clickEditContentType"/>
@@ -84,9 +84,11 @@
             <argument name="contentType"/>
             <argument name="targetIndex" defaultValue="1" type="string"/>
             <argument name="expectedIndex" defaultValue="2" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="null" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="null" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="onMouseOverContentTypeStage"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, targetIndex)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(contentType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
         <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="clickDuplicateContentType"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
@@ -285,5 +287,13 @@
         <waitForPageLoad stepKey="waitForDisable" />
         <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(contentType.role, targetIndex)}}" stepKey="waitForHideOptionVisible" />
         <dontSeeElementInDOM selector="{{section.hidden(targetIndex)}}" stepKey="dontSeeDomContentTypeHidden" />
+    </actionGroup>
+    <actionGroup name="unFocusOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickSearchPanel"/>
+        <waitForPageLoad stepKey="waitForAnimation"/>
+        <waitForElementNotVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(contentType.role)}}" stepKey="dontSeeOptionsMenu"/>
     </actionGroup>
 </actionGroups>

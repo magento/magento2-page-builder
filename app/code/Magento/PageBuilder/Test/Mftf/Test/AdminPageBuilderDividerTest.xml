@@ -16,7 +16,7 @@
             <description value="Validate that updating every attribute in the General form for Divider will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83931"/>
-            <testCaseId value="MAGETWO-84268"/>
+            <testCaseId value="MC-2891"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -102,7 +102,7 @@
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Divider."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89190"/>
-            <testCaseId value="MAGETWO-89781"/>
+            <testCaseId value="MC-2645"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -190,7 +190,7 @@
             <description value="Validate the default values for every attribute in the Advanced Configuration section on the Edit Form, Stage, and Storefront for Divider."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-88325"/>
+            <testCaseId value="MC-2795"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -214,7 +214,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -237,7 +236,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -248,7 +247,7 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -261,13 +260,12 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -290,7 +288,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
@@ -303,7 +301,7 @@
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingProperty10"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
@@ -315,7 +313,7 @@
             <description value="Validate that updating every attribute in the Advanced Configuration form for Divider will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89190"/>
-            <testCaseId value="MAGETWO-89782"/>
+            <testCaseId value="MC-2533"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -339,7 +337,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -384,7 +381,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -431,7 +427,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -484,7 +479,7 @@
             <description value="A user should be able to duplicate a divider content type. Verify on Stage and Storefront."/>
             <severity value="MAJOR"/>
             <useCaseId value="MAGETWO-90475"/>
-            <testCaseId value="MAGETWO-91143"/>
+            <testCaseId value="MC-2763"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -517,7 +512,6 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineWidth">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -601,7 +595,6 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLineWidthBeforeSave">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -665,7 +658,6 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLineWidthAfterSave">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -728,7 +720,7 @@
             <description value="A user should only have to enter required fields."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90475"/>
-            <testCaseId value="MAGETWO-91144"/>
+            <testCaseId value="MC-2506"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -1100,7 +1092,7 @@
             <description value="A user is able to hide and show the divider successfully"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
-            <testCaseId value="MC-3522"/>
+            <testCaseId value="MC-3523"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
             <group value="pagebuilder-hideShow"/>

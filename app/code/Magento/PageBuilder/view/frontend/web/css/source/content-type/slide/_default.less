@@ -9,8 +9,9 @@
 
 [data-role='slide'] {
     box-sizing: border-box;
+    overflow: hidden;
 
-    > a {
+    > [data-element='link'] {
         color: inherit;
         text-decoration: inherit;
 
@@ -18,11 +19,20 @@
             color: inherit;
             text-decoration: inherit;
         }
+
+        &[data-href='javascript:void(0)'] {
+            cursor: auto;
+        }
+
+        &:not([data-href='javascript:void(0)']) {
+            cursor: pointer;
+        }
     }
 }
 
 .pagebuilder-slide-wrapper {
     box-sizing: border-box;
+    word-break: break-all;
 
     .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;

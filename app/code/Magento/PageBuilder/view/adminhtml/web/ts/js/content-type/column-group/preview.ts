@@ -13,7 +13,6 @@ import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import {DataObject} from "../../data-store";
-import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
@@ -38,6 +37,7 @@ import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
  * @api
  */
 export default class Preview extends PreviewCollection {
+    public parent: ContentTypeCollectionInterface<ColumnGroupPreview>;
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
         let empty: boolean = false;
@@ -107,7 +107,9 @@ export default class Preview extends PreviewCollection {
 
         events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
-                this.spreadWidth(event, args);
+                _.defer(() => {
+                    this.spreadWidth(args.index);
+                });
             }
         });
 
@@ -347,9 +349,7 @@ export default class Preview extends PreviewCollection {
                 const columnInstance: ContentTypeCollectionInterface = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
                 setDragColumn((columnInstance.parent as ContentTypeCollectionInterface<ColumnPreview>));
-                this.dropPositions = calculateDropPositions(
-                    this.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                );
+                this.dropPositions = calculateDropPositions(this.parent);
 
                 events.trigger("column:dragStart", {
                     column: columnInstance,
@@ -395,7 +395,7 @@ export default class Preview extends PreviewCollection {
             if (newGridSize !== this.resizeUtils.getGridSize()) {
                 try {
                     resizeGrid(
-                        (this.parent as ContentTypeCollectionInterface<Preview>),
+                        this.parent,
                         newGridSize,
                         this.gridSizeHistory,
                     );
@@ -491,7 +491,7 @@ export default class Preview extends PreviewCollection {
     private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>): void {
         columns.forEach((column) => {
             column.preview.resizing(true);
-            column.preview.element.css({transition: `width ${animationTime}ms ease-in-out`});
+            column.preview.element.css({transition: `width 350ms ease-in-out`});
         });
     }
 
@@ -777,9 +777,7 @@ export default class Preview extends PreviewCollection {
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions(
-                    this.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                );
+                this.dropPositions = calculateDropPositions(this.parent);
             }
             const columnInstance = dragColumn;
             const currentX = event.pageX - groupPosition.left;
@@ -936,13 +934,13 @@ export default class Preview extends PreviewCollection {
                 self.dropPlaceholder.removeClass("left right");
             },
             over() {
-                // Always calculate drop positions when an element is dragged over
-                self.dropPositions = calculateDropPositions(
-                    self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
-                );
-
                 // Is the element currently being dragged a column?
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                    // Always calculate drop positions when an element is dragged over
+                    self.dropPositions = calculateDropPositions(
+                        self.parent as ContentTypeCollectionInterface<ColumnGroupPreview>,
+                    );
+
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;
@@ -952,12 +950,11 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Spread any empty space across the other columns
+     * Spread any empty space across the other columns when a column is removed
      *
-     * @param {Event} event
-     * @param {ContentTypeRemovedEventParamsInterface} params
+     * @param {number} removedIndex
      */
-    private spreadWidth(event: Event, params: ContentTypeRemovedEventParamsInterface): void {
+    private spreadWidth(removedIndex: number): void {
         if (this.parent.children().length === 0) {
             return;
         }
@@ -995,15 +992,15 @@ export default class Preview extends PreviewCollection {
             let columnToModify: ContentTypeCollectionInterface<ColumnPreview>;
 
             // As the original column has been removed from the array, check the new index for a column
-            if ((params.index) <= this.parent.children().length
-                && typeof this.parent.children()[params.index] !== "undefined") {
-                columnToModify = this.parent.children()[params.index] as ContentTypeCollectionInterface<ColumnPreview>;
+            if (removedIndex <= this.parent.children().length
+                && typeof this.parent.children()[removedIndex] !== "undefined") {
+                columnToModify = this.parent.children()[removedIndex] as ContentTypeCollectionInterface<ColumnPreview>;
             }
-            if (!columnToModify && (params.index - i) >= 0 &&
-                typeof this.parent.children()[params.index - i] !== "undefined"
+            if (!columnToModify && (removedIndex - i) >= 0 &&
+                typeof this.parent.children()[removedIndex - i] !== "undefined"
             ) {
                 columnToModify =
-                    this.parent.children()[params.index - i] as ContentTypeCollectionInterface<ColumnPreview>;
+                    this.parent.children()[removedIndex - i] as ContentTypeCollectionInterface<ColumnPreview>;
             }
             if (columnToModify) {
                 updateColumnWidth(

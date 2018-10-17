@@ -23,13 +23,14 @@ export default class Preview extends BasePreview {
     public displayingBlockPreview: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
-    private lastBlockId: number;
-    private lastTemplate: string;
-    private lastRenderedHtml: string;
-    private messages = {
+    public element: HTMLElement;
+    protected messages = {
         NOT_SELECTED: $t("Empty Block"),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
+    private lastBlockId: number;
+    private lastTemplate: string;
+    private lastRenderedHtml: string;
 
     /**
      * @inheritdoc
@@ -46,10 +47,25 @@ export default class Preview extends BasePreview {
     /**
      * Runs the widget initializer for each configured widget
      */
-    public initializeWidgets() {
-        widgetInitializer({
-            config: Config.getConfig("widgets"),
-        });
+    public initializeWidgets(element: HTMLElement) {
+        if (element) {
+            this.element = element;
+            widgetInitializer({
+                config: Config.getConfig("widgets"),
+            }, element);
+        }
+    }
+
+    /**
+     * Updates the view state using the data provided
+     * @param {DataObject} data
+     */
+    public processBlockData(data: DataObject): void {
+        // Only load if something changed
+        this.displayPreviewPlaceholder(data, "block_id");
+        if (data.block_id && data.template.length !== 0) {
+            this.processRequest(data, "block_id", "title");
+        }
     }
 
     /**
@@ -76,40 +92,60 @@ export default class Preview extends BasePreview {
         const data = this.parent.dataStore.get() as DataObject;
 
         // Only load if something changed
-        if (this.lastBlockId === data.block_id && this.lastTemplate === data.template) {
+        this.processBlockData(data);
+
+    }
+
+    /**
+     * Display preview placeholder
+     *
+     * @param {DataObject} data
+     * @param {string} identifierName
+     */
+    protected displayPreviewPlaceholder(data: DataObject, identifierName: string): void {
+        // Only load if something changed
+        if (this.lastBlockId === data[identifierName] && this.lastTemplate === data.template) {
             // The mass converter will have transformed the HTML property into a directive
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
                 this.showBlockPreview(true);
-                this.initializeWidgets();
+                this.initializeWidgets(this.element);
             }
         } else {
             this.showBlockPreview(false);
             this.placeholderText("");
         }
 
-        if (!data.block_id || data.template.length === 0) {
+        if (!data[identifierName] || (data[identifierName] && data[identifierName].length === 0) ||
+            data.template.length === 0) {
             this.showBlockPreview(false);
             this.placeholderText(this.messages.NOT_SELECTED);
             return;
         }
+    }
 
-        this.loading(true);
-
+    /**
+     *
+     * @param {DataObject} data
+     * @param {string} identifierName
+     * @param {string} labelKey
+     */
+    protected processRequest(data: DataObject, identifierName: string, labelKey: string): void {
         const url = Config.getConfig("preview_url");
+        const identifier = data[identifierName];
         const requestConfig = {
             // Prevent caching
             method: "POST",
             data: {
                 role: this.config.name,
-                block_id: data.block_id,
+                block_id: identifier,
                 directive: this.data.main.html(),
             },
         };
-
+        this.loading(true);
         // Retrieve a state object representing the block from the preview controller and process it on the stage
         $.ajax(url, requestConfig)
-            // The state object will contain the block name and either html or a message why there isn't any.
+        // The state object will contain the block name and either html or a message why there isn't any.
             .done((response) => {
                 // Empty content means something bad happened in the controller that didn't trigger a 5xx
                 if (typeof response.data !== "object") {
@@ -120,18 +156,18 @@ export default class Preview extends BasePreview {
                 }
 
                 // Update the stage content type label with the real block title if provided
-                this.displayLabel(response.data.title ? response.data.title : this.config.label);
+                this.displayLabel(response.data[labelKey] ? response.data[labelKey] : this.config.label);
 
                 if (response.data.content) {
                     this.showBlockPreview(true);
                     this.data.main.html(response.data.content);
-                    this.initializeWidgets();
+                    this.initializeWidgets(this.element);
                 } else if (response.data.error) {
                     this.showBlockPreview(false);
                     this.placeholderText(response.data.error);
                 }
 
-                this.lastBlockId = parseInt(data.block_id.toString(), 10);
+                this.lastBlockId = parseInt(identifier.toString(), 10);
                 this.lastTemplate = data.template.toString();
                 this.lastRenderedHtml = response.data.content;
             })

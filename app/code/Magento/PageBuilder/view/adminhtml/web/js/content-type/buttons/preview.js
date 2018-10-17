@@ -1,23 +1,38 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _contentTypeFactory, _option, _delayUntil, _previewCollection) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
 
-    function Preview() {
-      var _temp, _this;
+    _inheritsLoose(Preview, _previewCollection2);
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    /**
+     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Preview(parent, config, observableUpdater) {
+      var _this;
 
-      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _this.currentMaxWidth = _knockout.observable(0), _this.disableSorting = _knockout.computed(function () {
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Keeps track of number of button item to disable sortable if there is only 1.
+
+      _this.focusedButton = _knockout.observable();
+      _this.debouncedResizeHandler = _underscore.debounce(function () {
+        _this.resizeChildButtons();
+      }, 350);
+
+      _this.parent.children.subscribe(function () {
         var sortableElement = (0, _jquery)(_this.wrapperElement).find(".buttons-container");
 
         if (_this.parent.children().length <= 1) {
@@ -25,15 +40,41 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } else {
           sortableElement.sortable("enable");
         }
-      }), _temp) || _this;
+      }); // Monitor focus tab to start / stop interaction on the stage, debounce to avoid duplicate calls
+
+
+      _this.focusedButton.subscribe(_underscore.debounce(function (index) {
+        if (index !== null) {
+          _events.trigger("stage:interactionStart");
+
+          var focusedButton = _this.parent.children()[index];
+
+          (0, _delayUntil)(function () {
+            return (0, _jquery)(focusedButton.preview.wrapperElement).find("[contenteditable]").focus();
+          }, function () {
+            return typeof focusedButton.preview.wrapperElement !== "undefined";
+          }, 10);
+        } else {
+          // We have to force the stop as the event firing is inconsistent for certain operations
+          _events.trigger("stage:interactionStop", {
+            force: true
+          });
+        }
+      }, 1));
+
+      return _this;
     }
+    /**
+     * Bind events
+     */
+
 
     var _proto = Preview.prototype;
 
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this);
+      _previewCollection2.prototype.bindEvents.call(this);
 
       _events.on("buttons:dropAfter", function (args) {
         if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
@@ -41,37 +82,42 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
-      _events.on("buttons:renderAfter", function (eventData) {
-        if (eventData.contentType.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
+      _events.on("buttons:renderAfter", function (args) {
+        if (args.contentType.id === _this2.parent.id) {
+          _this2.debouncedResizeHandler();
         }
       });
 
-      _events.on("button-item:renderAfter", function (eventData) {
-        if (eventData.contentType.parent.id === _this2.parent.id) {
-          _this2.resizeChildButtons();
+      _events.on("button-item:renderAfter", function (args) {
+        if (args.contentType.parent.id === _this2.parent.id) {
+          _this2.debouncedResizeHandler();
         }
       });
 
-      _events.on("stage:updateAfter", function (eventData) {
-        _underscore.debounce(function () {
-          _this2.resizeChildButtons();
-        }, 500).call(_this2);
+      _events.on("stage:updateAfter", function () {
+        _this2.debouncedResizeHandler();
       });
-    };
-    /**
-     * Set state based on mouseover event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
+
+      _events.on("contentType:redrawAfter", function () {
+        _this2.debouncedResizeHandler();
+      }); // Capture when a content type is duplicated within the container
 
 
-    _proto.onMouseOver = function onMouseOver(context, event) {
-      // Only run the mouse over action when the active element is not a child of buttons
-      if (!_jquery.contains(this.wrapperElement, document.activeElement)) {
-        return _PreviewCollection.prototype.onMouseOver.call(this, context, event);
-      }
+      var duplicatedButton;
+      var duplicatedButtonIndex;
+
+      _events.on("button-item:duplicateAfter", function (args) {
+        if (_this2.parent.id === args.duplicateContentType.parent.id && args.direct) {
+          duplicatedButton = args.duplicateContentType;
+          duplicatedButtonIndex = args.index;
+        }
+      });
+
+      _events.on("button-item:mountAfter", function (args) {
+        if (duplicatedButton && args.id === duplicatedButton.id) {
+          _this2.focusedButton(duplicatedButtonIndex);
+        }
+      });
     };
     /**
      * Return an array of options
@@ -81,7 +127,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       options.add = new _option({
         preview: this,
@@ -105,7 +151,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       createButtonItemPromise.then(function (button) {
         _this3.parent.addChild(button);
 
-        _this3.isLiveEditing(_this3.parent.children().indexOf(button) !== -1);
+        var buttonIndex = _this3.parent.children().indexOf(button);
+
+        _this3.focusedButton(buttonIndex > -1 ? buttonIndex : null);
 
         return button;
       }).catch(function (error) {
@@ -121,7 +169,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.buttonsSortableOptions = function buttonsSortableOptions(orientation, tolerance) {
+    _proto.getSortableOptions = function getSortableOptions(orientation, tolerance) {
       if (orientation === void 0) {
         orientation = "width";
       }
@@ -130,7 +178,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         tolerance = "intersect";
       }
 
-      var placeholderGhost;
       return {
         handle: ".button-item-drag-handle",
         items: ".pagebuilder-content-type-wrapper",
@@ -138,10 +185,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         containment: "parent",
         tolerance: tolerance,
         revert: 200,
-        cursorAt: {
-          left: 15,
-          top: 15
-        },
         disabled: this.parent.children().length <= 1,
 
         /**
@@ -169,9 +212,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           element: function element(item) {
             var placeholder = item.clone().css({
               display: "inline-block",
-              opacity: 0,
-              width: item.width(),
-              height: item.height()
+              opacity: "0.3"
             }).removeClass("focused").addClass("sortable-placeholder");
             placeholder[0].querySelector(".pagebuilder-options").remove();
             return placeholder[0];
@@ -182,65 +223,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         },
 
         /**
-         * Logic for starting the sorting and adding the placeholderGhost
-         *
-         * @param {Event} event
-         * @param {JQueryUI.SortableUIParams} element
+         * Trigger interaction start on sort
          */
-        start: function start(event, element) {
-          placeholderGhost = element.placeholder.clone().css({
-            opacity: 0.3,
-            position: "absolute",
-            left: element.placeholder.position().left,
-            top: element.placeholder.position().top
-          });
-          element.item.parent().append(placeholderGhost);
-
+        start: function start() {
           _events.trigger("stage:interactionStart");
         },
 
         /**
-         * Logic for changing element position
-         *
-         * Set the width and height of the moving placeholder animation
-         * and then add animation of placeholder ghost to the placeholder position.
-         *
-         * @param {Event} event
-         * @param {JQueryUI.SortableUIParams} element
-         */
-        change: function change(event, element) {
-          element.placeholder.stop(true, false);
-
-          if (orientation === "height") {
-            element.placeholder.css({
-              height: element.item.height() / 1.2
-            });
-            element.placeholder.animate({
-              height: element.item.height()
-            }, 200, "linear");
-          }
-
-          if (orientation === "width") {
-            element.placeholder.css({
-              width: element.item.width() / 1.2
-            });
-            element.placeholder.animate({
-              width: element.item.width()
-            }, 200, "linear");
-          }
-
-          placeholderGhost.stop(true, false).animate({
-            left: element.placeholder.position().left,
-            top: element.placeholder.position().top
-          }, 200);
-        },
-
-        /**
-         * Logic for post sorting and removing the placeholderGhost
+         * Stop stage interaction on stop
          */
         stop: function stop() {
-          placeholderGhost.remove();
-
           _events.trigger("stage:interactionStop");
         }
       };
@@ -253,20 +245,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.resizeChildButtons = function resizeChildButtons() {
       if (this.wrapperElement) {
         var buttonItems = (0, _jquery)(this.wrapperElement).find(".pagebuilder-button-item > a");
-        var buttonResizeValue = "";
+        var buttonResizeValue = 0;
 
         if (this.parent.dataStore.get("is_same_width") === "true") {
           if (buttonItems.length > 0) {
-            buttonItems.css("min-width", "");
-            var currentLargestButton = this.findLargestButton(buttonItems);
-            var currentLargestButtonWidth = currentLargestButton.outerWidth();
+            var currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
+            var parentWrapperWidth = (0, _jquery)(this.wrapperElement).width();
 
-            if (currentLargestButtonWidth !== 0) {
-              buttonResizeValue = currentLargestButtonWidth;
-              this.currentMaxWidth(currentLargestButtonWidth);
-            } else {
-              buttonResizeValue = this.currentMaxWidth();
+            if (currentLargestButtonWidth === 0) {
+              return;
             }
+
+            buttonResizeValue = Math.min(currentLargestButtonWidth, parentWrapperWidth);
           }
         }
 
@@ -274,25 +264,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
     };
     /**
-     * Find the largest button which will determine the button width we use for re-sizing.
+     * Find the largest button width for calculating same size value.
      *
      * @param {JQuery} buttonItems
-     * @returns {JQuery}
+     * @returns {number}
      */
 
 
-    _proto.findLargestButton = function findLargestButton(buttonItems) {
+    _proto.findLargestButtonWidth = function findLargestButtonWidth(buttonItems) {
       var _this4 = this;
 
-      var largestButton = null;
-      buttonItems.each(function (index, element) {
-        var buttonElement = (0, _jquery)(element);
-
-        if (largestButton === null || _this4.calculateButtonWidth(buttonElement) > _this4.calculateButtonWidth(largestButton)) {
-          largestButton = buttonElement;
-        }
-      });
-      return largestButton;
+      return _underscore.max(_underscore.map(buttonItems, function (buttonItem) {
+        return _this4.calculateButtonWidth((0, _jquery)(buttonItem));
+      }));
     };
     /**
      * Manually calculate button width using content plus box widths (padding, border)
@@ -303,11 +287,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
+      if (buttonItem.is(":visible") === false) {
+        return 0;
+      }
+
       var widthProperties = ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"];
-      var calculatedButtonWidth = widthProperties.reduce(function (accumulatedWidth, widthProperty) {
+      return widthProperties.reduce(function (accumulatedWidth, widthProperty) {
         return accumulatedWidth + (parseInt(buttonItem.css(widthProperty), 10) || 0);
       }, buttonItem.find("[data-element='link_text']").width());
-      return calculatedButtonWidth;
     };
 
     return Preview;

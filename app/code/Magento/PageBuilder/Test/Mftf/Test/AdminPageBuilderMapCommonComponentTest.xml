@@ -16,12 +16,10 @@
             <description value="Tests default state of a map content type in the stage, edit form, and storefront"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88749"/>
+            <testCaseId value="MC-2516"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -141,7 +139,6 @@
         <!-- Validate Edit Panel: Add Location Form 2 -->
         <comment userInput="Validate Edit Panel: Add Location Form 2" stepKey="commentValidateEditPanelAddLocationForm2"/>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton2"/>
-        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForMapVisible2"/>
         <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsEditPanel2">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
@@ -196,7 +193,7 @@
             <description value="Test verifies that on hover option menu for Map content type contains all buttons"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88894"/>
+            <testCaseId value="MC-2850"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
@@ -231,7 +228,7 @@
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-88893"/>
+            <testCaseId value="MC-2600"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
@@ -253,7 +250,6 @@
         <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -306,7 +302,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -354,12 +349,10 @@
             <description value="Validate that updating every attribute in the Advanced Configuration form for Map will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89915"/>
-            <testCaseId value="MAGETWO-89930"/>
+            <testCaseId value="MC-2560"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -388,7 +381,6 @@
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -431,7 +423,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -478,7 +469,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -531,12 +521,10 @@
             <description value="A user should be able to add a map with all attribute fields filled."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-84914"/>
+            <testCaseId value="MC-2489"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -658,7 +646,6 @@
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -915,7 +902,6 @@
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section -->
         <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1001,12 +987,10 @@
             <description value="A user should be able to duplicate a map content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88896"/>
+            <testCaseId value="MC-2895"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1106,7 +1090,6 @@
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1333,7 +1316,6 @@
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section -->
         <comment userInput="Edit Panel: Verify Advanced Section" stepKey="commentVerifyAdvancedSection"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1555,7 +1537,6 @@
         </actionGroup>
         <!-- Edit Panel: Verify Advanced Section After Save -->
         <comment userInput="Edit Panel: Verify Advanced Section After Save" stepKey="commentVerifyAdvancedSectionAfterSave"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1654,7 +1635,7 @@
             <description value="A user should be able to delete a map content type. Verify on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88897"/>
+            <testCaseId value="MC-2886"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
@@ -1742,12 +1723,10 @@
             <description value="As a Content Manager I want column to be a container so that I can add Map inside"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-964"/>
-            <testCaseId value="MAGETWO-89961"/>
+            <testCaseId value="MC-4023"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-map"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1834,8 +1813,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-column"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

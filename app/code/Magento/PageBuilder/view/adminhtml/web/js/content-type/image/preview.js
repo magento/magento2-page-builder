@@ -1,23 +1,24 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_events, _preview, _uploader) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/content-type/preview"], function (_events, _uploader, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.uploader = void 0, _temp) || _this;
+      return _preview2.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
@@ -28,7 +29,9 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
      * @returns {Uploader}
      */
     _proto.getUploader = function getUploader() {
-      return this.uploader;
+      var dataStore = this.parent.dataStore.get();
+      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
     /**
      * @inheritDoc
@@ -36,25 +39,17 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this = this;
 
-      _BasePreview.prototype.bindEvents.call(this);
+      _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this.parent.dataStore.get();
 
-        var files = dataStore[_this2.config.additional_data.uploaderConfig.dataScope];
+        var files = dataStore[_this.config.additional_data.uploaderConfig.dataScope];
         var imageObject = files ? files[0] : {};
 
-        _events.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
-      });
-
-      _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this2.parent.dataStore.get();
-
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-        _this2.uploader = new _uploader("imageuploader_" + _this2.parent.id, _this2.config.additional_data.uploaderConfig, _this2.parent.id, _this2.parent.dataStore, initialImageValue);
+        _events.trigger("image:" + _this.parent.id + ":assignAfter", imageObject);
       });
     };
 

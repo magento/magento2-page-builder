@@ -54,6 +54,7 @@
             <argument name="additionalSettings" xsi:type="array">
                 <item name="fixed_toolbar_container" xsi:type="string">.pagebuilder-content-type</item>
                 <item name="fontsize_formats" xsi:type="string">10px 12px 14px 16px 18px 20px 24px 26px 28px 32px 34px 36px 38px 40px 42px 48px 52px 56px 64px 72px</item>
+                <item name="lineheight_formats" xsi:type="string">10px 12px 14px 16px 18px 20px 24px 26px 28px 32px 34px 36px 38px 40px 42px 48px 52px 56px 64px 72px</item>
                 <item name="style_formats" xsi:type="array">
                     <item name="paragraph" xsi:type="array">
                         <item name="title" xsi:type="string">Paragraph</item>
@@ -348,17 +349,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="AppearanceSourceNewsletter" type="Magento\PageBuilder\Model\Source\VisualSelect">
-        <arguments>
-            <argument name="optionsSize" xsi:type="string">large</argument>
-            <argument name="optionsData" xsi:type="array">
-                <item name="0" xsi:type="array">
-                    <item name="value" xsi:type="string">default</item>
-                    <item name="title" xsi:type="string" translate="true">Default</item>
-                </item>
-            </argument>
-        </arguments>
-    </virtualType>
     <virtualType name="AppearanceSourceProducts" type="Magento\PageBuilder\Model\Source\VisualSelect">
         <arguments>
             <argument name="optionsSize" xsi:type="string">large</argument>
@@ -518,12 +508,14 @@
         <arguments>
             <argument name="editors" xsi:type="array">
                 <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" xsi:type="array">
-                    <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/wysiwyg/tinymce4</item>
+                    <item name="component" xsi:type="string">Magento_PageBuilder/js/wysiwyg/tinymce4</item>
                     <item name="component_initializers" xsi:type="array">
                         <item name="text" xsi:type="string">Magento_PageBuilder/js/content-type/text/wysiwyg/tinymce4/component-initializer</item>
+                        <item name="slide" xsi:type="string">Magento_PageBuilder/js/content-type/slide/wysiwyg/tinymce4/component-initializer</item>
                     </item>
                     <item name="config_modifiers" xsi:type="array">
                         <item name="text" xsi:type="string">Magento_PageBuilder/js/content-type/text/wysiwyg/tinymce4/config-modifier</item>
+                        <item name="slide" xsi:type="string">Magento_PageBuilder/js/content-type/slide/wysiwyg/tinymce4/config-modifier</item>
                     </item>
                     <item name="mode" xsi:type="string">inline</item>
                     <item name="minToolbarWidth" xsi:type="number">360</item>
@@ -535,4 +527,13 @@
             </argument>
         </arguments>
     </type>
+    <virtualType name="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\BannerConfig" type="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Wysiwyg\Config">
+        <arguments>
+            <argument name="editors" xsi:type="array">
+                <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" xsi:type="array">
+                    <item name="parentSelectorsToUnderlay" xsi:type="null"/>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>

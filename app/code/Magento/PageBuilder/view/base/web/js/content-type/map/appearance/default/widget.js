@@ -13,7 +13,9 @@ define([
             controls,
             mapOptions = {};
 
-        if (element.hasAttribute('data-locations')) {
+        element = element[0];
+
+        if (element !== undefined && element.hasAttribute('data-locations')) {
 
             /**
              * Set map display to none if no locations

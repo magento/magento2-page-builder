@@ -11,12 +11,6 @@
     <preference for="Magento\Framework\Data\Form\Element\Editor" type="Magento\PageBuilder\Block\Element\Editor" />
     <preference for="Magento\PageBuilder\Model\ConfigInterface" type="Magento\PageBuilder\Model\Config" />
     <preference for="Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface" type="Magento\PageBuilder\Setup\DataConverter\StyleExtractor" />
-    <type name="Magento\Cms\Block\Page">
-        <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Page" />
-    </type>
-    <type name="Magento\Cms\Block\Block">
-        <plugin name="filter_dynamic_blocks" type="Magento\PageBuilder\Plugin\Cms\Block\Block" />
-    </type>
     <type name="Magento\PageBuilder\Model\Stage\Config\UiComponentConfig">
         <arguments>
             <argument name="configFactory" xsi:type="object">uiComponentConfigFactory</argument>
@@ -517,6 +511,9 @@
                             <item name="dataRole" xsi:type="string">slide</item>
                         </item>
                     </item>
+                    <item name="clickEventBinder" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/widget/click-event-binder</item>
+                    </item>
                 </item>
                 <item name="banner" xsi:type="array">
                     <item name="default" xsi:type="array">
@@ -526,6 +523,9 @@
                             <item name="showOverlay" xsi:type="string">hover</item>
                             <item name="dataRole" xsi:type="string">banner</item>
                         </item>
+                    </item>
+                    <item name="clickEventBinder" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_PageBuilder/js/widget/click-event-binder</item>
                     </item>
                 </item>
                 <item name="buttons" xsi:type="array">
@@ -556,5 +556,4 @@
             <argument name="targetName" xsi:type="string">ns = pagebuilder_map_form, index = map_location_modal</argument>
         </arguments>
     </virtualType>
-    <virtualType name="Magento\PageBuilder\Block\ContentType\Newsletter" type="Magento\Newsletter\Block\Subscribe"/>
 </config>

@@ -7,7 +7,6 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
 
   /**
    * Create a new instance of property reader pool
-   * @api
    */
   function create(contentType) {
     var config = _config.getContentTypeConfig(contentType);
@@ -43,10 +42,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref = _i3.value;
               }
 
-              var _propertyConfig = _ref;
+              var propertyConfig = _ref;
 
-              if (_propertyConfig.reader && propertyReaders.indexOf(_propertyConfig.reader) === -1 && !_propertyReaderPool.get(_propertyConfig.reader)) {
-                propertyReaders.push(_propertyConfig.reader);
+              if (propertyConfig.reader && propertyReaders.indexOf(propertyConfig.reader) === -1 && !_propertyReaderPool.get(propertyConfig.reader)) {
+                propertyReaders.push(propertyConfig.reader);
               }
             }
           }
@@ -64,10 +63,10 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", 
                 _ref2 = _i4.value;
               }
 
-              var _attributeConfig = _ref2;
+              var attributeConfig = _ref2;
 
-              if (_attributeConfig.reader && propertyReaders.indexOf(_attributeConfig.reader) === -1 && !_propertyReaderPool.get(_attributeConfig.reader)) {
-                propertyReaders.push(_attributeConfig.reader);
+              if (attributeConfig.reader && propertyReaders.indexOf(attributeConfig.reader) === -1 && !_propertyReaderPool.get(attributeConfig.reader)) {
+                propertyReaders.push(attributeConfig.reader);
               }
             }
           }

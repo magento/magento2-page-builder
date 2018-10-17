@@ -2,6 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
@@ -10,7 +11,6 @@ import ContentTypeCollectionInterface from "../content-type-collection";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
 import Stage from "../stage";
-import {bindAfterRenderForAnimation, lockContainerHeight} from "./container-animation";
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";
 import {getAllowedContainersClasses} from "./matrix";
 import {moveContentType} from "./move-content-type";
@@ -110,18 +110,19 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
         const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
         if (contentTypeInstance) {
             // Ensure the original item is displayed but with reduced opacity
-            ui.item.show().addClass("pagebuilder-sorting-original");
+            ui.item.css("display", "block").addClass("pagebuilder-sorting-original");
 
-            $(".pagebuilder-drop-indicator.hidden-drop-indicator").show().removeClass("hidden-drop-indicator");
+            $(".pagebuilder-drop-indicator.hidden-drop-indicator").css("display", "block")
+                .removeClass("hidden-drop-indicator");
 
             // If we're the first item in the container we need to hide the first drop indicator
-            if ((contentTypeInstance.parent as ContentTypeCollectionInterface)
-                    .getChildren().indexOf(contentTypeInstance) === 0) {
-                ui.item.prev(".pagebuilder-drop-indicator").hide().addClass("hidden-drop-indicator");
+            if (contentTypeInstance.parent.getChildren().indexOf(contentTypeInstance) === 0) {
+                ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
             }
 
-            sortedContentType = contentTypeInstance;
             showDropIndicators(contentTypeInstance.config.name);
+
+            sortedContentType = contentTypeInstance;
 
             // Dynamically change the connect with option to restrict content types
             $(this).sortable("option", "connectWith", getAllowedContainersClasses(contentTypeInstance.config.name));
@@ -143,9 +144,9 @@ function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     if ($(this).sortable("option", "disabled") ||
         ui.placeholder.parents(hiddenClass).length > 0
     ) {
-        ui.placeholder.hide();
+        ui.placeholder.css("display", "none");
     } else {
-        ui.placeholder.show();
+        ui.placeholder.css("display", "block");
     }
 
     /**
@@ -183,6 +184,9 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    const contentTypeConfig = getDraggedContentTypeConfig();
+    setDraggedContentTypeConfig(null);
+
     if ($(event.target)[0] !== this) {
         return;
     }
@@ -193,7 +197,6 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
         return;
     }
 
-    const contentTypeConfig = getDraggedContentTypeConfig();
     if (contentTypeConfig) {
         // If the sortable instance is disabled don't complete this operation
         if ($(this).sortable("option", "disabled") || $(this).parents(hiddenClass).length > 0) {
@@ -208,15 +211,11 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
                 return element.classList.contains("pagebuilder-draggable-content-type");
             });
 
-        const parentContainerElement = $(event.target).parents(".type-container");
-        const containerLocked = getParentProxy(preview).getChildren()().length === 0 &&
-            lockContainerHeight(parentContainerElement);
-
         // Create the new content type and insert it into the parent
         createContentType(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview))
             .then((contentType: ContentTypeInterface) => {
-                // Prepare the event handler to animate the container height on render
-                bindAfterRenderForAnimation(containerLocked, contentType, parentContainerElement);
+                // Set the content type instance as "dropped", as it was dropped from the left panel
+                contentType.dropped = true;
 
                 getParentProxy(preview).addChild(contentType, index);
                 events.trigger("contentType:dropAfter", {id: contentType.id, contentType});
@@ -288,21 +287,6 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
                 $(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
             } else {
                 $(el).remove();
-            }
-
-            const parentContainerElement = $(event.target).parents(".type-container");
-            const parentContainerLocked = targetParent.getChildren()().length === 0 &&
-                lockContainerHeight(parentContainerElement);
-
-            // Bind the event handler before the move operation
-            bindAfterRenderForAnimation(parentContainerLocked, contentTypeInstance, parentContainerElement);
-
-            // Also check if we need to handle animations on the source container
-            if (sourceParent.preview && sourceParent.preview.wrapperElement) {
-                const sourceContainerElement = $(sourceParent.preview.wrapperElement);
-                const sourceContainerLocked = sourceParent.getChildren()().length === 1 &&
-                    lockContainerHeight(sourceContainerElement);
-                bindAfterRenderForAnimation(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
             }
 
             moveContentType(contentTypeInstance, targetIndex, targetParent);

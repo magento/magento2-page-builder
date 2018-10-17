@@ -12,5 +12,5 @@ import ContentTypeInterface from "../content-type.d";
 export default interface ContentTypeAfterRenderEventParamsInterface {
     id: string;
     element: Element;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface;
 }

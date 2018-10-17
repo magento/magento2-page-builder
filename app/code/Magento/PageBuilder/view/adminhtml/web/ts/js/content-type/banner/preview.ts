@@ -3,20 +3,35 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import Config from "../../config";
 import {DataObject} from "../../data-store";
+import Uploader from "../../uploader";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
-import Uploader from "../uploader";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
+
     /**
-     * Uploader instance
+     * Wysiwyg instance
      */
-    private uploader: Uploader;
+    private wysiwyg: WysiwygInterface;
+
+    /**
+     * The element the text content type is bound to
+     */
+    private element: HTMLElement;
+
+    /**
+     * The textarea element in disabled mode
+     */
+    private textarea: HTMLTextAreaElement;
 
     private buttonPlaceholder: string = $t("Edit Button Text");
 
@@ -26,7 +41,49 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        return this.uploader;
+        const dataStore = this.parent.dataStore.get() as DataObject;
+        const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+        // Create uploader
+        return new Uploader(
+            "imageuploader_" + this.parent.id,
+            this.config.additional_data.uploaderConfig,
+            this.parent.id,
+            this.parent.dataStore,
+            (initialImageValue as object[]),
+        );
+    }
+
+    /**
+     * Makes WYSIWYG active
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     */
+    public activateEditor(preview: Preview, event: JQueryEventObject) {
+        const element = this.element || this.textarea;
+
+        if (event.currentTarget !== event.target &&
+            event.target !== element &&
+            !element.contains(event.target)
+        ) {
+            return;
+        }
+
+        element.focus();
+    }
+
+    /**
+     * Stop event to prevent execution of action when editing textarea.
+     *
+     * @param {Preview} preview
+     * @param {JQueryEventObject} event
+     * @returns {Boolean}
+     */
+    public stopEvent(preview: Preview, event: JQueryEventObject) {
+        event.stopPropagation();
+
+        return true;
     }
 
     /**
@@ -80,6 +137,81 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * @returns {Boolean}
+     */
+    public isWysiwygSupported(): boolean {
+        return Config.getConfig("can_use_inline_editing_on_stage");
+    }
+
+    /**
+     * @param {HTMLElement} element
+     */
+    public initWysiwyg(element: HTMLElement) {
+        this.element = element;
+
+        element.id = this.parent.id + "-editor";
+
+        const config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+        config.adapter.settings.fixed_toolbar_container = "#" + this.parent.id + " .pagebuilder-banner-text-content";
+
+        WysiwygFactory(
+            this.parent.id,
+            element.id,
+            this.config.name,
+            config,
+            this.parent.dataStore,
+            "message",
+        ).then((wysiwyg: WysiwygInterface): void => {
+            this.wysiwyg = wysiwyg;
+        });
+    }
+
+    /**
+     * @param {HTMLTextAreaElement} element
+     */
+    public initTextarea(element: HTMLTextAreaElement)
+    {
+        this.textarea = element;
+
+        // set initial value of textarea based on data store
+        this.textarea.value = this.parent.dataStore.get("message") as string;
+        this.adjustTextareaHeightBasedOnScrollHeight();
+
+        // Update content in our stage preview textarea after its slideout counterpart gets updated
+        events.on(`form:${this.parent.id}:saveAfter`, () => {
+            this.textarea.value = this.parent.dataStore.get("message") as string;
+            this.adjustTextareaHeightBasedOnScrollHeight();
+        });
+    }
+
+    /**
+     * Save current value of textarea in data store
+     */
+    public onTextareaKeyUp()
+    {
+        this.adjustTextareaHeightBasedOnScrollHeight();
+        this.parent.dataStore.update(this.textarea.value, "message");
+    }
+
+    /**
+     * Start stage interaction on textarea blur
+     */
+    public onTextareaFocus()
+    {
+        $(this.textarea).closest(".pagebuilder-banner-text-content").addClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStart");
+    }
+
+    /**
+     * Stop stage interaction on textarea blur
+     */
+    public onTextareaBlur()
+    {
+        $(this.textarea).closest(".pagebuilder-banner-text-content").removeClass("pagebuilder-toolbar-active");
+        events.trigger("stage:interactionStop");
+    }
+
+    /**
      * @inheritDoc
      */
     protected bindEvents() {
@@ -90,19 +222,21 @@ export default class Preview extends BasePreview {
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
+    }
 
-        events.on(`${this.config.name}:mountAfter`, () => {
-            const dataStore = this.parent.dataStore.get() as DataObject;
-            const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+    /**
+     * Adjust textarea's height based on scrollHeight
+     */
+    private adjustTextareaHeightBasedOnScrollHeight()
+    {
+        this.textarea.style.height = "";
+        const scrollHeight = this.textarea.scrollHeight;
+        const minHeight = parseInt($(this.textarea).css("min-height"), 10);
 
-            // Create uploader
-            this.uploader = new Uploader(
-                "imageuploader_" + this.parent.id,
-                this.config.additional_data.uploaderConfig,
-                this.parent.id,
-                this.parent.dataStore,
-                (initialImageValue as object[]),
-            );
-        });
+        if (scrollHeight === minHeight) { // leave height at 'auto'
+            return;
+        }
+
+        $(this.textarea).height(scrollHeight);
     }
 }

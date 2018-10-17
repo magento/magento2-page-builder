@@ -16,7 +16,7 @@
             <description value="A user should see the default settings for parallax row"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88247"/>
-            <testCaseId value="MAGETWO-88899"/>
+            <testCaseId value="MC-2914"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowParallax"/>
@@ -34,9 +34,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeEnableParallaxProperty">
             <argument name="property" value="PageBuilderRowParallax_Default"/>
@@ -72,9 +69,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowParallax"/>
-            <skip>
-                <issueId value="MC-3686"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -89,9 +83,6 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxEnabledProperty">
             <argument name="property" value="PageBuilderRowParallax_Enabled"/>

@@ -17,13 +17,12 @@ import observableUpdaterFactory from "./observable-updater-factory";
  * @param {ContentTypeInterface} contentType
  * @param {ContentTypeConfigInterface} config
  * @returns {Promise<ContentTypeInterface>}
- * @api
  */
 export default function create(
     contentType: ContentTypeInterface,
     config: ContentTypeConfigInterface,
-): Promise<typeof Master | typeof MasterCollection> {
-    return new Promise((resolve: (masterComponent: any) => void) => {
+): Promise<Master | MasterCollection> {
+    return new Promise((resolve: (masterComponent: Master | MasterCollection) => void) => {
         observableUpdaterFactory(config, converterResolver).then((observableUpdater) => {
             loadModule([config.master_component], (contentComponent: typeof Master | typeof MasterCollection) => {
                 resolve(

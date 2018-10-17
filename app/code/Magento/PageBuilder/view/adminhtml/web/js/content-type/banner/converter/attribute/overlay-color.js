@@ -7,6 +7,8 @@ define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConvert
   var OverlayColor =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function OverlayColor() {}
 
     var _proto = OverlayColor.prototype;

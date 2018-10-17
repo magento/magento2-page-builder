@@ -16,12 +16,10 @@
             <description value="A user should be able to add a pin to a map on the Edit Panel by clicking the map and see the pin on Edit Panel, Stage, and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88929"/>
+            <testCaseId value="MC-2613"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -148,12 +146,10 @@
             <description value="A user should be able to add a pin to a map on the Edit Panel by inputting coordinates and see the pin on Edit Panel, Stage, and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
-            <testCaseId value="MAGETWO-91471"/>
+            <testCaseId value="MC-2707"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -256,12 +252,10 @@
             <description value="A user should not be able to add a pin to a map from the Stage nor the store front."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88895"/>
+            <testCaseId value="MC-2594"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -315,12 +309,10 @@
             <description value="A user should be able to move a map pin by clicking on the map on the Edit Panel"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87083"/>
-            <testCaseId value="MAGETWO-88930"/>
+            <testCaseId value="MC-2552"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -373,6 +365,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -439,9 +433,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -455,12 +448,10 @@
             <description value="A user should be able to move a map pin by changing the coordinates on the Edit Panel"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
-            <testCaseId value="MAGETWO-91485"/>
+            <testCaseId value="MC-2660"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -513,6 +504,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -565,9 +558,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -581,12 +573,10 @@
             <description value="A user should be able to move a map pin by dragging and dropping the pin on the Edit Panel"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
-            <testCaseId value="MAGETWO-91573"/>
+            <testCaseId value="MC-2731"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -639,6 +629,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -689,9 +681,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -705,12 +696,10 @@
             <description value="A user should be able to move a map pin by dragging and dropping the pin off of the map on the Edit Panel"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
-            <testCaseId value="MAGETWO-91574"/>
+            <testCaseId value="MC-2563"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to form key issues MC-3386 -->
-            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -763,6 +752,8 @@
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -813,9 +804,8 @@
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
@@ -829,12 +819,10 @@
             <description value="Make sure the user can add a map after adding a map and then removing it."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-66519"/>
-            <testCaseId value="MAGETWO-91859"/>
+            <testCaseId value="MC-2875"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -898,12 +886,10 @@
             <description value="Verify that the user can open and close the map pin tooltip window and that the tooltip window stays open as a user moves the map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92220"/>
+            <testCaseId value="MC-2445"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- MC-2430 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -987,12 +973,10 @@
             <description value="Verify tooltip with all location data appears on Stage and Storefront but not Edit Panel."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-66519"/>
-            <testCaseId value="MAGETWO-88892"/>
+            <testCaseId value="MC-2556"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1105,12 +1089,10 @@
             <description value="Verify that the user can add locations to a map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92297"/>
+            <testCaseId value="MC-2446"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1329,12 +1311,10 @@
             <description value="Verify that the user can add 10 locations to a map."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92298"/>
+            <testCaseId value="MC-2442"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1525,12 +1505,10 @@
             <description value="Verify that the user can add 2 locations to a map with the same coordinates."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92299"/>
+            <testCaseId value="MC-2480"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1617,12 +1595,10 @@
             <description value="Verify that the user can add 2 locations to a map that are on opposite sides of the world."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
-            <testCaseId value="MAGETWO-92300"/>
+            <testCaseId value="MC-2452"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapPinTests"/>
-            <!-- Skipped due to Maps API Key MC-3413 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

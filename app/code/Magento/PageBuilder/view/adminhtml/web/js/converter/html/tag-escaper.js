@@ -7,6 +7,8 @@ define(["underscore"], function (_underscore) {
   var TagEscaper =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function TagEscaper() {}
 
     var _proto = TagEscaper.prototype;
@@ -18,7 +20,9 @@ define(["underscore"], function (_underscore) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return (0, _underscore.unescape)((0, _underscore.unescape)(value));
+      var result = (0, _underscore.unescape)(value); // Have to do a manual &nbsp; replace since underscore un-escape does not un-escape &nbsp;
+
+      return result.replace(/&nbsp;/g, String.fromCharCode(160));
     };
     /**
      * Convert value to knockout format
@@ -30,7 +34,7 @@ define(["underscore"], function (_underscore) {
 
 
     _proto.toDom = function toDom(name, data) {
-      return (0, _underscore.escape)((0, _underscore.escape)(data[name].toString()));
+      return (0, _underscore.escape)(data[name].toString());
     };
 
     return TagEscaper;

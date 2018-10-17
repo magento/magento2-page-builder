@@ -1,5 +1,7 @@
 # magento2-page-builder
 
+<!-- {% raw %} -->
+
 ## PageBuilder Early Access Program
 
 The PageBuilder Early Access Program (EAP) gives partners the following perks:
@@ -13,13 +15,13 @@ The PageBuilder Early Access Program (EAP) gives partners the following perks:
 
 ## Installation
 
-We offer two methods for installing PageBuilder:
+We offer one method for installing PageBuilder:
 
-* As a [Composer package] - use this option if you do not plan to contribute to the PageBuilder code repository 
+
 * Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code 
 
-[Composer package]: app/code/Magento/PageBuilder/docs/install.md#composer-installation
-[GitHub repository]: app/code/Magento/PageBuilder/docs/install.md#github-installation
+[Composer package]: docs/install.md#composer-installation
+[GitHub repository]: docs/install.md#github-installation
 
 ## Developer documentation
 
@@ -39,19 +41,19 @@ This project repository contains PageBuilder developer documentation on the foll
 1. [Visual select]
 1. [Custom Toolbar]
 
-[Architecture overview]: app/code/Magento/PageBuilder/docs/architecture-overview.md
-[BlueFoot to PageBuilder data migration]: app/code/Magento/PageBuilder/docs/bluefoot-data-migration.md
-[Third-party content type migration]: app/code/Magento/PageBuilder/docs/new-content-type-example.md
-[Iconography]: app/code/Magento/PageBuilder/docs/iconography.md
-[Module integration]: app/code/Magento/PageBuilder/docs/module-integration.md
-[Additional data configuration]: app/code/Magento/PageBuilder/docs/custom-configuration.md
-[Content type configuration]: app/code/Magento/PageBuilder/docs/content-type-configuration.md
-[How to add a new content type]: app/code/Magento/PageBuilder/docs/how-to-add-new-content-type.md
-[Events]: app/code/Magento/PageBuilder/docs/events.md
-[Bindings]: app/code/Magento/PageBuilder/docs/bindings.md
-[Master format]: app/code/Magento/PageBuilder/docs/master-format.md
-[Visual select]: app/code/Magento/PageBuilder/docs/visual-select.md
-[Custom Toolbar]: app/code/Magento/PageBuilder/docs/toolbar.md
+[Architecture overview]: docs/architecture-overview.md
+[BlueFoot to PageBuilder data migration]: docs/bluefoot-data-migration.md
+[Third-party content type migration]: docs/new-content-type-example.md
+[Iconography]: docs/iconography.md
+[Module integration]: docs/module-integration.md
+[Additional data configuration]: docs/custom-configuration.md
+[Content type configuration]: docs/content-type-configuration.md
+[How to add a new content type]: docs/how-to-add-new-content-type.md
+[Events]: docs/events.md
+[Bindings]: docs/bindings.md
+[Master format]: docs/master-format.md
+[Visual select]: docs/visual-select.md
+[Custom Toolbar]: docs/toolbar.md
 
 ## Contribute to PageBuilder
 
@@ -60,9 +62,9 @@ A good place to start is by looking at our [features roadmap] and list of [known
 
 If you are interested in contributing to this repository, please see our [Contribution Guide].
 
-[Contribution Guide]: app/code/Magento/PageBuilder/docs/CONTRIBUTING.md
-[features roadmap]: app/code/Magento/PageBuilder/docs/roadmap.md#planned-features-and-functionality
-[known issues]: app/code/Magento/PageBuilder/docs/roadmap.md#known-issues
+[Contribution Guide]: CONTRIBUTING.md
+[features roadmap]: docs/roadmap.md#planned-features-and-functionality
+[known issues]: docs/roadmap.md#known-issues
 
 ## PageBuilder updates from the Magento core team
 
@@ -71,7 +73,7 @@ The PageBuilder team updates the code every 2 weeks.
 
 To help you prepare for these changes, we are publishing a [roadmap] of features and issues that we are going to work on in the following months.
 
-[roadmap]: app/code/Magento/PageBuilder/docs/roadmap.md
+[roadmap]: docs/roadmap.md
 
 ## Provide feedback
 
@@ -87,3 +89,5 @@ For all other questions or requests, contact [Olena Tkacheva].
 
 [Slack]: https://magentocommeng.slack.com/
 [Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
+
+<!-- {% endraw %} -->

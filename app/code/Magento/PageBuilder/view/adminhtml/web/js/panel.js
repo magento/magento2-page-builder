@@ -11,6 +11,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
   var Panel =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Panel(parent) {
       this.groups = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
@@ -24,9 +26,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchNoResult = (0, _translate)("Nothing found");
       this.fullScreenTitle = (0, _translate)("Full Screen");
       this.searchTitle = (0, _translate)("Clear Search");
-      this.parent = void 0;
-      this.id = void 0;
-      this.element = void 0;
       this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
       this.id = this.parent.id;
@@ -136,34 +135,36 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var panel = (0, _jquery)(this.element);
       var stage = panel.siblings(".pagebuilder-stage");
       (0, _jquery)(window).scroll(function () {
-        var panelOffsetTop = panel.offset().top;
-        var stageOffsetTop = stage.offset().top;
-        var panelHeight = panel.outerHeight();
-        var stageHeight = stage.outerHeight();
-        var currentPanelBottom = Math.round(panelOffsetTop + panel.outerHeight(true) - (0, _jquery)(this).scrollTop());
-        var currentStageBottom = Math.round(stageOffsetTop + stage.outerHeight(true) - (0, _jquery)(this).scrollTop());
-        var currentPanelTop = Math.round(panelOffsetTop - (0, _jquery)(this).scrollTop());
-        var currentStageTop = Math.round(stageOffsetTop - (0, _jquery)(this).scrollTop()); // When panel height is less than stage, begin stickiness
+        if (panel && panel.offset()) {
+          var panelOffsetTop = panel.offset().top;
+          var stageOffsetTop = stage.offset().top;
+          var panelHeight = panel.outerHeight();
+          var stageHeight = stage.outerHeight();
+          var currentPanelBottom = Math.round(panelOffsetTop + panel.outerHeight(true) - (0, _jquery)(this).scrollTop());
+          var currentStageBottom = Math.round(stageOffsetTop + stage.outerHeight(true) - (0, _jquery)(this).scrollTop());
+          var currentPanelTop = Math.round(panelOffsetTop - (0, _jquery)(this).scrollTop());
+          var currentStageTop = Math.round(stageOffsetTop - (0, _jquery)(this).scrollTop()); // When panel height is less than stage, begin stickiness
 
-        if (panelHeight <= stageHeight && pageActions.hasClass("_fixed")) {
-          var pageActionsHeight = pageActions.outerHeight() + 15; // When scroll reaches top of stage, stick panel to top
+          if (panelHeight <= stageHeight && pageActions.hasClass("_fixed")) {
+            var pageActionsHeight = pageActions.outerHeight() + 15; // When scroll reaches top of stage, stick panel to top
 
-          if (currentStageTop <= pageActionsHeight) {
-            // When panel reaches bottom of stage, stick panel to bottom of stage
-            if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
-              self.isStickyBottom(true);
-              self.isStickyTop(false);
+            if (currentStageTop <= pageActionsHeight) {
+              // When panel reaches bottom of stage, stick panel to bottom of stage
+              if (currentPanelBottom >= currentStageBottom && currentPanelTop <= pageActionsHeight) {
+                self.isStickyBottom(true);
+                self.isStickyTop(false);
+              } else {
+                self.isStickyBottom(false);
+                self.isStickyTop(true);
+              }
             } else {
               self.isStickyBottom(false);
-              self.isStickyTop(true);
+              self.isStickyTop(false);
             }
           } else {
             self.isStickyBottom(false);
             self.isStickyTop(false);
           }
-        } else {
-          self.isStickyBottom(false);
-          self.isStickyTop(false);
         }
       });
     };

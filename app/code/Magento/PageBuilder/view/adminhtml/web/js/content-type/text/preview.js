@@ -1,26 +1,39 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _events, _config, _preview, _factory) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _events, _underscore, _config, _factory, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.wysiwyg = void 0, _this.element = void 0, _this.textarea = void 0, _temp) || _this;
+      return _preview2.apply(this, arguments) || this;
     }
 
     var _proto = Preview.prototype;
+
+    /**
+     * Wysiwyg instance
+     */
+
+    /**
+     * The element the text content type is bound to
+     */
+
+    /**
+     * The textarea element in disabled mode
+     */
 
     /**
      * @returns {Boolean}
@@ -34,12 +47,15 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
 
 
     _proto.initWysiwyg = function initWysiwyg(element) {
-      var _this2 = this;
+      var _this = this;
 
       this.element = element;
+      element.innerHTML = this.data.main.html();
       element.id = this.parent.id + "-editor";
-      (0, _factory)(this.parent.id, element.id, this.config.name, this.config.additional_data.wysiwygConfig.wysiwygConfigData, this.parent.dataStore, "content").then(function (wysiwyg) {
-        _this2.wysiwyg = wysiwyg;
+      var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+      wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
+      (0, _factory)(this.parent.id, element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+        _this.wysiwyg = wysiwyg;
       });
     };
     /**
@@ -48,7 +64,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
 
 
     _proto.initTextarea = function initTextarea(element) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.textarea = element; // set initial value of textarea based on data store
 
@@ -56,9 +72,9 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
       _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.parent.dataStore.get("content");
+        _this2.textarea.value = _this2.parent.dataStore.get("content");
 
-        _this3.adjustTextareaHeightBasedOnScrollHeight();
+        _this2.adjustTextareaHeightBasedOnScrollHeight();
       });
     };
     /**
@@ -89,6 +105,19 @@ define(["jquery", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/confi
       (0, _jquery)(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");
+    };
+    /**
+     * Retrieve the margin & padding styles for the placeholder
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getPlaceholderStyle = function getPlaceholderStyle() {
+      var keys = ["marginBottom", "marginLeft", "marginRight", "marginTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop"];
+      return _underscore.pick(this.data.main.style(), function (style, key) {
+        return keys.indexOf(key) !== -1;
+      });
     };
     /**
      * Adjust textarea's height based on scrollHeight

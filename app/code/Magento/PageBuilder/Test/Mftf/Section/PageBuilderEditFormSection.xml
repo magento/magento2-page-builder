@@ -16,7 +16,7 @@
         <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
         <element name="editPanelSectionName" type="button" selector="//div[@data-index='{{arg1}}']" parameterized="true"/>
         <element name="editPanelSectionExpanded" type="button" selector="//div[@data-index='{{arg1}}' and contains(@class,'_show')]" parameterized="true"/>
-        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/span[not(contains(@style,"display: none;"))] | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"][not(contains(@style,"display: none;"))]/span[text()="{{arg4}}"]' parameterized="true" />
+        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/descendant::label[not(contains(@style,"display: none;"))] | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"]/descendant::span[text()="{{arg4}}"][not(ancestor::legend)]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelSectionError" type="text" selector="[data-index='{{arg1}}'] span._error .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelFieldControl" type="input" selector='//aside//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
@@ -62,6 +62,7 @@
         <element name="marginNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Margin']"/>
         <element name="paddingNote" type="input" selector="//div[@data-index='margins_and_padding']//span[.='Padding']"/>
         <element name="advancedMarginsAndPadding" type="input" selector="//input[@name='margins_and_padding']"/>
+        <element name="advancedMarginsOrPaddingField" type="input" selector="//input[@name='{{arg1}}']" parameterized="true"/>
         <element name="advancedMarginTop" type="input" selector="//input[@name='marginTop']"/>
         <element name="advancedMarginRight" type="input" selector="//input[@name='marginRight']"/>
         <element name="advancedMarginBottom" type="input" selector="//input[@name='marginBottom']"/>
@@ -71,6 +72,7 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
         <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
+        <element name="advancedMarginAndPaddingErrorMessage" type="button" selector="//div[@data-index='margins_and_padding']/descendant::label[not(contains(@style,'display: none;'))][2]"/>
     </section>
     <section name="ColorPicker">
         <element name="panelEmptyColorSwatch" type="button" selector="//div[contains(@class,'_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[contains(@class,'sp-clear-display')]" parameterized="true"/>

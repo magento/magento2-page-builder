@@ -6,7 +6,8 @@
 import events from "Magento_PageBuilder/js/events";
 import loadModule from "Magento_PageBuilder/js/utils/loader";
 import _ from "underscore";
-import ConfigFieldInterface from "./config-field.d";
+import ContentType from "./content-type";
+import ContentTypeCollection from "./content-type-collection";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
@@ -32,10 +33,10 @@ export default function createContentType(
     stageId: string,
     data: object = {},
     childrenLength: number = 0,
-): Promise<ContentTypeInterface & ContentTypeCollectionInterface> {
-    return new Promise((resolve: (contentTypeComponent: any) => void) => {
-        loadModule([config.component], (ContentTypeComponent: any) => {
-            const contentType = new ContentTypeComponent(
+): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
+    return new Promise((resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void) => {
+        loadModule([config.component], (contentTypeComponent: typeof ContentType | typeof ContentTypeCollection) => {
+            const contentType = new contentTypeComponent(
                 parent,
                 config,
                 stageId,
@@ -45,8 +46,7 @@ export default function createContentType(
                     previewFactory(contentType, config),
                     masterFactory(contentType, config),
                 ],
-            ).then((resolvedPromises) => {
-                const [previewComponent, masterComponent] = resolvedPromises;
+            ).then(([previewComponent, masterComponent]) => {
                 contentType.preview = previewComponent;
                 contentType.content = masterComponent;
                 contentType.dataStore.update(
@@ -55,13 +55,14 @@ export default function createContentType(
                 resolve(contentType);
             });
         });
-    }).then((contentType: ContentTypeInterface) => {
+    }).then((contentType: ContentTypeInterface | ContentTypeCollectionInterface) => {
         events.trigger("contentType:createAfter", {id: contentType.id, contentType});
         events.trigger(config.name + ":createAfter", {id: contentType.id, contentType});
         fireContentTypeReadyEvent(contentType, childrenLength);
         return contentType;
     }).catch((error) => {
         console.error(error);
+        return null;
     });
 }
 
@@ -98,8 +99,9 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
-        events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
+        const params = {id: contentType.id, contentType, expectChildren: childrenLength};
+        events.trigger("contentType:mountAfter", params);
+        events.trigger(contentType.config.name + ":mountAfter", params);
     };
 
     if (childrenLength === 0) {
@@ -111,6 +113,7 @@ function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLe
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
+                    mountCounter = 0;
                     fire();
                     events.off(`contentType:${contentType.id}:mountAfter`);
                 }

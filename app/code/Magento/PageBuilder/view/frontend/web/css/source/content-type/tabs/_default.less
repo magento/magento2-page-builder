@@ -3,11 +3,6 @@
 //  * See COPYING.txt for license details.
 //  */
 
-@f6: #f6f6f6;
-@ccc: #ccc;
-@color-black: #000;
-@color-white: #fff;
-
 //
 //  Default appearance styles
 //  _____________________________________________
@@ -24,8 +19,8 @@ div[data-role='tabs'] {
         }
 
         li.tab-header {
-            background: @f6;
-            border: 1px solid @ccc;
+            background: @color-gray-light0;
+            border: 1px solid @color-gray80;
             border-bottom: 0;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
@@ -50,6 +45,7 @@ div[data-role='tabs'] {
                 transition: all .3s;
                 vertical-align: middle;
                 white-space: normal;
+                word-break: break-all;
 
                 span.tab-title {
                     display: block;
@@ -61,7 +57,7 @@ div[data-role='tabs'] {
             }
 
             &:last-child {
-                border-right: 1px solid @ccc;
+                border-right: 1px solid @color-gray80;
             }
 
             &.ui-state-active {
@@ -77,7 +73,7 @@ div[data-role='tabs'] {
     }
 
     .tabs-content {
-        border: 1px solid @ccc;
+        border: 1px solid @color-gray80;
         overflow: hidden;
         position: relative;
         z-index: 9;
@@ -88,10 +84,6 @@ div[data-role='tabs'] {
 
             &:not(:first-child) {
                 display: none;
-            }
-
-            > * {
-                min-height: inherit;
             }
         }
     }

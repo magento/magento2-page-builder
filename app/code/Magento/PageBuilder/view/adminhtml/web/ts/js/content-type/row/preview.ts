@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import "jarallax";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
-import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
-import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
+import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
@@ -34,7 +34,10 @@ export default class Preview extends PreviewCollection {
     private buildJarallax = _.debounce(() => {
         // Destroy all instances of the plugin prior
         try {
+            // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+            const style = this.element.getAttribute("style");
             jarallax(this.element, "destroy");
+            this.element.setAttribute("style", style);
         } catch (e) {
             // Failure of destroying is acceptable
         }

@@ -7,29 +7,29 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import "Magento_PageBuilder/js/resource/slick/slick.min";
+import "slick";
 import _ from "underscore";
 import "../../binding/focus";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {DataObject} from "../../data-store";
+import delayUntil from "../../utils/delay-until";
+import deferred from "../../utils/promise-deferred";
+import DeferredInterface from "../../utils/promise-deferred.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import Slide from "../slide/preview";
-import {default as SliderPreview} from "../slider/preview";
 
 /**
  * @api
@@ -37,84 +37,64 @@ import {default as SliderPreview} from "../slider/preview";
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
-    private element: Element;
+    public element: HTMLElement;
+    protected events: DataObject = {
+        columnWidthChangeAfter: "onColumnResize",
+    };
+    private ready: boolean = false;
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
-    /**
-     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
-     *
-     * @type {(() => any) & _.Cancelable}
-     */
-    private buildSlick = _.debounce(() => {
-        if (this.element && this.element.children.length > 0) {
-            try {
-                $(this.element).slick("unslick");
-            } catch (e) {
-                // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
-            }
-
-            // Dispose current subscription in order to prevent infinite loop
-            this.childSubscribe.dispose();
-
-            // Force an update on all children, ko tries to intelligently re-render but fails
-            const data = this.parent.children().slice(0);
-            this.parent.children([]);
-            $(this.element).empty();
-            this.parent.children(data);
-
-            // Re-subscribe original event
-            this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-
-            // Build slick
-            $(this.element).slick(
-                Object.assign(
-                    {
-                        initialSlide: this.activeSlide() || 0,
-                    },
-                    this.buildSlickConfig(),
-                ),
-            );
-
-            // Update our KO pointer to the active slide on change
-            $(this.element).on(
-                "beforeChange",
-                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
-                    this.setActiveSlide(nextSlide);
-                },
-            ).on("afterChange", () => {
-                if (!this.contentTypeHeightReset) {
-                    $(this.element).css({
-                        height: "",
-                        overflow: "",
-                    });
-                    this.contentTypeHeightReset = null;
-                }
-            });
-        }
-    }, 10);
+    private mountAfterDeferred: DeferredInterface = deferred();
+    private afterChildrenRenderDeferred: DeferredInterface = deferred();
+    private buildSlickDebounce = _.debounce(this.buildSlick.bind(this), 10);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
 
-        this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-        this.parent.dataStore.subscribe(this.buildSlick);
+        // Wait for the tabs instance to mount and the container to be ready
+        Promise.all([
+            this.afterChildrenRenderDeferred.promise,
+            this.mountAfterDeferred.promise,
+        ]).then(([element, expectedChildren]) => {
+            // We always create 1 tab when dropping tabs into the instance
+            expectedChildren = expectedChildren || 1;
+            // Wait until all children's DOM elements are present before building the tabs instance
+            delayUntil(
+                () => {
+                    this.element = element as HTMLElement;
 
-        // Set the stage to interacting when a slide is focused
-        this.focusedSlide.subscribe((value: number) => {
-            if (value !== null) {
-                events.trigger("stage:interactionStart");
-            } else {
-                events.trigger("stage:interactionStop");
-            }
+                    this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
+                    this.parent.dataStore.subscribe(this.buildSlickDebounce);
+
+                    this.buildSlick();
+
+                    // Redraw slide after content type gets redrawn
+                    events.on("contentType:redrawAfter", function(args: ContentTypeAfterRenderEventParamsInterface) {
+                        if ($.contains(args.element, this.element)) {
+                            $(this.element).slick("setPosition");
+                        }
+                    }.bind(this));
+
+                    // Set the stage to interacting when a slide is focused
+                    this.focusedSlide.subscribe((value: number) => {
+                        if (value !== null) {
+                            events.trigger("stage:interactionStart");
+                        } else {
+                            events.trigger("stage:interactionStop");
+                        }
+                    });
+                },
+                () => $(element).find(".pagebuilder-slide").length === expectedChildren,
+            );
         });
     }
 
@@ -134,13 +114,6 @@ export default class Preview extends PreviewCollection {
             sort: 10,
         });
         return options;
-    }
-
-    /**
-     * Capture an after render event
-     */
-    public onAfterRender(): void {
-        this.buildSlick();
     }
 
     /**
@@ -173,7 +146,7 @@ export default class Preview extends PreviewCollection {
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
         if (_.isNull(event.relatedTarget) ||
-            event.relatedTarget && !$.contains(event.currentTarget as Element, event.relatedTarget)
+            event.relatedTarget && !$(event.currentTarget as HTMLElement).closest(event.relatedTarget).length
         ) {
             this.setFocusedSlide(null);
         }
@@ -187,19 +160,21 @@ export default class Preview extends PreviewCollection {
      * @param {boolean} force
      */
     public navigateToSlide(slideIndex: number, dontAnimate: boolean = false, force: boolean = false): void {
-        $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
-        this.setActiveSlide(slideIndex);
-        this.setFocusedSlide(slideIndex, force);
+        if ($(this.element).hasClass("slick-initialized")) {
+            $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
+            this.setActiveSlide(slideIndex);
+            this.setFocusedSlide(slideIndex, force);
+        }
     }
 
     /**
      * After child render record element
      *
-     * @param {Element} element
+     * @param {HTMLElement} element
      */
-    public afterChildrenRender(element: Element): void {
+    public afterChildrenRender(element: HTMLElement): void {
         super.afterChildrenRender(element);
-        this.element = element;
+        this.afterChildrenRenderDeferred.resolve(element);
     }
 
     /**
@@ -228,6 +203,12 @@ export default class Preview extends PreviewCollection {
         if (params.item.index() !== -1) {
             _.defer(this.focusElement.bind(this, event, params.item.index()));
         }
+        _.defer(() => {
+            $(this.element).css({
+                height: "",
+                overflow: "",
+            });
+        });
     }
 
     /**
@@ -241,10 +222,15 @@ export default class Preview extends PreviewCollection {
         ).then((slide) => {
             events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
-                    _.delay(() => {
-                        this.navigateToSlide(this.parent.children().length - 1);
+                    _.defer(() => {
+                        // Wait until slick is initialized before trying to navigate
+                        delayUntil(
+                            () => this.navigateToSlide(this.parent.children().length - 1),
+                            () => $(this.element).hasClass("slick-initialized"),
+                            10,
+                        );
                         slide.preview.onOptionEdit();
-                    }, 500 );
+                    });
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
             }, `slide:${slide.id}:mountAfter`);
@@ -279,11 +265,11 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
-        // We only start forcing the containers height once the slider is ready
-        let sliderReady: boolean = false;
-        events.on("slider:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slider:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.id === this.parent.id) {
-                sliderReady = true;
+                if (args.expectChildren !== undefined) {
+                    this.mountAfterDeferred.resolve(args.expectChildren);
+                }
             }
         });
 
@@ -308,19 +294,22 @@ export default class Preview extends PreviewCollection {
                 const data = this.parent.children().slice(0);
                 this.parent.children([]);
                 this.parent.children(data);
+
+                _.defer(() => {
+                    this.buildSlick();
+                });
             }
         });
 
         events.on("slide:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            const itemIndex = (args.contentType.parent as ContentTypeCollectionInterface)
-                .getChildren()().indexOf(args.contentType);
+            const itemIndex = args.contentType.parent.getChildren()().indexOf(args.contentType);
             if ((args.contentType.parent.id === this.parent.id) &&
                 (newItemIndex !== null && newItemIndex === itemIndex)
             ) {
                 _.defer(() => {
                     if (newItemIndex !== null) {
                         newItemIndex = null;
-                        (this as SliderPreview).navigateToSlide(itemIndex, true, true);
+                        this.navigateToSlide(itemIndex, true, true);
                         _.defer(() => {
                             this.focusedSlide(null);
                             this.focusedSlide(itemIndex);
@@ -332,7 +321,7 @@ export default class Preview extends PreviewCollection {
 
         // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
         events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
+            if (this.element && this.ready && args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });
@@ -345,11 +334,11 @@ export default class Preview extends PreviewCollection {
         });
 
         // Capture when a content type is duplicated within the container
-        let duplicatedSlide: Slide;
+        let duplicatedSlide: ContentTypeInterface;
         let duplicatedSlideIndex: number;
         events.on("slide:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (args.duplicateContentType.parent.id === this.parent.id) {
-                duplicatedSlide = (args.duplicateContentType as Slide);
+            if (args.duplicateContentType.parent.id === this.parent.id && args.direct) {
+                duplicatedSlide = args.duplicateContentType;
                 duplicatedSlideIndex = args.index;
             }
         });
@@ -357,11 +346,67 @@ export default class Preview extends PreviewCollection {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 _.defer(() => {
                     // Mark the new duplicate slide as active
-                    (this as SliderPreview).navigateToSlide(duplicatedSlideIndex, true, true);
+                    this.navigateToSlide(duplicatedSlideIndex, true, true);
                     duplicatedSlide = duplicatedSlideIndex = null;
                 });
             }
         });
+    }
+
+    /**
+     * Build our instance of slick
+     */
+    private buildSlick(): void {
+        if (this.element && this.element.children.length > 0) {
+            try {
+                $(this.element).slick("unslick");
+            } catch (e) {
+                // We aren't concerned if this fails, slick throws an Exception when we cannot unslick
+            }
+
+            // Dispose current subscription in order to prevent infinite loop
+            this.childSubscribe.dispose();
+
+            // Force an update on all children, ko tries to intelligently re-render but fails
+            const data = this.parent.children().slice(0);
+            this.parent.children([]);
+            $(this.element).empty();
+            this.parent.children(data);
+
+            // Re-subscribe original event
+            this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
+
+            // Bind our init event for slick
+            $(this.element).on("init", () => {
+                this.ready = true;
+            });
+
+            // Build slick
+            $(this.element).slick(
+                Object.assign(
+                    {
+                        initialSlide: this.activeSlide() || 0,
+                    },
+                    this.buildSlickConfig(),
+                ),
+            );
+
+            // Update our KO pointer to the active slide on change
+            $(this.element).on(
+                "beforeChange",
+                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
+                    this.setActiveSlide(nextSlide);
+                },
+            ).on("afterChange", () => {
+                if (!this.contentTypeHeightReset) {
+                    $(this.element).css({
+                        height: "",
+                        overflow: "",
+                    });
+                    this.contentTypeHeightReset = null;
+                }
+            });
+        }
     }
 
     /**
@@ -387,7 +432,7 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Build the slack config object
+     * Build the slick config object
      *
      * @returns {{autoplay: boolean; autoplaySpeed: (any | number);
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
@@ -402,6 +447,30 @@ export default class Preview extends PreviewCollection {
             fade: data.fade === "true",
             infinite: data.is_infinite === "true",
             waitForAnimate: false,
+            swipe: false,
         };
+    }
+
+    /**
+     * Fit slider in column container
+     *
+     * @param params
+     */
+    private onColumnResize(params: any) {
+        setTimeout(() => {
+            $(this.element).slick("setPosition");
+            this.checkWidth();
+        }, 250);
+    }
+
+    /**
+     * Check width and add class that marks element as small
+     */
+    private checkWidth() {
+        if (this.element.offsetWidth < 410) {
+            this.element.classList.add("slider-small-width");
+        } else {
+            this.element.classList.remove("slider-small-width");
+        }
     }
 }

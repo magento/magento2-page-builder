@@ -5,15 +5,17 @@
 
 import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import Config from "../../config";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
-import WysiwygFactory from "../wysiwyg/factory";
-import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
+
     /**
      * Wysiwyg instance
      */
@@ -41,14 +43,18 @@ export default class Preview extends BasePreview {
      */
     public initWysiwyg(element: HTMLElement) {
         this.element = element;
+        element.innerHTML = this.data.main.html();
 
         element.id = this.parent.id + "-editor";
+
+        const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
+        wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
 
         WysiwygFactory(
             this.parent.id,
             element.id,
             this.config.name,
-            this.config.additional_data.wysiwygConfig.wysiwygConfigData,
+            wysiwygConfig,
             this.parent.dataStore,
             "content",
         ).then((wysiwyg: WysiwygInterface): void => {
@@ -99,6 +105,28 @@ export default class Preview extends BasePreview {
     {
         $(this.textarea).closest(".pagebuilder-content-type").removeClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStop");
+    }
+
+    /**
+     * Retrieve the margin & padding styles for the placeholder
+     *
+     * @returns {any}
+     */
+    public getPlaceholderStyle()
+    {
+        const keys = [
+            "marginBottom",
+            "marginLeft",
+            "marginRight",
+            "marginTop",
+            "paddingBottom",
+            "paddingLeft",
+            "paddingRight",
+            "paddingTop",
+        ];
+        return _.pick(this.data.main.style(), (style: string, key: string) => {
+            return keys.indexOf(key) !== -1;
+        });
     }
 
     /**

@@ -4,13 +4,11 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-
-  /**
-   * @api
-   */
   var ConverterPool =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function ConverterPool() {
       this.converters = {};
     }

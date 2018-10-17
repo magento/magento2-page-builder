@@ -1,16 +1,21 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _widgetInitializer, _config, _preview) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _widgetInitializer, _config, _preview) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_BasePreview) {
-    _inheritsLoose(Preview, _BasePreview);
+  function (_preview2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _preview2);
 
     /**
      * @inheritdoc
@@ -18,13 +23,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, parent, config, observableUpdater) || this;
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
-      _this.placeholderText = void 0;
-      _this.lastBlockId = void 0;
-      _this.lastTemplate = void 0;
-      _this.lastRenderedHtml = void 0;
       _this.messages = {
         NOT_SELECTED: (0, _translate)("Empty Block"),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
@@ -39,10 +40,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     var _proto = Preview.prototype;
 
-    _proto.initializeWidgets = function initializeWidgets() {
-      (0, _widgetInitializer)({
-        config: _config.getConfig("widgets")
-      });
+    _proto.initializeWidgets = function initializeWidgets(element) {
+      if (element) {
+        this.element = element;
+        (0, _widgetInitializer)({
+          config: _config.getConfig("widgets")
+        }, element);
+      }
+    };
+    /**
+     * Updates the view state using the data provided
+     * @param {DataObject} data
+     */
+
+
+    _proto.processBlockData = function processBlockData(data) {
+      // Only load if something changed
+      this.displayPreviewPlaceholder(data, "block_id");
+
+      if (data.block_id && data.template.length !== 0) {
+        this.processRequest(data, "block_id", "title");
+      }
     };
     /**
      * @inheritdoc
@@ -52,7 +70,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _BasePreview.prototype.bindEvents.call(this); // When a block type is dropped for the first time open the edit panel
+      _preview2.prototype.bindEvents.call(this); // When a block type is dropped for the first time open the edit panel
 
 
       _events.on("block:dropAfter", function (args) {
@@ -69,48 +87,69 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
-      var _this3 = this;
-
-      _BasePreview.prototype.afterObservablesUpdated.call(this);
+      _preview2.prototype.afterObservablesUpdated.call(this);
 
       var data = this.parent.dataStore.get(); // Only load if something changed
 
-      if (this.lastBlockId === data.block_id && this.lastTemplate === data.template) {
+      this.processBlockData(data);
+    };
+    /**
+     * Display preview placeholder
+     *
+     * @param {DataObject} data
+     * @param {string} identifierName
+     */
+
+
+    _proto.displayPreviewPlaceholder = function displayPreviewPlaceholder(data, identifierName) {
+      // Only load if something changed
+      if (this.lastBlockId === data[identifierName] && this.lastTemplate === data.template) {
         // The mass converter will have transformed the HTML property into a directive
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
           this.showBlockPreview(true);
-          this.initializeWidgets();
+          this.initializeWidgets(this.element);
         }
       } else {
         this.showBlockPreview(false);
         this.placeholderText("");
       }
 
-      if (!data.block_id || data.template.length === 0) {
+      if (!data[identifierName] || data[identifierName] && data[identifierName].length === 0 || data.template.length === 0) {
         this.showBlockPreview(false);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
+    };
+    /**
+     *
+     * @param {DataObject} data
+     * @param {string} identifierName
+     * @param {string} labelKey
+     */
 
-      this.loading(true);
+
+    _proto.processRequest = function processRequest(data, identifierName, labelKey) {
+      var _this3 = this;
 
       var url = _config.getConfig("preview_url");
 
+      var identifier = data[identifierName];
       var requestConfig = {
         // Prevent caching
         method: "POST",
         data: {
           role: this.config.name,
-          block_id: data.block_id,
+          block_id: identifier,
           directive: this.data.main.html()
         }
-      }; // Retrieve a state object representing the block from the preview controller and process it on the stage
+      };
+      this.loading(true); // Retrieve a state object representing the block from the preview controller and process it on the stage
 
       _jquery.ajax(url, requestConfig) // The state object will contain the block name and either html or a message why there isn't any.
       .done(function (response) {
         // Empty content means something bad happened in the controller that didn't trigger a 5xx
-        if (_typeof(response.data) !== "object") {
+        if (typeof response.data !== "object") {
           _this3.showBlockPreview(false);
 
           _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
@@ -119,21 +158,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         } // Update the stage content type label with the real block title if provided
 
 
-        _this3.displayLabel(response.data.title ? response.data.title : _this3.config.label);
+        _this3.displayLabel(response.data[labelKey] ? response.data[labelKey] : _this3.config.label);
 
         if (response.data.content) {
           _this3.showBlockPreview(true);
 
           _this3.data.main.html(response.data.content);
 
-          _this3.initializeWidgets();
+          _this3.initializeWidgets(_this3.element);
         } else if (response.data.error) {
           _this3.showBlockPreview(false);
 
           _this3.placeholderText(response.data.error);
         }
 
-        _this3.lastBlockId = parseInt(data.block_id.toString(), 10);
+        _this3.lastBlockId = parseInt(identifier.toString(), 10);
         _this3.lastTemplate = data.template.toString();
         _this3.lastRenderedHtml = response.data.content;
       }).fail(function () {

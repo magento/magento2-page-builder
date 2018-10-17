@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/utils/url"], function (_config, _directives, _image, _url) {
+define(["Magento_PageBuilder/js/utils/image"], function (_image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -11,6 +11,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
   var BackgroundImage =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function BackgroundImage() {}
 
     var _proto = BackgroundImage.prototype;
@@ -45,10 +47,7 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/directive
       }
 
       var imageUrl = value[0].url;
-      var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getConfig("media_url"), imageUrl);
-      var mediaPath = imageUrl.split(mediaUrl);
-      var directive = "{{media url=" + mediaPath[1] + "}}";
-      return "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";
+      return (0, _image.imageToBackgroundImageDataUrl)(imageUrl);
     };
 
     return BackgroundImage;

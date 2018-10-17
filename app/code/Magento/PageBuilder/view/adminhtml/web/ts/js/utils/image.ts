@@ -4,6 +4,8 @@
  */
 
 import Config from "../config";
+import {toDataUrl} from "./directives";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "./url";
 
 /**
  * Decode image background URL to object
@@ -27,4 +29,27 @@ export function decodeUrl(value: string): string | [object] {
         result = [image];
     }
     return result;
+}
+
+/**
+ * Convert a URL to an image directive
+ *
+ * @param {string} imageUrl
+ * @returns {string}
+ */
+export function urlToDirective(imageUrl: string) {
+    const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getConfig("media_url"), imageUrl);
+
+    const mediaPath = imageUrl.split(mediaUrl);
+    return "{{media url=" + mediaPath[1] + "}}";
+}
+
+/**
+ * Convert an image URL to a background image data uri
+ *
+ * @param {string} imageUrl
+ * @returns {string}
+ */
+export function imageToBackgroundImageDataUrl(imageUrl: string) {
+    return "url(\'" + toDataUrl(urlToDirective(imageUrl)) + "\')";
 }

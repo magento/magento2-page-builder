@@ -8,15 +8,16 @@ interface EventBusInterface {
 }
 
 interface WysiwygSetupInterface {
-    eventBus: EventBusInterface,
-    setup(mode: string): void,
-    wysiwygInstance: WysiwygInstanceInterface
+    eventBus: EventBusInterface;
+    wysiwygInstance: WysiwygInstanceInterface;
+    setup(mode: string): void;
 }
 
 interface WysiwygInstanceInterface {
-    eventBus: EventBusInterface,
-    getContent(): string,
-    setContent(content: string): void
+    id: string;
+    eventBus: EventBusInterface;
+    getContent(): string;
+    setContent(content: string): void;
 }
 
 declare var WysiwygSetup: {

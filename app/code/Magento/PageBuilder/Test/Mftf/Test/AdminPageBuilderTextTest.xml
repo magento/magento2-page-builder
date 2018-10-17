@@ -86,6 +86,7 @@
         <!-- Verify data on TinyMCE4 -->
         <comment userInput="Verify data on TinyMCE4" stepKey="comment5"/>
         <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <seeElement selector="{{TextOnStage.tinymce('1')}}" stepKey="waitforTinyMCE4"/>
         <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="waitForText"/>
@@ -98,6 +99,7 @@
         <comment userInput="Switch to TinyMCE3" stepKey="comment6"/>
         <magentoCLI command="config:set cms/wysiwyg/editor Magento_Tinymce3/tinymce3Adapter" stepKey="enableTinyMCE3"/>
         <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageToBeLoaded1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4"/>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.textArea('1')}}&quot;, document.body).iterateNext().value" stepKey="actualData"/>
         <assertEquals stepKey="assertTextValue">
@@ -109,6 +111,7 @@
         <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
         <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4_1"/>
         <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageToBeLoaded2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_1"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -118,7 +121,9 @@
         <comment userInput="Add image to TextArea" stepKey="comment8"/>
         <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
         <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
-        <click stepKey="clickStorageRoot" selector="{{MediaGallerySection.StorageRootArrow}}" />
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
         <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -135,6 +140,7 @@
         <!-- Verify image on TinyMCE4 -->
         <comment userInput="Verify data on TinyMCE4" stepKey="comment10"/>
         <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageToBeLoaded3"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage4_2"/>
         <seeElement selector="{{TextOnStage.tinymce('1')}}{{CmsWYSIWYGSection.imageSource(ImageUpload3.fileName)}}" stepKey="assertMediaSourceOnStage2"/>
     </test>
@@ -366,7 +372,6 @@
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <click selector="{{MediaGallerySection.WysiwygArrow}}" stepKey="openWYSIWYGFolder"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
@@ -415,7 +420,7 @@
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
@@ -432,7 +437,7 @@
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
@@ -452,6 +457,8 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -500,6 +507,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <!--Assert Text placeholder-->
         <comment userInput="Assert Text placeholder" stepKey="assertTextPlaceholder"/>
         <seeElement selector="{{TextOnStage.textPlaceholder('1')}}" stepKey="seeTextPlaceholder"/>
@@ -589,7 +597,6 @@
         </before>
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
-            <click selector="{{MediaGallerySection.WysiwygArrow}}" stepKey="openWYSIWYGFolder"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
                 <argument name="FolderName" value="{{ImageFolder.name}}"/>
             </actionGroup>
@@ -613,6 +620,8 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -673,7 +682,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableCountry"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableCountry.editPanelValue)}}" stepKey="waitForVariableCountryStage1"/>
@@ -740,7 +749,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
@@ -807,14 +816,15 @@
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
         <actionGroup ref="VerifyTinyMCEActionGroup" stepKey="verifyTinyMCE4"/>
         <actionGroup ref="VerifyMagentoEntityActionGroup" stepKey="verifyMagentoEntities"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.undo}}" stepKey="seeUndo"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.redo}}" stepKey="seeRedo"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="seeFontsize"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.textColor}}" stepKey="seeTextColor"/>
-        <seeElement selector="{{WYSIWYGOnPageBuilder.backgroundColor}}" stepKey="seeBackgroundColor"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.undo}}" stepKey="seeUndo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.redo}}" stepKey="seeRedo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.fontSize}}" stepKey="seeFontsize"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.lineHeight}}" stepKey="seeLineHeight"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.textColor}}" stepKey="seeTextColor"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilderInline.backgroundColor}}" stepKey="seeBackgroundColor"/>
         <!--Verify FontSize-->
         <comment userInput="Verify FontSize" stepKey="commentVerifyFontSize"/>
-        <click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.fontSize}}" stepKey="clickOnFontSize"/>
         <see userInput="10px" stepKey="see10px" />
         <see userInput="12px" stepKey="see12px" />
         <see userInput="14px" stepKey="see14px" />
@@ -835,11 +845,34 @@
         <see userInput="56px" stepKey="see56px" />
         <see userInput="64px" stepKey="see64px" />
         <see userInput="72px" stepKey="see72px" />
+        <!--Verify LineHeight-->
+        <comment userInput="Verify LineHeight" stepKey="commentVerifyLineHeight"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.lineHeight}}" stepKey="clickOnLineHeight"/>
+        <see userInput="10px" stepKey="seeLineHeight10px" />
+        <see userInput="12px" stepKey="seeLineHeight12px" />
+        <see userInput="14px" stepKey="seeLineHeight14px" />
+        <see userInput="16px" stepKey="seeLineHeight16px" />
+        <see userInput="18px" stepKey="seeLineHeight18px" />
+        <see userInput="20px" stepKey="seeLineHeight20px" />
+        <see userInput="24px" stepKey="seeLineHeight24px" />
+        <see userInput="26px" stepKey="seeLineHeight26px" />
+        <see userInput="28px" stepKey="seeLineHeight28px" />
+        <see userInput="32px" stepKey="seeLineHeight32px" />
+        <see userInput="34px" stepKey="seeLineHeight34px" />
+        <see userInput="36px" stepKey="seeLineHeight36px" />
+        <see userInput="38px" stepKey="seeLineHeight38px" />
+        <see userInput="40px" stepKey="seeLineHeight40px" />
+        <see userInput="42px" stepKey="seeLineHeight42px" />
+        <see userInput="48px" stepKey="seeLineHeight48px" />
+        <see userInput="52px" stepKey="seeLineHeight52px" />
+        <see userInput="56px" stepKey="seeLineHeight56px" />
+        <see userInput="64px" stepKey="seeLineHeight64px" />
+        <see userInput="72px" stepKey="seeLineHeight72px" />
         <!--Verify FontStyle on preview-->
         <comment userInput="Verify FontStyle on preview" stepKey="commentVerifyFontsizeOnPreview"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
         <fillField selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTinyMCE4"/>
-        <click selector="{{WYSIWYGOnPageBuilder.formatSelector}}" stepKey="expandFormatList"/>
+        <click selector="{{WYSIWYGOnPageBuilderInline.formatSelector}}" stepKey="expandFormatList"/>
         <see userInput="Important" stepKey="seeImportantStyle"/>
         <click selector="{{TextOnStage.importantStyle('1')}}" stepKey="selectFormatStyle" />
         <seeElement selector="{{TextOnStage.textInImportantStyle('1',PageBuilderTextProperty.value)}}" stepKey="seeTextInImportantStyleOnPreview1" />
@@ -862,7 +895,7 @@
             <description value="Custom buttons on WYSIWYG toolbar inside PageBuilder"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-1412"/>
-            <testCaseId value="MAGETWO-90274"/>
+            <testCaseId value="MC-1333"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -884,6 +917,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -916,7 +950,7 @@
             <description value="Validate that updating every attribute in the General form for Text will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83925"/>
-            <testCaseId value="MAGETWO-84263"/>
+            <testCaseId value="MC-2911"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -938,6 +972,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -985,7 +1020,7 @@
             <description value="A user should be able to delete a Text content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83925"/>
-            <testCaseId value="MAGETWO-84919"/>
+            <testCaseId value="MC-2550"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -1003,6 +1038,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1016,7 +1052,7 @@
             <description value="Validate the default values for every attribute in the Advanced Configuration section on the Edit Form, Stage, and Storefront for Text."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-84275"/>
+            <testCaseId value="MC-2810"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -1037,13 +1073,13 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1078,7 +1114,7 @@
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
-            <argument name="index" value="1"/>            
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1096,7 +1132,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -1144,7 +1179,7 @@
             <description value="Validate that updating every attribute in the Advanced Configuration form for Text will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-89190"/>
-            <testCaseId value="MAGETWO-89774"/>
+            <testCaseId value="MC-2700"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -1165,13 +1200,13 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -1217,7 +1252,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1264,7 +1298,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -1317,7 +1350,7 @@
             <description value="A user should be able to duplicate a text content type. Verify on Stage and Storefront."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
-            <testCaseId value="MAGETWO-91075"/>
+            <testCaseId value="MC-2719"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -1338,6 +1371,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1346,7 +1380,6 @@
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1420,7 +1453,6 @@
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE1">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1476,7 +1508,6 @@
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE2">
             <argument name="property" value="PageBuilderTextProperty"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1532,7 +1563,7 @@
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Text."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
-            <testCaseId value="MAGETWO-91076"/>
+            <testCaseId value="MC-2721"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -1553,6 +1584,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1583,15 +1615,15 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementNotVisible selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextStorefront"/>
     </test>
-    <test name="TextRequiredAttributes">
+    <test name="TextHasNoRequired">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
-            <title value="Validate Required Attributes"/>
-            <description value="Validate that required attributes are required for text."/>
+            <title value="Text has no required fields in edit form"/>
+            <description value="Check there are no required fields in text edit form"/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
-            <testCaseId value="MAGETWO-91077"/>
+            <testCaseId value="MC-2808"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
         </annotations>
@@ -1609,16 +1641,20 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <!-- Validate Cannot Save Edit Panel -->
-        <comment userInput="Validate Cannot Save Edit Panel" stepKey="commentValidateCannotSave"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Clear Fields -->
+        <comment userInput="Clear Fields" stepKey="commentClearFields"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="clearText">
+            <argument name="property" value="PageBuilderTextContentTypeEmpty"/>
+        </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
     <test name="TextDisabledWYSIWYGAddImage">
         <annotations>
@@ -1665,7 +1701,8 @@
         <waitForElementVisible selector="{{TextOnConfiguration.insertImageButton}}" stepKey="waitForInsertImage"/>
         <click selector="{{TextOnConfiguration.insertImageButton}}" stepKey="clickInsertImage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <click stepKey="clickStorageRoot" selector="{{MediaGallerySection.StorageRootArrow}}" />
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -1703,7 +1740,7 @@
             <description value="Validate that textarea works for Text with WYSIWYG disabled."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
-            <testCaseId value="MAGETWO-91082"/>
+            <testCaseId value="MC-2636"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -1780,7 +1817,7 @@
             <description value="Validate that textarea works for Widget with WYSIWYG disabled."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
-            <testCaseId value="MAGETWO-91086"/>
+            <testCaseId value="MC-2858"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -1862,7 +1899,7 @@
             <description value="Validate that textarea works for Variable with WYSIWYG disabled."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90461"/>
-            <testCaseId value="MAGETWO-91092"/>
+            <testCaseId value="MC-2691"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
             <group value="pagebuilder-customBeforeAfter"/>
@@ -2092,7 +2129,7 @@
         <!--Input variable into stage-->
         <comment userInput="Input variable into stage" stepKey="commentInputVariableIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
-        <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.editPanelValue)}}" stepKey="waitForVariableBaseURLStage"/>
@@ -2109,7 +2146,7 @@
         <!--Input widget into stage-->
         <comment userInput="Input widget into stage" stepKey="commentInputWidgetIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea2"/>
-        <actionGroup ref="addPageLinkWidgetToTinyMCE" stepKey="addPageLinkWidgetToTinyMCE">
+        <actionGroup ref="addPageLinkWidgetToTinyMCEInline" stepKey="addPageLinkWidgetToTinyMCE">
             <argument name="widget" value="TinyMCEWidgetCMSPageLink"/>
             <argument name="page" value="$$createCMSPageB.identifier$$"/>
         </actionGroup>
@@ -2129,6 +2166,8 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
+        <click selector="{{MediaGallerySection.StorageRootArrow}}" stepKey="clickStorageRoot"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="CreateImageFolder" stepKey="CreateImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -2180,6 +2219,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -2233,6 +2273,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideTextInlineEditing" stepKey="closeLiveEdit"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -2279,5 +2320,81 @@
         <waitForPageLoad stepKey="waitForStorefrontReload" />
         <dontSeeElementInDOM selector="{{TextOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+    </test>
+    <test name="TextVariableCanWrap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Text variable value can wrap to multiple lines"/>
+            <description value="A user can see a long text variable with no spaces can wrap to multiple lines in storefront"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3508"/>
+            <testCaseId value="MC-4115"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set general/store_information/name {{TinyMCEVariableStoreName.storefrontValue}}" stepKey="setValueForStoreNameVariable"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set general/store_information/name none" stepKey="setBackToDefaultValue"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Add Column to Stage -->
+        <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Text to Column -->
+        <comment userInput="Add Text to Column" stepKey="addTextToColumn"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add variable to text on stage -->
+        <comment userInput="Add variable to text on stage" stepKey="commentAddVariableToTextOnStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea1"/>
+        <actionGroup ref="addVariableToTinyMCEInline" stepKey="addVariableToTinyMCEInline">
+            <argument name="variable" value="TinyMCEVariableStoreName"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromTextarea"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="expectedIndex" value="2"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
+        </actionGroup>
+        <!-- Resize Columns -->
+        <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
+        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumnToOne"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate height of variable in storefront -->
+        <comment userInput="Validate height of variable in storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Grab Height Values -->
+        <comment userInput="Grab Height Values" stepKey="commentGrabHeightValues"/>
+        <executeJS function="{{TextOnStorefront.textVariableHeightJS('1', TinyMCEVariableStoreName.storefrontValue)}}" stepKey="columnOneTextHeight"/>
+        <executeJS function="{{TextOnStorefront.textVariableHeightJS('2', TinyMCEVariableStoreName.storefrontValue)}}" stepKey="columnTwoTextHeight"/>
+        <assertGreaterThan stepKey="assertColumnTwoTextGreaterThanColumnOneText">
+            <expectedResult type="variable">columnTwoTextHeight</expectedResult>
+            <actualResult type="variable">columnOneTextHeight</actualResult>
+        </assertGreaterThan>
     </test>
 </tests>

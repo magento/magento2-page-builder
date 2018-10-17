@@ -49,6 +49,10 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
+        if (value === "") {
+            value = "javascript:void(0)";
+        }
+
         return value;
     }
 
@@ -60,37 +64,34 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
+        const link = data[name] as any;
 
-        const link = data[name];
-        let href = "";
-
-        if (!link) {
-            return href;
+        if (typeof link === "undefined" || (typeof link[link.type] === "string" && !link[link.type].length)) {
+            return "javascript:void(0)";
         }
 
-        const linkType = link.type;
-        const isHrefId = !isNaN(parseInt(link[linkType], 10));
+        let href = link[link.type];
 
-        if (isHrefId && link) {
-            href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
-        } else if (link[linkType]) {
-            href = link[linkType];
-        }
+        href = this.convertToWidget(href, link.type);
+
         return href;
     }
 
     /**
      * @param {string} href
-     * @param {object} widgetAttributes
+     * @param {string} linkType
      * @returns {string}
      */
-    private convertToWidget(href: string, widgetAttributes: object): string {
+    private convertToWidget(href: string, linkType: string): string {
+        if (!href || !this.widgetParamsByLinkType[linkType]) {
+            return href;
+        }
+
         const attributesString = _.map(
-            widgetAttributes,
+            this.widgetParamsByLinkType[linkType],
             (val: string, key: string) => `${key}='${val.replace(":href", href)}'`,
         ).join(" ");
 
         return `{{widget ${attributesString} }}`;
     }
-
 }

@@ -11,6 +11,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "
   var Src =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Src() {}
 
     var _proto = Src.prototype;

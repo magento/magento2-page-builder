@@ -7,6 +7,8 @@ define([], function () {
   var Margins =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Margins() {}
 
     var _proto = Margins.prototype;

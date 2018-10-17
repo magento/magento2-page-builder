@@ -11,6 +11,8 @@ define(["underscore"], function (_underscore) {
   var CreateValueForHref =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function CreateValueForHref() {
       this.widgetParamsByLinkType = {
         category: {
@@ -43,6 +45,10 @@ define(["underscore"], function (_underscore) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
+      if (value === "") {
+        value = "javascript:void(0)";
+      }
+
       return value;
     };
     /**
@@ -56,32 +62,28 @@ define(["underscore"], function (_underscore) {
 
     _proto.toDom = function toDom(name, data) {
       var link = data[name];
-      var href = "";
 
-      if (!link) {
-        return href;
+      if (typeof link === "undefined" || typeof link[link.type] === "string" && !link[link.type].length) {
+        return "javascript:void(0)";
       }
 
-      var linkType = link.type;
-      var isHrefId = !isNaN(parseInt(link[linkType], 10));
-
-      if (isHrefId && link) {
-        href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
-      } else if (link[linkType]) {
-        href = link[linkType];
-      }
-
+      var href = link[link.type];
+      href = this.convertToWidget(href, link.type);
       return href;
     };
     /**
      * @param {string} href
-     * @param {object} widgetAttributes
+     * @param {string} linkType
      * @returns {string}
      */
 
 
-    _proto.convertToWidget = function convertToWidget(href, widgetAttributes) {
-      var attributesString = _underscore.map(widgetAttributes, function (val, key) {
+    _proto.convertToWidget = function convertToWidget(href, linkType) {
+      if (!href || !this.widgetParamsByLinkType[linkType]) {
+        return href;
+      }
+
+      var attributesString = _underscore.map(this.widgetParamsByLinkType[linkType], function (val, key) {
         return key + "='" + val.replace(":href", href) + "'";
       }).join(" ");
 

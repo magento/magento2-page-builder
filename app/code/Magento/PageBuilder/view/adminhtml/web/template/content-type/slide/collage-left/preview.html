@@ -9,27 +9,38 @@
      attr="data.main.attributes"
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <div ko-style="Object.assign(data.main.style(), data.desktop_image.style(), getPaddingStyles())"
+    <div ko-style="Object.assign(data.main.style(), data.desktop_image.styleNoReset(), {paddingRight: 'calc(50% + ' + data.desktop_image.style().paddingRight + ')'})"
          css="data.main.css"
-         event="{ mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper }">
-        <div class="pagebuilder-collage-overlay"
+         event="mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor">
+        <scope args="getUploader().getUiComponent()">
+            <render />
+        </scope>
+        <div class="pagebuilder-collage-overlay wysiwyg-container"
              attr="data.overlay.attributes"
-             ko-style="data.overlay.style">
-            <scope args="getUploader().getUiComponent()">
-                <render />
-            </scope>
-            <div if="data.content.html()"
-                 css="data.content.css"
-                 html="data.content.html"
+             ko-style="data.overlay.style"
+             event="mousedown: activateEditor">
+            <div class="inline-wysiwyg"
+                 if="isWysiwygSupported()"
                  attr="data.content.attributes"
-                 ko-style="data.content.style">
+                 ko-style="data.content.style"
+                 css="data.content.css"
+                 event="mousedown: stopEvent, click: activateEditor"
+                 contenteditable="true"
+                 afterRender="afterRenderWysiwyg">
+                <div html="data.content.html"></div>
             </div>
-            <div ifnot="data.content.html()"
+            <div if="!data.content.html() && isWysiwygSupported()"
                  class="pagebuilder-empty-slide"
                  attr="data.content.attributes"
                  ko-style="data.content.style"
                  css="data.content.css"
                  translate="'Edit Slide Text'">
+            </div>
+            <div ifnot="isWysiwygSupported()">
+                <textarea class="inline-wysiwyg-textarea"
+                          afterRender="initTextarea"
+                          event="keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent"
+                          data-bind="attr: { placeholder: $t('Edit Slide Text') }" />
             </div>
             <a if="data.main.attributes()['data-show-button'] !== 'never'"
                type="button"
@@ -37,7 +48,7 @@
                css="data.button.css"
                attr="data.button.attributes"
                ko-style="data.button.style">
-                <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
+                <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }"></span>
             </a>
         </div>
     </div>

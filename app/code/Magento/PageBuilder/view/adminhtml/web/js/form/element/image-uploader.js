@@ -8,7 +8,7 @@ define([
     'underscore',
     'uiRegistry',
     'Magento_Ui/js/form/element/image-uploader',
-    'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min',
+    'Magento_PageBuilder/js/resource/resize-observer/ResizeObserver',
     'Magento_PageBuilder/js/events',
     'mage/translate'
 ], function ($, _, uiRegistry, Uploader, ResizeObserver, events, $t) {

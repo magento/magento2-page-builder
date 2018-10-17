@@ -1,68 +1,69 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "tabs", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _tabs, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
-  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "tabs", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _tabs, _underscore, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
 
   /**
    * @api
    */
   var Preview =
   /*#__PURE__*/
-  function (_PreviewCollection) {
-    _inheritsLoose(Preview, _PreviewCollection);
+  function (_previewCollection2) {
+    "use strict";
+
+    _inheritsLoose(Preview, _previewCollection2);
 
     /**
-     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-
-    /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
-      _this.focusedTab = _knockout.observable();
-      _this.disableInteracting = void 0;
-      _this.element = void 0;
-      _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
-        if (activeTabIndex === void 0) {
-          activeTabIndex = _this.previewData.default_active();
+      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
+
+      _this.focusedTab = _knockout.observable(null);
+      _this.onContainerRenderDeferred = (0, _promiseDeferred)();
+      _this.mountAfterDeferred = (0, _promiseDeferred)();
+      Promise.all([_this.onContainerRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
+        var element = _ref[0],
+            expectedChildren = _ref[1];
+        // We always create 1 tab when dropping tabs into the instance
+        expectedChildren = expectedChildren || 1; // Wait until all children's DOM elements are present before building the tabs instance
+
+        (0, _delayUntil)(function () {
+          _this.element = element;
+
+          _this.buildTabs();
+        }, function () {
+          return (0, _jquery)(element).find(".pagebuilder-tab-item").length === expectedChildren;
+        });
+      }); // Resolve our deferred when the tabs item mounts with expect children
+
+      _events.on("tabs:mountAfter", function (args) {
+        if (args.contentType.id === _this.parent.id && args.expectChildren !== undefined) {
+          _this.mountAfterDeferred.resolve(args.expectChildren);
         }
-
-        if (_this.element && _this.element.children.length > 0) {
-          var focusedTab = _this.focusedTab();
-
-          try {
-            (0, _jquery)(_this.element).tabs("destroy");
-          } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
-          }
-
-          (0, _jquery)(_this.element).tabs({
-            create: function create() {
-              // Ensure focus tab is restored after a rebuild cycle
-              if (focusedTab) {
-                _this.setFocusedTab(focusedTab, true);
-              } else {
-                _this.setFocusedTab(null);
-
-                if (activeTabIndex) {
-                  _this.setActiveTab(activeTabIndex);
-                }
-              }
-            }
-          });
-        }
-      }, 10);
+      });
 
       _events.on("tab-item:mountAfter", function (args) {
         if (_this.element && args.contentType.parent.id === _this.parent.id) {
           _this.refreshTabs();
+        }
+      });
+
+      _events.on("tab-item:renderAfter", function (args) {
+        if (_this.element && args.contentType.parent.id === _this.parent.id) {
+          _underscore.defer(function () {
+            _this.refreshTabs();
+          });
         }
       }); // Set the active tab to the new position of the sorted tab
 
@@ -110,6 +111,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.focusedTab.subscribe(_underscore.debounce(function (index) {
         if (index !== null) {
           _events.trigger("stage:interactionStart");
+
+          (0, _delayUntil)(function () {
+            return (0, _jquery)((0, _jquery)(_this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").focus();
+          }, function () {
+            return (0, _jquery)((0, _jquery)(_this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").length > 0;
+          }, 10);
         } else {
           // We have to force the stop as the event firing is inconsistent for certain operations
           _events.trigger("stage:interactionStop", {
@@ -132,7 +139,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Preview.prototype;
 
     _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
-      if (this.element) {
+      if (this.ready) {
         (0, _jquery)(this.element).tabs("refresh");
 
         if (focusIndex >= 0) {
@@ -163,6 +170,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.setActiveTab = function setActiveTab(index) {
       if (index !== null) {
         (0, _jquery)(this.element).tabs("option", "active", index);
+
+        _events.trigger("contentType:redrawAfter", {
+          id: this.parent.id,
+          contentType: this
+        });
       }
     };
     /**
@@ -185,25 +197,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       this.focusedTab(index);
-
-      if (this.element && index !== null) {
-        if (this.element.getElementsByClassName("tab-name")[index]) {
-          this.element.getElementsByClassName("tab-name")[index].focus();
-        }
-
-        _underscore.defer(function () {
-          var $focusedElement = (0, _jquery)(":focus");
-
-          if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
-            // Selection alternative to execCommand to workaround issues with tinymce
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents($focusedElement.get(0));
-            selection.removeAllRanges();
-            selection.addRange(range);
-          }
-        });
-      }
     };
     /**
      * Return an array of options
@@ -213,7 +206,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+      var options = _previewCollection2.prototype.retrieveOptions.call(this);
 
       options.add = new _option({
         preview: this,
@@ -256,24 +249,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onContainerRender = function onContainerRender(element) {
-      this.element = element;
-      this.buildTabs();
-    };
-    /**
-     * Handle clicking on a tab
-     *
-     * @param {number} index
-     * @param {Event} event
-     */
-
-
-    _proto.onTabClick = function onTabClick(index, event) {
-      // The options menu is within the tab, so don't change the focus if we click an item within
-      if ((0, _jquery)(event.target).parents(".pagebuilder-options").length > 0) {
-        return;
-      }
-
-      this.setFocusedTab(index);
+      this.onContainerRenderDeferred.resolve(element);
     };
     /**
      * Copy over border styles to the tab headers
@@ -365,7 +341,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            * @returns {JQuery}
            */
           element: function element(item) {
-            var placeholder = item.clone().show().css({
+            var placeholder = item.clone().css({
               display: "inline-block",
               opacity: "0.3"
             }).removeClass("focused").addClass("sortable-placeholder");
@@ -386,7 +362,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this3 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
+      _previewCollection2.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
       _events.on("tabs:dropAfter", function (args) {
@@ -410,7 +386,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedTabIndex;
 
       _events.on("tab-item:duplicateAfter", function (args) {
-        if (_this3.parent.id === args.duplicateContentType.parent.id) {
+        if (_this3.parent.id === args.duplicateContentType.parent.id && args.direct) {
           var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
@@ -451,9 +427,59 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
       this.parent.dataStore.update(activeOptions, "_default_active_options");
     };
+    /**
+     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+
+
+    _proto.buildTabs = function buildTabs(activeTabIndex) {
+      var _this4 = this;
+
+      if (activeTabIndex === void 0) {
+        activeTabIndex = this.previewData.default_active() || 0;
+      }
+
+      this.ready = false;
+
+      if (this.element && this.element.children.length > 0) {
+        var focusedTab = this.focusedTab();
+
+        try {
+          (0, _jquery)(this.element).tabs("destroy");
+        } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
+        }
+
+        (0, _jquery)(this.element).tabs({
+          create: function create() {
+            _this4.ready = true; // Ensure focus tab is restored after a rebuild cycle
+
+            if (focusedTab !== null) {
+              _this4.setFocusedTab(focusedTab, true);
+            } else {
+              _this4.setFocusedTab(null);
+
+              if (activeTabIndex) {
+                _this4.setActiveTab(activeTabIndex);
+              }
+            }
+          },
+
+          /**
+           * Trigger redraw event since new content is being displayed
+           */
+          activate: function activate() {
+            _events.trigger("contentType:redrawAfter", {
+              element: _this4.element
+            });
+          }
+        });
+      }
+    };
 
     return Preview;
-  }(_previewCollection); // Resolve issue with jQuery UI tabs content typeing events on content editable areas
+  }(_previewCollection); // Resolve issue with jQuery UI tabs content typing events on content editable areas
 
 
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;

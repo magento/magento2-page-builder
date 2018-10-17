@@ -5,8 +5,9 @@
 
 define([
     'jquery',
+    'underscore',
     'Magento_Ui/js/lib/validation/utils'
-], function ($, utils) {
+], function ($, _, utils) {
     'use strict';
 
     /**
@@ -43,24 +44,53 @@ define([
         return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href)//eslint-disable-line max-len);
     }
 
+    /**
+     * Validate a field with an expected data value of type object, like margins_and_padding field
+     * @param {Function} validator
+     * @param {String} ruleName
+     */
+    function validateObjectField(validator, ruleName) {
+        var rule = validator.getRule(ruleName);
+
+        validator.addRule(
+            ruleName,
+            function (value, params) {
+                var allNumbers = true;
+
+                if (typeof value !== 'object') {
+                    return rule.handler(value, params);
+                }
+
+                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    if (!rule.handler(val, params)) {
+                        return allNumbers = false;
+                    }
+                });
+
+                return allNumbers;
+            },
+            $.mage.__(rule.message)
+        );
+    }
+
     return function (validator) {
-        var requiredInputRuleHandler = validator.getRule('required-entry').handler;
+        var requiredInputRule = validator.getRule('required-entry');
 
         validator.addRule(
             'required-entry-location-name',
-            requiredInputRuleHandler,
+            requiredInputRule.handler,
             $.mage.__('Please enter the location name.')
         );
 
         validator.addRule(
             'required-entry-latitude',
-            requiredInputRuleHandler,
+            requiredInputRule.handler,
             $.mage.__('Enter latitude')
         );
 
         validator.addRule(
             'required-entry-longitude',
-            requiredInputRuleHandler,
+            requiredInputRule.handler,
             $.mage.__('Enter longitude')
         );
 
@@ -93,6 +123,30 @@ define([
             },
             $.mage.__('Please enter a valid video URL.')
         );
+
+        validator.addRule(
+            'required-entry',
+            function (value) {
+                // Validation only for margins and paddings
+                if (typeof value === 'object' && !!(value.padding || value.margin)) {
+                    var allFilled = true;
+
+                    _.flatten(_.map(value, _.values)).forEach(function(val) {
+                        if (utils.isEmpty(val)) {
+                            return allFilled = false;
+                        }
+                    });
+
+                    return allFilled;
+                }
+
+                return requiredInputRule.handler(value);
+            },
+            $.mage.__(requiredInputRule.message)
+        );
+        validateObjectField(validator, 'validate-number');
+        validateObjectField(validator, 'less-than-equals-to');
+        validateObjectField(validator, 'greater-than-equals-to');
 
         return validator;
     };

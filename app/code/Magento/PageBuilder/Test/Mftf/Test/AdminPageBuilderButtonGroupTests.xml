@@ -16,7 +16,7 @@
             <description value="A user should be able to remove a button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87059"/>
-            <testCaseId value="MAGETWO-91299"/>
+            <testCaseId value="MC-2861"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -68,7 +68,7 @@
             <description value="A user should be able to save a Button Group edit form without inputting data into any required field."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90473"/>
-            <testCaseId value="MAGETWO-92014"/>
+            <testCaseId value="MC-2477"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -86,6 +86,9 @@
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
@@ -105,7 +108,7 @@
             <description value="A user should be able to duplicate a Button Group content type. Verify on Stage amd Storefront."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90473"/>
-            <testCaseId value="MAGETWO-92013"/>
+            <testCaseId value="MC-2441"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -127,6 +130,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
@@ -138,7 +144,6 @@
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="setSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -266,7 +271,6 @@
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize2">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -381,6 +385,7 @@
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Storefront2">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
@@ -392,7 +397,7 @@
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for a Button group."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
-            <testCaseId value="MAGETWO-89418"/>
+            <testCaseId value="MC-2757"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -416,12 +421,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -494,7 +501,7 @@
             <description value="Validate that updating every attribute in the Advanced Configuration form for a Button group will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87059"/>
-            <testCaseId value="MAGETWO-91300"/>
+            <testCaseId value="MC-2833"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -518,10 +525,12 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -568,7 +577,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -636,7 +644,7 @@
             <description value="The old add button button should be gone on button group hover."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83922"/>
-            <testCaseId value="MAGETWO-91303"/>
+            <testCaseId value="MC-2776"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
@@ -817,7 +825,6 @@
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvanced"/>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -876,7 +883,6 @@
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateButtonSameSize">
             <argument name="property" value="PageBuilderButtonGroupSameSize_Enabled"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -1036,9 +1042,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton" />
         <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="hideContentType" stepKey="hideContentType">
             <argument name="section" value="ButtonGroupOnStage"/>
@@ -1050,10 +1061,12 @@
         <comment userInput="Validate content type remains disabled after save" stepKey="commentValidateHiddenStage"/>
         <seeElement selector="{{ButtonGroupOnStage.hidden('1')}}" stepKey="waitForContentTypeHidden" />
         <seeElement selector="{{ButtonItemOnStage.hidden('1')}}" stepKey="waitForContentTypeHiddenButtonItem" />
+        <seeElement selector="{{ButtonItemOnStage.hidden('2')}}" stepKey="waitForContentTypeHiddenButtonItem2" />
         <!-- Verify we cannot interact with the internal button after save -->
         <comment userInput="Verify we cannot interact with the internal button after save" stepKey="commentVerifyButtonItemIsDisabledAfterSave"/>
         <seeElementInDOM selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="seeDomButtonItemOptionsMenu"/>
         <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="dontSeeButtonItemOptionsMenu"/>
+        <dontSeeElement selector="{{ButtonItemOnStage.optionsMenu('2')}}" stepKey="dontSeeButtonItem2OptionsMenu"/>
         <!-- Validate store front -->
         <comment userInput="Validate content type is disabled on storefront" stepKey="commentValidateHiddenStorefront"/>
         <openNewTab stepKey="openNewTab" />
@@ -1065,6 +1078,7 @@
         <seeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="waitForHiddenElement" />
         <waitForElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemNotVisible" />
         <dontSeeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="dontSeeButtonItem" />
+        <dontSeeElement selector="{{ButtonItemOnStorefront.base('2')}}" stepKey="dontSeeButtonItem2" />
         <!-- Set content to visible in admin -->
         <comment userInput="Set content to visible in admin" stepKey="commentSetContentToVisibleAdmin"/>
         <switchToNextTab stepKey="switchBackToAdmin" />
@@ -1084,5 +1098,33 @@
         <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="waitForButtonGroupVisible" />
         <seeElement selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonItemVisible" />
+        <seeElement selector="{{ButtonItemOnStorefront.base('2')}}" stepKey="waitForButtonItem2Visible" />
+    </test>
+    <test name="ValidateShowHideOnButtonsOnStackedAppearance" extends="ValidateShowHideOnButtons">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Buttons has hide show capabilities on stacked appearance"/>
+            <description value="A user is able to hide and show the buttons successfully when using stacked appearance"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4093"/>
+            <testCaseId value="MC-4230"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+            <group value="pagebuilder-hideShow"/>
+        </annotations>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusOptionMenu" after="dragButtonsIntoStage">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage" after="unFocusOptionMenu">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+        </actionGroup>
+        <!-- Select Stacked Appearance -->
+        <comment userInput="Select Stacked Appearances" stepKey="commentSelectStackedAppearance" after="openEditMenuOnStage"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance" after="commentSelectStackedAppearance">
+            <argument name="property" value="PageBuilderButtonGroupAppearance_Stacked"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1" after="enterAppearance"/>
     </test>
 </tests>

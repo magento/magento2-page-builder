@@ -16,7 +16,7 @@
             <description value="Validate that when Products dialog is closed without configuring settings that no products show up on the storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-91579"/>
+            <testCaseId value="MC-1327"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -69,7 +69,7 @@
             <description value="Validate that adding a condition in the General form for Products will update the Stage and Storefront correctly with the correct products."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-91579"/>
+            <testCaseId value="MC-4027"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -137,7 +137,7 @@
             <description value="Validate that adding a products count update the Stage and Storefront correctly with the correct number of products."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-91579"/>
+            <testCaseId value="MC-4028"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -213,7 +213,7 @@
             <description value="Validate that main settings are saved and loaded correctly on the stage in memory and after page reload."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-91579"/>
+            <testCaseId value="MC-4029"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -285,7 +285,7 @@
             <description value="Validate that when Products dialog is saved without configuring settings that all products show up without filtering."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-91579"/>
+            <testCaseId value="MC-4030"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -435,7 +435,7 @@
             <description value="A user should be able to delete an Product List content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-89887"/>
+            <testCaseId value="MC-2839"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -467,7 +467,7 @@
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Product List."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-89472"/>
+            <testCaseId value="MC-2500"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -499,7 +499,6 @@
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -552,7 +551,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -600,7 +598,7 @@
             <description value="Validate that updating every attribute in the Advanced Configuration form for Product List will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-90015"/>
+            <testCaseId value="MC-2647"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
         </annotations>
@@ -632,7 +630,6 @@
             <argument name="page" value="ProductsContentTypeForm"/>
             <argument name="category" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -677,7 +674,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -724,7 +720,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -777,9 +772,12 @@
             <description value="Products display and respect global configuration settings Show Out Of Stock products"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-71425"/>
-            <testCaseId value="MAGETWO-91579"/>
+            <testCaseId value="MC-4031"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-products"/>
+            <skip>
+                <issueId value="MC-4257"/>
+            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1095,5 +1093,138 @@
         <waitForPageLoad stepKey="waitForStorefrontReload" />
         <dontSeeElementInDOM selector="{{ProductsOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{ProductsOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
+    </test>
+    <test name="ProductsWrapsInsideTinyColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Product Content Type wraps inside tiny column"/>
+            <description value="As a Content Manager I want products to be wrapped inside tiny column"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4096"/>
+            <testCaseId value="MC-4301"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-addToColumn"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Drag new column onto column group to make 1/12 column -->
+        <comment userInput="Drag new column onto column group to make 1/12 column" stepKey="commentDragNewColumnToGroupMakeFirstColumnSmall"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoFirstColumnGroup">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Add Products to Stage -->
+        <comment userInput="Add Products to Stage" stepKey="addProductsToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragProductsOntoColumn">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="User sees Products displayed in column on Stage" stepKey="confirmProductsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validating products is smaller than column -->
+        <comment userInput="Validating products is smaller than column" stepKey="commentValidatingProductsIsSmallerThanColumn"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ColumnOnBackend.columnX('1')}}')[0].clientWidth" stepKey="firstColumnWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidth"/>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductImage">
+            <actualResult type="variable">firstColumnWidth</actualResult>
+            <expectedResult type="variable">productImageWidth</expectedResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductPriceContainer">
+            <actualResult type="variable">firstColumnWidth</actualResult>
+            <expectedResult type="variable">productPriceContainerWidth</expectedResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductActions">
+            <actualResult type="variable">firstColumnWidth</actualResult>
+            <expectedResult type="variable">productActionsWidth</expectedResult>
+        </assertGreaterThan>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate stage after save" stepKey="validateProductsOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkContentTypeInContainerStage2">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validating products is smaller than column after save -->
+        <comment userInput="Validating products is smaller than column after save" stepKey="commentValidatingProductsIsSmallerThanColumnAfterSave"/>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ColumnOnBackend.columnX('1')}}')[0].clientWidth" stepKey="firstColumnWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthAfterSave"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStage.productActions}}')[0].clientWidth" stepKey="productActionsWidthAfterSave"/>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductImageAfterSave">
+            <actualResult type="variable">firstColumnWidthAfterSave</actualResult>
+            <expectedResult type="variable">productImageWidthAfterSave</expectedResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductPriceContainerAfterSave">
+            <actualResult type="variable">firstColumnWidthAfterSave</actualResult>
+            <expectedResult type="variable">productPriceContainerWidthAfterSave</expectedResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductActionsAfterSave">
+            <actualResult type="variable">firstColumnWidthAfterSave</actualResult>
+            <expectedResult type="variable">productActionsWidthAfterSave</expectedResult>
+        </assertGreaterThan>
+        <!-- Validate Storefront -->
+        <comment userInput="View Products inside column on storefront" stepKey="viewProductsOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <!-- Validating products is smaller than column Storefront -->
+        <comment userInput="Validating products is smaller than column storefront" stepKey="commentValidatingProductsIsSmallerThanColumnStoreFront"/>
+        <executeJS function="return document.querySelectorAll('{{ColumnOnFrontend.columnX('1')}}')[0].clientWidth" stepKey="firstColumnWidthFrontend"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productImageCSS}}')[0].clientWidth" stepKey="productImageWidthFrontend"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productPriceContainer}}')[0].clientWidth" stepKey="productPriceContainerWidthFrontend"/>
+        <executeJS function="return document.querySelectorAll('{{ProductsOnStorefront.productActions}}')[0].clientWidth" stepKey="productActionsWidthFrontend"/>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductImageFrontend">
+            <actualResult type="variable">firstColumnWidthFrontend</actualResult>
+            <expectedResult type="variable">productImageWidthFrontend</expectedResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductPriceContainerFrontend">
+            <actualResult type="variable">firstColumnWidthFrontend</actualResult>
+            <expectedResult type="variable">productPriceContainerWidthFrontend</expectedResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertColumnIsWiderThanProductActionsFrontend">
+            <actualResult type="variable">firstColumnWidthFrontend</actualResult>
+            <expectedResult type="variable">productActionsWidthFrontend</expectedResult>
+        </assertGreaterThan>
     </test>
 </tests>
