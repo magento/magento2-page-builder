@@ -558,6 +558,7 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToSecondTabOnStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterClickingTabHeader" />
         <waitForElementVisible selector="{{SlideOnFrontend.base('1')}}" stepKey="waitForSliderToBeVisible" />
         <seeElement selector="{{SlideOnFrontend.base('1')}}" stepKey="seeSliderOnFrontend"/>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeSlide1ContentDisplayedOnFrontend"/>
