@@ -1238,6 +1238,7 @@
             <argument name="group" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
@@ -1329,12 +1330,11 @@
             <argument name="group" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
-
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
         <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption" />
@@ -1437,12 +1437,11 @@
             <argument name="group" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
-
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
         <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Product" stepKey="selectOption" />
@@ -1540,12 +1539,11 @@
             <argument name="group" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
-
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
             <argument name="section" value="ButtonItemOnStage"/>
             <argument name="targetIndex" value="1"/>
         </actionGroup>
-
         <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
         <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Page" stepKey="selectOption" />

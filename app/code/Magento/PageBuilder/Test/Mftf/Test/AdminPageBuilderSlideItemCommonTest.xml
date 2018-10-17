@@ -55,6 +55,7 @@
         <!-- Validate Stage: Slide Title On Option Menu -->
         <comment userInput="Validate Stage: Slide Title On Option Menu" stepKey="commentSlideTitleOptionMenuStage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '1')}}" stepKey="clickSlideDot"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForOptionMenu"/>
         <see userInput="Slide 1" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideTitleOnOptionsMenu"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -613,6 +614,7 @@
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlideDot"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <dragAndDrop selector1="{{SliderOnStage.slideNavigationDragHandleByIndex('1', '2')}}" selector2="{{SliderOnStage.slideNavigationDot('1', '1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Validate Stage After Sorting -->
         <comment userInput="Validate Stage After Sorting" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide1ContentAfterSort"/>
@@ -1341,9 +1343,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slide"/>
             <group value="pagebuilder-slideItemCommon"/>
-            <skip>
-                <issueId value="MC-3348"/>
-            </skip>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1384,8 +1383,10 @@
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine to stage" stepKey="commentUploadImageToStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromSlide"/>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="section" value="ImageOnStage"/>
@@ -1585,6 +1586,7 @@
         <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumnToOne"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Height of Variable in Storefront -->
