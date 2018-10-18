@@ -18,15 +18,32 @@ use Magento\Framework\View\Element\Template;
 class BabelPolyfill extends Template
 {
     /**
+     * @var \Magento\PageBuilder\Model\ConfigInterface
+     */
+    private $config;
+
+    /**
+     * @param Template\Context $context
+     * @param \Magento\PageBuilder\Model\ConfigInterface $config
+     * @param array $data
+     */
+    public function __construct(
+        Template\Context $context,
+        \Magento\PageBuilder\Model\ConfigInterface $config,
+        array $data = []
+    ) {
+        $this->config = $config;
+        parent::__construct($context, $data);
+    }
+
+    /**
      * Detect if Page Builder is enabled before loading the polyfill
      *
      * @return bool
      */
     public function shouldLoadPolyfill() : bool
     {
-        return (bool)$this->_scopeConfig->getValue(
-            \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
-        );
+        return $this->config->isEnabled();
     }
 
     /**
@@ -36,6 +53,6 @@ class BabelPolyfill extends Template
      */
     public function getJsUrl() : string
     {
-        return $this->_assetRepo->getUrl("Magento_PageBuilder::js/babel/polyfill.min.js");
+        return $this->_assetRepo->getUrl("Magento_PageBuilder::js/resource/babel/polyfill.min.js");
     }
 }

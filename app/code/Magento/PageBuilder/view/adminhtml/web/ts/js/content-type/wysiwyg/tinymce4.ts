@@ -169,13 +169,11 @@ export default class Wysiwyg implements WysiwygInterface {
      */
     private clearSelection(): void {
         if (window.getSelection) {
-            if (window.getSelection().empty) {  // Chrome
+            if (window.getSelection().empty) {
                 window.getSelection().empty();
-            } else if (window.getSelection().removeAllRanges) {  // Firefox
+            } else if (window.getSelection().removeAllRanges) {
                 window.getSelection().removeAllRanges();
             }
-        } else if ((document as any).selection) {  // IE?
-            (document as any).selection.empty();
         }
     }
 }
