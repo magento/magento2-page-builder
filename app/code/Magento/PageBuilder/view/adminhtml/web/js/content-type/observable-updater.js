@@ -49,7 +49,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           viewModel.data[elementName] = {
             attributes: _knockout.observable({}),
             style: _knockout.observable({}),
-            styleNoReset: _knockout.observable({}),
             css: _knockout.observable({}),
             html: _knockout.observable({})
           };
@@ -58,13 +57,6 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         if (config[elementName].style !== undefined) {
           var currentStyles = viewModel.data[elementName].style();
           var newStyles = this.convertStyle(config[elementName], data);
-          /**
-           * There maybe instances when you need to interface with the styles without the reset applied, this is
-           * currently used when merging multiple elements styles together, as the reset can cause undesired
-           * effects if all elements attempt to apply.
-           */
-
-          viewModel.data[elementName].styleNoReset(newStyles);
 
           if (currentStyles) {
             /**
