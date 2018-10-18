@@ -41,7 +41,7 @@ export default class Preview extends PreviewCollection {
         } catch (e) {
             // Failure of destroying is acceptable
         }
-        if (this.element && $(this.element).hasClass("jarallax")) {
+        if (this.element && $(this.element).hasClass("jarallax") && this.data.inner.style().backgroundImage.length) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
                 jarallax(
@@ -53,6 +53,10 @@ export default class Preview extends PreviewCollection {
                         speed: this.data.inner.attributes()["data-parallax-speed"] || 0.5,
                     },
                 );
+
+                // jarallax removes backgroundImage style on element; reinstate for cases when it later gets re-built
+                $(this.element).css("background-image", this.data.inner.style().backgroundImage);
+
                 jarallax(this.element, "onResize");
             });
         }
@@ -110,7 +114,7 @@ export default class Preview extends PreviewCollection {
 
         new ResizeObserver(() => {
             // Observe for resizes of the element and force jarallax to display correctly
-            if ($(this.element).hasClass("jarallax")) {
+            if ($(this.element).hasClass("jarallax") && this.data.inner.style().backgroundImage.length) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");
             }
