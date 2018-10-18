@@ -8,11 +8,52 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
-    <entity name="PageBuilderProductsCountProperty" type="pagebuilder_content_type">
-        <data key="name">Products Count</data>
-        <data key="section">display</data>
+    <entity name="PageBuilderProductsCountPropertyOne" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value">1</data>
+    </entity>
+    <entity name="PageBuilderProductsCountPropertyFour" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
         <data key="fieldName">products_count</data>
         <data key="value">4</data>
+    </entity>
+    <entity name="PageBuilderProductsCountPropertyMax" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value">999</data>
+    </entity>
+
+    <entity name="PageBuilderProductsInvalidMinCountProperty" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value">0</data>
+        <data key="errorMessage">Please enter a value greater than or equal to 1.</data>
+    </entity>
+    <entity name="PageBuilderProductsInvalidMaxCountProperty" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value">1000</data>
+        <data key="errorMessage">Please enter a value less than or equal to 999.</data>
+    </entity>
+    <entity name="PageBuilderProductsInvalidTypeCountProperty" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value">Invalid</data>
+        <data key="errorMessage">Please enter a valid number in this field.</data>
+    </entity>
+    <entity name="PageBuilderProductsInvalidEmptyCountProperty" type="pagebuilder_content_type">
+        <data key="name">Number of Products to Display</data>
+        <data key="section">general</data>
+        <data key="fieldName">products_count</data>
+        <data key="value"/>
+        <data key="errorMessage">This is a required field.</data>
     </entity>
     <entity name="PageBuilderProductsSubCategory" type="category">
         <data key="name" unique="suffix">PageBuilderProductsSubCategory</data>

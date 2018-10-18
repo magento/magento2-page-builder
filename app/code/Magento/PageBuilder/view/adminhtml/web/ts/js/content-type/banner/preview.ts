@@ -8,10 +8,10 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import {DataObject} from "../../data-store";
+import Uploader from "../../uploader";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
-import Uploader from "../uploader";
-import WysiwygFactory from "../wysiwyg/factory";
-import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**
  * @api
