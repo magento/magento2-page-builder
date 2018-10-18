@@ -4,9 +4,15 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Display =
   /*#__PURE__*/
   function () {
+    "use strict";
+
     function Display() {}
 
     var _proto = Display.prototype;
@@ -15,22 +21,26 @@ define([], function () {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {void}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return;
+      return !(value === "none");
     };
     /**
-     * Convert value to knockout format
+     * Convert value to knockout format, if buttons are displayed they should be inline block
      *
-     * @param name string
-     * @param data DataObject
-     * @returns {void}
+     * @param {string} name
+     * @param {DataObject} data
+     * @returns {string}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      return;
+      if (typeof data[name] !== "undefined" && data[name] === false) {
+        return "none";
+      }
+
+      return "inline-block";
     };
 
     return Display;
