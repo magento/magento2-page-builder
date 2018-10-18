@@ -13,6 +13,7 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import DataStore from "../../data-store";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
@@ -48,10 +49,10 @@ export default class Preview extends PreviewCollection {
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.inner.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.inner.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.inner.style().backgroundSize || "cover",
-                        speed: this.data.inner.attributes()["data-parallax-speed"] || 0.5,
+                        imgPosition: this.parent.dataStore.get("background_position") as string || "50% 50%",
+                        imgRepeat: this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat",
+                        imgSize: this.parent.dataStore.get("background_size") as string || "cover",
+                        speed: Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string) || 0.5,
                     },
                 );
                 jarallax(this.element, "onResize");
