@@ -90,6 +90,8 @@
         <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][not(*)]" parameterized="true"/>
         <element name="messageContentTextArea" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
+        <element name="messageContentTextAreaTextWidget" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
+        <element name="messageContentText" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
         <element name="linkUrl" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//*[@data-element='link'][contains(@data-href,'{{arg2}}')]" parameterized="true"/>
         <element name="openInNewTab" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]/*[@data-element='link'][contains(@data-target,'_blank')]" parameterized="true"/>
@@ -121,11 +123,16 @@
         <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=slider] div.pagebuilder-slide-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=slider] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='button']//span[contains(@contenteditable, 'true')]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]/div[contains(@style,'{{arg2}}')]" parameterized="true"/>
         <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
         <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//div[@class='pagebuilder-options-wrapper']" parameterized="true"/>
         <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="optionsMenuButtonDisabled" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
         <element name="optionsMenuTitle" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//div[contains(@class,'option-title')]" parameterized="true"/>
+        <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
+        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
+        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
+        <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-role='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
@@ -141,6 +148,7 @@
         <element name="backgroundRepeat" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]/div[contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundAttachment" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]/div[contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
         <!-- Content Configuration -->
+        <element name="messageContentText" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]/div//*[contains(.,'{{arg2}}') and contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[text()='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content'][.='Edit Slide Text'][not(*)]" parameterized="true"/>
         <element name="button" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='button']" parameterized="true"/>

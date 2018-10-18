@@ -273,6 +273,7 @@
         <comment userInput="Resize first column to 1/6" stepKey="commentResizeColumn" />
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/6')}}" stepKey="validateLeftColumnWidth2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','5/6')}}" stepKey="validateRightColumnWidth2"/>
         <!-- Change grid size back to 12 and validate column maintained ratio -->
@@ -518,6 +519,7 @@
         <!-- Resize Column 1 -->
         <comment userInput="Resize Column 1" stepKey="context2"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill32"/>
         <!-- Verify New Column Sizes -->
         <comment userInput="Verify New Column Sizes " stepKey="context3"/>

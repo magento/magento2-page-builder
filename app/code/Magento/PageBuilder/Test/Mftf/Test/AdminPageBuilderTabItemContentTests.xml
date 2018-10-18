@@ -229,8 +229,8 @@
         <!-- Attach image A to PageBuilder stage-->
         <attachFile userInput="{{PageBuilderImageProperty_StageJPG.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
         <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="waitForImageSource"/>
-        <seeElement selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="seeImageSourceOnStage" />
+        <waitForElementVisible selector="{{ImageOnStage.imageSource('magentoStage')}}" stepKey="waitForImageSource"/>
+        <seeElement selector="{{ImageOnStage.imageSource('magentoStage')}}" stepKey="seeImageSourceOnStage" />
         <seeElement selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Image in Tab on storefront -->
