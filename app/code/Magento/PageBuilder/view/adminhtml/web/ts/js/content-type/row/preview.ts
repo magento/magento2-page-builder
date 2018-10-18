@@ -41,16 +41,19 @@ export default class Preview extends PreviewCollection {
         } catch (e) {
             // Failure of destroying is acceptable
         }
-        if (this.element && $(this.element).hasClass("jarallax") && this.data.inner.style().backgroundImage.length) {
+        if (this.element &&
+            $(this.element).hasClass("jarallax") &&
+            (this.parent.dataStore.get("background_image") as any[]).length
+        ) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.inner.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.inner.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.inner.style().backgroundSize || "cover",
-                        speed: this.data.inner.attributes()["data-parallax-speed"] || 0.5,
+                        imgPosition: this.parent.dataStore.get("background_position") as string || "50% 50%",
+                        imgRepeat: this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat",
+                        imgSize: this.parent.dataStore.get("background_size") as string || "cover",
+                        speed: Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string) || 0.5,
                     },
                 );
 
@@ -114,7 +117,9 @@ export default class Preview extends PreviewCollection {
 
         new ResizeObserver(() => {
             // Observe for resizes of the element and force jarallax to display correctly
-            if ($(this.element).hasClass("jarallax") && this.data.inner.style().backgroundImage.length) {
+            if ($(this.element).hasClass("jarallax") &&
+                (this.parent.dataStore.get("background_image") as any[]).length
+            ) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");
             }

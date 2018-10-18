@@ -47,14 +47,14 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         } catch (e) {// Failure of destroying is acceptable
         }
 
-        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.data.inner.style().backgroundImage.length) {
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.parent.dataStore.get("background_image").length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
-              imgPosition: _this.data.inner.style().backgroundPosition || "50% 50%",
-              imgRepeat: _this.data.inner.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-              imgSize: _this.data.inner.style().backgroundSize || "cover",
-              speed: _this.data.inner.attributes()["data-parallax-speed"] || 0.5
+              imgPosition: _this.parent.dataStore.get("background_position") || "50% 50%",
+              imgRepeat: _this.parent.dataStore.get("background_repeat"),
+              imgSize: _this.parent.dataStore.get("background_size") || "cover",
+              speed: Number.parseFloat(_this.parent.dataStore.get("parallax_speed")) || 0.5
             }); // jarallax removes backgroundImage style on element; reinstate for cases when it later gets re-built
 
             (0, _jquery)(_this.element).css("background-image", _this.data.inner.style().backgroundImage);
@@ -114,7 +114,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
 
       new _ResizeObserver(function () {
         // Observe for resizes of the element and force jarallax to display correctly
-        if ((0, _jquery)(_this2.element).hasClass("jarallax") && _this2.data.inner.style().backgroundImage.length) {
+        if ((0, _jquery)(_this2.element).hasClass("jarallax") && _this2.parent.dataStore.get("background_image").length) {
           jarallax(_this2.element, "onResize");
           jarallax(_this2.element, "onScroll");
         }
