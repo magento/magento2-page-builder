@@ -125,6 +125,7 @@
         <!-- Change Columns To 5:1 Ratio -->
         <comment userInput="Change Columns To 5:1 Ratio" stepKey="context1"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="dragColumnOneToFive"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Assert the width classes are correct after manual resize -->
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('1','90')}}" stepKey="assertWidthClass1"/>
         <waitForElement selector="{{ColumnOnBackend.columnByIndexAndWidthClass('2','20')}}" stepKey="assertWidthClass2"/>
@@ -215,6 +216,7 @@
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="1"/>
@@ -303,12 +305,14 @@
         <!-- Change Columns To 4:1:1 Ratio -->
         <comment userInput="Change Columns To 4:1:1 Ratio" stepKey="context1"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToEight"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderDividerContentType"/>
         </actionGroup>
@@ -499,6 +503,7 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderDividerContentType"/>
         </actionGroup>
@@ -609,12 +614,14 @@
         </actionGroup>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage3">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('3')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeSecondColumnToTwo"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderDividerContentType"/>
         </actionGroup>
@@ -750,7 +757,9 @@
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumnToThird"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeSecondColumnToThird"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
@@ -869,35 +878,35 @@
         <comment userInput="Resizing columns to create 5/12, 1/12, 6/12 configuration, logic for resizing differs when dragging a 1/2 column to the left" stepKey="commentInitialResize"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
-        <waitForPageLoad stepKey="waitForPageLoad" />
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','5/12')}}" stepKey="validateFirstColumnWidth"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','6/12')}}" stepKey="validateThirdColumnWidth"/>
         <!-- Resize left column to 4/12 via second column -->
         <comment userInput="Resize left column to 4/12 via second column" stepKey="commentFourTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn1"/>
-        <waitForPageLoad stepKey="waitForResize1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','4/12')}}" stepKey="validateFirstColumnWidth1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth1"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','7/12')}}" stepKey="validateThirdColumnWidth1"/>
         <!-- Resize left column to 3/12 via second column -->
         <comment userInput="Resize left column to 3/12 via second column" stepKey="commentThreeTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn2"/>
-        <waitForPageLoad stepKey="waitForResize2"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','3/12')}}" stepKey="validateFirstColumnWidth2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth2"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','8/12')}}" stepKey="validateThirdColumnWidth2"/>
         <!-- Resize left column to 2/12 via second column -->
         <comment userInput="Resize left column to 2/12 via second column" stepKey="commentTwoTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn3"/>
-        <waitForPageLoad stepKey="waitForResize3"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop4"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','2/12')}}" stepKey="validateFirstColumnWidth3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth3"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','9/12')}}" stepKey="validateThirdColumnWidth3"/>
         <!-- Resize left column to 1/12 via second column -->
         <comment userInput="Resize left column to 1/12 via second column" stepKey="commentOneTwelth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ViaColumn4"/>
-        <waitForPageLoad stepKey="waitForResize4"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop5"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth4"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('2','1/12')}}" stepKey="validateSecondColumnWidth4"/>
         <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','10/12')}}" stepKey="validateThirdColumnWidth4"/>

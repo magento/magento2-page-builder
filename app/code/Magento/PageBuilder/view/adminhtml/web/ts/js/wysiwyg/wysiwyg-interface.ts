@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {AdditionalDataConfigInterface} from "../../content-type-config";
-import DataStore from "../../data-store";
+import {AdditionalDataConfigInterface} from "../content-type-config";
+import DataStore from "../data-store";
 
 /**
  * Provides an interface for the constructor of a WysiwygInterface object

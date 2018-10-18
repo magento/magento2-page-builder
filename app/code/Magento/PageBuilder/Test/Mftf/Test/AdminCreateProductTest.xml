@@ -402,7 +402,9 @@
         <click selector="{{AdminProductAttributeSetGridSection.AttributeSetName('Default')}}" stepKey="navigateToDefaultAttributeSet" />
         <waitForPageLoad stepKey="waitForAttributeSetEditPage" />
         <dragAndDrop selector1="{{AdminProductAttributeSetSection.attribute($$createPageBuilderAttribute1.attribute_code$$)}}" selector2="{{AdminProductAttributeSetSection.attribute('weight')}}" stepKey="dragFirstAttributeToWeight"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <dragAndDrop selector1="{{AdminProductAttributeSetSection.attribute($$createPageBuilderAttribute2.attribute_code$$)}}" selector2="{{AdminProductAttributeSetSection.attribute('status')}}" stepKey="dragSecondAttributeToStatus"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <click selector="{{AdminProductAttributeSetSection.saveBtn}}" stepKey="saveAttributesOrder"/>
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
         <!-- Validate attributes are displayed in the reverse order -->

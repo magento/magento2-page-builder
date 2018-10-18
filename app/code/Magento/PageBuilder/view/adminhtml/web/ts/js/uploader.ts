@@ -6,7 +6,7 @@
 import events from "Magento_PageBuilder/js/events";
 import layout from "uiLayout";
 import registry from "uiRegistry";
-import DataStore from "../data-store";
+import DataStore from "./data-store";
 
 interface UploaderConfigInterface {
     id: string;
