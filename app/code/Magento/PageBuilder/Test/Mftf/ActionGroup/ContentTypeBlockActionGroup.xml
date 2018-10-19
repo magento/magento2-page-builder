@@ -36,4 +36,30 @@
         <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
+    <actionGroup name="verifyAlignmentRightInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container"/>
+            <argument name="content"/>
+            <argument name="padding"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Verify container width is larger than content width -->
+        <comment userInput="Verify container width is larger than content width" stepKey="commentVerifyWidth"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.innerCSS}}')[{{index}}-1].clientWidth;" stepKey="containerWidth"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].clientWidth;" stepKey="contentWidth"/>
+        <assertGreaterThan stepKey="assertContainerHeightIsGreater">
+            <expectedResult type="variable">contentWidth</expectedResult>
+            <actualResult type="variable">containerWidth</actualResult>
+        </assertGreaterThan>
+        <!-- Verify position right of container matches content -->
+        <comment userInput="Verify position right of container matches content" stepKey="commentVerifyRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.innerCSS}}')[{{index}}-1].getBoundingClientRect().right-{{padding.paddingRight}};" stepKey="containerRightMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().right;" stepKey="contentRight"/>
+        <executeJS function="return Math.round(({$containerRightMinusPadding}/{$contentRight})*100)/100" stepKey="rightPositionRatio"/>
+            <assertEquals stepKey="assertRightPositionRatio">
+                <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">rightPositionRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
 </actionGroups>
