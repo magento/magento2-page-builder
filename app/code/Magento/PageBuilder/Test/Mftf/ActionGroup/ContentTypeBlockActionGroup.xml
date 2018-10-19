@@ -36,4 +36,29 @@
         <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
+    <actionGroup name="verifyVerticalAlignmentBottomInBlock">
+        <arguments>
+            <argument name="block" defaultValue="BlockOnStorefront"/>
+            <argument name="container"/>
+            <argument name="content"/>
+            <argument name="minHeight"/>
+            <argument name="padding"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <!-- Remove storefrontBugOffset when MC-5079 is resolved -->
+            <argument name="storefrontBugOffset" defaultValue="0" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
+        <executeJS function="return {$containerHeight}-{{storefrontBugOffset}}" stepKey="minusBugOffset"/>
+        <assertGreaterThanOrEqual stepKey="assertContainerHeightGreaterThanOrEqualMinHeight">
+            <expectedResult type="string">{{minHeight}}</expectedResult>
+            <actualResult type="variable">minusBugOffset</actualResult>
+        </assertGreaterThanOrEqual>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="containerBottomPositionMinusPadding"/>
+        <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>
+        <executeJS function="return Math.round(({$containerBottomPositionMinusPadding}/{$contentBottomPosition})*100)/100" stepKey="bottomPositionRatio"/>
+        <assertEquals stepKey="assertBottomPositionRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">bottomPositionRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
 </actionGroups>
