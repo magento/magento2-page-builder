@@ -16,6 +16,10 @@
         -o-transition: background-color 500ms ease;
         -webkit-transition: background-color 500ms ease;
         transition: background-color 500ms ease;
+
+        &:not(.pagebuilder-poster-overlay) {
+            max-width: 50%;
+        }
     }
 
     .pagebuilder-banner-button {
@@ -41,6 +45,7 @@
             right: 0;
             z-index: 20;
         }
+
         > .mce-content-body {
             min-height: 50px;
             padding: 5px 20px !important;
@@ -53,6 +58,7 @@
                 top: -45px;
             }
         }
+
         > .mce-edit-focus {
             ~ .placeholder-text {
                 display: none;
@@ -86,5 +92,23 @@
 .pagebuilder-content-type-hidden {
     > .pagebuilder-banner {
         cursor: default;
+    }
+}
+
+//
+//  Default appearance styles rendered through Block
+//  ________________________________________________
+
+[data-role='banner'] {
+    .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+        max-width: 50%;
+    }
+
+    [data-element='content'] {
+        min-height: 50px;
+    }
+
+    .pagebuilder-banner-button {
+        margin: @margin 0 0 0;
     }
 }

@@ -761,19 +761,11 @@ Poster
 ```
 <div data-element="main" data-role="banner" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
     <div data-element="link" data-href="" data-target="">
-        <div data-element="mobile_image" class="wrapper pagebuilder-mobile-only">
+        <div data-element="wrapper" data-background-images={} class="wrapper">
             <div data-element="overlay" style="" class="overlay">
                 <div class="content">
                     <div data-element="content">Content</div>
                     <button data-element="button" type="button" style="" class="action primary" >Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="desktop_image" style="" class="wrapper">
-            <div data-element="overlay" style="" class="overlay">
-                <div class="content">
-                    <div data-element="content">Banner content</div>
-                    <button data-element="button" type="button" style="" class="action primary">Button Text</button>
                 </div>
             </div>
         </div>
@@ -786,20 +778,11 @@ Collage Left
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
     <div data-element="link" data-href="" data-target="">
-        <div data-element="desktop_image" style=""
-             class="pagebuilder-desktop-only wrapper">
+        <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" style="" class="overlay>
                 <div class="content">
                     <div data-element="content">Banner content</div>
                     <button data-element="button" style="" class="action primary">Banner Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" style="" class="pagebuilder-mobile-only wrapper">
-            <div data-element="overlay" style="" class="overlay">
-                <div class="content">
-                    <div data-element="content">Banner content</div>
-                    <button data-element="button" style="" class="action primary">Button Text</button>
                 </div>
             </div>
         </div>
@@ -812,18 +795,10 @@ Collage Centered
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
     <div data-element="link" data-href="" data-target="">
-        <div data-element="desktop_image" style="" class="pagebuilder-desktop-only wrapper">
+        <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" class="overlay">
                 <div class="content">
                     <div data-element="content">Button content</div>
-                    <button data-element="button" style="" class="action primary">Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" style="" class="pagebuilder-mobile-only wrapper">
-            <div data-element="overlay" style="" class="overlay">
-                <div class="content">
-                    <div data-element="content">Banner content</div>
                     <button data-element="button" style="" class="action primary">Button Text</button>
                 </div>
             </div>
@@ -836,18 +811,10 @@ Collage Right
 ```
 <div data-element="main" data-role="banner" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
     <div data-element="link" data-href="" data-target="">
-        <div data-element="desktop_image" style="" class="pagebuilder-desktop-only wrapper">
+        <div data-element="wrapper" data-background-images="{}" style="" class="wrapper">
             <div data-element="overlay" style="" class="overlay">
                 <div class="content">
                     <div data-element="content" data-bind="html: getContentHtml()"></div>
-                    <button data-element="button" style="" class="action primary">Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" style="" class="pagebuilder-mobile-only wrapper">
-            <div data-element="overlay" style="" class="overlay">
-                <div class="content">
-                    <div data-element="content">Banner content</div>
                     <button data-element="button" style="" class="action primary">Button Text</button>
                 </div>
             </div>
@@ -883,6 +850,23 @@ Attributes
 5. data-target
 6. data-link-type
 
+### wrapper element
+
+Attributes
+1. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
+
+Inline Styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. padding
+8. min-height
+9. text-align
+
+=======
 ### overlay element
 
 Attributes
@@ -891,39 +875,6 @@ Attributes
 
 Inline styles
 1. background-color
-
-### desktop_image element
-
-Attributes
-1. data-element [desktop_image]
-
-Inline styles
-1. background-color
-2. background-image
-3. background-position
-4. background-size
-5. background-repeat
-6. background-attachment
-7. text-align
-8. padding
-9. min-height
-
-
-### mobile_image element
-
-Attributes
-1. data-element [mobile_image]
-
-Inline styles
-1. background-color
-2. background-image
-3. background-position
-4. background-size
-5. background-repeat
-6. background-attachment
-7. text-align
-8. padding
-9. min-height
 
 ### content element
 

@@ -140,6 +140,16 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                     <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                 </element>
+                <element name="wrapper">
+                    <style name="background_color" source="background_color"/>
+                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/container-background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
+                    <style name="background_position" source="background_position"/>
+                    <style name="background_size" source="background_size"/>
+                    <style name="background_repeat" source="background_repeat"/>
+                    <style name="background_attachment" source="background_attachment"/>
+                    <style name="text_align" source="text_align"/>
+                    <attribute name="background_images" source="data-background-images"/>
+                </element>
                 <element name="overlay">
                     <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" persistence_mode="write"/>
@@ -147,24 +157,6 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" persistence_mode="read"/>
                     <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" persistence_mode="read"/>
                     <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" persistence_mode="write"/>
-                </element>
-                <element name="desktop_image">
-                    <style name="text_align" source="text_align"/>
-                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                    <style name="background_position" source="background_position"/>
-                    <style name="background_size" source="background_size"/>
-                    <style name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
-                    <style name="background_attachment" source="background_attachment"/>
-                </element>
-                <element name="mobile_image">
-                    <style name="text_align" source="text_align"/>
-                    <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                    <style name="mobile_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-                    <style name="background_position" source="background_position"/>
-                    <style name="background_size" source="background_size"/>
-                    <style name="background_repeat" source="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
-                    <style name="background_attachment" source="background_attachment"/>
                 </element>
                 <element name="content">
                     <html name="message"/>
@@ -181,8 +173,9 @@ The following is an example of a content type configuration in `view/adminhtml/p
                 </element>
             </elements>
             <converters>
-                <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
+                <converter name="background_images" component="Magento_PageBuilder/js/mass-converter/background-images">
                     <config>
+                        <item name="attribute_name" value="background_images"/>
                         <item name="desktop_image_variable" value="background_image"/>
                         <item name="mobile_image_variable" value="mobile_image"/>
                     </config>
