@@ -9,8 +9,8 @@ import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import WysiwygInstanceInterface from "wysiwygAdapter";
-import {AdditionalDataConfigInterface} from "../../content-type-config";
-import DataStore from "../../data-store";
+import {AdditionalDataConfigInterface} from "../content-type-config";
+import DataStore from "../data-store";
 import WysiwygInterface from "./wysiwyg-interface";
 
 /**

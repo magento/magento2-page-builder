@@ -36,6 +36,7 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable(null);
+    public activeTab: KnockoutObservable<number> = ko.observable(0);
     private disableInteracting: boolean;
     private element: Element;
     private ready: boolean;
@@ -148,7 +149,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} activeIndex
      */
     public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
-        if (this.ready) {
+        try {
             $(this.element).tabs("refresh");
             if (focusIndex >= 0) {
                 this.setFocusedTab(focusIndex, forceFocus);
@@ -164,6 +165,8 @@ export default class Preview extends PreviewCollection {
                     sortableElement.sortable("enable");
                 }
             }
+        } catch (e) {
+            this.buildTabs();
         }
     }
 
@@ -175,6 +178,8 @@ export default class Preview extends PreviewCollection {
     public setActiveTab(index: number) {
         if (index !== null) {
             $(this.element).tabs("option", "active", index);
+
+            this.activeTab(index);
 
             events.trigger("contentType:redrawAfter", {
                 id: this.parent.id,
@@ -246,6 +251,7 @@ export default class Preview extends PreviewCollection {
      * @param {Element} element
      */
     public onContainerRender(element: Element) {
+        this.element = element;
         this.onContainerRenderDeferred.resolve(element);
     }
 
@@ -333,7 +339,6 @@ export default class Preview extends PreviewCollection {
                 element(item: JQuery) {
                     const placeholder = item
                         .clone()
-                        .show()
                         .css({
                             display: "inline-block",
                             opacity: "0.3",
@@ -423,7 +428,7 @@ export default class Preview extends PreviewCollection {
      *
      * @type {(() => void) & _.Cancelable}
      */
-    private buildTabs(activeTabIndex = this.previewData.default_active() as number || 0) {
+    private buildTabs(activeTabIndex = (this.activeTab() || this.previewData.default_active()) as number || 0) {
         this.ready = false;
         if (this.element && this.element.children.length > 0) {
             const focusedTab = this.focusedTab();
