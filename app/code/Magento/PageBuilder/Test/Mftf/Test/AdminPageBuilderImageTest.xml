@@ -44,7 +44,7 @@
         <comment userInput="Attach image A to PageBuilder stage" stepKey="attachImageToStage"/>
         <actionGroup ref="uploadImageToContentTypeFromStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
         </actionGroup>
         <!-- Go to Media Storage from stage-->
         <comment userInput="Go to Media Storage from stage" stepKey="commentGoToMediaStorageFromStage"/>
@@ -60,7 +60,7 @@
         <!-- Assert don't see deleted image on stage -->
         <comment userInput="Assert don't see deleted image on stage" stepKey="assertNotToSeeImage"/>
         <seeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imageEmptyPreview}}" stepKey="dontSeeImageOnStage1"/>
-        <dontSeeElementInDOM  selector="{{ImageOnStageWithoutImageUploaded.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStageWithoutImageUploaded.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM1"/>
         <!-- Attach image C to Image slideout form -->
         <comment userInput="Attach image C to Image slideout form" stepKey="attachImageToSlideOut"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -125,7 +125,7 @@
         <!-- Assert not to see image on stage -->
         <comment userInput="Assert not to see image on stage" stepKey="commentVerifyImageStage" />
         <seeElementInDOM selector="{{ImageOnStageWithoutImageUploaded.imageEmptyPreview}}" stepKey="dontSeeImageOnStage3"/>
-        <dontSeeElementInDOM  selector="{{ImageOnStageWithoutImageUploaded.imageSourceOnStage(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
+        <dontSeeElementInDOM  selector="{{ImageOnStageWithoutImageUploaded.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="dontSeeImageInDOM2"/>
     </test>
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>
@@ -1115,8 +1115,6 @@
         <dontSeeElement selector="{{PageBuilderStage.onHoverSelectFromGalleryButton(PageBuilderImageContentType.role, '1')}}" stepKey="dontSeeSelectFromGallery"/>
         <waitForElementNotVisible selector="{{ImageOnStageWithoutImageUploaded.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
         <dontSeeElement selector="{{ImageOnStageWithoutImageUploaded.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
-        <waitForElementNotVisible selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="waitForUploadInputNotVisible"/>
-        <dontSeeElement selector="{{ImageOnStage.uploadImageInput('1')}}" stepKey="dontSeeUploadImageInput"/>
     </test>
     <test name="DuplicateRowWithImage">
         <annotations>
