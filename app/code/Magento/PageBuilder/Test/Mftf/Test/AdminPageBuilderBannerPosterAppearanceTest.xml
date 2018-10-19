@@ -183,6 +183,7 @@
         <comment userInput="Resize Column" stepKey="commentResizeColumn"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('9')}}" x="$guideWidth" stepKey="dragColumn1"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnX('1')}}')).width)" stepKey="column1Width1"/>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnBackend.columnX('2')}}')).width)" stepKey="column2Width1"/>
         <executeJS function="return Math.round({$column1Width1}/{$column2Width1})" stepKey="columnSizeRatio"/>

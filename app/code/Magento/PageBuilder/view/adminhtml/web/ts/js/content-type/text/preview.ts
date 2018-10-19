@@ -7,9 +7,9 @@ import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
-import WysiwygFactory from "../wysiwyg/factory";
-import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**
  * @api

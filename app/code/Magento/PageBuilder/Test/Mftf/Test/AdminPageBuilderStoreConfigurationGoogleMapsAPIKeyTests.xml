@@ -125,6 +125,7 @@
         <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <!-- Validate Global Scope -->
         <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
         <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(googleMapsAPIKey.section, googleMapsAPIKey.row, googleMapsAPIKey.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
@@ -140,8 +141,8 @@
         <comment userInput="Validate Get API Key Link" stepKey="commentValidateLink"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="waitForLink"/>
         <click selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="clickLink"/>
+        <wait time="2" stepKey="waitForTabCreation"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeCurrentUrlEquals url="https://developers.google.com/maps/documentation/javascript/get-api-key" stepKey="validateURL"/>
     </test>
     <test name="StoreConfigurationGoogleMapsAPIKeyTestKeyButtonValidKey">
