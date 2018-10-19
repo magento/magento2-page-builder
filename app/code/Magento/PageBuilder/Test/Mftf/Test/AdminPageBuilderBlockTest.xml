@@ -982,8 +982,8 @@
             <title value="Image Can Be Right Aligned In Block"/>
             <description value="A user can right align an image in a Block"/>
             <severity value="MAJOR"/>
-            <testCaseId value="MC-4293"/>
-            <useCaseId value="MC-5174"/>
+            <useCaseId value="MC-4293"/>
+            <testCaseId value="MC-5174"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
             <group value="pagebuilder-image"/>
@@ -1050,9 +1050,9 @@
         <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
         <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightBeforeSave"/>
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockBeforeSave">
-            <argument name="container" value="RowOnStorefront"/>
-            <argument name="content" value="ImageOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
@@ -1060,9 +1060,9 @@
         <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
         <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightAfterSave"/>
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockAfterSave">
-            <argument name="container" value="RowOnStorefront"/>
-            <argument name="content" value="ImageOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnStorefrontCMSPage" />
         <waitForPageLoad stepKey="waitForCmsPageLoad"/>
@@ -1070,9 +1070,9 @@
         <comment userInput="Verify right alignment in storefront" stepKey="commentVerifyRightAlignmentInStorefront"/>
         <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightStorefront"/>
         <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockStorefront">
-            <argument name="container" value="RowOnStorefront"/>
-            <argument name="content" value="ImageOnStorefront"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
     </test>
     <test name="ValidateShowHideOnBlockDefaultState">
