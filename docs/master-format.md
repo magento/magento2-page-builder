@@ -574,19 +574,11 @@ Poster
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="poster" data-show-button="hover" data-show-overlay="always" style="...">
     <div data-element="link" data-href="" data-target="" data-link-type="default">
-        <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
+        <div data-element="wrapper" class="pagebuilder-slide-wrapper" style="..." data-background-images="{}">
             <div data-element="overlay" class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-poster-content">
                     <div data-element="content">Content</div>
                     <button data-element="button" type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
-            <div data-element="overlay" class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
-                <div class="pagebuilder-poster-content">
-                    <div data-element="content">Content</div>
-                    <button data-element="content" type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
@@ -599,15 +591,7 @@ Collage Left
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="collage-left" data-show-button="hover" data-show-overlay="always" style="...">
     <div data-element="link" data-href="" data-target="" data-link-type="default">
-        <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
-            <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
-                <div class="pagebuilder-collage-content">
-                    <div data-element="content">Content</div>
-                    <button data-element="button" type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+        <div data-element="wrapper" class="pagebuilder-slide-wrapper" style="..." data-background-images="{}">
             <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-collage-content">
                     <div data-element="content">Content</div>
@@ -624,15 +608,7 @@ Collage Centered
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="collage-centered" data-show-button="hover" data-show-overlay="always" style="...">
     <div data-element="link" data-href="" data-target="" data-link-type="default">
-        <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
-            <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
-                <div class="pagebuilder-collage-content">
-                    <div data-element="content">Content</div>
-                    <button data-element="button" type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+        <div data-element="wrapper" class="pagebuilder-slide-wrapper" style="..." data-background-images="{}">
             <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-collage-content">
                     <div data-element="content">Content</div>
@@ -649,15 +625,7 @@ Collage Right
 ```
 <div data-element="main" data-role="slide" data-slide-name="" data-appearance="collage-right" data-show-button="hover" data-show-overlay="always" style="...">
     <div data-element="link" data-href="" data-target="" data-link-type="default">
-        <div data-element="desktop_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
-            <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
-                <div class="pagebuilder-collage-content">
-                    <div data-element="content">Content</div>
-                    <button data-element="button" type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
-                </div>
-            </div>
-        </div>
-        <div data-element="mobile_image" class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+        <div data-element="wrapper" class="pagebuilder-slide-wrapper" style="..." data-background-images="{}">
             <div data-element="overlay" class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
                 <div class="pagebuilder-collage-content">
                     <div data-element="content">Content</div>
@@ -693,6 +661,24 @@ Attributes
 3. data-target
 4. data-link-type
 
+### wrapper element
+Attributes
+1. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
+
+Inline Styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. border-style
+7. border-color
+8. border-width
+9. border-radius
+10. padding
+12. min-height
+13. text-align
+
 ### overlay element
 
 Attributes
@@ -701,39 +687,6 @@ Attributes
 
 Inline styles
 1. background-color
-
-### desktop_image element
-
-Attributes
-1. data-element [desktop_image]
-
-Inline styles
-1. background-color
-2. background-image
-3. background-position
-4. background-size
-5. background-repeat
-6. background-attachment
-7. text-align
-8. margins-and-padding
-9. min-height
-
-
-### mobile_image element
-
-Attributes
-1. data-element [mobile_image]
-
-Inline styles
-1. background-color
-2. background-image
-3. background-position
-4. background-size
-5. background-repeat
-6. background-attachment
-7. text-align
-8. margins-and-padding
-9. min-height
 
 ### content element
 
@@ -761,7 +714,7 @@ Poster
 ```
 <div data-element="main" data-role="banner" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
     <div data-element="link" data-href="" data-target="">
-        <div data-element="wrapper" data-background-images={} class="wrapper">
+        <div data-element="wrapper" data-background-images="{}" class="wrapper">
             <div data-element="overlay" style="" class="overlay">
                 <div class="content">
                     <div data-element="content">Content</div>
@@ -866,7 +819,6 @@ Inline Styles
 8. min-height
 9. text-align
 
-=======
 ### overlay element
 
 Attributes

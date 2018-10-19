@@ -27,7 +27,7 @@
         -o-transition: all 500ms ease;
         -webkit-transition: all 500ms ease;
         cursor: default;
-        margin: @margin;
+        margin: @margin 0 0 0;
         opacity: 1;
         transition: all 500ms ease;
         word-break: break-all;
@@ -48,7 +48,7 @@
 
         > .mce-content-body {
             min-height: 50px;
-            padding: 5px 20px !important;
+            min-width: 10px;
 
             + .placeholder-text {
                 font-size: 14px;
@@ -96,8 +96,18 @@
 }
 
 //
-//  Default appearance styles rendered through Block
-//  ________________________________________________
+//  Default appearance styles rendered through stage and Block
+//  __________________________________________________________
+
+.pagebuilder-banner-wrapper {
+    .pagebuilder-overlay {
+        padding: 30px;
+    }
+}
+
+//
+//  Default appearance styles rendered through Block only
+//  _____________________________________________________
 
 [data-role='banner'] {
     .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {

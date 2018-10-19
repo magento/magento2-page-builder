@@ -59,11 +59,23 @@ class AdvancedSliderItem implements RendererInterface
         ];
 
         $formData = $itemData['formData'] ?? [];
-        $formData['background_image'] = '';
+        $backgroundImages = '';
+        $backgroundImagesAttr = '{}';
+
         if (isset($eavData['background_image'])) {
-            $formData['background_image'] = $eavData['background_image'];
+            $backgroundImages = $eavData['background_image'];
         } elseif (isset($eavData['image'])) {
-            $formData['background_image'] = $eavData['image'];
+            $backgroundImages = $eavData['image'];
+        }
+
+        if ($backgroundImages) {
+            $backgroundImagesAttr = '{\&quot;'
+                . 'desktop_image\&quot;:\&quot;'
+                . '{{media url=wysiwyg'
+                . $backgroundImages
+                . '}}\&quot;,\&quot;'
+                . 'mobile_image\&quot;:\&quot;'
+                . '{}\&quot;}';
         }
 
         $margin = $this->styleExtractor->extractStyle($formData, ['margin']);
@@ -72,8 +84,9 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         $wrapperDivElementAttributes = [
-            'data-element' => 'mobile_image',
-            'class' => 'pagebuilder-slide-wrapper pagebuilder-mobile-only'
+            'data-element' => 'wrapper',
+            'data-background-images' => $backgroundImagesAttr,
+            'class' => 'pagebuilder-slide-wrapper'
         ];
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
@@ -116,22 +129,6 @@ class AdvancedSliderItem implements RendererInterface
             . '><div class="pagebuilder-poster-content">'
             . '<div data-element="content">'
             . '<h3>'
-            . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
-            . '</h3>'
-            . '<div>' . ($eavData['textarea'] ?? '') . '</div></div>'
-            . $buttonElementHtml
-            . '</div></div></div>';
-
-        // non-mobile wrapper div
-        $wrapperDivElementAttributes['data-element'] = 'desktop_image';
-        $wrapperDivElementAttributes['class'] = 'pagebuilder-slide-wrapper ' .
-            'pagebuilder-mobile-hidden';
-        $rootElementHtml .= '<div'
-            . $this->printAttributes($wrapperDivElementAttributes)
-            . '><div'
-            . $this->printAttributes($overlayDivElementAttributes)
-            . '><div class="pagebuilder-poster-content">'
-            . '<div data-element="content"><h3>'
             . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3>'
             . '<div>' . ($eavData['textarea'] ?? '') . '</div></div>'
