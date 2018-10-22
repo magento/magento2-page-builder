@@ -198,7 +198,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColor"/>
         <assertEquals stepKey="assertDefaultBackgroundColor">
-            <expectedResult type="string">rgb(250, 250, 250)</expectedResult>
+            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.value}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColor</actualResult>
         </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -210,6 +210,11 @@
         <seeElement selector="{{SlideOnBackend.backgroundSize('1', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeBackgroundSizeStage2"/>
         <seeElement selector="{{SlideOnBackend.backgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeBackgroundPositionStage2"/>
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage2"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColorAfterSave"/>
+        <assertEquals stepKey="assertDefaultBackgroundColorAfterSave">
+            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultBackgroundColorAfterSave</actualResult>
+        </assertEquals>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
