@@ -534,7 +534,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <!--<scrollTo selector="{{EditPanelForm.editPanelSectionName(AdvancedForm.dataIndex)}}" stepKey="scrollToAdvancedSection" />-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
+        </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -559,7 +561,7 @@
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
@@ -616,7 +618,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignmentNotVisible" stepKey="validateStorefront">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront">
             <argument name="page" value="ImageOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
