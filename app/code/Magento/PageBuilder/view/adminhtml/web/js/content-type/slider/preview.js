@@ -20,6 +20,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _inheritsLoose(Preview, _previewCollection2);
 
     /**
+     * Define keys which when changed should not trigger the slider to be rebuilt
+     *
+     * @type {string[]}
+     */
+
+    /**
      * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -38,6 +44,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       _this.afterChildrenRenderDeferred = (0, _promiseDeferred)();
       _this.buildSlickDebounce = _underscore.debounce(_this.buildSlick.bind(_assertThisInitialized(_assertThisInitialized(_this))), 10);
+      _this.ignoredKeysForBuild = ["display", "margins_and_padding", "border", "border_color", "border_radius", "border_width", "css_classes", "name", "text_align"];
       Promise.all([_this.afterChildrenRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
         var element = _ref[0],
             expectedChildren = _ref[1];
@@ -47,17 +54,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         (0, _delayUntil)(function () {
           _this.element = element;
           _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlickDebounce);
+          _this.previousData = _this.parent.dataStore.get();
 
-          _this.parent.dataStore.subscribe(_this.buildSlickDebounce);
+          _this.parent.dataStore.subscribe(function (data) {
+            if (_this.hasDataChanged(_this.previousData, data)) {
+              _this.buildSlickDebounce();
+            }
+
+            _this.previousData = data;
+          });
 
           _this.buildSlick(); // Redraw slide after content type gets redrawn
 
 
           _events.on("contentType:redrawAfter", function (args) {
-            if (_jquery.contains(args.element, this.element)) {
-              (0, _jquery)(this.element).slick("setPosition");
+            var $element = (0, _jquery)(_this.element);
+
+            if (args.element && _this.element && $element.closest(args.element).length) {
+              $element.slick("setPosition");
             }
-          }.bind(_assertThisInitialized(_assertThisInitialized(_this)))); // Set the stage to interacting when a slide is focused
+          }); // Set the stage to interacting when a slide is focused
 
 
           _this.focusedSlide.subscribe(function (value) {
@@ -169,6 +185,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
+      this.element = element; // if slider has been re-rendered previously on this element, re-build
+
+      if (this.ready) {
+        this.buildSlick();
+      }
+
       _previewCollection2.prototype.afterChildrenRender.call(this, element);
 
       this.afterChildrenRenderDeferred.resolve(element);
@@ -232,7 +254,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               }, function () {
                 return (0, _jquery)(_this3.element).hasClass("slick-initialized");
               }, 10);
-              slide.preview.onOptionEdit();
             });
 
             _events.off("slide:" + slide.id + ":mountAfter");
@@ -375,6 +396,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
     };
     /**
+     * Determine if the data has changed, whilst ignoring certain keys which don't require a rebuild
+     *
+     * @param {DataObject} previousData
+     * @param {DataObject} newData
+     * @returns {boolean}
+     */
+
+
+    _proto.hasDataChanged = function hasDataChanged(previousData, newData) {
+      previousData = _underscore.omit(previousData, this.ignoredKeysForBuild);
+      newData = _underscore.omit(newData, this.ignoredKeysForBuild);
+      return !_underscore.isEqual(previousData, newData);
+    };
+    /**
      * Build our instance of slick
      */
 
@@ -389,7 +424,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Dispose current subscription in order to prevent infinite loop
 
 
-        this.childSubscribe.dispose(); // Force an update on all children, ko tries to intelligently re-render but fails
+        if (this.childSubscribe) {
+          this.childSubscribe.dispose();
+        } // Force an update on all children, ko tries to intelligently re-render but fails
+
 
         var data = this.parent.children().slice(0);
         this.parent.children([]);

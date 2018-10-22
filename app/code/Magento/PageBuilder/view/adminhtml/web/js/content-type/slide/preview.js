@@ -3,7 +3,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader", "Magento_PageBuilder/js/content-type/wysiwyg/factory"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _delayUntil, _preview, _uploader, _factory) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -142,7 +142,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         return false;
       }
 
-      if (!this.wysiwyg) {
+      if (this.element && !this.wysiwyg) {
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
@@ -372,7 +372,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
 
     _proto.restoreSelection = function restoreSelection(element, selection) {
-      if (window.getSelection) {
+      if (selection && window.getSelection) {
         // Find the original container that had the selection
         var startContainerParent = (0, _jquery)(element).find("[data-startContainer]");
         startContainerParent.removeAttr("data-startContainer");

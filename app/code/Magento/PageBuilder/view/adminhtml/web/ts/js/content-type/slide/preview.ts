@@ -12,13 +12,13 @@ import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
+import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
+import WysiwygFactory from "../../wysiwyg/factory";
+import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
-import Uploader from "../uploader";
-import WysiwygFactory from "../wysiwyg/factory";
-import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
 
 /**
  * @api
@@ -163,7 +163,8 @@ export default class Preview extends BasePreview {
             event.preventDefault();
             return false;
         }
-        if (!this.wysiwyg) {
+
+        if (this.element && !this.wysiwyg) {
             this.element.removeAttribute("contenteditable");
             _.defer(() => {
                 this.initWysiwyg(true)
@@ -378,7 +379,7 @@ export default class Preview extends BasePreview {
      * @param {Selection} selection
      */
     private restoreSelection(element: HTMLElement, selection: Selection) {
-        if (window.getSelection) {
+        if (selection && window.getSelection) {
             // Find the original container that had the selection
             const startContainerParent = $(element).find("[data-startContainer]");
             startContainerParent.removeAttr("data-startContainer");
