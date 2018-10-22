@@ -262,7 +262,6 @@ export default class Preview extends PreviewCollection {
                             () => $(this.element).hasClass("slick-initialized"),
                             10,
                         );
-                        slide.preview.onOptionEdit();
                     });
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
