@@ -51,14 +51,19 @@ export default class Preview extends PreviewCollection {
                     this.element,
                     {
                         imgPosition: this.parent.dataStore.get("background_position") as string || "50% 50%",
-                        imgRepeat: this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat",
+                        imgRepeat: (
+                            (this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
+                        ),
                         imgSize: this.parent.dataStore.get("background_size") as string || "cover",
                         speed: Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string) || 0.5,
                     },
                 );
 
                 // jarallax removes backgroundImage style on element; reinstate for cases when it later gets re-built
-                $(this.element).css("background-image", this.data.inner.style().backgroundImage);
+                $(this.element).css(
+                    "background-image",
+                    (this.parent.dataStore.get("background_image") as any[])[0].url as string,
+                );
 
                 jarallax(this.element, "onResize");
             });

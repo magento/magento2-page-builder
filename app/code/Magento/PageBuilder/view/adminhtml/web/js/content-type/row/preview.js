@@ -52,12 +52,12 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
               imgPosition: _this.parent.dataStore.get("background_position") || "50% 50%",
-              imgRepeat: _this.parent.dataStore.get("background_repeat"),
+              imgRepeat: _this.parent.dataStore.get("background_repeat") || "no-repeat",
               imgSize: _this.parent.dataStore.get("background_size") || "cover",
               speed: Number.parseFloat(_this.parent.dataStore.get("parallax_speed")) || 0.5
             }); // jarallax removes backgroundImage style on element; reinstate for cases when it later gets re-built
 
-            (0, _jquery)(_this.element).css("background-image", _this.data.inner.style().backgroundImage);
+            (0, _jquery)(_this.element).css("background-image", _this.parent.dataStore.get("background_image")[0].url);
             jarallax(_this.element, "onResize");
           });
         }
