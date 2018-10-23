@@ -80,18 +80,14 @@
             <testCaseId value="MC-2644"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">

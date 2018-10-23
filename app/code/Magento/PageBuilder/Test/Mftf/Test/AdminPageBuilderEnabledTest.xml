@@ -24,7 +24,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
@@ -67,14 +67,13 @@
             <testCaseId value="MC-2408"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!--Verify PageBuilder visible on creation form of Catalog Page-->
@@ -124,17 +123,15 @@
             <testCaseId value="MC-2407"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!--Create CMS Page using PageBuilder-->
@@ -156,7 +153,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent" />
         <!--Enable WYSIWYG-->
-        <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+        <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">
             <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
@@ -173,16 +170,14 @@
             <testCaseId value="MC-2406"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-enable"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <!--Enable PageBuilder from Configuration-->
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
         </before>
         <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -204,8 +199,6 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
         <see userInput="You saved the block." stepKey="seeSuccessMessage"/>
-        <!--Disable WYSIWYG from Configuration-->
-        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedCMSBlockPage2">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
