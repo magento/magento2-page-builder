@@ -62,7 +62,7 @@ export default class Preview extends PreviewCollection {
                 // jarallax removes backgroundImage style on element; reinstate for cases when it later gets re-built
                 $(this.element).css(
                     "background-image",
-                    (this.parent.dataStore.get("background_image") as any[])[0].url as string,
+                    `url('${(this.parent.dataStore.get("background_image") as any[])[0].url}')` as string,
                 );
 
                 jarallax(this.element, "onResize");

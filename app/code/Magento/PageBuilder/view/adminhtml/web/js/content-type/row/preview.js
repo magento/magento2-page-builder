@@ -57,7 +57,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
               speed: Number.parseFloat(_this.parent.dataStore.get("parallax_speed")) || 0.5
             }); // jarallax removes backgroundImage style on element; reinstate for cases when it later gets re-built
 
-            (0, _jquery)(_this.element).css("background-image", _this.parent.dataStore.get("background_image")[0].url);
+            (0, _jquery)(_this.element).css("background-image", "url('" + _this.parent.dataStore.get("background_image")[0].url + "')");
             jarallax(_this.element, "onResize");
           });
         }
