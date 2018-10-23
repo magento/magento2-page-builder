@@ -9,7 +9,7 @@ The PageBuilder Early Access Program (EAP) gives partners the following perks:
 * Explore PageBuilder extension points to build custom modules and integrations for 3rd party services, such as Facebook, Instagram, etc.
 * Try out PageBuilder customization options and extend its functionality beyond its default features.
 * Preview PageBuilder to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
- 
+
 **Note:**
 *This program should not be used to design and launch a production website using early code.*
 
@@ -17,63 +17,68 @@ The PageBuilder Early Access Program (EAP) gives partners the following perks:
 
 We offer two methods for installing PageBuilder:
 
-* As a [Composer package] - use this option if you do not plan to contribute to the PageBuilder code repository 
-* Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code 
+* As a [Composer package] - use this option if you do not plan to contribute to the PageBuilder code repository.
+* Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code.
 
-[Composer package]: docs/install.md#composer-installation
-[GitHub repository]: docs/install.md#github-installation
+[Composer package]: docs/install-pagebuilder.md#composer-installation
+[GitHub repository]: docs/install-pagebuilder.md#github-installation
+
+<!-- {% comment %} -->
 
 ## Developer documentation
 
-This project repository contains PageBuilder developer documentation on the following topics:
+### Getting Started
 
-1. [Architecture overview]
-1. [BlueFoot to PageBuilder data migration]
-1. [Third-party content type migration]
-1. [Iconography]
-1. [Module integration]
-1. [Additional data configuration]
-1. [Content type configuration]
-1. [How to add a new content type]
-1. [Events]
-1. [Bindings]
-1. [Master format]
-1. [Visual select]
-1. [Custom Toolbar]
+1. [Introduction](docs/getting-started/introduction.md)
+2. [Install Page Builder](docs/getting-started/install-pagebuilder.md)
+3. [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
+4. [Integrate Page Builder](docs/getting-started/integrate-pagebuilder.md)
 
-[Architecture overview]: docs/architecture-overview.md
-[BlueFoot to PageBuilder data migration]: docs/bluefoot-data-migration.md
-[Third-party content type migration]: docs/new-content-type-example.md
-[Iconography]: docs/iconography.md
-[Module integration]: docs/module-integration.md
-[Additional data configuration]: docs/custom-configuration.md
-[Content type configuration]: docs/content-type-configuration.md
-[How to add a new content type]: docs/how-to-add-new-content-type.md
-[Events]: docs/events.md
-[Bindings]: docs/bindings.md
-[Master format]: docs/master-format.md
-[Visual select]: docs/visual-select.md
-[Custom Toolbar]: docs/toolbar.md
+### Customizations
+
+* [Block chooser](docs/customizations/block-chooser.md)
+* [Full-width page layouts](docs/customizations/full-width-page-layouts.md)
+* [Responsive layouts](docs/customizations/responsive-layouts.md)
+* [Custom logic](docs/customizations/custom-logic.md)
+* [Visual selects](docs/customizations/visual-selects.md)
+* [Data configuration](docs/customizations/data-configuration.md)
+* [Product conditions](docs/customizations/product-conditions.md)
+* [Server-side rendered previews](docs/customizations/server-side-rendered-previews.md)
+
+### How Tos
+
+* [How to add a new content type](docs/how-to/how-to-add-new-content-type.md)
+* [How to add an image uploader](docs/how-to/how-to-add-image-uploader.md)
+* [How to add inline text editing](docs/how-to/how-to-add-inline-text-editing.md)
+* [How to add a custom toolbar](docs/how-to/how-to-add-custom-toolbar.md)
+* [How to create a custom container](docs/how-to/how-to-create-custom-container.md)
+* [How to store a component master format as a widget-directive](docs/how-to/how-to-store-master-format-as-widget-directive.md)
+
+### Reference
+
+* [Architecture](docs/reference/architecture.md)
+* [Events](docs/reference/events.md)
+* [Bindings](docs/reference/bindings.md)
+* [Content type configuration](docs/reference/content-type-configuration.md)
+* [Master format](docs/reference/master-format.md)
+
+### Migration
+
+* [Bluefoot data migration](docs/migration/bluefoot-data-migration.md)
+* [Third-party content type migration](docs/migration/third-party-content-type-migration.md)
+  
+<!-- {% endcomment %} -->
 
 ## Contribute to PageBuilder
 
-We appreciate any and all contributions to PageBuilder. 
-A good place to start is by looking at our [features roadmap] and list of [known issues].
-
-If you are interested in contributing to this repository, please see our [Contribution Guide].
+We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution Guide].
 
 [Contribution Guide]: CONTRIBUTING.md
-[features roadmap]: docs/roadmap.md#planned-features-and-functionality
-[known issues]: docs/roadmap.md#known-issues
 
 ## PageBuilder updates from the Magento core team
 
 The PageBuilder team updates the code every 2 weeks.
 **These changes may introduce breaking changes.**
-
-To help you prepare for these changes, we are publishing a [roadmap] of features and issues that we are going to work on in the following months.
-
-[roadmap]: docs/roadmap.md
 
 ## Provide feedback
 

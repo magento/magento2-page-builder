@@ -80,15 +80,15 @@
 
 [Introduction]: introduction.md
 [Contribution guide]: ../CONTRIBUTING.md
-[Installation guide]: install.md
+[Installation guide]: install-pagebuilder.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
+[Third-party content type migration]: third-party-content-type-migration.md
 [Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
+[Add image uploader to content type]: how-to-add-image-uploader.md
 [Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
+[Additional data configuration]: data-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
@@ -96,13 +96,13 @@
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Render a backend content type preview]: content-type-preview.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Custom Toolbar]: toolbar.md
+[Store component master format as widget directive]: how-to-store-master-format-as-widget-directive.md
+[Render a backend content type preview]: server-side-rendered-previews.md
+[Use the block chooser UI component]: block-chooser.md
+[Use the inline text editing component]: how-to-add-inline-text-editing.md
+[Custom Toolbar]: how-to-add-custom-toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
+[Add custom logic to content types]: custom-logic.md
 [Roadmap and Known Issues]: roadmap.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 

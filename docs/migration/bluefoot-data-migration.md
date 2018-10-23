@@ -1,66 +1,7 @@
-# BlueFoot to PageBuilder data migration
-
-<!--{% comment %}-->
-## Navigation
-
-1. [Introduction]
-2. [Installation guide]
-3. [Contribution guide]
-4. [Developer documentation]
-    1. [Architecture overview]
-    1. **BlueFoot to PageBuilder data migration**
-    1. [Third-party content type migration]
-    1. [Iconography]
-    1. [Add image uploader to content type]
-    1. [Module integration]
-    1. [Additional data configuration]
-    1. [Content type configuration]
-    1. [How to add a new content type]
-    1. [Events]
-    1. [Bindings]
-    1. [Master format]
-    1. [Visual select] 
-    1. [Reuse product conditions in content types]
-    1. [Store component master format as widget directive]
-    1. [Use the block chooser UI component]
-    1. [Use the inline text editing component]
-    1. [Render a backend content type preview]
-    1. [Custom Toolbar]
-    1. [Full width page layouts]
-    1. [Add custom logic to content types]
-5. [Roadmap and known issues]
-6. [How to create custom PageBuilder content type container]
-
-[Introduction]: introduction.md
-[Contribution guide]: ../CONTRIBUTING.md
-[Installation guide]: install.md
-[Developer documentation]: developer-documentation.md
-[Architecture overview]: architecture-overview.md
-[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
-[Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
-[Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
-[Content type configuration]: content-type-configuration.md
-[How to add a new content type]: how-to-add-new-content-type.md
-[Events]: events.md
-[Bindings]: bindings.md
-[Master format]: master-format.md
-[Visual select]: visual-select.md
-[Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Render a backend content type preview]: content-type-preview.md
-[Custom Toolbar]: toolbar.md
-[Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
-<!--{% endcomment %}-->
+# BlueFoot data migration
 
 <!-- {% raw %} -->
+
 ## Overview
 
 This topic goes over the data migration process for BlueFoot data into the PageBuilder module in Magento 2.3.
@@ -83,7 +24,8 @@ The following content types are deprecated in PageBuilder:
 * BlueFoot Accordion - The content for the Accordion content block will be converted to HTML during migration.
 * BlueFoot Newsletter - The content for the Newsletter content block will be converted to HTML during migration.
 * BlueFoot Code - The content for the Code content block will be wrapped with the following tags:
-    ```
+  
+    ``` html
     <pre><code></code></pre>
     ```
 
@@ -199,7 +141,6 @@ class Heading implements RendererInterface
 }
 ```
 
-
 #### Children content blocks
 
 Some BlueFoot content types, such as slider, can contain child content types.
@@ -242,6 +183,7 @@ If your custom content type has any data stored as EAV you can configure the fol
 `Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader`
 
 **Example `di.xml` entry for EAV hydrator for Heading:**
+
 ``` xml
 <virtualType name="HeadingEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
     <arguments>
@@ -258,6 +200,7 @@ In this example, the EAV loader for Heading is assigned the `title` and `heading
 Use [dependency injection] to inject this virtual type into your renderer's constructor.
 
 **Example `di.xml` entry for Heading renderer:**
+
 ``` xml
 <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Heading">
     <arguments>
@@ -282,6 +225,7 @@ This API provides an `extractStyle()` method that accepts an associative array.
 It returns a string of styles ready to be inserted into the `style` DOM attribute.
 
 **Example:**
+
 ``` php
 $style = $this->styleExtractor->extractStyle($itemData['formData']);
 ```
@@ -292,6 +236,7 @@ The `di.xml` file declares which content type renderers are available in the ren
 The core PageBuilder module implements content type renderers for all its core content types.
 
 **Example di.xml file:**
+
 ``` xml
 <type name="Magento\PageBuilder\Setup\DataConverter\RendererPool">
     <arguments>

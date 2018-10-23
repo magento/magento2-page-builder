@@ -1,64 +1,4 @@
-# Events
-
-<!--{% comment %}-->
-## Navigation
-
-1. [Introduction]
-2. [Installation guide]
-3. [Contribution guide]
-4. [Developer documentation]
-    1. [Architecture overview]
-    1. [BlueFoot to PageBuilder data migration]
-    1. [Third-party content type migration]
-    1. [Iconography]
-    1. [Add image uploader to content type]
-    1. [Module integration]
-    1. [Additional data configuration]
-    1. [Content type configuration]
-    1. [How to add a new content type]
-    1. **Events**
-    1. [Bindings]
-    1. [Master format]
-    1. [Visual select] 
-    1. [Reuse product conditions in content types]
-    1. [Store component master format as widget directive]
-    1. [Use the block chooser UI component]
-    1. [Use the inline text editing component]
-    1. [Render a backend content type preview]
-    1. [Custom Toolbar]
-    1. [Full width page layouts]
-    1. [Add custom logic to content types]
-5. [Roadmap and known issues]
-6. [How to create custom PageBuilder content type container]
-
-[Introduction]: introduction.md
-[Contribution guide]: ../CONTRIBUTING.md
-[Installation guide]: install.md
-[Developer documentation]: developer-documentation.md
-[Architecture overview]: architecture-overview.md
-[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
-[Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
-[Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
-[Content type configuration]: content-type-configuration.md
-[How to add a new content type]: how-to-add-new-content-type.md
-[Events]: events.md
-[Bindings]: bindings.md
-[Master format]: master-format.md
-[Visual select]: visual-select.md
-[Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Render a backend content type preview]: content-type-preview.md
-[Custom Toolbar]: toolbar.md
-[Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
-<!--{% endcomment %}-->
+# Events <!-- omit in toc -->
 
 <!-- {% raw %} -->
 
@@ -69,43 +9,41 @@ This document contains reference information for events dispatched in Page Build
 
 ## Events list {#eventslist}
 
-- [Events](#events)
-    - [Navigation](#navigation)
-    - [Events list {#eventslist}](#events-list-eventslist)
-    - [`contentType:*` events](#contenttype-events)
-        - [`contentType:createAfter`](#contenttypecreateafter)
-        - [`contentType:mountAfter`](#contenttypemountafter)
-        - [`contentType:dropAfter`](#contenttypedropafter)
-        - [`contentType:mountAfter`](#contenttypemountafter)
-        - [`contentType:renderAfter`](#contenttyperenderafter)
-        - [`contentType:removeAfter`](#contenttyperemoveafter)
-        - [`contentType:duplicateAfter`](#contenttypeduplicateafter)
-        - [`contentType:moveBefore`](#contenttypemovebefore)
-        - [`contentType:moveAfter`](#contenttypemoveafter)
-        - [`contentType:redrawAfter`](#contenttyperedrawafter)
-            - [Backend](#backend)
-            - [Frontend](#frontend)
-        - [`column:dragStart`](#columndragstart)
-        - [`column:dragStop`](#columndragstop)
-        - [`column:initializeAfter`](#columninitializeafter)
-        - [`image:{{id}}:assignAfter`](#imageidassignafter)
-        - [`image:mountAfter`](#imagemountafter)
-        - [`image:uploadAfter`](#imageuploadafter)
-        - [`stage:interactionStart`](#stageinteractionstart)
-        - [`stage:interactionStop`](#stageinteractionstop)
-        - [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
-        - [`previewData:updateAfter`](#previewdataupdateafter)
-        - [`previewSortable:sortstart`](#previewsortablesortstart)
-        - [`previewSortable:sortupdate`](#previewsortablesortupdate)
-        - [`stage:error`](#stageerror)
-        - [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-        - [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
-        - [`stage:updateAfter`](#stageupdateafter)
-        - [`stage:childFocusStart`](#stagechildfocusstart)
-        - [`stage:childFocusStop`](#stagechildfocusstop)
-        - [`state`](#state)
-        - [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
-    - [`googleMaps:authFailure`](#googlemapsauthfailure)
+- [Events list {#eventslist}](#events-list-eventslist)
+- [`contentType:*` events](#contenttype-events)
+    - [`contentType:createAfter`](#contenttypecreateafter)
+    - [`contentType:mountAfter`](#contenttypemountafter)
+    - [`contentType:dropAfter`](#contenttypedropafter)
+    - [`contentType:mountAfter`](#contenttypemountafter)
+    - [`contentType:renderAfter`](#contenttyperenderafter)
+    - [`contentType:removeAfter`](#contenttyperemoveafter)
+    - [`contentType:duplicateAfter`](#contenttypeduplicateafter)
+    - [`contentType:moveBefore`](#contenttypemovebefore)
+    - [`contentType:moveAfter`](#contenttypemoveafter)
+    - [`contentType:redrawAfter`](#contenttyperedrawafter)
+        - [Backend](#backend)
+        - [Frontend](#frontend)
+    - [`column:dragStart`](#columndragstart)
+    - [`column:dragStop`](#columndragstop)
+    - [`column:initializeAfter`](#columninitializeafter)
+    - [`image:{{id}}:assignAfter`](#imageidassignafter)
+    - [`image:mountAfter`](#imagemountafter)
+    - [`image:uploadAfter`](#imageuploadafter)
+    - [`stage:interactionStart`](#stageinteractionstart)
+    - [`stage:interactionStop`](#stageinteractionstop)
+    - [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
+    - [`previewData:updateAfter`](#previewdataupdateafter)
+    - [`previewSortable:sortstart`](#previewsortablesortstart)
+    - [`previewSortable:sortupdate`](#previewsortablesortupdate)
+    - [`stage:error`](#stageerror)
+    - [`stage:{{id}}:readyAfter`](#stageidreadyafter)
+    - [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
+    - [`stage:updateAfter`](#stageupdateafter)
+    - [`stage:childFocusStart`](#stagechildfocusstart)
+    - [`stage:childFocusStop`](#stagechildfocusstop)
+    - [`state`](#state)
+    - [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
+- [`googleMaps:authFailure`](#googlemapsauthfailure)
 
 ## `contentType:*` events
 All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
