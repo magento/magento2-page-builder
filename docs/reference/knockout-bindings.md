@@ -1,4 +1,4 @@
-# Bindings
+# Knockout Bindings
 
 <!-- {% raw %} -->
 

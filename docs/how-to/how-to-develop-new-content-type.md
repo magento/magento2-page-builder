@@ -1,4 +1,4 @@
-# How to add a new content type
+# How to develop a new content type
 
 <!-- {% raw %} -->
 

@@ -1,4 +1,4 @@
-# BlueFoot data migration
+# Migrate from BlueFoot
 
 <!-- {% raw %} -->
 

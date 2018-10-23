@@ -1,4 +1,4 @@
-# Data configuration
+# Additional data configuration
 
 <!-- {% raw %} -->
 

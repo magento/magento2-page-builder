@@ -32,40 +32,40 @@ We offer two methods for installing PageBuilder:
 1. [Introduction](docs/getting-started/introduction.md)
 2. [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 3. [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
-4. [Integrate Page Builder](docs/getting-started/integrate-pagebuilder.md)
 
 ### Customizations
 
 * [Block chooser](docs/customizations/block-chooser.md)
 * [Full-width page layouts](docs/customizations/full-width-page-layouts.md)
 * [Responsive layouts](docs/customizations/responsive-layouts.md)
-* [Custom logic](docs/customizations/custom-logic.md)
+* [Storefront customization](docs/customizations/storefront-customization.md)
 * [Visual selects](docs/customizations/visual-selects.md)
-* [Data configuration](docs/customizations/data-configuration.md)
+* [Additional data configuration](docs/customizations/additional-data-configuration.md)
 * [Product conditions](docs/customizations/product-conditions.md)
 * [Server-side rendered previews](docs/customizations/server-side-rendered-previews.md)
 
 ### How Tos
 
-* [How to add a new content type](docs/how-to/how-to-add-new-content-type.md)
-* [How to add an image uploader](docs/how-to/how-to-add-image-uploader.md)
+* [How to develop a new content type](docs/how-to/how-to-develop-new-content-type.md)
+* [How to develop a container content type](docs/how-to/how-to-develop-container-content-type.md)
+* [How to use the Image Uploader](docs/how-to/how-to-use-image-uploader.md)
 * [How to add inline text editing](docs/how-to/how-to-add-inline-text-editing.md)
 * [How to add a custom toolbar](docs/how-to/how-to-add-custom-toolbar.md)
-* [How to create a custom container](docs/how-to/how-to-create-custom-container.md)
+* [How to convert product attribute fields to use Page Builder](docs/how-to/how-to-convert-product-attributes-to-use-pagebuilder.md)
 * [How to store a component master format as a widget-directive](docs/how-to/how-to-store-master-format-as-widget-directive.md)
 
 ### Reference
 
 * [Architecture](docs/reference/architecture.md)
 * [Events](docs/reference/events.md)
-* [Bindings](docs/reference/bindings.md)
-* [Content type configuration](docs/reference/content-type-configuration.md)
+* [Knockout bindings](docs/reference/knockout-bindings.md)
+* [Configuration](docs/reference/configuration.md)
 * [Master format](docs/reference/master-format.md)
 
 ### Migration
 
-* [Bluefoot data migration](docs/migration/bluefoot-data-migration.md)
-* [Third-party content type migration](docs/migration/third-party-content-type-migration.md)
+* [Migrate from BlueFoot](docs/migration/migrate-from-bluefoot.md)
+* [Migrate custom content types from BlueFoot](docs/migration/migrate-custom-content-types-from-bluefoot.md)
   
 <!-- {% endcomment %} -->
 

@@ -1,4 +1,4 @@
-# How to add an Image Uploader <!-- omit in toc -->
+# How to use the Image Uploader <!-- omit in toc -->
 
 <!-- {% raw %} -->
 

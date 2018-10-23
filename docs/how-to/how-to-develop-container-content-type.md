@@ -1,4 +1,4 @@
-# How to create a custom content type container
+# How to develop a container content type
 
 <!-- {% raw %} -->
 This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainer`.

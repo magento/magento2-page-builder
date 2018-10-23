@@ -1,4 +1,4 @@
-# Integrate Page Builder
+# How to convert product attribute fields to use Page Builder
 
 <!-- {% raw %} -->
 

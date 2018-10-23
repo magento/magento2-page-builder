@@ -1,11 +1,9 @@
-# Content type configuration
+# Configuration
 
 **Note:**
 *We are revising configuration, format will change. We will publish draft of new improved configuration soon to get feedback.*
 
 <!-- {% raw %} -->
-
-## Configuration
 
 Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
 

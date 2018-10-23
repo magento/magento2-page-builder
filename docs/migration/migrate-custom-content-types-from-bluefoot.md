@@ -1,4 +1,4 @@
-# Third-party content type migration
+# Migrate custom content types from BlueFoot
 
 <!-- {% raw %} -->
 
