@@ -1671,10 +1671,9 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderOntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!-- Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="EditSlider"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
@@ -1692,7 +1691,6 @@
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
         <!-- Switch to Slide 2 -->
         <comment userInput="Switch to Slide 2" stepKey="commentSwitchToSlide2Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Stage"/>
@@ -1704,8 +1702,8 @@
         <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().left" stepKey="sliderLeftPosition"/>
         <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().right" stepKey="sliderRightPosition"/>
         <assertLessThan stepKey="assertSlideRightSideIsLessThanSliderRightSide">
-            <expectedResult type="variable">slideRightPosition</expectedResult>
-            <actualResult type="variable">sliderRightPosition</actualResult>
+            <expectedResult type="variable">sliderRightPosition</expectedResult>
+            <actualResult type="variable">slideRightPosition</actualResult>
         </assertLessThan>
         <assertGreaterThan stepKey="assertSlideLeftSideIsGreaterThanSliderLeftSide">
             <expectedResult type="variable">sliderLeftPosition</expectedResult>
