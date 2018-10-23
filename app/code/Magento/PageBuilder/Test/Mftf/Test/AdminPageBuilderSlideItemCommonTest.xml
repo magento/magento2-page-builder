@@ -198,7 +198,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColor"/>
         <assertEquals stepKey="assertDefaultBackgroundColor">
-            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.stageValue}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColor</actualResult>
         </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -212,7 +212,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage2"/>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColorAfterSave"/>
         <assertEquals stepKey="assertDefaultBackgroundColorAfterSave">
-            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.stageValue}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColorAfterSave</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel After Save -->

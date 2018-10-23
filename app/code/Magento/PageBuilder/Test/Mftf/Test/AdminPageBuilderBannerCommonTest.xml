@@ -596,7 +596,7 @@
         </actionGroup>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColor"/>
         <assertEquals stepKey="assertDefaultBackgroundColor">
-            <expectedResult type="string">{{PageBuilderBannerBackgroundColor_Empty.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderBannerBackgroundColor_Empty.stageValue}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColor</actualResult>
         </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -608,7 +608,7 @@
         </actionGroup>
         <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColorAfterSave"/>
         <assertEquals stepKey="assertDefaultBackgroundColorAfterSave">
-            <expectedResult type="string">{{PageBuilderBannerBackgroundColor_Empty.value}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderBannerBackgroundColor_Empty.stageValue}}</expectedResult>
             <actualResult type="variable">grabDefaultBackgroundColorAfterSave</actualResult>
         </assertEquals>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
