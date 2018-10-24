@@ -28,17 +28,6 @@
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStage" />
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
-    <actionGroup name="dragContentTypeToStageAndExpectEditPanel">
-        <arguments>
-            <argument name="contentType"/>
-        </arguments>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
-        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStage" />
-        <waitForElementVisible time="10" selector="{{EditPanelForm.editFormTitle}}" stepKey="waitForContentTypeNameInEditFormTitle" />
-        <see userInput="Edit {{contentType.editPanelName}}" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
-        <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
-    </actionGroup>
     <actionGroup name="dragContentTypeToContainer">
         <arguments>
             <argument name="contentType"/>
@@ -70,20 +59,6 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementNotVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeNotOnStage" />
         <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="dontSeeElementInContainer" />
-    </actionGroup>
-    <actionGroup name="dragContentTypeToContainerAndExpectEditPanel">
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
-            <argument name="containerTargetType"/>
-            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
-        </arguments>
-        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
-        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInContainer"/>
-        <waitForElementVisible time="30" selector="{{EditPanelForm.editFormTitle}}" stepKey="waitForContentTypeNameInEditFormTitle"/>
-        <see userInput="Edit {{contentType.editPanelName}}" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
     <!-- Test to ensure a content block doesn't receive drop events -->
     <actionGroup name="dragContentTypeToContentType">
