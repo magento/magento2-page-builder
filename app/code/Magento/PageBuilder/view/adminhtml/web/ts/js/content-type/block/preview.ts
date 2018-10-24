@@ -71,21 +71,6 @@ export default class Preview extends BasePreview {
     /**
      * @inheritdoc
      */
-    protected bindEvents() {
-        super.bindEvents();
-        // When a block type is dropped for the first time open the edit panel
-        events.on("block:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id) {
-                setTimeout(() => {
-                    this.openEdit();
-                }, 300);
-            }
-        });
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 

@@ -7,7 +7,11 @@
 
 <div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <div class="pagebuilder-banner-wrapper" css="data.desktop_image.css" attr="data.desktop_image.attributes" ko-style="Object.assign({}, data.desktop_image.style(), {paddingLeft: 'calc(25% + ' + data.desktop_image.style().paddingLeft + ')', paddingRight: 'calc(25% + ' + data.desktop_image.style().paddingRight + ')'})" event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }">
+    <div class="pagebuilder-banner-wrapper"
+         css="data.wrapper.css"
+         attr="data.wrapper.attributes"
+         ko-style="data.wrapper.style"
+         event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }">
         <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
             <scope args="getUploader().getUiComponent()">
                 <render />
