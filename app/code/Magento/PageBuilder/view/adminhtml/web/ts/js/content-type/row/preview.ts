@@ -35,7 +35,8 @@ export default class Preview extends PreviewCollection {
         // Destroy all instances of the plugin prior
         try {
             // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.element.getAttribute("style");
+            const style = this.element.getAttribute("data-jarallax-original-styles") ||
+                this.element.getAttribute("style");
             jarallax(this.element, "destroy");
             this.element.setAttribute("style", style);
         } catch (e) {
