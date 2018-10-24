@@ -254,7 +254,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               }, function () {
                 return (0, _jquery)(_this3.element).hasClass("slick-initialized");
               }, 10);
-              slide.preview.onOptionEdit();
             });
 
             _events.off("slide:" + slide.id + ":mountAfter");
