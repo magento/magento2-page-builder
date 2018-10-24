@@ -2263,4 +2263,243 @@
         <seeElement selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="seeWidgetStorefront"/>
         <click selector="{{BannerOnFrontend.messageContentTextAreaTextWidget('1', _ENV.MAGENTO_BASE_URL, $$createCMSPageB.identifier$$)}}" stepKey="clickWidgetStorefront"/>
     </test>
+    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageLeftAppearance" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner - Overlay does not have border radius applied on collage left appearance"/>
+            <description value="As a content creator I do not want border radius of banner overlay with collage left appearance to have a border radius applied to it so that I may be able to style it independently"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3870"/>
+            <testCaseId value="MC-5254"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+        </actionGroup>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageCenteredAppearance" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner - Overlay does not have border radius applied on collage centered appearance"/>
+            <description value="As a content creator I do not want border radius of banner overlay with collage centered appearance to have a border radius applied to it so that I may be able to style it independently"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3870"/>
+            <testCaseId value="MC-5253"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageRightAppearance" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner - Overlay does not have border radius applied on collage right appearance"/>
+            <description value="As a content creator I do not want border radius of banner overlay with collage right appearance to have a border radius applied to it so that I may be able to style it independently"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3870"/>
+            <testCaseId value="MC-5252"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+        </actionGroup>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner - Overlay has converted border radius applied on poster appearance"/>
+            <description value="As a content creator I want border radius of banner overlay with poster appearance to have a different border radius than its parent wrapper so that it aligns snugly alongside it without exposing any gaps"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3870"/>
+            <testCaseId value="MC-5237"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Open edit panel and apply border radius/width on poster appearance where border radius > border width -->
+        <comment userInput="Open edit panel and apply border radius/width on poster appearance where border radius greater than border width" stepKey="commentOpenEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderBannerAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
+            <argument name="property" value="PageBuilderBannerOverlayColor_FF0000"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayTransparency">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage where border radius > border width -->
+        <comment userInput="Validate Stage on poster appearance where border radius greater than border width" stepKey="commentValidateStage"/>
+        <seeElement selector="{{BannerOnBackend.overlay('1')}}" stepKey="seeOverlay"/>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius"/>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius</actualResult>
+        </assertEquals>
+        <!-- Validate Storefront where border radius > border width -->
+        <comment userInput="Validate Storefront where border radius greater than border width" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront"/>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
+        </assertEquals>
+        <switchToPreviousTab stepKey="switchBackToAdmin"/>
+        <reloadPage stepKey="refreshPage"/>
+        <waitForPageLoad stepKey="waitForPageRefresh"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Open edit panel and apply border radius/width where border radius <= border width -->
+        <comment userInput="Open edit panel and apply border radius/width where border radius less than or equal to border width" stepKey="commentOpenEditPanel2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage on where border radius <= border width -->
+        <comment userInput="Validate Stage where border radius less than or equal to border width" stepKey="commentValidateStagePoster"/>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadius2" />
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius2</actualResult>
+        </assertEquals>
+        <!-- Validate Storefront where border radius <= border width -->
+        <comment userInput="Validate Storefront where border radius less than or equal to border width" stepKey="commentValidateStorefront2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <switchToNextTab stepKey="switchBackToStorefront" />
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <executeJS function="return parseInt(getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.overlay('1')}}&quot;,document.body).iterateNext()).borderRadius, 10)" stepKey="overlayBorderRadiusStorefront2" />
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
+        </assertEquals>
+    </test>
 </tests>
