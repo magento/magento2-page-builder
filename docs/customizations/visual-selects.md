@@ -6,7 +6,9 @@
 
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
 
-The text alignment field for each content block, in the Advanced section, now shows an icon and title. You can customize the text alignment field to show this new look and feel for all content blocks.
+In the Advanced section of the content editor, the text alignment field for each content type now shows an icon and title. You can customize the text alignment field to show this new look and feel for your custom content types.
+
+![alignments](../images/advanced-alignment.png "Content alignment")
 
 All image formats are supported for icons, though we suggest using an SVG format.
 
@@ -20,7 +22,7 @@ To add Visual Select customization to a Page Builder content block:
 
 ## Override the select component with an element template {#element-template}
 
-We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, specifying an element template & component for this functionality, to implement the Visual Select option.
+We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, by specifying an element template and component for this functionality to implement the Visual Select option.
 
 In the provided template, specify `<elementTmpl>` alongside updating the fields component to `Magento_PageBuilder/js/form/element/visual-select`:
 
@@ -35,7 +37,7 @@ In the provided template, specify `<elementTmpl>` alongside updating the fields 
 
 ## Add Visual Select to the XML config {#xml-config}
 
-The available options for select, `value`, `title`, `icon` and `noticeMessage`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method. 
+The available options for select, `value`, `title`, `icon` and `noticeMessage`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method.
 
 Options should return an array with the following format:
 
@@ -123,7 +125,7 @@ To apply vertical alignment to a content type using the Visual Select component,
 </virtualType>
 ```
 
-### Add the Visual Select option in your module's form configuration file.
+### Add the Visual Select option in your module's form configuration file
 
 ```xml
 <field name="justify_content" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">

@@ -10,6 +10,7 @@ Follow these steps to activate PageBuilder in the Admin:
 2. In the **Stores** tab, select **Configuration** under the Settings group.
 3. In the **General** group on the page, select **Content Management**.
 4. Under **Advanced Content Tools**, select **Yes** for **Enable Page Builder**.
+   ![activate page builder](../images/activate-pagebuilder.png "Activate Page Builder")
 5. Click **Save Config**
 
 ## Deactivate Page Builder

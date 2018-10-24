@@ -4,16 +4,20 @@
 
 ## What's in this topic
 
-This topic describes how to use the product conditions rule tree for different content types. By reusing the conditions mechanism you can apply it to your own custom content types.
+Out-of-the-box, product conditions can be set on Page Builder's Product content type to define which products you want to display based on a variety of product attributes. For example, if you only want display products in a category with a price greater than $50, you would setup a condition for the product as shown here:
+
+![product conditions](../images/product-conditions.png "Product conditions example")
+
+This topic describes how you can apply the conditions mechanism to your own custom content types.
 
 ## Overview
 
 To reuse conditions for custom content types:
 
 1. [Add an attribute to the content type](#add-attribute)
-2. [Add the conditions form element to the `form` UI component](#add-conditions)
+2. [Add the conditions](#add-conditions)
 3. [Create a custom `form` data provider](#data-provider)
-4. [Include the `conditionsDataProcessor` and attribute in the data provider](#include)
+4. [Include the `conditionsDataProcessor` and attribute](#include)
 
 ## Add an attribute to the content type {#add-attribute}
 
@@ -23,7 +27,7 @@ To add an attribute within your custom content type:
 <attribute source="data-myconditions" name="myconditions"/>
  ```
 
-## Add the conditions form element to the `form` UI component {#add-conditions}
+## Add the conditions {#add-conditions}
 
 To add the conditions `form` element to the `form` UI component:
 
@@ -60,7 +64,7 @@ To create a custom `form` data provider for the edit form:
 
 The preceding code is an example of how to add a custom `form` data provider. Replace values with ones specific to your custom content type and component.
 
-## Include the `conditionsDataProcessor` and attribute in the data provider {#include}
+## Include the `conditionsDataProcessor` and attribute {#include}
 
 To include the `conditionsDataProcessor` and accompanying attribute in the data provider file, `view/adminhtml/web/js/content-type/mycomponent/form/provider.js`:
 
