@@ -1,84 +1,28 @@
-# Visual Select
-
-<!--{% comment %}-->
-## Navigation
-
-1. [Introduction]
-2. [Installation guide]
-3. [Contribution guide]
-4. [Developer documentation]
-    1. [Architecture overview]
-    1. [BlueFoot to PageBuilder data migration]
-    1. [Third-party content type migration]
-    1. [Iconography]
-    1. [Add image uploader to content type]
-    1. [Module integration]
-    1. [Additional data configuration]
-    1. [Content type configuration]
-    1. [How to add a new content type]
-    1. [Events]
-    1. [Bindings]
-    1. [Master format]
-    1. **Visual select** 
-    1. [Reuse product conditions in content types]
-    1. [Store component master format as widget directive]
-    1. [Use the block chooser UI component]
-    1. [Use the inline text editing component]
-    1. [Render a backend content type preview]
-    1. [Custom Toolbar]
-    1. [Full width page layouts]
-    1. [Add custom logic to content types]
-5. [Roadmap and known issues]
-6. [How to create custom PageBuilder content type container]
-
-[Introduction]: introduction.md
-[Contribution guide]: ../CONTRIBUTING.md
-[Installation guide]: install.md
-[Developer documentation]: developer-documentation.md
-[Architecture overview]: architecture-overview.md
-[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
-[Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
-[Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
-[Content type configuration]: content-type-configuration.md
-[How to add a new content type]: how-to-add-new-content-type.md
-[Events]: events.md
-[Bindings]: bindings.md
-[Master format]: master-format.md
-[Visual select]: visual-select.md
-[Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Render a backend content type preview]: content-type-preview.md
-[Custom Toolbar]: toolbar.md
-[Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
-<!--{% endcomment %}-->
+# Visual selects
 
 <!-- {% raw %} -->
+
 ## What's in this topic
 
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
 
-The text alignment field for each content block, in the Advanced section, now shows an icon and title. You can customize the text alignment field to show this new look and feel for all content blocks.
+In the Advanced section of the content editor, the text alignment field for each content type now shows an icon and title. You can customize the text alignment field to show this new look and feel for your custom content types.
+
+![alignments](../images/advanced-alignment.png "Content alignment")
 
 All image formats are supported for icons, though we suggest using an SVG format.
 
 ## Overview
 
 To add Visual Select customization to a Page Builder content block:
+
 1. [Override the select component with an element template](#element-template)
 2. [Add Visual Select to the XML config](#xml-config)
 3. [How to reuse vertical alignment between different content types](#vertical-alignment)
 
 ## Override the select component with an element template {#element-template}
 
-We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, specifying an element template & component for this functionality, to implement the Visual Select option.
+We use the default select component in the `/app/code/Magento/PageBuilder/view/adminhtml/ui-component/pagebuilder_base_form.xml` file. You can override the default template, by specifying an element template and component for this functionality to implement the Visual Select option.
 
 In the provided template, specify `<elementTmpl>` alongside updating the fields component to `Magento_PageBuilder/js/form/element/visual-select`:
 
@@ -93,7 +37,7 @@ In the provided template, specify `<elementTmpl>` alongside updating the fields 
 
 ## Add Visual Select to the XML config {#xml-config}
 
-The available options for select, `value`, `title`, `icon` and `noticeMessage`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method. 
+The available options for select, `value`, `title`, `icon` and `noticeMessage`, can be provided by the PHP class that implements the `\Magento\Framework\Option\ArrayInterface` method.
 
 Options should return an array with the following format:
 
@@ -142,6 +86,7 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
 ### Display notice when option is selected
 
 For some options you may wish to display an additional notice when the user selects the item. You can do this by providing a `noticeMessage` within the items declaration.
+
 ```xml
 <item name="3" xsi:type="array">
    <item name="value" xsi:type="string">right</item>
@@ -179,7 +124,9 @@ To apply vertical alignment to a content type using the Visual Select component,
     </arguments>
 </virtualType>
 ```
-### Add the Visual Select option in your module's form configuration file.
+
+### Add the Visual Select option in your module's form configuration file
+
 ```xml
 <field name="justify_content" sortOrder="20" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
     <argument name="data" xsi:type="array">
@@ -202,7 +149,9 @@ To apply vertical alignment to a content type using the Visual Select component,
     </formElements>
 </field>
 ```
+
 ### Configure the content type with the vertical alignment style properties. This example is from Row.
+
 ```html
 <elements>
     <element name="main" path=".">
@@ -235,9 +184,11 @@ To apply vertical alignment to a content type using the Visual Select component,
     </element>
 </elements>
 ```
-### Specify which elements in the preview and master templates should receive the style properties.
+
+### Specify which elements in the preview and master templates should receive the style properties
 
 Example master template:
+
 ```html
 <div attr="data.main.attributes"
      ko-style="Object.assign(data.container.style(), data.main.style())"
@@ -247,6 +198,7 @@ Example master template:
 ```
 
 Example preview template:
+
 ```html
 <div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-container': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1}), event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false, afterRender: function (element) { setTimeout(function () { initParallax.call($data, element); }, 0) }">
     <render args="getOptions().template"></render>
