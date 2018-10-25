@@ -994,6 +994,109 @@
         <seeElementInDOM selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeThatEmptyImageExistsInDomOnStorefront"/>
         <dontSeeElement selector="{{ImageOnStorefront.imageDisplay}}" stepKey="notSeeImageOnFrontend"/>
     </test>
+    <test name="BlockImageIsRightAligned">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Image Can Be Right Aligned In Block"/>
+            <description value="A user can right align an image in a Block"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4293"/>
+            <testCaseId value="MC-5174"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-image"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_PNG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderImageProperty_PNG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Go to edit page of Block and configure Image -->
+        <comment userInput="Go to edit page of Block and configure image" stepKey="commentGoToBlockEditPage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
+            <argument name="property" value="PageBuilderImageProperty_PNG"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">
+            <argument name="property" value="PageBuilderImageCaptionProperty"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
+        <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
+        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
+        <!-- Go to CMS Page and choose Block -->
+        <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Right Alignment On Stage - Before Save -->
+        <comment userInput="Verify right alignment on stage before save" stepKey="commentVerifyRightAlignmentOnStageBeforeSave"/>
+        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightBeforeSave"/>
+        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockBeforeSave">
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
+        <!-- Verify Right Alignment On Stage - After Save -->
+        <comment userInput="Verify right alignment on stage after save" stepKey="commentVerifyRightAlignmentOnStageAfterSave"/>
+        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightAfterSave"/>
+        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockAfterSave">
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnStorefrontCMSPage" />
+        <waitForPageLoad stepKey="waitForCmsPageLoad"/>
+        <!-- Verify Right Alignment In Storefront -->
+        <comment userInput="Verify right alignment in storefront" stepKey="commentVerifyRightAlignmentInStorefront"/>
+        <seeElement selector="({{ImageOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyRight.value)}}{{BlockOnStorefront.ancestor}})[1]" stepKey="seeImageAlignmentRightStorefront"/>
+        <actionGroup ref="verifyAlignmentRightInBlock" stepKey="verifyAlignmentRightInBlockStorefront">
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="content" value="{{ImageOnStorefront.imageElementCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+    </test>
     <test name="ValidateShowHideOnBlockDefaultState">
         <annotations>
             <features value="PageBuilder"/>
@@ -1180,6 +1283,9 @@
             <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">

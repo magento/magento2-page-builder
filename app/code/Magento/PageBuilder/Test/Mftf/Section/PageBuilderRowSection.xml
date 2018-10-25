@@ -75,6 +75,7 @@
         <element name="base" type="text" selector="(//div[@data-role='row'])[{{arg1}}]/div" parameterized="true"/>
         <element name="baseCSS" type="text" selector="[data-role=row]"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=row] > div')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="innerCSS" type="text" selector="[data-role=row] [data-element=inner]"/>
         <element name="hidden" type="text" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=row]')).width)"/>
