@@ -36,15 +36,6 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
         if (_this.element) {
           _this.mapElement.usePlaceholder(_this.element);
         }
-      }); // When a map is dropped for the first time open the edit panel
-
-
-      _events.on("map:dropAfter", function (args) {
-        if (args.id === _this.parent.id) {
-          setTimeout(function () {
-            _this.openEdit();
-          }, 300);
-        }
       });
     };
     /**

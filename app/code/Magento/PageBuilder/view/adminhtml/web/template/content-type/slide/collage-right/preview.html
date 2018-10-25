@@ -9,12 +9,13 @@
      attr="data.main.attributes"
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <div ko-style="Object.assign(data.main.style(), data.desktop_image.style(), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'})"
+    <div class="pagebuilder-slide-wrapper"
+         ko-style="Object.assign(data.main.style(), data.wrapper.style())"
          event="mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor">
         <scope args="getUploader().getUiComponent()">
             <render />
         </scope>
-        <div class="pagebuilder-collage-overlay wysiwyg-container"
+        <div class="pagebuilder-overlay wysiwyg-container"
              ko-style="data.overlay.style"
              event="mousedown: activateEditor">
             <div class="inline-wysiwyg"
