@@ -90,6 +90,7 @@
         <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][not(*)]" parameterized="true"/>
         <element name="messageContentTextArea" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
+        <element name="messageContentTextAreaImage" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content']//img[contains(@src, {{arg2}})]" parameterized="true"/>
         <element name="messageContentTextAreaTextWidget" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
         <element name="messageContentText" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
@@ -159,6 +160,10 @@
         <element name="showOverlay" type="button" selector="(//div[@data-role='slide'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
         <element name="overlayColorAndTransparency" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
         <element name="transparentOverlay" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-overlay')][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="overlayColorAndTransparency" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-collage-overlay')][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="transparentOverlay" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='overlay' or contains(@class,'pagebuilder-collage-overlay')][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="inlineWYSIWYGEditorWithTag" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[contains(@class,'inline-wysiwyg')]//{{arg2}}" parameterized="true"/>
+        <element name="inlineWYSIWYGEditorWithTag" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[contains(@class,'inline-wysiwyg')]//{{arg2}}" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="posterAlignment" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="posterNoAlignment" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@class='pagebuilder-slide-wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
