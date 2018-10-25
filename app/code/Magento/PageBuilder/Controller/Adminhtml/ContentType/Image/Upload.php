@@ -5,12 +5,12 @@
  */
 namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Image;
 
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
  * Class Upload
  */
-class Upload extends \Magento\Backend\App\Action
+class Upload extends \Magento\Backend\App\Action implements HttpPostActionInterface
 {
     const UPLOAD_DIR = 'wysiwyg';
 
@@ -94,7 +94,12 @@ class Upload extends \Magento\Backend\App\Action
         $fileUploader->setAllowRenameFiles(true);
         $fileUploader->setAllowedExtensions(['jpeg','jpg','png','gif']);
         $fileUploader->setAllowCreateFolders(true);
+
         try {
+            if (!$fileUploader->checkMimeType(['image/png', 'image/jpeg', 'image/gif'])) {
+                throw new \Magento\Framework\Exception\LocalizedException(__('File validation failed.'));
+            }
+
             $result = $fileUploader->save($this->getUploadDir());
             $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
             $result['id'] = $this->cmsWysiwygImages->idEncode($result['file']);
