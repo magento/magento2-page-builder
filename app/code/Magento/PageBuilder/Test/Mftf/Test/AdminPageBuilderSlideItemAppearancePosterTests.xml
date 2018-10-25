@@ -1401,8 +1401,11 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openSliderEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Fill Out Edit Panel: Appearance Poster -->
         <comment userInput="Fill Out Edit Panel: Appearance Poster" stepKey="commentFillEditPanel"/>
@@ -1423,8 +1426,8 @@
         <comment userInput="Validate Stage Overlay and Padding" stepKey="commentValidateOverlayPadding"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage"/>
         <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexGreen.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="seePosterPadding" />
-        <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="dontSeeCollagePadding" />
+        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding" />
+        <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding" />
         <!-- Change Appearance to Collage Left -->
         <comment userInput="Change Appearance to Collage Left" stepKey="commentChangeAppearanceCollageLeft"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
@@ -1436,7 +1439,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage2"/>
         <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexGreen.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
-        <dontSeeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="dontSeeDefaultPosterPadding" />
+        <dontSeeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeDefaultPosterPadding" />
         <!-- Change Appearance back to Poster -->
         <comment userInput="Change Appearance back to Poster" stepKey="commentChangeAppearanceBackToPoster"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
@@ -1450,7 +1453,7 @@
         <comment userInput="Validate Stage Overlay and Padding after appearance change" stepKey="commentValidateOverlayPadding2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage3"/>
         <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexGreen.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage3"/>
-        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="seePosterPadding2" />
-        <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderSlideItemPosterPadding_Default.value)}}" stepKey="dontSeeCollagePadding2" />
+        <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding2" />
+        <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding2" />
     </test>
 </tests>
