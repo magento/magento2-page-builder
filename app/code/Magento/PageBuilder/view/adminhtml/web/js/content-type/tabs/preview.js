@@ -30,6 +30,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
       _this.focusedTab = _knockout.observable(null);
+      _this.activeTab = _knockout.observable(0);
       _this.onContainerRenderDeferred = (0, _promiseDeferred)();
       _this.mountAfterDeferred = (0, _promiseDeferred)();
       Promise.all([_this.onContainerRenderDeferred.promise, _this.mountAfterDeferred.promise]).then(function (_ref) {
@@ -111,6 +112,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.focusedTab.subscribe(_underscore.debounce(function (index) {
         if (index !== null) {
           _events.trigger("stage:interactionStart");
+
+          (0, _delayUntil)(function () {
+            return (0, _jquery)((0, _jquery)(_this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").focus();
+          }, function () {
+            return (0, _jquery)((0, _jquery)(_this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").length > 0;
+          }, 10);
         } else {
           // We have to force the stop as the event firing is inconsistent for certain operations
           _events.trigger("stage:interactionStop", {
@@ -133,7 +140,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     var _proto = Preview.prototype;
 
     _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
-      if (this.ready) {
+      try {
         (0, _jquery)(this.element).tabs("refresh");
 
         if (focusIndex >= 0) {
@@ -152,6 +159,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             sortableElement.sortable("enable");
           }
         }
+      } catch (e) {
+        this.buildTabs();
       }
     };
     /**
@@ -164,6 +173,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.setActiveTab = function setActiveTab(index) {
       if (index !== null) {
         (0, _jquery)(this.element).tabs("option", "active", index);
+        this.activeTab(index);
+
+        _events.trigger("contentType:redrawAfter", {
+          id: this.parent.id,
+          contentType: this
+        });
       }
     };
     /**
@@ -186,25 +201,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       this.focusedTab(index);
-
-      if (this.ready && index !== null) {
-        if (this.element.getElementsByClassName("tab-name")[index]) {
-          this.element.getElementsByClassName("tab-name")[index].focus();
-        }
-
-        _underscore.defer(function () {
-          var $focusedElement = (0, _jquery)(":focus");
-
-          if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
-            // Selection alternative to execCommand to workaround issues with tinymce
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents($focusedElement.get(0));
-            selection.removeAllRanges();
-            selection.addRange(range);
-          }
-        });
-      }
     };
     /**
      * Return an array of options
@@ -257,28 +253,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onContainerRender = function onContainerRender(element) {
+      this.element = element;
       this.onContainerRenderDeferred.resolve(element);
-    };
-    /**
-     * Handle clicking on a tab
-     *
-     * @param {number} index
-     * @param {Event} event
-     */
-
-
-    _proto.onTabClick = function onTabClick(index, event) {
-      // The options menu is within the tab, so don't change the focus if we click an item within
-      if ((0, _jquery)(event.target).parents(".pagebuilder-options").length > 0) {
-        return;
-      }
-
-      this.setFocusedTab(index);
-
-      _events.trigger("contentType:redrawAfter", {
-        id: this.parent.id,
-        contentType: this
-      });
     };
     /**
      * Copy over border styles to the tab headers
@@ -370,7 +346,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            * @returns {JQuery}
            */
           element: function element(item) {
-            var placeholder = item.clone().show().css({
+            var placeholder = item.clone().css({
               display: "inline-block",
               opacity: "0.3"
             }).removeClass("focused").addClass("sortable-placeholder");
@@ -467,7 +443,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this4 = this;
 
       if (activeTabIndex === void 0) {
-        activeTabIndex = this.previewData.default_active() || 0;
+        activeTabIndex = this.activeTab() || this.previewData.default_active() || 0;
       }
 
       this.ready = false;
@@ -508,7 +484,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     };
 
     return Preview;
-  }(_previewCollection); // Resolve issue with jQuery UI tabs content typeing events on content editable areas
+  }(_previewCollection); // Resolve issue with jQuery UI tabs content typing events on content editable areas
 
 
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;

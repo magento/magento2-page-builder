@@ -58,11 +58,11 @@ To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_nam
 define([
 "Magento_PageBuilder/js/config",
 "Magento_PageBuilder/js/content-type/preview",
-"Magento_PageBuilder/js/content-type/wysiwyg/factory"
+"Magento_PageBuilder/js/wysiwyg/factory"
 ], function (_config, _preview, _factory) { ...
 ```
 
-If you are creating a custom content type, however, use an existing content type that already implements a WYSIWYG as your template. `Magento_PageBuilder/js/content-type/text` can be used as a reference for injecting the required inline text editor dependency into your own custom content type via `Magento_PageBuilder/js/content-type/wysiwyg/factory`:
+If you are creating a custom content type, however, use an existing content type that already implements a WYSIWYG as your template. `Magento_PageBuilder/js/content-type/text` can be used as a reference for injecting the required inline text editor dependency into your own custom content type via `Magento_PageBuilder/js/wysiwyg/factory`:
 
 ``` js
 initWysiwyg: function (element) {
@@ -120,7 +120,7 @@ To extend the inline text editor component:
         <arguments>
             <argument name="editors" xsi:type="array">
                 <item name="mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" xsi:type="array">
-                    <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/wysiwyg/tinymce4</item>
+                    <item name="component" xsi:type="string">Magento_PageBuilder/js/wysiwyg/tinymce4</item>
                     <item name="component_initializers" xsi:type="array">
                         <item name="text" xsi:type="string">Magento_PageBuilder/js/content-type/text/wysiwyg/tinymce4/component-initializer</item>
                     </item>

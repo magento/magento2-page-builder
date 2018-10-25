@@ -56,7 +56,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
         (0, _jquery)($slider.parent()).slick("slickPause");
       }
 
-      $notActiveSlides.hide();
+      $notActiveSlides.css("display", "none");
       this.sliderTransform = sliderContent.style.transform;
       sliderContent.style.transform = "";
       $slider.css("overflow", "visible");
@@ -82,7 +82,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
 
       $slider.css("overflow", "hidden");
       sliderContent.style.transform = this.sliderTransform;
-      $notActiveSlides.show();
+      $notActiveSlides.css("display", "block");
       (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", true);
 
       if (this.autoplay) {

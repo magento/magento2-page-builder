@@ -928,12 +928,12 @@
         <seeElement selector="{{ColumnOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied2"/>
         <seeElement selector="{{ColumnOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied2"/>
     </test>
-    <test name="ColumnValidateAdvancedConfigurationDefaultValues">
+    <test name="ColumnValidateDefaultAndUpdateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Column"/>
-            <title value="Validate Advanced Configuration Default Values"/>
-            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Column."/>
+            <title value="Validate Default and Update Advanced Configuration Default Values"/>
+            <description value="Validate the default values and updating values for every attribute in the Advanced Configuration form and on Stage for Column."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MC-2746"/>
@@ -1023,18 +1023,37 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAignmentLeft">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
-
         <!-- Save form data -->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible time="2" selector="{{ColumnOnBackend.column}}" stepKey="waitForBackEndColumn"/>
+        <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.border('1', '1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeColumnBorderStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderColor('1', '1', PageBuilderAdvancedBorderColorProperty_ffffff.rgb)}}" stepKey="seeColumnBorderColorOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderWidth('1', '1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderWidthOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.borderRadius('1', '1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStage"/>
+        <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.alignment('1', '1', PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="seetextAlignStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.border('1', '1', PageBuilderAdvancedBorderPropertyDotted.value)}}" stepKey="seeColumnBorderStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderColor('1', '1', PageBuilderAdvancedBorderColorProperty_ffffff.rgb)}}" stepKey="seeColumnBorderColorOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderWidth('1', '1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeColumnBorderWidthOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.borderRadius('1', '1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeColumnBorderRadiusStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.margins('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnMarginStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.padding('1', '1', PageBuilderAdvancedMarginsAndPaddingProperty.value)}}" stepKey="seeColumnPaddingStyleOnStageAfterSave"/>
+        <seeElement selector="{{ColumnOnBackend.cssClasses('1', '1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeColumnClassOnStageAfterSave"/>
         <!-- Validate form data has been persisted in the advanced section -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
@@ -1055,12 +1074,11 @@
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInColumn"/>
-
         <!-- Validate the correct styles have been applied to the front-end -->
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <waitForElementVisible time="2" selector="{{ColumnOnFrontend.columnDisplay}}" stepKey="waitForFrontEndColumn"/>
-        <seeElement selector="{{ColumnOnFrontend.columnTextAlign}}" stepKey="seeColumnTextAlignStyle"/>
+        <seeElement selector="{{ColumnOnFrontend.columnTextAlign}}" stepKey="seetextAlignStyle"/>
         <seeElement selector="{{ColumnOnFrontend.columnBorder}}" stepKey="seeColumnBorderStyle"/>
         <seeElement selector="{{ColumnOnFrontend.columnBorderRadius}}" stepKey="seeColumnBorderRadiusStyle"/>
         <seeElement selector="{{ColumnOnFrontend.columnMargin}}" stepKey="seeColumnMarginStyle"/>
@@ -1341,11 +1359,13 @@
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
         <comment userInput="Resize first column to 4/12" stepKey="commentResizeFirstColumn"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Resize second column to 4/12 -->
         <comment userInput="Grab grid guide width for 4/12 for second column" stepKey="commentRetrieveGuideWidthForSecond"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
         <comment userInput="Resize second column to 4/12" stepKey="commentResizeSecondColumn"/>
         <dragAndDrop selector1="{{ColumnOnBackend.columnX('2')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
+        <waitForPageLoad stepKey="waitForDragAndDrop2"/>
         <!-- Check all columns have the same width -->
         <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
         <executeJS function="return document.querySelector('{{ColumnOnBackend.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>

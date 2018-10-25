@@ -10,57 +10,45 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="base" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="overlay" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='overlay']" parameterized="true"/>
-        <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//a[@href='{{arg2}}']" parameterized="true"/>
-        <element name="mobileWysiwygLinkUrl" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//a[@href='{{arg2}}']" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="wysiwygLinkUrl" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//a[@href='{{arg2}}']" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="posterMinimumHeight" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collageMinimumHeight" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="mobileCollageMinimumHeight" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="collageMinimumHeight" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
         <!-- Background Configuration -->
-        <element name="backgroundPosition" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundSize" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundRepeat" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundAttachment" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBackgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="noBackgroundImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'background-image:'))]" parameterized="true"/>
-        <element name="backgroundMobileImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="mobileBackgroundPosition" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
-        <element name="mobileBackgroundSize" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
-        <element name="mobileBackgroundRepeat" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
-        <element name="mobileBackgroundAttachment" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
-        <element name="mobileBackgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
         <!-- Content Configuration -->
-        <element name="messageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
-        <element name="noMessageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
-        <element name="messageContentTextArea" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
+        <element name="messageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="noMessageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
+        <element name="messageContentTextArea" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
+        <element name="messageContentTextAreaTextWidget" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='content']//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
+        <element name="messageContentText" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='content']//div[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
-        <element name="linkUrl" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]/a[contains(@href,'{{arg2}}')]" parameterized="true"/>
-        <element name="openInNewTab" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]/a[contains(@target,'_blank')]" parameterized="true"/>
-        <element name="button" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//button" parameterized="true"/>
-        <element name="mobileButton" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//button" parameterized="true"/>
+        <element name="linkUrl" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]/*[@data-element='link'][contains(@data-href,'{{arg2}}')]" parameterized="true"/>
+        <element name="openInNewTab" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]/*[@data-element='link'][contains(@data-target,'_blank')]" parameterized="true"/>
+        <element name="button" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//button" parameterized="true"/>
         <element name="showButton" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][@data-show-button='{{arg2}}']" parameterized="true"/>
-        <element name="buttonType" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="buttonText" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//button[.='{{arg2}}']" parameterized="true"/>
+        <element name="buttonType" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonText" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//button[.='{{arg2}}']" parameterized="true"/>
         <element name="showOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
-        <element name="transparentOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
-        <element name="mobileMessageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
-        <element name="mobileNoMessageContent" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
-        <element name="mobileButtonType" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="mobileButtonText" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//button[.='{{arg2}}']" parameterized="true"/>
-        <element name="mobileOverlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
-        <element name="mobileTransparentOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
+        <element name="overlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="transparentOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="alignmentMobile" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignmentMobile" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="border" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
         <element name="borderColor" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBorderColor" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
@@ -70,44 +58,51 @@
         <element name="noCssClasses" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="posterPadding" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collagePadding" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'padding: {{arg2}};')]" parameterized="true"/>
-        <element name="mobileCollagePadding" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='mobile_image'][contains(@style,'padding: {{arg2}};')]" parameterized="true"/>
+        <element name="collagePadding" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="BannerOnBackend">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="overlay" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-banner')])[{{arg1}}]//div[@data-element='overlay']" parameterized="true"/>
+        <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
         <element name="emptyBanner" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]//div[contains(@class,'placeholder-text') and .='Edit Banner Text']" parameterized="true"/>
-        <element name="editableButtonOnStage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]//button//span[@contenteditable='true']" parameterized="true"/>
+        <element name="editableButtonOnStage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]//a//span[@contenteditable='true']" parameterized="true"/>
         <element name="wysiwygLinkUrl" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]//a[@href='{{arg2}}']" parameterized="true"/>
         <element name="imageOnStage" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]//img[contains(@src,'{{var1}}')]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]/div[contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="uploadImageInput" type="button" selector="//div[contains(@class,'pagebuilder-image-uploader-container')]//input[@name='background_image']"/>
+        <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
+        <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
+        <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="posterMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collageMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
+        <element name="collageMinimumHeight" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'min-height: {{arg2}}px;')]" parameterized="true"/>
         <!-- Background Configuration -->
-        <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundSize" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundRepeat" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundAttachment" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
-        <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'background-color:'))]" parameterized="true"/>
-        <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
-        <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'background-image:'))]" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="messageContent" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='content'][.='Edit Banner Text'][not(*)]" parameterized="true"/>
-        <element name="button" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//button[@data-element='button']" parameterized="true"/>
+        <element name="messageContentText" type="text" selector="(//div[contains(@class,'pagebuilder-banner')])[{{arg1}}]/div//div[contains(@class, 'pagebuilder-banner-text-content')]//*[contains(.,'{{arg2}}') and contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
+        <element name="button" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//a[@data-element='button']" parameterized="true"/>
         <element name="showButton" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][@data-show-button='{{arg2}}']" parameterized="true"/>
-        <element name="buttonType" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="buttonText" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//button//span[.='{{arg2}}']" parameterized="true"/>
+        <element name="buttonType" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="buttonText" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//a//span[.='{{arg2}}']" parameterized="true"/>
         <element name="showOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
         <element name="overlayColorAndTransparency" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
         <element name="transparentOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='desktop_image'][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='wrapper'][not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
         <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
@@ -117,7 +112,7 @@
         <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="posterPadding" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-banner')])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
-        <element name="collagePadding" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-banner')])[{{arg1}}]//div[@data-element='desktop_image'][contains(@style,'padding: {{arg2}};')]" parameterized="true"/>
+        <element name="collagePadding" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-banner')])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="BannerOnConfigurationPanel">
         <element name="textArea" type="text" selector="#pagebuilder_banner_form_message"/>

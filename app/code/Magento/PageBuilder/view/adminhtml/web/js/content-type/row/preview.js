@@ -38,7 +38,12 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
         try {
+          // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
+          var style = _this.element.getAttribute("data-jarallax-original-styles") || _this.element.getAttribute("style");
+
           jarallax(_this.element, "destroy");
+
+          _this.element.setAttribute("style", style);
         } catch (e) {// Failure of destroying is acceptable
         }
 
@@ -46,10 +51,10 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
-              imgPosition: _this.data.main.style().backgroundPosition || "50% 50%",
-              imgRepeat: _this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-              imgSize: _this.data.main.style().backgroundSize || "cover",
-              speed: _this.data.main.attributes()["data-parallax-speed"] || 0.5
+              imgPosition: _this.parent.dataStore.get("background_position") || "50% 50%",
+              imgRepeat: _this.parent.dataStore.get("background_repeat"),
+              imgSize: _this.parent.dataStore.get("background_size") || "cover",
+              speed: Number.parseFloat(_this.parent.dataStore.get("parallax_speed")) || 0.5
             });
             jarallax(_this.element, "onResize");
           });

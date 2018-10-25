@@ -8,13 +8,13 @@
 <div attr="data.main.attributes"
      ko-style="data.main.style"
      css="data.main.css">
-    <a attr="data.link.attributes"
+    <div attr="data.link.attributes"
        ko-style="data.link.style"
        css="data.link.css">
-        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden"
-             css="data.desktop_image.css"
-             attr="data.desktop_image.attributes"
-             ko-style="Object.assign({}, data.desktop_image.style(), {paddingLeft: 'calc(25% + ' + data.desktop_image.style().paddingLeft + ')', paddingRight: 'calc(25% + ' + data.desktop_image.style().paddingRight + ')'})">
+        <div class="pagebuilder-slide-wrapper"
+             css="data.wrapper.css"
+             attr="data.wrapper.attributes"
+             ko-style="data.wrapper.style">
             <div class="pagebuilder-overlay"
                  attr="data.overlay.attributes"
                  ko-style="data.overlay.style"
@@ -36,30 +36,5 @@
                 </div>
             </div>
         </div>
-        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only"
-             ko-style="data.mobile_image.style"
-             attr="data.mobile_image.attributes"
-             css="data.mobile_image.css">
-            <div class="pagebuilder-overlay "
-                 attr="data.overlay.attributes"
-                 ko-style="data.overlay.style"
-                 css="data.overlay.css">
-                <div class="pagebuilder-collage-content">
-                    <div attr="data.content.attributes"
-                         ko-style="data.content.style"
-                         css="data.content.css"
-                         html="data.content.html">
-                    </div>
-                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
-                            type="button"
-                            class="pagebuilder-slide-button"
-                            attr="data.button.attributes"
-                            ko-style="data.button.style"
-                            css="data.button.css"
-                            html="data.button.html">
-                    </button>
-                </div>
-            </div>
-        </div>
-    </a>
+    </div>
 </div>

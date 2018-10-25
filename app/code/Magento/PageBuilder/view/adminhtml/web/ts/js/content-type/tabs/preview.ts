@@ -36,6 +36,7 @@ import PreviewCollection from "../preview-collection";
  */
 export default class Preview extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable(null);
+    public activeTab: KnockoutObservable<number> = ko.observable(0);
     private disableInteracting: boolean;
     private element: Element;
     private ready: boolean;
@@ -128,6 +129,11 @@ export default class Preview extends PreviewCollection {
         this.focusedTab.subscribe(_.debounce((index: number) => {
             if (index !== null) {
                 events.trigger("stage:interactionStart");
+                delayUntil(
+                    () => $($(this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").focus(),
+                    () => $($(this.wrapperElement).find(".tab-header")[index]).find("[contenteditable]").length > 0,
+                    10,
+                );
             } else {
                 // We have to force the stop as the event firing is inconsistent for certain operations
                 events.trigger("stage:interactionStop", {force : true});
@@ -143,7 +149,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} activeIndex
      */
     public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
-        if (this.ready) {
+        try {
             $(this.element).tabs("refresh");
             if (focusIndex >= 0) {
                 this.setFocusedTab(focusIndex, forceFocus);
@@ -159,6 +165,8 @@ export default class Preview extends PreviewCollection {
                     sortableElement.sortable("enable");
                 }
             }
+        } catch (e) {
+            this.buildTabs();
         }
     }
 
@@ -170,6 +178,13 @@ export default class Preview extends PreviewCollection {
     public setActiveTab(index: number) {
         if (index !== null) {
             $(this.element).tabs("option", "active", index);
+
+            this.activeTab(index);
+
+            events.trigger("contentType:redrawAfter", {
+                id: this.parent.id,
+                contentType: this,
+            });
         }
     }
 
@@ -185,25 +200,6 @@ export default class Preview extends PreviewCollection {
             this.focusedTab(null);
         }
         this.focusedTab(index);
-
-        if (this.ready && index !== null) {
-            if (this.element.getElementsByClassName("tab-name")[index]) {
-                (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
-            }
-            _.defer(() => {
-                const $focusedElement = $(":focus");
-
-                if ($focusedElement.hasClass("tab-name") && $focusedElement.prop("contenteditable")) {
-                    // Selection alternative to execCommand to workaround issues with tinymce
-                    const selection = window.getSelection();
-                    const range = document.createRange();
-
-                    range.selectNodeContents($focusedElement.get(0));
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                }
-            });
-        }
     }
 
     /**
@@ -255,27 +251,8 @@ export default class Preview extends PreviewCollection {
      * @param {Element} element
      */
     public onContainerRender(element: Element) {
+        this.element = element;
         this.onContainerRenderDeferred.resolve(element);
-    }
-
-    /**
-     * Handle clicking on a tab
-     *
-     * @param {number} index
-     * @param {Event} event
-     */
-    public onTabClick(index: number, event: Event) {
-        // The options menu is within the tab, so don't change the focus if we click an item within
-        if ($(event.target).parents(".pagebuilder-options").length > 0) {
-            return;
-        }
-
-        this.setFocusedTab(index);
-
-        events.trigger("contentType:redrawAfter", {
-            id: this.parent.id,
-            contentType: this,
-        });
     }
 
     /**
@@ -362,7 +339,6 @@ export default class Preview extends PreviewCollection {
                 element(item: JQuery) {
                     const placeholder = item
                         .clone()
-                        .show()
                         .css({
                             display: "inline-block",
                             opacity: "0.3",
@@ -452,7 +428,7 @@ export default class Preview extends PreviewCollection {
      *
      * @type {(() => void) & _.Cancelable}
      */
-    private buildTabs(activeTabIndex = this.previewData.default_active() as number || 0) {
+    private buildTabs(activeTabIndex = (this.activeTab() || this.previewData.default_active()) as number || 0) {
         this.ready = false;
         if (this.element && this.element.children.length > 0) {
             const focusedTab = this.focusedTab();
@@ -487,7 +463,7 @@ export default class Preview extends PreviewCollection {
     }
 }
 
-// Resolve issue with jQuery UI tabs content typeing events on content editable areas
+// Resolve issue with jQuery UI tabs content typing events on content editable areas
 const originalTabKeyDown = $.ui.tabs.prototype._tabKeydown;
 $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     // If the target is content editable don't handle any events

@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_events, _preview, _uploader) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/content-type/preview"], function (_events, _uploader, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,16 +24,14 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
     var _proto = Preview.prototype;
 
     /**
-     * Uploader instance
-     */
-
-    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
      */
     _proto.getUploader = function getUploader() {
-      return this.uploader;
+      var dataStore = this.parent.dataStore.get();
+      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
     /**
      * @inheritDoc
@@ -52,14 +50,6 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/pr
         var imageObject = files ? files[0] : {};
 
         _events.trigger("image:" + _this.parent.id + ":assignAfter", imageObject);
-      });
-
-      _events.on(this.config.name + ":mountAfter", function () {
-        var dataStore = _this.parent.dataStore.get();
-
-        var initialImageValue = dataStore[_this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-        _this.uploader = new _uploader("imageuploader_" + _this.parent.id, _this.config.additional_data.uploaderConfig, _this.parent.id, _this.parent.dataStore, initialImageValue);
       });
     };
 

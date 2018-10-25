@@ -32,14 +32,14 @@ define([], function () {
     _proto.read = function read(element) {
       var _ref;
 
-      var href = element.getAttribute("href");
+      var href = element.getAttribute("data-href") || element.getAttribute("href");
       var attributeLinkType = element.getAttribute("data-link-type");
 
       if (typeof href === "string" && attributeLinkType !== "default") {
         href = this.getIdFromWidgetSyntax(href, this.regexpByLinkType[attributeLinkType]);
       }
 
-      return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = element.getAttribute("target") === "_blank", _ref.type = attributeLinkType, _ref;
+      return _ref = {}, _ref[attributeLinkType] = href, _ref.setting = (element.getAttribute("data-target") || element.getAttribute("target")) === "_blank", _ref.type = attributeLinkType, _ref;
     };
     /**
      * Returns link value from widget string

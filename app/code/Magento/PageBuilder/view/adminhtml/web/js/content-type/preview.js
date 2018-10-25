@@ -3,7 +3,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _hideShowOption, _option, _titleOption, _containerAnimation, _sortable2, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _hideShowOption, _option, _titleOption, _registry, _sortable2, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -155,7 +155,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onMouseOver = function onMouseOver(context, event) {
-      if (this.mouseover) {
+      if (this.mouseover || (0, _registry.getDraggedContentTypeConfig)()) {
         return;
       } // Ensure no other options panel is displayed
 
@@ -185,6 +185,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this2 = this;
 
       this.mouseover = false;
+
+      if ((0, _registry.getDraggedContentTypeConfig)()) {
+        return;
+      }
 
       _underscore.delay(function () {
         if (!_this2.mouseover && _this2.mouseoverContext === context) {
@@ -346,13 +350,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         };
 
         if (_this4.wrapperElement) {
-          var parentContainerElement = (0, _jquery)(_this4.wrapperElement).parents(".type-container");
-          var containerLocked = _this4.parent.parent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Fade out the content type
-
-          (0, _jquery)(_this4.wrapperElement).fadeOut(_containerAnimation.animationTime / 2, function () {
-            dispatchRemoveEvent(); // Prepare the event handler to animate the container height on render
-
-            (0, _containerAnimation.animateContainerHeight)(containerLocked, parentContainerElement);
+          // Fade out the content type
+          (0, _jquery)(_this4.wrapperElement).fadeOut(350 / 2, function () {
+            dispatchRemoveEvent();
           });
         } else {
           dispatchRemoveEvent();

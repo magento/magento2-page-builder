@@ -24,7 +24,7 @@ import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
-import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
+import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
@@ -178,7 +178,7 @@ export default class Preview {
      * @param {Event} event
      */
     public onMouseOver(context: Preview, event: Event): void {
-        if (this.mouseover) {
+        if (this.mouseover || getDraggedContentTypeConfig()) {
             return;
         }
 
@@ -207,6 +207,11 @@ export default class Preview {
      */
     public onMouseOut(context: Preview, event: Event) {
         this.mouseover = false;
+
+        if (getDraggedContentTypeConfig()) {
+            return;
+        }
+
         _.delay(() => {
             if (!this.mouseover && this.mouseoverContext === context) {
                 const currentTarget = event.currentTarget;
@@ -347,16 +352,9 @@ export default class Preview {
             };
 
             if (this.wrapperElement) {
-                const parentContainerElement = $(this.wrapperElement).parents(".type-container");
-                const containerLocked =
-                    (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
-                    lockContainerHeight(parentContainerElement);
-
                 // Fade out the content type
-                $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+                $(this.wrapperElement).fadeOut(350 / 2, () => {
                     dispatchRemoveEvent();
-                    // Prepare the event handler to animate the container height on render
-                    animateContainerHeight(containerLocked, parentContainerElement);
                 });
             } else {
                 dispatchRemoveEvent();

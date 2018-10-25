@@ -32,6 +32,12 @@ class Driver implements RendererInterface
      */
     private $serializer;
 
+    /**
+     * Driver constructor.
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     * @param Json $serializer
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader,
@@ -43,7 +49,7 @@ class Driver implements RendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
@@ -80,33 +86,26 @@ class Driver implements RendererInterface
         $rootElementAttributes['style'] .= $margin;
         $linkAttributes = [
             'data-element' => 'link',
-            'href' => $eavData['link_url'] ?? '',
-            'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
+            'data-href' => $eavData['link_url'] ?? '',
+            'data-target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
+
         $imageAttributes = [
-            'data-element' => 'desktop_image',
-            'style' => 'background-image: url('
-                . "'{{media url=wysiwyg"
+            'data-element' => 'wrapper',
+            'data-background-images' => '{\&quot;'
+                . 'desktop_image\&quot;:\&quot;'
+                . '{{media url=wysiwyg'
                 . $eavData['image']
-                . "}}'); "
-                . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
-                . 'background-attachment: scroll;'
+                . '}}\&quot;,\&quot;'
+                . 'mobile_image\&quot;:\&quot;'
+                . '{{media url=wysiwyg'
+                . $eavData['image']
+                . '}}\&quot;}',
+            'style' => 'min-height: 300px; background-size: auto; '
+                . 'background-repeat: no-repeat; background-attachment: scroll;'
                 . $textAlign,
-            'class' => 'pagebuilder-banner-wrapper pagebuilder-mobile-hidden'
+            'class' => 'pagebuilder-banner-wrapper'
         ];
-        $mobileImageAttributes = [
-            'data-element' => 'mobile_image',
-            'style' => 'background-image: url('
-                . "'{{media url=wysiwyg"
-                . (isset($eavData['image']) ? $eavData['image'] : $eavData['mobile_image'])
-                . "}}'); "
-                . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
-                . 'background-attachment: scroll;'
-                . $textAlign
-        ];
-        $mobileImageElementHtml = '<div'
-            . $this->printAttributes($mobileImageAttributes)
-            . ' class="pagebuilder-banner-wrapper pagebuilder-mobile-only">';
 
         $imageElementHtml = '<div' . $this->printAttributes($imageAttributes) . '>';
         $overlayElementHtml = '<div '
@@ -123,7 +122,7 @@ class Driver implements RendererInterface
 
         return '<div'
             . $this->printAttributes($rootElementAttributes)
-            . '><a'
+            . '><div'
             . $this->printAttributes($linkAttributes)
             . '>'
             . $imageElementHtml
@@ -131,11 +130,10 @@ class Driver implements RendererInterface
             . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
             . '</div></div></div>'
-            . $mobileImageElementHtml
             . $overlayElementHtml
             . '<div class="pagebuilder-poster-content"><div data-element="content"></div>'
             . $buttonHtml
-            . '</div></div></div></a></div>';
+            . '</div></div></div></div></div>';
     }
 
     /**

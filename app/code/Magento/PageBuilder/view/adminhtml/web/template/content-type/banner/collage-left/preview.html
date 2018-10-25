@@ -7,7 +7,11 @@
 
 <div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <div class="pagebuilder-banner-wrapper" attr="data.desktop_image.attributes" ko-style="Object.assign({}, data.desktop_image.style(), {paddingRight: 'calc(50% + ' + data.desktop_image.style().paddingRight + ')'})" css="data.desktop_image.css" event="{ mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }">
+    <div class="pagebuilder-banner-wrapper"
+         attr="data.wrapper.attributes"
+         ko-style="data.wrapper.style"
+         css="data.wrapper.css"
+         event="{ mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper, mousedown: activateEditor }">
         <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
             <scope args="getUploader().getUiComponent()">
                 <render />
@@ -20,14 +24,14 @@
                     <div if="isWysiwygSupported()" class="placeholder-text" ifnot="data.content.html" translate="'Edit Banner Text'"></div>
                     <textarea ifnot="isWysiwygSupported()" class="inline-wysiwyg-textarea" afterRender="initTextarea" event="{keyup: onTextareaKeyUp, focus: onTextareaFocus, blur: onTextareaBlur, mousedown: stopEvent}" attr="placeholder: $t('Edit Banner Text')"/>
                 </div>
-                <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                <a if="data.main.attributes()['data-show-button'] !== 'never'"
                    type="button"
                    class="pagebuilder-banner-button"
                    css="data.button.css"
                    attr="data.button.attributes"
                    ko-style="data.button.style">
                     <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>

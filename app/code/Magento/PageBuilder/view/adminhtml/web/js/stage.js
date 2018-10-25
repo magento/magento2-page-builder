@@ -3,7 +3,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/lib/view/utils/dom-observer", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _domObserver, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,9 +14,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     "use strict";
 
     /**
+     * Debounce the applyBindings call by 500ms to stop duplicate calls
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+
+    /**
      * @param {PageBuilderInterface} parent
      */
     function Stage(parent) {
+      var _this = this;
+
       this.config = {
         name: "stage",
         type: "restricted-container",
@@ -33,11 +41,18 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       this.template = "Magento_PageBuilder/content-type/preview";
       this.render = new _render();
       this.collection = new _collection();
+      this.applyBindingsDebounce = _underscore.debounce(function () {
+        _this.render.applyBindings(_this.children).then(function (renderedOutput) {
+          return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
+            value: renderedOutput
+          });
+        });
+      }, 500);
       this.parent = parent;
       this.id = parent.id;
-      this.initListeners();
-      Promise.all([(0, _stageBuilder)(this, parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
-      (0, _matrix.generateAllowedParents)();
+      (0, _matrix.generateAllowedParents)(); // Wait for the stage to be built alongside the stage being rendered
+
+      Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
     }
     /**
      * Get template.
@@ -56,13 +71,23 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
      */
 
 
-    _proto.ready = function ready() {
+    _proto.ready = function ready(_ref) {
+      var buildResults = _ref[0],
+          canvasElement = _ref[1];
+
+      // Disable the dom observer from running on our canvas
+      _domObserver.disableNode(canvasElement);
+
       _events.trigger("stage:" + this.id + ":readyAfter", {
         stage: this
       });
 
-      this.collection.getChildren().valueHasMutated();
       this.loading(false);
+      this.initListeners(); // Ensure we complete an initial save of the data within the stage once we're ready
+
+      _events.trigger("stage:updateAfter", {
+        stageId: this.id
+      });
     };
     /**
      * Remove a child from the observable array
@@ -139,37 +164,31 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
 
     _proto.initListeners = function initListeners() {
-      var _this = this;
+      var _this2 = this;
 
       this.collection.getChildren().subscribe(function () {
         return _events.trigger("stage:updateAfter", {
-          stageId: _this.id
+          stageId: _this2.id
         });
       }); // ContentType being removed from container
 
       _events.on("contentType:removeAfter", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onContentTypeRemoved(args);
+        if (args.stageId === _this2.id) {
+          _this2.onContentTypeRemoved(args);
         }
       }); // Any store state changes trigger a stage update event
 
 
       this.dataStore.subscribe(function () {
         return _events.trigger("stage:updateAfter", {
-          stageId: _this.id
+          stageId: _this2.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
       _events.on("stage:updateAfter", function (args) {
-        if (args.stageId === _this.id) {
-          _underscore.debounce(function () {
-            _this.render.applyBindings(_this.children).then(function (renderedOutput) {
-              return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
-                value: renderedOutput
-              });
-            });
-          }, 500).call(_this);
+        if (args.stageId === _this2.id) {
+          _this2.applyBindingsDebounce();
         }
       });
 
@@ -178,14 +197,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       _events.on("stage:interactionStart", function () {
         ++interactionLevel;
 
-        _this.interacting(true);
+        _this2.interacting(true);
       });
 
       _events.on("stage:interactionStop", function (args) {
         var forced = _underscore.isObject(args) && args.force === true;
 
         if (--interactionLevel === 0 || forced) {
-          _this.interacting(false);
+          _this2.interacting(false);
 
           if (forced) {
             interactionLevel = 0;
@@ -194,11 +213,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       });
 
       _events.on("stage:childFocusStart", function () {
-        return _this.focusChild(true);
+        return _this2.focusChild(true);
       });
 
       _events.on("stage:childFocusStop", function () {
-        return _this.focusChild(false);
+        return _this2.focusChild(false);
       });
     };
     /**
