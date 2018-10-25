@@ -15,6 +15,14 @@
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" before="amOnLogoutPage"/>
         </after>
     </test>
+     <test name="AdminAddImageToCMSPageTinyMCE3Test">
+         <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" before="loginAsAdmin"/>
+         </before>
+         <after>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="logout"/>
+         </after>
+     </test>
     <test name="AdminCreateDuplicatedCmsPageTest">
         <before>
             <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="loginGetFromGeneralFile"/>
