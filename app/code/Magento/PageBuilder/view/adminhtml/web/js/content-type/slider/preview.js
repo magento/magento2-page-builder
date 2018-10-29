@@ -445,6 +445,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }, this.buildSlickConfig())); // Update our KO pointer to the active slide on change
 
         (0, _jquery)(this.element).on("beforeChange", function (event, slick, currentSlide, nextSlide) {
+          (0, _jquery)(_this5.element).css("pointer-events", "none");
+
           _this5.setActiveSlide(nextSlide);
         }).on("afterChange", function () {
           if (!_this5.contentTypeHeightReset) {
@@ -454,6 +456,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             });
             _this5.contentTypeHeightReset = null;
           }
+
+          (0, _jquery)(_this5.element).css("pointer-events", "");
         });
       }
     };

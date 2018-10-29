@@ -137,8 +137,12 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         element.focus();
       };
 
+      if (!this.slideChanged) {
+        event.preventDefault();
+        return false;
+      }
+
       if (this.element && !this.wysiwyg) {
-        var selection = this.saveSelection();
         this.element.removeAttribute("contenteditable");
 
         _underscore.defer(function () {
@@ -146,7 +150,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
             return (0, _delayUntil)(function () {
               activate();
 
-              _this2.restoreSelection(_this2.element, selection);
+              _this2.restoreSelection(_this2.element, _this2.saveSelection());
             }, function () {
               return _this2.element.classList.contains("mce-edit-focus");
             }, 10);
