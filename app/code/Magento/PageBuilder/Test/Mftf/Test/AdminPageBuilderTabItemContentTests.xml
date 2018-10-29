@@ -223,14 +223,14 @@
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <seeElement selector="{{ImageOnStage.uploadImageBtn}}" stepKey="seeUploadImageBtn" />
-        <seeElement selector="{{ImageOnStage.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn" />
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.uploadImageBtn}}" stepKey="seeUploadImageBtn" />
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn" />
         <!-- Attach image A to PageBuilder stage-->
-        <attachFile userInput="{{PageBuilderImageProperty_StageJPG.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageSource('magentoStage')}}" stepKey="waitForImageSource"/>
-        <seeElement selector="{{ImageOnStage.imageSource('magentoStage')}}" stepKey="seeImageSourceOnStage" />
-        <seeElement selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImageOnStage"/>
+        <attachFile userInput="{{PageBuilderImageProperty_StageJPG.value}}" selector="{{ImageOnStageWithoutImageUploaded.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imagePreview}}" stepKey="waitForImagePreview"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSource('magentoStage')}}" stepKey="waitForImageSource"/>
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSource('magentoStage')}}" stepKey="seeImageSourceOnStage" />
+        <seeElement selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Image in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
