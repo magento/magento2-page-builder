@@ -1,65 +1,5 @@
 # Master format
 
-<!--{% comment %}-->
-## Navigation
-
-1. [Introduction]
-2. [Installation guide]
-3. [Contribution guide]
-4. [Developer documentation]
-    1. [Architecture overview]
-    1. [BlueFoot to PageBuilder data migration]
-    1. [Third-party content type migration]
-    1. [Iconography]
-    1. [Add image uploader to content type]
-    1. [Module integration]
-    1. [Additional data configuration]
-    1. [Content type configuration]
-    1. [How to add a new content type]
-    1. [Events]
-    1. [Bindings]
-    1. **Master format**
-    1. [Visual select] 
-    1. [Reuse product conditions in content types]
-    1. [Store component master format as widget directive]
-    1. [Use the block chooser UI component]
-    1. [Use the inline text editing component]
-    1. [Render a backend content type preview]
-    1. [Custom Toolbar]
-    1. [Full width page layouts]
-    1. [Add custom logic to content types]
-5. [Roadmap and known issues]
-6. [How to create custom PageBuilder content type container]
-
-[Introduction]: introduction.md
-[Contribution guide]: ../CONTRIBUTING.md
-[Installation guide]: install.md
-[Developer documentation]: developer-documentation.md
-[Architecture overview]: architecture-overview.md
-[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
-[Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
-[Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
-[Content type configuration]: content-type-configuration.md
-[How to add a new content type]: how-to-add-new-content-type.md
-[Events]: events.md
-[Bindings]: bindings.md
-[Master format]: master-format.md
-[Visual select]: visual-select.md
-[Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Render a backend content type preview]: content-type-preview.md
-[Custom Toolbar]: toolbar.md
-[Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
-<!--{% endcomment %}-->
-
 <!-- {% raw %} -->
 
 PageBuilder uses XHTML with inline styles and data attributes as the master format for storage.
@@ -70,7 +10,8 @@ PageBuilder uses XHTML with inline styles and data attributes as the master form
 ## Row
 
 Contained:
-```
+
+```html
 <div class="row-contained-wrapper" data-element="wrapper" data-role="row" data-appearance="contained">
     <div data-background-images="{}" style="..."></div>
 </div>
@@ -85,26 +26,30 @@ Contained:
 ### main element
 
 Attributes
+
 1. data-enable-parallax [1, 0]
 2. data-parallax-speed [0-1]
 3. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`
 4. class
 
 Full Width:
-```
+
+```html
 <div data-element="main" data-role="row" data-appearance="contained" data-background-images="{}" style="...">
     <div data-element="inner" class="row-full-width-inner"></div>
 </div>
 ```
 
 Full Bleed:
-```
+
+```html
 <div data-element="main" data-role="row" data-appearance="full-bleed" data-background-images="{}" style="..."></div>
 ```
 
 ### main element
 
 Attributes
+
 1. data-element [main]
 2. data-role [row]
 3. data-appearance [full-width, full-bleed]
@@ -114,22 +59,23 @@ Attributes
 7. class
 
 Inline styles
+
 1. background-color
-3. background-position
-4. background-size
-5. background-repeat
-6. background-attachment
-7. text-align
-8. border-style
-9. border-color
-10. border-width
-11. border-radius
-12. margin
-13. padding
-14. height
-15. justify-content
-16. display
-17. flex-direction
+2. background-position
+3. background-size
+4. background-repeat
+5. background-attachment
+6. text-align
+7. border-style
+8. border-color
+9. border-width
+10. border-radius
+11. margin
+12. padding
+13. height
+14. justify-content
+15. display
+16. flex-direction
 
 ## Column group
 
@@ -138,6 +84,7 @@ Inline styles
 ```
 
 Attributes
+
 1. data-element [main]
 2. data-role [column-group]
 3. data-appearance [default]

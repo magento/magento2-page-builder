@@ -2491,4 +2491,36 @@
             <expectedResult type="variable">currentUrl</expectedResult>
         </assertEquals>
     </test>
+    <test name="TextInlineWysiwygUploadImage" extends="SlideItemInlineWysiwygUploadImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Can Add Text WYSIWYG Image From Gallery or Link to Image in Gallery After Page Has Been Saved"/>
+            <description value="A user should be able to upload image to inline wysiwyg after a text has been saved to a page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4323"/>
+            <testCaseId value="MC-5020"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <!-- Add Text -->
+        <comment userInput="Add Text" stepKey="commentAddContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2" after="dragContentTypeOntoStage"/>
+        <comment userInput="Removed closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Add Image to Text -->
+        <comment userInput="Add Image to Text" stepKey="commentAddImageToContentType"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <!-- Validate Image Editor On Backend -->
+        <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
+        <!-- Validate Image Editor On Backend After Save -->
+        <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
+        <!-- Validate Image Editor On Storefront -->
+        <seeElement selector="{{TextOnStorefront.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
+    </test>
 </tests>
