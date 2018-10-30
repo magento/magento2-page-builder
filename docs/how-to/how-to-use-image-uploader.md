@@ -1,66 +1,7 @@
-# Add image uploader to content type
-
-<!--{% comment %}-->
-## Navigation
-
-1. [Introduction]
-2. [Installation guide]
-3. [Contribution guide]
-4. [Developer documentation]
-    1. [Architecture overview]
-    1. [BlueFoot to PageBuilder data migration]
-    1. [Third-party content type migration]
-    1. [Iconography]
-    1. **Add image uploader to content type**
-    1. [Module integration]
-    1. [Additional data configuration]
-    1. [Content type configuration]
-    1. [How to add a new content type]
-    1. [Events]
-    1. [Bindings]
-    1. [Master format]
-    1. [Visual select] 
-    1. [Reuse product conditions in content types]
-    1. [Store component master format as widget directive]
-    1. [Use the block chooser UI component]
-    1. [Use the inline text editing component]
-    1. [Render a backend content type preview]
-    1. [Custom Toolbar]
-    1. [Full width page layouts]
-    1. [Add custom logic to content types]
-5. [Roadmap and known issues]
-6. [How to create custom PageBuilder content type container]
-
-[Introduction]: introduction.md
-[Contribution guide]: ../CONTRIBUTING.md
-[Installation guide]: install.md
-[Developer documentation]: developer-documentation.md
-[Architecture overview]: architecture-overview.md
-[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
-[Third-party content type migration]: new-content-type-example.md
-[Iconography]: iconography.md
-[Add image uploader to content type]: image-uploader.md
-[Module integration]: module-integration.md
-[Additional data configuration]: custom-configuration.md
-[Content type configuration]: content-type-configuration.md
-[How to add a new content type]: how-to-add-new-content-type.md
-[Events]: events.md
-[Bindings]: bindings.md
-[Master format]: master-format.md
-[Visual select]: visual-select.md
-[Reuse product conditions in content types]: product-conditions.md
-[Store component master format as widget directive]: widget-directive.md
-[Use the block chooser UI component]: block-chooser-component.md
-[Use the inline text editing component]: inline-editing-component.md
-[Render a backend content type preview]: content-type-preview.md
-[Custom Toolbar]: toolbar.md
-[Full width page layouts]: full-width-page-layouts.md
-[Add custom logic to content types]: add-custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
-[How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
-<!--{% endcomment %}-->
+# How to use the Image Uploader <!-- omit in toc -->
 
 <!-- {% raw %} -->
+
 ## What's in this topic
 
 This topic describes how to add a reusable image uploader component to the PageBuilder stage for a content type.
@@ -68,9 +9,12 @@ This topic describes how to add a reusable image uploader component to the PageB
 ## Overview
 
 To add image uploader customization to PageBuilder:
-1. [Add configuration for the uploader](#add-configuration-for-the-uploader-config)
-2. [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file](#update-the-yourmoduleviewadminhtmlwebjscontent-typecontent_type_namepreviewjs-file-js-file)
-3. [Update the preview template to display the uploader component](#update-the-preview-template-to-display-the-uploader-component-preview)
+
+- [What's in this topic](#whats-in-this-topic)
+- [Overview](#overview)
+- [Add configuration for the uploader](#add-configuration-for-the-uploader)
+- [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file {#js-file}](#update-the-yourmoduleviewadminhtmlwebjscontent-typecontent_type_namepreviewjs-file-js-file)
+- [Update the preview template to display the uploader component {#preview}](#update-the-preview-template-to-display-the-uploader-component-preview)
 
 ## Add configuration for the uploader
 
@@ -131,13 +75,13 @@ To update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_nam
     | `initialValue`     | Object[]  | The value to be used for the initial state of the component.               | yes     | None                                                                                                    |
     | `onChangeCallback` | Function  | A callback that will be called when an image is selected.                           | no    | The image will be saved to the provided `dataStore` using `uploaderConfig.dataScope` as the key.        |
     | `onDeleteCallback` | Function  | A callback that will be called when the current used image is deleted from storage. | no    | The image will be removed from to the provided `dataStore` using `uploaderConfig.dataScope` as the key. |
- 
+
     The following is an example extracted from the image content type:
-     
+
     ```js
     var dataStore = this.parent.dataStore.get();
     var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
-     
+
     this.uploader = new Uploader(
        'imageuploader_' + this.parent.id,
        this.config.additional_data.uploaderConfig,
@@ -169,9 +113,9 @@ Update the preview template file, `bluefoot/app/code/Magento/PageBuilder/view/ad
 ``` html
 <div>
    ...
-            <scope args="getUploader().getUiComponent()">
-                <render />
-            </scope>
+    <scope args="getUploader().getUiComponent()">
+        <render />
+    </scope>
    ...
 </div>
 ```
