@@ -8,17 +8,16 @@
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Suite/etc/suiteSchema.xsd">
     <suite name="PageBuilderWithWYSIWYG">
         <before>
-            <createData stepKey="enablePageBuilderAndWYSIWYG" entity="enablePageBuilderAndWYSIWYGForm"/>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
         </before>
         <after>
-            <createData stepKey="DisabledWYSIWYG" entity="disableWYSYWYGForm"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
         </after>
         <include>
             <group name="pagebuilder"/>
         </include>
-        <exclude>
-            <group name="pagebuilder-customBeforeAfter"/>
-        </exclude>
     </suite>
 </suites>

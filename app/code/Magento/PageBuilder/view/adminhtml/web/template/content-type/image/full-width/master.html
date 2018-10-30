@@ -5,7 +5,7 @@
  */
 -->
 
-<figure attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+<figure attr="data.main.attributes" ko-style="Object.assign({}, data.main.style(), !data.desktop_image.attributes().src ? {} : {borderStyle: 'none'})" css="data.main.css">
     <a if="data.link.attributes().href" attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
         <img if="data.desktop_image.attributes().src"
              attr="data.desktop_image.attributes"

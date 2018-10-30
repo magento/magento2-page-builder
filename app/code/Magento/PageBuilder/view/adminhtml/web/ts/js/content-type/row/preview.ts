@@ -13,7 +13,6 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import DataStore from "../../data-store";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
@@ -43,18 +42,25 @@ export default class Preview extends PreviewCollection {
         } catch (e) {
             // Failure of destroying is acceptable
         }
-        if (this.element && $(this.element).hasClass("jarallax")) {
+        if (this.element &&
+            $(this.element).hasClass("jarallax") &&
+            (this.parent.dataStore.get("background_image") as any[]).length
+        ) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
                 jarallax(
                     this.element,
                     {
+                        imgSrc: (this.parent.dataStore.get("background_image") as any[])[0].url as string,
                         imgPosition: this.parent.dataStore.get("background_position") as string || "50% 50%",
-                        imgRepeat: this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat",
+                        imgRepeat: (
+                            (this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
+                        ),
                         imgSize: this.parent.dataStore.get("background_size") as string || "cover",
                         speed: Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string) || 0.5,
                     },
                 );
+
                 jarallax(this.element, "onResize");
             });
         }
@@ -112,7 +118,9 @@ export default class Preview extends PreviewCollection {
 
         new ResizeObserver(() => {
             // Observe for resizes of the element and force jarallax to display correctly
-            if ($(this.element).hasClass("jarallax")) {
+            if ($(this.element).hasClass("jarallax") &&
+                (this.parent.dataStore.get("background_image") as any[]).length
+            ) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");
             }

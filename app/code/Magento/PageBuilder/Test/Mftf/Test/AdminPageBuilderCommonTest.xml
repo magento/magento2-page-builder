@@ -214,7 +214,7 @@
             <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
             <actualResult type="variable">getDefaultImageBoxShadowStyle</actualResult>
         </assertEquals>
-        <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="moveMouseOverImage"/>
+        <moveMouseOver selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="moveMouseOverImage"/>
         <waitForPageLoad stepKey="waitForImageHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-image'),null).getPropertyValue('box-shadow')" stepKey="getDefaultImageHoverBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultImageHoverBoxShadowStyle" message="pass">
@@ -1679,7 +1679,7 @@
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1796,7 +1796,7 @@
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>

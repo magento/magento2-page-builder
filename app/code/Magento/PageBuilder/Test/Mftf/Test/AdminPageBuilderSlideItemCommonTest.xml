@@ -201,6 +201,11 @@
         <seeElement selector="{{SlideOnBackend.backgroundSize('1', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeBackgroundSizeStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeBackgroundPositionStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColor"/>
+        <assertEquals stepKey="assertDefaultBackgroundColor">
+            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.stageValue}}</expectedResult>
+            <actualResult type="variable">grabDefaultBackgroundColor</actualResult>
+        </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -210,6 +215,11 @@
         <seeElement selector="{{SlideOnBackend.backgroundSize('1', PageBuilderBackgroundSize_Default.value)}}" stepKey="seeBackgroundSizeStage2"/>
         <seeElement selector="{{SlideOnBackend.backgroundPosition('1', PageBuilderBackgroundPosition_Default.styleValue)}}" stepKey="seeBackgroundPositionStage2"/>
         <seeElement selector="{{SlideOnBackend.backgroundRepeat('1', PageBuilderBackgroundRepeat_Default.styleValue)}}" stepKey="seeBackgroundRepeatStage2"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.noBackgroundColor('1')}}&quot;, document.body).iterateNext()).backgroundColor" stepKey="grabDefaultBackgroundColorAfterSave"/>
+        <assertEquals stepKey="assertDefaultBackgroundColorAfterSave">
+            <expectedResult type="string">{{PageBuilderSlideItemBackgroundColor_Empty.stageValue}}</expectedResult>
+            <actualResult type="variable">grabDefaultBackgroundColorAfterSave</actualResult>
+        </assertEquals>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
@@ -1416,7 +1426,7 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromSlide"/>
         <actionGroup ref="goToMediaStorageFromStage" stepKey="goToMediaStorageFromStage1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="section" value="ImageOnStage"/>
+            <argument name="section" value="ImageOnStageWithoutImageUploaded"/>
         </actionGroup>
         <!-- Delete image A -->
         <comment stepKey="deleteImageA" userInput="Delete image A"/>
@@ -1570,7 +1580,8 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <magentoCLI command="config:set general/store_information/name none" stepKey="setBackToDefaultValue"/>
+            <!-- The below value is the Jenkins default store name -->
+            <magentoCLI command="config:set general/store_information/name 'Main Website Store'" stepKey="setBackToDefaultValue"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
