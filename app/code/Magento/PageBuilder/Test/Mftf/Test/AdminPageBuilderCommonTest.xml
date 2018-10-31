@@ -214,7 +214,7 @@
             <expectedResult type="string">{{PageBuilderBoxShadowProperty_No_Box_Shadow.value}}</expectedResult>
             <actualResult type="variable">getDefaultImageBoxShadowStyle</actualResult>
         </assertEquals>
-        <moveMouseOver selector="{{ImageOnStage.base('1')}}" stepKey="moveMouseOverImage"/>
+        <moveMouseOver selector="{{ImageOnStageWithoutImageUploaded.base('1')}}" stepKey="moveMouseOverImage"/>
         <waitForPageLoad stepKey="waitForImageHoverAnimation"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-image'),null).getPropertyValue('box-shadow')" stepKey="getDefaultImageHoverBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultImageHoverBoxShadowStyle" message="pass">
@@ -226,10 +226,9 @@
         </actionGroup>
         <!-- Validate Video Box Shadow -->
         <comment userInput="Validate Video Box-Shadow" stepKey="commentValidateVideoBoxShadow"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragVideoIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
             <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeVideoEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverVideo"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-video'),null).getPropertyValue('box-shadow')" stepKey="getDefaultVideoBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultVideoBoxShadowStyle" message="pass">
@@ -269,10 +268,9 @@
         </actionGroup>
         <!-- Validate Slider Box Shadow -->
         <comment userInput="Validate Slider Box-Shadow" stepKey="commentValidateSliderBoxShadow"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeSliderEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverSlider"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-slider .slider-container'),null).getPropertyValue('box-shadow')" stepKey="getDefaultSliderBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultSliderBoxShadowStyle" message="pass">
@@ -291,10 +289,9 @@
         </actionGroup>
         <!-- Validate Map Box Shadow -->
         <comment userInput="Validate Map Box-Shadow" stepKey="commentValidateMapBoxShadow"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragMapIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragMapIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeMapEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverMap"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-map'),null).getPropertyValue('box-shadow')" stepKey="getDefaultMapBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultMapBoxShadowStyle" message="pass">
@@ -316,10 +313,9 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupAddContent">
             <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeBlockEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverBlock"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-block'),null).getPropertyValue('box-shadow')" stepKey="getDefaultBlockBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultBlockBoxShadowStyle" message="pass">
@@ -338,10 +334,9 @@
         </actionGroup>
         <!-- Validate Products Box Shadow -->
         <comment userInput="Validate Products Box-Shadow" stepKey="commentValidateProductsBoxShadow"/>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragProductIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductIntoStage">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeProductsEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="resetMouseOverProducts"/>
         <executeJS function="return window.getComputedStyle(document.querySelector('.pagebuilder-products'),null).getPropertyValue('box-shadow')" stepKey="getDefaultProductsBoxShadowStyle"/>
         <assertEquals stepKey="assertDefaultProductsBoxShadowStyle" message="pass">
@@ -1684,7 +1679,7 @@
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
@@ -1801,7 +1796,7 @@
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
             <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStageWithoutImageUploaded.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage1SourceOnStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>

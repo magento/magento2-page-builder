@@ -39,7 +39,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         // Destroy all instances of the plugin prior
         try {
           // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-          var style = _this.element.getAttribute("style");
+          var style = _this.element.getAttribute("data-jarallax-original-styles") || _this.element.getAttribute("style");
 
           jarallax(_this.element, "destroy");
 
@@ -47,14 +47,15 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         } catch (e) {// Failure of destroying is acceptable
         }
 
-        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax")) {
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.parent.dataStore.get("background_image").length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
-              imgPosition: _this.data.main.style().backgroundPosition || "50% 50%",
-              imgRepeat: _this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-              imgSize: _this.data.main.style().backgroundSize || "cover",
-              speed: _this.data.main.attributes()["data-parallax-speed"] || 0.5
+              imgSrc: _this.parent.dataStore.get("background_image")[0].url,
+              imgPosition: _this.parent.dataStore.get("background_position") || "50% 50%",
+              imgRepeat: _this.parent.dataStore.get("background_repeat") || "no-repeat",
+              imgSize: _this.parent.dataStore.get("background_size") || "cover",
+              speed: Number.parseFloat(_this.parent.dataStore.get("parallax_speed")) || 0.5
             });
             jarallax(_this.element, "onResize");
           });
@@ -112,7 +113,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
 
       new _ResizeObserver(function () {
         // Observe for resizes of the element and force jarallax to display correctly
-        if ((0, _jquery)(_this2.element).hasClass("jarallax")) {
+        if ((0, _jquery)(_this2.element).hasClass("jarallax") && _this2.parent.dataStore.get("background_image").length) {
           jarallax(_this2.element, "onResize");
           jarallax(_this2.element, "onScroll");
         }

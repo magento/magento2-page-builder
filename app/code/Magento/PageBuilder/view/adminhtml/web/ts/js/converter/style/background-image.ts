@@ -4,7 +4,6 @@
  */
 
 import {DataObject} from "../../data-store";
-import {decodeUrl, imageToBackgroundImageDataUrl} from "../../utils/image";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -18,10 +17,7 @@ export default class BackgroundImage implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        if (!value) {
-            return "";
-        }
-        return decodeUrl(value);
+        return null;
     }
 
     /**
@@ -32,11 +28,6 @@ export default class BackgroundImage implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const value = data[name];
-        if (value[0] === undefined || value[0].url === undefined) {
-            return "";
-        }
-        const imageUrl = value[0].url;
-        return imageToBackgroundImageDataUrl(imageUrl);
+        return null;
     }
 }

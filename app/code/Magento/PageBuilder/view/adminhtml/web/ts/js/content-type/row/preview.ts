@@ -35,24 +35,32 @@ export default class Preview extends PreviewCollection {
         // Destroy all instances of the plugin prior
         try {
             // store/apply correct style after destroying, as jarallax incorrectly overrides it with stale value
-            const style = this.element.getAttribute("style");
+            const style = this.element.getAttribute("data-jarallax-original-styles") ||
+                this.element.getAttribute("style");
             jarallax(this.element, "destroy");
             this.element.setAttribute("style", style);
         } catch (e) {
             // Failure of destroying is acceptable
         }
-        if (this.element && $(this.element).hasClass("jarallax")) {
+        if (this.element &&
+            $(this.element).hasClass("jarallax") &&
+            (this.parent.dataStore.get("background_image") as any[]).length
+        ) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.main.style().backgroundSize || "cover",
-                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
+                        imgSrc: (this.parent.dataStore.get("background_image") as any[])[0].url as string,
+                        imgPosition: this.parent.dataStore.get("background_position") as string || "50% 50%",
+                        imgRepeat: (
+                            (this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
+                        ),
+                        imgSize: this.parent.dataStore.get("background_size") as string || "cover",
+                        speed: Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string) || 0.5,
                     },
                 );
+
                 jarallax(this.element, "onResize");
             });
         }
@@ -110,7 +118,9 @@ export default class Preview extends PreviewCollection {
 
         new ResizeObserver(() => {
             // Observe for resizes of the element and force jarallax to display correctly
-            if ($(this.element).hasClass("jarallax")) {
+            if ($(this.element).hasClass("jarallax") &&
+                (this.parent.dataStore.get("background_image") as any[]).length
+            ) {
                 jarallax(this.element, "onResize");
                 jarallax(this.element, "onScroll");
             }

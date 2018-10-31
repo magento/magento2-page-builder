@@ -10,6 +10,9 @@ namespace Magento\PageBuilder\Model\Stage\Config;
 use Magento\Framework\Config\DataInterfaceFactory;
 use Magento\Ui\Config\Converter;
 
+/**
+ * Retrieve fields and default values from associated UI component forms for content types
+ */
 class UiComponentConfig
 {
     /**
@@ -31,7 +34,7 @@ class UiComponentConfig
     /**
      * Retrieve fields for UI Component
      *
-     * @param $componentName
+     * @param string $componentName
      *
      * @return array
      */
@@ -62,31 +65,10 @@ class UiComponentConfig
     }
 
     /**
-     * Retrieve buttons associated with a UI component
-     *
-     * @param $componentName
-     *
-     * @return array
-     */
-    public function getButtons($componentName) : array
-    {
-        $componentConfig = $this->configFactory->create(
-            ['componentName' => $componentName]
-        )->get($componentName);
-
-        // Does the component have any buttons assigned?
-        if (isset($componentConfig[Converter::DATA_ARGUMENTS_KEY]['data']['buttons'])) {
-            return $componentConfig[Converter::DATA_ARGUMENTS_KEY]['data']['buttons'];
-        }
-
-        return [];
-    }
-
-    /**
      * Iterate over components within the configuration and run a defined callback function
      *
-     * @param $config
-     * @param $callback
+     * @param array $config
+     * @param \Closure $callback
      * @param bool $key
      *
      * @return array
@@ -96,6 +78,10 @@ class UiComponentConfig
         $values = $callback($config, $key) ?: [];
         if (isset($config[Converter::DATA_COMPONENTS_KEY])
             && !empty($config[Converter::DATA_COMPONENTS_KEY])
+            && (!isset($config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'])
+                || isset($config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'])
+                && $config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'] !== 'dynamicRows'
+            )
         ) {
             foreach ($config[Converter::DATA_COMPONENTS_KEY] as $key => $child) {
                 $values = array_merge(

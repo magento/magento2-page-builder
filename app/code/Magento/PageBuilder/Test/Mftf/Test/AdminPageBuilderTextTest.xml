@@ -1743,17 +1743,15 @@
             <testCaseId value="MC-2636"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1820,12 +1818,10 @@
             <testCaseId value="MC-2858"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
                 <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -1834,7 +1830,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
@@ -1902,12 +1898,10 @@
             <testCaseId value="MC-2691"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
                 <argument name="contentType" value="PageBuilderTextContentType"/>
@@ -1916,7 +1910,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
@@ -2340,7 +2334,8 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <magentoCLI command="config:set general/store_information/name none" stepKey="setBackToDefaultValue"/>
+            <!-- The below value is the Jenkins default store name -->
+            <magentoCLI command="config:set general/store_information/name 'Main Website Store'" stepKey="setBackToDefaultValue"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -2490,5 +2485,37 @@
             <actualResult type="variable">grabPage2URL</actualResult>
             <expectedResult type="variable">currentUrl</expectedResult>
         </assertEquals>
+    </test>
+    <test name="TextInlineWysiwygUploadImage" extends="SlideItemInlineWysiwygUploadImage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Can Add Text WYSIWYG Image From Gallery or Link to Image in Gallery After Page Has Been Saved"/>
+            <description value="A user should be able to upload image to inline wysiwyg after a text has been saved to a page"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4323"/>
+            <testCaseId value="MC-5020"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <!-- Add Text -->
+        <comment userInput="Add Text" stepKey="commentAddContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor2" after="dragContentTypeOntoStage"/>
+        <comment userInput="Removed closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Add Image to Text -->
+        <comment userInput="Add Image to Text" stepKey="commentAddImageToContentType"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <!-- Validate Image Editor On Backend -->
+        <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditor"/>
+        <!-- Validate Image Editor On Backend After Save -->
+        <seeElement selector="{{TextOnStage.inlineWYSIWYGEditorWithTag('1', 'img')}}" stepKey="validateImageInEditorAfterSave"/>
+        <!-- Validate Image Editor On Storefront -->
+        <seeElement selector="{{TextOnStorefront.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
 </tests>
