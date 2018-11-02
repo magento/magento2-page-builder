@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _events, _widgetInitializer, _config, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -67,25 +67,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
-
-      _preview2.prototype.bindEvents.call(this); // When a block type is dropped for the first time open the edit panel
-
-
-      _events.on("block:dropAfter", function (args) {
-        if (args.id === _this2.parent.id) {
-          setTimeout(function () {
-            _this2.openEdit();
-          }, 300);
-        }
-      });
-    };
-    /**
-     * @inheritdoc
-     */
-
-
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       _preview2.prototype.afterObservablesUpdated.call(this);
 
@@ -130,7 +111,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.processRequest = function processRequest(data, identifierName, labelKey) {
-      var _this3 = this;
+      var _this2 = this;
 
       var url = _config.getConfig("preview_url");
 
@@ -150,37 +131,37 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       .done(function (response) {
         // Empty content means something bad happened in the controller that didn't trigger a 5xx
         if (typeof response.data !== "object") {
-          _this3.showBlockPreview(false);
+          _this2.showBlockPreview(false);
 
-          _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
+          _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
 
           return;
         } // Update the stage content type label with the real block title if provided
 
 
-        _this3.displayLabel(response.data[labelKey] ? response.data[labelKey] : _this3.config.label);
+        _this2.displayLabel(response.data[labelKey] ? response.data[labelKey] : _this2.config.label);
 
         if (response.data.content) {
-          _this3.showBlockPreview(true);
+          _this2.showBlockPreview(true);
 
-          _this3.data.main.html(response.data.content);
+          _this2.data.main.html(response.data.content);
 
-          _this3.initializeWidgets(_this3.element);
+          _this2.initializeWidgets(_this2.element);
         } else if (response.data.error) {
-          _this3.showBlockPreview(false);
+          _this2.showBlockPreview(false);
 
-          _this3.placeholderText(response.data.error);
+          _this2.placeholderText(response.data.error);
         }
 
-        _this3.lastBlockId = parseInt(identifier.toString(), 10);
-        _this3.lastTemplate = data.template.toString();
-        _this3.lastRenderedHtml = response.data.content;
+        _this2.lastBlockId = parseInt(identifier.toString(), 10);
+        _this2.lastTemplate = data.template.toString();
+        _this2.lastRenderedHtml = response.data.content;
       }).fail(function () {
-        _this3.showBlockPreview(false);
+        _this2.showBlockPreview(false);
 
-        _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
+        _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
       }).always(function () {
-        _this3.loading(false);
+        _this2.loading(false);
       });
     };
     /**

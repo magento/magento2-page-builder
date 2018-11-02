@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/image"], function (_image) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,11 +24,7 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      if (!value) {
-        return "";
-      }
-
-      return (0, _image.decodeUrl)(value);
+      return null;
     };
     /**
      * Convert value to knockout format
@@ -40,14 +36,7 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
 
 
     _proto.toDom = function toDom(name, data) {
-      var value = data[name];
-
-      if (value[0] === undefined || value[0].url === undefined) {
-        return "";
-      }
-
-      var imageUrl = value[0].url;
-      return (0, _image.imageToBackgroundImageDataUrl)(imageUrl);
+      return null;
     };
 
     return BackgroundImage;

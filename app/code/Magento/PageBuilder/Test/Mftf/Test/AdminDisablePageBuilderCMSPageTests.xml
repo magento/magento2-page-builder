@@ -9,98 +9,106 @@
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
     <test name="AdminCreateCmsPageTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="loginGetFromGeneralFile" />
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="loginGetFromGeneralFile"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" before="amOnLogoutPage"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="amOnLogoutPage"/>
         </after>
     </test>
+     <test name="AdminAddImageToCMSPageTinyMCE3Test">
+         <before>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" before="loginAsAdmin"/>
+         </before>
+         <after>
+             <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="logout"/>
+         </after>
+     </test>
     <test name="AdminCreateDuplicatedCmsPageTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="loginGetFromGeneralFile"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="loginGetFromGeneralFile"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" before="logout"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="logout"/>
         </after>
     </test>
     <test name="AdminAddImageToWYSIWYGCMSTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddVariableToWYSIWYGCMSTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddWidgetToWYSIWYGWithCatalogCategoryLinkTypeTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddWidgetToWYSIWYGWithCatalogProductLinkTypeTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddWidgetToWYSIWYGWithCatalogProductListTypeTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddWidgetToWYSIWYGWithCMSPageLinkTypeTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddWidgetToWYSIWYGWithRecentlyComparedProductsTypeTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminAddWidgetToWYSIWYGWithRecentlyViewedProductsTypeTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="AdminSwitchWYSIWYGOptionsTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="enableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="enableWYSIWYG"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
     <test name="VerifyTinyMCEv4IsNativeWYSIWYGOnCMSPageTest">
         <before>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="turnOffPageBuilder" after="switchToTinyMCE4"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder" after="switchToTinyMCE4"/>
         </before>
         <after>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" after="disableWYSIWYG"/>
         </after>
     </test>
 </tests>

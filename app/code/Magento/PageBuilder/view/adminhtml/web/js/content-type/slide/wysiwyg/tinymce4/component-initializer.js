@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils/delay-until"], function (_jquery, _events, _delayUntil) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,6 +14,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
       this.sliderContentSelector = ".slick-track";
       this.slideSelector = ".slick-slide";
       this.activeSlideSelector = ".slick-current";
+      this.slideChanging = false;
     }
 
     var _proto = ComponentInitializer.prototype;
@@ -24,11 +25,19 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
      * @param {Wysiwyg} wysiwyg
      */
     _proto.initialize = function initialize(wysiwyg) {
+      var _this = this;
+
       this.$element = (0, _jquery)("#" + wysiwyg.elementId);
       this.config = wysiwyg.config;
       var tinymce = wysiwyg.getAdapter();
       tinymce.eventBus.attachEventHandler(_events.afterFocus, this.onFocus.bind(this));
-      tinymce.eventBus.attachEventHandler(_events.afterBlur, this.onBlur.bind(this));
+      tinymce.eventBus.attachEventHandler(_events.afterBlur, this.onBlur.bind(this)); // Update our KO pointer to the active slide on change
+
+      (0, _jquery)(this.$element.parents(this.sliderSelector)).parent().on("beforeChange", function () {
+        _this.slideChanging = true;
+      }).on("afterChange", function () {
+        _this.slideChanging = false;
+      });
     };
     /**
      * Event handler for wysiwyg focus
@@ -38,28 +47,35 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
 
 
     _proto.onFocus = function onFocus() {
-      var _this = this;
+      var _this2 = this;
 
       var $slider = (0, _jquery)(this.$element.parents(this.sliderSelector));
       var sliderContent = this.$element.parents(this.sliderContentSelector)[0];
       var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
+      (0, _delayUntil)(function () {
+        _jquery.each(_this2.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
+          _this2.$element.closest(selector).css("z-index", 100);
+        }); // Disable slider keyboard events and fix problem with overflow hidden issue
 
-      _jquery.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
-        _this.$element.closest(selector).css("z-index", 100);
-      }); // Disable slider keyboard events and fix problem with overflow hidden issue
 
+        $slider.parent().slick("slickSetOption", "accessibility", false);
+        _this2.autoplay = $slider.parent().slick("slickGetOption", "autoplay");
+        _this2.fade = $slider.parent().slick("slickGetOption", "fade");
 
-      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", false);
-      this.autoplay = (0, _jquery)($slider.parent()).slick("slickGetOption", "autoplay");
+        if (_this2.autoplay) {
+          $slider.parent().slick("slickPause");
+        }
 
-      if (this.autoplay) {
-        (0, _jquery)($slider.parent()).slick("slickPause");
-      }
+        if (!_this2.fade) {
+          $notActiveSlides.css("display", "none");
+        }
 
-      $notActiveSlides.css("display", "none");
-      this.sliderTransform = sliderContent.style.transform;
-      sliderContent.style.transform = "";
-      $slider.css("overflow", "visible");
+        _this2.sliderTransform = sliderContent.style.transform;
+        sliderContent.style.transform = "";
+        $slider.css("overflow", "visible");
+      }, function () {
+        return !_this2.slideChanging;
+      }, 10);
     };
     /**
      * Event handler for wysiwyg blur
@@ -69,24 +85,24 @@ define(["jquery", "mage/adminhtml/wysiwyg/events"], function (_jquery, _events) 
 
 
     _proto.onBlur = function onBlur() {
-      var _this2 = this;
+      var _this3 = this;
 
       var $slider = (0, _jquery)(this.$element.parents(this.sliderSelector));
       var sliderContent = this.$element.parents(this.sliderContentSelector)[0];
       var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
 
       _jquery.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
-        _this2.$element.closest(selector).css("z-index", "");
+        _this3.$element.closest(selector).css("z-index", "");
       }); // Enable slider keyboard events and revert changes made in onFocus
 
 
       $slider.css("overflow", "hidden");
       sliderContent.style.transform = this.sliderTransform;
       $notActiveSlides.css("display", "block");
-      (0, _jquery)($slider.parent()).slick("slickSetOption", "accessibility", true);
+      $slider.parent().slick("slickSetOption", "accessibility", true);
 
       if (this.autoplay) {
-        (0, _jquery)($slider.parent()).slick("slickPlay");
+        $slider.parent().slick("slickPlay");
       }
     };
 

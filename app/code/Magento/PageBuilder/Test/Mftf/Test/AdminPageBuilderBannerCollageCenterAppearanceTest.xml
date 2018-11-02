@@ -210,19 +210,21 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <!-- Validate desktop image is displayed before browser is resized -->
+        <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <dontSeeElement selector="{{BannerOnFrontend.backgroundMobileImage('1', PageBuilderBackgroundMobileImage_GIF.fileName)}}" stepKey="dontSeeMobileImage"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
-            <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
+        <!-- Validate mobile image is displayed when browser is resized -->
+        <comment userInput="Validate mobile image is displayed when browser is resized" stepKey="commentMobileImage"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <dontSeeElement selector="{{BannerOnFrontend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="dontSeeDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageOnStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
+            <argument name="pageNamePrefix" value="banner"/>
+        </actionGroup>
     </test>
     <test name="BannerCollageCenterMobileWithoutMobileImageValues">
         <annotations>
@@ -287,17 +289,20 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <!-- Validate desktop image is displayed before browser is resized -->
+        <comment userInput="Validate desktop image is displayed before browser is resized" stepKey="commentDesktopImage"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront1">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-        </actionGroup>
-        <!-- Validate Image Still Visible In Mobile -->
-        <comment userInput="Validate Image Still Visible In Mobile" stepKey="commentValidateStorefront2"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
-            <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <!-- Validate desktop image still visible in mobile view -->
+        <comment userInput="Validate desktop image still visible in mobile view" stepKey="commentDesktopImageMobileView"/>
+        <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront2">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
     <test name="BannerCollageCenterButtonNeverShow">
@@ -370,10 +375,10 @@
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <dontSeeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonInDOMStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <dontSeeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefrontMobile"/>
+        <dontSeeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonInDOMOnHoverStorefrontMobile"/>
     </test>
     <test name="BannerCollageCenterButtonOnHover">
         <annotations>
@@ -447,11 +452,11 @@
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
-        <dontSeeElement selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
+        <seeElementInDOM selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonInDOMStorefrontMobile"/>
+        <dontSeeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="dontSeeButtonStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.mobileButton('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
     </test>
     <test name="BannerCollageCenterOverlayNeverShow">
         <annotations>
@@ -523,10 +528,10 @@
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeCollageCenteredStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.mobileBackgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.mobileTransparentOverlay('1')}}" stepKey="seeTransparentOverlayOnHoverStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayOnHoverStorefrontMobile"/>
     </test>
     <test name="BannerCollageCenterOverlayOnHover" extends="BannerPosterOverlayOnHover">
         <annotations>
@@ -569,6 +574,40 @@
         <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="moveMouseOverBannerStage"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
+    </test>
+    <test name="BannerCollageCenterOverlayPosition" extends="BannerCollageLeftOverlayPosition">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Center - Check collage center overlay position is correct"/>
+            <description value="Check collage center overlay is correct"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4117"/>
+            <testCaseId value="MC-4969"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionStageAfterSave">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayPositionCollageCenter" stepKey="validateOverlayPositionStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
     </test>
     <test name="BannerCollageCenterButtonsCanBeEditedInline">
         <annotations>
@@ -698,7 +737,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
@@ -712,7 +751,7 @@
         <seeElement selector="{{BannerOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
         <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -740,7 +779,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -755,7 +794,7 @@
         <seeElement selector="{{BannerOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage2"/>
         <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage2"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
@@ -783,7 +822,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -792,17 +831,13 @@
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeAppearanceStorefront"/>
         <seeElement selector="{{BannerOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.alignmentMobile('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeInDOMMobileAlignmentStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.alignmentMobile('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="dontSeeMobileAlignmentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeBorderWidthStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStorefront"/>
         <seeElement selector="{{BannerOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStorefront"/>
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStorefront"/>
-        <seeElementInDOM selector="{{BannerOnFrontend.mobileCollagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.mobileValue)}}" stepKey="seeInDOMMobilePaddingStorefront"/>
-        <dontSeeElement selector="{{BannerOnFrontend.mobileCollagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.mobileValue)}}" stepKey="dontSeeMobilePaddingStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
     </test>
     <test name="BannerCollageCenterUpdateAllAttributes">
         <annotations>
@@ -929,7 +964,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
-            <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
@@ -962,7 +997,7 @@
         <seeElement selector="{{BannerOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage"/>
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage"/>
         <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -994,7 +1029,7 @@
         <seeElement selector="{{BannerOnBackend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStage2"/>
         <seeElement selector="{{BannerOnBackend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStage2"/>
         <seeElement selector="{{BannerOnBackend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStage2"/>
-        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStage2"/>
+        <seeElement selector="{{BannerOnBackend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -1076,7 +1111,7 @@
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderBannerCollageCenterPaddingPropertyUnique"/>
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -1093,10 +1128,10 @@
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateImageOnStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="pageNamePrefix" value="banner"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMessageContentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
@@ -1112,39 +1147,38 @@
         <seeElement selector="{{BannerOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusStorefront"/>
         <seeElement selector="{{BannerOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeCSSClassesStorefront"/>
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.desktopValue)}}" stepKey="seePaddingStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerCollageCenteredProperty.value)}}" stepKey="seeMobileAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.mobileCollageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
-        <actionGroup ref="validateMobileBackgroundAttributes" stepKey="validateMobileBackgroundAttributesStorefront">
+        <seeElement selector="{{BannerOnFrontend.collageMinimumHeight('1', PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="seeMobileMinimumHeightStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateMobileBackgroundAttributesStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="mobileBackgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
-            <argument name="mobileBackgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
-            <argument name="mobileBackgroundSize" value="PageBuilderBackgroundSize_Contain"/>
-            <argument name="mobileBackgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
-            <argument name="mobileBackgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Hex_White"/>
+            <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Center"/>
+            <argument name="backgroundSize" value="PageBuilderBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
-        <seeElement selector="{{BannerOnFrontend.mobileMessageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMobileMessageContentStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.messageContent('1', PageBuilderBannerMessageProperty.value)}}" stepKey="seeMobileMessageContentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.showButton('1', PageBuilderBannerShowButtonAlwaysProperty.value)}}" stepKey="seeMobileButtonStateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.mobileButtonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeMobileButtonTypeStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.mobileButtonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeMobileButtonTextStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.buttonType('1', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeMobileButtonTypeStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.buttonText('1', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeMobileButtonTextStorefront"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('1', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeMobileOverlayStateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.mobileOverlayColorAndTransparency('1', PageBuilderBannerOverlayColor_FF0000.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeMobileOverlayColorAndTransparencyStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.alignmentMobile('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeMobileAlignmentStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('1', PageBuilderBannerOverlayColor_FF0000.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeMobileOverlayColorAndTransparencyStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeMobileAlignmentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.border('1', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeMobileBorderStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderColor('1', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeMobileBorderColorStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderWidth('1', PageBuilderAdvancedBorderWidthProperty10.value)}}" stepKey="seeMobileBorderWidthStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderRadius('1', PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeMobileBorderRadiusStorefront"/>
         <seeElement selector="{{BannerOnFrontend.cssClasses('1', PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="seeMobileCSSClassesStorefront"/>
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMobileMarginsStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.mobileCollagePadding('1', PageBuilderBannerCollageCenterPaddingPropertyUnique.mobileValue)}}" stepKey="seeMobilePaddingStorefront"/>
-        <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktop"/>
-        <actionGroup ref="validateBackgroundMobileImage" stepKey="validateMobileImageStorefront">
+        <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seeMobilePaddingStorefront"/>
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateMobileImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty.value)}}" stepKey="clickLinkUrl"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -1279,5 +1313,38 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <see selector="{{BannerOnFrontend.button('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStorefrontNBSPButtonAfterSave"/>
+    </test>
+    <test name="BannerOverlayDoesNotHaveBorderRadiusAppliedOnCollageCenteredAppearance" extends="BannerOverlayHasConvertedBorderRadiusAppliedOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Center - Overlay does not have border radius applied on collage centered appearance"/>
+            <description value="As a content creator I do not want border radius of banner overlay with collage centered appearance to have a border radius applied to it so that I may be able to style it independently"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3870"/>
+            <testCaseId value="MC-5253"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageCenter"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAppearance">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusGreaterThanBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidth">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadius2</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertOverlayBorderRadiusEqualityWhereBorderRadiusLessThanOrEqualToBorderWidthOnStorefront">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
+        </assertEquals>
     </test>
 </tests>

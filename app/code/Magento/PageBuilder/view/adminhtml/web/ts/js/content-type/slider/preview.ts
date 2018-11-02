@@ -262,7 +262,6 @@ export default class Preview extends PreviewCollection {
                             () => $(this.element).hasClass("slick-initialized"),
                             10,
                         );
-                        slide.preview.onOptionEdit();
                     });
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
@@ -443,6 +442,7 @@ export default class Preview extends PreviewCollection {
             $(this.element).on(
                 "beforeChange",
                 (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
+                    $(this.element).css("pointer-events", "none");
                     this.setActiveSlide(nextSlide);
                 },
             ).on("afterChange", () => {
@@ -453,6 +453,7 @@ export default class Preview extends PreviewCollection {
                     });
                     this.contentTypeHeightReset = null;
                 }
+                $(this.element).css("pointer-events", "");
             });
         }
     }
