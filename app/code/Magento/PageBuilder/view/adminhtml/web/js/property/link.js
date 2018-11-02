@@ -32,7 +32,7 @@ define([], function () {
     _proto.read = function read(element) {
       var _ref;
 
-      var href = element.getAttribute("data-href") || element.getAttribute("href");
+      var href = element.getAttribute("href");
       var attributeLinkType = element.getAttribute("data-link-type");
 
       if (typeof href === "string" && attributeLinkType !== "default") {
