@@ -629,15 +629,6 @@
         <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlStorefront"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront" />
         <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefront" />
-        <!-- Click wysiwyg anchor -->
-        <comment userInput="Click wysiwyg anchor" stepKey="clickWysiwygLinkAnchorStorefront" />
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="seeWysiwygLinkUrlStorefront"/>
-        <click selector="{{SlideOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="clickWysiwygLinkUrlStorefront"/>
-        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefront2" />
-        <seeCurrentUrlEquals url="{{ExternalLink.googleUrl}}" stepKey="seeThatUrlIsChangedToWysiwygLinkUrlStorefront" />
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
@@ -657,15 +648,6 @@
         <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile" />
         <seeCurrentUrlEquals url="{{PageBuilderSlideItemLinkURL_External.value}}" stepKey="seeThatUrlIsChangedToButtonUrlStorefrontMobile" />
-        <!-- Click mobile wysiwyg anchor -->
-        <comment userInput="Click mobile wysiwyg anchor" stepKey="clickMobileWysiwygLinkAnchorStorefront" />
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <seeElement selector="{{SlideOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="seeMobileWysiwygLinkUrlStorefront"/>
-        <click selector="{{SlideOnFrontend.wysiwygLinkUrl('1', ExternalLink.googleUrl)}}" stepKey="clickMobileWysiwygLinkUrlStorefront"/>
-        <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccurStorefrontMobile2" />
-        <seeCurrentUrlEquals url="{{ExternalLink.googleUrl}}" stepKey="seeThatUrlIsChangedToMobileWysiwygLinkUrlStorefront" />
     </test>
     <test name="SlideItemPosterOverlayPosition">
         <annotations>
