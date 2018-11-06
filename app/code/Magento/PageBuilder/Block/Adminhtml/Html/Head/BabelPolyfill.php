@@ -17,8 +17,6 @@ use Magento\Framework\View\Element\Template;
  */
 class BabelPolyfill extends Template
 {
-    const IE_11_USER_AGENT = 'Trident/7.0; rv:11.0';
-
     /**
      * @var \Magento\PageBuilder\Model\ConfigInterface
      */
@@ -85,6 +83,7 @@ class BabelPolyfill extends Template
      */
     private function isIe11() : bool
     {
-        return strpos($this->httpHeader->getHttpUserAgent(), self::IE_11_USER_AGENT) !== false;
+        return strpos($this->httpHeader->getHttpUserAgent(), 'rv:11.0') !== false
+            && strpos($this->httpHeader->getHttpUserAgent(), 'Trident/7.0;') !== false;
     }
 }
