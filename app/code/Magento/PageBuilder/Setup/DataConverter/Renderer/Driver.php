@@ -86,8 +86,8 @@ class Driver implements RendererInterface
         $rootElementAttributes['style'] .= $margin;
         $linkAttributes = [
             'data-element' => 'link',
-            'data-href' => $eavData['link_url'] ?? '',
-            'data-target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
+            'href' => $eavData['link_url'] ?? '',
+            'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
         ];
 
         $imageAttributes = [
