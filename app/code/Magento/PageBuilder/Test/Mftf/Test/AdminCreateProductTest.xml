@@ -452,6 +452,7 @@
         <actionGroup ref="navigateToCreatedProductAttribute" stepKey="navigateToCreatedProductAttribute">
             <argument name="ProductAttribute" value="$$createPageBuilderAttribute$$"/>
         </actionGroup>
+        <waitForElementVisible selector="{{AttributePropertiesSection.InputType}}" stepKey="waitForInputType"/>
         <selectOption selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="selectPageBuilder" />
         <click selector="{{AttributePropertiesSection.Save}}" stepKey="saveAttribute" />
         <waitForPageLoad stepKey="waitForAttributeSave" />
