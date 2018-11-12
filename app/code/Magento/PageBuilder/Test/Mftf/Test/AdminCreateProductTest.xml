@@ -432,6 +432,10 @@
             <createData stepKey="addToDefaultSetSortOrder" entity="AddToDefaultSetSortOrder1">
                 <requiredEntity createDataKey="createPageBuilderAttribute"/>
             </createData>
+            <createData stepKey="createTextAttribute" entity="productAttributeText"/>
+            <createData stepKey="addToDefaultSetSortOrder1" entity="AddToDefaultSetSortOrder1">
+                <requiredEntity createDataKey="createTextAttribute"/>
+            </createData>
             <createData stepKey="createPreReqCategory" entity="_defaultCategory"/>
             <createData stepKey="relatedSimpleProduct" entity="SimpleProduct2"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -440,6 +444,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <deleteData createDataKey="createPageBuilderAttribute" stepKey="deleteAttribute1"/>
+            <deleteData createDataKey="createTextAttribute" stepKey="deleteAttribute2"/>
             <deleteData createDataKey="relatedSimpleProduct" stepKey="deleteRelatedProduct"/>
         </after>
         <!-- Update created attribute to enable Page Builder -->
@@ -471,14 +476,11 @@
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
-        <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
+        <conditionalClick selector="{{AdminProductContentSection.sectionHeader}}" dependentSelector="{{AdminProductContentSection.sectionHeaderIfNotShowing}}" visible="false" stepKey="openContentSection"/>
         <waitForPageLoad stepKey="waitForPageLoadContentSection"/>
-        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
-        <see userInput="{{EditWithPageBuilderButton.value}}" stepKey="seePageBuilderBtn"/>
-        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
-        <waitForPageLoad stepKey="waitForPageLoadPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
+            <argument name="attributeCode" value="description"/>
+        </actionGroup>
         <!-- Set background color of row -->
         <comment userInput="Set background color of row" stepKey="commentSetRowBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
@@ -490,6 +492,9 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen1" />
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen1"/>
+        <!-- Update new text attribute, to be shown in More Information -->
+        <comment userInput="Update new text attribute, to be shown in More Information" stepKey="commentTextAttribute"/>
+        <fillField selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillCustomContentTextarea"/>
         <!-- Add our related product -->
         <comment userInput="Add our related product" stepKey="commentAddRelatedProduct"/>
         <actionGroup ref="addRelatedProductBySku" stepKey="addRelatedProduct">
@@ -519,6 +524,7 @@
         <seeElement selector="{{StorefrontProductFullWidth.media}}" stepKey="seeMedia" />
         <seeElement selector="{{StorefrontProductFullWidth.description}}" stepKey="seeDescription" />
         <seeElement selector="{{StorefrontProductFullWidth.attributes}}" stepKey="seeAttributes" />
+        <seeElement selector="{{StorefrontProductFullWidth.moreInformation}}" stepKey="seeMoreInformation" />
         <seeElement selector="{{StorefrontProductFullWidth.reviews}}" stepKey="seeReviews" />
         <seeElement selector="{{StorefrontProductFullWidth.related}}" stepKey="seeRelated" />
         <seeElement selector="{{StorefrontProductFullWidth.upsell}}" stepKey="seeUpsell" />
@@ -528,6 +534,7 @@
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.media}}')[0].getBoundingClientRect().y" stepKey="mediaPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.description}}')[0].getBoundingClientRect().y" stepKey="descriptionPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.attributes}}')[0].getBoundingClientRect().y" stepKey="attributesPosition"/>
+        <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.moreInformation}}')[0].getBoundingClientRect().y" stepKey="moreInformationPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.reviews}}')[0].getBoundingClientRect().y" stepKey="reviewsPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.related}}')[0].getBoundingClientRect().y" stepKey="relatedPosition"/>
         <executeJS function="return document.querySelectorAll('{{StorefrontProductFullWidth.upsell}}')[0].getBoundingClientRect().y" stepKey="upsellPosition"/>
@@ -543,8 +550,12 @@
             <expectedResult type="variable">descriptionPosition</expectedResult>
             <actualResult type="variable">attributesPosition</actualResult>
         </assertGreaterThan>
-        <assertGreaterThan stepKey="assertReviewsBelowAttributes">
+        <assertGreaterThan stepKey="assertMoreInformationBelowAttributes">
             <expectedResult type="variable">attributesPosition</expectedResult>
+            <actualResult type="variable">moreInformationPosition</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="assertReviewsBelowMoreInformation">
+            <expectedResult type="variable">moreInformationPosition</expectedResult>
             <actualResult type="variable">reviewsPosition</actualResult>
         </assertGreaterThan>
         <assertGreaterThan stepKey="assertRelatedBelowReviews">
