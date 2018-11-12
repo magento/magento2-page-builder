@@ -29,7 +29,7 @@
     background-clip: padding-box;
     border-radius: inherit;
     box-sizing: border-box;
-    word-break: break-all;
+    overflow-wrap: break-word;
 
     .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
@@ -52,7 +52,6 @@
 
     [data-element='content'] {
         min-height: 50px;
-        word-wrap: break-word;
     }
 
     .pagebuilder-banner-button {
@@ -60,7 +59,9 @@
         -o-transition: opacity 500ms ease;
         -webkit-transition: opacity 500ms ease;
         margin: 20px 0 0 0;
+        max-width: 100%;
         transition: opacity 500ms ease;
+        word-break: break-word;
     }
 }
 
