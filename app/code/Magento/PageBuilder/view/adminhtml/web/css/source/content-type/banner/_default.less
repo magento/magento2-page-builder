@@ -118,15 +118,21 @@
 //  _____________________________________________________
 
 [data-role='banner'] {
-    .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
-        max-width: 50%;
-    }
+    .pagebuilder-banner-wrapper {
+        overflow-wrap: break-word;
 
-    [data-element='content'] {
-        min-height: 50px;
-    }
+        .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
+            max-width: 50%;
+        }
 
-    .pagebuilder-banner-button {
-        margin: @margin 0 0 0;
+        [data-element='content'] {
+            min-height: 50px;
+        }
+
+        .pagebuilder-banner-button {
+            margin: @margin 0 0 0;
+            max-width: 100%;
+            word-break: break-word;
+        }
     }
 }
