@@ -1068,8 +1068,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
-        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_EmptyFrontend.value)}}" stepKey="clickLinkUrl"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.emptyLinkUrl('1')}}" stepKey="seeSlideEmptyLinkUrl"/>
+        <click selector="{{SlideOnFrontend.emptyLinkUrl('1')}}" stepKey="clickEmptyLinkUrl"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderSliderContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>

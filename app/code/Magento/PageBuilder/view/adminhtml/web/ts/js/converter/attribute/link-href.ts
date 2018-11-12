@@ -24,19 +24,19 @@ export default class CreateValueForHref implements ConverterInterface {
     } = {
         category: {
             type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
-            id_path: `category/:href`,
+            id_path: "category/:href",
             template: "Magento_PageBuilder::widget/link_href.phtml",
             type_name: "Catalog Category Link",
         },
         product: {
             type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
-            id_path: `product/:href`,
+            id_path: "product/:href",
             template: "Magento_PageBuilder::widget/link_href.phtml",
             type_name: "Catalog Product Link",
         },
         page: {
             type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
-            page_id: `:href`,
+            page_id: ":href",
             template: "Magento_PageBuilder::widget/link_href.phtml",
             type_name: "CMS Page Link",
         },
@@ -49,10 +49,6 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        if (value === "") {
-            value = "javascript:void(0)";
-        }
-
         return value;
     }
 
@@ -65,14 +61,20 @@ export default class CreateValueForHref implements ConverterInterface {
      */
     public toDom(name: string, data: DataObject): string {
         const link = data[name] as any;
+        let href = "";
 
-        if (typeof link === "undefined" || (typeof link[link.type] === "string" && !link[link.type].length)) {
-            return "javascript:void(0)";
+        if (!link) {
+            return href;
         }
 
-        let href = link[link.type];
+        const linkType = link.type;
+        const isHrefId = !isNaN(parseInt(link[linkType], 10));
 
-        href = this.convertToWidget(href, link.type);
+        if (isHrefId && link) {
+            href = this.convertToWidget(link[linkType], linkType);
+        } else if (link[linkType]) {
+            href = link[linkType];
+        }
 
         return href;
     }

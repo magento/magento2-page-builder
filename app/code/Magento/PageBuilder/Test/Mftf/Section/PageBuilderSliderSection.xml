@@ -95,6 +95,7 @@
         <element name="messageContentText" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <element name="messageContentHeightJS" type="text" selector="return document.evaluate(&quot;(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(text(),'{{arg2}}')]&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight;" parameterized="true"/>
         <element name="linkUrl" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='link'][contains(@href,'{{arg2}}')]" parameterized="true"/>
+        <element name="emptyLinkUrl" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='link']" parameterized="true"/>
         <element name="openInNewTab" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]/a[@data-element='link'][contains(@target,'_blank')]" parameterized="true"/>
         <element name="button" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//button[@data-element='button']" parameterized="true"/>
         <element name="noButton" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper'][not(descendant::*[@data-element='button'])]" parameterized="true"/>

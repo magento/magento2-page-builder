@@ -6,7 +6,7 @@
 -->
 
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <a attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
+    <a if="data.link.attributes().href" attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
         <div css="data.wrapper.css"
              attr="data.wrapper.attributes"
              ko-style="data.wrapper.style"
@@ -26,4 +26,24 @@
             </div>
         </div>
     </a>
+    <div ifnot="data.link.attributes().href" attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
+        <div css="data.wrapper.css"
+             attr="data.wrapper.attributes"
+             ko-style="data.wrapper.style"
+             class="pagebuilder-banner-wrapper">
+            <div class="pagebuilder-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
+                <div class="pagebuilder-collage-content">
+                    <div attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
+                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                            type="button"
+                            class="pagebuilder-banner-button"
+                            attr="data.button.attributes"
+                            ko-style="data.button.style"
+                            css="data.button.css"
+                            html="data.button.html">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -6,7 +6,7 @@
 -->
 
 <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
-    <a data-bind="attr: data.link.attributes, style: data.link.style, css: data.link.css">
+    <a if="data.link.attributes().href" data-bind="attr: data.link.attributes, style: data.link.style, css: data.link.css">
         <div class="pagebuilder-banner-wrapper" attr="data.wrapper.attributes" ko-style="data.wrapper.style" css="data.wrapper.css">
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
@@ -23,4 +23,21 @@
             </div>
         </div>
     </a>
+    <div ifnot="data.link.attributes().href" data-bind="attr: data.link.attributes, style: data.link.style, css: data.link.css">
+        <div class="pagebuilder-banner-wrapper" attr="data.wrapper.attributes" ko-style="data.wrapper.style" css="data.wrapper.css">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
+                <div class="pagebuilder-poster-content">
+                    <div attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
+                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                            type="button"
+                            class="pagebuilder-banner-button"
+                            attr="data.button.attributes"
+                            ko-style="data.button.style"
+                            css="data.button.css"
+                            html="data.button.html">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

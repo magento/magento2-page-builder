@@ -973,8 +973,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
     <test name="ButtonItemEmptyLinkURLDoesNothingOnStorefront">
         <annotations>
@@ -1026,8 +1025,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
-        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="clickLinkUrl" />
+        <seeElement selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="seeButtonEmptyLinkUrlStorefront"/>
+        <click selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="clickButtonEmptyLinkUrlStorefront" />
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderButtonItemContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>

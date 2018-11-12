@@ -82,8 +82,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
     <test name="ButtonItemOneCharacterButtonText">
         <annotations>
@@ -156,10 +155,9 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+        <actionGroup ref="validateButtonItemEmptyLinkContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_OneCharacter"/>
-            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
     </test>
     <test name="ButtonItemCommonCharactersButtonText">
@@ -233,10 +231,9 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+        <actionGroup ref="validateButtonItemEmptyLinkContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_CommonCharacters"/>
-            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
     </test>
     <test name="ButtonItemSpecialCharactersButtonText">
@@ -311,10 +308,9 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+        <actionGroup ref="validateButtonItemEmptyLinkContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_SpecialCharacters"/>
-            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
     </test>
     <test name="ButtonItemLongButtonText">
@@ -400,10 +396,9 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront">
+        <actionGroup ref="validateButtonItemEmptyLinkContent" stepKey="validateStorefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_200Characters"/>
-            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
         </actionGroup>
         <!-- Get Width Of Button on Store Front -->
         <executeJS function="return Math.round({{ButtonItemOnStorefront.jsButtonSelector('1')}}.clientWidth)" stepKey="buttonWidthStoreFront"/>
@@ -492,8 +487,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
     <test name="ButtonItemSecondaryButtonType">
         <annotations>
@@ -569,8 +563,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Secondary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
     <test name="ButtonItemLinkButtonType">
         <annotations>
@@ -646,7 +639,6 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Link.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
 </tests>
