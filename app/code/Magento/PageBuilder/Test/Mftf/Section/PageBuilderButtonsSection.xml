@@ -95,7 +95,7 @@
         <element name="hidden" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[not(text())]" parameterized="true"/>
-        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-role=\'button-item\'] a')[{{arg1}}-1]" parameterized="true"/>
+        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-role=\'button-item\'] [data-element=\'link\']')[{{arg1}}-1]" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="buttonItemText" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//span[@data-element='link_text' and contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonItemTextByButtonGroup" type="button" selector="((//div[@data-role='buttons'])[{{arg1}}]//div[@data-role='button-item'])[{{arg2}}]//span[@data-element='link_text' and contains(.,'{{arg3}}')]" parameterized="true"/>
