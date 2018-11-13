@@ -112,7 +112,7 @@
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForMapVisible"/>
         <clickWithLeftButton selector="{{AddLocationForm.base}}" x="{{x}}" y="{{y}}" stepKey="clickMapToMovePin"/>
-        <waitForElementVisible selector="{{AddLocationForm.pin}}" stepKey="waitForPinVisible"/>
+        <waitForElementVisible selector="{{AddLocationForm.allPins}}" stepKey="waitForPinVisible"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="moveMapPinByDraggingAndDroppingPin">
@@ -139,7 +139,7 @@
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <waitForElementVisible selector="{{page.pin(index)}}" stepKey="waitForMapWithPin"/>
+        <waitForElementVisible selector="{{page.allPins(index)}}" stepKey="waitForMapWithPin"/>
     </actionGroup>
     <actionGroup name="verifyNumberOfPinsOnMap">
         <arguments>
@@ -151,8 +151,8 @@
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
         <waitForElementVisible selector="{{page.base(mapIndex)}}" stepKey="waitForMap"/>
-        <waitForElementVisible selector="{{page.pin(mapIndex)}}" stepKey="waitForMapPin"/>
-        <seeNumberOfElements selector="{{page.pin(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
+        <waitForElementVisible selector="{{page.allPins(mapIndex)}}" stepKey="waitForMapPin"/>
+        <seeNumberOfElements selector="{{page.allPins(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
     </actionGroup>
     <actionGroup name="dontSeeMapPin">
         <arguments>
@@ -162,7 +162,7 @@
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <dontSeeElement selector="{{page.pin(index)}}" stepKey="dontSeeMapPin"/>
+        <dontSeeElement selector="{{page.allPins(index)}}" stepKey="dontSeeMapPin"/>
     </actionGroup>
     <actionGroup name="validateMapButtons">
         <arguments>
