@@ -495,6 +495,7 @@
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen1"/>
         <!-- Update new text attribute, to be shown in More Information -->
         <comment userInput="Update new text attribute, to be shown in More Information" stepKey="commentTextAttribute"/>
+        <waitForElementVisible selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" stepKey="waitForTextInput"/>
         <fillField selector="{{PageBuilderProductAttribute.attributeTextInput($$createTextAttribute.attribute_code$$)}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillCustomContentTextarea"/>
         <!-- Add our related product -->
         <comment userInput="Add our related product" stepKey="commentAddRelatedProduct"/>
