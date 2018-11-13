@@ -36,7 +36,7 @@
             </div>
         </div>
     </a>
-    <div ifnot="data.link.attributes().href" attr="data.link.attributes"
+    <div ifnot="data.link.attributes().href" attr="_.omit(data.link.attributes(), ['href', 'target'])"
        ko-style="data.link.style"
        css="data.link.css">
         <div attr="data.wrapper.attributes"
