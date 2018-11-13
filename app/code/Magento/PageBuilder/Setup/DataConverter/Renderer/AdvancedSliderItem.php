@@ -120,7 +120,10 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         // mobile wrapper div
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '><div data-element="link"';
+        $linkNodeName = isset($eavData['link_url']) ? 'a' : 'div';
+
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '>';
+        $rootElementHtml .= '<' . $linkNodeName . ' data-element="link"';
         $rootElementHtml .= isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '">' : '>';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)
@@ -135,7 +138,7 @@ class AdvancedSliderItem implements RendererInterface
             . $buttonElementHtml
             . '</div></div></div>';
 
-        $rootElementHtml .= '</div></div>';
+        $rootElementHtml .= '</' . $linkNodeName . '></div>';
 
         return $rootElementHtml;
     }

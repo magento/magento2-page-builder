@@ -67,12 +67,14 @@ class ButtonItem implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= '><a data-element="link" href="'
+        $linkNodeName = isset($eavData['link_url']) ? 'a' : 'div';
+
+        $rootElementHtml .= '><' . $linkNodeName . ' data-element="link" href="'
             . ($eavData['link_url'] ?? '') . '"'
             . $buttonStyleAttribute
             . ' class="pagebuilder-button-primary"><span data-element="link_text">'
             . ($eavData['link_text'] ?? '')
-            . '</span></a></div>';
+            . '</span></' . $linkNodeName . '></div>';
 
         return $rootElementHtml;
     }
