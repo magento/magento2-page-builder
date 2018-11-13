@@ -10,8 +10,7 @@
      css="Object.assign({focused: $parent.parent.preview.focusedButton() === $index()}, data.main.css())"
      class="pagebuilder-content-type pagebuilder-button-item no-system-border focus-options">
     <render args="getOptions().template" />
-    <a if="data.link.attributes().href"
-       attr="data.link.attributes"
+    <a attr="data.link.attributes"
        ko-style="data.link.style"
        css="data.link.css"
        click="function (context, event) { onClick($index(), event); }"
@@ -22,16 +21,4 @@
               event="{ focusin: function (context, event) { onFocusIn($index(), event); }, focusout: function (context, event) { onFocusOut($index(), event); } }">
         </span>
     </a>
-    <div ifnot="data.link.attributes().href"
-         attr="data.link.attributes"
-         ko-style="data.link.style"
-         css="data.link.css"
-         click="function (context, event) { onClick($index(), event); }"
-         event="{ dragstart: function(context, event) { event.preventDefault(); }}">
-             <span class="button-item-drag-handle" css="{disabled: parent.parent.children().length <= 1}"></span>
-             <span attr="data.link_text.attributes"
-                  data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }, hasFocusNoScroll: $parent.parent.preview.focusedButton() === $index()"
-                  event="{ focusin: function (context, event) { onFocusIn($index(), event); }, focusout: function (context, event) { onFocusOut($index(), event); } }">
-             </span>
-    </div>
 </div>
