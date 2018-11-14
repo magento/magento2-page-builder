@@ -44,19 +44,6 @@
         <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
     </actionGroup>
-    <actionGroup name="validateButtonItemEmptyLinkContent">
-        <arguments>
-            <argument name="page"/>
-            <argument name="text" defaultValue="PageBuilderButtonItemText_Empty"/>
-            <argument name="type" defaultValue="PageBuilderButtonItemType_Primary"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <comment userInput="validateButtonItemEmptyLinkContent" stepKey="comment"/>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForButtonElement"/>
-        <waitForElementVisible selector="{{page.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
-        <waitForElementVisible selector="{{page.buttonItemType(index, type.value)}}" stepKey="waitForButtonType"/>
-        <waitForElementVisible selector="{{page.buttonItemEmptyLinkUrl(index)}}" stepKey="waitForButtonEmptyLinkUrl"/>
-    </actionGroup>
     <actionGroup name="inlineEditButton">
         <arguments>
             <argument name="text"/>

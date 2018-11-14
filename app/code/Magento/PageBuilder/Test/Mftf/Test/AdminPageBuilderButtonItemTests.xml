@@ -50,7 +50,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <waitForElement selector="{{ButtonItemOnStorefront.emptyButtonItemElement('1')}}" stepKey="seeEmptyButtonOnStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.emptyButtonItemElement('1')}}" stepKey="seeEmptyButtonOnStorefront"/>
     </test>
     <test name="AddButtonsContentTypeToCMSPage">
         <annotations>
@@ -858,7 +858,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
-            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -973,7 +973,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
         <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', '')}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
     <test name="ButtonItemEmptyLinkURLDoesNothingOnStorefront">
         <annotations>
@@ -1025,8 +1025,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="seeButtonEmptyLinkUrlStorefront"/>
-        <click selector="{{ButtonItemOnStorefront.buttonItemEmptyLinkUrl('1')}}" stepKey="clickButtonEmptyLinkUrlStorefront" />
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', '')}}" stepKey="seeButtonEmptyLinkUrlStorefront"/>
+        <click selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', '')}}" stepKey="clickButtonEmptyLinkUrlStorefront" />
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderButtonItemContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
