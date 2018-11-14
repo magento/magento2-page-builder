@@ -121,9 +121,10 @@ class AdvancedSliderItem implements RendererInterface
 
         // mobile wrapper div
         $linkNodeName = isset($eavData['link_url']) ? 'a' : 'div';
+        $linkDataElementName = isset($eavData['link_url']) ? 'link' : 'empty_link';
 
         $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes) . '>';
-        $rootElementHtml .= '<' . $linkNodeName . ' data-element="link"';
+        $rootElementHtml .= '<' . $linkNodeName . ' data-element="' . $linkDataElementName . '"';
         $rootElementHtml .= isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '">' : '>';
         $rootElementHtml .= '<div'
             . $this->printAttributes($wrapperDivElementAttributes)

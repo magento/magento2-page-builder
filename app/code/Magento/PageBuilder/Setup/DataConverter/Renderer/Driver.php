@@ -85,16 +85,17 @@ class Driver implements RendererInterface
         }
         $rootElementAttributes['style'] .= $margin;
 
-        $linkAttributes = [
-            'data-element' => 'link',
-        ];
-
         // if link_url is present, add href and target attribute
         if (isset($eavData['link_url'])) {
-            $linkAttributes = array_merge($linkAttributes, [
+            $linkAttributes = [
+                'data-element' => 'link',
                 'href' => $eavData['link_url'],
                 'target' => isset($eavData['target_blank']) && $eavData['target_blank'] ? '_blank' : '',
-            ]);
+            ];
+        } else {
+            $linkAttributes = [
+                'data-element' => 'empty_link',
+            ];
         }
 
         $imageAttributes = [

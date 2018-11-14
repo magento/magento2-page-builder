@@ -68,8 +68,9 @@ class ButtonItem implements RendererInterface
         }
 
         $linkNodeName = isset($eavData['link_url']) ? 'a' : 'div';
+        $linkDataElementName = isset($eavData['link_url']) ? 'link' : 'empty_link';
 
-        $rootElementHtml .= '><' . $linkNodeName . ' data-element="link"'
+        $rootElementHtml .= '><' . $linkNodeName . ' data-element="' . $linkDataElementName . '"'
             . (isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '"' : '')
             . $buttonStyleAttribute
             . ' class="pagebuilder-button-primary"><span data-element="link_text">'
