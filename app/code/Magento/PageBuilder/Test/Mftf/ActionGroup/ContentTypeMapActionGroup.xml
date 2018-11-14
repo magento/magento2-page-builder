@@ -123,11 +123,11 @@
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <waitForElementVisible selector="{{AddLocationForm.clickablePin}}" stepKey="waitForMapVisible"/>
         <!-- Adding 2nd click to reduce flakiness -->
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone2"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM2"/>
+        <waitForElement selector="{{AddLocationForm.clickablePin}}" stepKey="waitForMapVisible"/>
         <dragAndDrop selector1="{{AddLocationForm.clickablePin}}" selector2="{{AddLocationForm.clickablePin}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropOnMapToMovePin"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
@@ -232,11 +232,11 @@
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <waitForElementVisible selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <!-- Adding 2nd click to reduce flakiness -->
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton2"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone2"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM2"/>
+        <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
     </actionGroup>
@@ -269,11 +269,11 @@
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <waitForElementVisible selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <!-- Adding 2nd click to reduce flakiness -->
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton2"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone2"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM2"/>
+        <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
         <waitForElementVisible selector="{{page.locationName(mapIndex, locationName.value)}}" stepKey="waitForLocationName"/>
@@ -290,11 +290,11 @@
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <waitForElementVisible selector="{{AddLocationForm.clickablePin}}" stepKey="waitForPin"/>
         <!-- Adding 2nd click to reduce flakiness -->
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone2"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM2"/>
+        <waitForElement selector="{{AddLocationForm.clickablePin}}" stepKey="waitForPin"/>
         <click selector="{{AddLocationForm.clickablePin}}" stepKey="clickPin"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.tooltipWindow}}" stepKey="dontSeeTooltip"/>
     </actionGroup>

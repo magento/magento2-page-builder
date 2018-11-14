@@ -10,7 +10,7 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
-        <element name="clickablePin" type="button" selector="(//div[contains(@class,'pagebuilder-map')][{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
+        <element name="clickablePin" type="button" selector="((//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
         <element name="allPins" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="pinLocations" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
         <!-- Location Pin Configuration -->
@@ -53,7 +53,7 @@
         <element name="base" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('div[data-role=\'map\']')[{{arg1}}]" parameterized="true"/>
         <element name="allPins" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
-        <element name="clickablePin" type="button" selector="(//div[@data-role='map'][{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
+        <element name="clickablePin" type="button" selector="((//div[@data-role='map'])[{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
         <element name="pinLocations" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
         <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
         <!-- Location Pin Configuration -->
@@ -104,7 +104,7 @@
         <element name="editFormSave" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#save"/>
         <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
         <element name="baseJS" type="text" selector="document.querySelector('div[data-index=\'position\'] div.map-field')"/>
-        <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']//map//area"/>
+        <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//map//area"/>
         <element name="allPins" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]"/>
         <element name="pinLocations" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
         <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gm-style-iw']"/>
