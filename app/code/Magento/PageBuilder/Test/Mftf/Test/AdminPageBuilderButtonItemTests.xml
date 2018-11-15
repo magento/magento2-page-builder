@@ -1025,8 +1025,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', '')}}" stepKey="seeButtonEmptyLinkUrlStorefront"/>
-        <click selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', '')}}" stepKey="clickButtonEmptyLinkUrlStorefront" />
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="seeButtonEmptyLinkUrlStorefront"/>
+        <click selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="clickButtonEmptyLinkUrlStorefront" />
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderButtonItemContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
