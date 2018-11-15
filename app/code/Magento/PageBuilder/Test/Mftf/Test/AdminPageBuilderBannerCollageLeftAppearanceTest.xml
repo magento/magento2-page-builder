@@ -305,6 +305,23 @@
             <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
+    <test name="BannerCollageLeftContentCanWordWrap" extends="BannerPosterContentCanWordWrap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Banner content can wrap words to multiple lines"/>
+            <description value="A user can see banner collage left content word wrap to multiple lines"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4965"/>
+            <testCaseId value="MC-5632"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('6')}}" x="$guideWidth" stepKey="resizeColumn"/>
+    </test>
     <test name="BannerCollageLeftButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
