@@ -2393,6 +2393,50 @@
             <actualResult type="variable">columnOneTextHeight</actualResult>
         </assertGreaterThan>
     </test>
+    <test name="TextContentCanWordWrap" extends="BannerPosterContentCanWordWrap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Text content can wrap words to multiple lines"/>
+            <description value="A user can see text content word wrap to multiple lines"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4965"/>
+            <testCaseId value="MC-5634"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <fillField selector="{{TextOnStage.wysiwyg('1')}}" userInput="{{PageBuilderMessageProperty_WordBreak.value}}" after="dragIntoStage" stepKey="fillTextToTextarea"/>
+        <comment userInput="keyForRemoval" stepKey="inlineEdit"/>
+        <comment userInput="keyForRemoval" stepKey="openEditMenuOnStage"/>
+        <comment userInput="keyForRemoval" stepKey="enterAppearanceProperty"/>
+        <comment userInput="keyForRemoval" stepKey="saveEditPanelSettings"/>
+        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn"/>
+        <actionGroup ref="validateContentWordWrap" stepKey="validateContentWordWrapStage">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="height" value="80"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordWrap" stepKey="validateContentWordWrapAfterSave">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="height" value="110"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordWrap" stepKey="validateContentWordWrapStorefront">
+            <argument name="page" value="TextOnStorefront"/>
+            <argument name="height" value="80"/>
+        </actionGroup>
+    </test>
     <test name="TextInlineWYSIWYGWidgetAndVariableStyle">
         <annotations>
             <features value="PageBuilder"/>
