@@ -87,6 +87,7 @@
         <element name="backgroundRepeat" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
         <element name="backgroundAttachment" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
         <!-- Content Configuration -->
+        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-role=slide] [data-element=content]')[{{arg1}} - 1]" parameterized="true"/>
         <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][not(*)]" parameterized="true"/>
         <element name="messageContentTextArea" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
@@ -134,6 +135,7 @@
         <element name="variablePlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-variable magento-placeholder')]" parameterized="true"/>
         <element name="widgetPlaceholder" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//*[contains(@class, 'magento-placeholder magento-widget')]" parameterized="true"/>
         <element name="tinymce" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg}}]//div[contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
+        <element name="contentJS" type="text" selector="document.querySelectorAll('[data-role=slider] div.inline-wysiwyg')[{{arg1}} - 1]" parameterized="true"/>
         <!-- Appearance Configuration -->
         <element name="appearance" type="text" selector="(//div[@data-role='slide'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="slideName" type="button" selector="(//div[@data-role='slide'])[{{arg1}}][@data-slide-name='{{arg2}}']" parameterized="true"/>
