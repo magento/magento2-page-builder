@@ -50,6 +50,7 @@ class Driver implements RendererInterface
 
     /**
      * @inheritdoc
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function render(array $itemData, array $additionalData = []) : string
     {

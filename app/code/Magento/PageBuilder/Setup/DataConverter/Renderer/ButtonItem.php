@@ -26,6 +26,10 @@ class ButtonItem implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader
@@ -35,7 +39,7 @@ class ButtonItem implements RendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
