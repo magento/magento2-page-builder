@@ -9,7 +9,7 @@ Out of the box, Page Builder comes with several content types (controls) that yo
 
 This topic describes how to develop and add your own content types for use within Page Builder as outlined here and detailed after.
 
-![Creating Custom Content Types](../images/content-type-overview.svg)
+![Creating Custom Content Types](../images/content-type-overview.png)
 
 ## Prerequisites
 
