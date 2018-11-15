@@ -1041,8 +1041,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{BannerOnFrontendEmptyLink.linkUrl('1', '')}}" stepKey="seeBannerLinkElementIsADiv"/>
-        <click selector="{{BannerOnFrontendEmptyLink.linkUrl('1', '')}}" stepKey="clickLinkElement"/>
+        <seeElement selector="{{BannerOnFrontendEmptyLink.linkUrl('1', PageBuilderBannerLinkUrlProperty_Empty.value)}}" stepKey="seeBannerLinkElementIsADiv"/>
+        <click selector="{{BannerOnFrontendEmptyLink.linkUrl('1', PageBuilderBannerLinkUrlProperty_Empty.value)}}" stepKey="clickLinkElement"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderBannerContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
