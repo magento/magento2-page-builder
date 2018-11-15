@@ -25,7 +25,7 @@ export default class Link implements PropertyReaderInterface {
      * @returns {string | object}
      */
     public read(element: HTMLElement): string | object {
-        let href = element.getAttribute("data-href") || element.getAttribute("href");
+        let href = element.getAttribute("href");
         const attributeLinkType = element.getAttribute("data-link-type");
 
         if (typeof href === "string" && attributeLinkType !== "default") {
@@ -34,7 +34,7 @@ export default class Link implements PropertyReaderInterface {
 
         return {
             [attributeLinkType]: href,
-            setting: (element.getAttribute("data-target") || element.getAttribute("target")) === "_blank",
+            setting: element.getAttribute("target") === "_blank",
             type: attributeLinkType,
         };
     }
