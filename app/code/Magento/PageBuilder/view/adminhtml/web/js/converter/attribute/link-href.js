@@ -69,7 +69,7 @@ define(["underscore"], function (_underscore) {
 
       if (isHrefId && link) {
         href = this.convertToWidget(link[linkType], linkType);
-      } else if (link[linkType]) {
+      } else if (typeof link[linkType] === "string") {
         href = link[linkType];
       }
 
