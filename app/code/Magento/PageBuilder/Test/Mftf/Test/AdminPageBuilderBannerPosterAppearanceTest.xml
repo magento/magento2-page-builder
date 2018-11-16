@@ -466,6 +466,8 @@
             <testCaseId value="MC-5631"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+            <group value="pagebuilder-wordWrap"/>
         </annotations>
         <before>
             <resizeWindow width="1280" height="1024" stepKey="resetWindowToDesktopBefore"/>
@@ -484,6 +486,15 @@
         <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Duplicate Column to create small width -->
+        <comment userInput="Duplicate Column to create small width" stepKey="commentDuplicateColumnToCreateSmallWidth"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="expectedIndex" value="2"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
         </actionGroup>
         <!-- Add content type to Column -->
         <comment userInput="Add content type to Column" stepKey="addContentTypeToColumn"/>
@@ -506,14 +517,9 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
-        <!-- Resize Columns -->
-        <comment userInput="Resize Columns" stepKey="commentResizeColumns"/>
-        <executeJS function="return document.querySelector('{{ColumnOnBackend.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
-        <dragAndDrop selector1="{{ColumnOnBackend.columnX('1')}} {{ColumnOnBackend.columnResizeHandle}}" selector2="{{ColumnOnBackend.columnResizeGridLine('3')}}" x="$guideWidth" stepKey="resizeColumn"/>
-        <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Validate Height Before Save -->
         <comment userInput="Validate Height Before Save" stepKey="commentValidateBeforeSave"/>
-        <actionGroup ref="validateContentWordWrap" stepKey="validateContentWordWrapStage">
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
             <argument name="page" value="BannerOnBackend"/>
             <argument name="height" value="110"/>
         </actionGroup>
@@ -521,7 +527,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Height After Save -->
         <comment userInput="Validate Height After Save" stepKey="commentValidateAfterSave"/>
-        <actionGroup ref="validateContentWordWrap" stepKey="validateContentWordWrapAfterSave">
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
             <argument name="page" value="BannerOnBackend"/>
             <argument name="height" value="110"/>
         </actionGroup>
@@ -530,7 +536,7 @@
         </actionGroup>
         <!-- Validate Height Storefront -->
         <comment userInput="Validate Height Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateContentWordWrap" stepKey="validateContentWordWrapStorefront">
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
             <argument name="page" value="BannerOnFrontend"/>
             <argument name="height" value="50"/>
         </actionGroup>
