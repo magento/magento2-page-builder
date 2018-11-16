@@ -8,7 +8,7 @@ Out of the box, Page Builder comes with several content types (controls) that yo
 
 ## Prerequisites
 
-Content types are implemented as modules. Therefore, this topic assumes have already created a basic Magento module structure in which to add your content type files. **[Add a link to devdocs module topic]**  
+Content types are implemented as modules. Therefore, this topic assumes you have already created a basic Magento module structure in which to add your content type files. **[Add a link to devdocs module topic]**  
 
 ## Overview
 
@@ -25,9 +25,9 @@ The steps for creating a Page Builder content type are briefly illustrated and o
 7. Add a frontend widget: 
 
 
-## Step 1: Create Content Type configuration
+## Step 1: Add a configuration
 
-Adding a new content type starts with [configuration](content-type-configuration.md).
+Adding a new content type starts with an XML [configuration](content-type-configuration.md) file.
 
 To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content:
 
