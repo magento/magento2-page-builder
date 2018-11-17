@@ -31,16 +31,18 @@ We offer one method for installing PageBuilder:
 2. [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 3. [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
 
-### Customizations
+### Configurations
 
-* [Block chooser](docs/customizations/block-chooser.md)
-* [Full-width page layouts](docs/customizations/full-width-page-layouts.md)
-* [Responsive layouts](docs/customizations/responsive-layouts.md)
-* [Storefront customization](docs/customizations/storefront-customization.md)
-* [Visual selects](docs/customizations/visual-selects.md)
-* [Additional data configuration](docs/customizations/additional-data-configuration.md)
-* [Product conditions](docs/customizations/product-conditions.md)
-* [Server-side rendered previews](docs/customizations/server-side-rendered-previews.md)
+* [Content type configuration](docs/configurations/content-type-configuration.md)
+* [Additional configurations](docs/configurations/additional-configurations.md)
+* [Panel configurations](docs/configurations/panel-configurations.md)
+* [Block chooser configuration](docs/configurations/block-chooser-configuration.md)
+* [Full-width page layout configuration](docs/configurations/full-width-page-layout-configuration.md)
+* [Responsive layout configuration](docs/configurations/responsive-layout-configuration.md)
+* [Storefront configuration](docs/configurations/storefront-configuration.md)
+* [Selector configuration](docs/configurations/selector-configuration.md)
+* [Product conditions configuration](docs/configurations/product-conditions-configuration.md)
+* [Server-side rendered previews](docs/configurations/server-side-rendered-previews.md)
 
 ### How Tos
 
@@ -57,7 +59,6 @@ We offer one method for installing PageBuilder:
 * [Architecture](docs/reference/architecture.md)
 * [Events](docs/reference/events.md)
 * [Knockout bindings](docs/reference/knockout-bindings.md)
-* [Configuration](docs/reference/configuration.md)
 * [Master format](docs/reference/master-format.md)
 
 ### Migration

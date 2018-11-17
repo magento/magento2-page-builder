@@ -6,13 +6,14 @@ By default, the Page Builder panel has four groups (Layout, Elements, Media, Add
 
 ![Panel menu](../images/panel-horizontal-default.png)
 
-You can customize the panel menu in three ways:
+You can customize the panel menu in four ways:
 
 1. Rename panel groups.
-2. Add new panel group.
-3. Add your content type to a panel group.
+2. Reorder panel groups.
+2. Add new panel groups.
+3. Add content types to different panel groups.
 
-## Rename the panel groups
+## Rename panel groups
 
 To rename the panel groups, you need to override the defaults configured in the Page Builder `group.xml` file as follows:
 
@@ -53,7 +54,25 @@ To rename the panel groups, you need to override the defaults configured in the 
     </config>
     ```
 
-## Add a new panel group
+## Reorder panel groups
+
+To reorder panel groups, you need to override the default `sortOrder`s applied to the existing panel groups:
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/group.xsd">
+    <group name="layout" translate="label" sortOrder="30" label="Structure"/>
+    <group name="elements" translate="label" sortOrder="20" label="Form Controls"/>
+    <group name="media" translate="label" sortOrder="10" label="Visual Controls"/>
+    <group name="add_content" translate="label" sortOrder="1" label="Content"/>
+</config>
+```
+
+In this example, the `sortOrder`'s of the groups have been reversed from their defaults. The result looks like this:
+
+![Reorder panel groups](../images/panel-reorder-groups.png)
+
+## Add new panel groups
 
 To add a new panel group, add a new `<group>` element  in your module's `group.xml` file with a unique `name` as shown here:
 
@@ -70,15 +89,15 @@ The result shows the new group (My Controls) positioned at the top of the panel 
 
 Now to populate the new and existing groups with content types.
 
-## Add a content type to a panel group
+## Add content types to different panel groups
 
-To do this, set your configuration's `group` attribute to the `<group>` element's name. For example, to add your content type to the Layout group,
+To add content types to other panel groups, set your configuration's `group` attribute to the new `<group>` element's name. For example, to add your content type to a new group called My Controls,
 
 ```xml
 <group name="my_controls" translate="label" sortOrder="0" label="My Controls"/>
 ```
 
-Specify "my_controls" as the value of the `group` attribute in your configuration file, as shown here:
+You specify "my_controls" as the value of the `group` attribute in your configuration file, as shown here:
 
 ```xml
 <?xml version="1.0"?>
@@ -86,18 +105,29 @@ Specify "my_controls" as the value of the `group` attribute in your configuratio
     <type name="bestcontrolever"
           label="Best Control Ever"
           group="my_controls"
-					...>
+          ...
+          >
 ```
 
 ![Group with content type](../images/group-with-content-type.png)
 
-The same technique applies to adding a content type to an existing panel groups: `layout`, `elements`, `media`, and `add_content` as shown here:
+The same technique applies when you want to add a new content type (or move existing content types) to one of the default groups: `layout`, `elements`, `media`, and `add_content` as shown here:
 
 ```xml
 <group name="layout" translate="label" sortOrder="1" label="Layout"/>
 <group name="elements" translate="label" sortOrder="10" label="Elements"/>
 <group name="media" translate="label" sortOrder="20" label="Media"/>
 <group name="add_content" translate="label" sortOrder="30" label="Add Content"/>
+```
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="bestcontrolever"
+          label="Best Control Ever"
+          group="elements"
+          ...
+          >
 ```
 
 <!-- {% endraw %} -->
