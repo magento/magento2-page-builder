@@ -17,7 +17,7 @@ You can customize the panel menu in four ways:
 
 To rename the panel groups, you need to override the defaults configured in the Page Builder `group.xml` file as follows:
 
-1. Add a file called `group.xml` to your module's `view/adminhtml/pagebuilder/` directory:
+1. Add a file named `group.xml` to your module's `view/adminhtml/pagebuilder/` directory:
 
     ![Custom group file](../images/custom-group-file.png)
 
