@@ -27,15 +27,28 @@ We offer one method for installing PageBuilder:
 
 ### Getting Started
 
-1. [Introduction](docs/getting-started/introduction.md)
-2. [Install Page Builder](docs/getting-started/install-pagebuilder.md)
-3. [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
+* [Introduction](docs/getting-started/introduction.md)
+* [Install Page Builder](docs/getting-started/install-pagebuilder.md)
+* [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
+
+### Create a basic content type
+
+* [Overview](docs/create-basic-content-type/overview.md)
+* [Step 1: Add configuration](docs/create-basic-content-type/step-1-add-configuration.md)
+* [Step 2: Add templates](docs/create-basic-content-type/step-2-add-templates.md)
+* [Step 3: Add components](docs/create-basic-content-type/step-3-add-components.md)
+* [Step 4: Add editor](docs/create-basic-content-type/step-4-add-editor.md)
+* [Step 5: Add layout](docs/create-basic-content-type/step-5-add-layout.md)
+* [Step 6: Add styles and icons](docs/create-basic-content-type/step-6-add-styles-icons.md)
+* [Step 7: Add frontend widget](docs/create-basic-content-type/step-7-add-frontend-widget.md)
+* [What's next](docs/create-basic-content-type/whats-next.md)
 
 ### Configurations
 
-* [Content type configuration](docs/configurations/content-type-configuration.md)
+* [Main configurations](docs/configurations/content-type-configuration.md)
 * [Additional configurations](docs/configurations/additional-configurations.md)
 * [Panel configurations](docs/configurations/panel-configurations.md)
+* [Iconography](docs/configurations/iconography.md)
 * [Block chooser configuration](docs/configurations/block-chooser-configuration.md)
 * [Full-width page layout configuration](docs/configurations/full-width-page-layout-configuration.md)
 * [Responsive layout configuration](docs/configurations/responsive-layout-configuration.md)
@@ -46,8 +59,6 @@ We offer one method for installing PageBuilder:
 
 ### How Tos
 
-* [How to develop a new content type](docs/how-to/how-to-develop-new-content-type.md)
-* [How to develop a container content type](docs/how-to/how-to-develop-container-content-type.md)
 * [How to use the Image Uploader](docs/how-to/how-to-use-image-uploader.md)
 * [How to add inline text editing](docs/how-to/how-to-add-inline-text-editing.md)
 * [How to add a custom toolbar](docs/how-to/how-to-add-custom-toolbar.md)
