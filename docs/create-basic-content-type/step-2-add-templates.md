@@ -1,3 +1,5 @@
+<!-- {% raw %} -->
+
 # Step 2: Add templates
 
 Page Builder templates are HTML files that define the appearance of content types within both the Admin UI (using the preview.html) and the storefront UI (using the master.html). Content types cannot be rendered without these templates, so let's create the ones already specified in the `<appearance>` element of our configuration file.
@@ -47,3 +49,4 @@ Page Builder templates are HTML files that define the appearance of content type
 
     ![Storefront master.html template](../images/content-type-master-template.png) 
     
+<!-- {% endraw %} -->
