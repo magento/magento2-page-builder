@@ -49,6 +49,7 @@ We offer one method for installing PageBuilder:
 * [Main configurations](docs/configurations/content-type-configuration.md)
 * [Additional configurations](docs/configurations/additional-configurations.md)
 * [Panel configurations](docs/configurations/panel-configurations.md)
+* [Option menu configurations](docs/configurations/option-menu-configurations.md)
 * [Iconography](docs/configurations/iconography.md)
 * [Block chooser configuration](docs/configurations/block-chooser-configuration.md)
 * [Full-width page layout configuration](docs/configurations/full-width-page-layout-configuration.md)
@@ -60,6 +61,9 @@ We offer one method for installing PageBuilder:
 
 ### How Tos
 
+* [How to develop a new content type](docs/how-to/how-to-develop-new-content-type.md)
+* [How to develop a container content type](docs/how-to/how-to-develop-container-content-type.md)
+* [How to use the Image Uploader](docs/how-to/how-to-use-image-uploader.md)
 * [How to use the Image Uploader](docs/how-to/how-to-use-image-uploader.md)
 * [How to add inline text editing](docs/how-to/how-to-add-inline-text-editing.md)
 * [How to add a custom toolbar](docs/how-to/how-to-add-custom-toolbar.md)

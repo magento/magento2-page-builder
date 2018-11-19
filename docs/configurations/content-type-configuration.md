@@ -15,7 +15,7 @@ Use the content type and group configuration to add new content types, extend ex
 | `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
 | `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
-| `additional_data`   | Allows to specify additional data for component, see [custom configuration for content type](data-configuration.md) for more information. |
+| `additional_data`   | Allows to specify additional data for component, see [additional configurations](additional-configurations.md) for more information. |
 
 | Attribute           | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |

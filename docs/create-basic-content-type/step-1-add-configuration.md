@@ -6,6 +6,8 @@ Creating a configuration file is the first step to creating a new content type. 
 
 1. Create a new XML file in the following directory structure of your module: `view/adminhtml/pagebuilder/content_type/my-content-type.xml`. 
 
+    ![Create config file](../images/create-config-file.png)
+
 2. Copy the contents of this example into your `my-content-type.xml` file:
     ``` xml
     <?xml version="1.0"?>
@@ -39,35 +41,4 @@ Creating a configuration file is the first step to creating a new content type. 
     </config>
     ```
 
-3. Create the required `preview_template` and `render_template` as specified in the configuration file.
-
-    Before seeing the results of our configuration in the Page Builder panel menu, we need to create the two templates specified in the <appearance> element of the configuration file: 
-    * preview.html - to display our content type within the Admin UI. 
-    * master.html - to display our content type within the CMS page on the storefront. 
-
-    Both templates are required. So for now, just create the files within the following directory structure, `view/adminhtml/web/template/content_type/my-content-type/default/`, using the example content that follows. We will discuss them in detail later:
-    
-    ```html
-    <!--preview.html-->
-    <div class="pagebuilder-content-type" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-        <render args="getOptions().template" />
-        <div attr="data.main.attributes" css="data.main.css" ko-style="data.main.style">
-            <div style="width: 100%; height: 100px; background-color: #f1f1f1; padding: 20px;">Admin template</div>
-        </div>
-    </div>
-    ```
-    
-    ```html
-    <!--master.html-->
-    <div class="pagebuilder-content-type" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-        <render args="getOptions().template" />
-        <div attr="data.main.attributes" css="data.main.css" ko-style="data.main.style">
-            <div style="width: 100%; height: 100px; background-color: #f1f1f1; padding: 20px;">Admin template</div>
-        </div>
-    </div>
-    ```
-
-4. Flush your config cache `bin/magento cache:flush config` and view Page Builder from the Home Page editor (as a convenience for storefront viewing later). The Page Builder panel menu should show your content type at the top of the layout group:
-   
-   ![Page Builder Panel Config](../images/create-config-file-1.png) 
-   
+If you try to view Page Builder at this point, Page Builder will throw an error noting that the `preview_template` and `render_template` from the `<appearance` element are missing. These templates are required before we can add our content type to Page Builder. Let's do that in [Step 2: Add templates](step-2-add-templates.md).
