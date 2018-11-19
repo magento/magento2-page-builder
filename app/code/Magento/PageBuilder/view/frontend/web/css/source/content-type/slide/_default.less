@@ -11,21 +11,14 @@
     box-sizing: border-box;
     overflow: hidden;
 
-    > [data-element='link'] {
+    > [data-element='link'],
+    > [data-element='empty_link'] {
         color: inherit;
         text-decoration: inherit;
 
         &:hover {
             color: inherit;
             text-decoration: inherit;
-        }
-
-        &[href='javascript:void(0)'] {
-            cursor: auto;
-        }
-
-        &:not([href='javascript:void(0)']) {
-            cursor: pointer;
         }
     }
 }

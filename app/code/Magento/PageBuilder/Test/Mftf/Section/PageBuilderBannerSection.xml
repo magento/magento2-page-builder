@@ -61,6 +61,9 @@
         <element name="posterPadding" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <element name="collagePadding" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
+    <section name="BannerOnFrontendEmptyLink">
+        <element name="linkUrl" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]/div[@data-element='empty_link'][not(@href) and not(@target)][not(@href='{{arg2}}')]" parameterized="true"/>
+    </section>
     <section name="BannerOnBackend">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>

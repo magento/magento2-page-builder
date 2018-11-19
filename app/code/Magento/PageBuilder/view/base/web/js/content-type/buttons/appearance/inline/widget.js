@@ -28,16 +28,17 @@ define([
     };
 
     return function (config, element) {
-        var $element = $(element);
+        var $element = $(element),
+            buttonSelector = '[data-element="link"], [data-element="empty_link"]';
 
         if ($element.data('sameWidth')) {
-            equalizeButtonWidth($element.find('[data-element="link"]'));
+            equalizeButtonWidth($element.find(buttonSelector));
             $(window).resize(function () {
-                equalizeButtonWidth($element.find('[data-element="link"]'));
+                equalizeButtonWidth($element.find(buttonSelector));
             });
             events.on('contentType:redrawAfter', function (eventData) {
                 if ($element.closest(eventData.element).length > 0) {
-                    equalizeButtonWidth($element.find('[data-element="link"]'));
+                    equalizeButtonWidth($element.find(buttonSelector));
                 }
             });
         }
