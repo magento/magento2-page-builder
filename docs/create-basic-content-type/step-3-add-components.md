@@ -1,1 +1,1 @@
-# Step 3: Add a component
+# Step 3: Add components

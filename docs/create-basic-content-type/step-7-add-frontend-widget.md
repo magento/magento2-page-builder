@@ -1,1 +1,1 @@
-# Step 7: Add a frontend widget
+# Step 7: Add frontend widget

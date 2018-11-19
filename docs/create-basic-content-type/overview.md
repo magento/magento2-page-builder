@@ -1,18 +1,19 @@
-# Content type Overview
+# Overview
 
 Out of the box, Page Builder comes with several content types (controls) that you can drag onto the stage to build your storefront pages, as shown below. In this topic, you will learn how to create your own content type for use within Page Builder.
 
 ![Page Builder Content Types](../images/panel-horizontal.png)
 
 ## Prerequisites
+{:.tutorial-before}
 
 Page Builder creates content types from modules. So this topic assumes you have a basic module structure in which to add your content type files.
 
-![](../images/module-minimum-structure.png)
+![Minimum module structure](../images/module-minimum-structure.png)
 
 ## Overview
 
-The steps for creating a Page Builder content type are briefly outlined here. The remainder of this topic describes these steps in detail.
+An overview of the steps for creating a Page Builder content type are briefly illustrated and described here.
 
 ![Creating Custom Content Types](../images/content-type-overview.png)
 
@@ -24,5 +25,10 @@ The steps for creating a Page Builder content type are briefly outlined here. Th
 6. **Add styles and icons**: LESS and image files (png, svg) to add specific styling and images to your content types as they appear on the Admin stage and the storefront. 
 7. **Add frontend widget**: a JavaScript file to control the UI behavior (user interactivity) of your content type on the storefront.  
 
+## Content type files
+
+The files you will need to create in order to build a basic content type are shown here.
+
 ![Before and after content type](../images/content-type-files.png)
 
+This tutorial walks you through creating these files, step by step.

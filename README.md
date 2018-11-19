@@ -30,6 +30,7 @@ We offer one method for installing PageBuilder:
 * [Introduction](docs/getting-started/introduction.md)
 * [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 * [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
+* [View Page Builder](docs/getting-started/view-pagebuilder.md)
 
 ### Create a content type
 
