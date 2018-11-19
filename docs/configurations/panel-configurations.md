@@ -47,7 +47,7 @@ To rename the panel groups, you need to extend the defaults configured in the Pa
 
 ## Reorder panel groups
 
-To reorder existing panel groups, you need to override the default `sortOrder`s applied to existing panel groups. The `sortOrder` is defined as a `byte` value, so it can be set any where from -127 to 127. This example changes the order of the `layout` and `elements` groups to display as the last two groups. 
+To reorder existing panel groups, you need to override the default `sortOrder`s applied to existing panel groups. The `sortOrder` is defined as a `byte` value, so technically, it can be set any where from -128 to 127, but we don't recommend using negative values! Just keep the byte value in mind when you try to set the `sortOrder` above 127. The following example changes the order of the `layout` and `elements` groups to display as the last two groups. 
 
 ```xml
 <?xml version="1.0"?>
