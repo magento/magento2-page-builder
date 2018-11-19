@@ -385,8 +385,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="dontSeeMessageContentStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeNoMessageContentStorefront"/>
         <seeElement selector="{{SlideOnFrontendEmptyLink.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefront"/>
@@ -409,8 +408,7 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefrontMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="dontSeeMessageContentStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeNoMessageContentStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontendEmptyLink.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefrontMobile"/>
