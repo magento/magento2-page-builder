@@ -103,11 +103,11 @@
         </actionGroup>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupValidateInlineAppearance">
@@ -239,11 +239,11 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="secondButtonIndex" value="10"/>
         </actionGroup>
     </test>
@@ -316,7 +316,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupValidateInlineAppearanceAddButton">
@@ -383,7 +383,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupValidateStackedAppearanceAddButton">
@@ -450,7 +450,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupValidateSwitchingAppearances">
@@ -528,7 +528,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Storefront"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
@@ -570,7 +570,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Storefront2"/>
         <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupValidateInlineAppearanceLongNameWrap">
@@ -655,7 +655,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateButtonGroupInlineAppearanceWraps" stepKey="seeAppearanceWrapsOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupInlineAppearanceEnableSameSize">
@@ -752,7 +752,7 @@
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupStackedAppearanceEnableSameSize" extends="ButtonGroupInlineAppearanceEnableSameSize">
@@ -872,7 +872,7 @@
         </actionGroup>
         <actionGroup ref="validateButtonItemsDifferentSizes" stepKey="validateButtonsDifferentSizesStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupStackedAppearanceDisableSameSize" extends="ButtonGroupInlineAppearanceDisableSameSize">
@@ -967,9 +967,9 @@
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
         <!-- Edit Button: Make Largest Button Larger -->
         <comment userInput="Edit Button: Make Largest Button Larger" stepKey="commentEdit1"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
@@ -999,9 +999,9 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
         <assertGreaterThan stepKey="assertButtonWidthLargerThanInitialStorefront">
             <actualResult type="variable">button1WidthStorefront2</actualResult>
             <expectedResult type="variable">button1WidthStorefront1</expectedResult>
@@ -1035,9 +1035,9 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront3"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront3"/>
         <assertLessThan stepKey="assertButtonWidthSmallerThanInitialStorefront">
             <actualResult type="variable">button1WidthStorefront3</actualResult>
             <expectedResult type="variable">button1WidthStorefront1</expectedResult>
@@ -1071,9 +1071,9 @@
         <waitForPageLoad stepKey="waitForPageLoad6"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront4"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront4"/>
         <assertEquals stepKey="assertButtonWidthUnchangedStorefront">
             <actualResult type="variable">button1WidthStorefront4</actualResult>
             <expectedResult type="variable">button1WidthStorefront3</expectedResult>
@@ -1107,9 +1107,9 @@
         <waitForPageLoad stepKey="waitForPageLoad8"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront5">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront5"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront5"/>
         <assertEquals stepKey="assertButtonWidthSameAsInitialStorefront">
             <actualResult type="variable">button1WidthStorefront5</actualResult>
             <expectedResult type="variable">button1WidthStorefront1</expectedResult>
@@ -1182,9 +1182,9 @@
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
         <!-- Add New Longest Button -->
         <comment userInput="Add New Longest Button" stepKey="commentAddNewButton"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
@@ -1220,14 +1220,14 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="secondButtonIndex" value="3"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
         <assertGreaterThan stepKey="assertButtonWidthStorefront">
             <actualResult type="variable">button1WidthStorefront2</actualResult>
             <expectedResult type="variable">button1WidthStorefront1</expectedResult>
@@ -1300,9 +1300,9 @@
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront1"/>
         <!-- Update Button Border Width -->
         <comment userInput="Update Button Border Width" stepKey="commentUpdateButton"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
@@ -1336,9 +1336,9 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront2"/>
         <assertGreaterThan stepKey="assertButtonWidthStorefront">
             <actualResult type="variable">button1WidthStorefront2</actualResult>
             <expectedResult type="variable">button1WidthStorefront1</expectedResult>
@@ -1374,9 +1374,9 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront3"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront3"/>
         <assertGreaterThan stepKey="assertButtonWidthStorefront2">
             <actualResult type="variable">button1WidthStorefront3</actualResult>
             <expectedResult type="variable">button1WidthStorefront2</expectedResult>
@@ -1412,9 +1412,9 @@
         <waitForPageLoad stepKey="waitForPageLoad6"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront4">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront4"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="button1WidthStorefront4"/>
         <assertGreaterThan stepKey="assertButtonWidthStorefront3">
             <actualResult type="variable">button1WidthStorefront4</actualResult>
             <expectedResult type="variable">button1WidthStorefront3</expectedResult>
@@ -1480,7 +1480,7 @@
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
     </test>
     <test name="ButtonGroupCreateNewSmallerButtonWithSameSizeEnabled" extends="ButtonGroupCreateNewLargestButtonWithSameSizeEnabled">
@@ -1734,10 +1734,10 @@
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('1')}}')).width)" stepKey="columnWidthStorefront"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefront">
             <expectedResult type="variable">$columnWidthStorefront</expectedResult>
             <actualResult type="variable">$buttonWidthStorefront</actualResult>
@@ -1747,10 +1747,10 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile1"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('1')}}')).width)" stepKey="columnWidthStorefrontMobile"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefrontMobile">
             <expectedResult type="variable">$columnWidthStorefrontMobile</expectedResult>
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
@@ -1792,10 +1792,10 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('1')}}')).width)" stepKey="columnWidthStorefront2"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront2"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefront2">
             <expectedResult type="variable">$columnWidthStorefront2</expectedResult>
             <actualResult type="variable">$buttonWidthStorefront2</actualResult>
@@ -1805,10 +1805,10 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile2"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('1')}}')).width)" stepKey="columnWidthStorefrontMobile2"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile2"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile2"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefrontMobile2">
             <expectedResult type="variable">$columnWidthStorefrontMobile</expectedResult>
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
@@ -1845,10 +1845,10 @@
         <waitForPageLoad stepKey="waitForPageLoad4"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('2')}}')).width)" stepKey="columnWidthStorefront3"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront3"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront3"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefront3">
             <expectedResult type="variable">$columnWidthStorefront3</expectedResult>
             <actualResult type="variable">$buttonWidthStorefront3</actualResult>
@@ -1858,10 +1858,10 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile3"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile3">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return parseInt(window.getComputedStyle(document.querySelector('{{ColumnOnFrontend.columnX('2')}}')).width)" stepKey="columnWidthStorefrontMobile3"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile3"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile3"/>
         <assertLessThan stepKey="assertButtonSmallerThanColumnStorefrontMobile3">
             <expectedResult type="variable">$columnWidthStorefrontMobile</expectedResult>
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
@@ -1987,10 +1987,10 @@
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefront"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefront"/>
         <assertLessThan stepKey="assertButtonSmallerThanTabStorefront">
             <expectedResult type="variable">$tabWidthStorefront</expectedResult>
             <actualResult type="variable">$buttonWidthStorefront</actualResult>
@@ -2000,10 +2000,10 @@
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile1"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefrontMobile1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <executeJS function="return document.querySelectorAll('{{TabOnStorefront.all}}')[0].offsetWidth" stepKey="tabWidthStorefrontMobile"/>
-        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefront.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
+        <executeJS function="return parseInt(window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).width)" stepKey="buttonWidthStorefrontMobile"/>
         <assertLessThan stepKey="assertButtonSmallerThanTabStorefrontMobile">
             <expectedResult type="variable">$tabWidthStorefrontMobile</expectedResult>
             <actualResult type="variable">$buttonWidthStorefrontMobile</actualResult>
@@ -2117,13 +2117,13 @@
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront1">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="clickActiveTabStorefront"/>
         <waitForElementVisible time="30" selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeNewTabActiveStorefront"/>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront2">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="buttonGroupIndex" value="2"/>
             <argument name="firstButtonIndex" value="3"/>
             <argument name="secondButtonIndex" value="4"/>

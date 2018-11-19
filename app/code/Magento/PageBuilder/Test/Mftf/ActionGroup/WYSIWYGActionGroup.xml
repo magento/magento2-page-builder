@@ -161,4 +161,19 @@
             <actualResult type="variable">textareaValue</actualResult>
         </assertEquals>
     </actionGroup>
+    <actionGroup name="validateContentWordHeight">
+        <arguments>
+            <argument name="page"/>
+            <argument name="height" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <!-- Validate content height -->
+        <comment userInput="Validate content height" stepKey="commentValidateContentHeight"/>
+        <executeJS function="return {{page.contentJS(index)}}.getBoundingClientRect().height" stepKey="elementContentHeight"/>
+        <executeJS function="return Math.round(({$elementContentHeight}/{{height}})*100)/100" stepKey="contentHeightRatio"/>
+        <assertEquals stepKey="assertContentHeightRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">contentHeightRatio</actualResult>
+        </assertEquals>
+    </actionGroup>
 </actionGroups>
