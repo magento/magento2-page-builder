@@ -10,7 +10,7 @@ These groups are defined in the Page Builder `group.xml` file and can be extende
 
 | name          | label       | sortOrder | purpose                                                |
 | ------------- | ----------- | --------- | ------------------------------------------------------ |
-| `layout`      | Layout      | 1         | Groups containers that control the structure of a page |
+| `layout`      | Layout      | 1         | Groups containers that control the structure of a page |
 | `elements`    | Elements    | 10        | Groups common text and input elements                  |
 | `media`       | Media       | 20        | Groups visual and interactive elements                 |
 | `add_content` | Add Content | 30        | Groups dynamic storefront elements                     |
