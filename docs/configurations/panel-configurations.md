@@ -8,20 +8,19 @@ By default, the Page Builder panel has four groups (Layout, Elements, Media, Add
 
 These groups are defined in the Page Builder `group.xml` file and can be extended and customized from your content type by adding new groups with unique names and/or changing the `label` and `sortOrder` of the existing groups noted in the table below. 
 
-| name          | label       | sortOrder | purpose                                                 |
-| ------------- | ----------- | --------- | ------------------------------------------------------- |
-| `layout`      | Layout      | 1         | Groups containers that control the structure of a page. |
-| `elements`    | Elements    | 10        | Groups common text and input elements                   |
-| `media`       | Media       | 20        | Groups visual and interactive elements                  |
-| `add_content` | Add Content | 30        | Groups dynamic storefront elements                      |
+| name          | label       | sortOrder | purpose                                                |
+| ------------- | ----------- | --------- | ------------------------------------------------------ |
+| `layout`      | Layout      | 1         | Groups containers that control the structure of a page |
+| `elements`    | Elements    | 10        | Groups common text and input elements                  |
+| `media`       | Media       | 20        | Groups visual and interactive elements                 |
+| `add_content` | Add Content | 30        | Groups dynamic storefront elements                     |
 
 ## Overview
 
 This topic describes four ways to customize the Page Builder panel:
 
-- [Rename panel groups](# rename-panel-groups)
-
-- [Reorder panel groups](# reorder-panel-groups)
+- [Rename panel groups](#rename-panel-groups)
+- [Reorder panel groups](#reorder-panel-groups)
 - [Add new panel groups](#add-new-panel-groups)
 - [Add content types to different panel group](#add-content-types-to-different-panel-groups).
 
