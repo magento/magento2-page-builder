@@ -1,9 +1,24 @@
 # View Page Builder
 
-After activating Page Builder, you can view it by navigating to and editing any of your Magento CMS pages. For example, navigate to the Home Page editor by selecting **Content** > **Pages** > **Home Page** > **Edit**, as shown here:
+After activating Page Builder, you can view it by navigating to one of several locations within the Admin UI:
+
+- Catalog Product
+- Catalog Category
+- CMS Page
+- CMS Block
+
+**Commerce Only:**
+
+- Content Staging
+- Dynamic Block (formally banner)
+
+The following example shows Page Builder active within the Home Page by selecting **Content** > **Pages** > **Home Page** > **Edit**, as shown here:
 
 ![Navigate to Page Builder](../images/navigate-to-pagebuilder.png)
 
-Then open the **Content** section on the Home Page to view Page Builder:
+
+
+Page Builder is shown here within the **Content** section of the Home Page.
 
 ![View Page Builder](../images/home-page-pagebuilder.png)
+

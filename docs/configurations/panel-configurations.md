@@ -1,20 +1,29 @@
 <!-- {% raw %} -->
 
-# Panel configurations
+# Panel groups and configurations
 
 By default, the Page Builder panel has four groups (Layout, Elements, Media, Add Content) and 16 content types as shown here:
 
 ![Panel menu](../images/panel-horizontal-default.png)
 
-You can customize the panel menu in many ways:
+These groups are defined in the Page Builder `group.xml` file and can be extended and customized from your content type by adding new groups with unique names and/or changing the `label` and `sortOrder` of the existing groups noted in the table below. 
 
-- Rename panel groups.
+| name          | label       | sortOrder | purpose                                                 |
+| ------------- | ----------- | --------- | ------------------------------------------------------- |
+| `layout`      | Layout      | 1         | Groups containers that control the structure of a page. |
+| `elements`    | Elements    | 10        | Groups common text and input elements                   |
+| `media`       | Media       | 20        | Groups visual and interactive elements                  |
+| `add_content` | Add Content | 30        | Groups dynamic storefront elements                      |
 
-- Reorder panel groups.
+## Overview
 
-- Add new panel groups.
+This topic describes four ways to customize the Page Builder panel:
 
-- Add content types to different panel groups.
+- [Rename panel groups](# rename-panel-groups)
+
+- [Reorder panel groups](# reorder-panel-groups)
+- [Add new panel groups](#add-new-panel-groups)
+- [Add content types to different panel group](#add-content-types-to-different-panel-groups).
 
 {: .bs-callout .bs-callout-info }
 For the sake of the user experience, please don't forget the affect your panel configurations may have on the end user. User's should have access the most important content types first, so be careful how you reorder groups and content types within groups. We strongly encourage you to place your content types into the existing groups when possible, instead of creating your own group.
