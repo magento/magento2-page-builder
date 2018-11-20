@@ -4,6 +4,9 @@
 
 Creating a configuration file is the first step to defining a new content type. It defines the properties and files that control the appearances and behaviors of a content type.
 
+{: .bs-callout .bs-callout-info }
+This topic describes only a subset of configuration elements, enough to establish a fundamental understanding of the configuration file's role within a content type. For more details, refer to [Main configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+
 ## Create a configuration file
 
 Create a new configuration (XML) file in the following directory structure of your module: `view/adminhtml/pagebuilder/content_type/my-content-type.xml`. 
