@@ -352,12 +352,12 @@
         <waitForElementVisible selector="{{ButtonGroupOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="buttonGroupIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
@@ -373,7 +373,7 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- 1st Button -->
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Storefront">
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Storefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="text" value="PageBuilderButtonItemText_First"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
@@ -382,10 +382,9 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- 2nd Button -->
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Storefront2">
-            <argument name="page" value="ButtonItemOnStorefront"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Storefront">
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="text" value="PageBuilderButtonItemText_Second"/>
-            <argument name="url" value="PageBuilderButtonItemLink_EmptyFrontend"/>
             <argument name="index" value="4"/>
         </actionGroup>
     </test>
@@ -939,11 +938,11 @@
         </actionGroup>
         <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <actionGroup ref="validateButtonItemsSameSize" stepKey="validateButtonsSameSizeStorefront">
             <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
-            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>

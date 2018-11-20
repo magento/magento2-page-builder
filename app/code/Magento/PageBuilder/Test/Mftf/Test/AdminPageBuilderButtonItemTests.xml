@@ -50,7 +50,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <waitForElement selector="{{ButtonItemOnStorefront.emptyButtonItemElement('1')}}" stepKey="seeEmptyButtonOnStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.emptyButtonItemElement('1')}}" stepKey="seeEmptyButtonOnStorefront"/>
     </test>
     <test name="AddButtonsContentTypeToCMSPage">
         <annotations>
@@ -690,13 +690,13 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <seeElement selector="{{ButtonItemOnStorefront.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.noBorder('1')}}" stepKey="seeNoBorderStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.noBorderColor('1')}}" stepKey="seeNoBorderColorStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.noMargins('1')}}" stepKey="seeNoMarginsStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.noPadding('1')}}" stepKey="seeNoPaddingStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorder('1')}}" stepKey="seeNoBorderStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderColor('1')}}" stepKey="seeNoBorderColorStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noMargins('1')}}" stepKey="seeNoMarginsStorefront"/>
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noPadding('1')}}" stepKey="seeNoPaddingStorefront"/>
     </test>
     <test name="ButtonItemUpdateAdvancedConfigurationValues">
         <annotations>
@@ -858,7 +858,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
-            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="page" value="ButtonItemOnStorefrontEmptyLink"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -970,11 +970,10 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.base('1')}}" stepKey="waitForButtonElementStorefront"/>
-        <waitForElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="waitForButtonUrlStorefront"/>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.base('1')}}" stepKey="waitForButtonElementStorefront"/>
+        <waitForElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemText('1', PageBuilderButtonItemText_Empty.value)}}" stepKey="waitForButtonTextStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonEmptyLinkUrlStorefront"/>
     </test>
     <test name="ButtonItemEmptyLinkURLDoesNothingOnStorefront">
         <annotations>
@@ -1026,8 +1025,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
-        <click selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_EmptyFrontend.value)}}" stepKey="clickLinkUrl" />
+        <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="seeButtonEmptyLinkUrlStorefront"/>
+        <click selector="{{ButtonItemOnStorefrontEmptyLink.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="clickButtonEmptyLinkUrlStorefront" />
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderButtonItemContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
