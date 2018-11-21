@@ -1,14 +1,8 @@
 <!-- {% raw %} -->
-{: .bs-callout .bs-callout-warning }
-The development of this tutorial is currently **IN PROGRESS**, **INCOMPLETE**, and potentially **INCORRECT**. The expected completion time is Nov. 27.
 
 # Step 2: Add templates
 
-Page Builder templates are HTML files that define the appearance of content types within both the Admin UI (using the preview.html) and the storefront UI (using the master.html). Content types cannot be rendered without these templates, so let's create the ones already specified in the `<appearance>` element of our configuration file.
-
-## Location
-
-Add your HTML templates here (`view/adminhtml/web/template/content-type/<content-type-name>/default/`):
+Page Builder templates are HTML files that define the appearance of content types within both the Admin UI (using the preview.html) and the storefront UI (using the master.html). Content types cannot be rendered without these templates, so let's create the ones already specified in the `<appearance>` element of our configuration file. Add them to your module in the following location (`view/adminhtml/web/template/content-type/<content-type-name>/default/`):
 
 ![Create config file](../images/step2-add-templates.png)
 

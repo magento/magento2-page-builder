@@ -1,23 +1,18 @@
 <!-- {% raw %} -->
-{: .bs-callout .bs-callout-warning }
-The development of this tutorial is currently **IN PROGRESS**, **INCOMPLETE**, and potentially **INCORRECT**. The expected completion time is Nov. 27.
 
 # Step 1: Add configuration
 
-The configuration file gives your content type its existence. It's where you set the name, display label, and references to the other files that define the appearance and behavior of your content type.
-
-{: .bs-callout .bs-callout-info }
-Only a subset of configuration elements are described here (enough to understand the configuration file's role within a content type). For more details, refer to [Main configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
-
-## Location
-
-Add your configuration file here (`view/adminhtml/pagebuilder/content_type/`):
+The configuration file gives your content type its existence. It's where you set the name, display label, and references to the other files that define the appearance and behavior of your content type. Add it to your module in the following location (`view/adminhtml/pagebuilder/content_type/`):
 
 ![Create config file](../images/step1-add-config-file.png)
 
-The file name should reflect the name of your content type, using underscores to separate multi-word names as needed. 
+The file name should reflect the name of your content type. Use underscores to separate multi-word names as needed. 
 
 ## Example
+
+{: .bs-callout .bs-callout-info }
+Only a subset of configuration elements are described in this example (enough to understand the configuration file's role within a content type). For more details, refer to [Main configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+
 
 The following configuration shows the minimal requirements for defining a content type, described in the tables that follow.
 
