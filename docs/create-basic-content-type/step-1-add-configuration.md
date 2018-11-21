@@ -1,19 +1,25 @@
 <!-- {% raw %} -->
+{: .bs-callout .bs-callout-warning }
+The development of this tutorial is currently **IN PROGRESS**, **INCOMPLETE**, and potentially **INCORRECT**. The expected completion time is Nov. 27.
 
 # Step 1: Add configuration
 
-Creating a configuration file is the first step to defining a new content type. It defines the properties and files that control the appearances and behaviors of a content type.
+The configuration file gives your content type its existence. It's where you set the name, display label, and references to the other files that define the appearance and behavior of your content type.
 
 {: .bs-callout .bs-callout-info }
-This topic describes only a subset of configuration elements, enough to establish a fundamental understanding of the configuration file's role within a content type. For more details, refer to [Main configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+Only a subset of configuration elements are described here (enough to understand the configuration file's role within a content type). For more details, refer to [Main configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
 
-## Create a configuration file
+## Location
 
-Create a new configuration (XML) file in the following directory structure of your module: `view/adminhtml/pagebuilder/content_type/my-content-type.xml`. 
+Add your configuration file here (`view/adminhtml/pagebuilder/content_type/`):
 
-![Create config file](../images/create-config-file.png)
+![Create config file](../images/step1-add-config-file.png)
 
-This config file should contain the following minimal requirements, described in the tables that follow:
+The file name should reflect the name of your content type, using underscores to separate multi-word names as needed. 
+
+## Example
+
+The following configuration shows the minimal requirements for defining a content type, described in the tables that follow.
 
 ``` xml
 <?xml version="1.0"?>
@@ -63,6 +69,7 @@ The `<type>` node defines the key properties of your content type. The attribute
 | icon              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
 | is_hideable       | Optional. Default `true`. Include it only when you want to set it to `false` to prevent the end-user from hiding your  content type on demand, using a button (eye icon) in the options menu. A setting of false will remove the hide button from the options menu. |
 | translate         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
+{:style="table-layout:auto"}
 
 ## The `appearance` node
 
@@ -77,6 +84,7 @@ The `<appearance>` attributes are described as follows:
 | preview_template | `preview.html` - the HTML template for rendering the preview appearance of a content type within the Admin. |
 | render_template  | `master.html` - the HTML template for rendering the storefront appearance of a content type for customers. |
 | reader           | Reads data for the content type from the master format       |
+{:style="table-layout:auto"}
 
 All content types must have at least one `<appearance>` defined within the `<appearances>` collection.
 

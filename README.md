@@ -40,7 +40,7 @@ We offer one method for installing PageBuilder:
 * [Step 3: Add components](docs/create-basic-content-type/step-3-add-components.md)
 * [Step 4: Add form editor](docs/create-basic-content-type/step-4-add-form-editor.md)
 * [Step 5: Add layout](docs/create-basic-content-type/step-5-add-layout.md)
-* [Step 6: Add styles and icons](docs/create-basic-content-type/step-6-add-styles-icons.md)
+* [Step 6: Add styles](docs/create-basic-content-type/step-6-add-styles.md)
 * [Step 7: Add frontend widget](docs/create-basic-content-type/step-7-add-frontend-widget.md)
 * [What's next](docs/create-basic-content-type/whats-next.md)
 
