@@ -1,9 +1,4 @@
-<!-- {% raw %} -->
-
 # Overview
-
-{: .bs-callout .bs-callout-warning }
-The development of this tutorial is currently **IN PROGRESS**. A more complete rough draft is available in the How Tos section here: [How to develop a new content type](docs/how-to/how-to-develop-new-content-type.md). When this tutorial is complete, it will replace the equivalent How To topic.
 
 Out of the box, Page Builder comes with several content types (controls) that you can drag onto the stage to build your storefront pages, as shown below. In this topic, you will learn how to create your own content type for use within Page Builder.
 
@@ -16,8 +11,6 @@ Page Builder creates content types from modules. So this topic assumes you have 
 ![Minimum module structure](../images/module-minimum-structure.png)
 
 ## Overview
-
-An overview of the steps for creating a Page Builder content type are briefly illustrated and described here.
 
 ![Creating Custom Content Types](../images/content-type-overview.png)
 
@@ -34,7 +27,5 @@ The files you will need to create in order to build a basic content type are sho
 
 ![Before and after content type](../images/content-type-files.png)
 
-This tutorial walks you through creating these files, starting with [Step 1: Add configuration](step-1-add-configuration.md).
-
-
-<!-- {% endraw %} -->
+## Tutorial
+This tutorial walks you through creating these files, starting with [Step 1: Add configuration](step-1-add-configuration.md). 

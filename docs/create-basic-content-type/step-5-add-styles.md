@@ -2,15 +2,36 @@
 
 # Step 5: Add styles
 
-Styles are LESS files that add specific CSS styling to content types when rendered in the Admin UI and on the storefront. Add them to your module in the following locations:
+Like in the rest of Magento, you use LESS files to style your content types in the Admin UI and on the storefront (frontend). 
 
-- `view/adminhtml/web/css/source/content-type/<content-type-name>/`
-- `view/frontend/web/css/source/content-type/<content-type-name>/`
+## Configuration
+
+CSS classes from your LESS files are typically used within your HTML templates. However, you can also allow end-users to apply CSS classes directly to your content types from within the editor, using the CSS Classess input field as shown here:
+
+![Create config file](../images/css-classes-input-field.png)
+
+To display this field within your content type's editor, add the `<css>` element to the `main` element of your configuration:
+
+```xml
+<elements>
+  <element name="main">
+    <css name="css_classes"/>
+    ...
+  </element>
+</elements>
+```
+
+## Location
+
+Add your LESS files here:
+
+- For Admin UI previews: `view/adminhtml/web/css/source/content-type/<content-type-name>/`
+- For storefront display: `view/frontend/web/css/source/content-type/<content-type-name>/`
 
 ![Create config file](../images/step6-add-styles.png)
 
+## Create LESS files
 
-{: .bs-callout .bs-callout-warning }
-The development of this tutorial is currently **IN PROGRESS**, **INCOMPLETE**, and potentially **INCORRECT**. The expected completion time is Nov. 27.
+In this example, 
 
 <!-- {% endraw %} -->
