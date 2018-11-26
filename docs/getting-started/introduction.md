@@ -8,7 +8,7 @@ The Page Builder Early Access Program (EAP) gives partners the following perks:
 
 ## Installation
 
-See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
+See [Install Page Builder](install-pagebuilder.md)
 
 <!-- {% comment %} -->
 
@@ -16,9 +16,9 @@ See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 
 ### Getting Started
 
-* [Install Page Builder](../getting-started/install-pagebuilder.md)
-* [Activate Page Builder](../getting-started/activate-pagebuilder.md)
-* [View Page Builder](../getting-started/view-pagebuilder.md)
+* [Install Page Builder](install-pagebuilder.md)
+* [Activate Page Builder](activate-pagebuilder.md)
+* [View Page Builder](view-pagebuilder.md)
 
 ### Create a content type
 
@@ -73,6 +73,7 @@ See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 
 * [Component status](../component-status.md)
 * [Known issues](../known-issues.md)
+
 <!-- {% endcomment %} -->
 
 ## Contribute to PageBuilder
@@ -88,5 +89,5 @@ We will push new beta releases once a week, including work from the backlog. We 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
 
-[Contribution Guide]: CONTRIBUTING.md
+[Contribution Guide]: ../../CONTRIBUTING.md
 [Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9
