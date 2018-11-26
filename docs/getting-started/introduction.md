@@ -1,26 +1,14 @@
-<!-- {% raw %} -->
-
-# Introduction
-
-PageBuilder is a module that provides a visual way to build content within the Admin editor for Magento 2.3 and above.
-It replaces the default WYSIWYG Editor in the Admin area with a highly configurable drag-and-drop editing system.
-
 ## PageBuilder Early Access Program
 
-The PageBuilder Early Access Program (EAP) gives partners the following perks:
-
-* Explore PageBuilder extension points to build custom modules and integrations for 3rd party services, such as Facebook, Instagram, etc.
-* Try out PageBuilder customization options and extend its functionality beyond its default features.
-* Preview PageBuilder to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
-
-**Note:**
-*This program should not be used to design and launch a production website using early code.*
+The Page Builder Early Access Program (EAP) gives partners the following perks:
+ 
+* Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
+* Try out customization options and extend its functionality beyond its default features.
+* Preview to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
 
 ## Installation
 
-To install Page Builder, use the method described in the topic [Install Page Builder].
-
-[Install Page Builder]: install-pagebuilder.md
+See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 
 <!-- {% comment %} -->
 
@@ -28,7 +16,6 @@ To install Page Builder, use the method described in the topic [Install Page Bui
 
 ### Getting Started
 
-* [Introduction](../getting-started/introduction.md)
 * [Install Page Builder](../getting-started/install-pagebuilder.md)
 * [Activate Page Builder](../getting-started/activate-pagebuilder.md)
 * [View Page Builder](../getting-started/view-pagebuilder.md)
@@ -81,32 +68,21 @@ To install Page Builder, use the method described in the topic [Install Page Bui
 
 * [Migrate from BlueFoot](../migration/migrate-from-bluefoot.md)
 * [Migrate custom content types from BlueFoot](../migration/migrate-custom-content-types-from-bluefoot.md)
-  
+
 <!-- {% endcomment %} -->
 
 ## Contribute to PageBuilder
 
 We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution Guide].
 
-[Contribution Guide]: CONTRIBUTING.md
-
 ## PageBuilder updates from the Magento core team
 
-The PageBuilder team updates the code every 2 weeks.
-**These changes may introduce breaking changes.**
+We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we  will communicate them to you if the need arises.
 
-## Provide feedback
+## Contact Us
 
-We want to hear what you think of PageBuilder!
-We are particularly interested on your thoughts on the following:
+To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
-* [How would you customize PageBuilder and what do you need to accomplish this task?](https://github.com/magento/magento2-page-builder/issues/57)
-* [What web content API do you use or would like to see in PageBuilder?](https://github.com/magento/magento2-page-builder/issues/58)
 
-To participate in technical discussions and ask questions, join us in [Slack].
-
-For all other questions or requests, contact Olena Tkacheva or Dave Macaulay.
-
-[Slack]: https://magentocommeng.slack.com/
-
-<!-- {% endraw %} -->
+[Contribution Guide]: CONTRIBUTING.md
+[Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9

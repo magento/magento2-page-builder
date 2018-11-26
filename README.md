@@ -1,33 +1,21 @@
 # magento2-page-builder
 
-<!-- {% raw %} -->
-
 ## PageBuilder Early Access Program
 
-The PageBuilder Early Access Program (EAP) gives partners the following perks:
-
-* Explore PageBuilder extension points to build custom modules and integrations for 3rd party services, such as Facebook, Instagram, etc.
-* Try out PageBuilder customization options and extend its functionality beyond its default features.
-* Preview PageBuilder to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
-
-**Note:**
-*This program should not be used to design and launch a production website using early code.*
+The Page Builder Early Access Program (EAP) gives partners the following perks:
+ 
+* Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook, Instagram, etc.
+* Try out customization options and extend its functionality beyond its default features.
+* Preview to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
 
 ## Installation
 
-We offer one method for installing PageBuilder:
-
-* Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code.
-
-[GitHub repository]: docs/install-pagebuilder.md
-
-<!-- {% comment %} -->
+See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 
 ## Developer documentation
 
 ### Getting Started
 
-* [Introduction](docs/getting-started/introduction.md)
 * [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 * [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
 * [View Page Builder](docs/getting-started/view-pagebuilder.md)
@@ -80,33 +68,20 @@ We offer one method for installing PageBuilder:
 
 * [Migrate from BlueFoot](docs/migration/migrate-from-bluefoot.md)
 * [Migrate custom content types from BlueFoot](docs/migration/migrate-custom-content-types-from-bluefoot.md)
-  
-<!-- {% endcomment %} -->
 
 ## Contribute to PageBuilder
 
 We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution Guide].
 
-[Contribution Guide]: CONTRIBUTING.md
-
 ## PageBuilder updates from the Magento core team
 
-The PageBuilder team updates the code every 2 weeks.
-**These changes may introduce breaking changes.**
+We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we  will communicate them to you if the need arises.
 
-## Provide feedback
+## Contact Us
 
-We want to hear what you think of PageBuilder!
-We are particularly interested on your thoughts on the following:
+To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
-* [How would you customize PageBuilder and what do you need to accomplish this task?](https://github.com/magento/magento2-page-builder/issues/57)
-* [What web content API do you use or would like to see in PageBuilder?](https://github.com/magento/magento2-page-builder/issues/58)
 
-To participate in technical discussions and ask questions, join us in [Slack].
+[Contribution Guide]: CONTRIBUTING.md
+[Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9
 
-For all other questions or requests, contact [Olena Tkacheva].
-
-[Slack]: https://magentocommeng.slack.com/
-[Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
-
-<!-- {% endraw %} -->
