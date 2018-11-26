@@ -14,7 +14,7 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ## Developer documentation
 
-### Getting Started
+### Getting started
 
 * [Install Page Builder](install-pagebuilder.md)
 * [Activate Page Builder](activate-pagebuilder.md)
@@ -46,7 +46,7 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Product conditions configuration](../configurations/product-conditions-configuration.md)
 * [Server-side rendered previews](../configurations/server-side-rendered-previews.md)
 
-### How Tos
+### How tos
 
 * [How to develop a new content type](../how-to/how-to-develop-new-content-type.md)
 * [How to develop a container content type](../how-to/how-to-develop-container-content-type.md)
@@ -73,14 +73,15 @@ See [Install Page Builder](install-pagebuilder.md)
 
 * [Component status](../component-status.md)
 * [Known issues](../known-issues.md)
+* [Contribution guide](../CONTRIBUTING.md)
 
 <!-- {% endcomment %} -->
 
-## Contribute to PageBuilder
+## Contribute to Page Builder
 
 We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution Guide].
 
-## PageBuilder updates from the Magento core team
+## Page Builder updates from the Magento core team
 
 We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we  will communicate them to you if the need arises.
 
@@ -89,5 +90,5 @@ We will push new beta releases once a week, including work from the backlog. We 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
 
-[Contribution Guide]: ../../CONTRIBUTING.md
+[Contribution Guide]: ../CONTRIBUTING.md
 [Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9
