@@ -103,7 +103,7 @@
 [Custom Toolbar]: how-to-add-custom-toolbar.md
 [Full width page layouts]: full-width-page-layouts.md
 [Add custom logic to content types]: custom-logic.md
-[Roadmap and Known Issues]: roadmap.md
+[Roadmap and Known Issues]: known-issues.md
 [How to create custom PageBuilder content type container]: how-to-create-custom-content-type-container.md
 
 <!-- {% endraw %} -->
