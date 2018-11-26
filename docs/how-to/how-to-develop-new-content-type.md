@@ -26,7 +26,7 @@ The steps for creating a Page Builder content type are briefly outlined here. Th
 
 ## Step 1: Add a configuration
 
-Adding a new content type starts with an XML [configuration](content-type-configuration.md) file.
+Adding a new content type starts with an XML [configuration](../configurations/content-type-configuration.md) file.
 
 To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content:
 

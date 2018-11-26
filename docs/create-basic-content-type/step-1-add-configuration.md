@@ -18,23 +18,23 @@ The following configuration shows the minimal requirements for defining a conten
 
 ``` xml
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="heading"
-        label="Heading"
-        component="Magento_PageBuilder/js/content-type"
-        preview_component="Magento_PageBuilder/js/content-type/heading/preview"
-        form="pagebuilder_heading_form"
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+  <type name="example"
+        label="Example"
         group="elements"
+        component="Magento_PageBuilder/js/content-type"
+        preview_component="Vendor_Module/js/content-type/example/preview"
+        master_component="Magento_PageBuilder/js/content-type/master"
+        form="pagebuilder_example_form"
         icon="icon-pagebuilder-heading"
-        sortOrder="20"
+        sortOrder="21"
         translate="label">
     <children default_policy="deny"/>
     <appearances>
-      <appearance default="true"
-                  name="default"
-                  preview_template="Magento_PageBuilder/content-type/heading/default/preview"
-                  render_template="Magento_PageBuilder/content-type/heading/default/master"
+      <appearance name="default"
+                  default="true"
+                  preview_template="Vendor_Module/content-type/example/default/preview"
+                  render_template="Vendor_Module/content-type/example/default/master"
                   reader="Magento_PageBuilder/js/master-format/read/configurable">
         <elements>
           <element name="main">
@@ -48,8 +48,8 @@ The following configuration shows the minimal requirements for defining a conten
             <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
             <attribute name="name" source="data-role"/>
             <attribute name="appearance" source="data-appearance"/>
-            <tag name="heading_type"/>
-            <html name="heading_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+            <tag name="example_type"/>
+            <html name="example_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
             <css name="css_classes"/>
           </element>
         </elements>

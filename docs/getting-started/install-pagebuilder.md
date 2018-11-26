@@ -50,7 +50,7 @@ When a new version of Page Builder is available, destroy your existing 2.3.0-alp
 
 ### Page Builder repositories access problems
 
-If you are having trouble accessing PageBuilder repositories, please contact [Igor Melnykov] or [Olena Tkacheva].
+If you are having trouble accessing PageBuilder repositories, please contact [Olena Tkacheva].
 
 ### 2.3 alpha installation problems
 
@@ -65,7 +65,7 @@ Could not find a matching version of package magento/module-page-builder-commerc
 ```
 
 Check your composer keys in the `auth.json` file.
-If these keys are correct and you still encounter these errors, please contact [Igor Melnykov] or [Olena Tkacheva].
+If these keys are correct and you still encounter these errors, please contact [Olena Tkacheva].
 
 [Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
 
