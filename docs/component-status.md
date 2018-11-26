@@ -2,7 +2,8 @@
 
 <style type="text/css" style="display: none">
 .status {
-  padding: 2px;
+  padding: 3px 5px;
+  border-radius: 2px;
 }
 .status.red {
   color: #fff;
