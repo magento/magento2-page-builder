@@ -2,6 +2,9 @@
 
 # Step 2: Add templates
 
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.
+
 Templates are the HTML files that define the appearance of content types within both the Admin UI (using the `preview.html`) and the storefront UI (using the `master.html`). 
 
 ## Configuration

@@ -1,5 +1,8 @@
 # Overview
 
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.
+
 Out of the box, Page Builder comes with several content types (controls) that you can drag onto the stage to build your storefront pages, as shown below. In this topic, you will learn how to create your own content type for use within Page Builder.
 
 ![Page Builder Content Types](../images/panel-horizontal.png)

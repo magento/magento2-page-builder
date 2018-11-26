@@ -69,6 +69,10 @@ See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 * [Migrate from BlueFoot](../migration/migrate-from-bluefoot.md)
 * [Migrate custom content types from BlueFoot](../migration/migrate-custom-content-types-from-bluefoot.md)
 
+### Other
+
+* [Component status](../component-status.md)
+* [Known issues](../known-issues.md)
 <!-- {% endcomment %} -->
 
 ## Contribute to PageBuilder

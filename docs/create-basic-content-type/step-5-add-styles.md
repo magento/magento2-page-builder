@@ -2,6 +2,9 @@
 
 # Step 5: Add styles
 
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.
+
 Like in the rest of Magento, you use LESS files to style your content types in the Admin UI and on the storefront (frontend). 
 
 ## Configuration

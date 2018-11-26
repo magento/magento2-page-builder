@@ -1,5 +1,8 @@
 # Step 4: Add editor
 
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.
+
 Page Builder provides an editor that slides out from the right of the screen within the Admin UI to give users a way to add content and customize the appearance of your content type, as shown in the screen shot. All you have to do is create a UI component form and a layout for the editor to use.
 
 ![Create config file](../images/content-type-editor.png)

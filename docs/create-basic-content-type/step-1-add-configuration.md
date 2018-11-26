@@ -2,6 +2,9 @@
 
 # Step 1: Add configuration
 
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.
+
 The configuration file gives your content type its existence. It's where you set the name, display label, and references to the other files that define the appearance and behavior of your content type. Add it to your module here (`view/adminhtml/pagebuilder/content_type/`):
 
 ![Create config file](../images/step1-add-config-file.png)

@@ -2,6 +2,9 @@
 
 # Step 6: Add frontend widget
 
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.
+
 The frontend widget is a JavaScript file that controls the UI behavior (user interactivity) of your content type when it is rendered on the storefront. 
 
 ## Configuration

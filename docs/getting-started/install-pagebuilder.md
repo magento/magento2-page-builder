@@ -19,11 +19,7 @@ You must be an active member in the Page Builder EAP program and have submitted 
     ```
     
 {: .bs-callout .bs-callout-info }
-If you have had a previous version of Magento 2.3.0 or Page Builder installed you may need to clear your composer cache to ensure the latest packages of both versions are installed:
-
-```sh
-composer clearcache
-```
+If you have had a previous version of Magento 2.3.0 or Page Builder installed you may need to clear your composer cache (`composer clearcache`) to ensure the latest packages of both versions are installed.
 
 ## Updating
 
