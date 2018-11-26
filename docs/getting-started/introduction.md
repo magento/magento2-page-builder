@@ -105,9 +105,8 @@ We are particularly interested on your thoughts on the following:
 
 To participate in technical discussions and ask questions, join us in [Slack].
 
-For all other questions or requests, contact [Olena Tkacheva].
+For all other questions or requests, contact Olena Tkacheva or Dave Macaulay.
 
 [Slack]: https://magentocommeng.slack.com/
-[Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
 
 <!-- {% endraw %} -->
