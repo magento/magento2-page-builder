@@ -79,7 +79,8 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ## Contribute to Page Builder
 
-We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution Guide].
+We appreciate any and all contributions to PageBuilder. If you are interested in contributing to this repository, please see our [Contribution guide](https://devdocs.magedevteam.com/ds_pagebuilder/page-builder/contributing.html).
+.
 
 ## Page Builder updates from the Magento core team
 
@@ -90,5 +91,4 @@ We will push new beta releases once a week, including work from the backlog. We 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
 
-[Contribution Guide]: ../CONTRIBUTING.md
 [Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9

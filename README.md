@@ -12,7 +12,7 @@ See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 
 ## Developer documentation
 
-### Getting Started
+### Getting started
 
 * [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 * [Activate Page Builder](docs/getting-started/activate-pagebuilder.md)
@@ -44,7 +44,7 @@ See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
 * [Product conditions configuration](docs/configurations/product-conditions-configuration.md)
 * [Server-side rendered previews](docs/configurations/server-side-rendered-previews.md)
 
-### How Tos
+### How tos
 
 * [How to develop a new content type](docs/how-to/how-to-develop-new-content-type.md)
 * [How to develop a container content type](docs/how-to/how-to-develop-container-content-type.md)
@@ -80,7 +80,7 @@ We appreciate any and all contributions to PageBuilder. If you are interested in
 
 We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we  will communicate them to you if the need arises.
 
-## Contact Us
+## Contact us
 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
