@@ -24,7 +24,7 @@ https://devdocs.magedevteam.com/ds_pagebuilder/page-builder/getting-started/intr
 * [Step 1: Add configuration](docs/create-basic-content-type/step-1-add-configuration.md)
 * [Step 2: Add templates](docs/create-basic-content-type/step-2-add-templates.md)
 * [Step 3: Add components](docs/create-basic-content-type/step-3-add-components.md)
-* [Step 4: Add editor](docs/create-basic-content-type/step-4-add-form.md)
+* [Step 4: Add form](docs/create-basic-content-type/step-4-add-form.md)
 * [Step 5: Add styles](docs/create-basic-content-type/step-5-add-styles.md)
 * [Step 6: Add frontend widget](docs/create-basic-content-type/step-6-add-frontend-widget.md)
 * [What's next](docs/create-basic-content-type/whats-next.md)
