@@ -6,11 +6,11 @@ The Page Builder Early Access Program (EAP) gives partners the following perks:
 * Try out customization options and extend its functionality beyond its default features.
 * Preview to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
 
-## Installation
-
-See [Install Page Builder](docs/getting-started/install-pagebuilder.md)
-
 ## Developer documentation
+
+For the latest updates to the documentation, please access the rendered version here:
+
+https://devdocs.magedevteam.com/ds_pagebuilder/page-builder/getting-started/introduction.html
 
 ### Getting started
 

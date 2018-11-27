@@ -33,7 +33,7 @@ This can be install by completing a `composer update` within your project.
 If you run into the following issue:
 
 ```shell
-Could not find a matching version of package magento/module-page-builder-commerce. Check the package spelling, your version constraint and that the package is available in a stability which matches your minimum-stability (stable).
+Could not find a matching version of package magento/page-builder-commerce. Check the package spelling, your version constraint and that the package is available in a stability which matches your minimum-stability (stable).
 ```
 
 Please ensure the credentials you're using to connect with `repo.magento.com` belong to the MAGEID you provided when you signed up to the EAP program.
