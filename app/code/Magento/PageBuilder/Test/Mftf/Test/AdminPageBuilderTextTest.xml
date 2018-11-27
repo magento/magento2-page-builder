@@ -2569,4 +2569,46 @@
         <!-- Validate Image Editor On Storefront -->
         <seeElement selector="{{TextOnStorefront.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
+    <test name="TextDisabledWYSIWYGUpdateAdvancedConfigurationValues" extends="TextUpdateAdvancedConfigurationValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Update Advanced Configuration Values With Disabled WYSIWYG"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for Text will update the Stage and Storefront correctly with disabled wysiwyg."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3713"/>
+            <testCaseId value="MC-5731"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG" before="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
+        </after>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel" before="enterText"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="enterText"/>
+    </test>
+    <test name="TextDisabledByDefaultWYSIWYGUpdateAdvancedConfigurationValues" extends="TextUpdateAdvancedConfigurationValues">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Update Advanced Configuration Values With Disabled By Default WYSIWYG"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for Text will update the Stage and Storefront correctly with disabled wysiwyg by default."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3713"/>
+            <testCaseId value="MC-5732"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/enabled hidden" stepKey="disableByDefaultWYSIWYG" before="loginAsAdmin"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="logout"/>
+        </after>
+        <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel" before="enterText"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="enterText"/>
+    </test>
 </tests>
