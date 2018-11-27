@@ -6,20 +6,27 @@ You must be an active member in the Page Builder EAP program and have submitted 
 
 ## Installation steps
 
+{: .bs-callout .bs-callout-info }
+If you have had a previous version of Magento 2.3.0 or Page Builder installed you may need to clear your composer cache (`composer clearcache`) to ensure the latest packages of both versions are installed.
+
 1. Upgrade an existing project to Magento 2.3.0 Commerce or install a fresh copy. Instructions for installation can be found [here](https://devdocs.magento.com/guides/v2.3/install-gde/bk-install-guide.html). **Use the MAGEID assigned to you when you signed up to the program.**
 
-2. Navigate to the root of the project and require the `magento/module-page-builder-commerce` package:
+2. Ensure your composer has `minimum-stability` set to `beta` as follows:
+    ```
+    composer config minimum-stability beta
+    ```
+
+3. Navigate to the root of the project and require the `magento/module-page-builder-commerce` package:
     ```
     composer require magento/page-builder-commerce
     ```
     
-3. Enable the module within Magento:
+4. Enable the module within Magento:
     ``` sh
     bin/magento setup:upgrade
     ```
     
-{: .bs-callout .bs-callout-info }
-If you have had a previous version of Magento 2.3.0 or Page Builder installed you may need to clear your composer cache (`composer clearcache`) to ensure the latest packages of both versions are installed.
+5. Activate Page Builder from the Admin UI as described in [Activate Page Builder](activate-pagebuilder.md).
 
 ## Updating
 
