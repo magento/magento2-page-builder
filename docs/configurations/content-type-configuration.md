@@ -16,6 +16,7 @@ Use the content type and group configuration to add new content types, extend ex
 | `appearances`       | Appearance configuration.                                                                                                                   |
 | `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
 | `additional_data`   | Allows to specify additional data for component, see [additional configurations](additional-configurations.md) for more information. |
+{:style="table-layout:auto"}
 
 | Attribute           | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -26,6 +27,7 @@ Use the content type and group configuration to add new content types, extend ex
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type.                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
+{:style="table-layout:auto"}
 
 ### Examples
 
@@ -155,6 +157,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `form`              | UI component form used for editing the content type                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
 | `is_hideable`       | Boolean that enables content types to be shown and hidden. Default is true. Set to false to prevent hiding of content type.                 |
+{:style="table-layout:auto"}
 
 ### `form`
 
@@ -175,11 +178,13 @@ Parent policies will overwrite any child policies that are set.
 | Element             | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `parent`            | The name of the parent content type that is allowed or denied.                         |
+{:style="table-layout:auto"}
 
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `default_policy`    | Allows or denies all content types to be parents unless specified as a parent element. |
-  
+{:style="table-layout:auto"}
+
 **Example:**
 ``` xml
 <parents default_policy="deny">
@@ -195,11 +200,13 @@ The `children` element specifies which content types can accept this type as a p
 | Element             | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `child`             | The name of the child content type that is allowed or denied                           |
+{:style="table-layout:auto"}
 
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `default_policy`    | Allows or denies all content types to be children unless specified as a child element. |
-  
+{:style="table-layout:auto"}
+
 **Example:**
 ``` xml
 <children default_policy="allow">
@@ -217,12 +224,14 @@ It controls the templates, how data is read from the master format, and how to a
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `appearance`        | The name of the appearance. Every content type requires one default appearance.        |
 | `data_mapping`      | Specifies how data is read from, saved to, and converted to and from the master format |
+{:style="table-layout:auto"}
 
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `preview_template`  | Template used to display the element in the preview                                    |
 | `render_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
+{:style="table-layout:auto"}
 
 The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
 It reads data based on the configuration specified in `data_mapping`.
@@ -252,6 +261,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 | `css`              | Specifies whether element has classes and in which variable they should be read                       |
 | `html`             | Specifies whether element has html content and in which variable they should be read                  |
 | `tag`              | Allows you to read the tag name of the element and map it back to the master format.                  |
+{:style="table-layout:auto"}
 
 **Example:**
 ``` xml
@@ -317,6 +327,7 @@ The name attribute in the element tags gets converted to a `data-element` attrib
 | `preview_converter`   | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.     |
 | `persistence_mode`    | Used for read/write properties.                                                                                       |
 | `reader`              | Reader used for parsing attributes and properties out of the DOM. Should not be used with read-only persistence_mode. |
+{:style="table-layout:auto"}
 
 You may optionally set a `reader` value in configuration, otherwise `Magento_PageBuilder/js/property/style-property-reader` will be used for properties, and `Magento_PageBuilder/js/property/attribute-reader` will be used for attributes. Both default readers accept `source` as a parameter, and will return that value.
 
@@ -492,5 +503,6 @@ define([], function () {
 | Property                 | Description                                                                                                                         | Example        |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- |
 |`fieldsToIgnoreOnRemove`| array containing field names to ignore when evaluating whether an element has been configured. The default value is an empty array. | `["tab_name"]` |
+{:style="table-layout:auto"}
 
 <!-- {% endraw %} -->

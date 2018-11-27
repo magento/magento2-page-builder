@@ -1,6 +1,4 @@
-<!-- {% raw %} -->
-
 # What's next?
 
-
-<!-- {% endraw %} -->
+{: .bs-callout .bs-callout-info }
+The development of this tutorial is currently **IN PROGRESS**.

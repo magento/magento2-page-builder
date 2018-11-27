@@ -49,7 +49,7 @@ To revert back to using the default WYSIWYG, add the following entry to the fiel
 
 ## Big picture
 
-![Page Builder big picture](images/big-picture.png)
+![Page Builder big picture](../images/big-picture.png)
 
 | Entity            | Name in configuration | Description                                                                                                    |
 | ----------------- | --------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -65,13 +65,13 @@ To revert back to using the default WYSIWYG, add the following entry to the fiel
 
 ## Data flow
 
-![Page Builder data flow](images/data-flow.png)
+![Page Builder data flow](../images/data-flow.png)
 
 The following is a simple overview of the data flow:
 
 1. Data is read by reader `Magento_PageBuilder/js/master-format/read/configurable`.
 2. Data for each element (`border`, `border_color`, `border_width` etc) is converted to an internal format by element converters.
-3. Data is converted by mass converters. For more details see [converter interface](content-type-configuration.md).
+3. Data is converted by mass converters. For more details see [converter interface](../configurations/content-type-configuration.md).
 4. Content type is created and `Magento_PageBuilder/js/data-store` is populated with data.
 5. Data in the data store is modified in the form or using live edit.
 6. Data is converted by mass converters.
@@ -95,13 +95,13 @@ An element converter modifies a single field at a time.
 
 Data for content types are stored in a simple object called the DataStore `Magento_PageBuilder/js/data-store`.
 
-`var` from [content type configuration](content-type-configuration.md) is the name of a parameter in the DataStore.
+`var` from [content type configuration](../configurations/content-type-configuration.md) is the name of a parameter in the DataStore.
 
 You can use the `subscribe` method to subscribe to changes in the data and perform custom action on it.
 
 ## Content type configuration
 
-Please see [content type configuration](content-type-configuration.md#Converter Interfaces) for information on content type configuration.
+Please see [content type configuration](../configurations/content-type-configuration.md#Converter Interfaces) for information on content type configuration.
 
 ## Appearances
 
@@ -127,6 +127,6 @@ Appearances allow you to make the following customization on existing content ty
 
 [TypeScript]: https://www.typescriptlang.org/
 [master format]: master-format.md
-[content type]: how-to-add-new-content-type.md
+[content type]: ../how-to/how-to-develop-new-content-type.md
 
 <!-- {% endraw %} -->

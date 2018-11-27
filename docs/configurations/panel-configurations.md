@@ -14,6 +14,7 @@ These groups are defined in the Page Builder `group.xml` file and can be extende
 | `elements`    | Elements    | 10        | Groups common text and input elements                  |
 | `media`       | Media       | 20        | Groups visual and interactive elements                 |
 | `add_content` | Add Content | 30        | Groups dynamic storefront elements                     |
+{:style="table-layout:auto"}
 
 ## Overview
 
