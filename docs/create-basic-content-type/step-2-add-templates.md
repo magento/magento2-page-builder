@@ -9,7 +9,7 @@ Templates are the HTML files that define the appearance of content types within 
 
 ## Configuration
 
-Templates are referenced from the `<appearance>` element of the configuration file as shown here:
+In your configuration file, reference your templates as shown here within the `<appearance>` element:
 
 ```xml
 <appearance name="default"

@@ -9,7 +9,7 @@ Components are the JavaScript files that define the behaviors of your content ty
 
 ## Configuration
 
-Components are referenced from the `<type>` element of the configuration file as shown here:
+In your configuration file, reference your JavaScript component (`preview.js`) as shown here within the `<type>` element:
 
 ```XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 

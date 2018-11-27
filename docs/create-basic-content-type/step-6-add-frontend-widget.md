@@ -10,9 +10,6 @@ The frontend widget is a JavaScript file that controls the UI behavior (user int
 ## Configuration
 
 
-
-
-
 ## Location
 
 Add it to your module in the following location (`view/base/web/js/content-type/example/appearance/default/`):

@@ -1,15 +1,15 @@
-# Step 4: Add editor
+# Step 4: Add form
 
 {: .bs-callout .bs-callout-info }
 The development of this tutorial is currently **IN PROGRESS**.
 
-Page Builder provides an editor that slides out from the right of the screen within the Admin UI to give users a way to add content and customize the appearance of your content type, as shown in the screen shot. All you have to do is create a UI component form and a layout for the editor to use.
+Page Builder provides an editor that slides out from the right of the screen within the Admin UI to give you a way to add content and customize the appearance of your content type, as shown in the screen shot. To use and customize this editor for your needs, you need to create a UI component form along with the layout to display that form.
 
 ![Create config file](../images/content-type-editor.png)
 
 ## Configuration
 
-Reference your UI component form as shown here in the `<type>` element of your configuration file:
+In your configuration file, reference your UI component form as shown here within the `<type>` element:
 
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -17,12 +17,12 @@ Reference your UI component form as shown here in the `<type>` element of your c
   <type name="example"
         label="Example"
         form="pagebuilder_example_form"
+        ...
 ```
 
 | Attribute | Description                                                  |
 | --------- | ------------------------------------------------------------ |
 | form      | `pagebuilder_example_form.xml` - UI component form that provides the editor for your content type. |
-
 {:style="table-layout:auto"}
 
 ## Location
@@ -32,13 +32,11 @@ Add the layout and form to your module as shown here:
 - `view/adminhtml/web/layout/`
 - `view/adminhtml/web/ui-component/`
 
-![Create config file](../images/step4-add-editor.png)
-
-
+![Create config file](../images/step4-add-form.png)
 
 ## Create UI component form
 
-In this example, we create a form that extends `pagebuilder_base_form` to provide a basic form editor for our content type. The code is provided here followed by descriptions of the key parts.
+In this example, let's create a form that extends `pagebuilder_base_form` to provide form controls for editing our content type. The code is provided here followed by descriptions of the key parts.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -181,7 +179,7 @@ In this example, we create a form that extends `pagebuilder_base_form` to provid
 
 ```
 
-
+[Insert descriptions]
 
 ## Create layout
 

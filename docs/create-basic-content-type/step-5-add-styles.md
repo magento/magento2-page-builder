@@ -35,6 +35,6 @@ Add your LESS files here:
 
 ## Create LESS files
 
-In this example, 
+In this example... 
 
 <!-- {% endraw %} -->

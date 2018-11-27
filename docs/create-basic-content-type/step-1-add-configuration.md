@@ -11,7 +11,7 @@ The configuration file gives your content type its existence. It's where you set
 
 The file name should reflect the name of your content type. Use underscores to separate multi-word names as needed. 
 
-## Example
+## Example configuration
 
 {: .bs-callout .bs-callout-info }
 Only a subset of configuration elements are described in this example (enough to understand the configuration file's role within a content type). For more details, refer to [Main configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
@@ -51,7 +51,6 @@ The following configuration shows the minimal requirements for defining a conten
             <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
             <attribute name="name" source="data-role"/>
             <attribute name="appearance" source="data-appearance"/>
-            <tag name="example_type"/>
             <html name="example_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
             <css name="css_classes"/>
           </element>
@@ -74,7 +73,7 @@ The `<type>` node defines the key properties of your content type. The attribute
 | component         | Currently there are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
 | preview_component | JavaScript file that provides preview-specific rendering logic within the Admin UI. |
 | master_component  | JavaScript file that provides master format rendering logic generic for all appearances of your content type when rendered on the storefront. |
-| form              | UI component form that provides the editor for your content type. |
+| form              | UI component form that provides the form controls for editing your content type. |
 | icon              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
 | is_hideable       | Optional. Default `true`. Include it only when you want to set it to `false` to prevent the end-user from hiding your  content type on demand, using a button (eye icon) in the options menu. A setting of false will remove the hide button from the options menu. |
 | translate         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
@@ -99,7 +98,7 @@ All content types must have at least one `<appearance>` defined within the `<app
 
 ## The `elements` node
 
-The purpose of `<elements>` node in the configuration is to map the data from the editor to the content type's master format so that the values entered in the editor can be stored and rendered correctly within both the Admin preview and the storefront. These nodes will be explained more fully in Step 4: Add editor.
+The purpose of `<elements>` node in the configuration is to map the data from the form to the content type's master format so that the values entered in the editor can be stored and rendered correctly within both the Admin preview and the storefront. These nodes will be explained more fully in Step 4: Add editor.
 
 ## Next
 
