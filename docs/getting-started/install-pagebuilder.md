@@ -4,7 +4,7 @@
 
 You must be an active member in the Page Builder EAP program and have submitted your MAGEID to be provided access to the Page Builder composer packages through `repo.magento.com`. If you have not done so, or are experiencing problems please contact us at `pagebuilderEAP@adobe.com`. 
 
-## Installation Steps
+## Installation steps
 
 1. Upgrade an existing project to Magento 2.3.0 Commerce or install a fresh copy. Instructions for installation can be found [here](https://devdocs.magento.com/guides/v2.3/install-gde/bk-install-guide.html). **Use the MAGEID assigned to you when you signed up to the program.**
 
@@ -28,7 +28,7 @@ This can be install by completing a `composer update` within your project.
 
 ## Troubleshooting
 
-### Composer Installation issues
+### Composer installation issues
 
 If you run into the following issue:
 

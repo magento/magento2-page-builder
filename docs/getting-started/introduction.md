@@ -83,9 +83,9 @@ We appreciate any and all contributions to PageBuilder. If you are interested in
 
 ## Page Builder updates from the Magento core team
 
-We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we  will communicate them to you if the need arises.
+We will push new beta releases once a week, including work from the backlog. We don't expect any large breaking changes, but we will communicate them to you if the need arises.
 
-## Contact Us
+## Contact us
 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
