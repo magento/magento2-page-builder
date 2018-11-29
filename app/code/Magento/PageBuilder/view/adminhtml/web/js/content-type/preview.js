@@ -464,8 +464,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         })
       }; // If the content type is not hide-able show the hide / show option
 
-      debugger;
-
       if (!_underscore.contains(this.notHideableContentTypes, this.parent.config.name)) {
         options.hideShow = new _hideShowOption({
           preview: this,

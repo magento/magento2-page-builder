@@ -462,7 +462,6 @@ export default class Preview {
         };
 
         // If the content type is not hide-able show the hide / show option
-        debugger;
         if (!_.contains(this.notHideableContentTypes, this.parent.config.name)) {
             options.hideShow = new HideShowOption({
                 preview: this,
