@@ -170,6 +170,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapButtons" stepKey="comment"/>
+        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -184,6 +185,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateNoMapButtons" stepKey="comment"/>
+        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -267,6 +269,7 @@
             <argument name="pinIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
+        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
