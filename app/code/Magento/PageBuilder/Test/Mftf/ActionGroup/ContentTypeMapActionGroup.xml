@@ -141,7 +141,7 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -166,7 +166,7 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -178,7 +178,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapButtons" stepKey="comment"/>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -193,7 +193,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateNoMapButtons" stepKey="comment"/>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
