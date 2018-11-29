@@ -29,6 +29,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
     /**
+     * Content types that are not hide-able
+     */
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -43,6 +47,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
       this.mouseover = false;
+      this.notHideableContentTypes = ["button-item", "column", "slide", "column-group", "tab-item"];
       this.parent = parent;
       this.config = config;
       this.edit = new _edit(this.parent, this.parent.dataStore);
@@ -457,9 +462,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           classes: ["remove-structural"],
           sort: 60
         })
-      }; // If the content type is is_hideable show the hide / show option
+      }; // If the content type is not hide-able show the hide / show option
 
-      if (this.parent.config.is_hideable) {
+      debugger;
+
+      if (!_underscore.contains(this.notHideableContentTypes, this.parent.config.name)) {
         options.hideShow = new _hideShowOption({
           preview: this,
           icon: _hideShowOption.showIcon,

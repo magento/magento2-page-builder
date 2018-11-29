@@ -65,6 +65,11 @@ export default class Preview {
     private mouseoverContext: Preview;
 
     /**
+     * Content types that are not hide-able
+     */
+    private notHideableContentTypes = ["button-item", "column", "slide", "column-group", "tab-item"];
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -456,8 +461,9 @@ export default class Preview {
             }),
         };
 
-        // If the content type is is_hideable show the hide / show option
-        if (this.parent.config.is_hideable) {
+        // If the content type is not hide-able show the hide / show option
+        debugger;
+        if (!_.contains(this.notHideableContentTypes, this.parent.config.name)) {
             options.hideShow = new HideShowOption({
                 preview: this,
                 icon: HideShowOption.showIcon,
