@@ -650,13 +650,15 @@
             <argument name="gridSize" value="2"/>
         </actionGroup>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="targetIndex" value="1"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="seeCannotDuplicateColumnModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForColumn1Visible"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="mouseOverColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '1')}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderColumnContentType.role, '1')}}" stepKey="clickDuplicate"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modalOk}}" stepKey="waitForCannotDuplicateColumnModal"/>
         <seeElement selector="{{PageBuilderStage.errorModal(PageBuilderColumnDuplicate.cannotDuplicateColumnErrorMessage)}}" stepKey="seeErrorMessage"/>
         <click selector="{{PageBuilderStage.modalOk}}" stepKey="closeModal"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
         <seeNumberOfElements selector="{{ColumnOnBackend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
     </test>
     <test name="ValidateMaxColumnError">
