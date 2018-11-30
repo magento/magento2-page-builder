@@ -30,4 +30,21 @@
         <waitForElementVisible selector="{{page.minHeight(index, minHeight.value)}}" stepKey="waitForMinHeight"/>
         <waitForElementVisible selector="{{page.verticalAlignContainer(index, verticalAlignContainer.value)}}" stepKey="waitForVerticalAlignContainer"/>
     </actionGroup>
+    <!-- Validate Min Height -->
+    <actionGroup name="validateContentTypeHeightEqualToMinHeight">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="height" defaultValue="PageBuilderMinHeightProperty_300"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{padding.paddingTop}}-{{padding.paddingBottom}}-({{border.value}}*2)" stepKey="actualContentHeight"/>
+        <executeJS function="return Math.round(Math.abs({$actualContentHeight}-{{height.value}}))" stepKey="contentTypeHeightRatio"/>
+        <assertLessThanOrEqual stepKey="assertContentHeightRatio">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">contentTypeHeightRatio</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
 </actionGroups>
