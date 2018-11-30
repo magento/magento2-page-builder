@@ -302,6 +302,57 @@
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeMinHeightStorefront"/>
     </test>
+    <test name="TabsWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tab"/>
+            <title value="Tabs Group - Height is equal to min height"/>
+            <description value="A user can see Tab group height with borders and padding is equal to min height"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5775"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabsGroup"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <click selector="{{TabsOnStage.tabsContainer}}" after="dragContentTypeToStage" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderTabsDefinedMinHeight"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" after="saveEditPanelSettings" stepKey="openTabItemEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" after="openTabItemEditPanel" stepKey="enterMinHeightPropertyTabItem">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" after="enterMinHeightPropertyTabItem" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{TabsOnStage.tabsContentCSS}}"/>
+            <argument name="height" value="PageBuilderTabsDefinedMinHeight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{TabsOnStage.tabsContentCSS}}"/>
+            <argument name="height" value="PageBuilderTabsDefinedMinHeight"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{TabsOnFrontend.tabsContentCSS}}"/>
+            <argument name="height" value="PageBuilderTabsDefinedMinHeight"/>
+        </actionGroup>
+    </test>
     <test name="TabsAdvancedSettingsApplyInAdminPreviewAndStorefront">
         <annotations>
             <features value="PageBuilder"/>
