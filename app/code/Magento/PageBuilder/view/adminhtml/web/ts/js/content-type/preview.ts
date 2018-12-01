@@ -18,7 +18,6 @@ import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
-import HideShowOption from "../content-type-menu/hide-show-option";
 import Option from "../content-type-menu/option";
 import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
@@ -63,11 +62,6 @@ export default class Preview {
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
     private mouseoverContext: Preview;
-
-    /**
-     * Content types that are not hide-able
-     */
-    private notHideableContentTypes = ["button-item", "column", "slide", "column-group", "tab-item"];
 
     /**
      * @param {ContentTypeInterface} parent
@@ -460,18 +454,6 @@ export default class Preview {
                 sort: 60,
             }),
         };
-
-        // If the content type is not hide-able show the hide / show option
-        if (!_.contains(this.notHideableContentTypes, this.parent.config.name)) {
-            options.hideShow = new HideShowOption({
-                preview: this,
-                icon: HideShowOption.showIcon,
-                title: HideShowOption.showText,
-                action: this.onOptionVisibilityToggle,
-                classes: ["hide-show-content-type"],
-                sort: 40,
-            });
-        }
 
         return options;
     }
