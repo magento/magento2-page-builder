@@ -27,13 +27,10 @@ export default class OverlayBackgroundColor implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
-        let overlayColor: string = "transparent";
-        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            overlayColor = fromHex(
-                data.overlay_color.toString(),
-                percentToDecimal(data.overlay_transparency.toString()),
-            );
+        if (data.show_overlay === "always" && data[name] !== "" && data[name] !== undefined) {
+            return data[name].toString();
         }
-        return overlayColor;
+
+        return "transparent";
     }
 }
