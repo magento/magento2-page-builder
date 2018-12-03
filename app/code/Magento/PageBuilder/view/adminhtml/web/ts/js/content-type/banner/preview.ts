@@ -56,6 +56,7 @@ export default class Preview extends BasePreview {
 
         return options;
     }
+
     /**
      * Get registry callback reference to uploader UI component
      *

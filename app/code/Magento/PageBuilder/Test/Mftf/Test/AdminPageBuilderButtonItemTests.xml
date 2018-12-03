@@ -1254,7 +1254,7 @@
             <description value="Validate button item has no hide / show capabilities"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-4959"/>
-            <testCaseId value="MC-5780"/>
+            <testCaseId value="MC-3547"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonItem"/>
@@ -1274,7 +1274,8 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <click selector="{{ButtonItemOnStage.base('1')}}" stepKey="clickButtonItem"/>
+        <click selector="ButtonItemOnStage.openOptionsMenu('1')" stepKey="clickButtonItem"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="waitForButtonItemOptionsMenuVisible"/>
         <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderButtonItemContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
     </test>
