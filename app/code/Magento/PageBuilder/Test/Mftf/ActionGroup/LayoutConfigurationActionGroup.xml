@@ -41,10 +41,10 @@
             <argument name="pixelBuffer" defaultValue="5" type="string"/>
         </arguments>
         <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().height-{{padding.paddingTop}}-{{padding.paddingBottom}}-({{border.value}}*2)" stepKey="actualContentHeight"/>
-        <executeJS function="return Math.round(Math.abs({$actualContentHeight}-{{height.value}}))" stepKey="contentTypeHeightRatio"/>
+        <executeJS function="return Math.round(Math.abs({$actualContentHeight}-{{height.value}}))" stepKey="contentTypeHeightDifference"/>
         <assertLessThanOrEqual stepKey="assertContentHeightRatio">
             <expectedResult type="int">{{pixelBuffer}}</expectedResult>
-            <actualResult type="variable">contentTypeHeightRatio</actualResult>
+            <actualResult type="variable">contentTypeHeightDifference</actualResult>
         </assertLessThanOrEqual>
     </actionGroup>
     <actionGroup name="validateContentTypeHeightGreaterThanMinHeight">
