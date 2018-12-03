@@ -815,18 +815,14 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayColor">
-            <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparency">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
+            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStage"/>
-        <seeElement selector="{{BannerOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStage"/>
-        <seeElement selector="{{BannerOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStage"/>
+        <seeElement selector="{{BannerOnBackend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayBackgroundColor"/>
         <moveMouseOver selector="{{BannerOnBackend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="moveMouseOverBannerStage"/>
         <seeElement selector="{{BannerOnBackend.overlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -836,16 +832,14 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayBackgroundColorStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefront"/>
         <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStorefront"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromBanner"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="767" height="1000" stepKey="resizeWindowToMobile"/>
-        <seeElement selector="{{BannerOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
-        <seeElement selector="{{BannerOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('1', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayBackgroundColorStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.appearance('1', PageBuilderBannerAppearance_Poster.value)}}" stepKey="seeAppearanceStorefrontMobile"/>
         <moveMouseOver selector="{{BannerOnFrontend.base('1')}}" stepKey="moveMouseOverBannerStorefrontMobile"/>
         <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('1', PageBuilderBannerContentOverlayColorProperty.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>

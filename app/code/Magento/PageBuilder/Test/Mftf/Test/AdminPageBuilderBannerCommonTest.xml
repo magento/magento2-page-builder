@@ -314,73 +314,6 @@
         </actionGroup>
         <dontSeeElement selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="checkNoRequiredField"/>
     </test>
-    <test name="BannerCheckInvalidOverlayTransparencyInputs">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Banner"/>
-            <title value="Invalid Overlay Transparency Values"/>
-            <description value="Banner edit form does not save with invalid overlay transparency values"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-81599"/>
-            <testCaseId value="MC-2823"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCommon"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
-            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <!-- Check Invalid Min -->
-        <comment userInput="Check Invalid Min" stepKey="commentCheckInvalidMin"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMin">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMin">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
-        </actionGroup>
-        <!-- Check Invalid Max -->
-        <comment userInput="Check Invalid Max" stepKey="commentCheckInvalidMax"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMax">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMax">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
-        </actionGroup>
-        <!-- Check Invalid Type -->
-        <comment userInput="Check Invalid Type" stepKey="commentCheckInvalidType"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidType">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidType">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
-        </actionGroup>
-        <!-- Check Valid -->
-        <comment userInput="Check Valid" stepKey="commentCheckValid"/>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBannerOverlayTransparencyValid">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-    </test>
     <test name="BannerHasExpectedFieldsAndDefaults">
         <annotations>
             <features value="PageBuilder"/>
@@ -470,9 +403,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayColorProperty">
             <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayTransparencyProperty">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
-        </actionGroup>
         <!-- Validate Edit Panel Defaults -->
         <comment userInput="Validate Edit Panel Defaults" stepKey="commentValidateEditPanelDefaults"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
@@ -507,9 +437,6 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerShowContentOverlayProperty">
             <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutIsZeroProperty" stepKey="seeDefaultOverlayTransparencyProperty">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
-        </actionGroup>
         <!-- Validate Edit Panel Disabled -->
         <comment userInput="Validate Edit Panel Disabled" stepKey="commentValidateEditPanelDisabled"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerButtonTextPropertyIsDisabled">
@@ -520,9 +447,6 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayColorPropertyIsDisabled">
             <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayTransparencyPropertyIsDisabled">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
         </actionGroup>
     </test>
     <test name="BannerValidateBackgroundSectionDefaultValues">
