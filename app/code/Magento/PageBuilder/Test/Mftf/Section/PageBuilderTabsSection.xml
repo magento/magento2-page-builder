@@ -9,7 +9,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="TabsOnStage">
         <element name="base" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]" parameterized="true"/>
-        <element name="baseCSS" type="text" selector="div.pagebuilder-content-type.pagebuilder-row"/>
         <element name="hidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-role='tabs'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
