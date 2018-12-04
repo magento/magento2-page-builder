@@ -8,8 +8,9 @@ define([
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
     'Magento_PageBuilder/js/events',
+    'Magento_Ui/js/lib/view/utils/dom-observer',
     'Magento_PageBuilder/js/page-builder'
-], function ($, Wysiwyg, $t, events, PageBuilder) {
+], function ($, Wysiwyg, $t, events, domObserver, PageBuilder) {
     'use strict';
 
     /**
@@ -18,13 +19,14 @@ define([
     return Wysiwyg.extend({
         defaults: {
             elementSelector: '> textarea',
-            pageBuilder: {},
+            stageSelector: '.pagebuilder-stage-wrapper',
+            pageBuilder: false,
             visiblePageBuilder: false,
             isComponentInitialized: false,
             wysiwygConfigData: {},
             pageBuilderEditButtonText: $t('Edit with Page Builder'),
             isWithinModal: false,
-            modal: false,
+            modal: false
         },
 
         /**
@@ -45,7 +47,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('visiblePageBuilder wysiwygConfigData loading');
+                .observe('isComponentInitialized visiblePageBuilder wysiwygConfigData loading');
 
             return this;
         },
@@ -54,12 +56,17 @@ define([
          * Handle button click, init the Page Builder application
          */
         pageBuilderEditButtonClick: function (context, event) {
-            var modalInnerWrap = $(event.currentTarget).parents(".modal-inner-wrap");
+            var modalInnerWrap = $(event.currentTarget).parents('.modal-inner-wrap');
 
             // Determine if the Page Builder instance is within a modal
             this.isWithinModal = modalInnerWrap.length === 1;
+
             if (this.isWithinModal) {
                 this.modal = modalInnerWrap;
+            }
+
+            if (!this.isComponentInitialized()) {
+                this.disableDomObserver($(event.currentTarget).parent()[0]);
             }
 
             this.initPageBuilder();
@@ -70,15 +77,30 @@ define([
          * Init Page Builder
          */
         initPageBuilder: function () {
-            if (!this.isComponentInitialized) {
+            if (!this.isComponentInitialized()) {
+                $.async({
+                    component: this,
+                    selector: this.stageSelector
+                }, this.disableDomObserver.bind(this));
+
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
                 this.initPageBuilderListeners();
+                this.isComponentInitialized(true);
             }
 
             if (!this.wysiwygConfigData()['pagebuilder_button']) {
                 this.visiblePageBuilder(true);
             }
+        },
+
+        /**
+         * Disable the domObserver on the PageBuilder stage to improve performance
+         *
+         * @param {HTMLElement} node
+         */
+        disableDomObserver: function (node) {
+            domObserver.disableNode(node);
         },
 
         /**
@@ -95,7 +117,6 @@ define([
             var id = this.pageBuilder.id;
 
             events.on('stage:' + id + ':readyAfter', function () {
-                this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
 
@@ -109,8 +130,8 @@ define([
 
                     if (this.isWithinModal && this.modal) {
                         this.modal.css({
-                            transform: "",
-                            transition: ""
+                            transform: '',
+                            transition: ''
                         });
                     }
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
@@ -118,8 +139,8 @@ define([
 
                     if (this.isWithinModal && this.modal) {
                         this.modal.css({
-                            transform: "none",
-                            transition: "none"
+                            transform: 'none',
+                            transition: 'none'
                         });
                     }
                 }

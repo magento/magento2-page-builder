@@ -13,9 +13,11 @@
             click="pageBuilderEditButtonClick.bind($data)">
         <span translate="pageBuilderEditButtonText" />
     </button>
-    <if args="visiblePageBuilder">
-        <with args="pageBuilder">
-            <render />
-        </with>
+    <if args="isComponentInitialized">
+        <div visible="visiblePageBuilder" class="pagebuilder-wysiwyg-wrapper">
+            <with args="pageBuilder">
+                <render />
+            </with>
+        </div>
     </if>
 </div>

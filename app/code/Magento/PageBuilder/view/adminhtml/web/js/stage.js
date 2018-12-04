@@ -3,7 +3,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/lib/view/utils/dom-observer", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _domObserver, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -71,13 +71,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
      */
 
 
-    _proto.ready = function ready(_ref) {
-      var buildResults = _ref[0],
-          canvasElement = _ref[1];
-
-      // Disable the dom observer from running on our canvas
-      _domObserver.disableNode(canvasElement);
-
+    _proto.ready = function ready() {
       _events.trigger("stage:" + this.id + ":readyAfter", {
         stage: this
       });
