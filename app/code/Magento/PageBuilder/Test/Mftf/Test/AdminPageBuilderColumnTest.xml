@@ -238,17 +238,19 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToContainer">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -256,6 +258,7 @@
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{ColumnOnFrontend.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
     </test>
     <test name="ColumnConfigurationHasVerticalAlignment">

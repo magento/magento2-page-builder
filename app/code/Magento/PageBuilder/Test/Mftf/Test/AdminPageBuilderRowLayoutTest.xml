@@ -249,7 +249,7 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderMinHeightProperty_300"/>
+            <argument name="property" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
@@ -267,33 +267,17 @@
         <!-- Add tall content to container -->
         <comment userInput="Add tall content to container" stepKey="commentAddTallContentToContainer"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToContainer">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
-        </actionGroup>
-        <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
-        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading"/>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
-        </actionGroup>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType2">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
-        </actionGroup>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType3">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
-        </actionGroup>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType4">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
-        </actionGroup>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType5">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate height on stage before save -->
         <comment userInput="Validate height on stage before save" stepKey="commentValidateHeightOnStageBeforeSave"/>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{RowOnStage.baseCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -303,6 +287,7 @@
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{RowOnStage.baseCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -312,6 +297,7 @@
         <comment userInput="Validate height on storefront" stepKey="commentValidateHeightOnStorefront"/>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{RowOnStorefront.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
     </test>
     <test name="RowContentIsVerticallyAligned">

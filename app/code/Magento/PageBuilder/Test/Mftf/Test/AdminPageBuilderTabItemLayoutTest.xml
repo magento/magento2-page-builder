@@ -238,20 +238,22 @@
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragContentTypeToContainer">
-            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{TabOnStage.tabContentCSS}}"/>
             <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
             <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -259,6 +261,7 @@
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightGreaterThanMinHeight" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{TabOnStorefront.tabContentCSS}}"/>
+            <argument name="height" value="PageBuilderMinHeightProperty_200"/>
         </actionGroup>
     </test>
     <test name="TabContentIsVerticallyAlignedTop">
