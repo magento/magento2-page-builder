@@ -1274,7 +1274,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <click selector="ButtonItemOnStage.openOptionsMenu('1')" stepKey="clickButtonItem"/>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('1')}}" stepKey="clickButtonItem"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="waitForButtonItemOptionsMenuVisible"/>
         <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderButtonItemContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
