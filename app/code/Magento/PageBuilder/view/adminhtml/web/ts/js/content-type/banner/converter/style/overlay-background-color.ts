@@ -5,8 +5,6 @@
 
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
-import {fromHex} from "../../../../utils/color-converter";
-import {percentToDecimal} from "../../../../utils/number-converter";
 
 export default class OverlayBackgroundColor implements ConverterInterface {
     /**

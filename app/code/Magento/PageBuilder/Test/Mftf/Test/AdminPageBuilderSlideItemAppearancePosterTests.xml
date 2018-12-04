@@ -552,10 +552,7 @@
             <argument name="property" value="PageBuilderSlideItemShowOverlay_OnHover"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayColor">
-            <argument name="property" value="PageBuilderSlideItemOverlayColor_HexWhite"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -564,7 +561,7 @@
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStage"/>
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStage"/>
         <moveMouseOver selector="{{SlideOnBackend.base('1')}}" stepKey="moveMouseOverSlideStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStage"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -575,7 +572,7 @@
         <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefront"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefront"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromSlide"/>
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
@@ -584,7 +581,7 @@
         <seeElement selector="{{SlideOnFrontend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeBackgroundColorStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
     </test>
     <test name="SlideItemPosterOverlayAndButtonOnHover">
         <annotations>
@@ -635,10 +632,7 @@
             <argument name="property" value="PageBuilderSlideItemShowOverlay_OnHover"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayColor">
-            <argument name="property" value="PageBuilderSlideItemOverlayColor_HexWhite"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
@@ -655,7 +649,7 @@
         <seeElement selector="{{SlideOnBackend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStage"/>
         <moveMouseOver selector="{{SlideOnBackend.base('1')}}" stepKey="moveMouseOverSlideStage"/>
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonOnHoverStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStage"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -669,7 +663,7 @@
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefront"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" stepKey="moveMouseOverSlideStorefront"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefront"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="-1" y="0" stepKey="moveMouseAwayFromSlide"/>
         <!-- Click slide anchor -->
         <comment userInput="Click slide anchor" stepKey="clickSlideAnchorStorefront" />
@@ -689,7 +683,7 @@
         <seeElement selector="{{SlideOnFrontend.transparentOverlay('1')}}" stepKey="seeTransparentOverlayStorefrontMobile"/>
         <moveMouseOver selector="{{SlideOnFrontend.base('1')}}" x="1" y="1" stepKey="moveMouseOverSlideStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.button('1')}}" stepKey="seeButtonOnHoverStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayOnHoverStorefrontMobile"/>
         <!-- Click mobile slide anchor -->
         <comment userInput="Click mobile slide anchor" stepKey="clickMobileSlideAnchorStorefront" />
         <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_External.value)}}" stepKey="clickLinkUrlStorefrontMobile"/>
@@ -742,10 +736,7 @@
             <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
-            <argument name="property" value="PageBuilderSlideItemOverlayColor_FF0000"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
@@ -1098,10 +1089,7 @@
             <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
-            <argument name="property" value="PageBuilderSlideItemOverlayColor_HexWhite"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <!-- Fill Out Edit Panel: Advanced -->
         <comment userInput="Fill Out Edit Panel: Advanced" stepKey="commentFillEditPanel4"/>
@@ -1154,7 +1142,7 @@
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
         <!-- Validate Stage: Advanced -->
         <comment userInput="Validate Stage: Advanced" stepKey="commentValidateAdvancedStage"/>
         <seeElement selector="{{SlideOnBackend.posterAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
@@ -1190,7 +1178,7 @@
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStage2"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage2"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
         <!-- Validate Stage After Save: Advanced -->
         <comment userInput="Validate Stage After Save: Advanced" stepKey="commentValidateAdvancedStage2"/>
         <seeElement selector="{{SlideOnBackend.posterAlignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
@@ -1255,10 +1243,7 @@
             <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
-            <argument name="property" value="PageBuilderSlideItemOverlayColor_HexWhite"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -1314,7 +1299,7 @@
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStorefront"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStorefront"/>
         <!-- Validate Storefront: Advanced -->
         <comment userInput="Validate Storefront: Advanced" stepKey="commentValidateAdvancedStorefront"/>
         <seeElement selector="{{SlideOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
@@ -1351,7 +1336,7 @@
         <seeElement selector="{{SlideOnFrontend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeMobileButtonTypeStorefront"/>
         <seeElement selector="{{SlideOnFrontend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeMobileButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeMobileOverlayStateStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexWhite.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeMobileOverlayColorAndTransparencyStorefront"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeMobileOverlayColorAndTransparencyStorefront"/>
         <!-- Validate Storefront Mobile: Advanced -->
         <comment userInput="Validate Storefront Mobile: Advanced" stepKey="commentValidateAdvancedStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.alignment('1', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeMobileAlignmentStorefront"/>
@@ -1439,16 +1424,13 @@
             <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
-            <argument name="property" value="PageBuilderSlideItemOverlayColor_HexGreen"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayTransparency">
-            <argument name="property" value="PageBuilderSlideItemOverlayTransparency_70"/>
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage Overlay and Padding -->
         <comment userInput="Validate Stage Overlay and Padding" stepKey="commentValidateOverlayPadding"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexGreen.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
         <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding" />
         <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding" />
         <!-- Change Appearance to Collage Left -->
@@ -1461,7 +1443,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage2"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexGreen.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
         <dontSeeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeDefaultPosterPadding" />
         <!-- Change Appearance back to Poster -->
         <comment userInput="Change Appearance back to Poster" stepKey="commentChangeAppearanceBackToPoster"/>
@@ -1475,7 +1457,7 @@
         <!-- Validate Stage Overlay and Padding after appearance change -->
         <comment userInput="Validate Stage Overlay and Padding after appearance change" stepKey="commentValidateOverlayPadding2"/>
         <seeElement selector="{{SlideOnBackend.showOverlay('1', PageBuilderSlideItemShowOverlay_Always.value)}}" stepKey="seeOverlayStateStage3"/>
-        <seeElement selector="{{SlideOnBackend.overlayColorAndTransparency('1', PageBuilderSlideItemOverlayColor_HexGreen.rgb, PageBuilderSlideItemOverlayTransparency_70.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage3"/>
+        <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage3"/>
         <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding2" />
         <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding2" />
     </test>
