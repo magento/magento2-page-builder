@@ -149,16 +149,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onFocusOut = function onFocusOut(data, event) {
-      var relatedTarget = event.relatedTarget;
+      var relatedTarget = event.relatedTarget,
+          $relatedTarget;
 
       if (!relatedTarget && document.activeElement && !(document.activeElement instanceof HTMLBodyElement)) {
         relatedTarget = document.activeElement;
       }
 
-      var relatedTargetIsDescendantOfNavigation = relatedTarget && (0, _jquery)(relatedTarget).closest(this.navigationElement).length;
-      var shouldUnsetFocusedSlide = !relatedTarget || !relatedTargetIsDescendantOfNavigation;
+      if (!relatedTarget) {
+        this.setFocusedSlide(null);
+        return;
+      }
 
-      if (shouldUnsetFocusedSlide) {
+      $relatedTarget = (0, _jquery)(relatedTarget);
+      var isRelatedTargetDescendantOfNavigation = $relatedTarget.closest(this.navigationElement).length;
+      var isFocusedOnAnotherSlideInThisSlider = $relatedTarget.hasClass("navigation-dot-anchor") && isRelatedTargetDescendantOfNavigation;
+
+      if (isFocusedOnAnotherSlideInThisSlider) {
+        _events.trigger("stage:interactionStop");
+      } else if (!isRelatedTargetDescendantOfNavigation) {
         this.setFocusedSlide(null);
       }
     };

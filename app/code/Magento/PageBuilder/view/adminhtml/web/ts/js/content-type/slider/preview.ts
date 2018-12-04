@@ -172,20 +172,29 @@ export default class Preview extends PreviewCollection {
      * @param {JQueryEventObject} event
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
-        let relatedTarget = event.relatedTarget;
+        let relatedTarget = event.relatedTarget,
+            $relatedTarget;
 
         if (!relatedTarget && document.activeElement && !(document.activeElement instanceof HTMLBodyElement)) {
             relatedTarget = document.activeElement;
         }
 
-        const relatedTargetIsDescendantOfNavigation = (
-            relatedTarget &&
-            $(relatedTarget as HTMLElement).closest(this.navigationElement).length
+        if (!relatedTarget) {
+            this.setFocusedSlide(null);
+            return;
+        }
+
+        $relatedTarget = $(relatedTarget as HTMLElement);
+
+        const isRelatedTargetDescendantOfNavigation = $relatedTarget.closest(this.navigationElement).length;
+        const isFocusedOnAnotherSlideInThisSlider = (
+            $relatedTarget.hasClass("navigation-dot-anchor") &&
+            isRelatedTargetDescendantOfNavigation
         );
 
-        const shouldUnsetFocusedSlide = !relatedTarget || !relatedTargetIsDescendantOfNavigation;
-
-        if (shouldUnsetFocusedSlide) {
+        if (isFocusedOnAnotherSlideInThisSlider) {
+            events.trigger("stage:interactionStop");
+        } else if (!isRelatedTargetDescendantOfNavigation) {
             this.setFocusedSlide(null);
         }
     }
