@@ -599,7 +599,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!-- Add Slide 2 -->
         <comment userInput="Add Slide 2" stepKey="commentAddSlide"/>
-        <actionGroup ref="addSlide" stepKey="addSlide2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType1">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -738,7 +740,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="2" stepKey="seeSlidesStage1"/>
         <!-- Remove Slide Before Page Save (No Confirmation Modal) -->
         <comment userInput="Remove Slide Before Page Save" stepKey="commentRemoveSlide1"/>
@@ -749,7 +753,9 @@
         <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="1" stepKey="seeSlidesStage2"/>
         <!-- Add Slide Again -->
         <comment userInput="Add Slide Again" stepKey="commentAddSlideAgain"/>
-        <actionGroup ref="addSlide" stepKey="addSlide2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{SlideOnBackend.all}}" userInput="2" stepKey="seeSlidesStage3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -1712,7 +1718,9 @@
         <seeElement selector="{{SlideOnBackend.backgroundColor('1', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeSlideBackgroundAfterDelete"/>
         <!-- Test removing added slide -->
         <comment userInput="Test removing added slide" stepKey="commentAddedSlide"/>
-        <actionGroup ref="addSlide" stepKey="addNewSlide" />
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
