@@ -14,7 +14,9 @@
         <span translate="pageBuilderEditButtonText" />
     </button>
     <if args="isComponentInitialized">
-        <div visible="visiblePageBuilder" class="pagebuilder-wysiwyg-wrapper">
+        <div visible="visiblePageBuilder"
+             class="pagebuilder-wysiwyg-wrapper"
+             css="{'pagebuilder-transition-in': wysiwygConfigData()['pagebuilder_button'], 'trigger-transition': transition, 'pagebuilder-transition-out': transitionOut}">
             <with args="pageBuilder">
                 <render />
             </with>

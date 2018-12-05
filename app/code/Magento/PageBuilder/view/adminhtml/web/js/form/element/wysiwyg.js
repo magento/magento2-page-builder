@@ -5,12 +5,15 @@
 
 define([
     'jquery',
+    'Magento_Ui/js/lib/view/utils/async',
+    'underscore',
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
     'Magento_PageBuilder/js/events',
     'Magento_Ui/js/lib/view/utils/dom-observer',
-    'Magento_PageBuilder/js/page-builder'
-], function ($, Wysiwyg, $t, events, domObserver, PageBuilder) {
+    'Magento_PageBuilder/js/page-builder',
+    'Magento_PageBuilder/js/utils/promise-deferred'
+], function (jQuery, $, _, Wysiwyg, $t, events, domObserver, PageBuilder, deferred) {
     'use strict';
 
     /**
@@ -18,6 +21,8 @@ define([
      */
     return Wysiwyg.extend({
         defaults: {
+            transition: false,
+            transitionOut: false,
             elementSelector: '> textarea',
             stageSelector: '.pagebuilder-stage-wrapper',
             pageBuilder: false,
@@ -47,7 +52,8 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe('isComponentInitialized visiblePageBuilder wysiwygConfigData loading');
+                .observe('isComponentInitialized visiblePageBuilder wysiwygConfigData loading transition ' +
+                    'transitionOut');
 
             return this;
         },
@@ -56,7 +62,9 @@ define([
          * Handle button click, init the Page Builder application
          */
         pageBuilderEditButtonClick: function (context, event) {
-            var modalInnerWrap = $(event.currentTarget).parents('.modal-inner-wrap');
+            var modalInnerWrap = jQuery(event.currentTarget).parents('.modal-inner-wrap');
+
+            this.transition(false);
 
             // Determine if the Page Builder instance is within a modal
             this.isWithinModal = modalInnerWrap.length === 1;
@@ -66,7 +74,7 @@ define([
             }
 
             if (!this.isComponentInitialized()) {
-                this.disableDomObserver($(event.currentTarget).parent()[0]);
+                this.disableDomObserver(jQuery(event.currentTarget).parent()[0]);
             }
 
             this.initPageBuilder();
@@ -78,15 +86,16 @@ define([
          */
         initPageBuilder: function () {
             if (!this.isComponentInitialized()) {
-                $.async({
-                    component: this,
-                    selector: this.stageSelector
-                }, this.disableDomObserver.bind(this));
-
                 this.loading(true);
                 this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
                 this.initPageBuilderListeners();
                 this.isComponentInitialized(true);
+
+                // Disable the domObserver for the entire stage
+                $.async({
+                    component: this,
+                    selector: this.stageSelector
+                }, this.disableDomObserver.bind(this));
             }
 
             if (!this.wysiwygConfigData()['pagebuilder_button']) {
@@ -114,11 +123,19 @@ define([
          * Init various listeners on the stage
          */
         initPageBuilderListeners: function () {
-            var id = this.pageBuilder.id;
+            var id = this.pageBuilder.id,
+                renderDeferred = jQuery.Deferred(),
+                fullScreenDeferred = jQuery.Deferred(),
+                rendered = false;
 
             events.on('stage:' + id + ':readyAfter', function () {
                 this.loading(false);
             }.bind(this));
+
+            events.on('stage:' + id + ':renderAfter', function () {
+                renderDeferred.resolve();
+                rendered = true;
+            });
 
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
@@ -126,14 +143,23 @@ define([
 
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
                 if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
-                    this.visiblePageBuilder(false);
-
                     if (this.isWithinModal && this.modal) {
                         this.modal.css({
                             transform: '',
                             transition: ''
                         });
                     }
+
+                    // Force full screen mode whilst the animation occurs
+                    this.transitionOut(true);
+                    // Trigger animation out
+                    this.transition(false);
+
+                    // Reset the transition out class and hide the stage
+                    _.delay(function () {
+                        this.transitionOut(false);
+                        this.visiblePageBuilder(false);
+                    }.bind(this), 185);
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(true);
 
@@ -143,7 +169,23 @@ define([
                             transition: 'none'
                         });
                     }
+
+                    fullScreenDeferred.resolve();
+
+                    // If the stage has already rendered once we don't need to wait until animating the stage in
+                    if (rendered) {
+                        _.defer(function () {
+                            this.transition(true);
+                        }.bind(this));
+                    }
                 }
+            }.bind(this));
+
+            // Wait until the stage is rendered and full screen mode is activated
+            jQuery.when(renderDeferred, fullScreenDeferred).done(function () {
+                _.defer(function () {
+                    this.transition(true);
+                }.bind(this));
             }.bind(this));
         }
     });

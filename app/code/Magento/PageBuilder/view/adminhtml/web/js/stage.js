@@ -35,7 +35,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
       this.focusChild = _knockout.observable(false);
-      this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
       this.template = "Magento_PageBuilder/content-type/preview";
@@ -50,7 +49,13 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       }, 500);
       this.parent = parent;
       this.id = parent.id;
-      (0, _matrix.generateAllowedParents)(); // Wait for the stage to be built alongside the stage being rendered
+      (0, _matrix.generateAllowedParents)(); // Fire an event after the DOM has rendered
+
+      this.afterRenderDeferred.promise.then(function () {
+        _events.trigger("stage:" + _this.id + ":renderAfter", {
+          stage: _this
+        });
+      }); // Wait for the stage to be built alongside the stage being rendered
 
       Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
     }

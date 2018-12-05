@@ -39,7 +39,6 @@ export default class Stage {
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
     public userSelect: KnockoutObservable<boolean> = ko.observable(true);
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
-    public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
     private template: string = "Magento_PageBuilder/content-type/preview";
@@ -65,6 +64,11 @@ export default class Stage {
         this.parent = parent;
         this.id = parent.id;
         generateAllowedParents();
+
+        // Fire an event after the DOM has rendered
+        this.afterRenderDeferred.promise.then(() => {
+            events.trigger(`stage:${ this.id }:renderAfter`, {stage: this});
+        });
 
         // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
