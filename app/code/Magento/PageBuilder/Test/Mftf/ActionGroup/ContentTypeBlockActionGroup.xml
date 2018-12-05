@@ -36,6 +36,14 @@
         <seeElement selector="{{BlockOnStage.title(index,block.title)}}" stepKey="seeOptionMenuTitle"/>
         <see selector="{{BlockOnStage.content(index)}}" userInput="{{block.content}}" stepKey="seeBlockContentOnStage"/>
     </actionGroup>
+    <actionGroup name="verifyBlockOnStorefront">
+        <arguments>
+            <argument name="block"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <see selector="{{BlockOnStorefront.textContent(index, block.content)}}" stepKey="seeBlockContentOnCmsStage"/>
+    </actionGroup>
     <actionGroup name="verifyVerticalAlignmentBottomInBlock">
         <arguments>
             <argument name="block" defaultValue="BlockOnStorefront"/>
