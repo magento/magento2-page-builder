@@ -6,7 +6,7 @@
 
 This document outlines how to implement the inline editing toolbar for any content type. This feature is used within the heading to allow for easy modification of the heading type and alignment. It can be used within your content types to quickly change common things without needing to open the full editor.
 
-![Page Builder toolbar](images/toolbar.png)
+![Page Builder toolbar](../images/toolbar.png)
 
 ## Overview
 

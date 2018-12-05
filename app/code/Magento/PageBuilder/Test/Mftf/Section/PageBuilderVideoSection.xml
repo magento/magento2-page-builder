@@ -17,7 +17,7 @@
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-video')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe[@src='{{arg2}}']" parameterized="true"/>
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
