@@ -172,8 +172,7 @@ export default class Preview extends PreviewCollection {
      * @param {JQueryEventObject} event
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
-        let relatedTarget = event.relatedTarget,
-            $relatedTarget;
+        let relatedTarget = event.relatedTarget;
 
         if (!relatedTarget && document.activeElement && !(document.activeElement instanceof HTMLBodyElement)) {
             relatedTarget = document.activeElement;
@@ -184,7 +183,7 @@ export default class Preview extends PreviewCollection {
             return;
         }
 
-        $relatedTarget = $(relatedTarget as HTMLElement);
+        const $relatedTarget = $(relatedTarget);
 
         const isRelatedTargetDescendantOfNavigation = $relatedTarget.closest(this.navigationElement).length;
         const isFocusedOnAnotherSlideInThisSlider = (
