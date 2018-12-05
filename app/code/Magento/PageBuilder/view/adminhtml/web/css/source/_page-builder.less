@@ -35,6 +35,7 @@
         height: 100%;
         left: 0;
         overflow: scroll;
+        overflow-x: hidden;
         padding: 0;
         position: fixed;
         top: 0;
@@ -42,28 +43,38 @@
         z-index: 800;
 
         .pagebuilder-header {
-            background: rgba(255,255,255,.8);
+            height: 0;
             padding: 0;
             position: fixed;
+            position: -webkit-sticky;
+            position: sticky;
             right: 0;
             top: 0;
             width: auto;
             z-index: 101;
 
             .action-close {
-                background-color: transparent;
+                background: rgba(255,255,255,.8);
                 border: none;
                 border-radius: 0;
                 box-shadow: none;
-                display: block;
+                display: inline-block;
                 margin: 0;
                 padding: 15px 20px;
             }
         }
 
+        .pagebuilder-canvas {
+            padding-top: 25px;
+        }
+
         .pagebuilder-panel-wrapper {
-            position: fixed;
             top: 0;
+            bottom: 0;
+            position: fixed;
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 102;
 
             .pagebuilder-panel {
                 height: 100vh;
