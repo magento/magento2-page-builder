@@ -1251,4 +1251,33 @@
             <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
         </assertEquals>
     </test>
+    <test name="BannerOverlayAndButtonDoNotGoOutsideContainerOnCollageRightAppearance" extends="BannerOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner Overlay and Button do not go outside container on collage right appearance"/>
+            <description value="User should be able to place a banner inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5818"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageRight"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateBannerOverlayAndButtonCollage" stepKey="validateBannerOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="banner" value="BannerOnBackend"/>
+            <argument name="bannerBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateBannerOverlayAndButtonCollage" stepKey="validateBannerOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="banner" value="BannerOnFrontend"/>
+            <argument name="bannerBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
 </tests>

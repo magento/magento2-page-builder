@@ -536,4 +536,33 @@
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
     </test>
+    <test name="SlideOverlayAndButtonDoNotGoOutsideContainerOnCollageLeftAppearance" extends="SlideOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Overlay and Button do not go outside container on collage left appearance"/>
+            <description value="User should be able to place a slider inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5818"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOverlayAndButtonCollage" stepKey="validateSlideOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="slide" value="SlideOnBackend"/>
+            <argument name="slideBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOverlayAndButtonCollage" stepKey="validateSlideOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="slide" value="SlideOnFrontend"/>
+            <argument name="slideBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
 </tests>
