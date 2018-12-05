@@ -1,9 +1,9 @@
-<!-- {% raw %} -->
-
 # Step 1: Add configuration
 
-{: .bs-callout .bs-callout-info }
+***
 The development of this tutorial is currently **IN PROGRESS**.
+
+***
 
 The configuration file gives your content type its existence. It's where you set the name, display label, and references to the other files that define the appearance and behavior of your content type. Add it to your module here (`view/adminhtml/pagebuilder/content_type/`):
 
@@ -19,7 +19,7 @@ Only a subset of configuration elements are described in this example (enough to
 
 The following configuration shows the minimal requirements for defining a content type called `example`. The `example` content type is nearly identical to the built-in `heading` content type in order to help you learn the fundamental parts of a content type as seen in the configuration file here. An overview of these elements and attributes are described in the tables that follow.
 
-``` xml
+```xml
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
   <type name="example"
@@ -65,19 +65,18 @@ The following configuration shows the minimal requirements for defining a conten
 
 The `<type>` node defines the key properties of your content type. The attributes are described here:
 
-| Attribute         | Description                                                  |
-| :---------------- | ------------------------------------------------------------ |
-| name              | Name of the content type that Magento uses for XML merging. The convention for using multi-word names is to separate the words with hyphens. |
-| label             | Label displayed in the Page Builder panel, option menu, and on the Admin stage. |
-| group             | Group or category in the panel menu where your content type is displayed. The default groups are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details. |
-| component         | Currently there are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
-| preview_component | JavaScript file that provides preview-specific rendering logic within the Admin UI. |
-| master_component  | JavaScript file that provides master format rendering logic generic for all appearances of your content type when rendered on the storefront. |
-| form              | UI component form that provides the form controls for editing your content type. |
-| icon              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
-| is_hideable       | Optional. Default `true`. Include it only when you want to set it to `false` to prevent the end-user from hiding your  content type on demand, using a button (eye icon) in the options menu. A setting of false will remove the hide button from the options menu. |
-| translate         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
-{:style="table-layout:auto"}
+| Attribute           | Description                                                                                                                                                                                                                                                                                                                                       |
+|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`              | Name of the content type that Magento uses for XML merging. The convention for using multi-word names is to separate the words with hyphens.                                                                                                                                                                                                      |
+| `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage.                                                                                                                                                                                                                                                                   |
+| `group`             | Group or category in the panel menu where your content type is displayed. The default groups are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details.                                                                                                                |
+| `component`         | Currently there are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
+| `preview_component` | JavaScript file that provides preview-specific rendering logic within the Admin UI.                                                                                                                                                                                                                                                               |
+| `master_component`  | JavaScript file that provides master format rendering logic generic for all appearances of your content type when rendered on the storefront.                                                                                                                                                                                                     |
+| `form`              | UI component form that provides the form controls for editing your content type.                                                                                                                                                                                                                                                                  |
+| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label.                                                                                                                                                                                                                                                               |
+| `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder`s of 10 and 20. |
+| `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation.                                                                                                                                                                                                                                           |
 
 ## The `appearance` node
 
@@ -85,14 +84,13 @@ The purpose of the `<appearance>` node in a configuration is to define how your 
 
 The `<appearance>` attributes are described as follows:
 
-| Attribute        | Description                                                  |
-| ---------------- | ------------------------------------------------------------ |
-| name             | Name of the appearance for extending as needed.              |
-| default          | Content types must specify one of the appearances as the default appearance. That means if you only have one appearance, it must be set as the default. |
-| preview_template | `preview.html` - the HTML template for rendering the preview appearance of a content type within the Admin. |
-| render_template  | `master.html` - the HTML template for rendering the storefront appearance of a content type for customers. |
-| reader           | Reads data for the content type from the master format       |
-{:style="table-layout:auto"}
+| Attribute          | Description                                                                                                                                             |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`             | Name of the appearance for extending as needed.                                                                                                         |
+| `default`          | Content types must specify one of the appearances as the default appearance. That means if you only have one appearance, it must be set as the default. |
+| `preview_template` | `preview.html` - the HTML template for rendering the preview appearance of a content type within the Admin.                                             |
+| `render_template`  | `master.html` - the HTML template for rendering the storefront appearance of a content type for customers.                                              |
+| `reader`           | Reads data for the content type from the master format                                                                                                  |
 
 All content types must have at least one `<appearance>` defined within the `<appearances>` node.
 
@@ -103,5 +101,3 @@ The purpose of `<elements>` node in the configuration is to map the data from th
 ## Next
 
 At this point, if you try to view Page Builder you get an error noting that the `preview_template` and `render_template` from the `<appearance>` element are missing. These templates are referenced in the `example.xml` config file, but we have not yet created them. Let's do that next in [Step 2: Add templates](step-2-add-templates.md).
-
-<!-- {% endraw %} -->

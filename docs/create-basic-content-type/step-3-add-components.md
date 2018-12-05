@@ -1,9 +1,9 @@
-<!-- {% raw %} -->
-
 # Step 3: Add components (optional)
 
-{: .bs-callout .bs-callout-info }
+***
 The development of this tutorial is currently **IN PROGRESS**.
+
+***
 
 Components are the JavaScript files that define the behaviors of your content type when they appear on the stage in the Admin UI (using the `preview.js` component) and in the storefront (using the `master.js` component). As such, they are complementary to the templates you added previously in Step 2. 
 
@@ -39,7 +39,3 @@ Add them to your module here (`view/adminhtml/web/js/content-type/<content-type-
 
 
 ## Create preview component
-
-
-
-<!-- {% endraw %} -->

@@ -1,9 +1,9 @@
-<!-- {% raw %} -->
-
 # Step 2: Add templates
 
-{: .bs-callout .bs-callout-info }
+***
 The development of this tutorial is currently **IN PROGRESS**.
+
+***
 
 Templates are the HTML files that define the appearance of content types within both the Admin UI (using the `preview.html`) and the storefront UI (using the `master.html`). 
 
@@ -14,22 +14,21 @@ In your configuration file, reference your templates as shown here within the `<
 ```xml
 <appearance name="default"
             default="true"
-            preview_template="Vendor_Module/content-type/example/default/preview"
+            preview_template="Vendor_Module/content-type/example/default/preview" 
             render_template="Vendor_Module/content-type/example/default/master"
             reader="Magento_PageBuilder/js/master-format/read/configurable">
 ```
 
 | Attribute        | Description                                                  |
 | ---------------- | ------------------------------------------------------------ |
-| preview_template | `preview.html` - the HTML template for rendering the preview appearance of a content type on the stage within the Admin UI. |
-| render_template  | `master.html` - the HTML template for rendering the appearance of a content type on the storefront for customers to see. |
+| `preview_template` | `preview.html` - the HTML template for rendering the preview appearance of a content type on the stage within the Admin UI. |
+| `render_template`  | `master.html` - the HTML template for rendering the appearance of a content type on the storefront for customers to see. |
 
 ## Location
 
 Content types cannot be rendered without these templates. Add them to your module here (`view/adminhtml/web/template/content-type/<content-type-name>/default/`):
 
 ![Create config file](../images/step2-add-templates.png)
-
 
 
 ## Create the `preview_template`
@@ -62,7 +61,6 @@ Content types cannot be rendered without these templates. Add them to your modul
 ## Create the `master_template`
 
 
-
 ```html
 <!--master.html-->
 <h2 attr="data.main.attributes" 
@@ -71,8 +69,3 @@ Content types cannot be rendered without these templates. Add them to your modul
     html="data.main.html">
 </h2>
 ```
-
-
-
-
-<!-- {% endraw %} -->
