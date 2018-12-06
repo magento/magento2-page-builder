@@ -3,7 +3,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _previewCollection) {
+define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver", "underscore", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jarallax, _jquery, _knockout, _events, _ResizeObserver, _underscore, _conditionalRemoveOption, _hideShowOption, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -93,6 +93,14 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       options.remove = new _conditionalRemoveOption(_extends({}, options.remove.config, {
         preview: this
       }));
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
       return options;
     };
     /**

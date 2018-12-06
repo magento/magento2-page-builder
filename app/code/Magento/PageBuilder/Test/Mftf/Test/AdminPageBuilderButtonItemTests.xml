@@ -1246,14 +1246,14 @@
         <seeElementInDOM selector="{{ButtonItemOnStage.moveHandleDisabled('1')}}" stepKey="seeMoveHandleDisabled2"/>
         <dontSeeElementInDOM selector="{{ButtonItemOnStage.moveHandle('1')}}" stepKey="dontSeeMoveHandleEnabled2"/>
     </test>
-    <test name="ValidateShowHideOnButtonItemDefaultState">
+    <test name="ValidateButtonItemNotHideable">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Button Item is shown by default"/>
-            <description value="Button Item is shown by default in stage and storefront"/>
+            <title value="Validate button item has no hide / show capabilities"/>
+            <description value="Validate button item has no hide / show capabilities"/>
             <severity value="CRITICAL"/>
-            <useCaseId value="MC-965"/>
+            <useCaseId value="MC-4959"/>
             <testCaseId value="MC-3547"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
@@ -1268,35 +1268,16 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-        </actionGroup>
-        <!-- Add Button Item to Stage -->
-        <comment userInput="Add Button Item to Stage" stepKey="commentAddButtonItemToStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonItemIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsIntoStage">
             <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
-            <argument name="text" value="PageBuilderButtonItemText_First"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
-        <!-- Stage: Validate Default Show/Hide State - Before Save -->
-        <comment userInput="Stage: Validate Default Show/Hide State Before Save" stepKey="CommentValidateDefaultShowHideStateOnStageBeforeSave"/>
-        <seeElement selector="{{ButtonItemOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageBeforeSave"/>
-        <!-- Stage: Validate Default Show/Hide State - After Save -->
-        <comment userInput="Stage: Validate Default Show/Hide State - After Save" stepKey="CommentValidateDefaultShowHideStateOnStageAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <seeElement selector="{{ButtonItemOnStage.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStageAfterSave"/>
-        <!-- Storefront: Validate Default Show/Hide State -->
-        <comment userInput="Storefront: Validate Default Show/Hide State" stepKey="CommentValidateDefaultShowHideStateOnStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-        </actionGroup>
-        <seeElement selector="{{ButtonItemOnStorefront.notHidden('1')}}" stepKey="seeContentTypeNotHiddenStorefront"/>
+        <click selector="{{ButtonItemOnStage.openOptionsMenu('1')}}" stepKey="clickButtonItem"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.optionsMenu('1')}}" stepKey="waitForButtonItemOptionsMenuVisible"/>
+        <dontSeeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeHide(PageBuilderButtonItemContentType.role, '1')}}" stepKey="dontSeeDomHideOption" />
     </test>
     <test name="ButtonItemCanSaveButtonTextWithoutFocusingOutsideOfLiveEdit">
         <annotations>
