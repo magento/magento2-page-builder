@@ -41,6 +41,7 @@ export default class Preview extends PreviewCollection {
     protected events: DataObject = {
         columnWidthChangeAfter: "onColumnResize",
     };
+    private navigationElement: HTMLElement;
     private ready: boolean = false;
     private childSubscribe: KnockoutSubscription;
     private contentTypeHeightReset: boolean;
@@ -171,11 +172,39 @@ export default class Preview extends PreviewCollection {
      * @param {JQueryEventObject} event
      */
     public onFocusOut(data: PreviewCollection, event: JQueryEventObject) {
-        if (_.isNull(event.relatedTarget) ||
-            event.relatedTarget && !$(event.currentTarget as HTMLElement).closest(event.relatedTarget).length
-        ) {
+        let relatedTarget = event.relatedTarget;
+
+        if (!relatedTarget && document.activeElement && !(document.activeElement instanceof HTMLBodyElement)) {
+            relatedTarget = document.activeElement;
+        }
+
+        if (!relatedTarget) {
+            this.setFocusedSlide(null);
+            return;
+        }
+
+        const $relatedTarget = $(relatedTarget);
+
+        const isRelatedTargetDescendantOfNavigation = $relatedTarget.closest(this.navigationElement).length;
+        const isFocusedOnAnotherSlideInThisSlider = (
+            $relatedTarget.hasClass("navigation-dot-anchor") &&
+            isRelatedTargetDescendantOfNavigation
+        );
+
+        if (isFocusedOnAnotherSlideInThisSlider) {
+            events.trigger("stage:interactionStop");
+        } else if (!isRelatedTargetDescendantOfNavigation) {
             this.setFocusedSlide(null);
         }
+    }
+
+    /**
+     * Set reference to navigation element in template
+     *
+     * @param {HTMLElement} navigationElement
+     */
+    public afterNavigationRender(navigationElement: HTMLElement): void {
+        this.navigationElement = navigationElement;
     }
 
     /**

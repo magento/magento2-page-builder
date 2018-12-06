@@ -149,9 +149,36 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onFocusOut = function onFocusOut(data, event) {
-      if (_underscore.isNull(event.relatedTarget) || event.relatedTarget && !(0, _jquery)(event.currentTarget).closest(event.relatedTarget).length) {
+      var relatedTarget = event.relatedTarget;
+
+      if (!relatedTarget && document.activeElement && !(document.activeElement instanceof HTMLBodyElement)) {
+        relatedTarget = document.activeElement;
+      }
+
+      if (!relatedTarget) {
+        this.setFocusedSlide(null);
+        return;
+      }
+
+      var $relatedTarget = (0, _jquery)(relatedTarget);
+      var isRelatedTargetDescendantOfNavigation = $relatedTarget.closest(this.navigationElement).length;
+      var isFocusedOnAnotherSlideInThisSlider = $relatedTarget.hasClass("navigation-dot-anchor") && isRelatedTargetDescendantOfNavigation;
+
+      if (isFocusedOnAnotherSlideInThisSlider) {
+        _events.trigger("stage:interactionStop");
+      } else if (!isRelatedTargetDescendantOfNavigation) {
         this.setFocusedSlide(null);
       }
+    };
+    /**
+     * Set reference to navigation element in template
+     *
+     * @param {HTMLElement} navigationElement
+     */
+
+
+    _proto.afterNavigationRender = function afterNavigationRender(navigationElement) {
+      this.navigationElement = navigationElement;
     };
     /**
      * Navigate to a slide
