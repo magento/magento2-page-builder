@@ -5,13 +5,13 @@ The development of this tutorial is currently **IN PROGRESS**.
 
 ***
 
-Out of the box, Page Builder comes with several content types (controls) that you can drag onto the stage to build your storefront pages, as shown below. In this topic, you will learn how to create your own content type for use within Page Builder.
+Page Builder comes with 16 content types (controls) you can use to build your storefront pages. In this tutorial, you will add a new content type: a Quote control, which you can use to show customer testimonials or other quotations on a page.
 
 ![Page Builder Content Types](../images/panel-horizontal.png)
 
 ## Prerequisites
 
-Page Builder creates content types from modules. So this topic assumes you have a basic module structure in which to add your content type files.
+Page Builder creates content types from a module with UI components. So this topic assumes you have a basic module structure in which to add your content type files.
 
 ![Minimum module structure](../images/module-minimum-structure.png)
 
@@ -32,5 +32,5 @@ The files you will need to create in order to build a basic content type are sho
 
 ![Before and after content type](../images/content-type-files.png)
 
-## Tutorial
-This tutorial walks you through creating these files, starting with [Step 1: Add configuration](step-1-add-configuration.md). 
+## Next
+[Step 1: Add configuration](step-1-add-configuration.md). 

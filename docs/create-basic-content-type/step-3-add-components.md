@@ -36,6 +36,4 @@ Add them to your module here (`view/adminhtml/web/js/content-type/<content-type-
 
 ![Create config file](../images/step3-add-component.png)
 
-
-
 ## Create preview component

@@ -182,4 +182,3 @@ In this example, let's create a form that extends `pagebuilder_base_form` to pro
 [Insert descriptions]
 
 ## Create layout
-

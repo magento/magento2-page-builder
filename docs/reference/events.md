@@ -1,6 +1,4 @@
-# Events <!-- omit in toc -->
-
-<!-- {% raw %} -->
+# Events
 
 This document contains reference information for events dispatched in Page Builder.
 
@@ -9,41 +7,42 @@ This document contains reference information for events dispatched in Page Build
 
 ## Events list {#eventslist}
 
-- [Events list {#eventslist}](#events-list-eventslist)
-- [`contentType:*` events](#contenttype-events)
-    - [`contentType:createAfter`](#contenttypecreateafter)
-    - [`contentType:mountAfter`](#contenttypemountafter)
-    - [`contentType:dropAfter`](#contenttypedropafter)
-    - [`contentType:mountAfter`](#contenttypemountafter)
-    - [`contentType:renderAfter`](#contenttyperenderafter)
-    - [`contentType:removeAfter`](#contenttyperemoveafter)
-    - [`contentType:duplicateAfter`](#contenttypeduplicateafter)
-    - [`contentType:moveBefore`](#contenttypemovebefore)
-    - [`contentType:moveAfter`](#contenttypemoveafter)
-    - [`contentType:redrawAfter`](#contenttyperedrawafter)
-        - [Backend](#backend)
-        - [Frontend](#frontend)
-    - [`column:dragStart`](#columndragstart)
-    - [`column:dragStop`](#columndragstop)
-    - [`column:initializeAfter`](#columninitializeafter)
-    - [`image:{{id}}:assignAfter`](#imageidassignafter)
-    - [`image:mountAfter`](#imagemountafter)
-    - [`image:uploadAfter`](#imageuploadafter)
-    - [`stage:interactionStart`](#stageinteractionstart)
-    - [`stage:interactionStop`](#stageinteractionstop)
-    - [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
-    - [`previewData:updateAfter`](#previewdataupdateafter)
-    - [`previewSortable:sortstart`](#previewsortablesortstart)
-    - [`previewSortable:sortupdate`](#previewsortablesortupdate)
-    - [`stage:error`](#stageerror)
-    - [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-    - [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
-    - [`stage:updateAfter`](#stageupdateafter)
-    - [`stage:childFocusStart`](#stagechildfocusstart)
-    - [`stage:childFocusStop`](#stagechildfocusstop)
-    - [`state`](#state)
-    - [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
-- [`googleMaps:authFailure`](#googlemapsauthfailure)
+- [Events](#events)
+    - [Events list {#eventslist}](#events-list-eventslist)
+    - [`contentType:*` events](#contenttype-events)
+        - [`contentType:createAfter`](#contenttypecreateafter)
+        - [`contentType:mountAfter`](#contenttypemountafter)
+        - [`contentType:dropAfter`](#contenttypedropafter)
+        - [`contentType:mountAfter`](#contenttypemountafter-1)
+        - [`contentType:renderAfter`](#contenttyperenderafter)
+        - [`contentType:removeAfter`](#contenttyperemoveafter)
+        - [`contentType:duplicateAfter`](#contenttypeduplicateafter)
+        - [`contentType:moveBefore`](#contenttypemovebefore)
+        - [`contentType:moveAfter`](#contenttypemoveafter)
+        - [`contentType:redrawAfter`](#contenttyperedrawafter)
+            - [Backend](#backend)
+            - [Frontend](#frontend)
+        - [`column:dragStart`](#columndragstart)
+        - [`column:dragStop`](#columndragstop)
+        - [`column:initializeAfter`](#columninitializeafter)
+        - [`image:{{id}}:assignAfter`](#imageidassignafter)
+        - [`image:mountAfter`](#imagemountafter)
+        - [`image:uploadAfter`](#imageuploadafter)
+        - [`stage:interactionStart`](#stageinteractionstart)
+        - [`stage:interactionStop`](#stageinteractionstop)
+        - [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
+        - [`previewData:updateAfter`](#previewdataupdateafter)
+        - [`previewSortable:sortstart`](#previewsortablesortstart)
+        - [`previewSortable:sortupdate`](#previewsortablesortupdate)
+        - [`stage:error`](#stageerror)
+        - [`stage:{{id}}:readyAfter`](#stageidreadyafter)
+        - [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
+        - [`stage:updateAfter`](#stageupdateafter)
+        - [`stage:childFocusStart`](#stagechildfocusstart)
+        - [`stage:childFocusStop`](#stagechildfocusstop)
+        - [`state`](#state)
+        - [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
+    - [`googleMaps:authFailure`](#googlemapsauthfailure)
 
 ## `contentType:*` events
 All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
@@ -548,5 +547,3 @@ _none_
 [Back to top]
 
 [Back to top]: #eventslist
-
-<!-- {% endraw %} -->

@@ -1,6 +1,5 @@
 # How to develop a container content type
 
-<!-- {% raw %} -->
 This tutorial takes you through the process of creating a module with the name `VendorName_CustomContainer`.
 
 The module creates a new custom container group content type with a `left` and `right` appearance.
@@ -1034,5 +1033,3 @@ Use the configuration form in the container group's edit panel to switch between
 [custom container group]: #custom-container-group
 [custom container group form]: #custom-container-group-form-layout
 [custom container form]: #custom-container-form-layout
-
-<!-- {% endraw %} -->

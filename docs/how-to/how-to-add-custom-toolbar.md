@@ -1,7 +1,5 @@
 # How to add a custom Toolbar
 
-<!-- {% raw %} -->
-
 ## What's in this topic
 
 This document outlines how to implement the inline editing toolbar for any content type. This feature is used within the heading to allow for easy modification of the heading type and alignment. It can be used within your content types to quickly change common things without needing to open the full editor.
@@ -79,5 +77,3 @@ In your content block template, add the toolbar events to your main toolbar cont
 
 An example implementation can be found in the Heading content block:
 `app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
-
-<!-- {% endraw %} -->

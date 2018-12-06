@@ -1,5 +1,3 @@
-<!-- {% raw %} -->
-
 # Panel groups and configurations
 
 By default, the Page Builder panel has four groups (Layout, Elements, Media, Add Content) and 16 content types as shown here:
@@ -20,10 +18,12 @@ These groups are defined in the Page Builder `group.xml` file and can be extende
 
 This topic describes four ways to customize the Page Builder panel:
 
-- [Rename panel groups](#rename-panel-groups)
-- [Reorder panel groups](#reorder-panel-groups)
-- [Add new panel groups](#add-new-panel-groups)
-- [Add content types to different panel group](#add-content-types-to-different-panel-groups).
+- [Panel groups and configurations](#panel-groups-and-configurations)
+    - [Overview](#overview)
+    - [Rename panel groups](#rename-panel-groups)
+    - [Reorder panel groups](#reorder-panel-groups)
+    - [Add new panel groups](#add-new-panel-groups)
+    - [Add content types to different panel groups](#add-content-types-to-different-panel-groups)
 
 {: .bs-callout .bs-callout-info }
 For the sake of the user experience, please don't forget the affect your panel configurations may have on the end user. User's should have access the most important content types first, so be careful how you reorder groups and content types within groups. We strongly encourage you to place your content types into the existing groups when possible, instead of creating your own group.
@@ -103,6 +103,3 @@ To add your content type to a new group or one of the existing groups, set your 
 The result looks like this:
 
 ![Group with content type](../images/group-with-content-type.png)
-
-
-<!-- {% endraw %} -->

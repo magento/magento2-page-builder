@@ -1,4 +1,4 @@
-## PageBuilder Early Adopters Program
+# PageBuilder Early Adopters Program
 
 The Page Builder Early Adopters Program (EAP) gives partners the following perks:
  

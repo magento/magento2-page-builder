@@ -1,6 +1,4 @@
-# How to use the Image Uploader <!-- omit in toc -->
-
-<!-- {% raw %} -->
+# How to use the Image Uploader
 
 ## What's in this topic
 
@@ -10,11 +8,12 @@ This topic describes how to add a reusable image uploader component to the PageB
 
 To add image uploader customization to PageBuilder:
 
-- [What's in this topic](#whats-in-this-topic)
-- [Overview](#overview)
-- [Add configuration for the uploader](#add-configuration-for-the-uploader)
-- [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file {#js-file}](#update-the-yourmoduleviewadminhtmlwebjscontent-typecontent_type_namepreviewjs-file-js-file)
-- [Update the preview template to display the uploader component {#preview}](#update-the-preview-template-to-display-the-uploader-component-preview)
+- [How to use the Image Uploader](#how-to-use-the-image-uploader)
+    - [What's in this topic](#whats-in-this-topic)
+    - [Overview](#overview)
+    - [Add configuration for the uploader](#add-configuration-for-the-uploader)
+    - [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file {#js-file}](#update-the-yourmoduleviewadminhtmlwebjscontent-typecontenttypenamepreviewjs-file-js-file)
+    - [Update the preview template to display the uploader component {#preview}](#update-the-preview-template-to-display-the-uploader-component-preview)
 
 ## Add configuration for the uploader
 
@@ -121,5 +120,3 @@ Update the preview template file, `bluefoot/app/code/Magento/PageBuilder/view/ad
 ```
 
 **Note:** When a file is deleted from the media browser, the `fileDeleted` event is triggered on the window with the `mediabrowser` namespace. The passed argument is an object containing the `ids` property, which is an array of ID strings for each of the deleted files. The IDs of the selected files are provided in the objects dispatched by the `addFile` and `processFile` methods inside the image uploader UI Component.
-
-<!-- {% endraw %} -->
