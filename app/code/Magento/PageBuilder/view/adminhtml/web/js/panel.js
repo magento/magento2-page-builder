@@ -175,13 +175,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.getDraggableOptions = function getDraggableOptions() {
+    _proto.getDraggableOptions = function getDraggableOptions(element) {
+      var containment = "document";
+
+      if ((0, _jquery)(element).parents(".modal-inner-wrap").length > 0) {
+        containment = (0, _jquery)(element).parents(".modal-inner-wrap");
+      }
+
       var self = this;
       return {
         appendTo: "body",
         cursor: "-webkit-grabbing",
         connectToSortable: ".content-type-drop",
-        containment: "document",
+        containment: containment,
+        scroll: true,
         helper: function helper() {
           return (0, _jquery)(this).clone().css({
             width: (0, _jquery)(this).width(),

@@ -179,13 +179,19 @@ export default class Panel implements PanelInterface {
      *
      * @returns {JQueryUI.DraggableOptions}
      */
-    public getDraggableOptions(): JQueryUI.DraggableOptions {
+    public getDraggableOptions(element: HTMLElement): JQueryUI.DraggableOptions {
+        let containment: string | JQuery = "document";
+        if ($(element).parents(".modal-inner-wrap").length > 0) {
+            containment = $(element).parents(".modal-inner-wrap");
+        }
+
         const self = this;
         return {
             appendTo: "body",
             cursor: "-webkit-grabbing",
             connectToSortable: ".content-type-drop",
-            containment: "document",
+            containment,
+            scroll: true,
             helper() {
                 return $(this).clone().css({
                     width: $(this).width(),
