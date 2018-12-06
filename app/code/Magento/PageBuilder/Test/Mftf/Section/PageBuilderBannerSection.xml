@@ -10,6 +10,7 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
         <element name="base" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="[data-role=banner]"/>
         <element name="baseJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="hidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
@@ -67,6 +68,7 @@
     </section>
     <section name="BannerOnBackend">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector=".pagebuilder-banner.pagebuilder-content-type"/>
         <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>

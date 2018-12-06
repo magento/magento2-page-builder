@@ -8,6 +8,75 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="BannerPosterWithMarginStaysInsideParent">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Poster - With margin stays inside of parent container"/>
+            <description value="Verify that a Banner with margin stays inside parent container"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5025"/>
+            <testCaseId value="MC-5840"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsProperty_50"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate stage before save -->
+        <comment userInput="Validate stage before save" stepKey="commentValidateStageBeforeSave"/>
+        <actionGroup ref="validatePositionRightWithinContainer" stepKey="validatePositionRightBeforeSave">
+            <argument name="content" value="{{BannerOnBackend.baseCSS}}"/>
+            <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
+            <argument name="container" value="{{RowOnStage.baseCss}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate stage after save -->
+        <comment userInput="Validate stage after save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validatePositionRightWithinContainer" stepKey="validatePositionRightAfterSave">
+            <argument name="content" value="{{BannerOnBackend.baseCSS}}"/>
+            <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
+            <argument name="container" value="{{RowOnStage.baseCss}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Validate storefront -->
+        <comment userInput="Validate storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validatePositionRightWithinContainer" stepKey="validatePositionRightStorefront">
+            <argument name="content" value="{{BannerOnFrontend.baseCSS}}"/>
+            <argument name="contentMargins" value="PageBuilderMarginsProperty_50"/>
+            <argument name="container" value="{{RowOnStorefront.innerCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+    </test>
     <test name="BannerPosterCanInlineEditContent">
         <annotations>
             <features value="PageBuilder"/>
