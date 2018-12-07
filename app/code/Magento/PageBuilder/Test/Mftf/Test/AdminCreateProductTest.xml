@@ -204,8 +204,14 @@
         <comment userInput="Create a new product" stepKey="commentCreateNewProduct"/>
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForProductPage"/>
+        <!-- Fill the remaining product fields accordingly -->
+        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
+        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
         <!-- Set background colour of row for custom attribute -->
         <comment userInput="Set background colour of row for custom attribute" stepKey="commentSetBackgroundColor"/>
+        <scrollToTopOfPage stepKey="scrollToTop"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute">
             <argument name="attributeCode" value="$$createWysiwygAttribute.attribute_code$$"/>
         </actionGroup>
@@ -218,6 +224,11 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <!-- Save product, before editing row -->
+        <comment userInput="Save product, before editing row" stepKey="commentSaveProductAfterAttribute"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProductAfterAttribute"/>
+        <waitForPageLoad stepKey="waitForProductSaveAfterAttribute"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccessAfterAttribute"/>
         <!-- Set background colour of row for description -->
         <comment userInput="Set background colour of row for description" stepKey="commentSetDescriptionRowBackgroundColor"/>
         <click selector="{{AdminProductContentSection.sectionHeader}}" stepKey="openContentSection"/>
@@ -233,11 +244,6 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveDescriptionEditPanelSettings"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitDescriptionPageBuilderFullScreen" />
         <waitForPageLoad stepKey="waitForDescriptionPageLoadExitFullScreen"/>
-        <!-- Fill the remaining product fields accordingly -->
-        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
-            <argument name="product" value="SimpleProduct"/>
-        </actionGroup>
         <!-- Save product -->
         <comment userInput="Save product" stepKey="commentSaveProduct"/>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -350,8 +356,14 @@
         <comment userInput="Create a new product" stepKey="commentCreateNewProduct"/>
         <amOnPage url="{{AdminProductCreatePage.url(AddToDefaultSet.attributeSetId, 'simple')}}" stepKey="navigateToNewProduct"/>
         <waitForPageLoad stepKey="waitForProductPage"/>
+        <!-- Fill the remaining product fields accordingly -->
+        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
+        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
         <!-- Set background colour of row for our first custom attribute -->
         <comment userInput="Set background colour of row for our first custom attribute" stepKey="commentSetBackgroundColor"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute1">
             <argument name="attributeCode" value="$$createPageBuilderAttribute1.attribute_code$$"/>
         </actionGroup>
@@ -364,8 +376,14 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <!-- Save product, after first attribute -->
+        <comment userInput="Save product, after first attribute" stepKey="commentSaveProductAfterAttribute"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProductAfterAttribute"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProductAfterAttribute"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccessAfterAttribute"/>
         <!-- Set background colour of row for our second custom attribute -->
         <comment userInput="Set background colour of row for our second custom attribute" stepKey="commentSetBackgroundColor1"/>
+        <scrollToTopOfPage stepKey="scrollToTopOfPage1"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForAttribute2">
             <argument name="attributeCode" value="$$createPageBuilderAttribute2.attribute_code$$"/>
         </actionGroup>
@@ -378,11 +396,6 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen1" />
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen1"/>
-        <!-- Fill the remaining product fields accordingly -->
-        <comment userInput="Fill the remaining product fields accordingly" stepKey="commentFillProductFields"/>
-        <actionGroup ref="fillMainProductForm" stepKey="fillMainProductForm">
-            <argument name="product" value="SimpleProduct"/>
-        </actionGroup>
         <!-- Save product -->
         <comment userInput="Save product" stepKey="commentSaveProduct"/>
         <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProduct"/>
@@ -475,6 +488,11 @@
         <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings"/>
         <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <waitForPageLoad stepKey="waitForPageLoadExitFullScreen"/>
+        <!-- Save product after custom attribute -->
+        <comment userInput="Save product after custom attribute" stepKey="saveProductAfterCustomAttribute"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="saveProductAfterAttribute"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveProductAfterAttribute"/>
+        <waitForElementVisible selector="{{AdminProductMessagesSection.successMessage}}" stepKey="assertSaveMessageSuccessAfterAttribute"/>
         <!-- Add PageBuilder description -->
         <comment userInput="Add PageBuilder description" stepKey="commentAddDescription"/>
         <conditionalClick selector="{{AdminProductContentSection.sectionHeader}}" dependentSelector="{{AdminProductContentSection.sectionHeaderIfNotShowing}}" visible="false" stepKey="openContentSection"/>
