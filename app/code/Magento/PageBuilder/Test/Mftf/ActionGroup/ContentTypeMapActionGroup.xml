@@ -372,11 +372,12 @@
     </actionGroup>
     <actionGroup name="validateMapErrorMessageStage">
         <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{MapOnStage.base(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{MapOnStage.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
-        <see userInput="{{PageBuilderMapCommonData.mapErrorMessageStage}}" selector="{{MapOnStage.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
+        <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
+        <waitForElementVisible selector="{{page.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
+        <see userInput="{{PageBuilderMapCommonData.mapErrorMessageAdmin}}" selector="{{page.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
     </actionGroup>
     <actionGroup name="validateMapErrorMessageStorefront">
         <arguments>
