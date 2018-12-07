@@ -7,6 +7,7 @@ define([], function () {
 
   /**
    * Subtract margin from max-width to fit inside parent container
+   * Accepted values are in pixels. If no value is set by user, it's 100%
    *
    * @api
    */
@@ -42,14 +43,18 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      if (data.max_width !== "") {
-        return data.max_width + "px";
+      if (data[name] !== "") {
+        return data[name] + "px";
       }
 
-      var margins = data.margins_and_padding.margin || {};
-      var marginLeft = margins.left ? parseInt(margins.left, 10) : 0;
-      var marginRight = margins.right ? parseInt(margins.right, 10) : 0;
-      return "calc(100% - " + (marginLeft + marginRight) + "px)";
+      if (data.margins_and_padding && data.margins_and_padding !== undefined) {
+        var margins = data.margins_and_padding.margin || {};
+        var marginLeft = margins.left ? parseInt(margins.left, 10) : 0;
+        var marginRight = margins.right ? parseInt(margins.right, 10) : 0;
+        return "calc(100% - " + (marginLeft + marginRight) + "px)";
+      }
+
+      return "100%";
     };
 
     return MaxWidth;

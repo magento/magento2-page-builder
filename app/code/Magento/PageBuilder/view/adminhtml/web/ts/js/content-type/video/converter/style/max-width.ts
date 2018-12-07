@@ -8,6 +8,7 @@ import {DataObject} from "../../../../data-store";
 
 /**
  * Subtract margin from max-width to fit inside parent container
+ * Accepted values are in pixels. If no value is set by user, it's 100%
  *
  * @api
  */
@@ -33,13 +34,16 @@ export default class MaxWidth implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string {
-        if (data.max_width !== "") {
-            return data.max_width + "px";
+        if (data[name] !== "") {
+            return data[name] + "px";
         }
-        const margins = data.margins_and_padding.margin || {};
-        const marginLeft = margins.left ? parseInt(margins.left as string, 10) : 0;
-        const marginRight = margins.right ? parseInt(margins.right as string, 10) : 0;
+        if (data.margins_and_padding && data.margins_and_padding !== undefined) {
+            const margins = data.margins_and_padding.margin || {};
+            const marginLeft = margins.left ? parseInt(margins.left as string, 10) : 0;
+            const marginRight = margins.right ? parseInt(margins.right as string, 10) : 0;
 
-        return "calc(100% - " + (marginLeft + marginRight) + "px)";
+            return "calc(100% - " + (marginLeft + marginRight) + "px)";
+        }
+        return "100%";
     }
 }
