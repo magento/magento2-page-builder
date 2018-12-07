@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType, _positionSticky) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -54,7 +54,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("stage:" + this.id + ":readyAfter", function () {
         _this.populateContentTypes();
 
-        _this.onScroll();
+        if (!(0, _positionSticky.supportsPositionSticky)()) {
+          _this.onScroll();
+        }
 
         _this.isVisible(true);
       });
@@ -176,6 +178,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.getDraggableOptions = function getDraggableOptions(element) {
+      // If we're within a modal make the containment be the current modal
       var containment = "document";
 
       if ((0, _jquery)(element).parents(".modal-inner-wrap").length > 0) {

@@ -17,6 +17,7 @@ import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {ContentType as GroupContentType} from "./panel/group/content-type";
+import {supportsPositionSticky} from "./utils/position-sticky";
 
 /**
  * @api
@@ -60,7 +61,9 @@ export default class Panel implements PanelInterface {
     public initListeners(): void {
         events.on("stage:" + this.id + ":readyAfter", () => {
             this.populateContentTypes();
-            this.onScroll();
+            if (!supportsPositionSticky()) {
+                this.onScroll();
+            }
             this.isVisible(true);
         });
     }
@@ -180,6 +183,7 @@ export default class Panel implements PanelInterface {
      * @returns {JQueryUI.DraggableOptions}
      */
     public getDraggableOptions(element: HTMLElement): JQueryUI.DraggableOptions {
+        // If we're within a modal make the containment be the current modal
         let containment: string | JQuery = "document";
         if ($(element).parents(".modal-inner-wrap").length > 0) {
             containment = $(element).parents(".modal-inner-wrap");
