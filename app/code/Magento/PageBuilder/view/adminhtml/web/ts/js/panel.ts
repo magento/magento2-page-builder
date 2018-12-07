@@ -141,6 +141,7 @@ export default class Panel implements PanelInterface {
         const self = this;
         const pageActions = $(".page-actions");
         const panel = $(this.element);
+        panel.addClass("no-position-sticky");
         const stage = panel.siblings(".pagebuilder-stage");
         $(window).scroll(function() {
             if (panel && panel.offset()) {

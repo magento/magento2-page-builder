@@ -137,6 +137,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var self = this;
       var pageActions = (0, _jquery)(".page-actions");
       var panel = (0, _jquery)(this.element);
+      panel.addClass("no-position-sticky");
       var stage = panel.siblings(".pagebuilder-stage");
       (0, _jquery)(window).scroll(function () {
         if (panel && panel.offset()) {
