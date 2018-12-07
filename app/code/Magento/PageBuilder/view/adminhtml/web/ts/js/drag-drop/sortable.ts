@@ -120,12 +120,18 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
                 ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
             }
 
-            showDropIndicators(contentTypeInstance.config.name);
+            showDropIndicators(contentTypeInstance.config.name, preview.parent.stageId);
 
             sortedContentType = contentTypeInstance;
 
             // Dynamically change the connect with option to restrict content types
-            $(this).sortable("option", "connectWith", getAllowedContainersClasses(contentTypeInstance.config.name));
+            $(this).sortable(
+                "option", "connectWith",
+                getAllowedContainersClasses(
+                    contentTypeInstance.config.name,
+                    preview.parent.stageId
+                )
+            );
             $(this).sortable("refresh");
         }
     }

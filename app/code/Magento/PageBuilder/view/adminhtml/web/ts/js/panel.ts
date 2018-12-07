@@ -102,7 +102,7 @@ export default class Panel implements PanelInterface {
                 ),
                 (contentType, identifier: string) => {
                     // Create a new instance of GroupContentType for each result
-                    return new GroupContentType(identifier, contentType);
+                    return new GroupContentType(identifier, contentType, this.parent.stage.id);
                 }),
             );
         }
@@ -216,7 +216,7 @@ export default class Panel implements PanelInterface {
                             $(this).sortable("option", "tolerance", "intersect");
                         }
                     });
-                    showDropIndicators(block.config.name);
+                    showDropIndicators(block.config.name, self.parent.stage.id);
                     setDraggedContentTypeConfig(block.config);
                     events.trigger("stage:interactionStart", {stage: self.parent.stage});
                 }
@@ -255,10 +255,14 @@ export default class Panel implements PanelInterface {
                             is_visible: true,
                         }), /* Retrieve content types with group id */
                         (contentType: ContentTypeConfigInterface, identifier: string) => {
-                            const groupContentType = new GroupContentType(identifier, contentType);
-                            return groupContentType;
+                            return new GroupContentType(
+                                identifier,
+                                contentType,
+                                this.parent.stage.id
+                            );
                         },
                     ),
+                    this.parent.stage.id
                 ));
             });
 
@@ -271,7 +275,7 @@ export default class Panel implements PanelInterface {
             }
 
         } else {
-            console.warn( "Configuration is not properly initialized, please check the Ajax response." );
+            console.warn("Configuration is not properly initialized, please check the Ajax response.");
         }
     }
 }

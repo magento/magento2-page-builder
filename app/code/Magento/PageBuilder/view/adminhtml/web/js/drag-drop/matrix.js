@@ -34,13 +34,17 @@ define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _
    * Generate classes of containers the content type is allowed within
    *
    * @param {string} contentType
+   * @param {string} stageId
    * @returns {string}
    */
 
 
-  function getAllowedContainersClasses(contentType) {
+  function getAllowedContainersClasses(contentType, stageId) {
+    console.log(getContainersFor(contentType).map(function (value) {
+      return "#" + stageId + " .content-type-container." + value + "-container";
+    }).join(", "));
     return getContainersFor(contentType).map(function (value) {
-      return ".content-type-container." + value + "-container";
+      return "#" + stageId + " .content-type-container." + value + "-container";
     }).join(", ");
   }
 

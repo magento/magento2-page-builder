@@ -37,9 +37,12 @@ export function getContainersFor(contentType: string): string[] {
  * Generate classes of containers the content type is allowed within
  *
  * @param {string} contentType
+ * @param {string} stageId
  * @returns {string}
  */
-export function getAllowedContainersClasses(contentType: string) {
+export function getAllowedContainersClasses(contentType: string, stageId: string) {
+    console.log(getContainersFor(contentType)
+        .map((value) => `#${stageId} .content-type-container.${value}-container`).join(", "));
     return getContainersFor(contentType)
-        .map((value) => ".content-type-container." + value + "-container").join(", ");
+        .map((value) => `#${stageId} .content-type-container.${value}-container`).join(", ");
 }

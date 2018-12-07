@@ -81,6 +81,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.search = function search(self, event) {
+      var _this2 = this;
+
       this.searchValue(event.currentTarget.value.toLowerCase());
 
       if (this.searchValue() === "") {
@@ -93,7 +95,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return matches && contentType.is_visible === true;
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
-          return new _contentType.ContentType(identifier, contentType);
+          return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
         }));
       }
     };
@@ -213,7 +215,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
                 (0, _jquery)(this).sortable("option", "tolerance", "intersect");
               }
             });
-            (0, _dropIndicators.showDropIndicators)(block.config.name);
+            (0, _dropIndicators.showDropIndicators)(block.config.name, self.parent.stage.id);
             (0, _registry.setDraggedContentTypeConfig)(block.config);
 
             _events.trigger("stage:interactionStart", {
@@ -242,7 +244,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.populateContentTypes = function populateContentTypes() {
-      var _this2 = this;
+      var _this3 = this;
 
       var groups = _config.getConfig("groups");
 
@@ -253,15 +255,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Iterate through the groups creating new instances with their associated content types
         _underscore.each(groups, function (group, id) {
           // Push the group instance into the observable array to update the UI
-          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
+          _this3.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
             is_visible: true
           }),
           /* Retrieve content types with group id */
           function (contentType, identifier) {
-            var groupContentType = new _contentType.ContentType(identifier, contentType);
-            return groupContentType;
-          })));
+            return new _contentType.ContentType(identifier, contentType, _this3.parent.stage.id);
+          }), _this3.parent.stage.id));
         }); // Display the panel
 
 
