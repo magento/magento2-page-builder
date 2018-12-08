@@ -24,7 +24,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchValue = _knockout.observable("");
       this.searchPlaceholder = (0, _translate)("Find items");
       this.searchNoResult = (0, _translate)("Nothing found");
-      this.fullScreenTitle = (0, _translate)("Full Screen");
       this.searchTitle = (0, _translate)("Clear Search");
       this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
@@ -98,14 +97,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
         }));
       }
-    };
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-
-
-    _proto.fullScreen = function fullScreen() {
-      _events.trigger("stage:" + this.parent.id + ":toggleFullscreen");
     };
     /**
      * Collapse the panel into the side of the UI

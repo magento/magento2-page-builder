@@ -24,7 +24,9 @@
 }
 
 .pagebuilder-stage-wrapper {
+    background: white;
     position: relative;
+    transition: .35s ease-in-out;
 
     ._disabled & {
         opacity: .5;
@@ -54,11 +56,12 @@
             width: auto;
             z-index: 101;
 
-            .action-close {
+            .icon-pagebuilder-fullscreen-exit {
                 background: rgba(255,255,255,.8);
                 border: none;
                 border-radius: 0;
                 box-shadow: none;
+                cursor: pointer;
                 display: inline-block;
                 margin: 0;
                 padding: 15px 20px;
@@ -114,8 +117,8 @@
     .pagebuilder-header {
         .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-header;
 
-        .action-close {
-            .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-header.action-close;
+        .icon-pagebuilder-fullscreen-exit {
+            .pagebuilder-stage-wrapper.stage-full-screen.pagebuilder-header.icon-pagebuilder-fullscreen-exit;
         }
     }
 }
@@ -162,16 +165,15 @@
 }
 
 .pagebuilder-stage {
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-    /* Rules below not implemented in browsers yet */
+    -moz-user-select: none;
+    -ms-user-select: none;
     -o-user-select: none;
-    -webkit-user-select: none; /* Chrome/Safari */
+    -webkit-user-select: none;
 
     font-size: 0;
-    margin-left: 170px; // temp
+    margin-left: 170px;
     min-height: 200px;
-    padding: 0 0 60px; // 60px to include the add row button
+    padding: 0;
     user-select: none;
 
     &.stage-full-screen {
@@ -180,12 +182,10 @@
 
     &.pagebuilder-no-user-select {
         * {
-            -moz-user-select: none !important; /* Firefox */
-            -ms-user-select: none !important; /* IE10+ */
-
-            /* Rules below not implemented in browsers yet */
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
             -o-user-select: none !important;
-            -webkit-user-select: none !important; /* Chrome/Safari */
+            -webkit-user-select: none !important;
             user-select: none !important;
         }
     }
@@ -209,7 +209,7 @@
         -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         opacity: 0;
-        padding-bottom: 60px;
+        padding-bottom: 120px;
         transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
         visibility: hidden;
 

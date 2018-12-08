@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
@@ -22,6 +23,8 @@ export default class PageBuilder implements PageBuilderInterface {
     public originalScrollTop: number = 0;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
+    public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
+    private previousWrapperStyles: {[key: string]: string} = {};
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
@@ -45,7 +48,38 @@ export default class PageBuilder implements PageBuilderInterface {
      * Tells the stage wrapper to expand to fullScreen
      */
     public toggleFullScreen(): void {
-        this.isFullScreen(!this.isFullScreen());
+        const stageWrapper = $("#" + this.stage.id).parent();
+        const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
+        if (!this.isFullScreen()) {
+            pageBuilderWrapper.height(pageBuilderWrapper.height());
+            this.previousWrapperStyles = {
+                'position': 'fixed',
+                'top': parseInt(stageWrapper.offset().top.toString(), 10) -
+                parseInt($(window).scrollTop().toString(), 10) + 'px',
+                'left': stageWrapper.offset().left + 'px',
+                'zIndex': '800',
+                'width': stageWrapper.outerWidth().toString() + 'px'
+            };
+            this.wrapperStyles(this.previousWrapperStyles);
+            this.isFullScreen(!this.isFullScreen());
+            _.defer(() => {
+                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
+                    .reduce((object: object, styleName: string) => {
+                        return Object.assign(object, {[styleName]: ""});
+                    }, {})
+                );
+            });
+        } else {
+            this.wrapperStyles(this.previousWrapperStyles);
+            _.delay(() => {
+                this.isFullScreen(!this.isFullScreen());
+                this.wrapperStyles(Object.keys(this.previousWrapperStyles)
+                    .reduce((object: object, styleName: string) => {
+                        return Object.assign(object, {[styleName]: ""});
+                    }, {})
+                );
+            }, 350);
+        }
     }
 
     /**

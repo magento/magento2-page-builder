@@ -33,7 +33,6 @@ export default class Panel implements PanelInterface {
     public searchValue: KnockoutObservable<string> = ko.observable("");
     public searchPlaceholder: string = $t("Find items");
     public searchNoResult: string = $t("Nothing found");
-    public fullScreenTitle: string = $t("Full Screen");
     public searchTitle: string = $t("Clear Search");
     public parent: PageBuilder;
     public id: string;
@@ -106,13 +105,6 @@ export default class Panel implements PanelInterface {
                 }),
             );
         }
-    }
-
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-    public fullScreen(): void {
-        events.trigger(`stage:${ this.parent.id }:toggleFullscreen`);
     }
 
     /**
