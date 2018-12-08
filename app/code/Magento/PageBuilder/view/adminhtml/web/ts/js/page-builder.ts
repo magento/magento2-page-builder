@@ -41,14 +41,19 @@ export default class PageBuilder implements PageBuilderInterface {
      * Init listeners.
      */
     public initListeners() {
-        events.on(`stage:${ this.id }:toggleFullscreen`, () => this.toggleFullScreen());
+        events.on(`stage:${ this.id }:toggleFullscreen`, this.toggleFullScreen.bind(this));
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
     /**
      * Tells the stage wrapper to expand to fullScreen
      */
-    public toggleFullScreen(): void {
+    public toggleFullScreen(args): void {
+        if (typeof args.animate !== "undefined" && args.animate === false) {
+            this.isFullScreen(!this.isFullScreen());
+            return;
+        }
+
         const stageWrapper = $("#" + this.stage.id).parent();
         const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
         const panel = stageWrapper.find(".pagebuilder-panel");

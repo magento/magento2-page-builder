@@ -37,9 +37,7 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _events.on("stage:" + this.id + ":toggleFullscreen", function () {
-        return _this.toggleFullScreen();
-      });
+      _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
       this.isFullScreen.subscribe(function () {
         return _this.onFullScreenChange();
@@ -50,8 +48,13 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
      */
 
 
-    _proto.toggleFullScreen = function toggleFullScreen() {
+    _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this2 = this;
+
+      if (typeof args.animate !== "undefined" && args.animate === false) {
+        this.isFullScreen(!this.isFullScreen());
+        return;
+      }
 
       var stageWrapper = (0, _jquery)("#" + this.stage.id).parent();
       var pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");

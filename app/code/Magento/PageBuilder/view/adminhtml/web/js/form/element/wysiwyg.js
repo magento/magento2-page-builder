@@ -115,7 +115,7 @@ define([
          * Toggle Page Builder full screen mode
          */
         toggleFullScreen: function () {
-            events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {});
+            events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {animate: false});
         },
 
         /**
