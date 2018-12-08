@@ -24,11 +24,12 @@ This allows the content to be displayed with minimum changes to the Magento stor
 To display Page Builder content on storefront Magento and third party systems need to do the following
 
 Use the following steps to display PageBuilder content on a Magento storefront or third-party system:
-
+<!-- {% raw %} -->
 1. Replace all Magento directives such as `{{image url=path/to/image.png}}`
 2. Add custom stylesheet to provide the base styles that user can't edit.
    This includes styles for the content types such as `slider`, `tabs`, etc.
 3. After the content renders, load and initialize the widgets and libraries on the frontend that need initialization, such as slider, tabs, etc.
+<!-- {% endraw %} -->
 
 ## Integration with Magento and custom modules
 

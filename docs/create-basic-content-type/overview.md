@@ -11,7 +11,7 @@ Page Builder comes with 16 content types (controls) you can use to build your st
 
 ## Prerequisites
 
-Page Builder creates content types from a module with UI components. So this topic assumes you have a basic module structure in which to add your content type files.
+Page Builder creates content types from a module with UI components. This tutorial assumes you have a basic module structure (as follows) in which to add your content type files.
 
 ![Minimum module structure](../images/module-minimum-structure.png)
 
@@ -19,10 +19,10 @@ Page Builder creates content types from a module with UI components. So this top
 
 ![Creating Custom Content Types](../images/content-type-overview.png)
 
-1. **Add configuration**: Create an XML file to setup all the other files that control the appearances and behaviors of your content type.  
-2. **Add templates**: Create HTML files that define the appearance of your content types on the Admin stage (preview.html) and the storefront (master.html).
-3. **Add component**: Create a JavaScript file that define the behavior of your content type on the Admin stage (preview.js) and the storefront (master.js).
-4. **Add form**: Create a UI component form (XML file) and layout so users can edit your content type.
+1. **Add configuration**: Create an XML file to define your content type and reference the other files that control the appearances and behaviors of your content type.  
+2. **Add templates**: Create HTML templates that define the appearance of your content types on the Admin stage (preview.html) and the storefront (master.html).
+3. **Add component**: Create a JavaScript file that defines the behavior of your content type on the Admin stage (preview.js) and the storefront (master.js).
+4. **Add form**: Create a UI component form and a layout so users can edit your content type within the Page Builder editor.
 5. **Add styles**: Create LESS files to style your content types when rendered in the Admin UI and on the storefront. 
 6. **Add frontend widget**: Create a JavaScript file to control the UI behavior (user interactivity) of your content type on the storefront.  
 
