@@ -55,9 +55,17 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
 
       var stageWrapper = (0, _jquery)("#" + this.stage.id).parent();
       var pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
+      var panel = stageWrapper.find(".pagebuilder-panel");
 
       if (!this.isFullScreen()) {
-        pageBuilderWrapper.height(pageBuilderWrapper.height());
+        pageBuilderWrapper.height(pageBuilderWrapper.outerHeight());
+        this.previousPanelHeight = panel.outerHeight();
+        panel.css("height", this.previousPanelHeight + "px");
+        /**
+         * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
+         * screen.
+         */
+
         this.previousWrapperStyles = {
           'position': 'fixed',
           'top': parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10) + 'px',
@@ -66,9 +74,12 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
           'width': stageWrapper.outerWidth().toString() + 'px'
         };
         this.wrapperStyles(this.previousWrapperStyles);
-        this.isFullScreen(!this.isFullScreen());
+        this.isFullScreen(true);
 
         _underscore.defer(function () {
+          // Remove all styles we applied to fix the position once we're transitioning
+          panel.css("height", "");
+
           _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
             var _Object$assign;
 
@@ -76,16 +87,22 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
           }, {}));
         });
       } else {
+        // When leaving full screen mode just transition back to the original state
         this.wrapperStyles(this.previousWrapperStyles);
+        this.isFullScreen(false);
+        panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
 
         _underscore.delay(function () {
-          _this2.isFullScreen(!_this2.isFullScreen());
+          panel.css("height", "");
 
           _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
             var _Object$assign2;
 
             return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
           }, {}));
+
+          _this2.previousWrapperStyles = {};
+          _this2.previousPanelHeight = null;
         }, 350);
       }
     };

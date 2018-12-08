@@ -25,6 +25,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public wrapperStyles: KnockoutObservable<{[key: string]: string}> = ko.observable({});
     private previousWrapperStyles: {[key: string]: string} = {};
+    private previousPanelHeight: number;
 
     constructor(config: any, initialValue: string) {
         Config.setConfig(config);
@@ -50,8 +51,15 @@ export default class PageBuilder implements PageBuilderInterface {
     public toggleFullScreen(): void {
         const stageWrapper = $("#" + this.stage.id).parent();
         const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
+        const panel = stageWrapper.find(".pagebuilder-panel");
         if (!this.isFullScreen()) {
-            pageBuilderWrapper.height(pageBuilderWrapper.height());
+            pageBuilderWrapper.height(pageBuilderWrapper.outerHeight());
+            this.previousPanelHeight = panel.outerHeight();
+            panel.css("height", this.previousPanelHeight + "px");
+            /**
+             * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
+             * screen.
+             */
             this.previousWrapperStyles = {
                 'position': 'fixed',
                 'top': parseInt(stageWrapper.offset().top.toString(), 10) -
@@ -61,8 +69,10 @@ export default class PageBuilder implements PageBuilderInterface {
                 'width': stageWrapper.outerWidth().toString() + 'px'
             };
             this.wrapperStyles(this.previousWrapperStyles);
-            this.isFullScreen(!this.isFullScreen());
+            this.isFullScreen(true);
             _.defer(() => {
+                // Remove all styles we applied to fix the position once we're transitioning
+                panel.css("height", "");
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
                     .reduce((object: object, styleName: string) => {
                         return Object.assign(object, {[styleName]: ""});
@@ -70,14 +80,20 @@ export default class PageBuilder implements PageBuilderInterface {
                 );
             });
         } else {
+            // When leaving full screen mode just transition back to the original state
             this.wrapperStyles(this.previousWrapperStyles);
+            this.isFullScreen(false);
+            panel.css("height", this.previousPanelHeight + "px");
+            // Wait for the 350ms animation to complete before changing these properties back
             _.delay(() => {
-                this.isFullScreen(!this.isFullScreen());
+                panel.css("height", "");
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
                     .reduce((object: object, styleName: string) => {
                         return Object.assign(object, {[styleName]: ""});
                     }, {})
                 );
+                this.previousWrapperStyles = {};
+                this.previousPanelHeight = null;
             }, 350);
         }
     }
