@@ -7,15 +7,11 @@ This topic describes how to add a reusable image uploader component to the PageB
 ## Overview
 
 To add image uploader customization to PageBuilder:
-
-- [How to use the Image Uploader](#how-to-use-the-image-uploader)
-    - [What's in this topic](#whats-in-this-topic)
-    - [Overview](#overview)
     - [Add configuration for the uploader](#add-configuration-for-the-uploader)
-    - [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file {#js-file}](#update-the-yourmoduleviewadminhtmlwebjscontent-typecontenttypenamepreviewjs-file-js-file)
-    - [Update the preview template to display the uploader component {#preview}](#update-the-preview-template-to-display-the-uploader-component-preview)
+    - [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file {#js-file}](#js-file)
+    - [Update the preview template to display the uploader component {#preview}](#preview)
 
-## Add configuration for the uploader
+## Add configuration for the uploader {#add-configuration-for-the-uploader}
 
 Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<content-type-name>.xml` XML config file to add the image uploader custom configuration to a content type:
 

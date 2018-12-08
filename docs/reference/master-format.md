@@ -1,5 +1,4 @@
 # Master format
-
 <!-- {% raw %} -->
 PageBuilder uses XHTML with inline styles and data attributes as the master format for storage.
 
@@ -25,6 +24,7 @@ Contained:
 ### main element
 
 Attributes
+
 1. data-enable-parallax [1, 0]
 2. data-parallax-speed [0-1]
 3. data-background-images `{"desktop_image":"{{media url}}","mobile_image":"{{media url}}"}`

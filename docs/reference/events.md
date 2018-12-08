@@ -1,4 +1,4 @@
-# Events
+# Events {#events}
 
 This document contains reference information for events dispatched in Page Builder.
 
@@ -7,9 +7,7 @@ This document contains reference information for events dispatched in Page Build
 
 ## Events list {#eventslist}
 
-- [Events](#events)
-    - [Events list {#eventslist}](#events-list-eventslist)
-    - [`contentType:*` events](#contenttype-events)
+   - [`contentType:*` events](#contenttype-events)
         - [`contentType:createAfter`](#contenttypecreateafter)
         - [`contentType:mountAfter`](#contenttypemountafter)
         - [`contentType:dropAfter`](#contenttypedropafter)
@@ -304,7 +302,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `image:{{id}}:assignAfter`
+### `image:{{id}}:assignAfter` {#imageidassignafter}
 
 **Triggers**
 
@@ -373,7 +371,7 @@ Function
 
 [Back to top]
 
-### `stage:{{id}}:toggleFullscreen`
+### `stage:{{id}}:toggleFullscreen` {#stageidtogglefullscreen}
 
 **Triggers**
 
@@ -453,14 +451,14 @@ Error
 
 [Back to top]
 
-### `stage:{{id}}:readyAfter`
+### `stage:{{id}}:readyAfter` {#stageidreadyafter}
 
 **Triggers**
 
 * `Stage::ready`
 * `stage instance`
 
-### `stage:{{id}}:masterFormatRenderAfter`
+### `stage:{{id}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
 **Triggers**
 
@@ -517,7 +515,7 @@ Error
 
 [Back to top]
 
-### `{{config.name}}:{{id}}:updateAfter`
+### `{{config.name}}:{{id}}:updateAfter` {#confignameidupdateafter}
 
 **Triggers**
 

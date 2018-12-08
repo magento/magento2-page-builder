@@ -55,7 +55,7 @@ Content types cannot be rendered without these templates. Add them to your modul
 
     ![Admin preview.html template](../images/drag-content-type-to-stage.png) 
 
-    Notice that you also have an options menu when you hover over your content type. This is provided by including the `<render args="getOptions().template" />` within your `preview.html` template. See [Option menu configurations](option-menu-configurations.md) for more details.
+    Notice that you also have an options menu when you hover over your content type. This is provided by including the `<render args="getOptions().template" />` within your `preview.html` template. See [Option menu configurations](../configurations/option-menu-configurations.md) for more details.
 
 ## Create the `master_template`
 

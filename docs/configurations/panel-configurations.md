@@ -17,9 +17,6 @@ These groups are defined in the Page Builder `group.xml` file and can be extende
 ## Overview
 
 This topic describes four ways to customize the Page Builder panel:
-
-- [Panel groups and configurations](#panel-groups-and-configurations)
-    - [Overview](#overview)
     - [Rename panel groups](#rename-panel-groups)
     - [Reorder panel groups](#reorder-panel-groups)
     - [Add new panel groups](#add-new-panel-groups)

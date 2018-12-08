@@ -13,7 +13,7 @@ To add a custom toolbar to a Page Builder content block:
 1. [Add a toolbar configuration](#toolbarConfig)
 2. [Add a toolbar template](#toolbarTpl)
 
-## Add a toolbar configuration
+## Add a toolbar configuration {#toolbarConfig}
 
 To add a Toolbar configuration to your content block, you need to create a new instance of the `Toolbar` class, then add configuration options to it. 
 
@@ -63,7 +63,7 @@ Option property descriptions:
 | `label`             | Label of the option. If no icon is specified, this will be displayed               |
 | `icon`              | Name of CSS class to use for the icon.                                             |
 
-## Add toolbar template
+## Add toolbar template {#toolbarTpl}
 
 In your content block template, add the toolbar events to your main toolbar container, and insert the toolbar template:
 

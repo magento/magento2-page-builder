@@ -185,8 +185,8 @@ Run the following command on the server to initiate your module's migration proc
 
 You have migrated your old BlueFoot content type into your new PageBuilder content type!
 
-[PageBuilder migration API]: bluefoot-data-migration.md
-[BlueFoot data migration]: bluefoot-data-migration.md
+[PageBuilder migration API]: migrate-from-bluefoot.md
+[BlueFoot data migration]: migrate-from-bluefoot.md
 [`composer.json`]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/composer-integration.html
 [versioning policy]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/versioning/
 [module lifecycle]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/prepare/lifecycle.html

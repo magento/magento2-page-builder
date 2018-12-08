@@ -9,7 +9,7 @@ Each container group has 3 containers in a grid and styled differently based on 
 
 ## Before you begin
 
-For creating a generic content type and content type collection, see [How to add a new content type][].
+For creating a generic content type and content type collection, see [How to develop a new content type][].
 
 Make sure you know how to register your custom module.
 See [Register your component](https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html) in devdocs.
@@ -1027,7 +1027,7 @@ Use the configuration form in the container group's edit panel to switch between
 
 ![Custom Containers Form](../images/custom-containers-form.png)
 
-[How to add a new content type]: how-to-add-new-content-type.md
+[How to develop a new content type]: how-to-develop-new-content-type.md
 [Register your component]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html
 [custom container]: #custom-container
 [custom container group]: #custom-container-group
