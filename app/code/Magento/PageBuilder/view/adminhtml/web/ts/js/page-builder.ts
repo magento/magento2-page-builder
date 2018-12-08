@@ -12,6 +12,7 @@ import Config from "./config";
 import PageBuilderInterface from "./page-builder.d";
 import Panel from "./panel";
 import Stage from "./stage";
+import StageToggleFullScreenParamsInterface from "./stage-toggle-full-screen-params";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
@@ -47,8 +48,10 @@ export default class PageBuilder implements PageBuilderInterface {
 
     /**
      * Tells the stage wrapper to expand to fullScreen
+     *
+     * @param {StageToggleFullScreenParamsInterface} args
      */
-    public toggleFullScreen(args): void {
+    public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
         if (typeof args.animate !== "undefined" && args.animate === false) {
             this.isFullScreen(!this.isFullScreen());
             return;
@@ -58,7 +61,7 @@ export default class PageBuilder implements PageBuilderInterface {
         const pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
         const panel = stageWrapper.find(".pagebuilder-panel");
         if (!this.isFullScreen()) {
-            pageBuilderWrapper.height(pageBuilderWrapper.outerHeight());
+            pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
             this.previousPanelHeight = panel.outerHeight();
             panel.css("height", this.previousPanelHeight + "px");
             /**
@@ -92,6 +95,7 @@ export default class PageBuilder implements PageBuilderInterface {
             // Wait for the 350ms animation to complete before changing these properties back
             _.delay(() => {
                 panel.css("height", "");
+                pageBuilderWrapper.css("height", "");
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
                     .reduce((object: object, styleName: string) => {
                         return Object.assign(object, {[styleName]: ""});

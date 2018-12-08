@@ -45,6 +45,8 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
     };
     /**
      * Tells the stage wrapper to expand to fullScreen
+     *
+     * @param {StageToggleFullScreenParamsInterface} args
      */
 
 
@@ -61,7 +63,7 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
       var panel = stageWrapper.find(".pagebuilder-panel");
 
       if (!this.isFullScreen()) {
-        pageBuilderWrapper.height(pageBuilderWrapper.outerHeight());
+        pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
         this.previousPanelHeight = panel.outerHeight();
         panel.css("height", this.previousPanelHeight + "px");
         /**
@@ -97,6 +99,7 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
 
         _underscore.delay(function () {
           panel.css("height", "");
+          pageBuilderWrapper.css("height", "");
 
           _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
             var _Object$assign2;
