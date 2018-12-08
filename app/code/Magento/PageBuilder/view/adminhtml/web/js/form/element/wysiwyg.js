@@ -5,15 +5,14 @@
 
 define([
     'jquery',
-    'Magento_Ui/js/lib/view/utils/async',
     'underscore',
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
     'Magento_PageBuilder/js/events',
     'Magento_Ui/js/lib/view/utils/dom-observer',
     'Magento_PageBuilder/js/page-builder',
-    'Magento_PageBuilder/js/utils/promise-deferred'
-], function (jQuery, $, _, Wysiwyg, $t, events, domObserver, PageBuilder, deferred) {
+    'Magento_Ui/js/lib/view/utils/async'
+], function ($, _, Wysiwyg, $t, events, domObserver, PageBuilder) {
     'use strict';
 
     /**
@@ -62,7 +61,7 @@ define([
          * Handle button click, init the Page Builder application
          */
         pageBuilderEditButtonClick: function (context, event) {
-            var modalInnerWrap = jQuery(event.currentTarget).parents('.modal-inner-wrap');
+            var modalInnerWrap = $(event.currentTarget).parents('.modal-inner-wrap');
 
             this.transition(false);
 
@@ -74,7 +73,7 @@ define([
             }
 
             if (!this.isComponentInitialized()) {
-                this.disableDomObserver(jQuery(event.currentTarget).parent()[0]);
+                this.disableDomObserver($(event.currentTarget).parent()[0]);
             }
 
             this.initPageBuilder();
@@ -124,8 +123,8 @@ define([
          */
         initPageBuilderListeners: function () {
             var id = this.pageBuilder.id,
-                renderDeferred = jQuery.Deferred(),
-                fullScreenDeferred = jQuery.Deferred(),
+                renderDeferred = $.Deferred(),
+                fullScreenDeferred = $.Deferred(),
                 rendered = false;
 
             events.on('stage:' + id + ':readyAfter', function () {
@@ -182,7 +181,7 @@ define([
             }.bind(this));
 
             // Wait until the stage is rendered and full screen mode is activated
-            jQuery.when(renderDeferred, fullScreenDeferred).done(function () {
+            $.when(renderDeferred, fullScreenDeferred).done(function () {
                 _.defer(function () {
                     this.transition(true);
                 }.bind(this));
