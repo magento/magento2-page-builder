@@ -61,16 +61,8 @@ define([
          * Handle button click, init the Page Builder application
          */
         pageBuilderEditButtonClick: function (context, event) {
-            var modalInnerWrap = $(event.currentTarget).parents('.modal-inner-wrap');
-
+            this.determineIfWithinModal(event.currentTarget);
             this.transition(false);
-
-            // Determine if the Page Builder instance is within a modal
-            this.isWithinModal = modalInnerWrap.length === 1;
-
-            if (this.isWithinModal) {
-                this.modal = modalInnerWrap;
-            }
 
             if (!this.isComponentInitialized()) {
                 this.disableDomObserver($(event.currentTarget).parent()[0]);
@@ -108,7 +100,24 @@ define([
          * @param {HTMLElement} node
          */
         disableDomObserver: function (node) {
+            this.determineIfWithinModal(node);
             domObserver.disableNode(node);
+        },
+
+        /**
+         * Determine if the current instance is within a modal
+         *
+         * @param {HTMLElement} element
+         */
+        determineIfWithinModal: function (element) {
+            var modalInnerWrap = $(element).parents('.modal-inner-wrap');
+
+            // Determine if the Page Builder instance is within a modal
+            this.isWithinModal = modalInnerWrap.length === 1;
+
+            if (this.isWithinModal) {
+                this.modal = modalInnerWrap;
+            }
         },
 
         /**
@@ -141,14 +150,14 @@ define([
             }.bind(this));
 
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
-                if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
-                    if (this.isWithinModal && this.modal) {
-                        this.modal.css({
-                            transform: '',
-                            transition: ''
-                        });
-                    }
+                if (this.isWithinModal && this.modal) {
+                    this.modal.css({
+                        transform: '',
+                        transition: ''
+                    });
+                }
 
+                if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     // Force full screen mode whilst the animation occurs
                     this.transitionOut(true);
                     // Trigger animation out
@@ -159,9 +168,7 @@ define([
                         this.transitionOut(false);
                         this.visiblePageBuilder(false);
                     }.bind(this), 185);
-                } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
-                    this.visiblePageBuilder(true);
-
+                } else if (args.fullScreen) {
                     if (this.isWithinModal && this.modal) {
                         this.modal.css({
                             transform: 'none',
@@ -169,13 +176,17 @@ define([
                         });
                     }
 
-                    fullScreenDeferred.resolve();
+                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                        this.visiblePageBuilder(true);
 
-                    // If the stage has already rendered once we don't need to wait until animating the stage in
-                    if (rendered) {
-                        _.defer(function () {
-                            this.transition(true);
-                        }.bind(this));
+                        fullScreenDeferred.resolve();
+
+                        // If the stage has already rendered once we don't need to wait until animating the stage in
+                        if (rendered) {
+                            _.defer(function () {
+                                this.transition(true);
+                            }.bind(this));
+                        }
                     }
                 }
             }.bind(this));
