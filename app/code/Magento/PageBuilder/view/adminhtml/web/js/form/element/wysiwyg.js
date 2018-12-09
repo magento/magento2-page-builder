@@ -150,24 +150,28 @@ define([
             }.bind(this));
 
             events.on('stage:' + id + ':fullScreenModeChangeAfter', function (args) {
-                if (this.isWithinModal && this.modal) {
-                    this.modal.css({
-                        transform: '',
-                        transition: ''
-                    });
-                }
+                if (!args.fullScreen) {
+                    if (this.isWithinModal && this.modal) {
+                        _.delay(function () {
+                            this.modal.css({
+                                transform: '',
+                                transition: ''
+                            });
+                        }.bind(this), 350);
+                    }
 
-                if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
-                    // Force full screen mode whilst the animation occurs
-                    this.transitionOut(true);
-                    // Trigger animation out
-                    this.transition(false);
+                    if (this.wysiwygConfigData()['pagebuilder_button']) {
+                        // Force full screen mode whilst the animation occurs
+                        this.transitionOut(true);
+                        // Trigger animation out
+                        this.transition(false);
 
-                    // Reset the transition out class and hide the stage
-                    _.delay(function () {
-                        this.transitionOut(false);
-                        this.visiblePageBuilder(false);
-                    }.bind(this), 185);
+                        // Reset the transition out class and hide the stage
+                        _.delay(function () {
+                            this.transitionOut(false);
+                            this.visiblePageBuilder(false);
+                        }.bind(this), 185);
+                    }
                 } else if (args.fullScreen) {
                     if (this.isWithinModal && this.modal) {
                         this.modal.css({
