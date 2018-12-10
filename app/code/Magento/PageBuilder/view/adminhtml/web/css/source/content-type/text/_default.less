@@ -10,7 +10,6 @@
 .pagebuilder-content-type.pagebuilder-text {
     border-width: 0;
     min-height: 70px;
-    padding: 5px;
 
     ol {
         list-style: decimal;
@@ -32,6 +31,10 @@
             pointer-events: none;
             position: absolute;
             top: 5px;
+        }
+
+        img {
+            height: auto;
         }
     }
     > .mce-edit-focus {
@@ -57,4 +60,13 @@
 
 .pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-text:not(.pagebuilder-toolbar-active) {
     pointer-events: none;
+}
+
+//
+//  Styles rendered through Blocks
+//  ______________________________
+
+[data-role='text'] {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }

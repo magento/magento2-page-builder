@@ -385,9 +385,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <seeElementInDOM selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefront"/>
-        <dontSeeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="dontSeeMessageContentStorefront"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefront"/>
+        <seeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeNoMessageContentStorefront"/>
+        <seeElement selector="{{SlideOnFrontendEmptyLink.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefront"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStorefront"/>
@@ -409,9 +408,8 @@
         <!-- Validate Storefront Mobile -->
         <comment userInput="Validate Storefront Mobile" stepKey="commentValidateStorefrontMobile"/>
         <resizeWindow width="375" height="667" stepKey="resizeWindowToMobile"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeInDOMMessageContentStorefrontMobile"/>
-        <dontSeeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="dontSeeMessageContentStorefrontMobile"/>
-        <seeElement selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontend.noMessageContent('1')}}" stepKey="seeNoMessageContentStorefrontMobile"/>
+        <seeElement selector="{{SlideOnFrontendEmptyLink.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeLinkStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.showButton('1', PageBuilderSlideItemShowButton_Never.value)}}" stepKey="seeButtonStateStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.noButton('1')}}" stepKey="seeNoButtonTextStorefrontMobile"/>
         <seeElement selector="{{SlideOnFrontend.showOverlay('1', PageBuilderSlideItemShowOverlay_Never.value)}}" stepKey="seeOverlayStateStorefrontMobile"/>
@@ -894,6 +892,13 @@
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonStage"/>
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Primary.value)}}" stepKey="seeButtonTypeStage"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateSlideButtonTypePrimary">
+            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Storefront: Primary -->
         <comment userInput="Validate Storefront: Primary" stepKey="commentValidateStorefront"/>
         <openNewTab stepKey="openNewTab"/>
@@ -927,6 +932,13 @@
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonStage2"/>
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Secondary.value)}}" stepKey="seeButtonTypeStage2"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave2">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateSlideButtonTypeSecondary">
+            <argument name="property" value="PageBuilderSlideItemButtonType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!-- Validate Storefront: Secondary -->
         <comment userInput="Validate Storefront: Secondary" stepKey="commentValidateStorefront2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -957,6 +969,13 @@
         <seeElement selector="{{SlideOnBackend.button('1')}}" stepKey="seeButtonStage3"/>
         <seeElement selector="{{SlideOnBackend.buttonType('1', PageBuilderSlideItemButtonType_Link.value)}}" stepKey="seeButtonTypeStage3"/>
         <seeElement selector="{{SlideOnBackend.buttonText('1', PageBuilderSlideItemButtonText_Common.value)}}" stepKey="seeButtonTextStage3"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterSave3">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateSlideButtonTypeLink">
+            <argument name="property" value="PageBuilderSlideItemButtonType_Link"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings3"/>
         <!-- Validate Storefront: Link -->
         <comment userInput="Validate Storefront: Link" stepKey="commentValidateStorefront3"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
@@ -1068,8 +1087,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElementInDOM selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
-        <click selector="{{SlideOnFrontend.linkUrl('1', PageBuilderSlideItemLinkURL_EmptyFrontend.value)}}" stepKey="clickLinkUrl"/>
+        <seeElementInDOM selector="{{SlideOnFrontendEmptyLink.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="seeSlideEmptyLinkUrl"/>
+        <click selector="{{SlideOnFrontendEmptyLink.linkUrl('1', PageBuilderSlideItemLinkURL_Empty.value)}}" stepKey="clickEmptyLinkUrl"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderSliderContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
@@ -1615,7 +1634,6 @@
         <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
-            <argument name="expectedIndex" value="2"/>
             <argument name="contentTypeXCoordinate" value="10"/>
             <argument name="contentTypeYCoordinate" value="0"/>
         </actionGroup>

@@ -235,6 +235,53 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
+    <test name="SlideItemPosterContentCanWordWrap" extends="BannerPosterContentCanWordWrap">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Poster - Slide content can wrap words to multiple lines"/>
+            <description value="A user can see slide poster content word wrap to multiple lines"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4965"/>
+            <testCaseId value="MC-5633"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-slideItemPoster"/>
+            <group value="pagebuilder-wordWrap"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="content" value="{{PageBuilderMessageProperty_WordBreak.value}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
+            <argument name="page" value="SlideOnBackend"/>
+            <argument name="height" value="110"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
+            <argument name="page" value="SlideOnBackend"/>
+            <argument name="height" value="80"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
+            <argument name="page" value="SlideOnFrontend"/>
+            <argument name="height" value="50"/>
+        </actionGroup>
+    </test>
     <test name="SlideItemPosterButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
@@ -1202,7 +1249,7 @@
             <argument name="property" value="PageBuilderSlideItemButtonText_Common"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeButtonType">
-            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
+            <argument name="property" value="PageBuilderSlideItemButtonType_Secondary"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeShowOverlay">
             <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>

@@ -5,7 +5,8 @@
 
 import events from "Magento_PageBuilder/js/events";
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import BasePreview from "../preview";
 
 /**
@@ -15,6 +16,26 @@ export default class Preview extends BasePreview {
 
     private element: Element;
     private mapElement: GoogleMap;
+
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
+    }
 
     /**
      * Open edit menu on map content type drop with a delay of 300ms
