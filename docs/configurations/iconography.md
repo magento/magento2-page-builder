@@ -11,7 +11,7 @@ They are simple, flat, and monochromatic to prevent the loss of detail at smalle
 
 The following image shows all available PageBuilder Admin icons:
 
-![PageBuilder admin icons](images/pagebuilder-icons.png)
+![PageBuilder admin icons](../images/pagebuilder-icons.png)
 
 You can use these icons when extending or customizing the PageBuilder module or [create your own icons].
 
