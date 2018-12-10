@@ -460,32 +460,4 @@
         <waitForElementVisible selector="{{page.noMargins(index)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.noPadding(index)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
-    <actionGroup name="validatePositionRightWithinContainer">
-        <arguments>
-            <argument name="content" type="string"/>
-            <argument name="contentMargins" defaultValue="PageBuilderMarginsPropertyDefault"/>
-            <argument name="container" type="string"/>
-            <argument name="containerPadding" defaultValue="PageBuilderPaddingPropertyDefault"/>
-            <argument name="index" defaultValue="1" type="string"/>
-            <argument name="pixelBuffer" defaultValue="5" type="string"/>
-        </arguments>
-        <!-- Validate right edge of content is within parent -->
-        <comment userInput="Validate right edge of content is within parent" stepKey="commentValidateRightEdgeOfContentIsWithinParent"/>
-        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().right+{{contentMargins.marginRight}}" stepKey="contentRightPosition"/>
-        <executeJS function="return document.querySelectorAll('{{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}}" stepKey="parentRightPosition"/>
-        <executeJS function="return Math.round(Math.abs({$contentRightPosition}-{$parentRightPosition}))" stepKey="rightPositionDifference"/>
-        <assertLessThanOrEqual stepKey="assertRightPositionDifference">
-            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
-            <actualResult type="variable">rightPositionDifference</actualResult>
-        </assertLessThanOrEqual>
-        <!-- Validate width of content and width of container are equal -->
-        <comment userInput="Validate width of content and width of container are equal" stepKey="commentValidateWidthOfContentAndWidthOfContainerAreEqual"/>
-        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().width+{{contentMargins.marginLeft}}+{{contentMargins.marginRight}}" stepKey="contentWidth"/>
-        <executeJS function="return document.querySelectorAll('{{container}}')[{{index}}-1].getBoundingClientRect().width-{{containerPadding.paddingLeft}}-{{containerPadding.paddingRight}}" stepKey="parentWidth"/>
-        <executeJS function="return Math.round(Math.abs({$contentWidth}-{$parentWidth}))" stepKey="widthDifference"/>
-        <assertLessThanOrEqual stepKey="assertWidthDifference">
-            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
-            <actualResult type="variable">widthDifference</actualResult>
-        </assertLessThanOrEqual>
-    </actionGroup>
 </actionGroups>
