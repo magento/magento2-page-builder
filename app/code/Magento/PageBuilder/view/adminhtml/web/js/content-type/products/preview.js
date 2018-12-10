@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _hideShowOption, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -35,11 +35,31 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
       return _this;
     }
     /**
-     * @inheritdoc
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
      */
 
 
     var _proto = Preview.prototype;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _preview2.prototype.retrieveOptions.call(this);
+
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
+      return options;
+    };
+    /**
+     * @inheritdoc
+     */
+
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this2 = this;

@@ -7,6 +7,8 @@ import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import WysiwygFactory from "../../wysiwyg/factory";
@@ -34,6 +36,26 @@ export default class Preview extends BasePreview {
     private textarea: HTMLTextAreaElement;
 
     private buttonPlaceholder: string = $t("Edit Button Text");
+
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
+    }
 
     /**
      * Get registry callback reference to uploader UI component

@@ -3,7 +3,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _option, _delayUntil, _promiseDeferred, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "slick", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/promise-deferred", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _events, _slick, _underscore, _focus, _config, _contentTypeFactory, _hideShowOption, _option, _delayUntil, _promiseDeferred, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -109,6 +109,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         classes: ["add-child"],
         sort: 10
       });
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
       return options;
     };
     /**
@@ -149,9 +157,36 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.onFocusOut = function onFocusOut(data, event) {
-      if (_underscore.isNull(event.relatedTarget) || event.relatedTarget && !(0, _jquery)(event.currentTarget).closest(event.relatedTarget).length) {
+      var relatedTarget = event.relatedTarget;
+
+      if (!relatedTarget && document.activeElement && !(document.activeElement instanceof HTMLBodyElement)) {
+        relatedTarget = document.activeElement;
+      }
+
+      if (!relatedTarget) {
+        this.setFocusedSlide(null);
+        return;
+      }
+
+      var $relatedTarget = (0, _jquery)(relatedTarget);
+      var isRelatedTargetDescendantOfNavigation = $relatedTarget.closest(this.navigationElement).length;
+      var isFocusedOnAnotherSlideInThisSlider = $relatedTarget.hasClass("navigation-dot-anchor") && isRelatedTargetDescendantOfNavigation;
+
+      if (isFocusedOnAnotherSlideInThisSlider) {
+        _events.trigger("stage:interactionStop");
+      } else if (!isRelatedTargetDescendantOfNavigation) {
         this.setFocusedSlide(null);
       }
+    };
+    /**
+     * Set reference to navigation element in template
+     *
+     * @param {HTMLElement} navigationElement
+     */
+
+
+    _proto.afterNavigationRender = function afterNavigationRender(navigationElement) {
+      this.navigationElement = navigationElement;
     };
     /**
      * Navigate to a slide

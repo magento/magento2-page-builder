@@ -2,9 +2,31 @@
 
 <!-- {% raw %} -->
 
-## Configuration
+Out of the box, Page Builder comes with several content types (controls) that you can drag onto the stage to build your storefront pages, as shown below. In this topic, you will learn how to create your own content type for use within Page Builder.
 
-Adding new content type starts with [configuration](content-type-configuration.md).
+![Page Builder Content Types](../images/panel-horizontal.png)
+
+## Prerequisites
+
+Page Builder creates content types from modules. So this topic assumes you have a basic module structure in which to add your content type files.
+
+![](../images/module-minimum-structure.png)
+
+## Overview
+
+The steps for creating a Page Builder content type are briefly outlined here. The remainder of this topic describes these steps in detail.
+
+![Creating Custom Content Types](../images/content-type-overview.png)
+
+
+
+![Before and after content type](../images/content-type-files.png)
+
+
+
+## Step 1: Add a configuration
+
+Adding a new content type starts with an XML [configuration](../configurations/content-type-configuration.md) file.
 
 To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content:
 
@@ -48,6 +70,8 @@ To add configuration for a new content type, create a file under the following l
 
 In this example, content type has only one element in the template.
 
+## Step 2: Add a template
+
 Let's create templates specified in the configuration. 
 
 Optional: For template knockout bindings, you can use the original data-bind syntax, or utilize Magento custom Knockout.js bindings as seen in the template snippets below. `http://devdocs.magento.com/guides/v2.2/ui_comp_guide/concepts/knockout-bindings.html`
@@ -68,7 +92,47 @@ And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/cont
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
 ```
 
-In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` which enables the user to modify these attributes from the admin.
+In the `simple.xml` above we defined border attributes and form for component. 
+
+## Step 3: Add a component
+
+If your content type has custom preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/content-type/preview` will be used.
+
+If your content type can have other components as children, you need to extend `Magento_PageBuilder/js/content-type/preview-collection` component. Otherwice you need to extend `Magento_PageBuilder/js/content-type/preview`.
+
+In the preview component you can add custom logic that will be available in the template. You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
+
+Let's add a button in the preview that would display `Hello World` on click.
+
+```js
+define(["Magento_PageBuilder/js/content-type/preview"], function (Preview) {
+    var Simple = function() {
+        Preview.apply(this, arguments);
+    };
+
+    Simple.prototype = Object.create(Preview.prototype);
+    Simple.prototype.constructor = Simple;
+
+    /**
+     * Alert Hello World
+     */
+    Simple.prototype.helloWorld = function() {
+        alert("Hello World");
+    };
+
+    return Simple;
+});
+```
+
+
+
+## Step 4: Add an icon
+
+
+
+## Step 5: Add a form
+
+Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` which enables the user to modify these attributes from the admin.
 
 ``` XML
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
@@ -150,6 +214,8 @@ Every form should have default appearance to allow other modules to add more app
 
 Attributes that we want to edit as part of the advanced section are defined in `pagebuilder_base_form`, so we can just extend it.
 
+## Step 6: Add a layout
+
 And to allow this form to be loaded in PageBuilder, let's create layout `Vendor/ModuleName/view/adminhtml/layout/pagebuildercustom_simple_form.xml`.
 
 ``` XML
@@ -163,35 +229,19 @@ And to allow this form to be loaded in PageBuilder, let's create layout `Vendor/
 </page>
 ```
 
+
+
+## Step 7: Add a frontend widget
+
+ 
+
+
+
+
+
+
+
 ## Preview, PreviewCollection, Content, and ContentCollection
-
-If your content type has custom preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/content-type/preview` will be used.
-
-If your content type can have other components as children, you need to extend `Magento_PageBuilder/js/content-type/preview-collection` component. Otherwice you need to extend `Magento_PageBuilder/js/content-type/preview`.
-
-In the preview component you can add custom logic that will be available in the template. You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
-
-Let's add a button in the preview that would display `Hello World` on click.
-
-``` js
-define(["Magento_PageBuilder/js/content-type/preview"], function (Preview) {
-    var Simple = function() {
-        Preview.apply(this, arguments);
-    };
-
-    Simple.prototype = Object.create(Preview.prototype);
-    Simple.prototype.constructor = Simple;
-
-    /**
-     * Alert Hello World
-     */
-    Simple.prototype.helloWorld = function() {
-        alert("Hello World");
-    };
-
-    return Simple;
-});
-```
 
 And the last part is to add button to a template.
 
