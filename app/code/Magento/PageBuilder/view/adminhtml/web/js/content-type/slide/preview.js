@@ -3,7 +3,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _factory, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/modal/nest-link-dialog"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _factory, _preview, _nestLinkDialog) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -274,6 +274,28 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
+
+        var content = dataStore.content;
+        var linkUrl = dataStore.link_url;
+        var aLinkRegex = /<a.*?>|<\/a>/igm;
+
+        if (content.match(aLinkRegex) && dataStore.link_url && (linkUrl.type === "page" && linkUrl.page && linkUrl.page.length !== 0 || linkUrl.type === "product" && linkUrl.product && linkUrl.product.length !== 0 || linkUrl.type === "category" && linkUrl.category && linkUrl.category.length !== 0 || linkUrl.type === "default" && linkUrl.default && linkUrl.default.length !== 0)) {
+          (0, _nestLinkDialog)({
+            actions: {
+              confirm: function confirm() {
+                var anchorLessMessage = content.replace(aLinkRegex, ""); // Call the parent to remove the child element
+
+                _this5.parent.dataStore.update(anchorLessMessage, "content");
+
+                (0, _jquery)("#" + _this5.wysiwyg.elementId).html(anchorLessMessage);
+              }
+            },
+            content: (0, _translate)("Adding link in both contents and the outer element will result in nesting links. " + "This may break the structure of the page elements."),
+            // tslint:disable-line:max-line-length
+            title: (0, _translate)("Nesting links are not allowed"),
+            buttonText: "Revert Link"
+          });
+        }
       }); // Remove wysiwyg before assign new instance.
 
 

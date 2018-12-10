@@ -19,6 +19,8 @@ import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
+import FieldDefaultsInterface from "../../field-defaults";
+import singleButtonDialog from "Magento_PageBuilder/js/modal/nest-link-dialog";
 
 /**
  * @api
@@ -286,6 +288,29 @@ export default class Preview extends BasePreview {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+            const content = dataStore.content as string;
+            const linkUrl = dataStore.link_url as FieldDefaultsInterface;
+            const aLinkRegex = /<a.*?>|<\/a>/igm;
+            if (content.match(aLinkRegex) && dataStore.link_url && ((linkUrl.type === "page"
+                && linkUrl.page && linkUrl.page.length !== 0) || (linkUrl.type === "product" && linkUrl.product
+                && linkUrl.product.length !== 0) || (linkUrl.type === "category" && linkUrl.category
+                && linkUrl.category.length !== 0) || (linkUrl.type === "default" && linkUrl.default
+                && linkUrl.default.length !== 0))) {
+                singleButtonDialog({
+                    actions: {
+                        confirm: () => {
+                            const anchorLessMessage = content.replace(aLinkRegex, "");
+                            // Call the parent to remove the child element
+                            this.parent.dataStore.update(anchorLessMessage, "content");
+                            $("#" + this.wysiwyg.elementId).html(anchorLessMessage);
+                        },
+                    },
+                    content: $t("Adding link in both contents and the outer element will result in nesting links. " +
+                        "This may break the structure of the page elements."), // tslint:disable-line:max-line-length
+                    title: $t("Nesting links are not allowed"),
+                    buttonText: "Revert Link",
+                });
+            }
         });
 
         // Remove wysiwyg before assign new instance.

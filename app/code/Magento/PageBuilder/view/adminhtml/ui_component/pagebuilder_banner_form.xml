@@ -108,6 +108,12 @@
             <settings>
                 <label translate="true">Message Text</label>
                 <dataScope>message</dataScope>
+                <validation>
+                    <rule name="validate-no-url" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="validation.validate-no-url">${$.parentName}.link_url:value</link>
+                </imports>
             </settings>
             <formElements>
                 <wysiwyg>
@@ -117,12 +123,18 @@
                 </wysiwyg>
             </formElements>
         </field>
-        <urlInput name="link_url" sortOrder="20">
+        <urlInput name="link_url" sortOrder="20" template="Magento_PageBuilder/form/element/url-input">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Link</label>
                 <dataScope>link_url</dataScope>
                 <urlTypes class="Magento\Ui\Model\UrlInput\LinksConfigProvider"/>
+                <validation>
+                    <rule name="validate-message-no-link" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="validation.validate-message-no-link">${$.parentName}.message:value</link>
+                </imports>
             </settings>
         </urlInput>
         <field name="show_button" sortOrder="40" formElement="select">

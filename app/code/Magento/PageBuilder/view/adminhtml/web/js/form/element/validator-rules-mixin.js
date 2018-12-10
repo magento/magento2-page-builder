@@ -45,6 +45,30 @@ define([
     }
 
     /**
+     * Validate that string has an anchor tag
+     * @param {String} str
+     * @return {Boolean}
+     */
+    function validateWysiwygHasAnchorTags(str) {
+
+        return (/<a.*?>|<\/a>/igm).test(str)//eslint-disable-line max-len);
+    }
+
+    /**
+     * Validate message field and url field anchor tag is used exclusively by one field
+     * @param {String} message
+     * @param {Object} url
+     * @return {Boolean}
+     */
+    function validateOneAnchorTagField(message, url) {
+
+        return !(validateWysiwygHasAnchorTags(message) && ((url.type === 'page' && url.page && url.page.length !== 0)
+            || (url.type === 'product' && url.product && url.product.length !== 0)
+            || (url.type === 'category' && url.category && url.category.length !== 0)
+            || (url.type === 'default' && url.default && url.default.length !== 0)));
+    }
+
+    /**
      * Validate a field with an expected data value of type object, like margins_and_padding field
      * @param {Function} validator
      * @param {String} ruleName
@@ -144,6 +168,23 @@ define([
             },
             $.mage.__(requiredInputRule.message)
         );
+
+        validator.addRule(
+            'validate-message-no-link',
+            function (url,message) {
+                return validateOneAnchorTagField(message, url);
+            },
+            $.mage.__('Adding link in both content and outer element is not allowed')
+        );
+
+        validator.addRule(
+            'validate-no-url',
+            function (message,url) {
+                return validateOneAnchorTagField(message, url);
+            },
+            $.mage.__('Adding link in both content and outer element is not allowed')
+        );
+
         validateObjectField(validator, 'validate-number');
         validateObjectField(validator, 'less-than-equals-to');
         validateObjectField(validator, 'greater-than-equals-to');
