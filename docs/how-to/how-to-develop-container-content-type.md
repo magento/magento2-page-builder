@@ -1012,21 +1012,21 @@ bin/magento setup:upgrade
 
 You should now see a new custom content type in PageBuilder called **Custom Container** with a default appearance of **left**.
 
-![Custom Containers Panel](images/custom-containers-panel.png)
+![Custom Containers Panel](../images/custom-containers-panel.png)
 
 When you place it onto the stage, it should be filled with 3 container content types that have only one option to edit.
 
 The left appearance will have 2 rows of containers on the left side and the right appearance will have 2 rows on the right side.
 
 Left:
-![Custom Containers Left Appearance](images/custom-containers-left.png)
+![Custom Containers Left Appearance](../images/custom-containers-left.png)
 
 Right:
-![Custom Containers Right Appearance](images/custom-containers-right.png)
+![Custom Containers Right Appearance](../images/custom-containers-right.png)
 
 Use the configuration form in the container group's edit panel to switch between the left and right appearances.
 
-![Custom Containers Form](images/custom-containers-form.png)
+![Custom Containers Form](../images/custom-containers-form.png)
 
 [How to add a new content type]: how-to-add-new-content-type.md
 [Register your component]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html

@@ -10,7 +10,7 @@
     <section name="HtmlOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html') or contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
         <element name="hidden" type="text" selector="(//*[@data-role='html'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//*[@data-role='html'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-html')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="empty" type="text" selector="(//div[contains(@class,'placeholder-html-empty')])[{{arg1}}]" parameterized="true"/>
         <element name="html" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[contains(@data-bind,'text: data.main.html')])[{{arg1}}]{{arg2}}" parameterized="true"/>
         <!-- Advanced Configuration -->

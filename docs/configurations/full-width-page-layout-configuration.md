@@ -12,7 +12,7 @@ This topic describes the new full-width page layouts in Page Builder, along with
 
 Page Builder sets the default layouts to the new full-width layouts supplied by our Page Builder module. So unless you change the page layout, new pages are full width by default.
 
-![Page Layout Defaults](images/default-full-width.png)
+![Page Layout Defaults](../images/default-full-width.png)
 
 **Note:** The full-width layouts are specific to Product, Category, and CMS Page. Using one of these layouts outside of its intended scope could yield unpredictable results.
 
@@ -28,7 +28,7 @@ We do this by referencing the `main.content` container and replacing the `page-m
 <referenceContainer name="main.content" htmlTag="main" htmlClass="page-main-full-width" />
 ```
 
-![CMS Full Width Layout](images/cms-full-width.png)
+![CMS Full Width Layout](../images/cms-full-width.png)
 
 ## Category Full Width
 
@@ -56,7 +56,7 @@ We do this within `category-full-width.xml` by creating new wrapping containers 
 <move element="category.cms.wrapper" destination="category.view.container" after="category.description.wrapper"/>
 ```
 
-![Category Full Width Layout](images/category-full-width.png)
+![Category Full Width Layout](../images/category-full-width.png)
 
 ## Product Full Width
 
@@ -83,7 +83,7 @@ In `product-full-width.xml`, we create a new wrapper for product details & descr
 <move element="product.info.description" destination="product.info.description.wrapper"/>
 ```
 
-![Product Full Width Layout](images/product-full-width.png)
+![Product Full Width Layout](../images/product-full-width.png)
 
 ## Custom Theme Full Width
 
