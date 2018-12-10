@@ -24,6 +24,8 @@
 }
 
 .pagebuilder-stage-wrapper {
+    -webkit-transition: .35s ease-in-out;
+    -moz-transition: .35s ease-in-out;
     background: white;
     position: relative;
     transition: .35s ease-in-out;
@@ -49,6 +51,7 @@
         z-index: 800;
 
         .pagebuilder-header {
+            float: right;
             height: 0;
             padding: 0;
             position: fixed;
@@ -212,11 +215,11 @@
     }
 
     .pagebuilder-canvas {
-        -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
-        -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+        -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
+        -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
         opacity: 0;
         padding-bottom: 120px;
-        transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+        transition: opacity .75s ease-in-out, visibility .75s ease-in-out, padding-top .35s ease-in-out;
         visibility: hidden;
 
         &.active {
