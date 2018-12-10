@@ -34,6 +34,8 @@
     }
 
     &.stage-full-screen {
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
         background: @color-white;
         height: 100%;
         left: 0;
@@ -42,6 +44,7 @@
         padding: 0;
         position: fixed;
         top: 0;
+        transform: translateZ(0);
         width: 100%;
         z-index: 800;
 
@@ -128,14 +131,14 @@
         -moz-transition: .175s ease-in-out;
         -webkit-transition: .175s ease-in-out;
         opacity: 0;
-        transform: scale(.8);
+        transform: scale(.8) translateZ(0);
         transition: .175s ease-in-out;
         visibility: hidden;
     }
 
     &.trigger-transition .pagebuilder-stage-wrapper {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateZ(0);
         visibility: visible;
     }
 }

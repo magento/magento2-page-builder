@@ -68,11 +68,13 @@ export default class PageBuilder implements PageBuilderInterface {
              * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
              * screen.
              */
+            const xPosition = parseInt(stageWrapper.offset().top.toString(), 10) -
+                parseInt($(window).scrollTop().toString(), 10);
+            const yPosition = stageWrapper.offset().left;
             this.previousWrapperStyles = {
                 'position': 'fixed',
-                'top': parseInt(stageWrapper.offset().top.toString(), 10) -
-                parseInt($(window).scrollTop().toString(), 10) + 'px',
-                'left': stageWrapper.offset().left + 'px',
+                'top': `${xPosition}px`,
+                'left': `${yPosition}px`,
                 'zIndex': '800',
                 'width': stageWrapper.outerWidth().toString() + 'px'
             };

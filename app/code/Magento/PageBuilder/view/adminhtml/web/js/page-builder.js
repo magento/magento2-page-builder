@@ -71,10 +71,12 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
          * screen.
          */
 
+        var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10);
+        var yPosition = stageWrapper.offset().left;
         this.previousWrapperStyles = {
           'position': 'fixed',
-          'top': parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10) + 'px',
-          'left': stageWrapper.offset().left + 'px',
+          'top': xPosition + "px",
+          'left': yPosition + "px",
           'zIndex': '800',
           'width': stageWrapper.outerWidth().toString() + 'px'
         };
