@@ -179,8 +179,6 @@ class Config
             'label' => $contentType['label'],
             'icon' => $contentType['icon'],
             'form' => $contentType['form'],
-            'is_hideable' =>
-                isset($contentType['is_hideable']) && $contentType['is_hideable'] === 'false' ? false : true,
             'contentType' => '',
             'group' => $contentType['group'] ?? 'general',
             'fields' => $this->uiComponentConfig->getFields($contentType['form']),
