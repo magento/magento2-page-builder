@@ -22,12 +22,16 @@
         <!-- Validate right edge of content is within parent -->
         <comment userInput="Validate right edge of content is within parent" stepKey="commentValidateRightEdgeOfContentIsWithinParent"/>
         <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().right+{{contentMargins.marginRight}}" stepKey="contentRightPosition"/>
-        <executeJS function="return document.querySelectorAll('{{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}}-({{containerBorder.value}}*2)" stepKey="parentRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}}-{{containerBorder.value}}" stepKey="parentRightPosition"/>
         <executeJS function="return Math.round({$parentRightPosition}-{$contentRightPosition})" stepKey="rightPositionDifference"/>
         <assertLessThanOrEqual stepKey="assertRightPositionDifference">
             <expectedResult type="int">{{pixelBuffer}}</expectedResult>
             <actualResult type="variable">rightPositionDifference</actualResult>
         </assertLessThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertRightPositionIsGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rightPositionDifference</actualResult>
+        </assertGreaterThanOrEqual>
     </actionGroup>
     <!-- Element Size -->
     <actionGroup name="validateContentWidthEqualToContainerWidth">
