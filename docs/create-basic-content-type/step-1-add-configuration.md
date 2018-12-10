@@ -75,7 +75,6 @@ The `<type>` node defines the key properties of your content type. The attribute
 | master_component  | JavaScript file that provides master format rendering logic generic for all appearances of your content type when rendered on the storefront. |
 | form              | UI component form that provides the form controls for editing your content type. |
 | icon              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
-| is_hideable       | Optional. Default `true`. Include it only when you want to set it to `false` to prevent the end-user from hiding your  content type on demand, using a button (eye icon) in the options menu. A setting of false will remove the hide button from the options menu. |
 | translate         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
 {:style="table-layout:auto"}
 
