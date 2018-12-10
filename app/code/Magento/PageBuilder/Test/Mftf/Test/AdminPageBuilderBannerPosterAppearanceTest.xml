@@ -1844,10 +1844,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateBannerOverlayAndButtonPoster" stepKey="validateBannerOnStage">
+        <actionGroup ref="validateOverlayAndButtonPoster" stepKey="validateBannerOnStage">
             <argument name="column" value="ColumnOnBackend"/>
-            <argument name="banner" value="BannerOnBackend"/>
-            <argument name="bannerBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="element" value="BannerOnBackend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="diffThreshold" value="2"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -1857,10 +1857,10 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="validateBannerOverlayAndButtonPoster" stepKey="validateBannerOnStorefront">
+        <actionGroup ref="validateOverlayAndButtonPoster" stepKey="validateBannerOnStorefront">
             <argument name="column" value="ColumnOnFrontend"/>
-            <argument name="banner" value="BannerOnFrontend"/>
-            <argument name="bannerBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="element" value="BannerOnFrontend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
             <argument name="diffThreshold" value="0"/>
         </actionGroup>
     </test>
