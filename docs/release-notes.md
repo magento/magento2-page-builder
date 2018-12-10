@@ -2,10 +2,6 @@
 
 Here are the Page Builder beta release notes and the higher priority known issues. We are actively working on many of these items and will update this document with each beta release.
 
-## Beta 1 - November 27, 2018
-
-- Initial beta release
-
 ## Beta 2 - December 10, 2018
 
 - Resolved: Image inside Text Content Type is scaled on stage <!-- MC-3509 --> 
@@ -17,6 +13,10 @@ Here are the Page Builder beta release notes and the higher priority known issue
 - Resolved: Remove Reset Button From Slide Outs For All Content Types <!-- MC-5790 --> 
 - Resolved: Remove is_hideable option from content type configuration <!-- MC-4959 --> 
 - Resolved: IE11 - Cannot Use Slide Item Option Menu <!-- MC-5443 --> 
+
+## Beta 1 - November 27, 2018
+
+- Initial beta release
 
 ## Known Issues
 
