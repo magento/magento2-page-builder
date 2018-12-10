@@ -1,16 +1,27 @@
-# Known Issues
+# Release Notes
 
-This article outlines the known higher priority issues present in the Page Builder beta release. We're actively working on many of these items and will update this document accordingly.
+Here are the Page Builder beta release notes and the higher priority known issues. We are actively working on many of these items and will update this document with each beta release.
 
-## Issues
+## Beta 2 - December 10, 2018
+
+- Fixed: Image inside Text Content Type is scaled on stage <!-- MC-3509 --> 
+- Fixed: Padding is not respected on Text <!-- MC-3713 --> 
+- Fixed: Saving Slide Button Type As Secondary Or Link Will Still Show As Primary On Edit Form <!-- MC-3818 --> 
+- Fixed: Columns Widths Are Not Consistent Between Stage & Storefront <!-- MC-3992 --> 
+- Fixed: Review Information Covered By Add To Cart Button On Products On Stage <!-- MC-4130 --> 
+- Fixed: Hard Coded Padding On Button Groups & On Text <!-- MC-4278 --> 
+- Fixed: Remove Reset Button From Slide Outs For All Content Types <!-- MC-5790 --> 
+- Fixed: Remove is_hideable option from content type configuration <!-- MC-4959 --> 
+- Fixed: IE11 - Cannot Use Slide Item Option Menu <!-- MC-5443 --> 
+
+
+## Known Issues
 
 * Degraded admin experience in IE 11.
-    * Unable to edit a slide item due to being unable to click on the edit icon for a slide item. <!-- MC-5443 -->
     * Inline editing placeholders behave strangely within the admin and won't disappear when typing starts.
 * Product does not display in admin when it is assigned to a specific website. <!-- MC-5373 -->
 * TinyMCE inline editing mode is focused after saving a content type within the admin. <!-- MC-3812 -->
-* Column rendered widths differ from storefront to admin. <!-- MC-3992 -->
-* Issues with paddings, margins, and box-sizing on numerous content types.
+* Issues with padding, margins, and box-sizing on numerous content types.
 * Floating option menus and other controls can be displayed off screen when content types are rendered near the edge of the screen.
 * Degraded Parallax performance on storefront and in admin within some browsers. <!-- MC-5480 -->
 * Using Page Builder within a slide out form has a degraded experience.
