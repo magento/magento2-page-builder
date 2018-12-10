@@ -323,6 +323,18 @@
             <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
         </actionGroup>
         <comment userInput="keyForRemoval" stepKey="duplicateColumn"/>
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
+            <argument name="page" value="BannerOnBackend"/>
+            <argument name="height" value="50"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
+            <argument name="page" value="BannerOnBackend"/>
+            <argument name="height" value="50"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="height" value="50"/>
+        </actionGroup>
     </test>
     <test name="BannerCollageLeftButtonNeverShow">
         <annotations>
