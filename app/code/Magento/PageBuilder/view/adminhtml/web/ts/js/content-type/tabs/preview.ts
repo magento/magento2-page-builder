@@ -16,6 +16,7 @@ import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
+import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
@@ -209,6 +210,7 @@ export default class Preview extends PreviewCollection {
      */
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
+
         options.add = new Option({
             preview: this,
             icon: "<i class='icon-pagebuilder-add'></i>",
@@ -217,6 +219,16 @@ export default class Preview extends PreviewCollection {
             classes: ["add-child"],
             sort: 10,
         });
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
         return options;
     }
 

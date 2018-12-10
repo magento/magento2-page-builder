@@ -39,7 +39,7 @@
         <element name="base" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]" parameterized="true"/>
         <element name="containerCSS" type="text" selector="[data-role=slider] .slider-container"/>
         <element name="hidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
-        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
+        <element name="notHidden" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="slideNavigationDot" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]//div[contains(@class,'navigation-dot')][{{arg2}}]" parameterized="true"/>
         <element name="activeSlideNavigationDot" type="button" selector="div.navigation-dot.active"/>
         <element name="slideNavigationDotNameTooltip" type="button" selector="(//div[@data-role='slider'])[{{arg1}}]//span[@role='tooltip']" parameterized="true"/>
