@@ -6,12 +6,14 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
+import singleButtonDialog from "Magento_PageBuilder/js/modal/nest-link-dialog";
 import _ from "underscore";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
+import FieldDefaultsInterface from "../../field-defaults";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import WysiwygFactory from "../../wysiwyg/factory";
@@ -19,8 +21,6 @@ import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
-import FieldDefaultsInterface from "../../field-defaults";
-import singleButtonDialog from "Magento_PageBuilder/js/modal/nest-link-dialog";
 
 /**
  * @api
