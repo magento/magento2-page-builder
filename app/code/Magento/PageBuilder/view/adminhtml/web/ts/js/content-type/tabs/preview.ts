@@ -178,14 +178,18 @@ export default class Preview extends PreviewCollection {
      */
     public setActiveTab(index: number) {
         if (index !== null) {
-            $(this.element).tabs("option", "active", index);
-
-            this.activeTab(index);
-
-            events.trigger("contentType:redrawAfter", {
-                id: this.parent.id,
-                contentType: this,
-            });
+            // Added to prevent mismatched fragment error caused by not yet rendered tab-item
+            delayUntil(
+                () => {
+                    $(this.element).tabs("option", "active", index);
+                    this.activeTab(index);
+                    events.trigger("contentType:redrawAfter", {
+                        id: this.parent.id,
+                        contentType: this,
+                    });
+                },
+                () => $(this.element).find(".pagebuilder-tab-item").length >= index + 1,
+            );
         }
     }
 

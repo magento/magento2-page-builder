@@ -171,13 +171,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.setActiveTab = function setActiveTab(index) {
-      if (index !== null) {
-        (0, _jquery)(this.element).tabs("option", "active", index);
-        this.activeTab(index);
+      var _this2 = this;
 
-        _events.trigger("contentType:redrawAfter", {
-          id: this.parent.id,
-          contentType: this
+      if (index !== null) {
+        // Added to prevent mismatched fragment error caused by not yet rendered tab-item
+        (0, _delayUntil)(function () {
+          (0, _jquery)(_this2.element).tabs("option", "active", index);
+
+          _this2.activeTab(index);
+
+          _events.trigger("contentType:redrawAfter", {
+            id: _this2.parent.id,
+            contentType: _this2
+          });
+        }, function () {
+          return (0, _jquery)(_this2.element).find(".pagebuilder-tab-item").length >= index + 1;
         });
       }
     };
@@ -236,21 +244,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.addTab = function addTab() {
-      var _this2 = this;
+      var _this3 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
         _events.on("tab-item:mountAfter", function (args) {
           if (args.id === tab.id) {
-            _this2.setFocusedTab(_this2.parent.children().length - 1);
+            _this3.setFocusedTab(_this3.parent.children().length - 1);
 
             _events.off("tab-item:" + tab.id + ":mountAfter");
           }
         }, "tab-item:" + tab.id + ":mountAfter");
 
-        _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
+        _this3.parent.addChild(tab, _this3.parent.children().length); // Update the default tab title when adding a new tab
 
 
-        tab.dataStore.update((0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
+        tab.dataStore.update((0, _translate)("Tab") + " " + (_this3.parent.children.indexOf(tab) + 1), "tab_name");
       });
     };
     /**
@@ -373,24 +381,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this3 = this;
+      var _this4 = this;
 
       _previewCollection2.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
       _events.on("tabs:dropAfter", function (args) {
-        if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
-          _this3.addTab();
+        if (args.id === _this4.parent.id && _this4.parent.children().length === 0) {
+          _this4.addTab();
         }
       }); // ContentType being removed from container
 
 
       _events.on("tab-item:removeAfter", function (args) {
-        if (args.parent.id === _this3.parent.id) {
+        if (args.parent.id === _this4.parent.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
-          _this3.refreshTabs(newIndex, true);
+          _this4.refreshTabs(newIndex, true);
         }
       }); // Capture when a content type is duplicated within the container
 
@@ -399,7 +407,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedTabIndex;
 
       _events.on("tab-item:duplicateAfter", function (args) {
-        if (_this3.parent.id === args.duplicateContentType.parent.id && args.direct) {
+        if (_this4.parent.id === args.duplicateContentType.parent.id && args.direct) {
           var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
@@ -409,16 +417,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("tab-item:mountAfter", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
-          _this3.refreshTabs(duplicatedTabIndex, true);
+          _this4.refreshTabs(duplicatedTabIndex, true);
 
           duplicatedTab = duplicatedTabIndex = null;
         }
 
-        if (_this3.parent.id === args.contentType.parent.id) {
-          _this3.updateTabNamesInDataStore();
+        if (_this4.parent.id === args.contentType.parent.id) {
+          _this4.updateTabNamesInDataStore();
 
           args.contentType.dataStore.subscribe(function () {
-            _this3.updateTabNamesInDataStore();
+            _this4.updateTabNamesInDataStore();
           });
         }
       });
@@ -448,7 +456,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.buildTabs = function buildTabs(activeTabIndex) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (activeTabIndex === void 0) {
         activeTabIndex = this.activeTab() || this.previewData.default_active() || 0;
@@ -466,15 +474,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         (0, _jquery)(this.element).tabs({
           create: function create() {
-            _this4.ready = true; // Ensure focus tab is restored after a rebuild cycle
+            _this5.ready = true; // Ensure focus tab is restored after a rebuild cycle
 
             if (focusedTab !== null) {
-              _this4.setFocusedTab(focusedTab, true);
+              _this5.setFocusedTab(focusedTab, true);
             } else {
-              _this4.setFocusedTab(null);
+              _this5.setFocusedTab(null);
 
               if (activeTabIndex) {
-                _this4.setActiveTab(activeTabIndex);
+                _this5.setActiveTab(activeTabIndex);
               }
             }
           },
@@ -484,7 +492,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
            */
           activate: function activate() {
             _events.trigger("contentType:redrawAfter", {
-              element: _this4.element
+              element: _this5.element
             });
           }
         });
