@@ -16,6 +16,7 @@
     </div>
     <div class="slider-controls focus-options">
         <div class="slider-navigation"
+             afterRender="afterNavigationRender"
              each="$parent.getChildren()"
              data-bind="sortableChildren: { handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: onSortStart.bind($parent.preview), stop: onSortStop.bind($parent.preview) }">
             <div class="navigation-dot"
