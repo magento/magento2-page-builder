@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import _ from "underscore";
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
+import _ from "underscore";
 import Config from "./config";
 import PageBuilderInterface from "./page-builder.d";
 import Panel from "./panel";
@@ -52,7 +52,7 @@ export default class PageBuilder implements PageBuilderInterface {
      * @param {StageToggleFullScreenParamsInterface} args
      */
     public toggleFullScreen(args: StageToggleFullScreenParamsInterface): void {
-        if (typeof args.animate !== "undefined" && args.animate === false) {
+        if (args.animate === false) {
             this.isFullScreen(!this.isFullScreen());
             return;
         }
@@ -72,11 +72,11 @@ export default class PageBuilder implements PageBuilderInterface {
                 parseInt($(window).scrollTop().toString(), 10);
             const yPosition = stageWrapper.offset().left;
             this.previousWrapperStyles = {
-                'position': 'fixed',
-                'top': `${xPosition}px`,
-                'left': `${yPosition}px`,
-                'zIndex': '800',
-                'width': stageWrapper.outerWidth().toString() + 'px'
+                position: "fixed",
+                top: `${xPosition}px`,
+                left: `${yPosition}px`,
+                zIndex: "800",
+                width: stageWrapper.outerWidth().toString() + "px",
             };
             this.wrapperStyles(this.previousWrapperStyles);
             this.isFullScreen(true);
@@ -86,7 +86,7 @@ export default class PageBuilder implements PageBuilderInterface {
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
                     .reduce((object: object, styleName: string) => {
                         return Object.assign(object, {[styleName]: ""});
-                    }, {})
+                    }, {}),
                 );
             });
         } else {
@@ -101,7 +101,7 @@ export default class PageBuilder implements PageBuilderInterface {
                 this.wrapperStyles(Object.keys(this.previousWrapperStyles)
                     .reduce((object: object, styleName: string) => {
                         return Object.assign(object, {[styleName]: ""});
-                    }, {})
+                    }, {}),
                 );
                 this.previousWrapperStyles = {};
                 this.previousPanelHeight = null;

@@ -129,8 +129,8 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
                 "option", "connectWith",
                 getAllowedContainersClasses(
                     contentTypeInstance.config.name,
-                    preview.parent.stageId
-                )
+                    preview.parent.stageId,
+                ),
             );
             $(this).sortable("refresh");
         }

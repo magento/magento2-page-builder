@@ -177,7 +177,7 @@ export default class Panel implements PanelInterface {
      */
     public getDraggableOptions(element: HTMLElement): JQueryUI.DraggableOptions {
         // If we're within a modal make the containment be the current modal
-        let containment: string | JQuery = "document";
+        let containment: JQuery;
         if ($(element).parents(".modal-inner-wrap").length > 0) {
             containment = $(element).parents(".modal-inner-wrap");
         }
@@ -187,7 +187,7 @@ export default class Panel implements PanelInterface {
             appendTo: "body",
             cursor: "-webkit-grabbing",
             connectToSortable: ".content-type-drop",
-            containment,
+            containment: containment || "document",
             scroll: true,
             helper() {
                 return $(this).clone().css({
@@ -251,11 +251,11 @@ export default class Panel implements PanelInterface {
                             return new GroupContentType(
                                 identifier,
                                 contentType,
-                                this.parent.stage.id
+                                this.parent.stage.id,
                             );
                         },
                     ),
-                    this.parent.stage.id
+                    this.parent.stage.id,
                 ));
             });
 

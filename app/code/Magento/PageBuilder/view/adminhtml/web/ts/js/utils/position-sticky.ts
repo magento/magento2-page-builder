@@ -13,14 +13,16 @@ export function supportsPositionSticky() {
         return false;
     }
 
-    const testNode = document.createElement('div');
+    const testNode = document.createElement("div");
 
-    return ['', '-webkit-', '-moz-', '-ms-'].some(prefix => {
+    return ["", "-webkit-", "-moz-", "-ms-"].some((prefix) => {
         try {
-            testNode.style.position = prefix + 'sticky';
+            testNode.style.position = prefix + "sticky";
         }
-        catch(e) {}
+        catch (e) {
+            // Fail silently
+        }
 
-        return testNode.style.position != '';
-    })
+        return testNode.style.position !== "";
+    });
 }

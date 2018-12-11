@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_underscore, _jquery, _knockout, _events, _mageUtils, _config, _panel, _stage) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -53,7 +53,7 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
     _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this2 = this;
 
-      if (typeof args.animate !== "undefined" && args.animate === false) {
+      if (args.animate === false) {
         this.isFullScreen(!this.isFullScreen());
         return;
       }
@@ -74,11 +74,11 @@ define(["underscore", "jquery", "knockout", "Magento_PageBuilder/js/events", "ma
         var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10);
         var yPosition = stageWrapper.offset().left;
         this.previousWrapperStyles = {
-          'position': 'fixed',
-          'top': xPosition + "px",
-          'left': yPosition + "px",
-          'zIndex': '800',
-          'width': stageWrapper.outerWidth().toString() + 'px'
+          position: "fixed",
+          top: xPosition + "px",
+          left: yPosition + "px",
+          zIndex: "800",
+          width: stageWrapper.outerWidth().toString() + "px"
         };
         this.wrapperStyles(this.previousWrapperStyles);
         this.isFullScreen(true);

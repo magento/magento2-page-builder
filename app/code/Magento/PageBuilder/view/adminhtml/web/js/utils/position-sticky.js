@@ -15,13 +15,14 @@ define([], function () {
       return false;
     }
 
-    var testNode = document.createElement('div');
-    return ['', '-webkit-', '-moz-', '-ms-'].some(function (prefix) {
+    var testNode = document.createElement("div");
+    return ["", "-webkit-", "-moz-", "-ms-"].some(function (prefix) {
       try {
-        testNode.style.position = prefix + 'sticky';
-      } catch (e) {}
+        testNode.style.position = prefix + "sticky";
+      } catch (e) {// Fail silently
+      }
 
-      return testNode.style.position != '';
+      return testNode.style.position !== "";
     });
   }
 

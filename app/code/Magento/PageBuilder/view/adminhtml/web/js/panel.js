@@ -173,7 +173,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.getDraggableOptions = function getDraggableOptions(element) {
       // If we're within a modal make the containment be the current modal
-      var containment = "document";
+      var containment;
 
       if ((0, _jquery)(element).parents(".modal-inner-wrap").length > 0) {
         containment = (0, _jquery)(element).parents(".modal-inner-wrap");
@@ -184,7 +184,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         appendTo: "body",
         cursor: "-webkit-grabbing",
         connectToSortable: ".content-type-drop",
-        containment: containment,
+        containment: containment || "document",
         scroll: true,
         helper: function helper() {
           return (0, _jquery)(this).clone().css({
