@@ -6,8 +6,8 @@
 @border-size: 2px;
 
 .pagebuilder-header {
-    text-align: right;
     margin-bottom: 15px;
+    text-align: right;
 
     > .icon-pagebuilder-fullscreen {
         cursor: pointer;
@@ -24,9 +24,9 @@
 }
 
 .pagebuilder-stage-wrapper {
-    -webkit-transition: .35s ease-in-out;
     -moz-transition: .35s ease-in-out;
-    background: white;
+    -webkit-transition: .35s ease-in-out;
+    background: #fff;
     position: relative;
     transition: .35s ease-in-out;
 
@@ -36,8 +36,8 @@
     }
 
     &.stage-full-screen {
-        -webkit-transform: translateZ(0);
         -moz-transform: translateZ(0);
+        -webkit-transform: translateZ(0);
         background: @color-white;
         height: 100%;
         left: 0;
@@ -146,44 +146,19 @@
     }
 }
 
-.pagebuilder-add-row-wrapper {
-    float: left;
-    text-align: center;
-    width: 100%;
-
-    .pagebuilder-add-row {
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-
-        background: @row-color;
-        border-radius: 5px;
-        color: @color-white;
-        display: inline-block;
-        font-size: 26px;
-        height: 50px;
-        line-height: 50px;
-        width: 50px;
-
-        &:hover {
-            background: darken(@row-color, 15%);
-        }
-    }
-}
-
 .pagebuilder-stage {
     -moz-transition: margin-left .35s ease-in-out;
-    -webkit-transition: margin-left .35s ease-in-out;
     -moz-user-select: none;
+    -webkit-transition: margin-left .35s ease-in-out;
+    -webkit-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
-    -webkit-user-select: none;
-
     font-size: 0;
     margin-left: 170px;
     min-height: 200px;
     padding: 0;
-    user-select: none;
     transition: margin-left .35s ease-in-out;
+    user-select: none;
 
     &.stage-full-screen {
         background: @color-black;
