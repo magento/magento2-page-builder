@@ -199,7 +199,9 @@ export default class Stage {
         });
         events.on("stage:interactionStop", (args: {force: boolean}) => {
             const forced = (_.isObject(args) && args.force === true);
-            if (--interactionLevel === 0 || forced) {
+            interactionLevel = Math.max(interactionLevel - 1, 0);
+
+            if (interactionLevel === 0 || forced) {
                 this.interacting(false);
                 if (forced) {
                     interactionLevel = 0;

@@ -7,6 +7,8 @@ import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import Toolbar from "../../content-type-toolbar";
 import {OptionInterface} from "../../content-type-toolbar/option.d";
 import ContentTypeInterface from "../../content-type.d";
@@ -17,7 +19,7 @@ import BasePreview from "../preview";
 /**
  * @api
  */
-export default class Heading extends BasePreview {
+export default class Preview extends BasePreview {
     public toolbar: Toolbar;
     private element: Element;
 
@@ -36,6 +38,26 @@ export default class Heading extends BasePreview {
             this,
             this.getToolbarOptions(),
         );
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
     }
 
     /**

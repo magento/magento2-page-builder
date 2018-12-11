@@ -201,8 +201,9 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
       _events.on("stage:interactionStop", function (args) {
         var forced = _underscore.isObject(args) && args.force === true;
+        interactionLevel = Math.max(interactionLevel - 1, 0);
 
-        if (--interactionLevel === 0 || forced) {
+        if (interactionLevel === 0 || forced) {
           _this2.interacting(false);
 
           if (forced) {
