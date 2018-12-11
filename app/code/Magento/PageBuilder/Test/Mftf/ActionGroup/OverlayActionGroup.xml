@@ -59,16 +59,15 @@
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+            <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
         </arguments>
-        <!-- Validate right edge of overlay -->
-        <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().right" stepKey="wrapperRightPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
-        <executeJS function="return Math.round(({$wrapperRightPosition}-{$overlayRightPosition})*100)/100" stepKey="overlaySpaceRight"/>
-        <assertGreaterThanOrEqual stepKey="assertOverlaySpaceRightGreaterThanOrEqualToRightPadding">
-            <expectedResult type="int">{{padding.paddingRight}}</expectedResult>
-            <actualResult type="variable">overlaySpaceRight</actualResult>
-        </assertGreaterThanOrEqual>
+        <!-- Validate width of overlay -->
+        <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
+        <assertEquals stepKey="assertOverlayWidth">
+            <expectedResult type="string">{{expectedOverlayWidth}}</expectedResult>
+            <actualResult type="variable">overlayWidth</actualResult>
+        </assertEquals>
         <!-- Validate left edge of overlay -->
         <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().left" stepKey="wrapperLeftPosition"/>
@@ -85,6 +84,7 @@
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+            <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
         </arguments>
         <!-- Validate right edge of overlay -->
         <comment userInput="Validate right edge of overlay" stepKey="commentValidateRightEdgeOfOverlay"/>
@@ -95,15 +95,13 @@
             <expectedResult type="int">{{padding.paddingRight}}</expectedResult>
             <actualResult type="variable">overlayPadding</actualResult>
         </assertEquals>
-        <!-- Validate left edge of overlay -->
-        <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().left" stepKey="wrapperLeftPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
-        <executeJS function="return Math.round(({$overlayLeftPosition}-{$wrapperLeftPosition})*100)/100" stepKey="overlaySpaceLeft"/>
-        <assertGreaterThanOrEqual stepKey="assertOverlaySpaceLeftGreaterThanOrEqualToLeftPadding">
-            <expectedResult type="int">{{padding.paddingLeft}}</expectedResult>
-            <actualResult type="variable">overlaySpaceLeft</actualResult>
-        </assertGreaterThanOrEqual>
+        <!-- Validate width of overlay -->
+        <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
+        <assertEquals stepKey="assertOverlayWidth">
+            <expectedResult type="string">{{expectedOverlayWidth}}</expectedResult>
+            <actualResult type="variable">overlayWidth</actualResult>
+        </assertEquals>
     </actionGroup>
     <!-- Checks the position of the overlay with small padding value. This action group may not work with large padding values -->
     <actionGroup name="validateOverlayPositionCollageCenter">
@@ -111,14 +109,25 @@
             <argument name="page"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="padding" defaultValue="PageBuilderPaddingProperty40"/>
+            <argument name="expectedOverlayWidth" defaultValue="540" type="string"/>
         </arguments>
-        <!-- Validate right edge of overlay -->
+        <!-- Validate width of overlay -->
+        <comment userInput="Validate width of overlay" stepKey="commentValidateWidthOfOverlay"/>
+        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().width" stepKey="overlayWidth"/>
+        <assertEquals stepKey="assertOverlayWidth">
+            <expectedResult type="string">{{expectedOverlayWidth}}</expectedResult>
+            <actualResult type="variable">overlayWidth</actualResult>
+        </assertEquals>
+        <!-- Validate center position of overlay -->
         <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().right" stepKey="wrapperRightPosition"/>
+        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().width" stepKey="wrapperWidth"/>
+        <executeJS function="return Math.round(({$wrapperRightPosition}-({$wrapperWidth}/2))*100)/100" stepKey="wrapperCenterPosition"/>
         <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
-        <executeJS function="return Math.round(({$wrapperRightPosition}-{$overlayRightPosition})*100)/100" stepKey="overlaySpaceRight"/>
-        <assertGreaterThanOrEqual stepKey="assertOverlaySpaceRightGreaterThanOrEqualToRightPadding">
-            <expectedResult type="int">{{padding.paddingRight}}</expectedResult>
-            <actualResult type="variable">overlaySpaceRight</actualResult>
+        <executeJS function="return Math.round(({$overlayRightPosition}-({$overlayWidth}/2))*100)/100" stepKey="overlayCenterPosition"/>
+        <executeJS function="return Math.round(({$wrapperCenterPosition}/{$overlayCenterPosition})*100)/100" stepKey="overlayCenterRatio"/>
+        <assertGreaterThanOrEqual stepKey="assertOverlayCenterRatio">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">overlayCenterRatio</actualResult>
         </assertGreaterThanOrEqual>
         <!-- Validate left edge of overlay -->
         <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
@@ -173,35 +182,49 @@
     <actionGroup name="validateOverlayAndButtonPoster">
         <arguments>
             <argument name="column"/>
+            <argument name="columnIndex" defaultValue="1" type="string"/>
+            <argument name="columnBorderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="columnPadding" defaultValue="PageBuilderPaddingProperty10"/>
             <argument name="element"/>
+            <argument name="elementIndex" defaultValue="1" type="string"/>
             <argument name="elementBorderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="elementPadding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="overlayPadding" defaultValue="PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide"/>
             <argument name="diffThreshold" defaultValue="0" type="string"/>
         </arguments>
-        <executeJS function="return document.querySelector('{{column.columnX('1')}}').clientWidth" stepKey="columnWidth"/>
-        <executeJS function="return parseInt({{element.elementJS('1')}}.getBoundingClientRect().width)" stepKey="elementWidth"/>
-        <executeJS function="return parseInt({$columnWidth} - {{PageBuilderPaddingProperty10.paddingLeft}} - {{PageBuilderPaddingProperty10.paddingRight}})" stepKey="expectedElementWidth"/>
+        <!-- Validate Element Width -->
+        <comment userInput="Validate Element Width" stepKey="commentValidateElementWidth"/>
+        <executeJS function="return document.querySelector('{{column.columnX(columnIndex)}}').clientWidth" stepKey="columnWidth"/>
+        <executeJS function="return parseInt({{element.elementJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="elementWidth"/>
+        <executeJS function="return parseInt({$columnWidth} - {{columnPadding.paddingLeft}} - {{columnPadding.paddingRight}} - ({{columnBorderWidth.value}} * 2))" stepKey="expectedElementWidth"/>
         <executeJS function="return Math.abs({$expectedElementWidth} - {$elementWidth})" stepKey="elementDiff"/>
         <!-- We will allow a 2px offset to account for rounding and any additional threshold that is passed in as an argument -->
         <executeJS function="return parseInt({{diffThreshold}} + 2)" stepKey="acceptableOffset"/>
-        <assertLessThanOrEqual stepKey="assertElementWidthEqualsColumnWidthLessColumnPaddingAndColumnBorderWidth">
+        <assertLessThanOrEqual stepKey="assertElementWidthEqualsColumnWidthLessPaddingAndBorder">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">elementDiff</actualResult>
         </assertLessThanOrEqual>
-        <executeJS function="return parseInt({{element.overlayJS('1')}}.getBoundingClientRect().width)" stepKey="overlayWidth"/>
-        <executeJS function="return parseInt({$elementWidth} - {{PageBuilderPaddingPropertyDefault.paddingLeft}} - {{PageBuilderPaddingPropertyDefault.paddingRight}} - ({{elementBorderWidth.value}} * 2))" stepKey="expectedOverlayWidth"/>
+        <!-- Validate Overlay Width -->
+        <comment userInput="Validate Overlay Width" stepKey="commentValidateOverlayWidth"/>
+        <executeJS function="return parseInt({{element.overlayJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="overlayWidth"/>
+        <executeJS function="return parseInt({$elementWidth} - {{elementPadding.paddingLeft}} - {{elementPadding.paddingRight}} - ({{elementBorderWidth.value}} * 2))" stepKey="expectedOverlayWidth"/>
         <executeJS function="return Math.abs({$expectedOverlayWidth} - {$overlayWidth})" stepKey="overlayDiff"/>
-        <assertLessThanOrEqual stepKey="assertOverlayWidthEqualsElementWidthLessElementPaddingAndElementBorderWidth">
+        <assertLessThanOrEqual stepKey="assertOverlayWidthEqualsElementWidthLessPaddingAndBorder">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">overlayDiff</actualResult>
         </assertLessThanOrEqual>
-        <executeJS function="return parseInt({{element.contentJS('1')}}.getBoundingClientRect().width)" stepKey="contentWidth"/>
-        <executeJS function="return parseInt({$overlayWidth} - {{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}} - {{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}})" stepKey="expectedContentWidth"/>
+        <!-- Validate Content Width -->
+        <comment userInput="Validate Content Width" stepKey="commentValidateContentWidth"/>
+        <executeJS function="return parseInt({{element.contentJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="contentWidth"/>
+        <executeJS function="return parseInt({$overlayWidth} - {{overlayPadding.paddingLeft}} - {{overlayPadding.paddingRight}})" stepKey="expectedContentWidth"/>
         <executeJS function="return Math.abs({$expectedContentWidth} - {$contentWidth})" stepKey="contentDiff"/>
         <assertLessThanOrEqual stepKey="assertContentWidthEqualsOverlayWidthLessPadding">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">contentDiff</actualResult>
         </assertLessThanOrEqual>
-        <executeJS function="return parseInt({{element.buttonJS('1')}}.getBoundingClientRect().width)" stepKey="buttonWidth"/>
+        <!-- Validate Button Width -->
+        <comment userInput="Validate Button Width" stepKey="commentValidateButtonWidth"/>
+        <executeJS function="return parseInt({{element.buttonJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="buttonWidth"/>
         <!-- wysiwyg content may shrink smaller, but buttons will never be smaller than 36px (17px padding + 1px border) -->
         <executeJS function="return Math.max(36, {$expectedContentWidth})" stepKey="expectedButtonWidth"/>
         <executeJS function="return Math.abs({$expectedButtonWidth} - {$buttonWidth})" stepKey="buttonDiff"/>
@@ -213,35 +236,49 @@
     <actionGroup name="validateOverlayAndButtonCollage">
         <arguments>
             <argument name="column"/>
+            <argument name="columnIndex" defaultValue="1" type="string"/>
+            <argument name="columnBorderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="columnPadding" defaultValue="PageBuilderPaddingProperty10"/>
             <argument name="element"/>
+            <argument name="elementIndex" defaultValue="1" type="string"/>
             <argument name="elementBorderWidth" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="elementPadding" defaultValue="PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide"/>
+            <argument name="overlayPadding" defaultValue="PageBuilderPaddingPropertyOverlayDefault"/>
             <argument name="diffThreshold" defaultValue="0" type="string"/>
         </arguments>
-        <executeJS function="return document.querySelector('{{column.columnX('1')}}').clientWidth" stepKey="columnWidth"/>
-        <executeJS function="return parseInt({{element.elementJS('1')}}.getBoundingClientRect().width)" stepKey="elementWidth"/>
-        <executeJS function="return parseInt({$columnWidth} - {{PageBuilderPaddingProperty10.paddingLeft}} - {{PageBuilderPaddingProperty10.paddingRight}})" stepKey="expectedElementWidth"/>
+        <!-- Validate Element Width -->
+        <comment userInput="Validate Element Width" stepKey="commentValidateElementWidth"/>
+        <executeJS function="return document.querySelector('{{column.columnX(columnIndex)}}').clientWidth" stepKey="columnWidth"/>
+        <executeJS function="return parseInt({{element.elementJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="elementWidth"/>
+        <executeJS function="return parseInt({$columnWidth} - {{columnPadding.paddingLeft}} - {{columnPadding.paddingRight}} - ({{columnBorderWidth.value}} * 2))" stepKey="expectedElementWidth"/>
         <executeJS function="return Math.abs({$expectedElementWidth} - {$elementWidth})" stepKey="elementDiff"/>
         <!-- We will allow a 2px offset to account for rounding and any additional threshold that is passed in as an argument -->
         <executeJS function="return parseInt({{diffThreshold}} + 2)" stepKey="acceptableOffset"/>
-        <assertLessThanOrEqual stepKey="assertElementWidthEqualsColumnWidthLessColumnPaddingAndColumnBorderWidth">
+        <assertLessThanOrEqual stepKey="assertElementWidthEqualsColumnWidthLessPaddingAndBorder">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">elementDiff</actualResult>
         </assertLessThanOrEqual>
-        <executeJS function="return parseInt({{element.overlayJS('1')}}.getBoundingClientRect().width)" stepKey="overlayWidth"/>
-        <executeJS function="return parseInt({$elementWidth} - {{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}} - {{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}} - ({{elementBorderWidth.value}} * 2))" stepKey="expectedOverlayWidth"/>
+        <!-- Validate Overlay Width -->
+        <comment userInput="Validate Overlay Width" stepKey="commentValidateOverlayWidth"/>
+        <executeJS function="return parseInt({{element.overlayJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="overlayWidth"/>
+        <executeJS function="return parseInt({$elementWidth} - {{elementPadding.paddingLeft}} - {{elementPadding.paddingRight}} - ({{elementBorderWidth.value}} * 2))" stepKey="expectedOverlayWidth"/>
         <executeJS function="return Math.abs({$expectedOverlayWidth} - {$overlayWidth})" stepKey="overlayDiff"/>
-        <assertLessThanOrEqual stepKey="assertOverlayWidthEqualsElementWidthLessElementPaddingAndElementBorderWidth">
+        <assertLessThanOrEqual stepKey="assertOverlayWidthEqualsElementWidthLessPaddingAndBorder">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">overlayDiff</actualResult>
         </assertLessThanOrEqual>
-        <executeJS function="return parseInt({{element.contentJS('1')}}.getBoundingClientRect().width)" stepKey="contentWidth"/>
-        <executeJS function="return parseInt({$overlayWidth} - {{PageBuilderPaddingPropertyOverlayDefault.paddingLeft}} - {{PageBuilderPaddingPropertyOverlayDefault.paddingRight}})" stepKey="expectedContentWidth"/>
+        <!-- Validate Content Width -->
+        <comment userInput="Validate Content Width" stepKey="commentValidateContentWidth"/>
+        <executeJS function="return parseInt({{element.contentJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="contentWidth"/>
+        <executeJS function="return parseInt({$overlayWidth} - {{overlayPadding.paddingLeft}} - {{overlayPadding.paddingRight}})" stepKey="expectedContentWidth"/>
         <executeJS function="return Math.abs({$expectedContentWidth} - {$contentWidth})" stepKey="contentDiff"/>
         <assertLessThanOrEqual stepKey="assertContentWidthEqualsOverlayWidthLessPadding">
             <expectedResult type="variable">acceptableOffset</expectedResult>
             <actualResult type="variable">contentDiff</actualResult>
         </assertLessThanOrEqual>
-        <executeJS function="return parseInt({{element.buttonJS('1')}}.getBoundingClientRect().width)" stepKey="buttonWidth"/>
+        <!-- Validate Button Width -->
+        <comment userInput="Validate Button Width" stepKey="commentValidateButtonWidth"/>
+        <executeJS function="return parseInt({{element.buttonJS(elementIndex)}}.getBoundingClientRect().width)" stepKey="buttonWidth"/>
         <!-- wysiwyg content may shrink smaller, but buttons will never be smaller than 36px (17px padding + 1px border) -->
         <executeJS function="return Math.max(36, {$expectedContentWidth})" stepKey="expectedButtonWidth"/>
         <executeJS function="return Math.abs({$expectedButtonWidth} - {$buttonWidth})" stepKey="buttonDiff"/>
