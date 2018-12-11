@@ -1311,6 +1311,121 @@
             <argument name="storefrontBugOffset" value="20"/>
         </actionGroup>
     </test>
+    <test name="BlockRowContainedAppearanceHasEqualWidthToContents">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Row contained appearance has equal width to contents in Block"/>
+            <description value="A user can see a row contained appearance has equal width to contents in a Block"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5432"/>
+            <testCaseId value="MC-5958"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Edit Block and configure Row -->
+        <comment userInput="Edit Block and configure Row" stepKey="commentConfigureRowInBlock"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow1">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
+        <!-- Edit Block and configure Banner -->
+        <comment userInput="Edit Block and configure Banner" stepKey="commentConfigureBannerInBlock"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImage">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSize">
+            <argument name="property" value="PageBuilderBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock2"/>
+        <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="saveBlock"/>
+        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Go to CMS page and choose Block -->
+        <comment userInput="Go to CMS page and choose Block" stepKey="commentGoToCMSPage"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate width before save -->
+        <comment userInput="Validate width before save" stepKey="commentValidateBeforeSave"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="contentIndex" value="1"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
+            <argument name="containerIndex" value="2"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+         <!-- Validate width after save -->
+        <comment userInput="Validate width after save" stepKey="commentValidateAfterSave"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="contentIndex" value="1"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
+            <argument name="containerIndex" value="2"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <!-- Validate width storefront -->
+        <comment userInput="Validate width storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="contentIndex" value="1"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
+            <argument name="containerIndex" value="2"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+    </test>
     <test name="BlockBannerPosterContentCanWordWrap">
         <annotations>
             <features value="PageBuilder"/>
