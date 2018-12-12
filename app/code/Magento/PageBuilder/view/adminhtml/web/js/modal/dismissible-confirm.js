@@ -20,13 +20,56 @@ define([
 ], function ($, _, promptContentTmpl, $t) {
     'use strict';
 
+    /**
+     * Create buttons array for modal options
+     *
+     * @param {String | Boolean} buttonText
+     * @param {Boolean} haveCancelButton
+     * @return {Object}
+     */
+    function buttonsConfig(buttonText, haveCancelButton) {
+        var cancelButton = {
+            text: $.mage.__('Cancel'),
+            class: 'action-secondary action-dismiss',
+
+            /**
+             * Click handler.
+             */
+            click: function () {
+                this.closeModal(false);
+            }
+        },
+            confirmButton = {
+            text: $.mage.__('OK'),
+            class: 'action-primary action-accept',
+
+            /**
+             * Click handler.
+             */
+            click: function () {
+                this.closeModal(true);
+            }
+        },
+            buttons = [];
+
+        if (typeof buttonText !== 'undefined') {
+            confirmButton.text = buttonText;
+        }
+
+        if (haveCancelButton !== false) {
+            buttons.push(cancelButton);
+        }
+        buttons.push(confirmButton);
+
+        return buttons;
+    }
+
     $.widget('mage.dismissibleConfirm', $.mage.prompt, {
         options: {
             promptContentTmpl: promptContentTmpl,
             dismissible: false, // Can the modal be dismissed?
             dismissKey: 'default', // The key we'll check to see if the modal has already been dismissed
-            dismissMessage: $t('Do not show this again'), // Message to display next to the dismiss checkbox
-            dismissCheckbox: '[name="modal-dnsa"]' // Selector to retrieve dismiss checkbox
+            dismissMessage: $t('Do not show this again') // Message to display next to the dismiss checkbox
         },
 
         /**
@@ -52,7 +95,6 @@ define([
          */
         closeModal: function (result) {
             this._super(result);
-            result = result || false;
 
             if (result && this._isDismissed()) {
                 $.mage.cookies.set(this.options.dismissKey, 'true', {});
@@ -70,6 +112,10 @@ define([
     });
 
     return function (config) {
+        config.buttons = buttonsConfig(config.buttonText, config.haveCancelButton);
+        delete config.buttonText;
+        delete config.haveCancelButton;
+
         return $('<div></div>').html(config.content).dismissibleConfirm(config);
     };
 });

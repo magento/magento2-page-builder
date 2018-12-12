@@ -6,7 +6,7 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import singleButtonDialog from "Magento_PageBuilder/js/modal/nest-link-dialog";
+import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import Config from "../../config";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
@@ -247,25 +247,25 @@ export default class Preview extends BasePreview {
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
             const message = dataStore.message as string;
             const linkUrl = dataStore.link_url as FieldDefaultsInterface;
-            const aLinkRegex = /<a.*?>|<\/a>/igm;
-            if (message.match(aLinkRegex) && dataStore.link_url && ((linkUrl.type === "page"
-            && linkUrl.page && linkUrl.page.length !== 0) || (linkUrl.type === "product" && linkUrl.product
-            && linkUrl.product.length !== 0) || (linkUrl.type === "category" && linkUrl.category
-            && linkUrl.category.length !== 0) || (linkUrl.type === "default" && linkUrl.default
-            && linkUrl.default.length !== 0))) {
-                singleButtonDialog({
+            const aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
+            if (message.match(aLinkRegex) &&
+            dataStore.link_url &&
+            ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 &&
+            linkUrl[linkUrl.type] &&
+            linkUrl[linkUrl.type].length !== 0) {
+                confirmationDialog({
                     actions: {
                         confirm: () => {
                             const anchorLessMessage = message.replace(aLinkRegex, "");
-                            // Call the parent to remove the child element
                             this.parent.dataStore.update(anchorLessMessage, "message");
                             $("#" + this.wysiwyg.elementId).html(anchorLessMessage);
                         },
                     },
-                    content: $t("Adding link in both contents and the outer element will result in nesting links. " +
-                        "This may break the structure of the page elements."), // tslint:disable-line:max-line-length
+                    content: $t("Adding link in both contents and the outer element will result in " +
+                        "nesting links. This may break the structure of the page elements."),
                     title: $t("Nesting links are not allowed"),
-                    buttonText: "Revert Link",
+                    haveCancelButton: false,
+                    buttonText: $t("Revert Link"),
                 });
             }
         });

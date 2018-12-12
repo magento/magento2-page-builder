@@ -6,9 +6,11 @@
 interface DismissibleConfirmInterface {
     actions: object;
     content: string;
-    dismissKey: string;
-    dismissible: boolean;
+    dismissKey?: string;
+    dismissible?: boolean;
     title: string;
+    haveCancelButton?: boolean;
+    buttonText?: string;
 }
 
 declare function DismissibleConfirm(config: DismissibleConfirmInterface): void;
