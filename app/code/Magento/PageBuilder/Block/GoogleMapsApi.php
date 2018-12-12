@@ -57,7 +57,7 @@ class GoogleMapsApi extends \Magento\Framework\View\Element\Template
     {
         return __(
             "You must provide a valid <a href='%1'>Google Maps API key</a> to use a map.",
-            $this->_urlBuilder->getUrl('adminhtml/system_config/edit/section/cms')
+            $this->_urlBuilder->getUrl('adminhtml/system_config/edit/section/cms', ['_fragment' => 'cms_pagebuilder'])
         );
     }
 }

@@ -70,7 +70,10 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
         }
 
         if (isset($config['map_configuration_url'])) {
-            $config['map_configuration_url'] = $this->url->getUrl($config['map_configuration_url']);
+            $config['map_configuration_url'] = $this->url->getUrl(
+                $config['map_configuration_url'],
+                ['_fragment' => 'cms_pagebuilder']
+            );
         }
         if (isset($config['content'])) {
             $config['content'] = sprintf($config['content'], $config['map_configuration_url']);
