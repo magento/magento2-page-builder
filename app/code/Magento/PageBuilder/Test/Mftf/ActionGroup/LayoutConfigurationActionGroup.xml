@@ -61,4 +61,21 @@
             <actualResult type="variable">actualContentHeight</actualResult>
         </assertGreaterThan>
     </actionGroup>
+    <!-- Validate Max Width -->
+    <actionGroup name="validateContentTypeWidthEqualToMaxWidth">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="width" defaultValue="PageBuilderVideoWidth_500"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().width-{{padding.paddingLeft}}-{{padding.paddingRight}}-({{border.value}}*2)" stepKey="actualContentWidth"/>
+        <executeJS function="return Math.round(Math.abs({$actualContentWidth}-{{width.value}}))" stepKey="contentTypeWidthDifference"/>
+        <assertLessThanOrEqual stepKey="assertContentWidthDifference">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">contentTypeWidthDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
 </actionGroups>

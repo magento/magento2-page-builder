@@ -563,6 +563,78 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
+    <test name="VideoWithBordersAndPaddingEqualToMaxWidth">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Video"/>
+            <title value="Video width with borders and padding is equal to max-width"/>
+            <description value="A user can see Video width with borders and padding is equal to max-width"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5974"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Configure content type -->
+        <comment userInput="Configure content type" stepKey="commentConfigureContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroup">
+            <argument name="group" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate width on stage before save -->
+        <comment userInput="Validate width on stage before save" stepKey="commentValidateWidthOnStageBeforeSave"/>
+        <actionGroup ref="validateContentTypeWidthEqualToMaxWidth" stepKey="validateContentTypeWidthBeforeSave">
+            <argument name="content" value="{{VideoOnStorefront.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate width on stage after save -->
+        <comment userInput="Validate width on stage after save" stepKey="commentValidateWidthOnStageAfterSave"/>
+        <actionGroup ref="validateContentTypeWidthEqualToMaxWidth" stepKey="validateContentTypeWidthAfterSave">
+            <argument name="content" value="{{VideoOnStorefront.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeWidthEqualToMaxWidth" stepKey="validateContentTypeWidthStorefront">
+            <argument name="content" value="{{VideoOnStorefront.wrapperCSS}}"/>
+        </actionGroup>
+    </test>
     <test name="VideoValidateURL">
         <annotations>
             <features value="PageBuilder"/>
