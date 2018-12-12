@@ -9,7 +9,10 @@ namespace Magento\PageBuilder\Controller\Adminhtml\GoogleMaps;
 
 use Magento\Framework\Controller\ResultFactory;
 
-class ValidateApi extends \Magento\Backend\App\Action
+/**
+ * Class ValidateApi
+ */
+class ValidateApi extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
     const ADMIN_RESOURCE = 'Magento_Backend::content';
 

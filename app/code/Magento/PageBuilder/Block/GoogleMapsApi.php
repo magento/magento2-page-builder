@@ -10,6 +10,8 @@ namespace Magento\PageBuilder\Block;
 use Magento\Framework\View\Element\Template;
 
 /**
+ * Google Maps API Block
+ *
  * @api
  */
 class GoogleMapsApi extends \Magento\Framework\View\Element\Template

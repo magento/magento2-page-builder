@@ -10,9 +10,8 @@ define([
     'underscore',
     'module',
     'Magento_PageBuilder/js/events',
-    'mage/translate',
     'googleMaps'
-], function (_, module, events, $t) {
+], function (_, module, events) {
     'use strict';
 
     var google = window.google || {},

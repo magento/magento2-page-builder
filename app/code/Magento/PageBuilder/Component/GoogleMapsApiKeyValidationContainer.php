@@ -14,6 +14,8 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator;
 
 /**
+ * Google Maps API Key Validation Container for UI Component Form
+ *
  * @api
  */
 class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Container
