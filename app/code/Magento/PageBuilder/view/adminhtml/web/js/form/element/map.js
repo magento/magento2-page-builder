@@ -8,8 +8,10 @@
 define([
     'Magento_Ui/js/form/element/abstract',
     'Magento_PageBuilder/js/utils/map',
+    'module',
+    'Magento_PageBuilder/js/events',
     'googleMaps'
-], function (AbstractField, GoogleMap) {
+], function (AbstractField, GoogleMap, module, events) {
     'use strict';
 
     var google = window.google || {};
@@ -18,7 +20,22 @@ define([
         defaults: {
             elementTmpl: 'Magento_PageBuilder/form/element/map',
             map: false,
-            marker: false
+            marker: false,
+            apiKeyValid: !!module.config().apiKey,
+            apiKeyErrorMessage: module.config().apiKeyErrorMessage
+        },
+
+        /**
+         * Initializes observable properties of instance
+         *
+         * @returns {Abstract} Chainable.
+         */
+        initObservable: function () {
+            this._super();
+
+            this.observe('apiKeyValid');
+
+            return this;
         },
 
         /**
@@ -43,11 +60,20 @@ define([
                 }
             };
 
+            events.on('googleMaps:authFailure', function () {
+                this.apiKeyValid(false);
+            }.bind(this));
+
             // Create the map
-            this.mapElement = new GoogleMap(element, [], mapOptions);
+            try {
+                this.mapElement = new GoogleMap(element, [], mapOptions);
+            } catch (e) {
+                this.apiKeyValid(false);
+
+                return;
+            }
 
             if (!this.mapElement.map) {
-
                 return;
             }
 

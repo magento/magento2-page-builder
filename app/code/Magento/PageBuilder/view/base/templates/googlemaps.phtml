@@ -14,7 +14,15 @@
         config: {
             'Magento_PageBuilder/js/utils/map': {
                 style: '<?= $block->escapeJs($block->getStyle()); ?>'
-            }
+            },
+            'Magento_PageBuilder/js/content-type/map/preview': {
+                apiKey: '<?= $block->escapeJs($block->getApiKey()); ?>',
+                apiKeyErrorMessage: '<?= $block->escapeJs($block->getInvalidApiKeyMessage()); ?>'
+            },
+            'Magento_PageBuilder/js/form/element/map': {
+                apiKey: '<?= $block->escapeJs($block->getApiKey()); ?>',
+                apiKeyErrorMessage: '<?= $block->escapeJs($block->getInvalidApiKeyMessage()); ?>'
+            },
         }
     });
 </script>

@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block;
 
+use Magento\Framework\View\Element\Template;
+
 /**
  * @api
  */
@@ -17,15 +19,23 @@ class GoogleMapsApi extends \Magento\Framework\View\Element\Template
     const GOOGLE_MAPS_STYLE_PATH = 'cms/pagebuilder/google_maps_style';
 
     /**
+     * Retrieve the Google Maps API key
+     *
+     * @return string
+     */
+    public function getApiKey(): ?string
+    {
+        return $this->_scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH);
+    }
+
+    /**
      * Generate URL for retrieving Google Maps Javascript API
      *
      * @return string
      */
     public function getLibraryUrl(): string
     {
-        $apiKey = $this->_scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH);
-        $libraryUrlWithKey = sprintf(self::GOOGLE_MAPS_LIBRARY_URL, $apiKey);
-        return $libraryUrlWithKey;
+        return sprintf(self::GOOGLE_MAPS_LIBRARY_URL, $this->getApiKey());
     }
 
     /**
@@ -36,5 +46,18 @@ class GoogleMapsApi extends \Magento\Framework\View\Element\Template
     public function getStyle(): ?string
     {
         return $this->_scopeConfig->getValue(self::GOOGLE_MAPS_STYLE_PATH);
+    }
+
+    /**
+     * Return the translated message for an invalid API key.
+     *
+     * @return \Magento\Framework\Phrase
+     */
+    public function getInvalidApiKeyMessage(): \Magento\Framework\Phrase
+    {
+        return __(
+            "You must provide a valid <a href='%1'>Google Maps API key</a> to use a map.",
+            $this->_urlBuilder->getUrl('adminhtml/system_config/edit/section/cms')
+        );
     }
 }

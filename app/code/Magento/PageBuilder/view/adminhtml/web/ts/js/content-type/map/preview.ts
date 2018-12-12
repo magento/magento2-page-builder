@@ -3,16 +3,18 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import module from "module";
 import BasePreview from "../preview";
 
 /**
  * @api
  */
 export default class Preview extends BasePreview {
-
+    public apiKeyValid: KnockoutObservable<boolean> = ko.observable(!!module.config().apiKey);
+    public apiKeyErrorMessage: string = module.config().apiKeyErrorMessage;
     private element: Element;
     private mapElement: GoogleMap;
 
@@ -24,9 +26,7 @@ export default class Preview extends BasePreview {
 
         // When the map api key fails, empties out the content type and adds the placeholder
         events.on("googleMaps:authFailure", () => {
-            if (this.element) {
-                this.mapElement.usePlaceholder(this.element);
-            }
+            this.apiKeyValid(false);
         });
     }
 
@@ -66,7 +66,12 @@ export default class Preview extends BasePreview {
             locations = mapData.locations;
             options = mapData.options;
         }
-        this.mapElement = new GoogleMap(element, locations, options);
+
+        try {
+            this.mapElement = new GoogleMap(element, locations, options);
+        } catch (e) {
+            this.apiKeyValid(false);
+        }
     }
 
     /**

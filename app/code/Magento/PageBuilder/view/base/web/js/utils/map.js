@@ -42,25 +42,9 @@ define([
         var options,
             style;
 
-        /**
-         * Replace the content of element with a placeholder
-         *
-         * @param {Element} container
-         */
-        this.usePlaceholder = function (container) {
-            var placeholder = document.createElement('div');
-
-            placeholder.innerHTML = $t('Enter valid API Key to use Google Maps');
-            placeholder.classList.add('google-map-auth-failure-placeholder');
-            container.innerHTML = '';
-            container.appendChild(placeholder);
-        };
-
-        //Terminate map early and add placeholder if gm_authFailure is true
+        // If we've previously had an API key error, throw our own error instead
         if (gmAuthFailure) {
-            this.usePlaceholder(element);
-
-            return;
+            throw 'InvalidKeyMapError';
         }
 
         /**
