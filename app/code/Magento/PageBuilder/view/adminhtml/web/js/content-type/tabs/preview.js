@@ -175,6 +175,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (index !== null) {
         // Added to prevent mismatched fragment error caused by not yet rendered tab-item
+        index = parseInt(index, 10);
         (0, _delayUntil)(function () {
           (0, _jquery)(_this2.element).tabs("option", "active", index);
 

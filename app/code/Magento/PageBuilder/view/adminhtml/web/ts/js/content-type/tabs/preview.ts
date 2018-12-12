@@ -179,6 +179,7 @@ export default class Preview extends PreviewCollection {
     public setActiveTab(index: number) {
         if (index !== null) {
             // Added to prevent mismatched fragment error caused by not yet rendered tab-item
+            index = parseInt(index, 10);
             delayUntil(
                 () => {
                     $(this.element).tabs("option", "active", index);
