@@ -362,14 +362,6 @@
         <waitForElementVisible selector="{{page.latitude(index, latitude)}}" stepKey="waitForLatitude"/>
         <waitForElementVisible selector="{{page.longitude(index, longitude)}}" stepKey="waitForLongitude"/>
     </actionGroup>
-    <actionGroup name="dontSeeWarningMessage">
-        <arguments>
-            <argument name="page" defaultValue="MapOnStage"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
-        <dontSee userInput="{{googleMapsAPIKey.warningMessage}}" stepKey="dontSeeWarningMessage"/>
-    </actionGroup>
     <actionGroup name="validateMapErrorMessageStage">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
@@ -393,13 +385,6 @@
         <waitForElementVisible selector="{{MapOnStorefront.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
         <see userInput="{{PageBuilderMapCommonData.mapErrorTitleStorefront}}" selector="{{MapOnStorefront.errorTitle(index)}}" stepKey="seeMapErrorTitle"/>
         <see userInput="{{PageBuilderMapCommonData.mapErrorMessageStorefront}}" selector="{{MapOnStorefront.errorMessage(index)}}" stepKey="seeMapErrorMessage"/>
-    </actionGroup>
-    <actionGroup name="dontSeeRenderedMapOnLocationForm">
-        <arguments>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{AddLocationForm.base(index)}}" stepKey="seeMap"/>
-        <dontSeeElementInDOM selector="{{AddLocationForm.renderedMap}}" stepKey="dontSeeRenderedMap"/>
     </actionGroup>
     <actionGroup name="validateWarningMessageLink">
         <arguments>

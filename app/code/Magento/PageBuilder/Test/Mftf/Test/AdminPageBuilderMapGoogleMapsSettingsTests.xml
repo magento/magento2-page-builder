@@ -329,7 +329,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
+        <waitForElementVisible selector="{{AddLocationForm.errorContainer('1')}}" stepKey="waitForLocationMapOverlay"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
