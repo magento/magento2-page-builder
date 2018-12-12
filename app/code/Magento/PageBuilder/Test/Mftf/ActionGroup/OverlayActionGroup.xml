@@ -129,15 +129,6 @@
             <expectedResult type="int">1</expectedResult>
             <actualResult type="variable">overlayCenterRatio</actualResult>
         </assertGreaterThanOrEqual>
-        <!-- Validate left edge of overlay -->
-        <comment userInput="Validate left edge of overlay" stepKey="commentValidateLeftEdgeOfOverlay"/>
-        <executeJS function="return {{page.wrapperJS(index)}}.getBoundingClientRect().left" stepKey="wrapperLeftPosition"/>
-        <executeJS function="return {{page.overlayJS(index)}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
-        <executeJS function="return Math.round(({$overlayLeftPosition}-{$wrapperLeftPosition})*100)/100" stepKey="overlaySpaceLeft"/>
-        <assertGreaterThanOrEqual stepKey="assertOverlaySpaceLeftGreaterThanOrEqualToLeftPadding">
-            <expectedResult type="int">{{padding.paddingLeft}}</expectedResult>
-            <actualResult type="variable">overlaySpaceLeft</actualResult>
-        </assertGreaterThanOrEqual>
     </actionGroup>
     <!-- Overlay Position -->
     <actionGroup name="validateOverlayPositionTop">
