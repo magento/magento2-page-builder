@@ -14,7 +14,7 @@
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
         <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
-        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+        <waitForPageLoad stepKey="waitForContentTypeToLoad" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStage" />
