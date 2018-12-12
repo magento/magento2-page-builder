@@ -653,4 +653,21 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <see selector="{{SlideOnFrontend.button('1')}}" userInput="{{PageBuilderBannerButtonTextProperty_Non_Breaking_Space.value}}" stepKey="seeStorefrontNBSPButtonAfterSave"/>
     </test>
+    <test name="SliderCollageCenterAlignmentInheritance" extends="SliderPosterAlignmentInheritance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Collage Center - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6025"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCollageCenter"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageCentered"/>
+        </actionGroup>
+    </test>
 </tests>

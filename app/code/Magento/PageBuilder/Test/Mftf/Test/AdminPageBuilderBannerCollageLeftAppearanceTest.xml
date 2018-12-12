@@ -1328,4 +1328,23 @@
             <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
         </assertEquals>
     </test>
+    <test name="BannerCollageLeftAlignmentInheritance" extends="BannerPosterAlignmentInheritance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6017"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <!-- Fill Out Banner Edit Panel -->
+        <comment userInput="Fill Out Banner Edit Panel" stepKey="commentFillBannerEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+    </test>
 </tests>

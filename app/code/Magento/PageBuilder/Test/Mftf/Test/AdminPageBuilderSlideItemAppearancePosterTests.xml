@@ -1479,4 +1479,91 @@
         <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding2" />
         <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding2" />
     </test>
+    <test name="SliderPosterAlignmentInheritance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Poster - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6014"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider To Row -->
+        <comment userInput="Add Slider To Row" stepKey="commentAddSliderToRow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openSliderEditPanelOnStage">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Fill Out Slide Item Edit Panel -->
+        <comment userInput="Fill Out Slide Item Edit Panel" stepKey="commentFillSlideItemEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentDefault">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideItemEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlideItemEditor"/>
+        <!-- Fill Out Row Edit Panel -->
+        <comment userInput="Fill Out Row Edit Panel" stepKey="commentFillRowEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <comment userInput="Update Values" stepKey="commentUpdateValues"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusRowEditor"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <executeJS function="return window.getComputedStyle({{SlideOnBackend.contentJS('1')}}).textAlign" stepKey="grabComputedTextAlign"/>
+        <assertEquals stepKey="assertComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlign</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <executeJS function="return window.getComputedStyle({{SlideOnBackend.contentJS('1')}}).textAlign" stepKey="grabComputedTextAlignAfterSave"/>
+        <assertEquals stepKey="assertComputedTextAlignAfterSave">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignAfterSave</actualResult>
+        </assertEquals>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <executeJS function="return window.getComputedStyle({{SlideOnFrontend.contentJS('1')}}).textAlign" stepKey="grabComputedTextAlignStoreFront"/>
+        <assertEquals stepKey="assertComputedTextAlignStoreFront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignStoreFront</actualResult>
+        </assertEquals>
+    </test>
 </tests>
