@@ -47,6 +47,7 @@
         <element name="zoomOut" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
         <!-- Map Error Message -->
         <element name="errorContainer" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='google-map-auth-failure-placeholder']" parameterized="true"/>
+        <element name="warningMessageLink" type="button" selector="//div[@class='google-map-auth-failure-placeholder']//a"/>
     </section>
     <section name="MapOnStorefront">
         <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
@@ -92,10 +93,13 @@
         <element name="errorContainer" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@class, 'gm-err-container')]" parameterized="true"/>
         <element name="errorTitle" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@class, 'gm-err-container')]//div[contains(@class, 'gm-err-title')]" parameterized="true"/>
         <element name="errorMessage" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@class, 'gm-err-container')]//div[contains(@class, 'gm-err-message')]" parameterized="true"/>
+        <element name="warningMessageLink" type="button" selector="//div[contains(@class,'pagebuilder-map')]//div[@class='google-map-auth-failure-placeholder']//a"/>
     </section>
     <section name="EditMapForm">
         <element name="addLocationButton" type="button" selector="//button[@data-index='add_location_button']"/>
-        <element name="addLocationButtonDisabled" type="button" selector="//button[@data-index='add_location_button' and @disabled]"/>
+        <!-- Map Error Message -->
+        <element name="warningMessage" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]"/>
+        <element name="warningMessageLink" type="button" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]//a"/>
     </section>
     <section name="AddLocationForm">
         <element name="form" type="text" selector="aside  div.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal_map_location_insert_form"/>
@@ -109,8 +113,6 @@
         <element name="pinLocations" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
         <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gm-style-iw']"/>
         <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
-        <element name="warningMessage" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]"/>
-        <element name="warningMessageLink" type="button" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]//a"/>
         <element name="renderedMap" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(@class, 'gm-style')]"/>
         <!-- Map Buttons -->
         <element name="googleModalOkButton" type="button" selector="//aside//button[@class='dismissButton' and .='OK'][{{arg1}}]" parameterized="true"/>
@@ -118,6 +120,7 @@
         <element name="zoomIn" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom in'])[{{arg1}}]" parameterized="true"/>
         <element name="zoomOut" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom out'])[{{arg1}}]" parameterized="true"/>
         <!-- Map Error Message -->
-        <element name="errorContainer" type="text" selector="(//div[@data-index='position']//div[@class='map-field']//div[@class='google-map-auth-failure-placeholder'])[{{arg1}}]" parameterized="true"/>
+        <element name="errorContainer" type="text" selector="(//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder'])[{{arg1}}]" parameterized="true"/>
+        <element name="warningMessageLink" type="button" selector="//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder']//a"/>
     </section>
 </sections>

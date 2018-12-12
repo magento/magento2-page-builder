@@ -372,12 +372,18 @@
     </actionGroup>
     <actionGroup name="validateMapErrorMessageStage">
         <arguments>
-            <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{page.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
-        <see userInput="{{PageBuilderMapCommonData.mapErrorMessageAdmin}}" selector="{{page.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
+        <waitForElement selector="{{MapOnStage.base(index)}}" stepKey="seeMap"/>
+        <waitForElementVisible selector="{{MapOnStage.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
+        <see userInput="{{PageBuilderMapCommonData.mapErrorMessageAdmin}}" selector="{{MapOnStage.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
+    </actionGroup>
+    <actionGroup name="validateMapErrorMessageAddLocationForm">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{AddLocationForm.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
+        <see userInput="{{PageBuilderMapCommonData.mapErrorMessageAdmin}}" selector="{{AddLocationForm.errorContainer(index)}}" stepKey="seeMapErrorMessage"/>
     </actionGroup>
     <actionGroup name="validateMapErrorMessageStorefront">
         <arguments>
@@ -394,5 +400,15 @@
         </arguments>
         <waitForElementVisible selector="{{AddLocationForm.base(index)}}" stepKey="seeMap"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.renderedMap}}" stepKey="dontSeeRenderedMap"/>
+    </actionGroup>
+    <actionGroup name="validateWarningMessageLink">
+        <arguments>
+            <argument name="section"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.warningMessageLink}}" stepKey="waitForWarningMessageLink"/>
+        <click selector="{{section.warningMessageLink}}" stepKey="clickLink"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeInCurrentUrl url="{{AdminContentManagementPage.url}}#cms_pagebuilder" stepKey="validateURL"/>
+        <seeElement selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="seeGoogleMapsAPIKeyInputField"/>
     </actionGroup>
 </actionGroups>
