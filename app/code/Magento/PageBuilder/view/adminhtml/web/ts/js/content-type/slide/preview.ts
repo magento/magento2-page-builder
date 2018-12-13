@@ -298,7 +298,7 @@ export default class Preview extends BasePreview {
                 linkUrl[linkUrl.type].length !== 0) {
                 confirmationDialog({
                     actions: {
-                        confirm: () => {
+                        always: () => {
                             const anchorLessMessage = content.replace(aLinkRegex, "");
                             this.parent.dataStore.update(anchorLessMessage, "content");
                             $("#" + this.wysiwyg.elementId).html(anchorLessMessage);

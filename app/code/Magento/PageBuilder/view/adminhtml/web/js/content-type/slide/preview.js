@@ -282,7 +282,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         if (content.match(aLinkRegex) && dataStore.link_url && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
           (0, _dismissibleConfirm)({
             actions: {
-              confirm: function confirm() {
+              always: function always() {
                 var anchorLessMessage = content.replace(aLinkRegex, "");
 
                 _this5.parent.dataStore.update(anchorLessMessage, "content");
