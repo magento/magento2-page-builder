@@ -1,6 +1,5 @@
 # Component status
 
-
 **Last Updated: December 10, 2018**
 
 <style type="text/css" style="display: none">
