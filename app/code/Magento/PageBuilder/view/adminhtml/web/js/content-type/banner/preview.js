@@ -229,7 +229,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         if (message.match(aLinkRegex) && dataStore.link_url && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
           (0, _dismissibleConfirm)({
             actions: {
-              confirm: function confirm() {
+              always: function always() {
                 var anchorLessMessage = message.replace(aLinkRegex, "");
 
                 _this4.parent.dataStore.update(anchorLessMessage, "message");
@@ -237,10 +237,10 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
                 (0, _jquery)("#" + _this4.wysiwyg.elementId).html(anchorLessMessage);
               }
             },
-            content: (0, _translate)("Adding link in both contents and the outer element will result in " + "nesting links. This may break the structure of the page elements."),
+            content: (0, _translate)("Adding link in content and outer element is not allowed. Remove the link from the element before adding links to the content."),
+            // tslint:disable-line:max-line-length
             title: (0, _translate)("Nesting links are not allowed"),
-            haveCancelButton: false,
-            buttonText: (0, _translate)("Revert Link")
+            haveCancelButton: false
           });
         }
       });

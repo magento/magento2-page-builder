@@ -150,6 +150,11 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
     </actionGroup>
+
+    <actionGroup name="addPageLinkToTinyMCEInline" extends="insertLinkInWYSIWYG">
+        <waitForElementVisible selector="{{TinyMCESection.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{TinyMCESection.InsertLink}}" stepKey="clickInsertLinkButton"/>
+    </actionGroup>
     <actionGroup name="assertTextareaContainsValue">
         <arguments>
             <argument name="selector" type="string"/>

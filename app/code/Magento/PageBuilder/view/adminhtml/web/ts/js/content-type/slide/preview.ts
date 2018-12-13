@@ -304,11 +304,9 @@ export default class Preview extends BasePreview {
                             $("#" + this.wysiwyg.elementId).html(anchorLessMessage);
                         },
                     },
-                    content: $t("Adding link in both contents and the outer element will result in " +
-                        "nesting links. This may break the structure of the page elements."),
+                    content: $t("Adding link in content and outer element is not allowed. Remove the link from the element before adding links to the content."), // tslint:disable-line:max-line-length
                     title: $t("Nesting links are not allowed"),
                     haveCancelButton: false,
-                    buttonText: $t("Revert Link"),
                 });
             }
         });

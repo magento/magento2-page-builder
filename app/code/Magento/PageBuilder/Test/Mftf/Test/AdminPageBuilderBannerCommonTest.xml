@@ -2310,4 +2310,162 @@
         <!-- Validate Image Editor On Storefront -->
         <seeElement selector="{{BannerOnFrontend.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
+
+    <test name="BannerCannotHaveTinyMCELinkAndLinkUrl">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Can Not Add Both Banner TinyMCE Link and Link URL"/>
+            <description value="Banner edit form validate banner TinyMCE Link and Link URL could not be added at the same time."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-81599"/>
+            <testCaseId value="MC-2823"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
+            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
+        </actionGroup>
+        <!-- Check Invalid Min -->
+        <comment userInput="Check Invalid Min" stepKey="commentCheckInvalidMin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMin">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMin">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
+        </actionGroup>
+        <!-- Check Invalid Max -->
+        <comment userInput="Check Invalid Max" stepKey="commentCheckInvalidMax"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMax">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMax">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
+        </actionGroup>
+        <!-- Check Invalid Type -->
+        <comment userInput="Check Invalid Type" stepKey="commentCheckInvalidType"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidType">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidType">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
+        </actionGroup>
+        <!-- Check Valid -->
+        <comment userInput="Check Valid" stepKey="commentCheckValid"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBannerOverlayTransparencyValid">
+            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+    </test>
+    <test name="BannerCannotHaveInlineWysiwygLinkAndLinkUrl">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner inline WYSIWYG editor will notify user of not adding "/>
+            <description value="Banner edit form and inline editor validate banner TinyMCE Link and Link URL could not be added at the same time."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5386"/>
+            <testCaseId value="MC-6052"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Check Invalid Link Url and Message Text -->
+        <comment userInput="- Check Invalid Link Url and Message Text" stepKey="commentCheckInvalidLinkUrlAndMessageText"/>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLink">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInWYSIWYG">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorUrlInput" stepKey="validateInvalidLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlInvalidProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorWysiwyg" stepKey="validateInvalidMessageWithUrl">
+            <argument name="property" value="PageBuilderBannerMessageInvalidProperty"/>
+        </actionGroup>
+        <!-- Reset and Fill Url -->
+        <comment userInput="Reset and Fill Url" stepKey="commentResetAndFillUrl"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterInitialValidation">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLinkAfterInitialValidation">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+            <argument name="section" value="BannerOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Inline Editor -->
+        <comment userInput="Validate Inline Editor" stepKey="commentValidateInlineEditor"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
+        <actionGroup ref="addPageLinkToTinyMCEInline" stepKey="insertLinkInStageInlineEditor">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+        </actionGroup>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInWysiwygBoolean"/>
+        <assertFalse stepKey="assertMessageHasNoAnchorTags">
+            <actualResult type="variable">grabIfAnchorInWysiwygBoolean</actualResult>
+        </assertFalse>
+        <!-- Validate Slide Out Editor -->
+        <comment userInput="Validate Slide Out Editor" stepKey="commentValidateSlideOutEditor"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterInlineValidation">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInSlideOutWysiwygBoolean"/>
+        <assertFalse stepKey="assertMessageHasNoAnchorTags2">
+            <actualResult type="variable">grabIfAnchorInSlideOutWysiwygBoolean</actualResult>
+        </assertFalse>
+    </test>
 </tests>

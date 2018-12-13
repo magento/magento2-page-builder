@@ -23,11 +23,10 @@ define([
     /**
      * Create buttons array for modal options
      *
-     * @param {String | Boolean} buttonText
      * @param {Boolean} haveCancelButton
      * @return {Object}
      */
-    function buttonsConfig(buttonText, haveCancelButton) {
+    function buttonsConfig(haveCancelButton) {
         var cancelButton = {
             text: $.mage.__('Cancel'),
             class: 'action-secondary action-dismiss',
@@ -51,10 +50,6 @@ define([
             }
         },
             buttons = [];
-
-        if (typeof buttonText !== 'undefined') {
-            confirmButton.text = buttonText;
-        }
 
         if (haveCancelButton !== false) {
             buttons.push(cancelButton);
@@ -112,8 +107,7 @@ define([
     });
 
     return function (config) {
-        config.buttons = buttonsConfig(config.buttonText, config.haveCancelButton);
-        delete config.buttonText;
+        config.buttons = buttonsConfig(config.haveCancelButton);
         delete config.haveCancelButton;
 
         return $('<div></div>').html(config.content).dismissibleConfirm(config);

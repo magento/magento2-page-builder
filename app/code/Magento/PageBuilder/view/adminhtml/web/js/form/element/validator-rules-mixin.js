@@ -180,7 +180,7 @@ define([
             function (url, message) {
                 return validateOneAnchorTagField(message, url);
             },
-            $.mage.__('Adding link in both content and outer element is not allowed')
+            $.mage.__('Adding link in both content and outer element is not allowed.')
         );
 
         validator.addRule(
@@ -188,7 +188,7 @@ define([
             function (message, url) {
                 return validateOneAnchorTagField(message, url);
             },
-            $.mage.__('Adding link in both content and outer element is not allowed')
+            $.mage.__('Adding link in both content and outer element is not allowed.')
         );
 
         validateObjectField(validator, 'validate-number');
