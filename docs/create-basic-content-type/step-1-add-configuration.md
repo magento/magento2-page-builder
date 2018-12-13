@@ -5,9 +5,13 @@ The development of this tutorial is currently **IN PROGRESS**.
 
 ***
 
-The configuration file defines the basic settings and files that compose your content type. 
+The configuration file defines the settings and references to your content type files. You will return to this file often to update references and change settings during the development process. 
 
-## Convention
+Files referenced from the configuration include the HTML templates, the JavaScript components, the icon displayed for your content type in the Page Builder panel, and the UI component form for your content type editor within the Admin.
+
+![configuration-hub](../images/configuration-hub.png)
+
+## Conventions
 
 By convention, Page Builder requires the configuration for a content type to be in the `adminhtml` area within a directory named `pagebuilder` and a subdirectory named `content_type` or `content-type`.
 
@@ -16,15 +20,14 @@ The name of your configuration file should also reflect the name of your content
 ![Create config file](../images/step1-add-config-file.png)
 
 {: .bs-callout .bs-callout-info }
-If your content type name uses multiple words, use underscores to separate the words in the name. 
+If your content type name uses multiple words, use underscores to separate the words in the name.
 
 ## Example configuration
 
-{: .bs-callout .bs-callout-info }
 In this example, only a subset of configuration elements are described (enough to understand the configuration file's basic role). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
 
 
-The following configuration shows the complete configuration file for our Quote content type. An overview of these elements and attributes are described in the tables that follow.
+The following configuration is from the Quote content type. An overview of these elements and attributes are described in the tables that follow.
 
 ```xml
 <?xml version="1.0"?>
@@ -49,34 +52,7 @@ The following configuration shows the complete configuration file for our Quote 
                   preview_template="Vendor_Module/content-type/quote/default/preview"
                   render_template="Vendor_Module/content-type/quote/default/master"
                   reader="Magento_PageBuilder/js/master-format/read/configurable">
-        <elements>
-          <element name="main">
-            <style name="text_align" source="text_align"/>
-            <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-            <style name="border_color" source="border_color"/>
-            <style name="background_color" source="background_color"/>
-            <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-            <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-            <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-            <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-            <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-            <attribute name="name" source="data-role"/>
-            <attribute name="appearance" source="data-appearance"/>
-            <css name="css_classes"/>
-          </element>
-          <element name="quote">
-            <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-            <css name="quote_css"/>
-          </element>
-          <element name="author">
-            <style name="text_align" source="text_align"/>
-            <html name="quote_author" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-          </element>
-          <element name="author_title">
-            <style name="text_align" source="text_align"/>
-            <html name="quote_author_desc" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-          </element>
-        </elements>
+        <elements...>
       </appearance>
     </appearances>
   </type>
@@ -168,7 +144,7 @@ The `<appearance>` attributes are described as follows:
 
 ## The `elements` element
 
-The purpose of `<elements>` as defined within an appearance is to map the data from the content type's edit form to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. These elements will be explained more fully in [Step 4: Add form](step-4-add-form.md)
+The purpose of `<elements>` as defined within an appearance is to map the data from the content type's edit form to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. We will describe the `elements` in [Step 4: Add form](step-4-add-form.md)
 
 ## Next
 
