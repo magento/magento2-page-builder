@@ -62,4 +62,19 @@ class GoogleMapsApi extends \Magento\Framework\View\Element\Template
             $this->_urlBuilder->getUrl('adminhtml/system_config/edit/section/cms', ['_fragment' => 'cms_pagebuilder'])
         );
     }
+
+    /**
+     * Include the Google Maps library within the admin only if the API key is set
+     *
+     * @return bool
+     */
+    public function shouldIncludeGoogleMapsLibrary(): bool
+    {
+        try {
+            return $this->_appState->getAreaCode() !== \Magento\Backend\App\Area\FrontNameResolver::AREA_CODE ||
+                $this->getApiKey();
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            return false;
+        }
+    }
 }

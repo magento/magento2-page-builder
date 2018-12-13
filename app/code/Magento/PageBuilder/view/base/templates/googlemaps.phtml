@@ -26,3 +26,17 @@
         }
     });
 </script>
+
+<?php
+// Include the googleMaps dependency only if we have an API key set, this removes unnecessary calls to Google
+if ($block->shouldIncludeGoogleMapsLibrary()): ?>
+<script>
+    require.config({
+        shim: {
+            'Magento_PageBuilder/js/utils/map': {
+                deps: ['googleMaps']
+            }
+        }
+    });
+</script>
+<?php endif; ?>

@@ -9,8 +9,7 @@ define([
     'Magento_Ui/js/form/element/abstract',
     'Magento_PageBuilder/js/utils/map',
     'module',
-    'Magento_PageBuilder/js/events',
-    'googleMaps'
+    'Magento_PageBuilder/js/events'
 ], function (AbstractField, GoogleMap, module, events) {
     'use strict';
 
@@ -49,6 +48,10 @@ define([
                 mapOptions,
                 latitudeLongitude;
 
+            if (!this.apiKeyValid()) {
+                return;
+            }
+
             if (typeof startValue === 'string' && startValue !== '') {
                 startValue = JSON.parse(startValue);
             }
@@ -65,15 +68,9 @@ define([
             }.bind(this));
 
             // Create the map
-            try {
-                this.mapElement = new GoogleMap(element, [], mapOptions);
-            } catch (e) {
-                this.apiKeyValid(false);
+            this.mapElement = new GoogleMap(element, [], mapOptions);
 
-                return;
-            }
-
-            if (!this.mapElement.map) {
+            if (!this.mapElement || !this.mapElement.map) {
                 return;
             }
 
@@ -141,6 +138,10 @@ define([
          * Callback after an update to map
          */
         onUpdate: function () {
+            if (!this.mapElement) {
+                return;
+            }
+
             this._super();
             var content = this.value(),
                 latitudeLongitude;
@@ -153,6 +154,7 @@ define([
             }
 
             if (!this.validateCoordinate(content) ||
+                this.mapElement &&
                 !this.mapElement.map ||
                 this.value() === '' ||
                 this.value() === this.exportValue()) {

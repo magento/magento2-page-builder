@@ -56,10 +56,14 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uti
     _proto.renderMap = function renderMap(element) {
       var _this3 = this;
 
+      if (!this.apiKeyValid()) {
+        return;
+      }
+
       this.generateMap(element);
       this.element = element;
 
-      if (this.mapElement.map) {
+      if (this.mapElement && this.mapElement.map) {
         this.data.main.attributes.subscribe(function () {
           _this3.updateMap();
         });
@@ -88,11 +92,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/uti
         options = mapData.options;
       }
 
-      try {
-        this.mapElement = new _map(element, locations, options);
-      } catch (e) {
-        this.apiKeyValid(false);
-      }
+      this.mapElement = new _map(element, locations, options);
     };
     /**
      * Updates map

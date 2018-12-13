@@ -5,9 +5,9 @@
  */
 -->
 
-<div class="admin__field admin__field-map" css="{'invalid-key': !apiKeyValid()}">
-    <div ifnot="apiKeyValid" class="google-map-auth-failure-placeholder" html="apiKeyErrorMessage"></div>
-    <div if="apiKeyValid" class="map-field" afterRender="renderMap"></div>
+<div class="admin__field admin__field-map">
+    <div visible="!apiKeyValid()" class="google-map-auth-failure-placeholder" html="apiKeyErrorMessage"></div>
+    <div visible="apiKeyValid" class="map-field" afterRender="renderMap"></div>
     <div attr="id: uid, name: inputName">
         <input type="text" ko-value="value().longitude" attr="name: inputName + '.longitude'"/>
         <input type="text" ko-value="value().latitude" attr="name: inputName + '.latitude'"/>

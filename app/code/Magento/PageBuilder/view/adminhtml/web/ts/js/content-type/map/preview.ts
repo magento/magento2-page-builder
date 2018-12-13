@@ -37,9 +37,13 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     public renderMap(element: Element) {
+        if (!this.apiKeyValid()) {
+            return;
+        }
+
         this.generateMap(element);
         this.element = element;
-        if (this.mapElement.map) {
+        if (this.mapElement && this.mapElement.map) {
             this.data.main.attributes.subscribe(() => {
                 this.updateMap();
             });
@@ -67,11 +71,7 @@ export default class Preview extends BasePreview {
             options = mapData.options;
         }
 
-        try {
-            this.mapElement = new GoogleMap(element, locations, options);
-        } catch (e) {
-            this.apiKeyValid(false);
-        }
+        this.mapElement = new GoogleMap(element, locations, options);
     }
 
     /**

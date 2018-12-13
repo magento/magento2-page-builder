@@ -4,13 +4,14 @@
  */
 
 /**
+ * googleMaps dependency is added within googlemaps.phtml through shim based on API key being set
+ *
  * @api
  */
 define([
     'underscore',
     'module',
-    'Magento_PageBuilder/js/events',
-    'googleMaps'
+    'Magento_PageBuilder/js/events'
 ], function (_, module, events) {
     'use strict';
 
@@ -41,9 +42,11 @@ define([
         var options,
             style;
 
-        // If we've previously had an API key error, throw our own error instead
+        // If we've previously had an API key error, throw the error even again
         if (gmAuthFailure) {
-            throw 'InvalidKeyMapError';
+            events.trigger('googleMaps:authFailure');
+
+            return;
         }
 
         /**

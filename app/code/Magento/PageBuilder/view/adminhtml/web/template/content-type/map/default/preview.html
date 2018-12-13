@@ -6,7 +6,7 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-map" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div ifnot="apiKeyValid" class="google-map-auth-failure-placeholder" html="apiKeyErrorMessage"></div>
-    <div if="apiKeyValid" attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" afterRender="renderMap"></div>
+    <div visible="!apiKeyValid()" class="google-map-auth-failure-placeholder" html="apiKeyErrorMessage"></div>
+    <div visible="apiKeyValid" attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" afterRender="renderMap"></div>
     <render args="getOptions().template" />
 </div>
