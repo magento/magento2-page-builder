@@ -28,6 +28,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -90,9 +91,6 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
         </before>
-        <after>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey" before="logout"/>
-        </after>
         <seeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage"/>
         <seeElement selector="{{EditMapForm.warningMessage}}" stepKey="dontSeeWarningMessage2"/>
     </test>
@@ -110,13 +108,12 @@
             <group value="pagebuilder-googleMapsAPIKey"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -173,8 +170,11 @@
             <group value="pagebuilder-googleMapsAPIKey"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setEmptyGoogleMapsAPIKey"/>
         </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey" before="logout"/>
+        </after>
         <comment userInput="Edit Form: Validate No Warning Message Link" stepKey="commentValidateWarningMessageLinkEditForm"/>
         <dontSeeElement selector="{{EditMapForm.warningMessage}}" stepKey="validateWarningMessageLink2"/>
         <reloadPage stepKey="moveBack2"/>
@@ -199,6 +199,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -254,9 +255,6 @@
         <before>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
         </before>
-        <after>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.invalidOneCharacter}}" stepKey="setInvalidGoogleMapsAPIKey" before="logout"/>
-        </after>
     </test>
     <test name="MapCanEditLocationWithInvalidAPIKey">
         <annotations>
@@ -278,7 +276,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeTab"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Save Page With Map -->
@@ -308,15 +306,6 @@
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Load Storefront -->
-        <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="validateMapErrorMessageStorefront" stepKey="validateMapErrorMessageStorefront"/>
-        <switchToPreviousTab stepKey="switchToPreviousTab"/>
-        <reloadPage stepKey="reloadPage1"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Verify Can Still Edit Location -->
         <comment userInput="Verify Can Still Edit Location" stepKey="commentEdit"/>
@@ -356,12 +345,23 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
         </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <switchToNextTab stepKey="switchToNextTab"/>
-        <reloadPage stepKey="reloadPage2"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateMapErrorMessageStorefront" stepKey="validateMapErrorMessageStorefront2"/>
+    </test>
+    <test name="MapCanEditLocationWithEmptyAPIKey" extends="MapCanEditLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Edit Location With Empty API Key"/>
+            <description value="A user should be able to edit a location with an empty API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6039"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
     </test>
     <test name="MapCanDeleteLocationWithInvalidAPIKey">
         <annotations>
@@ -383,7 +383,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeTab"/>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Save Page With Map -->
@@ -413,15 +413,6 @@
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
-        <!-- Load Storefront -->
-        <openNewTab stepKey="openNewTab"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="validateMapErrorMessageStorefront" stepKey="validateMapErrorMessageStorefront"/>
-        <switchToPreviousTab stepKey="switchToPreviousTab"/>
-        <reloadPage stepKey="reloadPage1"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
@@ -443,12 +434,23 @@
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="seeEmptyGrid2"/>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <switchToNextTab stepKey="switchToNextTab"/>
-        <reloadPage stepKey="reloadPage3"/>
-        <waitForPageLoad stepKey="waitForPageLoad3"/>
-        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+    </test>
+    <test name="MapCanDeleteLocationWithEmptyAPIKey" extends="MapCanDeleteLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Delete Location With Empty API Key"/>
+            <description value="A user should be able to delete a location with an empty API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5723"/>
+            <testCaseId value="MC-6040"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setInvalidGoogleMapsAPIKey"/>
+        </before>
     </test>
     <test name="MapDoesNotRenderNewGoogleMapsStyleOnStorefrontUntilPageSaveOrCacheRefresh">
         <annotations>

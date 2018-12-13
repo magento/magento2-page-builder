@@ -10,6 +10,7 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="[data-role=map]"/>
         <element name="clickablePin" type="button" selector="((//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
         <element name="allPins" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="pinLocations" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
@@ -26,18 +27,17 @@
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="noHeight" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and not(contains(@style,'height:'))]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
         <element name="showControls" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and @data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
         <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
         <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
         <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
@@ -70,7 +70,6 @@
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="noHeight" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'height:'))]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
         <element name="showControls" type="text" selector="(//div[@data-role='map'])[{{arg1}}][@data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
