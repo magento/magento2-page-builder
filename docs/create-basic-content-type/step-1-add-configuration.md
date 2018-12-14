@@ -103,9 +103,9 @@ In our configuration, the `parents` element first prevents our content type from
 
 The `<appearances>` element specifies one or more views for displaying your content type. For example, the Banner has four appearances you can choose from within its editor as shown here:
 
-![BannerTemplateAppearanceExample](../images/BannerTemplateAppearanceExample.png)
+![banner-appearances](../images/banner-appearances.png)
 
-Each of these appearances are defined as an `appearance` within the Banner configuration file (`app/code/Magento/PageBuilder/view/adminhtml/pagebuilder/content_type/banner.xml`):
+Each of these views is defined as an `appearance` within the Banner configuration file (`app/code/Magento/PageBuilder/view/adminhtml/pagebuilder/content_type/banner.xml`):
 
 ```xml
 <appearances>
@@ -118,34 +118,11 @@ Each of these appearances are defined as an `appearance` within the Banner confi
 
 Going further, each `appearance` is defined by exactly two HTML templates, one to display a preview appearance in the Admin (`preview.html`) and the other to display the master appearance (`master.html`) on your storefront. We will discuss HTML templates more in [Step 2: Add templates](step-2-add-templates.md).
 
-Our Quote only has one appearance, so we define it as the default:
-
-```xml
-<appearances>
-  <appearance name="default"
-              default="true"
-              preview_template="Vendor_Module/content-type/quote/default/preview"
-              render_template="Vendor_Module/content-type/quote/default/master"
-              reader="Magento_PageBuilder/js/master-format/read/configurable">
-    <elements...>
-  </appearance>
-</appearances>
-```
-
-The `<appearance>` attributes are described as follows:
-
-| Attribute          | Description                                                  |
-| ------------------ | ------------------------------------------------------------ |
-| `name`             | Name of the appearance so it can be extended as needed.      |
-| `default`          | Content types must specify one of the appearances as the default appearance. That means if you only have one appearance, it must be set as the default. |
-| `preview_template` | `preview.html` - the HTML template for rendering the preview appearance of a content type on the Admin stage during page development. |
-| `render_template`  | `master.html` - the HTML template for rendering the storefront appearance of a content type for customers. |
-| `reader`           | Reads data for the content type from the master format       |
-
 ## The `elements` element
 
 The purpose of `<elements>` as defined within an appearance is to map the data from the content type's edit form to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. We will describe the `elements` in [Step 4: Add form](step-4-add-form.md)
 
 ## Next
 
-[Step 2: Add templates](step-2-add-templates.md).
+[Step 2: Add templates](step-2-add-templates.md)
+

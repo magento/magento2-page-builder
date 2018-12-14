@@ -11,11 +11,11 @@ Page Builder comes with 16 content types (controls) you can use to build your st
 
 ## Quote content type
 
-Our Quote control will look like this when rendered in the Admin UI within a three-column grid: 
+Here's an example of three Quote control instances rendered in three-columns on the Admin stage: 
 
 ![QuoteTypeDisplay](../images/QuoteTypeDisplay.png)
 
-And it will look like this when it's shown on a page in the storefront:
+And here are the same three quote controls rendered on a mock testimonial page in the storefront:
 
 ![StorefrontTestimonials](../images/StorefrontTestimonials.png)
 
@@ -53,4 +53,4 @@ Before you get started, take a look at what you will be building. The block on t
 The file structure represents an overview of the conventions used for content types. Many of the conventions used are simply those defined for developing UI components. However, the conventions specific to Page Builder start within the directories called `content_type` or `content-type`. Page Builder instantiates a content type from the files defined within these directories. We discuss these conventions within each step of the process.
 
 ## Next
-[Step 1: Add configuration](step-1-add-configuration.md). 
+[Step 1: Add configuration](step-1-add-configuration.md)
