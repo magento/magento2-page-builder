@@ -2609,4 +2609,52 @@
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel" before="enterText"/>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="enterText"/>
     </test>
+    <test name="TextHeightConsistencyBetweenStageAndStorefront">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="Height consistency PageBuilder stage and storefront"/>
+            <description value="Verify height consistent when switching between stage and storefront"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MC-4254"/>
+            <testCaseId value="MC-6268"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!--Input text into stage-->
+        <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <pressKey selector="{{TextOnStage.tinymce('1')}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStage.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStageHeight"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!--Get storefront information-->
+        <comment userInput="Get storefront information" stepKey="commentGetStorefrontInformation"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad stepKey="waitForStorefront"/>
+        <waitForElement selector="{{TextOnStorefront.base('1')}}" stepKey="waitForTextOnStorefront"/>
+        <executeJS function="return document.evaluate(&quot;{{TextOnStorefront.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStorefrontHeight"/>
+        <executeJS function="return Math.abs({$getTextOnStageHeight} - ${getTextOnStorefrontHeight}) &lt;= 2" stepKey="getStageAndStorefrontHeightDifference"/>
+        <assertTrue stepKey="assertStageAndStorefrontHeightAreClose">
+            <actualResult type="variable">getStageAndStorefrontHeightDifference</actualResult>
+        </assertTrue>
+    </test>
 </tests>
