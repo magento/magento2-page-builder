@@ -15,12 +15,12 @@ Files referenced from the configuration include the HTML templates, the JavaScri
 
 By convention, Page Builder requires the configuration for a content type to be in the `adminhtml` area within a directory named `pagebuilder` and a subdirectory named `content_type` or `content-type`.
 
-The name of your configuration file should also reflect the name of your content type. Our example content type is called Quote, so we should name our configuration file `quote.xml` and add it to our module within the following directory structure (`view/adminhtml/pagebuilder/content_type/`):
+The name of your configuration file should reflect the name of your content type preceeded by       your module vendor name. For example, our module name is `Acme/PageBuilderQuote` and our content type is a quote control, so we should name our configuration file `acme_quote.xml` and add it to our module within the following directory structure (`view/adminhtml/pagebuilder/content_type/`):
 
 ![Create config file](../images/step1-add-config-file.png)
 
 {: .bs-callout .bs-callout-info }
-If your content type name uses multiple words, use underscores to separate the words in the name.
+If your content type is something with a simple or generic name like our "quote" example, include your vendor name within your configuration file name to This naming convention prevents Magento from merging your configuration file with another configuration file of the same name, or a future content type configuration file published by Magento. If your content type name uses multiple words, use underscores to separate the words.
 
 ## Example configuration
 

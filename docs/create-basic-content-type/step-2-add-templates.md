@@ -13,11 +13,11 @@ Content type templates are the HTML files (HTML fragments) that define how your 
 
 Conventions for adding content type templates are as follows.
 
-- Page Builder requires you to name your templates `preview.html` for the Admin template and `master.html` for the storefront template.
+- Page Builder requires you to name your templates `preview.html` for the Admin preview template and `master.html` for the master format storefront template.
 
-- Page Builder requires the name of an `appearance` to match the name of the directory containing the appearance templates. For example, `default` is the conventional name for content types with only one `appearance`. Therefore, the directory name should also be `default`. 
+- Page Builder requires the name of an `appearance` to match the name of the directory containing the appearance templates. If they don't match, your content type appearances will not render. 
 
-  If you navigate to the Banner templates (`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
+  For example, if you navigate to the Banner's appearance templates (`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
 
   ```xml
   <appearances>
@@ -30,10 +30,11 @@ Conventions for adding content type templates are as follows.
 
   ![BannerBlockTemplateSets](../images/BannerBlockTemplateSets.png)
 
+For content types with only one appearance (as noted in the screenshot with block), we use the name `default` for both the content type's appearance name and the name of the template directory.
 
 ## Template Configuration
 
-The Quote example defines only one `appearance`. Therefore, by convention, set the names of the Quote `appearance` and the template directory to `default` as shown in the code and directory structure that follows:
+The Quote example defines only one `appearance`. Therefore, by convention, set the name of the Quote `appearance` and the name of the template directory to `default` as shown here:
 
 ```xml
 <appearances>
@@ -63,13 +64,13 @@ The following table describes each `appearance` attribute in our example.
 | ------------------ | ------------------------------------------------------------ |
 | `name`             | As noted by convention, the name of the appearance and the name of the directory for the appearance templates *must* match. |
 | `default`          | Every content type must have a default appearance. If you only define one appearance for your content type, you must set the default to `true`. |
-| `preview_template` | References the`preview.html` template for rendering the preview appearance of your content type on the stage within the Admin UI. |
-| `render_template`  | References the `master.html` template for rendering the appearance of your content type on the storefront for customers to see. |
-| `reader`           | Reads data for the content type from the master format.      |
+| `preview_template` | References the `preview.html` (the Admin preview template) for rendering the preview appearance of your content type on the stage within the Admin UI. |
+| `render_template`  | References the `master.html` (the master format storefront template) for rendering the appearance of your content type on the storefront for customers to see. |
+| `reader`           | Reads content type data from the master format.      |
 
 ## Quote `preview.html`
 
-The `preview.html` template defined for the Quote appearance, is shown here in full followed by descriptions to help you understand the basics of this template.
+The `preview.html` template defined for our Quote's appearance, is shown here in full followed by descriptions to help you understand the basics of this template.
 
 ```html
 <!-- preview.html -->
@@ -101,7 +102,7 @@ The `preview.html` template defined for the Quote appearance, is shown here in f
 
 ### attr
 
-The `attr` attribute allows binding of data from the content type form (UI component) to the html elements in the template. Without defining the `attr` for an HTML element in your template, bindings like `ko-style`, `css`, `html`, and `events` won't work. 
+The `attr` attribute allows binding of data from the content type form (UI component) to the html elements in the template. 
 
 The value for `attr` is derived from the `element` name in the configuration file followed by `attributes`. For example, the `attr` value used to bind data for the  `blockquote` on line 8 of the Quote `preview.html` is `attr="data.quote.attributes"`. This corresponds to the  `element` named `quote` in the `quote.xml` configuration file, as shown here:
 
@@ -134,9 +135,9 @@ The `ko-style` attribute applies the `<style>` attributes from the form to a tem
 </element>
 ```
 
-As we discuss more in [Step 4: Add form](step-4-add-form.md), the `element` styles define bindings to fields in our form. In turn, these form fields provide user-entered data or default values that we apply to the HTML elements in our templates using the `k0-style` attribute. 
+As we discuss more in [Step 4: Add form](step-4-add-form.md), the `element` styles define bindings to fields in our form. In turn, these form fields provide user-entered data or default values that we apply to the HTML elements in our templates using the `ko-style` attribute. 
 
-The following snippet shows the `ko-style` (Knockout binding) that applies the styles defined in the main `element` to the  `div` node of the Quote's preview template: 
+The following snippet shows the `ko-style` (Knockout binding) that applies the styles defined in the main `element` to the  `div` node of the Quote's Admin preview template: 
 
 ```html
 <!-- preview.html -->
@@ -168,11 +169,11 @@ The `liveEdit` binding enables end users to enter HTML content directly on the A
 
 ### event
 
-To be completed.
+The `event` attribute enables the options menu to be shown and hidden when users interact with the content type using the mouse. If you have a special circumstance with the way you wish to handle your option menus, you can modify this logic to suit your needs.
 
 ## Quote `master.html`
 
-The `master.html` template defined for the Quote appearance is shown here in full. The same attributes and descriptions from the preview template apply to this template as well, with one addition, the `html` attribute. 
+The `master.html` template defined for the Quote appearance is shown here in full. The same attributes and descriptions from the Admin preview template apply to this template as well, with one addition, the `html` attribute. 
 
 ```html
 <!--master.html-->
@@ -209,7 +210,7 @@ The `html` attribute applies the actual user-entered HTML to the template elemen
 
 From `liveEdit`, we see that the content of `blockquote` is bound to the `quote_text` field that stores the html. 
 
-The master template uses the `html` attribute to retrieve the HTML content and display it in the `blockquote` element: 
+The master format storefront template uses the `html` attribute to retrieve the HTML content and display it in the `blockquote` element: 
 
 ```html
 <!--master.html-->

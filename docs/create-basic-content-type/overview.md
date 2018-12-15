@@ -9,9 +9,9 @@ Page Builder comes with 16 content types (controls) you can use to build your st
 
 ![Page Builder Content Types](../images/panel-horizontal.png)
 
-## Quote content type
+## The Quote
 
-Here's an example of three Quote control instances rendered in three-columns on the Admin stage: 
+Here are three examples of three Quote control instances rendered in three-columns on the Admin stage: 
 
 ![QuoteTypeDisplay](../images/QuoteTypeDisplay.png)
 
