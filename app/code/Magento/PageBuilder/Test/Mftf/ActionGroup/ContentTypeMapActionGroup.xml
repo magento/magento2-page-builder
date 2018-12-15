@@ -16,7 +16,7 @@
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElement selector="{{AddLocationForm.renderedMap}}" stepKey="waitForMapOnForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}|{{AddLocationForm.warningMessageLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -48,7 +48,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElement selector="{{AddLocationForm.renderedMap}}" stepKey="waitForMapOnForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}|{{AddLocationForm.warningMessageLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -65,7 +65,7 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
-        <waitForElement selector="{{AddLocationForm.renderedMap}}" stepKey="waitForMapOnForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}|{{AddLocationForm.warningMessageLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -110,7 +110,7 @@
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
         </arguments>
-        <waitForElement selector="{{AddLocationForm.renderedMap}}" stepKey="waitForMapOnForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -124,14 +124,10 @@
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
         </arguments>
-        <waitForElement selector="{{AddLocationForm.renderedMap}}" stepKey="waitForMapOnForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <!-- Adding 2nd click to reduce flakiness -->
-        <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
-        <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone2"/>
-        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <waitForElement selector="{{AddLocationForm.clickablePin}}" stepKey="waitForMapVisible"/>
         <dragAndDrop selector1="{{AddLocationForm.clickablePin}}" selector2="{{AddLocationForm.clickablePin}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropOnMapToMovePin"/>
         <wait time="2" stepKey="waitForPinMove"/>
@@ -141,7 +137,7 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(index)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -153,11 +149,10 @@
             <argument name="mapIndex" defaultValue="1" type="string"/>
             <argument name="count" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <waitForElementVisible selector="{{page.base(mapIndex)}}" stepKey="waitForMap"/>
         <waitForElementVisible selector="{{page.allPins(mapIndex)}}" stepKey="waitForMapPin"/>
         <seeNumberOfElements selector="{{page.allPins(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
     </actionGroup>
@@ -166,7 +161,7 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(index)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -178,7 +173,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapButtons" stepKey="comment"/>
-        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(index)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -193,7 +188,7 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateNoMapButtons" stepKey="comment"/>
-        <waitForElement selector="{{page.base(index)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(index)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(index)}}" dependentSelector="{{page.googleModalOkButton(index)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(index)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(index)}}" stepKey="dontSeeGoogleModalInDOM"/>
@@ -255,14 +250,10 @@
             <argument name="pinIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="openMapPinTooltipWindow" stepKey="comment"/>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <!-- Adding 2nd click to reduce flakiness -->
-        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton2"/>
-        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone2"/>
-        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
@@ -293,14 +284,10 @@
             <argument name="pinIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
-        <waitForElement selector="{{page.base(mapIndex)}}" stepKey="waitForMapOnStage"/>
+        <waitForElementVisible selector="{{page.googleMapsLink(mapIndex)}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <!-- Adding 2nd click to reduce flakiness -->
-        <conditionalClick selector="{{page.googleModalOkButton(mapIndex)}}" dependentSelector="{{page.googleModalOkButton(mapIndex)}}" visible="true" stepKey="clickOkButton2"/>
-        <waitForElementNotVisible selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="waitForGoogleModalGone2"/>
-        <dontSeeElementInDOM selector="{{page.googleModalOkButton(mapIndex)}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
@@ -315,14 +302,10 @@
     </actionGroup>
     <actionGroup name="validateNoPinTooltip">
         <comment userInput="validateNoPinTooltip" stepKey="comment"/>
-        <waitForElement selector="{{AddLocationForm.renderedMap}}" stepKey="waitForMapOnForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.googleMapsLink('1')}}" stepKey="waitForMap"/>
         <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton"/>
         <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM"/>
-        <!-- Adding 2nd click to reduce flakiness -->
-        <conditionalClick selector="{{AddLocationForm.googleModalOkButton('1')}}" dependentSelector="{{AddLocationForm.googleModalOkButton('1')}}" visible="true" stepKey="clickOkButton2"/>
-        <waitForElementNotVisible selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="waitForGoogleModalGone2"/>
-        <dontSeeElementInDOM selector="{{AddLocationForm.googleModalOkButton('1')}}" stepKey="dontSeeGoogleModalInDOM2"/>
         <waitForElement selector="{{AddLocationForm.clickablePin}}" stepKey="waitForPin"/>
         <click selector="{{AddLocationForm.clickablePin}}" stepKey="clickPin"/>
         <dontSeeElementInDOM selector="{{AddLocationForm.tooltipWindow}}" stepKey="dontSeeTooltip"/>
@@ -419,8 +402,8 @@
         <arguments>
             <argument name="section"/>
         </arguments>
-        <waitForElementVisible selector="{{section.warningMessageLink}}" stepKey="waitForWarningMessageLink"/>
-        <click selector="{{section.warningMessageLink}}" stepKey="clickLink"/>
+        <waitForElementVisible selector="{{section.warningMessageLink('1')}}" stepKey="waitForWarningMessageLink"/>
+        <click selector="{{section.warningMessageLink('1')}}" stepKey="clickLink"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeInCurrentUrl url="{{AdminContentManagementPage.url}}#cms_pagebuilder" stepKey="validateURL"/>
         <seeElement selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="seeGoogleMapsAPIKeyInputField"/>
