@@ -5,21 +5,34 @@ The development of this tutorial is currently **IN PROGRESS**.
 
 ***
 
-Components are the JavaScript files that define the behaviors of your content type when they appear on the stage in the Admin UI (using the `preview.js` component) and in the storefront (using the `master.js` component). As such, they are complementary to the templates you added previously in Step 2, acting as the view models to the template's views. 
+In this step, we will create a preview component in order to show you how to customize the Quote options menu.
+
+## About components
+
+Components are the JavaScript files that define the behaviors of your content type when they appear on the stage in the Admin UI (using the `preview.js` component) and in the storefront (using the `master.js` component). As such, they are complementary to the templates you added previously in Step 2, acting as the view models to the template's views.
+
+Custom component files are completely optional. If they are not added to your content type, Page Builder will use these defaults:
+
+- Default preview component: `Magento_PageBuilder/js/content-type/preview`
+- Default master component: `Magento_PageBuilder/js/content-type/master`
+
+Reasons for adding your own preview component include customizing options menus and adding user-interactivity that your content type needs to fulfill its function when displayed on the Admin stage. Adding your own master component is necessary if you want to... **[Reviewer: please give some examples of when custom master components might be necessary.]**
 
 ## Component conventions
 
-Discuss the naming convention of the preview.js and master.js files, similar to the naming convention for the preview.html and master.html template files.
+The conventions for naming your components and adding them to your module are as follows:
 
-These component files are completely optional. Among the reasons for adding your own component is to customize the options menu in the Admin preview. That's what we will do for our Quote content type.
+- Your preview component must be named `preview.js` and placed here in your module (`view/adminhtml/web/js/content-type/example-quote/`):
 
-## Add component directories
+  ![Create config file](../images/step3-add-component.png)
 
-The directory structure for your Quote components should look like this (`view/adminhtml/web/js/content-type/example-quote/`):
+- Your master component must be named `master.js` and placed here in your module (`view/frontend/web/js/content-type/example-quote/`):
 
-![Create config file](../images/step3-add-component.png)
+  ![Create config file](../images/step3-add-master-component.png)
 
-  
+We will not create a master component for our Quote example, but the location is given here if you need to include one for more complex content types.
+
+Before continuing, add the preview component file (``preview.js`) to your `PageBuilderQuote` module within the directory structure noted.
 
 ## Component configuration
 
@@ -38,158 +51,134 @@ In your configuration file, reference your Admin `preview_component` (`preview.j
 </config>
 ```
 
-The following table describes each component-related attribute from the Quote configuration.
+A description of each component-related attribute from the Quote configuration follows:
 
 | Attribute           | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
 | `component`         | There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children (like our Quote). Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children (container content types). |
-| `preview_component` | Optional. The `preview.js` file provides rendering logic to the Admin preview template. If your content type does not require any changes to the standard option menu (shown on mouseover) for a content type or other user-interactivity in the Admin, you can omit this attribute from the the `type` element. When you omit the attribute, Page Builder will use `Magento_PageBuilder/js/content-type/preview` by default. |
+| `preview_component` | Optional. The `preview.js` file provides rendering logic to the Admin preview template. If your content type does not require any changes to Page Builder's standard rendering logic, you can omit this attribute from the the `type` element. When you omit the attribute, Page Builder will use `Magento_PageBuilder/js/content-type/preview` by default.<br /><br />However, if you want to make changes to the option menu for your content type, or other customize other user-interactivity in the Admin, you need to create your own preview component as we have done for the Quote content type. |
 | `master_component`  | Optional. The `master.js` file provides rendering logic to the master format storefront template. As with the `preview_component`, if your content type does not require any specific user-interactivity or other behavior when it's displayed in the storefront, you can simply omit this attribute from the the `type` element. When you omit the attribute, Page Builder will use `Magento_PageBuilder/js/content-type/master` by default. <br /><br />In the Quote configuration, the `master_component` attribute is only included for discussion. It simply points to the Page Builder default `master.js` component that would be used the attribute was omitted. |
 
 ## Quote `preview_component`
 
-The Quote `preview_component`  (`preview.js`) is shown here in full, followed by an explanation of how the component is used in the Quote.
+The Quote `preview_component`  (`preview.js`) example is shown here in full for you to copy into your `preview.js` file, followed by an explanation of its key parts. 
 
 ```js
 define([
   'Magento_PageBuilder/js/content-type/preview',
-	], function (PreviewBase) {
+], function (PreviewBase) {
   'use strict';
-  
   var $super;
 
   function Preview(parent, config, stageId) {
     PreviewBase.call(this, parent, config, stageId);
   }
+
   Preview.prototype = Object.create(PreviewBase.prototype);
   $super = PreviewBase.prototype;
 
   Preview.prototype.retrieveOptions = function retrieveOptions() {
     var options = $super.retrieveOptions.call(this, arguments);
-    console.log(options);
-    
+    //console.log(options);
+
+    // Change option menu title
+    options.title.preview.config.label = "Quote Menu";
+
+    // Change option menu icons
+    options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
+
+    // Change tooltips
+    options.edit.title = "Open Editor";
+    options.remove.title = "Delete";
+    // options.move.title = "Move";
+    // options.duplicate.title = "Duplicate";
+
     // Remove menu options
     // delete options.move;
     // delete options.duplicate;
     // delete options.edit;
     // delete options.remove;
 
-    // options.edit.preview.config.icon = "<i class='icon-pagebuilder-copy'></i>";
-    // options.edit.config.icon = "<i class='icon-pagebuilder-copy'></i>";
-    // options.edit.icon._latestValue = "<i class='icon-pagebuilder-copy'></i>";
-
-    // Change option menu icons
-    // options.edit.icon = "<i class='icon-pagebuilder-copy'></i>";
-
-    // Change option menu label
-    // options.title.preview.config.label = "title.preview.config.label"; // works
-    // options.title.title = "title.title"; // doesn't work
-
-    // Change tooltips
-    options.move.title = "Drag";
-    options.duplicate.title = "Copy";
-    options.remove.title = "Delete";
-    options.edit.title = "Open Editor";
-
     return options;
   };
-  //
-  // Preview.prototype.isContainer = function () {
-  //     return false;
-  // };
-
   return Preview;
 });
 ```
 
-### Extend from Page Builder preview.js
+### Extend from `Preview`
 
-dasdasd
+The first thing we do in our preview component is extend Page Builder's `Preview` class (`magento2-page-builder/app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts`) by declaring it as a dependency and calling it from the preview component's constructor as follows:
 
 ```js
 define([
   'Magento_PageBuilder/js/content-type/preview',
-	], function (PreviewBase) {
+], function (PreviewBase) {
   'use strict';
-  
   var $super;
 
   function Preview(parent, config, stageId) {
     PreviewBase.call(this, parent, config, stageId);
   }
+
   Preview.prototype = Object.create(PreviewBase.prototype);
   $super = PreviewBase.prototype;
 ```
 
+You don't have to extend `Preview` this way, but if you do, you get access to both its public and protected functions. In our Quote example, we need access to one protected function, discussed next.
 
+### Customize the options menu
 
-### Manipulate the options menu
+Our goal for the Quote preview component is to customize the default Page Builder options menu for a content type, as shown here:
 
-sdfsdf
+![Create config file](../images/options-menu-default.png)
 
-```js
-  Preview.prototype.retrieveOptions = function retrieveOptions() {
-    var options = $super.retrieveOptions.call(this, arguments);
-    
-    return options;
-  };
-```
-
-
-
-#### Remove menu options
-
-lsakd fjlsadfkj
+To do this, we need to override the protected `retrieveOptions()` function from the `Preview` class so we can change various options as shown here: 
 
 ```js
-// Remove menu options
-delete options.move;
-delete options.duplicate;
-delete options.edit;
-delete options.remove;
+Preview.prototype.retrieveOptions = function retrieveOptions() {
+  var options = $super.retrieveOptions.call(this, arguments);
+  //console.log(options);
+
+  // Change option menu title
+  options.title.preview.config.label = "Quote Menu";
+  
+  // Change option menu icons
+  options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
+
+  // Change tooltips
+  options.edit.title = "Open Editor";
+  options.remove.title = "Delete";
+  // options.move.title = "Move";
+  // options.duplicate.title = "Duplicate";
+
+  // Remove menu options
+  // delete options.move;
+  // delete options.duplicate;
+  // delete options.edit;
+  // delete options.remove;
+
+  return options;
+};
 ```
 
+In the preceding code, we made changes to the options menu title, icons, and tooltips. You can also remove options from the menu. For example, if you don't want end-users to move or duplicate your content type, you can remove those options from your menu using `delete options.move` and `delete options.duplicate` as shown commented out in the code.
 
+![Create config file](../images/options-menu-custom.png)
 
-#### Change option menu icons
+{: .bs-callout .bs-callout-info }
+Even though you can change the base option menu properties as described, we suggest you stick the the default options as much as possible to provide end-users with a consistent experience across Magento's content types and other third-party content types that are included as time goes on.
 
-sdfsdfsdf
+### Other changes
 
-```js
-// Change option menu icons
-options.edit.icon = "<i class='icon-pagebuilder-copy'></i>";
-```
+Other changes and additions you can make to your preview component include:
 
-
-
-#### Change option menu title
-
-skdjflsdfjs
-
-```js
-// Change option menu title
-options.title.preview.config.label = "title.preview.config.label";
-```
-
-
-
-#### Change option menu tooltips
-
-lsdfkjsdklfj
-
-```js
-// Change tooltips
-options.move.title = "Drag";
-options.duplicate.title = "Copy";
-options.remove.title = "Delete";
-options.edit.title = "Open Editor";
-```
+**[Reviewer: Please include a list of other changes or additions that developers might make in their own preview component]**
 
 
 
 ## Quote `master_component`
 
-As mentioned previously, our Quote content type has no need for a master.js component file. Instead, we are using Page Builder's default master component file: `Magento_PageBuilder/js/content-type/master`.
+As mentioned previously, our Quote content type has no need for a master.js component file. Instead, we are using Page Builder's default master component file: `Magento_PageBuilder/js/content-type/master`. More information on master components and their usage can be found **[where?]** 
 
 ## Next
 
