@@ -15,16 +15,16 @@ Files referenced from the configuration include the HTML templates, the JavaScri
 
 By convention, Page Builder requires the configuration for a content type to be in the `adminhtml` area within a directory named `pagebuilder` and a subdirectory named `content_type` or `content-type`.
 
-The name of your configuration file should reflect the name of your content type preceeded by       your module vendor name. For example, our module name is `Acme/PageBuilderQuote` and our content type is a quote control, so we should name our configuration file `acme_quote.xml` and add it to our module within the following directory structure (`view/adminhtml/pagebuilder/content_type/`):
+The name of your configuration file should reflect the name of your content type prefixed by your module vendor name and separated by an underscore (_). For example, our module name is `Example/PageBuilderQuote` and our content type is a quote control, so we name our configuration file `example_quote.xml` and add it to our module within the following directory structure (`view/adminhtml/pagebuilder/content_type/`):
 
 ![Create config file](../images/step1-add-config-file.png)
 
 {: .bs-callout .bs-callout-info }
-If your content type is something with a simple or generic name like our "quote" example, include your vendor name within your configuration file name to This naming convention prevents Magento from merging your configuration file with another configuration file of the same name, or a future content type configuration file published by Magento. If your content type name uses multiple words, use underscores to separate the words.
+The reason we suggest prefIxing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
 
 ## Example configuration
 
-In this example, only a subset of configuration elements are described (enough to understand the configuration file's basic role). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+In this example, only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
 
 
 The following configuration is from the Quote content type. An overview of these elements and attributes are described in the tables that follow.
@@ -32,13 +32,13 @@ The following configuration is from the Quote content type. An overview of these
 ```xml
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="quote"
+  <type name="example_quote"
         label="Quote"
         group="elements"
         component="Magento_PageBuilder/js/content-type"
         preview_component="Magento_PageBuilder/js/content-type/preview"
         master_component="Magento_PageBuilder/js/content-type/master"
-        form="pagebuilder_quote_form"
+        form="pagebuilder_example_quote_form"
         icon="icon-pagebuilder-heading"
         sortOrder="21"
         translate="label">
@@ -49,8 +49,8 @@ The following configuration is from the Quote content type. An overview of these
     <appearances>
       <appearance name="default"
                   default="true"
-                  preview_template="Vendor_Module/content-type/quote/default/preview"
-                  render_template="Vendor_Module/content-type/quote/default/master"
+                  preview_template="Example_PageBuilderQuote/content-type/acme_quote/default/preview"
+                  render_template="Example_PageBuilderQuote/content-type/acme_quote/default/master"
                   reader="Magento_PageBuilder/js/master-format/read/configurable">
         <elements...>
       </appearance>
@@ -61,21 +61,20 @@ The following configuration is from the Quote content type. An overview of these
 
 ## The `type` element
 
-The `<type>` element defines the key properties of your content type. The attributes are described here:
+The `type` element defines the key properties of your content type. The attributes from the previous code example are described here:
 
-| Attribute           | Description                                                                                                                                                                                                                                                                                                                                       |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`              | Name of the content type that Magento uses for XML merging. The convention for using multi-word names is to separate the words with hyphens.                                                                                                                                                                                                      |
-| `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage.                                                                                                                                                                                                                                                                   |
-| `group`             | Group or category in the panel menu where your content type is displayed. The default groups are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details.                                                                                                                |
-| `component`         | Currently there are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
-| `preview_component` | JavaScript file that provides preview-specific rendering logic within the Admin UI.                                                                                                                                                                                                                                                               |
-| `master_component`  | JavaScript file that provides master format rendering logic generic for all appearances of your content type when rendered on the storefront.                                                                                                                                                                                                     |
-| `form`              | UI component form that provides the form controls for editing your content type.                                                                                                                                                                                                                                                                  |
-| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label.                                                                                                                                                                                                                                                               |
+| Attribute           | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `name`              | Name of the content type that Magento uses for XML merging. The convention for using multi-word names is to separate the words with hyphens. |
+| `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage. |
+| `group`             | Group or category in the panel menu where your content type is displayed. The default groups are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details. |
+| `component`         | There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
+| `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. |
+| `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. |
+| `form`              | UI component form that provides the form controls for editing your content type. |
+| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
 | `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder`s of 10 and 20. |
-| `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation.                                                                                                                                                                                                                                           |
-
+| `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
 
 ## The  `children` element
 

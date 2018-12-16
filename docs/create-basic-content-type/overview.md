@@ -5,33 +5,35 @@ The development of this tutorial is currently **IN PROGRESS**.
 
 ***
 
-Page Builder comes with 16 content types (controls) you can use to build your storefront pages. In this tutorial, you will add a new content type: a **Quote** control, which you can use to show customer testimonials or other quotations within your storefront.
+Page Builder comes with several content types (controls) you can use to build your storefront pages. In this tutorial, you will add a new content type: a **Quote** control, which you can use to show customer testimonials or other types of quotations within your storefront.
 
 ![Page Builder Content Types](../images/panel-horizontal.png)
 
-## The Quote
+## Quote preview
 
-Here are three examples of three Quote control instances rendered in three-columns on the Admin stage: 
+A preview of the Qoute content type you will build is shown in the following screenshot, which shows three instances of the Quote control, on in each column shown here on the Admin stage: 
 
-![QuoteTypeDisplay](../images/QuoteTypeDisplay.png)
+![QuoteTypeDisplay](../images/AdminTestimonials.png)
 
-And here are the same three quote controls rendered on a mock testimonial page in the storefront:
+And here are the same three Quote controls rendered on a mock testimonial page in the storefront:
 
 ![StorefrontTestimonials](../images/StorefrontTestimonials.png)
 
 
 
-## Prerequisites
+## Quote module
 
-This tutorial assumes you are starting with a basic, registered module, as follows.
+As with most things in Magento, content types for Page Builder are housed in modules. The convention for naming modules that are solely dedicated to Page Builder, such as our Quote content type, is to prefix all the content type name with `PageBuilder`. This helps visually group content type modules within your vendor directory. Of course, this convention doesn't apply If you are adding a content type as part of an existing module.
+
+Applying this convention to the module for our Quote content type, we get the name `PageBuilderQuote`, and can set up our module as shown here:
 
 ![Minimum module structure](../images/module-minimum-structure.png)
 
+After registering your module (`bin/magento setup:upgrade`) you will be ready to begin this tutorial by following the content type creation process outlined next.
 
+## Quote creation
 
-## Overview
-
-The steps for building the Quote content type are illustrated and described below. While the reality is not quite this linear, these steps do represent the basic phases and flow for building new Page Builder content types.
+The steps for creating the Quote content type are illustrated and described below. The reality is not quite this linear, but these steps do represent the basic phases and flow for building new Page Builder content types.
 
 ![Creating Custom Content Types](../images/content-type-overview.png)
 
@@ -42,15 +44,15 @@ The steps for building the Quote content type are illustrated and described belo
 5. **Add styles**: Create LESS files to style your content types when rendered in the Admin UI and on the storefront. 
 6. **Add frontend widget**: Create a JavaScript file to control the UI behavior (user interactivity) of your content type on the storefront.  
 
-## File structure
+## Quote file structure
 
-Before you get started, take a look at what you will be building. The block on the left shows the empty module structure you will start with. The block on the right shows all the files you will add to your module, labeled by the steps in the process. 
+Before we get started, take a look at what you will be building. The directory structure on the left shows the basic `PageBuilderQuote` module you will start with (as previously described). The directory structure on the right shows all the files you will add to the `PageBuilderQuote` module throughout this tutorial, labeled by the steps in the process. 
 
 ![Before and after content type](../images/content-type-files.png)
 
 ## Conventions
 
-The file structure represents an overview of the conventions used for content types. Many of the conventions used are simply those defined for developing UI components. However, the conventions specific to Page Builder start within the directories called `content_type` or `content-type`. Page Builder instantiates a content type from the files defined within these directories. We discuss these conventions within each step of the process.
+The `PageBuilderQuote` module structure represents an overview of the conventions used for content types. Many of these conventions are simply those defined for developing UI components. However, the conventions specific to Page Builder content types appropriately start within the directories called `content_type` or `content-type`. Page Builder instantiates a content type from the files defined within these directories. We will discuss these content type conventions within each step of the process.
 
 ## Next
 [Step 1: Add configuration](step-1-add-configuration.md)

@@ -32,7 +32,7 @@ Conventions for adding content type templates are as follows.
 
 For content types with only one appearance (as noted in the screenshot with block), we use the name `default` for both the content type's appearance name and the name of the template directory.
 
-## Template Configuration
+## Template configuration
 
 The Quote example defines only one `appearance`. Therefore, by convention, set the name of the Quote `appearance` and the name of the template directory to `default` as shown here:
 
