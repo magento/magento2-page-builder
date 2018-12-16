@@ -11,7 +11,7 @@ Files referenced from the configuration include the HTML templates, the JavaScri
 
 ![configuration-hub](../images/configuration-hub.png)
 
-## Conventions
+## Configuration conventions
 
 By convention, Page Builder requires the configuration for a content type to be in the `adminhtml` area within a directory named `pagebuilder` and a subdirectory named `content_type` or `content-type`.
 
@@ -22,9 +22,9 @@ The name of your configuration file should reflect the name of your content type
 {: .bs-callout .bs-callout-info }
 The reason we suggest prefIxing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
 
-## Example configuration
+## The `example_quote` configuration
 
-In this example, only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+Only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
 
 
 The following configuration is from the Quote content type. An overview of these elements and attributes are described in the tables that follow.
@@ -119,7 +119,7 @@ Going further, each `appearance` is defined by exactly two HTML templates, one t
 
 ## The `elements` element
 
-The purpose of `<elements>` as defined within an appearance is to map the data from the content type's edit form to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. We will describe the `elements` in [Step 4: Add form](step-4-add-form.md)
+The `<elements>` element as defined within an `appearance` is to map the data from the content type's form editor to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. We discuss content type `elements` in [Step 4: Add form](step-4-add-form.md)
 
 ## Next
 
