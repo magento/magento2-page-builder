@@ -9,24 +9,9 @@ Page Builder provides an editor that slides out from the right of the screen wit
 
 ![Create config file](../images/content-type-editor.png)
 
-## Configuration
 
-In your configuration file, reference your UI component form as shown here within the `<type>` element:
 
-```xml
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="example"
-        label="Example"
-        form="pagebuilder_example_form"
-        ...
-```
-
-| Attribute | Description                                                  |
-| --------- | ------------------------------------------------------------ |
-| `form`      | `pagebuilder_example_form.xml` - UI component form that provides the editor for your content type. |
-
-## Location
+## Form conventions
 
 Add the layout and form to your module as shown here:
 
@@ -35,9 +20,28 @@ Add the layout and form to your module as shown here:
 
 ![Create config file](../images/step4-add-form.png)
 
-## Create UI component form
 
-In this example, let's create a form that extends `pagebuilder_base_form` to provide form controls for editing our content type. The code is provided here followed by descriptions of the key parts.
+
+## Form configuration
+
+In your configuration file, reference your UI component form as shown here within the `<type>` element:
+
+```xml
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+  <type name="example_quote"
+        label="Quote"
+        form="pagebuilder_example_quote_form"
+        ...
+```
+
+| Attribute | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| `form`      | `pagebuilder_example_form.xml` - UI component form that provides the editor for your content type. |
+
+## Quote form
+
+Our Quote form extends `pagebuilder_base_form` to provide form controls for editing our content type. The form XML is shown in full here, followed by descriptions of the key parts.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -179,8 +183,25 @@ In this example, let's create a form that extends `pagebuilder_base_form` to pro
 </form>
 ```
 
-[Insert descriptions]
 
-## Create layout
 
-The remainder of this topic is in progress.
+Discuss the extending of forms `extends="pagebuilder_base_form"` and the other form with more stuff.
+
+## Quote form layout
+
+The layout for our Quote form is shown here in full:
+
+```xml
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="pagebuilder_example_quote_form"/>
+        </referenceContainer>
+    </body>
+</page>
+```
+
+This is a standard UI component form layout. For more information, see [ui component reference].
+
