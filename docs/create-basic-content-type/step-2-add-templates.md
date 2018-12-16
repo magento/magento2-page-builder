@@ -44,14 +44,14 @@ The Quote example defines only one `appearance`. Therefore, by convention, set t
 
 ![Create config file](../images/step2-add-templates.png)
 
-These files can be blank initially; they just need to exist in their proper location for now so we can reference them in the `appearance` element of our `quote.xml` configuration file as shown here:
+These files can be blank initially; they just need to exist in their proper location for now so we can reference them in the `appearance` element of our `example_quote.xml` configuration file as shown here:
 
 ```xml
 <appearances>
   <appearance name="default"
               default="true"
-              preview_template="Vendor_Module/content-type/quote/default/preview"
-              render_template="Vendor_Module/content-type/quote/default/master"
+              preview_template="Example_PageBuilderQuote/content-type/example-quote/default/preview"
+              render_template="Example_PageBuilderQuote/content-type/example-quote/default/master"
               reader="Magento_PageBuilder/js/master-format/read/configurable">
     <elements...>
   </appearance>
@@ -154,7 +154,7 @@ The `css` attribute applies CSS classes entered by users on the form to a templa
 
 ### class
 
-Just as with any other html template, you can add your own classes to your template elements. Defining those classes for your content type is discussed in [Step 5: Add styles](step-5-add-styles.md).
+ Just as with any other html template, you can add your own classes to your template elements. However, you should **always add the `pagebuilder-content-type` as the first class in the top node in your `preview.html` template** as shown for the Quote. Page Builder uses the `pagebuilder-content-type` class to visual indicators and mouseover effects to the Admin preview template, such as correctly positioning the options menu. Defining custom LESS/CSS classes for your content type is discussed in [Step 5: Add styles](step-5-add-styles.md).
 
 ### liveEdit
 

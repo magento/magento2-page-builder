@@ -14,10 +14,10 @@ In your configuration file, reference your JavaScript component (`preview.js`) a
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="example"
-        label="Example"
+  <type name="example_quote"
+        label="Quote"
         component="Magento_PageBuilder/js/content-type"
-        preview_component="Acme_PageBuilderQuote/js/content-type/acme_quote/preview"
+        preview_component="Example_PageBuilderQuote/js/content-type/example_quote/preview"
         master_component="Magento_PageBuilder/js/content-type/master">
         ...
   </type>
@@ -34,7 +34,7 @@ The following table describes each component-related attribute from the Quote co
 
 ## Location
 
-Add them to your module here (`view/adminhtml/web/js/content-type/<content-type-name>/`):
+Add them to your module here (`view/adminhtml/web/js/content-type/example-quote/`):
 
 ![Create config file](../images/step3-add-component.png)
 
