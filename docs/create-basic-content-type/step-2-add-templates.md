@@ -17,7 +17,7 @@ Conventions for adding content type templates are as follows.
 
 - Page Builder requires the name of an `appearance` to match the name of the directory containing the appearance templates. If they don't match, your content type appearances will not render. 
 
-  For example, if you navigate to the Banner's appearance templates (`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
+  For example, if you navigate to the Banner's appearance templates (`PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
 
   ```xml
   <appearances>
@@ -154,7 +154,7 @@ The `css` attribute applies CSS classes entered by users on the form to a templa
 
 ### class
 
- Just as with any other html template, you can add your own classes to your template elements. However, you should **always add the `pagebuilder-content-type` as the first class in the top node in your `preview.html` template** as shown for the Quote. Page Builder uses the `pagebuilder-content-type` class to add visual indicators and mouseover effects to the Admin preview template, such as correctly positioning the options menu. Defining custom LESS/CSS classes for your content type is discussed in [Step 5: Add styles](step-5-add-styles.md).
+ Just as with any other HTML template, you can add your own classes to your template elements. However, **always add the `pagebuilder-content-type` as the first class in the top node in your `preview.html` template** as shown for the Quote. Page Builder uses the `pagebuilder-content-type` class to add visual indicators and mouseover effects to the Admin preview template, such as correctly positioning the options menu. Defining custom LESS/CSS classes for your content type is discussed in [Step 5: Add styles](step-5-add-styles.md).
 
 ### liveEdit
 
