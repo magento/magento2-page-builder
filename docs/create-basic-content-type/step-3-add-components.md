@@ -138,9 +138,6 @@ To do this, we need to override the protected `retrieveOptions()` function from 
 Preview.prototype.retrieveOptions = function retrieveOptions() {
   var options = $super.retrieveOptions.call(this, arguments);
   //console.log(options);
-
-  // Change option menu title
-  options.title.preview.config.label = "Quote Menu";
   
   // Change option menu icons
   options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
@@ -161,7 +158,7 @@ Preview.prototype.retrieveOptions = function retrieveOptions() {
 };
 ```
 
-In the preceding code, we made changes to the options menu title, icons, and tooltips. You can also remove options from the menu. For example, if you don't want end-users to move or duplicate your content type, you can remove those options from your menu using `delete options.move` and `delete options.duplicate` as shown commented out in the code.
+In the preceding code, we made changes to the options menu icons and tooltips. You can also remove options from the menu. For example, if you don't want end-users to move or duplicate your content type, you can remove those options from your menu using `delete options.move` and `delete options.duplicate` as shown commented out in the code.
 
 ![Create config file](../images/options-menu-custom.png)
 
