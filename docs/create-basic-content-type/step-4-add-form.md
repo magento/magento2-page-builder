@@ -1,7 +1,9 @@
 # Step 4: Add form
 
-{: .bs-callout .bs-callout-info }
+***
 The development of this tutorial is currently **IN PROGRESS**.
+
+***
 
 Page Builder provides an editor that slides out from the right of the screen within the Admin UI to give you a way to add content and customize the appearance of your content type, as shown in the screen shot. To use and customize this editor for your needs, you need to create a UI component form along with the layout to display that form.
 
@@ -22,8 +24,7 @@ In your configuration file, reference your UI component form as shown here withi
 
 | Attribute | Description                                                  |
 | --------- | ------------------------------------------------------------ |
-| form      | `pagebuilder_example_form.xml` - UI component form that provides the editor for your content type. |
-{:style="table-layout:auto"}
+| `form`      | `pagebuilder_example_form.xml` - UI component form that provides the editor for your content type. |
 
 ## Location
 
@@ -176,30 +177,10 @@ In this example, let's create a form that extends `pagebuilder_base_form` to pro
     </field>
   </fieldset>
 </form>
-
 ```
 
 [Insert descriptions]
 
 ## Create layout
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The remainder of this topic is in progress.
