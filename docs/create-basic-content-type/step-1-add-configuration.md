@@ -69,10 +69,10 @@ The `type` element defines the key properties of your content type. The attribut
 | `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage. |
 | `group`             | Group or category in the panel menu where your content type is displayed. The default groups are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details. |
 | `component`         | There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
-| `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. |
-| `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. |
+| `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. The preview component does not need to specify the `.js` extension. If you don't provide the `preview_component`, Page Builder uses the base `Preview` component shown in the code: `Magento_PageBuilder/js/content-type/preview`. |
+| `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. The master component does not need to specify the `.js` extension. If you don't provide the `master_component`, Page Builder uses the base `Master` component shown in the code: `Magento_PageBuilder/js/content-type/master`. |
 | `form`              | UI component form that provides the form controls for editing your content type. |
-| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
+| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. If no icon value is provided, the content type will simply be displayed in the Page Builder panel without an icon. |
 | `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder`s of 10 and 20. |
 | `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
 

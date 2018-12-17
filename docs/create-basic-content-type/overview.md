@@ -1,4 +1,4 @@
-# Introduction
+# Overview
 
 ***
 The development of this tutorial is currently **IN PROGRESS**.
@@ -11,11 +11,11 @@ Page Builder comes with several content types (controls) you can use to build yo
 
 ## Quote preview
 
-A preview of the Qoute content type you will build is shown in the following screenshot, which shows three instances of the Quote control, on in each column shown here on the Admin stage: 
+The following screenshot shows three instances of the Quote control you will build in this tutorial: 
 
 ![QuoteTypeDisplay](../images/AdminTestimonials.png)
 
-And here are the same three Quote controls rendered on a mock testimonial page in the storefront:
+And the same three Quote controls are shown rendered here on a mock testimonial page in the storefront:
 
 ![StorefrontTestimonials](../images/StorefrontTestimonials.png)
 
