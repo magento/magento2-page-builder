@@ -1588,6 +1588,50 @@
         <switchToNextTab stepKey="switchToNextTab"/>
         <seeCurrentUrlEquals url="{{PageBuilderBannerLinkUrlProperty.value}}" stepKey="seeCurrentUrlEquals"/>
     </test>
+    <test name="BannerPosterWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Poster - Banner with borders and padding is equal to min height"/>
+            <description value="A user can see Banner poster height with borders and padding is equal to min height"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5794"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" after="enterPageTitle" stepKey="expandGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+    </test>
     <test name="BannerPosterHtmlValueInButtons" extends="BannerCollageCenterHtmlValueInButtons">
         <annotations>
             <features value="PageBuilder"/>

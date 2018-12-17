@@ -913,6 +913,50 @@
         <seeElement selector="{{BannerOnFrontend.margins('1', PageBuilderMarginsPropertyUnique.value)}}" stepKey="seeMarginsStorefront"/>
         <seeElement selector="{{BannerOnFrontend.collagePadding('1', PageBuilderPaddingPropertyUnique.value)}}" stepKey="seePaddingStorefront"/>
     </test>
+    <test name="BannerCollageLeftWithBordersAndPaddingEqualToMinHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Banner with borders and padding is equal to min height"/>
+            <description value="A user can see Banner collage left height with borders and padding is equal to min height"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5079"/>
+            <testCaseId value="MC-5797"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" after="enterPageTitle" stepKey="expandGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" after="openEditPanel" stepKey="enterAppearanceCollageLeftProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
+            <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
+            <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
+            <argument name="content" value="{{BannerOnBackend.wrapperCSS}}"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
+            <argument name="content" value="{{BannerOnFrontend.wrapperCSS}}"/>
+        </actionGroup>
+    </test>
     <test name="BannerCollageLeftUpdateAllAttributes">
         <annotations>
             <features value="PageBuilder"/>
