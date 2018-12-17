@@ -8,12 +8,12 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
-    <test name="InitialStatusBlock">
+    <test name="BlockValidateEmptyState">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Block - Initial Status"/>
-            <description value="Verify that Static Block is refactor and new Block preview is applied."/>
+            <title value="Validate Empty Block on Stage and Storefront"/>
+            <description value="Verify that empty block renders correctly on stage and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-2278"/>
             <useCaseId value="MC-1420"/>
@@ -22,8 +22,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
         </before>
         <after>
@@ -39,13 +37,15 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{BlockOnStage.status('1', 'Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder"/>
+        <seeElement selector="{{BlockOnStage.status('1', 'Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{BlockOnStage.status('1', 'Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder2"/>
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElement selector="{{BlockOnStorefront.empty('1')}}" stepKey="waitForSeeElement"/>
-        <seeElementInDOM selector="{{BlockOnStorefront.empty('1')}}" stepKey="seeBlockContentOnCmsStage"/>
+        <dontSeeElement selector="{{BlockOnStorefront.empty('1')}}" stepKey="dontSeeBlockOnStorefront"/>
+        <seeElementInDOM selector="{{BlockOnStorefront.empty('1')}}" stepKey="seeElementInDOM"/>
     </test>
     <test name="AddBlockToCmsPage">
         <annotations>
@@ -242,12 +242,12 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <dontSeeElementInDOM selector="{{BlockOnStorefront.base('1')}}" stepKey="doNotSeeBlockElementOnStorefront" />
     </test>
-    <test name="BlockDuplicate">
+    <test name="BlockHidden">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Duplicate Block"/>
-            <description value="A user should be able to duplicate Block content type. Verify on Stage and Storefront."/>
+            <title value="Hide Block"/>
+            <description value="A user should be able to hide Block content type. Verify on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-965"/>
             <testCaseId value="MC-3600"/>
@@ -325,6 +325,225 @@
         <seeElement selector="{{BlockOnStorefront.notHidden('1')}}" stepKey="waitForContentTypeShownStorefront1"/>
         <seeElement selector="{{BlockOnStorefront.notHidden('2')}}" stepKey="waitForContentTypeShownStorefront2"/>
     </test>
+    <test name="BlockDuplicate">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Duplicate Block"/>
+            <description value="A user should be able to duplicate Block content type. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3235"/>
+            <testCaseId value="MC-5833"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <!-- Add Block to Stage -->
+        <comment userInput="Add Block to Stage" stepKey="addBlockToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <!-- Update Values -->
+        <comment userInput="Update Values" stepKey="commentUpdateValues"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage1">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage1">
+            <argument name="page" value="BlockOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Duplicate -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage2">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="BlockOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Duplicate On Edit Panel -->
+        <comment userInput="Verify Duplicate On Edit Panel" stepKey="commentVerifyEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBorder1">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderColor1">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderWidth1">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderRadius1">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCSSClasse1">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins1">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding1">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!--Validate After Save Page-->
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnStage3">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage3">
+            <argument name="page" value="BlockOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Verify Duplicate On Edit Panel -->
+        <comment userInput="Verify Duplicate On Edit Panel" stepKey="commentVerifyEditPanel2"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm3"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCSSClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
+        <!--Validate Storefront-->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront1">
+            <argument name="page" value="BlockOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront2">
+            <argument name="page" value="BlockOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <seeElement selector="{{BlockOnStorefront.textContent('1', $$createPreReqBlock.content$$)}}" stepKey="seeBlockContentOnCmsStorefront1"/>
+        <seeElement selector="{{BlockOnStorefront.textContent('2', $$createPreReqBlock.content$$)}}" stepKey="seeBlockContentOnCmsStorefront2"/>
+    </test>
     <test name="BlockDelete">
         <annotations>
             <features value="PageBuilder"/>
@@ -351,10 +570,27 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!--Delete Block-->
+        <comment userInput="Delete Block" stepKey="commentRemoveBlock"/>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage1"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+        </actionGroup>
+        <dontSeeElementInDOM selector="{{BlockOnStorefront.base('1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
     <test name="DisplayingDeletedBlockOnStage">
         <annotations>
@@ -489,7 +725,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
@@ -1583,6 +1819,125 @@
         <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="height" value="70"/>
+        </actionGroup>
+    </test>
+    <test name="BlockMove">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block"/>
+            <title value="Move Block Between Columns"/>
+            <description value="Verify that moving a block content type on the stage will update the storefront"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3235"/>
+            <testCaseId value="MC-5839"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Stage -->
+        <comment userInput="Add Heading to Stage" stepKey="commentAddHeadingToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Block to Stage -->
+        <comment userInput="Add Block to Stage" stepKey="commentAddBlockToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragBlockToColumn">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateBlockStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Move Block -->
+        <comment userInput="Move Block" stepKey="commentMoveBlock"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveBlockToLeftColumn">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateBlockStage2">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="validateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateHeadingStorefront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateBlockStorefront">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
     </test>
 </tests>
