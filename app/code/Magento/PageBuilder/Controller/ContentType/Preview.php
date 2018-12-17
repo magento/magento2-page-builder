@@ -8,13 +8,14 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\ContentType;
 
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 
 /**
  * Preview controller to render blocks preview on Stage
  * @api
  */
-class Preview extends \Magento\Framework\App\Action\Action
+class Preview extends \Magento\Framework\App\Action\Action implements HttpPostActionInterface
 {
     /**
      * @var \Magento\PageBuilder\Model\Stage\RendererPool
