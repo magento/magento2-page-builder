@@ -11,9 +11,9 @@ Files referenced from the configuration include the HTML templates, the JavaScri
 
 ![configuration-hub](../images/configuration-hub.png)
 
-## Conventions
+## Configuration conventions
 
-By convention, Page Builder requires the configuration for a content type to be in the `adminhtml` area within a directory named `pagebuilder` and a subdirectory named `content_type` or `content-type`.
+By convention, Page Builder requires the configuration file to be in the `<module_name>/adminhtml/pagebuilder/content_type` or `content-type` directory.
 
 The name of your configuration file should reflect the name of your content type prefixed by your module vendor name and separated by an underscore (_). For example, our module name is `Example/PageBuilderQuote` and our content type is a quote control, so we name our configuration file `example_quote.xml` and add it to our module within the following directory structure (`view/adminhtml/pagebuilder/content_type/`):
 
@@ -22,9 +22,9 @@ The name of your configuration file should reflect the name of your content type
 {: .bs-callout .bs-callout-info }
 The reason we suggest prefIxing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
 
-## Example configuration
+## The `example_quote` configuration
 
-In this example, only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
+Only a subset of configuration elements are described in our Quote example (enough to understand the basic role of the configuration file). For more details, refer to [Content type configurations](../configurations/content-type-configuration.md) and [Additional configurations](../configurations/additional-configurations.md).
 
 
 The following configuration is from the Quote content type. An overview of these elements and attributes are described in the tables that follow.
@@ -69,10 +69,10 @@ The `type` element defines the key properties of your content type. The attribut
 | `label`             | Label displayed in the Page Builder panel, option menu, and on the Admin stage. |
 | `group`             | Group or category in the panel menu where your content type is displayed. The default groups are Layout, Elements, Media, and Add Content. See [Panel configurations](../configurations/panel-configurations.md) for more details. |
 | `component`         | There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children. Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children, otherwise known as container content types. |
-| `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. |
-| `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. |
+| `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. The preview component does not need to specify the `.js` extension. If you don't provide the `preview_component`, Page Builder uses the base `Preview` component shown in the code: `Magento_PageBuilder/js/content-type/preview`. |
+| `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. The master component does not need to specify the `.js` extension. If you don't provide the `master_component`, Page Builder uses the base `Master` component shown in the code: `Magento_PageBuilder/js/content-type/master`. |
 | `form`              | UI component form that provides the form controls for editing your content type. |
-| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. |
+| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. If no icon value is provided, the content type will simply be displayed in the Page Builder panel without an icon. |
 | `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder`s of 10 and 20. |
 | `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
 
@@ -119,7 +119,7 @@ Going further, each `appearance` is defined by exactly two HTML templates, one t
 
 ## The `elements` element
 
-The purpose of `<elements>` as defined within an appearance is to map the data from the content type's edit form to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. We will describe the `elements` in [Step 4: Add form](step-4-add-form.md)
+The `<elements>` element as defined within an `appearance` is to map the data from the content type's form editor to the content type's master format so that the values entered in the form can be stored and rendered correctly on the Admin stage and storefront. We discuss content type `elements` in [Step 4: Add form](step-4-add-form.md)
 
 ## Next
 

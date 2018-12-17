@@ -17,7 +17,7 @@ Conventions for adding content type templates are as follows.
 
 - Page Builder requires the name of an `appearance` to match the name of the directory containing the appearance templates. If they don't match, your content type appearances will not render. 
 
-  For example, if you navigate to the Banner's appearance templates (`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
+  For example, if you navigate to the Banner's appearance templates (`PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
 
   ```xml
   <appearances>
@@ -68,9 +68,9 @@ The following table describes each `appearance` attribute in our example.
 | `render_template`  | References the `master.html` (the master format storefront template) for rendering the appearance of your content type on the storefront for customers to see. |
 | `reader`           | Reads content type data from the master format.      |
 
-## Quote `preview.html`
+## Quote `preview_template`
 
-The `preview.html` template defined for our Quote's appearance, is shown here in full followed by descriptions to help you understand the basics of this template.
+The Quote `preview_template`  (`preview.html`) is shown here in full, followed by the attribute descriptions to help you understand the basics of content type templates.
 
 ```html
 <!-- preview.html -->
@@ -154,7 +154,7 @@ The `css` attribute applies CSS classes entered by users on the form to a templa
 
 ### class
 
- Just as with any other html template, you can add your own classes to your template elements. However, you should **always add the `pagebuilder-content-type` as the first class in the top node in your `preview.html` template** as shown for the Quote. Page Builder uses the `pagebuilder-content-type` class to add visual indicators and mouseover effects to the Admin preview template, such as correctly positioning the options menu. Defining custom LESS/CSS classes for your content type is discussed in [Step 5: Add styles](step-5-add-styles.md).
+ Just as with any other HTML template, you can add your own classes to your template elements. However, **always add the `pagebuilder-content-type` as the first class in the top node in your `preview.html` template** as shown for the Quote. Page Builder uses the `pagebuilder-content-type` class to add visual indicators and mouseover effects to the Admin preview template, such as correctly positioning the options menu. Defining custom LESS/CSS classes for your content type is discussed in [Step 5: Add styles](step-5-add-styles.md).
 
 ### liveEdit
 
@@ -171,9 +171,9 @@ The `liveEdit` binding enables end users to enter HTML content directly on the A
 
 The `event` attribute enables the options menu to be shown and hidden when users interact with the content type using the mouse. If you have a special circumstance with the way you wish to handle your option menus, you can modify this logic to suit your needs.
 
-## Quote `master.html`
+## Quote `render_template`
 
-The `master.html` template defined for the Quote appearance is shown here in full. The same attributes and descriptions from the Admin preview template apply to this template as well, with one addition, the `html` attribute. 
+The Quote `render_template` (`master.html`) is shown here in full. The same attributes and descriptions from the `preview.html` template apply to the `master.html` template as well. However, the  `master.html` template introduces one addition attribute, `html`, which is described after the code.
 
 ```html
 <!--master.html-->
@@ -200,7 +200,9 @@ The `master.html` template defined for the Quote appearance is shown here in ful
 
 ### html
 
-The `html` attribute applies the actual user-entered HTML to the template element. In our Quote example, the end-user enters their quote text either from the Admin stage using `liveEdit`, which is bound to the `quote_text` field, or from the form. 
+The `html` attribute applies the actual user-entered HTML content to the template element. In our Quote example, the end-user enters their quote text either on the Admin stage using `liveEdit` (which is bound to the `quote_text` field in the form editor) or on the form, directly into the`quote_text` field itself.
+
+For example, from the Quote `preview.html` template, the `liveEdit` binding on the `blockquote` is bound to the `quote_text` field that stores the HTML content, as shown here (`{ field: 'quote_text'...}`):
 
 ```html
 <!--preview.html-->
@@ -208,9 +210,7 @@ The `html` attribute applies the actual user-entered HTML to the template elemen
 </blockquote>
 ```
 
-From `liveEdit`, we see that the content of `blockquote` is bound to the `quote_text` field that stores the html. 
-
-The master format storefront template uses the `html` attribute to retrieve the HTML content and display it in the `blockquote` element: 
+The master format storefront template uses the `html` attribute to retrieve the HTML content and display it in the `blockquote` element as follows: 
 
 ```html
 <!--master.html-->
@@ -223,6 +223,7 @@ The `html` value is derived from the configuration `element` name  (`quote`) and
 <element name="quote">
   <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
 	...
+</element>
 ```
 
 ## Next
