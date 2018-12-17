@@ -42,7 +42,6 @@ export default class WidgetDirective extends BaseWidgetDirective {
             products_count: data.products_count,
             type_name: "Catalog Products List",
             conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || ""),
-            store_id: 0,
         };
 
         if (attributes.conditions_encoded.length === 0) {

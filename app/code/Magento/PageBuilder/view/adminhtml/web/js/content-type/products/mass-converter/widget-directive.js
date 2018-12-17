@@ -55,8 +55,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
         show_pager: 0,
         products_count: data.products_count,
         type_name: "Catalog Products List",
-        conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || ""),
-        store_id: 0
+        conditions_encoded: this.encodeWysiwygCharacters(data.conditions_encoded || "")
       };
 
       if (attributes.conditions_encoded.length === 0) {
