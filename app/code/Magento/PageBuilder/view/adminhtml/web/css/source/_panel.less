@@ -47,13 +47,18 @@
 }
 
 .pagebuilder-panel-wrapper {
-    display: none;
+    -moz-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+    -webkit-transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
     float: left;
+    opacity: 0;
     position: relative;
+    transition: opacity .75s ease-in-out, visibility .75s ease-in-out;
+    visibility: hidden;
     width: 150px;
 
     &.visible {
-        display: block;
+        opacity: 1;
+        visibility: visible;
 
         &.sticky-top {
             position: fixed;
@@ -224,7 +229,7 @@
     &.collapsed {
         width: 32px;
 
-        #pagebuilder-panel {
+        .pagebuilder-panel {
             opacity: 0;
             transform: translateX(-100%);
         }

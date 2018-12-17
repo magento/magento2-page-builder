@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import utils from "mageUtils";
-import _ from "underscore";
 import Config from "./config";
 import PageBuilderInterface from "./page-builder.d";
 import Panel from "./panel";
@@ -53,14 +53,9 @@ export default class PageBuilder implements PageBuilderInterface {
      */
     public onFullScreenChange(): void {
         if (this.isFullScreen()) {
-            this.originalScrollTop = window.scrollY;
-            _.defer(() => {
-                window.scroll(0, 0);
-            });
+            $("body").css("overflow", "hidden");
         } else {
-            _.defer(() => {
-                window.scroll(0, this.originalScrollTop);
-            });
+            $("body").css("overflow", "");
         }
 
         events.trigger(`stage:${ this.id }:fullScreenModeChangeAfter`, {

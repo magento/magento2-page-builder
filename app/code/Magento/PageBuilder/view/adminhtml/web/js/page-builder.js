@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_knockout, _events, _mageUtils, _underscore, _config, _panel, _stage) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _config, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -57,18 +57,10 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
 
 
     _proto.onFullScreenChange = function onFullScreenChange() {
-      var _this2 = this;
-
       if (this.isFullScreen()) {
-        this.originalScrollTop = window.scrollY;
-
-        _underscore.defer(function () {
-          window.scroll(0, 0);
-        });
+        (0, _jquery)("body").css("overflow", "hidden");
       } else {
-        _underscore.defer(function () {
-          window.scroll(0, _this2.originalScrollTop);
-        });
+        (0, _jquery)("body").css("overflow", "");
       }
 
       _events.trigger("stage:" + this.id + ":fullScreenModeChangeAfter", {
