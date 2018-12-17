@@ -17,7 +17,7 @@ Conventions for adding content type templates are as follows.
 
 - Page Builder requires the name of an `appearance` to match the name of the directory containing the appearance templates. If they don't match, your content type appearances will not render. 
 
-  For example, if you navigate to the Banner's appearance templates (`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
+  For example, if you navigate to the Banner's appearance templates (`PageBuilder/view/adminhtml/web/template/content-type/banner`) you can see that the names of the template directories match the names of the four appearances defined in the `banner.xml` configuration file as shown here:
 
   ```xml
   <appearances>
