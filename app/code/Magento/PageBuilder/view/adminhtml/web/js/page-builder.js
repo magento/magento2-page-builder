@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _config, _panel, _stage) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -15,6 +15,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "Mag
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
       this.loading = _knockout.observable(true);
+      this.wrapperStyles = _knockout.observable({});
+      this.previousWrapperStyles = {};
 
       _config.setConfig(config);
 
@@ -35,9 +37,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "Mag
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _events.on("stage:" + this.id + ":toggleFullscreen", function () {
-        return _this.toggleFullScreen();
-      });
+      _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
       this.isFullScreen.subscribe(function () {
         return _this.onFullScreenChange();
@@ -45,11 +45,74 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "Mag
     };
     /**
      * Tells the stage wrapper to expand to fullScreen
+     *
+     * @param {StageToggleFullScreenParamsInterface} args
      */
 
 
-    _proto.toggleFullScreen = function toggleFullScreen() {
-      this.isFullScreen(!this.isFullScreen());
+    _proto.toggleFullScreen = function toggleFullScreen(args) {
+      var _this2 = this;
+
+      if (args.animate === false) {
+        this.isFullScreen(!this.isFullScreen());
+        return;
+      }
+
+      var stageWrapper = (0, _jquery)("#" + this.stage.id).parent();
+      var pageBuilderWrapper = stageWrapper.parents(".pagebuilder-wysiwyg-wrapper");
+      var panel = stageWrapper.find(".pagebuilder-panel");
+
+      if (!this.isFullScreen()) {
+        pageBuilderWrapper.css("height", pageBuilderWrapper.outerHeight());
+        this.previousPanelHeight = panel.outerHeight();
+        panel.css("height", this.previousPanelHeight + "px");
+        /**
+         * Fix the stage in the exact place it is when it's part of the content and allow it to transition to full
+         * screen.
+         */
+
+        var xPosition = parseInt(stageWrapper.offset().top.toString(), 10) - parseInt((0, _jquery)(window).scrollTop().toString(), 10);
+        var yPosition = stageWrapper.offset().left;
+        this.previousWrapperStyles = {
+          position: "fixed",
+          top: xPosition + "px",
+          left: yPosition + "px",
+          zIndex: "800",
+          width: stageWrapper.outerWidth().toString() + "px"
+        };
+        this.wrapperStyles(this.previousWrapperStyles);
+        this.isFullScreen(true);
+
+        _underscore.defer(function () {
+          // Remove all styles we applied to fix the position once we're transitioning
+          panel.css("height", "");
+
+          _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
+            var _Object$assign;
+
+            return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
+          }, {}));
+        });
+      } else {
+        // When leaving full screen mode just transition back to the original state
+        this.wrapperStyles(this.previousWrapperStyles);
+        this.isFullScreen(false);
+        panel.css("height", this.previousPanelHeight + "px"); // Wait for the 350ms animation to complete before changing these properties back
+
+        _underscore.delay(function () {
+          panel.css("height", "");
+          pageBuilderWrapper.css("height", "");
+
+          _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
+            var _Object$assign2;
+
+            return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
+          }, {}));
+
+          _this2.previousWrapperStyles = {};
+          _this2.previousPanelHeight = null;
+        }, 350);
+      }
     };
     /**
      * Change window scroll base on full screen mode.
