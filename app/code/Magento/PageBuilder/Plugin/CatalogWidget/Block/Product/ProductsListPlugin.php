@@ -75,7 +75,10 @@ class ProductsListPlugin
 
         $conditions = $this->conditionsHelper->decode($conditionsEncoded);
 
-        $nextHighestRootConditionNumber = max(preg_grep('#^\d+$#', array_keys($conditions)), 0) + 1;
+        $nextHighestRootConditionNumber = max(
+            0,
+            ...preg_grep('#^\d+$#', array_keys($conditions))
+        ) + 1;
 
         $conditions[$nextHighestRootConditionNumber] = [
             'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
