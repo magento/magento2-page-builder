@@ -5,7 +5,7 @@ The development of this tutorial is currently **IN PROGRESS**.
 
 ***
 
-In this step, we will create a UI component form to give our Quote example an editor we can use to edit content and style its appearance in various ways.
+In this step, we will create a UI component form so that we can give end-users an editor for entering content for the Quote and for styling its appearance when it is displayed in the Admin and on the storefront.
 
 ## About forms
 
@@ -19,15 +19,13 @@ Inheriting from either base form gives you an editor for your content type that 
 
 ### `pagebuilder_base_form`
 
-The `pagebuilder_base_form` gives you the following form fields in the editor, along with the Close, Reset, and Save buttons as shown here:
+The `pagebuilder_base_form` gives you the following form fields in a fieldset named Advance, along with the Close, Reset, and Save buttons as shown here:
 
  ![Create config file](../images/pagebuilder_base_form.png)
 
-
-
 ### `pagebuilder_base_form_with_background_attributes`
 
-In addition the the "Advanced" form fields from `pagebuilder_base_form`,  the `pagebuilder_base_form_with_background_attributes` gives you the following "Background" form fields as shown here:
+In addition to all the fields from `pagebuilder_base_form`,  the `pagebuilder_base_form_with_background_attributes` gives you the following "Background" form fields as shown here:
 
 ![Create config file](../images/pagebuilder_base_form_with_background_attributes.png)
 
@@ -48,6 +46,165 @@ The form and layout files should be added to your module in the following locati
 ![Create config file](../images/step4-add-form.png)
 
 Make sure you add these files as shown before continuing.
+
+## Quote form
+
+The Quote form inherits from `pagebuilder_base_form_with_background_attributes` to provide all the form fields available for customizing our content type. In addition to the fields we get from inheritance, we want to add specific entry and styling fields for our Quote, as shown here:
+
+![Create config file](../images/custom-form-fields.png)
+
+The Quote form is shown in full here for you to copy into your `pagebuilder_example_form.xml` file, followed by descriptions of the key parts.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form_with_background_attributes">
+  <argument name="data" xsi:type="array">
+    <item name="js_config" xsi:type="array">
+      <item name="provider" xsi:type="string">pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</item>
+    </item>
+    <item name="label" xsi:type="string" translate="true">Quote</item>
+  </argument>
+  <settings>
+    <namespace>pagebuilder_example_quote_form</namespace>
+    <deps>
+      <dep>pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</dep>
+    </deps>
+  </settings>
+  <dataSource name="pagebuilder_example_quote_form_data_source">
+    <argument name="data" xsi:type="array">
+      <item name="js_config" xsi:type="array">
+        <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
+      </item>
+    </argument>
+    <dataProvider name="pagebuilder_example_quote_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+      <settings>
+        <requestFieldName/>
+        <primaryFieldName/>
+      </settings>
+    </dataProvider>
+  </dataSource>
+  <fieldset name="general" sortOrder="20">
+    <settings>
+      <label/>
+    </settings>
+    <field name="quote_text" sortOrder="10" formElement="textarea">
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="source" xsi:type="string">page</item>
+        </item>
+      </argument>
+      <settings>
+        <dataScope>quote_text</dataScope>
+        <dataType>text</dataType>
+        <label translate="true">Quote</label>
+      </settings>
+    </field>
+    <field name="quote_author" sortOrder="20" formElement="input">
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="source" xsi:type="string">page</item>
+        </item>
+      </argument>
+      <settings>
+        <dataScope>quote_author</dataScope>
+        <dataType>text</dataType>
+        <label translate="false">Author</label>
+      </settings>
+    </field>
+    <field name="quote_author_desc" sortOrder="30" formElement="input">
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="source" xsi:type="string">page</item>
+        </item>
+      </argument>
+      <settings>
+        <dataScope>quote_author_desc</dataScope>
+        <dataType>text</dataType>
+        <label translate="false">Author Description</label>
+      </settings>
+    </field>
+    <field name="quote_css" sortOrder="40" formElement="input">
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="source" xsi:type="string">page</item>
+        </item>
+      </argument>
+      <settings>
+        <dataScope>quote_css</dataScope>
+        <dataType>text</dataType>
+        <label translate="true">CSS for Quote</label>
+      </settings>
+    </field>
+  </fieldset>
+</form>
+```
+
+### fieldset
+
+The `<fieldset>` element is required and provides a basic grouping mechanism (with an optional label) for the fields in your form. You can define as many fieldsets as you want.
+
+| Attribute   | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| `name`      | You can name your fieldset whatever you want. Currently, it has no significance for data binding. |
+| `sortOrder` | Determines where the fieldset is placed in the editor. The `sortOrder` for the `pagebuilder_base_form` fieldset is set to `90`. Setting your fieldset to a value less than that (such as `20`) will put your fieldset above the inherited fieldsets. A value greater than `90` will put your fieldset below the inherited fieldsets. |
+
+### field
+
+The `<field>` element creates the actual HTML form element as specified by the `formElement` attribute, such as input, select, textarea, and colorPicker.
+
+| Attribute     | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| `name`        | The name of the field used for data bindings.                |
+| `sortOrder`   | Determines where the field is placed within the fieldset in relation to other fields. |
+| `formElement` | Determines the HTML form element to render for the field.    |
+
+### argument data source
+
+Defines the data source for the field. 
+
+[Need more info. What does it mean for the `page` to be specified as the data source?]
+
+```xml
+<argument name="data" xsi:type="array">
+  <item name="config" xsi:type="array">
+    <item name="source" xsi:type="string">page</item>
+  </item>
+</argument>
+```
+
+### settings
+
+The `<settings>` element defines the data scope, data type, and label to use for the field, as shown here:
+
+```xml
+<settings>
+  <dataScope>quote_text</dataScope>
+  <dataType>text</dataType>
+  <label translate="true">Quote</label>
+</settings>
+```
+
+The `dataType` values are typically `text` and `boolean`.
+
+[What is the dataScope? What's its significance? How is it used?]
+
+## Quote form layout
+
+The layout for our Quote form is shown in full here for you to copy into your `pagebuilder_example_form.xml` layout file. For more information about layouts, see [Layout instructions](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-instructions.html).
+
+```xml
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="pagebuilder_example_quote_form"/>
+        </referenceContainer>
+    </body>
+</page>
+```
+
+
 
 ## Form configuration
 
@@ -112,6 +269,8 @@ The `<element>` element provides a scope for the data bindings within it.
 | Attribute | Description                                                  |
 | --------- | ------------------------------------------------------------ |
 | `name`    | Specifies the name of the element scope for the data binding when applied to template elements. In our example, the element name of `main` is used as the scope for binding styles and other attributes to the top-level `<div>` element in our template: `<div attr="data.main.attributes" ko-style="data.main.style">` |
+
+![Create config file](../images/step4-add-form.png)
 
 #### style
 
@@ -220,162 +379,6 @@ And the application of the binding in the `master.html` template is shown here:
 ```html
 <!-- from master.html -->
 <blockquote css="data.quote.css" html="data.quote.html"></blockquote>
-```
-
-## Quote form
-
-The Quote form inherits from `pagebuilder_base_form_with_background_attributes` to provide all the form fields available for customizing our content type. In addition to the fields we get from inheritance, we want to add specific entry and styling fields for our Quote, as shown here:
-
-![Create config file](../images/custom-form-fields.png)
-
-The Quote form is shown in full here for you to copy into your `pagebuilder_example_form.xml` file, followed by descriptions of the key parts.
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form_with_background_attributes">
-  <argument name="data" xsi:type="array">
-    <item name="js_config" xsi:type="array">
-      <item name="provider" xsi:type="string">pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</item>
-    </item>
-    <item name="label" xsi:type="string" translate="true">Quote</item>
-  </argument>
-  <settings>
-    <namespace>pagebuilder_example_quote_form</namespace>
-    <deps>
-      <dep>pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</dep>
-    </deps>
-  </settings>
-  <dataSource name="pagebuilder_example_quote_form_data_source">
-    <argument name="data" xsi:type="array">
-      <item name="js_config" xsi:type="array">
-        <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
-      </item>
-    </argument>
-    <dataProvider name="pagebuilder_example_quote_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
-      <settings>
-        <requestFieldName/>
-        <primaryFieldName/>
-      </settings>
-    </dataProvider>
-  </dataSource>
-  <fieldset name="general" sortOrder="20">
-    <settings>
-      <label/>
-    </settings>
-    <field name="quote_text" sortOrder="10" formElement="textarea">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_text</dataScope>
-        <dataType>text</dataType>
-        <label translate="true">Quote</label>
-      </settings>
-    </field>
-    <field name="quote_author" sortOrder="20" formElement="input">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_author</dataScope>
-        <dataType>text</dataType>
-        <label translate="false">Author</label>
-      </settings>
-    </field>
-    <field name="quote_author_desc" sortOrder="30" formElement="input">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_author_desc</dataScope>
-        <dataType>text</dataType>
-        <label translate="false">Author Description</label>
-      </settings>
-    </field>
-    <field name="quote_css" sortOrder="40" formElement="input">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_css</dataScope>
-        <dataType>text</dataType>
-        <label translate="true">CSS for Quote</label>
-      </settings>
-    </field>
-  </fieldset>
-</form>
-```
-
-### fieldset
-
-The `<fieldset>` element is required and provides a basic grouping mechanism (with an optional label) for the fields in your form. You can define as many fieldsets as you want.
-
-| Attribute   | Description                                                  |
-| ----------- | ------------------------------------------------------------ |
-| `name`      | _What significance or conventions apply to the fieldset name?_ |
-| `sortOrder` | Determines where the fieldset is placed in the editor. The `sortOrder` for the `pagebuilder_base_form` fieldset is set to `90`. Setting your fieldset to a value less than that (such as `20`) will put your fieldset above the inherited fieldsets. A value greater than `90` will put your fieldset below the inherited fieldsets. |
-
-### field
-
-The `<field>` element creates the actual HTML form element as specified by the `formElement` attribute, such as input, select, textarea, and colorPicker.
-
-| Attribute     | Description                                                  |
-| ------------- | ------------------------------------------------------------ |
-| `name`        | The name of the field used for bindings.                     |
-| `sortOrder`   | Determines where the field is placed within the fieldset in relation to other fields. |
-| `formElement` | Determines the HTML form element to render for the field.    |
-
-### argument data source
-
-Defines the data source for the field. 
-
-[Need more info. What does it mean for the `page` to be specified as the data source?]
-
-```xml
-<argument name="data" xsi:type="array">
-  <item name="config" xsi:type="array">
-    <item name="source" xsi:type="string">page</item>
-  </item>
-</argument>
-```
-
-### settings
-
-The `<settings>` element defines the data scope, data type, and label to use for the field, as shown here:
-
-```xml
-<settings>
-  <dataScope>quote_text</dataScope>
-  <dataType>text</dataType>
-  <label translate="true">Quote</label>
-</settings>
-```
-The `dataType` values are typically `text` and `boolean`.
-
-[What is the dataScope? What's its significance? How is it used?]
-
-## Quote form layout
-
-The layout for our Quote form is shown in full here for you to copy into your `pagebuilder_example_form.xml` layout file. For more information about layouts, see [Layout instructions](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-instructions.html).
-
-```xml
-<?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <update handle="styles"/>
-    <body>
-        <referenceContainer name="content">
-            <uiComponent name="pagebuilder_example_quote_form"/>
-        </referenceContainer>
-    </body>
-</page>
 ```
 
 ## Next
