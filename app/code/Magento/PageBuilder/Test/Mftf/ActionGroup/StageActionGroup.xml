@@ -112,6 +112,15 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>
+    <actionGroup name="inlineEditTextWYSIWYGFromStage">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{TextOnStage.tinymce(index)}}" stepKey="focusOnEditorArea"/>
+        <pressKey selector="{{TextOnStage.tinymce(index)}}" userInput="{{content}}" stepKey="fillTextToTinyMCE4"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
+    </actionGroup>
     <actionGroup name="inlineEditTextAreaFromStage">
         <arguments>
             <argument name="contentType"/>
