@@ -703,6 +703,10 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
+        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeight">
+            <argument name="content" value="{{MapOnStage.mainCSS}}"/>
+            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+        </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -855,52 +859,9 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-    </test>
-    <test name="MapWithBordersAndPaddingEqualToHeight" extends="RowWithBordersAndPaddingEqualToMinHeight">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Map"/>
-            <title value="Map height with borders and padding is equal to height"/>
-            <description value="A user can see Map height with borders and padding is equal to height"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-5079"/>
-            <testCaseId value="MC-5793"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-map"/>
-            <group value="pagebuilder-mapCommon"/>
-        </annotations>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" after="enterPageTitle" stepKey="expandGroup">
-            <argument name="group" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" after="commentConfigureContentType" stepKey="dragContentTypeToStage">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
-        <actionGroup ref="clickAddLocationButton" after="openEditPanel" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="clickMapToAddOrMovePin" after="clickAddLocationButton" stepKey="addMapPin"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" after="addMapPin" stepKey="enterLocationName">
-            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
-        </actionGroup>
-        <actionGroup ref="saveLocationForm" after="enterLocationName" stepKey="saveLocationForm"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
-            <argument name="property" value="PageBuilderMapHeightDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
-            <argument name="content" value="{{MapOnStage.mainCSS}}"/>
-        </actionGroup>
-        <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
-            <argument name="content" value="{{MapOnStage.mainCSS}}"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderMapContentType"/>
-        </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightStorefront">
             <argument name="content" value="{{MapOnStorefront.baseCSS}}"/>
+            <argument name="height" value="PageBuilderMapHeightProperty350"/>
         </actionGroup>
     </test>
     <test name="MapDuplicate">
