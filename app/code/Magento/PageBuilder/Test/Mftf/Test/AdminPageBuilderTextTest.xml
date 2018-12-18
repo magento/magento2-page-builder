@@ -178,13 +178,6 @@
         <!--Assert Text placeholder and inline edit-->
         <comment userInput="Assert Text placeholder and inline edit" stepKey="comment1"/>
         <seeElement selector="{{TextOnStage.textareaPlaceholder('1')}}" stepKey="seeTextareaPlaceholder"/>
-        <!--Check min height of textarea-->
-        <comment userInput="Check min height of textarea" stepKey="comment2"/>
-        <executeJS function="return jQuery('.inline-wysiwyg-textarea').css('min-height');" stepKey="height"/>
-        <assertEquals stepKey="assertMinHeight">
-            <actualResult type="variable">height</actualResult>
-            <expectedResult type="string">{{PageBuilderTextProperty.minHeight}}</expectedResult>
-        </assertEquals>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!--Verify empty content type on storefront-->
         <comment userInput="Verify empty content type on storefront" stepKey="commentVerifyEmptyBlock"/>
@@ -192,8 +185,6 @@
         <waitForPageLoad stepKey="waitForPageLoad" />
         <seeElementInDOM selector="{{TextOnStorefront.empty('1')}}" stepKey="seeEmptyTextContentType"/>
         <dontSeeElement selector="{{TextOnStorefront.empty('1')}}" stepKey="dontSeeEmptyTextContentTypeOnStorefront"/>
-        <!--Check min height of textarea on Storefront-->
-        <comment userInput="Check min height of textarea on Storefront" stepKey="comment3"/>
         <seeElementInDOM selector="{{TextOnStorefront.noCssClasses('1')}}" stepKey="dontSeeCSSClassOnEmptyTextarea"/>
     </test>
     <test name="TextVerifyTextAreaOnTextContentType">
@@ -2640,7 +2631,8 @@
         </actionGroup>
         <!--Input text into stage-->
         <comment userInput="Input text into stage" stepKey="commentInputTextIntoStage"/>
-        <actionGroup ref="inlineEditTextWYSIWYGFromStage" stepKey="inlineEdit">
+        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="content" value="{{PageBuilderTextProperty.value}}"/>
         </actionGroup>
         <executeJS function="return document.evaluate(&quot;{{TextOnStage.base('1'))}}&quot;, document.body).iterateNext().offsetHeight;" stepKey="getTextOnStageHeight"/>
