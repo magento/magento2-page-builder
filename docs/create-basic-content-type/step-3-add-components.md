@@ -5,18 +5,32 @@ The development of this tutorial is currently **IN PROGRESS**.
 
 ***
 
-In this step, we will create a preview component in order to show you how to customize the Quote options menu.
+In this step, we will create a preview component in order to customize the options menu for our Quote. The options menu is the popup menu that appears when you mouseover a content type, as shown here:
+
+![Create config file](../images/options-menu-default.png)
+
+The options menu provides end-users with several functions, including a button to open the content type's form editor, which we will add in [Step 4: Add form](step-4-add-form.md).
 
 ## About components
 
-Components are the JavaScript files that define the behaviors of your content type when they appear on the stage in the Admin UI (using the `preview.js` component) and in the storefront (using the `master.js` component). As such, they are complementary to the templates you added previously in Step 2, acting as the view models to the template's views.
+Components are JavaScript files that define the behaviors of your content type when they appear on the Admin stage (using the `preview.js` component) and in the storefront (using the `master.js` component). As such, they are complementary to the templates you added previously in Step 2, acting as the view models to the template's views. 
 
-Custom component files are completely optional. If they are not added to your content type, Page Builder will use these defaults:
+Adding custom component files to your content types is completely optional. Whether you need one or not will depend on the complexity of your content type. If you do not add components to your content type, Page Builder will use these defaults:
 
 - Default preview component: `Magento_PageBuilder/js/content-type/preview`
 - Default master component: `Magento_PageBuilder/js/content-type/master`
 
-Reasons for adding your own preview component include customizing options menus and adding user-interactivity that your content type needs to fulfill its function when displayed on the Admin stage. Adding your own master component is necessary if you want to... **[Reviewer: please give some examples of when custom master components might be necessary.]**
+When you start developing more complex content types, you will need to create custom preview components in order to make these and other functions available on the Admin stage:
+
+- Initiating and using additional 3rd party libraries like sliders and tabs.
+- Adding image uploader support.
+- Providing dynamic data into your preview templates from the back-end.
+- Allowing the back-end to conduct rendering (such as our block and dynamic block content types).
+- Declaring special states based on the data stored, for example, showing a disabled state when certain fields are set to specific values.
+
+Examples of implementing these functions will be add to future tutorials and other topics in this documentation. 
+
+Adding your own master component is far less common. The master component is only necessary if you want to manipulate the final output of your content type before it is persisted to the database.
 
 ## Component conventions
 
@@ -24,7 +38,7 @@ The conventions for naming your components and adding them to your module are as
 
 - Your preview component must be named `preview.js` and placed here in your module (`view/adminhtml/web/js/content-type/example-quote/`):
 
-  ![Create config file](../images/step3-add-component.png)
+![Create config file](../images/step3-add-component.png)
 
 - Your master component must be named `master.js` and placed here in your module (`view/frontend/web/js/content-type/example-quote/`):
 
@@ -32,7 +46,7 @@ The conventions for naming your components and adding them to your module are as
 
 We will not create a master component for our Quote example, but the location is given here if you need to include one for more complex content types.
 
-Before continuing, add the preview component file (``preview.js`) to your `PageBuilderQuote` module within the directory structure noted.
+Before continuing, add the preview component file (`preview.js`) to your `PageBuilderQuote` module within the directory structure noted.
 
 ## Component configuration
 
@@ -55,7 +69,7 @@ A description of each component-related attribute from the Quote configuration f
 
 | Attribute           | Description                                                  |
 | ------------------- | ------------------------------------------------------------ |
-| `component`         | There are two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children (like our Quote). Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children (container content types). |
+| `component`         | Page Builder provides two component types to choose from: `content-type` and `content-type-collection`. Use `Magento_PageBuilder/js/content-type` for static content types that do not have children (like our Quote). Use `Magento_PageBuilder/js/content-type-collection` for content types that can contain children (container content types). You can also create and specify your own component implementations, provided they conform to the Page Builder interfaces. |
 | `preview_component` | Optional. The `preview.js` file provides rendering logic to the Admin preview template. If your content type does not require any changes to Page Builder's standard rendering logic, you can omit this attribute from the the `type` element. When you omit the attribute, Page Builder will use `Magento_PageBuilder/js/content-type/preview` by default.<br /><br />However, if you want to make changes to the option menu for your content type, or other customize other user-interactivity in the Admin, you need to create your own preview component as we have done for the Quote content type. |
 | `master_component`  | Optional. The `master.js` file provides rendering logic to the master format storefront template. As with the `preview_component`, if your content type does not require any specific user-interactivity or other behavior when it's displayed in the storefront, you can simply omit this attribute from the the `type` element. When you omit the attribute, Page Builder will use `Magento_PageBuilder/js/content-type/master` by default. <br /><br />In the Quote configuration, the `master_component` attribute is only included for discussion. It simply points to the Page Builder default `master.js` component that would be used the attribute was omitted. |
 
@@ -79,10 +93,6 @@ define([
 
   Preview.prototype.retrieveOptions = function retrieveOptions() {
     var options = $super.retrieveOptions.call(this, arguments);
-    //console.log(options);
-
-    // Change option menu title
-    options.title.preview.config.label = "Quote Menu";
 
     // Change option menu icons
     options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
@@ -137,10 +147,6 @@ To do this, we need to override the protected `retrieveOptions()` function from 
 ```js
 Preview.prototype.retrieveOptions = function retrieveOptions() {
   var options = $super.retrieveOptions.call(this, arguments);
-  //console.log(options);
-
-  // Change option menu title
-  options.title.preview.config.label = "Quote Menu";
   
   // Change option menu icons
   options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
@@ -161,26 +167,17 @@ Preview.prototype.retrieveOptions = function retrieveOptions() {
 };
 ```
 
-In the preceding code, we made changes to the options menu title, icons, and tooltips. You can also remove options from the menu. For example, if you don't want end-users to move or duplicate your content type, you can remove those options from your menu using `delete options.move` and `delete options.duplicate` as shown commented out in the code.
+In the preceding code, we made changes to the options menu icons and tooltips. You can also remove options from the menu. For example, if you don't want end-users to move or duplicate your content type, you can remove those options from your menu using `delete options.move` and `delete options.duplicate` as shown commented out in the code.
 
 ![Create config file](../images/options-menu-custom.png)
 
 {: .bs-callout .bs-callout-info }
 Even though you can change the base option menu properties as described, we suggest you stick the the default options as much as possible to provide end-users with a consistent experience across Magento's content types and other third-party content types that are included as time goes on.
 
-### Other changes
-
-Other changes and additions you can make to your preview component include:
-
-**[Reviewer: Please include a list of other changes or additions that developers might make in their own preview component]**
-
-
-
 ## Quote `master_component`
 
-As mentioned previously, our Quote content type has no need for a master.js component file. Instead, we are using Page Builder's default master component file: `Magento_PageBuilder/js/content-type/master`. More information on master components and their usage can be found **[where?]** 
+As mentioned previously, our Quote content type has no need for a master component. We are using Page Builder's default master component file: `Magento_PageBuilder/js/content-type/master`. 
 
 ## Next
 
 [Step 4: Add form](step-4-add-form.md)
-
