@@ -51,6 +51,7 @@
         <element name="notHidden" type="text" selector="(//div[@data-role='block'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="hr" type="button" selector="(//div[@data-role='block'])[{{arg1}}]/hr" parameterized="true"/>
         <element name="empty" type="text" selector="//div[@data-role='block'][{{arg1}}][not(*)]" parameterized="true"/>
+        <element name="textContent" type="text" selector="(//div[@data-role='block'])[{{arg1}}]//div[contains(text(),'{{arg2}}')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='block'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='block'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>

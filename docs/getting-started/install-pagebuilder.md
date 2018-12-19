@@ -18,7 +18,7 @@ If you have had a previous version of Magento 2.3.0 or Page Builder installed yo
 
 3. Navigate to the root of the project and require the `magento/module-page-builder-commerce` package:
     ```
-    composer require magento/page-builder-commerce
+    composer require magento/page-builder-commerce:^1.0.0
     ```
     
 4. Enable the module within Magento:

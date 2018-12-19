@@ -437,6 +437,7 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="enterFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitVisible"/>
         <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom"/>
         <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="verifyHeader"/>
     </test>

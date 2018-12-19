@@ -11,6 +11,7 @@
     <section name="ColumnOnBackend">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-column') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=column]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="baseCSS" type="text" selector="div.pagebuilder-content-type.pagebuilder-column"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-column')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; background-size: {{arg7}}; background-repeat: {{arg8}}; background-attachment: {{arg9}}; align-self: {{arg10}};']" parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
@@ -52,6 +53,7 @@
     <section name="ColumnOnFrontend">
         <element name="base" type="block" selector="(//div[@data-role='column'])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('[data-role=column]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="baseCSS" type="text" selector="[data-role=column]"/>
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>
         <element name="allColumns" type="block" selector="(//div[@data-role='column'])"/>
         <element name="columnX" type="block" selector="[data-role=column]:nth-child({{arg1}})" parameterized="true"/>

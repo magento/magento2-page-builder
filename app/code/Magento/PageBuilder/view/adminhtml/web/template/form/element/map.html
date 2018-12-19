@@ -6,7 +6,8 @@
 -->
 
 <div class="admin__field admin__field-map">
-    <div class="map-field" data-bind="afterRender: renderMap"></div>
+    <div visible="!apiKeyValid()" class="google-map-auth-failure-placeholder"><p html="apiKeyErrorMessage"></p></div>
+    <div visible="apiKeyValid" class="map-field" afterRender="renderMap"></div>
     <div attr="id: uid, name: inputName">
         <input type="text" ko-value="value().longitude" attr="name: inputName + '.longitude'"/>
         <input type="text" ko-value="value().latitude" attr="name: inputName + '.latitude'"/>
