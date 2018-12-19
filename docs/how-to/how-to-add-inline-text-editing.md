@@ -1,21 +1,8 @@
-# How to add inline text editing <!-- omit in toc -->
-
-<!-- {% raw %} -->
+# How to add inline text editing
 
 ## What's in this topic
 
 This topic describes how to add a reusable inline text editing component to the PageBuilder stage for a content type.
-
-## Overview
-
-To add inline editing customization to PageBuilder:
-
-- [What's in this topic](#whats-in-this-topic)
-- [Overview](#overview)
-- [Add configuration for the inline text editor](#add-configuration-for-the-inline-text-editor)
-- [Update the `<YourModule>/view/adminhtml/web/js/content-type/<content_type_name>/preview.js` file](#update-the-yourmoduleviewadminhtmlwebjscontent-typecontent_type_namepreviewjs-file)
-- [Update the preview template to display the inline text editor component](#update-the-preview-template-to-display-the-inline-text-editor-component)
-- [Extend the component](#extend-the-component)
 
 ## Add configuration for the inline text editor
 
@@ -168,5 +155,3 @@ To extend the inline text editor component:
 5. Specify the `mode` in which TinyMCE4 will be rendered on the stage.
 6. Specify the `minToolbarWidth` to limit the width of TinyMCE4. If a component is used with a content type configured to a small width, this will limit the width to match.
 7. Specify the `parentSelectorsToUnderlay` for TinyMCE4 to utilize an array of selectors for applying the z-index, which will prevent the toolbar from overlaying content type elements.
-
-<!-- {% endraw %} -->

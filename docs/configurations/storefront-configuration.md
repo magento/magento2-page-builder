@@ -1,14 +1,8 @@
-# Storefront customization <!-- omit in toc -->
+# Storefront customization
 
-<!-- {% raw %} -->
-You can customize PageBuilder content types by adding your own logic on the frontend.
+You can customize Page Builder content types by adding your own logic on the frontend, as described here.
 
-To add custom logic to content types:
-
-- [Create a JavaScript widget](#create-a-javascript-widget)
-- [Add XML configuration](#add-xml-configuration)
-
-## Create a JavaScript widget
+## Step 1: Create a JavaScript widget
 
 Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{content-type-name}/appearance/{appearance-name}/widget.js` file:
 
@@ -48,7 +42,7 @@ define([
 
 ```
 
-## Add XML configuration
+## Step 2: Add XML configuration
 
 The XML configuration loads the widget on the frontend, and on the stage, so that you can preview content inside both the block and dynamic block content types.
 
@@ -76,5 +70,3 @@ Add the following configuration to the `etc/di.xml` file in your custom module d
     </arguments>
 </type>
 ```
-
-<!-- {% endraw %} -->

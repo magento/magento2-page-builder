@@ -1,6 +1,4 @@
-# Events <!-- omit in toc -->
-
-<!-- {% raw %} -->
+# Events {#events}
 
 This document contains reference information for events dispatched in Page Builder.
 
@@ -307,7 +305,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `image:{{id}}:assignAfter`
+### `image:{{id}}:assignAfter` {#imageidassignafter}
 
 **Triggers**
 
@@ -408,7 +406,7 @@ Function
 
 [Back to top]
 
-### `stage:{{id}}:toggleFullscreen`
+### `stage:{{id}}:toggleFullscreen` {#stageidtogglefullscreen}
 
 **Triggers**
 
@@ -488,14 +486,14 @@ Error
 
 [Back to top]
 
-### `stage:{{id}}:readyAfter`
+### `stage:{{id}}:readyAfter` {#stageidreadyafter}
 
 **Triggers**
 
 * `Stage::ready`
 * `stage instance`
 
-### `stage:{{id}}:masterFormatRenderAfter`
+### `stage:{{id}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
 **Triggers**
 
@@ -552,7 +550,7 @@ Error
 
 [Back to top]
 
-### `{{config.name}}:{{id}}:updateAfter`
+### `{{config.name}}:{{id}}:updateAfter` {#confignameidupdateafter}
 
 **Triggers**
 
@@ -582,5 +580,3 @@ _none_
 [Back to top]
 
 [Back to top]: #eventslist
-
-<!-- {% endraw %} -->
