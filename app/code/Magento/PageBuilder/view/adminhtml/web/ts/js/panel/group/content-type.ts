@@ -13,16 +13,19 @@ export class ContentType {
     private icon: KnockoutObservable<string> = ko.observable("");
     private identifier: KnockoutObservable<string> = ko.observable("");
     private label: KnockoutObservable<string> = ko.observable("");
+    private stageId: string;
 
     /**
      * @param {string} identifier
      * @param {ContentTypeConfigInterface} config
+     * @param {string} stageId
      */
-    constructor(identifier: string, config: ContentTypeConfigInterface) {
+    constructor(identifier: string, config: ContentTypeConfigInterface, stageId: string) {
         this.config = config;
         this.identifier(identifier);
         this.label(config.label);
         this.icon(config.icon);
+        this.stageId = stageId;
     }
 
     /**
@@ -41,7 +44,7 @@ export class ContentType {
      */
     public getDraggableOptions() {
         return {
-            connectToSortable: getAllowedContainersClasses(this.config.name),
+            connectToSortable: getAllowedContainersClasses(this.config.name, this.stageId),
         };
     }
 }

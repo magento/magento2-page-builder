@@ -14,6 +14,7 @@
         <element name="hidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[@data-role='banner'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="elementJS" type="button" selector="document.querySelectorAll('[data-role=banner]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="wrapperCSS" type="button" selector="[data-role=banner] [data-element=wrapper]"/>
         <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="overlay" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='overlay']" parameterized="true"/>
         <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
@@ -48,7 +49,7 @@
         <element name="buttonType" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//button[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonText" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//button[.='{{arg2}}']" parameterized="true"/>
         <element name="showOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayColorAndTransparency" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="overlayBackgroundColor" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="transparentOverlay" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='banner'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -72,6 +73,7 @@
         <element name="hidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="elementJS" type="button" selector="document.querySelectorAll('[data-role=banner]')[{{arg1}} - 1]" parameterized="true"/>
+        <element name="wrapperCSS" type="button" selector="[data-role=banner] [data-element=wrapper]"/>
         <element name="wrapperJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-banner-wrapper')[{{arg1}} - 1]" parameterized="true"/>
         <element name="overlay" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-banner')])[{{arg1}}]//div[@data-element='overlay']" parameterized="true"/>
         <element name="overlayJS" type="button" selector="document.querySelectorAll('[data-role=banner] div.pagebuilder-overlay')[{{arg1}} - 1]" parameterized="true"/>
@@ -108,7 +110,7 @@
         <element name="buttonType" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonText" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//a//span[.='{{arg2}}']" parameterized="true"/>
         <element name="showOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}][@data-show-overlay='{{arg2}}']" parameterized="true"/>
-        <element name="overlayColorAndTransparency" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: rgba({{arg2}}, {{arg3}});')]" parameterized="true"/>
+        <element name="overlayBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="transparentOverlay" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[@data-element='overlay'][contains(@style,'background-color: transparent;')]" parameterized="true"/>
         <element name="inlineWYSIWYGEditorWithTag" type="text" selector="(//div[contains(@class,'pagebuilder-banner') and @data-element='main'])[{{arg1}}]//div[contains(@class,'inline-wysiwyg')]//{{arg2}}" parameterized="true"/>
         <!-- Advanced Configuration -->

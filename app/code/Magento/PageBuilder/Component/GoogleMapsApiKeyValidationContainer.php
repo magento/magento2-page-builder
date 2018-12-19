@@ -14,6 +14,8 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator;
 
 /**
+ * Google Maps API Key Validation Container for UI Component Form
+ *
  * @api
  */
 class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Container
@@ -31,17 +33,11 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
     private $scopeConfig;
 
     /**
-     * @var ApiKeyValidator
-     */
-    private $apiKeyValidator;
-
-    /**
      * Constructor
      *
      * @param ContextInterface $context
      * @param UrlInterface $url
      * @param ScopeConfigInterface $scopeConfig
-     * @param ApiKeyValidator $apiKeyValidator
      * @param array $components
      * @param array $data
      */
@@ -49,7 +45,6 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
         ContextInterface $context,
         UrlInterface $url,
         ScopeConfigInterface $scopeConfig,
-        ApiKeyValidator $apiKeyValidator,
         array $components = [],
         array $data = []
     ) {
@@ -60,7 +55,6 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
         );
         $this->url = $url;
         $this->scopeConfig = $scopeConfig;
-        $this->apiKeyValidator = $apiKeyValidator;
     }
 
     /**
@@ -73,13 +67,15 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
         parent::prepare();
         $config = $this->getData('config');
         $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH) ?: "";
-        $response = $this->apiKeyValidator->validate($apiKey);
-        if (!$response['success']) {
+        if (trim($apiKey) == "") {
             $config['visible'] = true;
         }
 
         if (isset($config['map_configuration_url'])) {
-            $config['map_configuration_url'] = $this->url->getUrl($config['map_configuration_url']);
+            $config['map_configuration_url'] = $this->url->getUrl(
+                $config['map_configuration_url'],
+                ['_fragment' => 'cms_pagebuilder']
+            );
         }
         if (isset($config['content'])) {
             $config['content'] = sprintf($config['content'], $config['map_configuration_url']);
