@@ -4,15 +4,15 @@
  */
 
 /**
+ * googleMaps dependency is added within googlemaps.phtml through shim based on API key being set
+ *
  * @api
  */
 define([
     'underscore',
     'module',
-    'Magento_PageBuilder/js/events',
-    'mage/translate',
-    'googleMaps'
-], function (_, module, events, $t) {
+    'Magento_PageBuilder/js/events'
+], function (_, module, events) {
     'use strict';
 
     var google = window.google || {},
@@ -42,23 +42,9 @@ define([
         var options,
             style;
 
-        /**
-         * Replace the content of element with a placeholder
-         *
-         * @param {Element} container
-         */
-        this.usePlaceholder = function (container) {
-            var placeholder = document.createElement('div');
-
-            placeholder.innerHTML = $t('Enter API Key to use Google Maps');
-            placeholder.classList.add('google-map-auth-failure-placeholder');
-            container.innerHTML = '';
-            container.appendChild(placeholder);
-        };
-
-        //Terminate map early and add placeholder if gm_authFailure is true
+        // If we've previously had an API key error, throw the error even again
         if (gmAuthFailure) {
-            this.usePlaceholder(element);
+            events.trigger('googleMaps:authFailure');
 
             return;
         }

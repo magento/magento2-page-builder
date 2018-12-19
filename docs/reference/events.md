@@ -23,26 +23,28 @@ This document contains reference information for events dispatched in Page Build
     - [`contentType:redrawAfter`](#contenttyperedrawafter)
         - [Backend](#backend)
         - [Frontend](#frontend)
-    - [`column:dragStart`](#columndragstart)
-    - [`column:dragStop`](#columndragstop)
-    - [`column:initializeAfter`](#columninitializeafter)
-    - [`image:{{id}}:assignAfter`](#imageidassignafter)
-    - [`image:mountAfter`](#imagemountafter)
-    - [`image:uploadAfter`](#imageuploadafter)
-    - [`stage:interactionStart`](#stageinteractionstart)
-    - [`stage:interactionStop`](#stageinteractionstop)
-    - [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
-    - [`previewData:updateAfter`](#previewdataupdateafter)
-    - [`previewSortable:sortstart`](#previewsortablesortstart)
-    - [`previewSortable:sortupdate`](#previewsortablesortupdate)
-    - [`stage:error`](#stageerror)
-    - [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-    - [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
-    - [`stage:updateAfter`](#stageupdateafter)
-    - [`stage:childFocusStart`](#stagechildfocusstart)
-    - [`stage:childFocusStop`](#stagechildfocusstop)
-    - [`state`](#state)
-    - [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
+- [`column:dragStart`](#columndragstart)
+- [`column:dragStop`](#columndragstop)
+- [`column:initializeAfter`](#columninitializeafter)
+- [`image:{{id}}:assignAfter`](#imageidassignafter)
+- [`image:mountAfter`](#imagemountafter)
+- [`image:uploadAfter`](#imageuploadafter)
+- [`stage:{{id}}:readyAfter`](#stageidreadyafter)
+- [`stage:{{id}}:renderAfter`](#stageidrenderafter)
+- [`stage:interactionStart`](#stageinteractionstart)
+- [`stage:interactionStop`](#stageinteractionstop)
+- [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
+- [`previewData:updateAfter`](#previewdataupdateafter)
+- [`previewSortable:sortstart`](#previewsortablesortstart)
+- [`previewSortable:sortupdate`](#previewsortablesortupdate)
+- [`stage:error`](#stageerror)
+- [`stage:{{id}}:readyAfter`](#stageidreadyafter)
+- [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
+- [`stage:updateAfter`](#stageupdateafter)
+- [`stage:childFocusStart`](#stagechildfocusstart)
+- [`stage:childFocusStop`](#stagechildfocusstop)
+- [`state`](#state)
+- [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
 - [`googleMaps:authFailure`](#googlemapsauthfailure)
 
 ## `contentType:*` events
@@ -336,6 +338,38 @@ Function
 **Params**
 
 Function
+
+[Back to top]
+
+### `stage:{{id}}:readyAfter`
+
+**Triggers**
+
+* `Stage::ready`
+
+**Params**
+
+``` js
+{
+    stage: Stage
+}
+```
+
+[Back to top]
+
+### `stage:{{id}}:renderAfter`
+
+**Triggers**
+
+* `Stage::constructor`
+
+**Params**
+
+``` js
+{
+    stageId: number
+}
+```
 
 [Back to top]
 
