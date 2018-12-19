@@ -36,7 +36,7 @@
                     <div>
                         <ul class="pagebuilder-panel-groups-content-types" each="contentTypes">
                             <li class="pagebuilder-draggable-content-type"
-                                data-bind="draggable: Object.assign($parents[1].getDraggableOptions(), getDraggableOptions())"
+                                data-bind="draggable: Object.assign($parents[1].getDraggableOptions($element), getDraggableOptions($element))"
                                 attr="id: 'content-type-' + identifier()">
                                 <a>
                                     <span class="content-type-icon">
@@ -52,7 +52,6 @@
         </ul>
         <div class="panel-controls">
             <a class="collapse" click="collapse" data-bind="i18n: 'Collapse'"></a>
-            <a class="full-screen" click="fullScreen" attr="title: fullScreenTitle"></a>
         </div>
     </div>
     <div class="expand" visible="isCollapsed">
