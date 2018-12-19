@@ -1,6 +1,6 @@
-## PageBuilder Early Access Program
+## PageBuilder Early Adopters Program
 
-The Page Builder Early Access Program (EAP) gives partners the following perks:
+The Page Builder Early Adopters Program (EAP) gives partners the following perks:
  
 * Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
 * Try out customization options and extend its functionality beyond its default features.

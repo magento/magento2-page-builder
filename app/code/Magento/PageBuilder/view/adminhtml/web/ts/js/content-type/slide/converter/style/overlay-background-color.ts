@@ -4,8 +4,7 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
-import {fromHex} from "../../../../utils/color-converter";
-import {percentToDecimal} from "../../../../utils/number-converter";
+import {DataObject} from "../../../../data-store";
 
 export default class OverlayBackgroundColor implements ConverterInterface {
     /**
@@ -25,11 +24,11 @@ export default class OverlayBackgroundColor implements ConverterInterface {
      * @param data Object
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        let overlayColor: string = "transparent";
-        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+    public toDom(name: string, data: DataObject): string | object {
+        if (data.show_overlay === "always" && data[name] !== "" && data[name] !== undefined) {
+            return data[name].toString();
         }
-        return overlayColor;
+
+        return "transparent";
     }
 }

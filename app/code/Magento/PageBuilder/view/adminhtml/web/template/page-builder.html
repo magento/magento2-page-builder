@@ -5,11 +5,11 @@
  */
 -->
 <div class="pagebuilder-stage-wrapper"
-     css="'stage-full-screen': isFullScreen">
+     css="'stage-full-screen': isFullScreen"
+     ko-style="wrapperStyles">
     <div class="admin__field pagebuilder-header">
-        <i click="toggleFullScreen.bind($data)" css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'action-close': isFullScreen()"></i>
+        <i click="function() { toggleFullScreen($element); }" css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"></i>
     </div>
-    <br/>
     <with args="panel">
         <render/>
     </with>

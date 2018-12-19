@@ -91,12 +91,14 @@
     <actionGroup name="clickAndValidateGoogleMapsAPIKeyTestKeyButton">
         <arguments>
             <argument name="expectedResult" defaultValue="success" type="string"/>
+            <argument name="buttonText" type="string"/>
         </arguments>
         <comment userInput="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="comment"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="waitForTestKeyButtonEnabled"/>
         <click selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="clickTestKeyButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult(expectedResult)}}" stepKey="waitForTestKeyButtonResult"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult}} .icon-admin-pagebuilder-{{expectedResult}}" stepKey="waitForTestKeyButtonResult"/>
+        <see userInput="{{buttonText}}" selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult}}" stepKey="seeTestKeyButtonText"/>
     </actionGroup>
     <actionGroup name="inputGoogleMapsStyle">
         <arguments>
