@@ -56,7 +56,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <grabMultiple selector="{{ProductsOnStage.product('1')}}" stepKey="grabStorefrontProducts"/>
+        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts"/>
         <assertCount expected="0" expectedType="int" actualType="variable" actual="grabStorefrontProducts" stepKey="assertStorefrontCountIs0" />
     </test>
     <test name="AdminPageBuilderProductsCanSaveConditionTest">
@@ -1358,5 +1358,121 @@
             <actualResult type="variable">firstColumnWidthFrontend</actualResult>
             <expectedResult type="variable">productActionsWidthFrontend</expectedResult>
         </assertGreaterThan>
+    </test>
+    <test name="ProductFromDifferentWebsiteShowsOnStage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Product from Different Website Shows on Stage"/>
+            <description value="As a product manager I want to be able to see products from all store views on stage in admin so that I don't get worried that conditions are being applied incorrectly"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5373"/>
+            <testCaseId value="MC-6294"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-storeView"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="customWebsite" stepKey="createCustomWebsite"/>
+            <createData entity="SimpleSubCategory" stepKey="createCategory"/>
+            <actionGroup ref="AdminStoreGroupCreateActionGroup" stepKey="createNewStore">
+                <argument name="Website" value="customWebsite"/>
+                <argument name="storeGroup" value="customStoreGroup"/>
+            </actionGroup>
+            <actionGroup ref="AdminCreateStoreViewActionGroup" stepKey="createCustomStoreView">
+                <argument name="StoreGroup" value="customStoreGroup"/>
+                <argument name="customStore" value="customStore"/>
+            </actionGroup>
+        </before>
+        <after>
+            <actionGroup ref="DeleteCustomWebsiteActionGroup" stepKey="deleteWebsite">
+                <argument name="websiteName" value="$createCustomWebsite.website[name]$"/>
+            </actionGroup>
+            <actionGroup ref="DeleteCategory" stepKey="deleteCategory">
+                <argument name="categoryEntity" value="SimpleSubCategory"/>
+            </actionGroup>
+            <actionGroup ref="deleteProductBySku" stepKey="deleteProduct">
+                <argument name="sku" value="{{SimpleProduct.sku}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
+        </after>
+        <!-- Create product and assign to store view -->
+        <comment userInput="Create product and assign to store view" stepKey="createProductAndAssignToStoreView"/>
+        <actionGroup ref="FillAdminSimpleProductForm" stepKey="createProduct">
+            <argument name="category" value="SimpleSubCategory"/>
+            <argument name="simpleProduct" value="SimpleProduct"/>
+        </actionGroup>
+        <actionGroup ref="SelectProductInWebsitesActionGroup" stepKey="setWebsite2">
+            <argument name="website" value="$createCustomWebsite.website[name]$"/>
+        </actionGroup>
+        <uncheckOption selector="{{ProductInWebsitesSection.website('Main Website')}}" stepKey="uncheckMainWebsite"/>
+        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="clickSaveProduct"/>
+        <waitForPageLoad stepKey="waitForProductToSave"/>
+        <see userInput="You saved the product." stepKey="seeSuccessfulProductSaveMessage"/>
+        <!-- Create CMS Page with product -->
+        <comment userInput="Create CMS Page with product" stepKey="createCMSPageWithProduct"/>
+        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="category" value="$$createCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="product" value="SimpleProduct"/>
+        </actionGroup>
+        <!-- Validate Storefront with incorrect store view -->
+        <comment userInput="Validate Storefront with incorrect Store View does not show product" stepKey="commentValidateStorefrontWithIncorrectStoreView"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts"/>
+        <assertCount stepKey="assertStorefrontCountIs0">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$grabStorefrontProducts</actualResult>
+        </assertCount>
+        <!-- Validate Storefront with correct store view -->
+        <comment userInput="Validate Storefront with correct Store View shows product" stepKey="commentValidateStorefrontWithCorrectStoreView"/>
+        <actionGroup ref="navigateToStoreFrontWithStoreView" stepKey="navigateToStoreFrontWithStoreView">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+            <argument name="storeView" value="customStore"/>
+        </actionGroup>
+        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts2"/>
+        <assertCount stepKey="assertStorefrontCountIs1">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">$grabStorefrontProducts2</actualResult>
+        </assertCount>
     </test>
 </tests>
