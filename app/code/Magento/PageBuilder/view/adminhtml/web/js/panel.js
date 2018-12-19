@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType, _positionSticky) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,7 +24,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.searchValue = _knockout.observable("");
       this.searchPlaceholder = (0, _translate)("Find items");
       this.searchNoResult = (0, _translate)("Nothing found");
-      this.fullScreenTitle = (0, _translate)("Full Screen");
       this.searchTitle = (0, _translate)("Clear Search");
       this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
@@ -54,7 +53,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.on("stage:" + this.id + ":readyAfter", function () {
         _this.populateContentTypes();
 
-        _this.onScroll();
+        if (!(0, _positionSticky.supportsPositionSticky)()) {
+          _this.onScroll();
+        }
 
         _this.isVisible(true);
       });
@@ -79,6 +80,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.search = function search(self, event) {
+      var _this2 = this;
+
       this.searchValue(event.currentTarget.value.toLowerCase());
 
       if (this.searchValue() === "") {
@@ -91,17 +94,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return matches && contentType.is_visible === true;
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
-          return new _contentType.ContentType(identifier, contentType);
+          return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
         }));
       }
-    };
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-
-
-    _proto.fullScreen = function fullScreen() {
-      _events.trigger("stage:" + this.parent.id + ":toggleFullscreen");
     };
     /**
      * Collapse the panel into the side of the UI
@@ -133,6 +128,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var self = this;
       var pageActions = (0, _jquery)(".page-actions");
       var panel = (0, _jquery)(this.element);
+      panel.addClass("no-position-sticky");
       var stage = panel.siblings(".pagebuilder-stage");
       (0, _jquery)(window).scroll(function () {
         if (panel && panel.offset()) {
@@ -175,13 +171,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
 
-    _proto.getDraggableOptions = function getDraggableOptions() {
+    _proto.getDraggableOptions = function getDraggableOptions(element) {
+      // If we're within a modal make the containment be the current modal
+      var containment;
+
+      if ((0, _jquery)(element).parents(".modal-inner-wrap").length > 0) {
+        containment = (0, _jquery)(element).parents(".modal-inner-wrap");
+      }
+
       var self = this;
       return {
         appendTo: "body",
         cursor: "-webkit-grabbing",
         connectToSortable: ".content-type-drop",
-        containment: "document",
+        containment: containment || "document",
+        scroll: true,
         helper: function helper() {
           return (0, _jquery)(this).clone().css({
             width: (0, _jquery)(this).width(),
@@ -203,7 +207,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
                 (0, _jquery)(this).sortable("option", "tolerance", "intersect");
               }
             });
-            (0, _dropIndicators.showDropIndicators)(block.config.name);
+            (0, _dropIndicators.showDropIndicators)(block.config.name, self.parent.stage.id);
             (0, _registry.setDraggedContentTypeConfig)(block.config);
 
             _events.trigger("stage:interactionStart", {
@@ -232,7 +236,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.populateContentTypes = function populateContentTypes() {
-      var _this2 = this;
+      var _this3 = this;
 
       var groups = _config.getConfig("groups");
 
@@ -243,15 +247,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         // Iterate through the groups creating new instances with their associated content types
         _underscore.each(groups, function (group, id) {
           // Push the group instance into the observable array to update the UI
-          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
+          _this3.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
             is_visible: true
           }),
           /* Retrieve content types with group id */
           function (contentType, identifier) {
-            var groupContentType = new _contentType.ContentType(identifier, contentType);
-            return groupContentType;
-          })));
+            return new _contentType.ContentType(identifier, contentType, _this3.parent.stage.id);
+          }), _this3.parent.stage.id));
         }); // Display the panel
 
 
