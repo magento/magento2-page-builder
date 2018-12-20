@@ -8,14 +8,14 @@ define([], function () {
   /**
    * @api
    */
-  var CreateValueForStoreId =
+  var StoreId =
   /*#__PURE__*/
   function () {
     "use strict";
 
-    function CreateValueForStoreId() {}
+    function StoreId() {}
 
-    var _proto = CreateValueForStoreId.prototype;
+    var _proto = StoreId.prototype;
 
     /**
      * Convert value to internal format
@@ -43,9 +43,9 @@ define([], function () {
       return data[name].replace(/\}\}$/, " store_id=\"0\"}}");
     };
 
-    return CreateValueForStoreId;
+    return StoreId;
   }();
 
-  return CreateValueForStoreId;
+  return StoreId;
 });
 //# sourceMappingURL=store-id.js.map

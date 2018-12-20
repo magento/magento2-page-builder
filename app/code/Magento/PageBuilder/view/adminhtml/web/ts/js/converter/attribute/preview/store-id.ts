@@ -9,7 +9,7 @@ import ConverterInterface from "../../converter-interface";
 /**
  * @api
  */
-export default class CreateValueForStoreId implements ConverterInterface {
+export default class StoreId implements ConverterInterface {
 
     /**
      * Convert value to internal format
