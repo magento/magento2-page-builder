@@ -12,17 +12,18 @@ define(["Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/j
    * CSS engine to display these for us than manually iterating through the DOM and applying a class to the elements.
    *
    * @param {string} contentType
+   * @param {string} stageId
    * @returns {HTMLStyleElement}
    */
 
-  function showDropIndicators(contentType) {
+  function showDropIndicators(contentType, stageId) {
     var acceptedContainers = (0, _matrix.getContainersFor)(contentType);
 
     if (acceptedContainers.length > 0) {
       var _ref;
 
       var classNames = acceptedContainers.map(function (container) {
-        return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator, " + ".pagebuilder-content-type.type-container.empty-container > .content-type-container." + container + "-container:before";
+        return "#" + stageId + " .content-type-container." + container + "-container > .pagebuilder-drop-indicator, " + ("#" + stageId + " .pagebuilder-content-type.type-container.empty-container > .content-type-container.") + (container + "-container:before");
       });
       var styles = (0, _createStylesheet.createStyleSheet)((_ref = {}, _ref[classNames.join(", ")] = {
         opacity: 1,

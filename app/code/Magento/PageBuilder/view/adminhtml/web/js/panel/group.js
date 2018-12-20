@@ -15,10 +15,9 @@ define(["knockout"], function (_knockout) {
      * @param id
      * @param group
      * @param contentTypes
-     *
-     * @todo change group type
+     * @param stageId
      */
-    function Group(id, group, contentTypes) {
+    function Group(id, group, contentTypes, stageId) {
       if (contentTypes === void 0) {
         contentTypes = [];
       }
@@ -37,6 +36,7 @@ define(["knockout"], function (_knockout) {
       this.icon(group.icon);
       this.sort(group.sort);
       this.contentTypes(contentTypes);
+      this.stageId = stageId;
     }
     /**
      * Toggle the group

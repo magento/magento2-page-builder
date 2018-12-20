@@ -5,7 +5,6 @@
 
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
-import {toHex} from "../../../../utils/color-converter";
 
 export default class OverlayColor implements ConverterInterface {
     /**
@@ -15,7 +14,7 @@ export default class OverlayColor implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return value === "transparent" ? "" : toHex(value);
+        return value === "transparent" ? "" : value;
     }
 
     /**
@@ -26,6 +25,10 @@ export default class OverlayColor implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
-        return data[name].toString();
+        if (data.overlay_color) {
+            return data.overlay_color.toString();
+        }
+
+        return "";
     }
 }
