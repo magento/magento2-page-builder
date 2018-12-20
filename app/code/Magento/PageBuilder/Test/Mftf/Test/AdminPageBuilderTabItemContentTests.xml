@@ -1151,7 +1151,7 @@
         <waitForElementVisible selector="{{TabOnStorefront.tabContent('1')}}" stepKey="waitForTabContentVisible"/>
         <executeJS function="return {{TabsOnFrontend.tabsContentHeightJS('0')}}" stepKey="tabContentHeightStorefront"/>
         <assertEquals stepKey="assertTabHeightStorefrontEqualsStage">
-            <expectedResult type="variable">tabContentHeightStage</expectedResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeightDefaultProperty.value}}</expectedResult>
             <actualResult type="variable">tabContentHeightStorefront</actualResult>
         </assertEquals>
     </test>

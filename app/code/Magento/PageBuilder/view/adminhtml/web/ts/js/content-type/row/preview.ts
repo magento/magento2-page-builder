@@ -11,6 +11,7 @@ import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/Resi
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
+import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
@@ -98,10 +99,21 @@ export default class Preview extends PreviewCollection {
      */
     public retrieveOptions(): OptionsInterface {
         const options = super.retrieveOptions();
+
         options.remove = new ConditionalRemoveOption({
             ...options.remove.config,
             preview: this,
         });
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
         return options;
     }
 

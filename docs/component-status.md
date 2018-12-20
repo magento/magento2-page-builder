@@ -1,6 +1,7 @@
 # Component status
 
-**Last Updated: November 27, 2018**
+
+**Last Updated: December 10, 2018**
 
 <style type="text/css" style="display: none">
 .status {
@@ -46,7 +47,7 @@ Issues that are not related to Page Builder beta are not part of this report.
 | Image              | <span class='status green'>Green</span>   |  |
 | Video              | <span class='status green'>Green</span>   |  |
 | Banner             | <span class='status green'>Green</span>   |  |
-| Slider             | <span class='status yellow'>Yellow</span> | Cannot be edited in IE 11 |
+| Slider             | <span class='status green'>Green</span>   |  |
 | Map                | <span class='status green'>Green</span>   |  |
 | Block              | <span class='status green'>Green</span>   |  |
 | Dynamic Block      | <span class='status green'>Green</span>   |  |

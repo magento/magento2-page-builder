@@ -14,6 +14,7 @@ export class Group {
     private sort: KnockoutObservable<number> = ko.observable();
     private contentTypes: KnockoutObservableArray<[any]> = ko.observableArray([]);
     private active: KnockoutObservable<boolean> = ko.observable(false);
+    private stageId: string;
 
     /**
      * Group constructor
@@ -21,16 +22,16 @@ export class Group {
      * @param id
      * @param group
      * @param contentTypes
-     *
-     * @todo change group type
+     * @param stageId
      */
-    constructor(id: number, group: any, contentTypes: any[] = []) {
+    constructor(id: number, group: any, contentTypes: any[] = [], stageId: string) {
         this.id(id);
         this.code(group.code);
         this.label(group.label);
         this.icon(group.icon);
         this.sort(group.sort);
         this.contentTypes(contentTypes);
+        this.stageId = stageId;
     }
 
     /**

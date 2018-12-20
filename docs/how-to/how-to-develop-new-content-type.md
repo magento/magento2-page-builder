@@ -1,7 +1,5 @@
 # How to develop a new content type
 
-<!-- {% raw %} -->
-
 Out of the box, Page Builder comes with several content types (controls) that you can drag onto the stage to build your storefront pages, as shown below. In this topic, you will learn how to create your own content type for use within Page Builder.
 
 ![Page Builder Content Types](../images/panel-horizontal.png)
@@ -18,11 +16,7 @@ The steps for creating a Page Builder content type are briefly outlined here. Th
 
 ![Creating Custom Content Types](../images/content-type-overview.png)
 
-
-
 ![Before and after content type](../images/content-type-files.png)
-
-
 
 ## Step 1: Add a configuration
 
@@ -124,11 +118,7 @@ define(["Magento_PageBuilder/js/content-type/preview"], function (Preview) {
 });
 ```
 
-
-
 ## Step 4: Add an icon
-
-
 
 ## Step 5: Add a form
 
@@ -229,19 +219,9 @@ And to allow this form to be loaded in PageBuilder, let's create layout `Vendor/
 </page>
 ```
 
-
-
 ## Step 7: Add a frontend widget
 
- 
-
-
-
-
-
-
-
-## Preview, PreviewCollection, Content, and ContentCollection
+ ## Preview, PreviewCollection, Content, and ContentCollection
 
 And the last part is to add button to a template.
 
@@ -320,7 +300,6 @@ Please also notice that we specified in configuration the following, to allow ou
 
 You can also specify `content_component` if you want to do modifications to observables used in master format templates.
 
-
 ## component, preview_component and content_component
 
 `component` is structure element. If your content type can contain children use `Magento_PageBuilder/js/content-type-collection`, otherwise use `Magento_PageBuilder/js/content-type`. You may extend default `component` if you want to dispatch additional or subscribe to existing events.
@@ -382,5 +361,3 @@ define(["Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/con
     };
 });
 ```
-
-<!-- {% endraw %} -->

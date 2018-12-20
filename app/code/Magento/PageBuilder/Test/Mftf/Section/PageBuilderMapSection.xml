@@ -10,9 +10,12 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="[data-role=map]"/>
+        <element name="mainCSS" type="button" selector="[data-role=map][data-element=main]"/>
         <element name="clickablePin" type="button" selector="((//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
         <element name="allPins" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="pinLocations" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
+        <element name="googleMapsLink" type="button" selector="(//div[@data-role='map' and not(contains(@style,'display: none;'))])[{{arg1}}]//a//img" parameterized="true"/>
         <!-- Location Pin Configuration -->
         <element name="latitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-locations,'&quot;position&quot;:{&quot;latitude&quot;:{{arg2}},')]" parameterized="true"/>
         <element name="longitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-locations,',&quot;longitude&quot;:{{arg2}}}')]" parameterized="true"/>
@@ -26,18 +29,17 @@
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="noHeight" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and not(contains(@style,'height:'))]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
         <element name="showControls" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and @data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
         <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
         <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
         <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
@@ -47,15 +49,18 @@
         <element name="zoomOut" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
         <!-- Map Error Message -->
         <element name="errorContainer" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='google-map-auth-failure-placeholder']" parameterized="true"/>
+        <element name="warningMessageLink" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='google-map-auth-failure-placeholder' and not(contains(@style,'display: none;'))]//a" parameterized="true"/>
     </section>
     <section name="MapOnStorefront">
         <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
         <element name="base" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseCSS" type="button" selector="[data-role=map][data-element=main]"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('div[data-role=\'map\']')[{{arg1}}]" parameterized="true"/>
         <element name="allPins" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="clickablePin" type="button" selector="((//div[@data-role='map'])[{{arg1}}]//map//area)[{{arg2}}]" parameterized="true"/>
         <element name="pinLocations" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
         <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
+        <element name="googleMapsLink" type="button" selector="(//div[@data-role='map' and not(contains(@style,'display: none;'))])[{{arg1}}]//a//img" parameterized="true"/>
         <!-- Location Pin Configuration -->
         <element name="latitude" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@data-locations,'&quot;position&quot;:{&quot;latitude&quot;:{{arg2}},')]" parameterized="true"/>
         <element name="longitude" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@data-locations,',&quot;longitude&quot;:{{arg2}}}')]" parameterized="true"/>
@@ -69,7 +74,6 @@
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="noHeight" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'height:'))]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
         <element name="showControls" type="text" selector="(//div[@data-role='map'])[{{arg1}}][@data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -95,7 +99,9 @@
     </section>
     <section name="EditMapForm">
         <element name="addLocationButton" type="button" selector="//button[@data-index='add_location_button']"/>
-        <element name="addLocationButtonDisabled" type="button" selector="//button[@data-index='add_location_button' and @disabled]"/>
+        <!-- Map Error Message -->
+        <element name="warningMessage" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]"/>
+        <element name="warningMessageLink" type="button" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]//a[{{arg1}}]" parameterized="true"/>
     </section>
     <section name="AddLocationForm">
         <element name="form" type="text" selector="aside  div.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal_map_location_insert_form"/>
@@ -103,19 +109,22 @@
         <element name="cancelButton" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#cancel"/>
         <element name="editFormSave" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#save"/>
         <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
+        <element name="baseError" type="button" selector="//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder']"/>
         <element name="baseJS" type="text" selector="document.querySelector('div[data-index=\'position\'] div.map-field')"/>
         <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//map//area"/>
         <element name="allPins" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[not(@usemap) and contains(@src,'spotlight-poi2.png')]"/>
         <element name="pinLocations" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
         <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gm-style-iw']"/>
         <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
-        <element name="warningMessage" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]"/>
-        <element name="warningMessageLink" type="button" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]//a"/>
         <element name="renderedMap" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[contains(@class, 'gm-style')]"/>
+        <element name="googleMapsLink" type="button" selector="//div[@data-index='position']//div[@class='map-field' and not(contains(@style,'display: none;'))]//a//img[{{arg1}}]" parameterized="true"/>
         <!-- Map Buttons -->
         <element name="googleModalOkButton" type="button" selector="//aside//button[@class='dismissButton' and .='OK'][{{arg1}}]" parameterized="true"/>
         <element name="fullScreen" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Toggle fullscreen view'])[{{arg1}}]" parameterized="true"/>
         <element name="zoomIn" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom in'])[{{arg1}}]" parameterized="true"/>
         <element name="zoomOut" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom out'])[{{arg1}}]" parameterized="true"/>
+        <!-- Map Error Message -->
+        <element name="errorContainer" type="text" selector="(//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder'])[{{arg1}}]" parameterized="true"/>
+        <element name="warningMessageLink" type="button" selector="//div[@data-index='position']//div[@class='google-map-auth-failure-placeholder' and not(contains(@style,'display: none;'))]//a[{{arg1}}]" parameterized="true"/>
     </section>
 </sections>
