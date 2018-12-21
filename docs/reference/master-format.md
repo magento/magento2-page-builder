@@ -445,9 +445,11 @@ HTML content.
 
 ```
 <div data-element="main" data-role="video" data-appearance="default" style="...">
-    <div data-element="wrapper" class="pagebuilder-video-wrapper">
-        <div class="pagebuilder-video-container">    
-            <iframe data-element="video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr: getVideoAttributes(), style: getStyle(), css: getCss()"></iframe>
+    <div data-element="inner" class="pagebuilder-video-inner">
+        <div data-element="wrapper" class="pagebuilder-video-wrapper">
+            <div class="pagebuilder-video-container">    
+                <iframe data-element="video" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr: getVideoAttributes(), style: getStyle(), css: getCss()"></iframe>
+            </div>
         </div>
     </div>
 </div>
@@ -464,6 +466,14 @@ Attributes
 Inline styles
 1. justify-content
 
+### inner element
+
+Attributes
+1. data-element [inner]
+
+Inline styles
+1. max-width
+
 ### wrapper element
 
 Attributes
@@ -477,7 +487,6 @@ Inline styles
 4. border-radius
 5. margin
 6. padding
-7. max-width
 
 ### video element
 
