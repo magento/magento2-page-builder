@@ -44,14 +44,11 @@
             <argument name="minHeight"/>
             <argument name="padding"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <!-- Remove storefrontBugOffset when MC-5079 is resolved -->
-            <argument name="storefrontBugOffset" defaultValue="0" type="string"/>
         </arguments>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].clientHeight;" stepKey="containerHeight"/>
-        <executeJS function="return {$containerHeight}-{{storefrontBugOffset}}" stepKey="minusBugOffset"/>
         <assertGreaterThanOrEqual stepKey="assertContainerHeightGreaterThanOrEqualMinHeight">
             <expectedResult type="string">{{minHeight}}</expectedResult>
-            <actualResult type="variable">minusBugOffset</actualResult>
+            <actualResult type="variable">containerHeight</actualResult>
         </assertGreaterThanOrEqual>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{container.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom-{{padding.paddingBottom}}" stepKey="containerBottomPositionMinusPadding"/>
         <executeJS function="return document.querySelectorAll('{{block.baseCSS}} {{content.baseCSS}}')[{{index}}-1].getBoundingClientRect().bottom" stepKey="contentBottomPosition"/>

@@ -8,8 +8,9 @@
 define([
     'Magento_Ui/js/form/element/abstract',
     'Magento_PageBuilder/js/utils/map',
-    'googleMaps'
-], function (AbstractField, GoogleMap) {
+    'module',
+    'Magento_PageBuilder/js/events'
+], function (AbstractField, GoogleMap, module, events) {
     'use strict';
 
     var google = window.google || {};
@@ -18,7 +19,22 @@ define([
         defaults: {
             elementTmpl: 'Magento_PageBuilder/form/element/map',
             map: false,
-            marker: false
+            marker: false,
+            apiKeyValid: !!module.config().apiKey,
+            apiKeyErrorMessage: module.config().apiKeyErrorMessage
+        },
+
+        /**
+         * Initializes observable properties of instance
+         *
+         * @returns {Abstract} Chainable.
+         */
+        initObservable: function () {
+            this._super();
+
+            this.observe('apiKeyValid');
+
+            return this;
         },
 
         /**
@@ -32,6 +48,10 @@ define([
                 mapOptions,
                 latitudeLongitude;
 
+            if (!this.apiKeyValid()) {
+                return;
+            }
+
             if (typeof startValue === 'string' && startValue !== '') {
                 startValue = JSON.parse(startValue);
             }
@@ -43,11 +63,14 @@ define([
                 }
             };
 
+            events.on('googleMaps:authFailure', function () {
+                this.apiKeyValid(false);
+            }.bind(this));
+
             // Create the map
             this.mapElement = new GoogleMap(element, [], mapOptions);
 
-            if (!this.mapElement.map) {
-
+            if (!this.mapElement || !this.mapElement.map) {
                 return;
             }
 
@@ -115,6 +138,10 @@ define([
          * Callback after an update to map
          */
         onUpdate: function () {
+            if (!this.mapElement) {
+                return;
+            }
+
             this._super();
             var content = this.value(),
                 latitudeLongitude;
@@ -127,6 +154,7 @@ define([
             }
 
             if (!this.validateCoordinate(content) ||
+                this.mapElement &&
                 !this.mapElement.map ||
                 this.value() === '' ||
                 this.value() === this.exportValue()) {

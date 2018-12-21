@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (_colorConverter, _numberConverter) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -32,13 +32,11 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
 
 
     _proto.toDom = function toDom(name, data) {
-      var overlayColor = "transparent";
-
-      if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-        overlayColor = (0, _colorConverter.fromHex)(data.overlay_color.toString(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency.toString()));
+      if (data.show_overlay === "always" && data[name] !== "" && data[name] !== undefined) {
+        return data[name].toString();
       }
 
-      return overlayColor;
+      return "transparent";
     };
 
     return OverlayBackgroundColor;

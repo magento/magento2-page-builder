@@ -12,8 +12,9 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
     /**
      * @param {string} identifier
      * @param {ContentTypeConfigInterface} config
+     * @param {string} stageId
      */
-    function ContentType(identifier, config) {
+    function ContentType(identifier, config, stageId) {
       this.droppable = true;
       this.icon = _knockout.observable("");
       this.identifier = _knockout.observable("");
@@ -22,6 +23,7 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
       this.identifier(identifier);
       this.label(config.label);
       this.icon(config.icon);
+      this.stageId = stageId;
     }
     /**
      * Retrieve the config object
@@ -44,7 +46,7 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
 
     _proto.getDraggableOptions = function getDraggableOptions() {
       return {
-        connectToSortable: (0, _matrix.getAllowedContainersClasses)(this.config.name)
+        connectToSortable: (0, _matrix.getAllowedContainersClasses)(this.config.name, this.stageId)
       };
     };
 

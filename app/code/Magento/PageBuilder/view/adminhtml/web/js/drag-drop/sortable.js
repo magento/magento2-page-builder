@@ -112,10 +112,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
           ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
         }
 
-        (0, _dropIndicators.showDropIndicators)(contentTypeInstance.config.name);
+        (0, _dropIndicators.showDropIndicators)(contentTypeInstance.config.name, preview.parent.stageId);
         sortedContentType = contentTypeInstance; // Dynamically change the connect with option to restrict content types
 
-        (0, _jquery)(this).sortable("option", "connectWith", (0, _matrix.getAllowedContainersClasses)(contentTypeInstance.config.name));
+        (0, _jquery)(this).sortable("option", "connectWith", (0, _matrix.getAllowedContainersClasses)(contentTypeInstance.config.name, preview.parent.stageId));
         (0, _jquery)(this).sortable("refresh");
       }
     }

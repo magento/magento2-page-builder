@@ -1,7 +1,5 @@
 # Master format
-
 <!-- {% raw %} -->
-
 PageBuilder uses XHTML with inline styles and data attributes as the master format for storage.
 
 **Note:**
@@ -148,7 +146,6 @@ Inline styles
 4. background-size
 5. background-repeat
 6. background-attachment
-
 
 ### navigation element
 

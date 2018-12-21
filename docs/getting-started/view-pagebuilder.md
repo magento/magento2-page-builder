@@ -16,9 +16,6 @@ The following example shows Page Builder active within the Home Page by selectin
 
 ![Navigate to Page Builder](../images/navigate-to-pagebuilder.png)
 
-
-
 Page Builder is shown here within the **Content** section of the Home Page.
 
 ![View Page Builder](../images/home-page-pagebuilder.png)
-

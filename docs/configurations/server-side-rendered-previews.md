@@ -1,6 +1,4 @@
-# Server-side rendered previews <!-- omit in toc -->
-
-<!-- {% raw %} -->
+# Server-side rendered previews
 
 ## What's in this topic
 
@@ -8,20 +6,9 @@ This topic describes how to use the `RenderPool` on the stage to render a backen
 
 Using this method, you can preview content types that cannot be rendered on the stage and require further backend processing to be previewed.
 
-The following steps utilize some example values; substitute those with values specific to your situation.
+The following steps utilize some example values. Substitute those with values specific to your situation.
 
-## Overview
-
-To use the stage's `RenderPool` to produce a content type preview:
-
-- [What's in this topic](#whats-in-this-topic)
-- [Overview](#overview)
-- [Create a renderer](#create-a-renderer)
-- [Add the renderer to the pool](#add-the-renderer-to-the-pool)
-- [Submit an HTTP request to the preview controller](#submit-an-http-request-to-the-preview-controller)
-- [Render the element](#render-the-element)
-
-## Create a renderer
+## Step 1: Create a renderer
 
 Create a renderer that implements the renderer interface, `Magento\PageBuilder\Model\Stage\RendererInterface`:
 
@@ -38,7 +25,7 @@ class AwesomeElement implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 }
 ```
 
-## Add the renderer to the pool
+## Step 2: Add the renderer to the pool
 
 Add the renderer you just created as an argument to the `Magento\PageBuilder\Model\Stage\RendererPool` type that specifies your custom content type role as the name in the `di.xml` file:
 
@@ -52,7 +39,7 @@ Add the renderer you just created as an argument to the `Magento\PageBuilder\Mod
 </type>
 ```
 
-## Submit an HTTP request to the preview controller
+## Step 3: Submit an HTTP request to the preview controller
 
 To invoke the renderer from the stage, submit an HTTP request to the PageBuilder preview controller:
 
@@ -95,12 +82,10 @@ To invoke the renderer from the stage, submit an HTTP request to the PageBuilder
         });
     ```
 
-## Render the element
+## Step 4: Render the element
 
 Your exact configuration and situation determine when, and how, you render the element. 
 
 Generally, you would perform this operation when the properties change, by overriding the `afterObservablesUpdated` method with this logic (as shown in the previous example).
 
 To update the Document Object Model (DOM) to display your content, amend the JavaScript property that represents the HTML variable of your main element with the response from the HTTP request, `this.data.main.html(response.content);` from the previous example.
-
-<!-- {% endraw %} -->
