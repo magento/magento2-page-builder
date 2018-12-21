@@ -20,11 +20,11 @@
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-video')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]//iframe[@src='{{arg2}}']" parameterized="true"/>
-        <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}][contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]/parent::div[contains(@style, 'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}]/parent::div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[contains(@style, 'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video-inner')])[{{arg1}}]/parent::div[not(contains(@style,'text-align:'))]" parameterized="true"/>
         <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
         <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video-wrapper')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
@@ -45,7 +45,7 @@
         <element name="notHidden" type="text" selector="(//div[@data-role='video'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="iframe" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
-        <element name="width" type="text" selector="(//div[@data-role='video'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
+        <element name="width" type="text" selector="(//div[@data-role='video'])[{{arg1}}]//div[@data-element='inner'][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='video'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
