@@ -483,4 +483,56 @@
         <scrollTo selector="{{RowOnStage.base('6')}}" stepKey="scrollToBottom2"/>
         <seeElement selector="{{PageBuilderPanel.panelGroup('Layout')}}" stepKey="verifyPanel2"/>
     </test>
+    <test name="TooltipMenusAreNotCutOffInFullScreenMode">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Tooltip menus should not overflow viewport bounds (get 'cut off') in full screen mode"/>
+            <description value="As a content creator I want tooltip menus to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-6491"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column Content Type -->
+        <comment userInput="Add Column Content Type" stepKey="commentAddColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForColumnContentType">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Text Content Type -->
+        <comment userInput="Add Text Content Type" stepKey="commentAddTextContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForTextContentType">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextToStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Open fullscreen -->
+        <comment userInput="Open fullscreen" stepKey="commentOpenFullscreen"/>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="enterFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
+        <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnTextEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForWYWSIWYGEditorPanelToBeVisible"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topBoundingClientRect"/>
+        <!-- Assert top bounding client rect > 0 -->
+        <comment userInput="Assert top bounding client rect > 0" stepKey="commentAssertTopBoundingClientRectGreaterThan0" />
+        <assertGreaterThanOrEqual stepKey="assertTopBoundingClientRectIsGreaterThan0">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$topBoundingClientRect</actualResult>
+        </assertGreaterThanOrEqual>
+    </test>
 </tests>
