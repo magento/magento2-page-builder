@@ -156,7 +156,6 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
-| `is_hideable`       | Boolean that enables content types to be shown and hidden. Default is true. Set to false to prevent hiding of content type.                 |
 {:style="table-layout:auto"}
 
 ### `form`
@@ -496,6 +495,14 @@ define([], function () {
     
     return EmptyMobileImage;
 });
+```
+
+### Form
+
+Individual appearances may have different uiComponent forms in order to use different customizable content.
+
+``` xml
+<form>pagebuilder_banner_collage_left_form</form>
 ```
 
 ## Preview component settings

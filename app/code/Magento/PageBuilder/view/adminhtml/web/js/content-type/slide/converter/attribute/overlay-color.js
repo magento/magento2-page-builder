@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConverter) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -20,19 +20,23 @@ define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConvert
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
+      return value === "transparent" ? "" : value;
     };
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name];
+      if (data.overlay_color) {
+        return data.overlay_color.toString();
+      }
+
+      return "";
     };
 
     return OverlayColor;
