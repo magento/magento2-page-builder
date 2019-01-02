@@ -55,7 +55,7 @@ export default class Stage {
         this.render.applyBindings(this.children)
             .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
-            })).catch((error) => {
+            })).catch((error: Error) => {
                 console.error(error);
             });
     }, 500);

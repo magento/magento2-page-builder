@@ -70,7 +70,15 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     parent = parent || stage;
     var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 
+    if (!role) {
+      return Promise.reject("Invalid master format: Content type element does not contain \n            " + _config.getConfig("dataRoleAttributeName") + " attribute.");
+    }
+
     var config = _config.getContentTypeConfig(role);
+
+    if (!config) {
+      return Promise.reject("Unable to load Page Builder configuration for content type \"" + role + "\".");
+    }
 
     return getElementData(element, config).then(function (data) {
       return (0, _contentTypeFactory)(config, parent, stage.id, data, getElementChildren(element).length);
@@ -120,23 +128,20 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
   /**
    * Return elements children, search for direct descendants, or traverse through to find deeper children
    *
-   * @param element
-   * @returns {Array}
+   * @param {HTMLElement} element
+   * @returns {Array<HTMLElement>}
    */
 
 
   function getElementChildren(element) {
     if (element.hasChildNodes()) {
-      var children = []; // Find direct children of the element
+      var children = [];
 
       _.forEach(element.childNodes, function (child) {
-        // Only search elements which tagName's and not script tags
-        if (child.tagName && child.tagName !== "SCRIPT") {
-          if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
-            children.push(child);
-          } else {
-            children = getElementChildren(child);
-          }
+        if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
+          children.push(child);
+        } else {
+          children = getElementChildren(child);
         }
       });
 
@@ -162,14 +167,18 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _contentTypeFactory)(rootContentTypeConfig, stage, stage.id, {}).then(function (row) {
-        stage.addChild(row);
+      return (0, _contentTypeFactory)(rootContentTypeConfig, stage, stage.id, {}).then(function (rootContentType) {
+        if (!rootContentType) {
+          return Promise.reject("Unable to create initial " + stageConfig.root_content_type + " content type " + " within stage.");
+        }
+
+        stage.addChild(rootContentType);
 
         if (htmlDisplayContentTypeConfig && initialValue) {
           return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, stage, stage.id, {
             html: initialValue
           }).then(function (text) {
-            row.addChild(text);
+            rootContentType.addChild(text);
           });
         }
       });
@@ -202,8 +211,8 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
     return currentBuild.catch(function (error) {
       (0, _alert)({
-        content: (0, _translate)("An error has occurred while initiating the content area."),
-        title: (0, _translate)("Advanced CMS Error")
+        content: (0, _translate)("An error has occurred while initiating Page Builder. Please consult with your technical " + "support contact."),
+        title: (0, _translate)("Page Builder Error")
       });
 
       _events.trigger("stage:error", error);
