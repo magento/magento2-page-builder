@@ -3,7 +3,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/lib/view/utils/dom-observer", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _domObserver, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _translate, _events, _jqueryUi, _alert, _underscore, _sortable, _collection, _dataStore, _matrix, _sortable2, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -35,7 +35,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
       this.focusChild = _knockout.observable(false);
-      this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       this.dataStore = new _dataStore();
       this.afterRenderDeferred = (0, _promiseDeferred)();
       this.template = "Magento_PageBuilder/content-type/preview";
@@ -50,7 +49,13 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
       }, 500);
       this.parent = parent;
       this.id = parent.id;
-      (0, _matrix.generateAllowedParents)(); // Wait for the stage to be built alongside the stage being rendered
+      (0, _matrix.generateAllowedParents)(); // Fire an event after the DOM has rendered
+
+      this.afterRenderDeferred.promise.then(function () {
+        _events.trigger("stage:" + _this.id + ":renderAfter", {
+          stage: _this
+        });
+      }); // Wait for the stage to be built alongside the stage being rendered
 
       Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
     }
@@ -71,13 +76,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
      */
 
 
-    _proto.ready = function ready(_ref) {
-      var buildResults = _ref[0],
-          canvasElement = _ref[1];
-
-      // Disable the dom observer from running on our canvas
-      _domObserver.disableNode(canvasElement);
-
+    _proto.ready = function ready() {
       _events.trigger("stage:" + this.id + ":readyAfter", {
         stage: this
       });
@@ -202,8 +201,9 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
       _events.on("stage:interactionStop", function (args) {
         var forced = _underscore.isObject(args) && args.force === true;
+        interactionLevel = Math.max(interactionLevel - 1, 0);
 
-        if (--interactionLevel === 0 || forced) {
+        if (interactionLevel === 0 || forced) {
           _this2.interacting(false);
 
           if (forced) {

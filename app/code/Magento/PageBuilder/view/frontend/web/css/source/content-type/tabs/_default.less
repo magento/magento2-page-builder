@@ -26,7 +26,10 @@ div[data-role='tabs'] {
             border-bottom-right-radius: 0 !important;
             display: inline-block;
             margin: 0;
+            max-width: 100%;
+            overflow-wrap: break-word;
             position: relative;
+            word-wrap: break-word;
             z-index: 1;
 
             &:not(:first-child) {
@@ -45,7 +48,6 @@ div[data-role='tabs'] {
                 transition: all .3s;
                 vertical-align: middle;
                 white-space: normal;
-                word-break: break-all;
 
                 span.tab-title {
                     display: block;
@@ -74,12 +76,13 @@ div[data-role='tabs'] {
 
     .tabs-content {
         border: 1px solid @color-gray80;
+        box-sizing: border-box;
         overflow: hidden;
         position: relative;
         z-index: 9;
 
         [data-role='tab-item'] {
-            box-sizing: content-box;
+            box-sizing: border-box;
             min-height: inherit;
 
             &:not(:first-child) {

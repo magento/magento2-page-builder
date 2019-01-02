@@ -26,6 +26,10 @@ class ButtonItem implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader
@@ -35,7 +39,7 @@ class ButtonItem implements RendererInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function render(array $itemData, array $additionalData = []) : string
     {
@@ -67,12 +71,15 @@ class ButtonItem implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= '><a data-element="link" href="'
-            . ($eavData['link_url'] ?? '') . '"'
+        $linkNodeName = isset($eavData['link_url']) ? 'a' : 'div';
+        $linkDataElementName = isset($eavData['link_url']) ? 'link' : 'empty_link';
+
+        $rootElementHtml .= '><' . $linkNodeName . ' data-element="' . $linkDataElementName . '"'
+            . (isset($eavData['link_url']) ? ' href="' . $eavData['link_url'] . '"' : '')
             . $buttonStyleAttribute
             . ' class="pagebuilder-button-primary"><span data-element="link_text">'
             . ($eavData['link_text'] ?? '')
-            . '</span></a></div>';
+            . '</span></' . $linkNodeName . '></div>';
 
         return $rootElementHtml;
     }

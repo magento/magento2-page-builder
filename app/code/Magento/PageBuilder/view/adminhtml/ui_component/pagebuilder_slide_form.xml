@@ -292,33 +292,6 @@
                 </colorPicker>
             </formElements>
         </field>
-        <field name="overlay_transparency" sortOrder="90" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="number">0</item>
-                    <item name="disabledValues" xsi:type="array">
-                        <item name="none" xsi:type="string">never</item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <label translate="true">Overlay Transparency</label>
-                <additionalClasses>
-                    <class name="admin__field-x-small">true</class>
-                </additionalClasses>
-                <addAfter translate="true">%</addAfter>
-                <dataType>text</dataType>
-                <dataScope>overlay_transparency</dataScope>
-                <imports>
-                    <link name="setDisabled">ns = ${ $.ns }, index = show_overlay:value</link>
-                </imports>
-                <validation>
-                    <rule name="validate-number" xsi:type="boolean">true</rule>
-                    <rule name="less-than-equals-to" xsi:type="number">100</rule>
-                    <rule name="greater-than-equals-to" xsi:type="number">0</rule>
-                </validation>
-            </settings>
-        </field>
     </fieldset>
     <fieldset name="advanced">
         <field name="margins_and_padding">

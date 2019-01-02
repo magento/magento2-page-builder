@@ -17,6 +17,7 @@ import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {ContentType as GroupContentType} from "./panel/group/content-type";
+import {supportsPositionSticky} from "./utils/position-sticky";
 
 /**
  * @api
@@ -32,7 +33,6 @@ export default class Panel implements PanelInterface {
     public searchValue: KnockoutObservable<string> = ko.observable("");
     public searchPlaceholder: string = $t("Find items");
     public searchNoResult: string = $t("Nothing found");
-    public fullScreenTitle: string = $t("Full Screen");
     public searchTitle: string = $t("Clear Search");
     public parent: PageBuilder;
     public id: string;
@@ -60,7 +60,9 @@ export default class Panel implements PanelInterface {
     public initListeners(): void {
         events.on("stage:" + this.id + ":readyAfter", () => {
             this.populateContentTypes();
-            this.onScroll();
+            if (!supportsPositionSticky()) {
+                this.onScroll();
+            }
             this.isVisible(true);
         });
     }
@@ -99,17 +101,10 @@ export default class Panel implements PanelInterface {
                 ),
                 (contentType, identifier: string) => {
                     // Create a new instance of GroupContentType for each result
-                    return new GroupContentType(identifier, contentType);
+                    return new GroupContentType(identifier, contentType, this.parent.stage.id);
                 }),
             );
         }
-    }
-
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-    public fullScreen(): void {
-        events.trigger(`stage:${ this.parent.id }:toggleFullscreen`);
     }
 
     /**
@@ -138,6 +133,7 @@ export default class Panel implements PanelInterface {
         const self = this;
         const pageActions = $(".page-actions");
         const panel = $(this.element);
+        panel.addClass("no-position-sticky");
         const stage = panel.siblings(".pagebuilder-stage");
         $(window).scroll(function() {
             if (panel && panel.offset()) {
@@ -179,13 +175,20 @@ export default class Panel implements PanelInterface {
      *
      * @returns {JQueryUI.DraggableOptions}
      */
-    public getDraggableOptions(): JQueryUI.DraggableOptions {
+    public getDraggableOptions(element: HTMLElement): JQueryUI.DraggableOptions {
+        // If we're within a modal make the containment be the current modal
+        let containment: JQuery;
+        if ($(element).parents(".modal-inner-wrap").length > 0) {
+            containment = $(element).parents(".modal-inner-wrap");
+        }
+
         const self = this;
         return {
             appendTo: "body",
             cursor: "-webkit-grabbing",
             connectToSortable: ".content-type-drop",
-            containment: "document",
+            containment: containment || "document",
+            scroll: true,
             helper() {
                 return $(this).clone().css({
                     width: $(this).width(),
@@ -206,7 +209,7 @@ export default class Panel implements PanelInterface {
                             $(this).sortable("option", "tolerance", "intersect");
                         }
                     });
-                    showDropIndicators(block.config.name);
+                    showDropIndicators(block.config.name, self.parent.stage.id);
                     setDraggedContentTypeConfig(block.config);
                     events.trigger("stage:interactionStart", {stage: self.parent.stage});
                 }
@@ -245,10 +248,14 @@ export default class Panel implements PanelInterface {
                             is_visible: true,
                         }), /* Retrieve content types with group id */
                         (contentType: ContentTypeConfigInterface, identifier: string) => {
-                            const groupContentType = new GroupContentType(identifier, contentType);
-                            return groupContentType;
+                            return new GroupContentType(
+                                identifier,
+                                contentType,
+                                this.parent.stage.id,
+                            );
                         },
                     ),
+                    this.parent.stage.id,
                 ));
             });
 
@@ -261,7 +268,7 @@ export default class Panel implements PanelInterface {
             }
 
         } else {
-            console.warn( "Configuration is not properly initialized, please check the Ajax response." );
+            console.warn("Configuration is not properly initialized, please check the Ajax response.");
         }
     }
 }

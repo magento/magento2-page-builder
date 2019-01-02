@@ -33,10 +33,11 @@
                     </element>
                     <element name="link">
                         <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
-                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/link-href"/>
+                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
                         <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
+                    <element name="empty_link"/>
                     <element name="wrapper">
                         <style name="background_color" source="background_color"/>
                         <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
@@ -54,10 +55,8 @@
                         <attribute name="background_images" source="data-background-images"/>
                     </element>
                     <element name="overlay">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="overlay_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <attribute name="overlay_color_attribute" storage_key="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color"/>
                     </element>
                     <element name="content">
                         <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
@@ -99,10 +98,11 @@
                     </element>
                     <element name="link">
                         <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
-                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/link-href"/>
+                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
                         <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
+                    <element name="empty_link"/>
                     <element name="wrapper">
                         <style name="background_color" source="background_color"/>
                         <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
@@ -120,10 +120,8 @@
                         <attribute name="background_images" source="data-background-images"/>
                     </element>
                     <element name="overlay">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="overlay_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <attribute name="overlay_color_attribute" storage_key="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color"/>
                     </element>
                     <element name="content">
                         <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
@@ -165,10 +163,11 @@
                     </element>
                     <element name="link">
                         <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
-                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/link-href"/>
+                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
                         <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
+                    <element name="empty_link"/>
                     <element name="wrapper">
                         <style name="background_color" source="background_color"/>
                         <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
@@ -186,10 +185,8 @@
                         <attribute name="background_images" source="data-background-images"/>
                     </element>
                     <element name="overlay">
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <style name="overlay_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <attribute name="overlay_color_attribute" storage_key="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color"/>
                     </element>
                     <element name="content">
                         <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
@@ -232,10 +229,11 @@
                     </element>
                     <element name="link">
                         <attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persistence_mode="read"/>
-                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/link-href"/>
+                        <attribute name="virtual_link_href" storage_key="link_url" source="href" converter="Magento_PageBuilder/js/converter/attribute/link-href" persistence_mode="write"/>
                         <attribute name="virtual_link_target" storage_key="link_url" source="target" converter="Magento_PageBuilder/js/converter/attribute/link-target" persistence_mode="write"/>
                         <attribute name="virtual_link_type" storage_key="link_url" source="data-link-type" converter="Magento_PageBuilder/js/converter/attribute/link-type" persistence_mode="write"/>
                     </element>
+                    <element name="empty_link"/>
                     <element name="wrapper">
                         <style name="background_color" source="background_color"/>
                         <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" persistence_mode="write"/>
@@ -253,11 +251,9 @@
                     <element name="overlay">
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/overlay-border-radius" persistence_mode="write"/>
                         <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="background_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
+                        <style name="overlay_color" source="background_color" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" persistence_mode="write"/>
                         <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" persistence_mode="read"/>
-                        <attribute name="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" persistence_mode="read"/>
-                        <attribute name="virtual_overlay_transparency" storage_key="overlay_transparency" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" persistence_mode="write"/>
+                        <attribute name="overlay_color_attribute" storage_key="overlay_color" source="data-overlay-color" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color"/>
                     </element>
                     <element name="content">
                         <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>

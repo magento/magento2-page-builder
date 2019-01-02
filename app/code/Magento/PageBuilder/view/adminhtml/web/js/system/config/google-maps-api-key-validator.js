@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
     'use strict';
 
     /**
@@ -12,7 +12,7 @@ define(['jquery'], function($) {
      * @param {Object} config
      * @param {HTMLElement} el
      */
-    var GoogleMapsApiKeyValidator = function(config, el) {
+    var GoogleMapsApiKeyValidator = function (config, el) {
         var sourceElement = $('#' + config.sourceField),
             initialValue = sourceElement.val(),
             resultElement = $('#' + config.elementId + ' > .result');
@@ -21,7 +21,7 @@ define(['jquery'], function($) {
             $(el).attr('disabled', false);
         }
 
-        $(el).click(function() {
+        $(el).click(function () {
             var resultText = config.invalidLabel,
                 resultIcon = 'icon-admin-pagebuilder-error',
                 resultHtml;
@@ -29,8 +29,10 @@ define(['jquery'], function($) {
             $.ajax({
                 url: config.validateUrl,
                 showLoader: true,
-                data: { key: sourceElement.val() }
-            }).done(function(data) {
+                data: {
+                    googleMapsApiKey: sourceElement.val()
+                }
+            }).done(function (data) {
                 if (data.success) {
                     resultText = config.validLabel;
                     resultIcon = 'icon-admin-pagebuilder-success';
@@ -47,7 +49,7 @@ define(['jquery'], function($) {
 
             $(el).attr('disabled', !elementValue);
             resultElement.html(buttonText);
-        })
+        });
     };
 
     return GoogleMapsApiKeyValidator;

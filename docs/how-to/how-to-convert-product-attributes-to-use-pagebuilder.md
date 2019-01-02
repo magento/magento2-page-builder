@@ -1,7 +1,5 @@
 # How to convert product attribute fields to use Page Builder
 
-<!-- {% raw %} -->
-
 ## Product attribute fields
 
 The PageBuilder module is compatible with all product attributes fields that use an input of type `text`.
@@ -119,9 +117,7 @@ To prevent your form field from switching or using PageBuilder, set the `is_page
 ...
 ```
 
-[Catalog Input Type]: images/catalog-input-type.png
-[PageBuilder button]: images/pagebuilder-button.png
+[Catalog Input Type]: ../images/catalog-input-type.png
+[PageBuilder button]: ../images/pagebuilder-button.png
 [WYSIWYG UI Component]: https://devdocs.magento.com/guides/v2.2/ui_comp_guide/components/ui-wysiwyg.html
 [UI Component configuration file]: https://devdocs.magento.com/guides/v2.2/ui_comp_guide/concepts/ui_comp_xmldeclaration_concept.html
-
-<!-- {% endraw %} -->

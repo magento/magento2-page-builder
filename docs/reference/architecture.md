@@ -1,6 +1,4 @@
-# Architecture <!-- omit in toc -->
-
-<!-- {% raw %} -->
+# Architecture
 
 ## What is PageBuilder
 
@@ -18,26 +16,28 @@ Use the TypeScript components in the module as reference to understand the flow 
 PageBuilder also uses core Magento technologies such as jQuery, Knockout & UI Components.
 It also uses additional libraries to help with various content types shipped with the module.
 
-## Storage format 
+## Storage format
 
-PageBuilder uses XHTML with inline stlyes and data attributes for storage and as the [master format].
+PageBuilder uses XHTML with inline styles and data attributes for storage and as the [master format].
 This allows the content to be displayed with minimum changes to the Magento storefront and other third-party systems.
 
 To display Page Builder content on storefront Magento and third party systems need to do the following
 
 Use the following steps to display PageBuilder content on a Magento storefront or third-party system:
 
+<!-- {% raw %} -->
 1. Replace all Magento directives such as `{{image url=path/to/image.png}}`
 2. Add custom stylesheet to provide the base styles that user can't edit.
    This includes styles for the content types such as `slider`, `tabs`, etc.
-3. After the content renders, load and initialze the widgets and libraries on the frontend that need initalization, such as slider, tabs, etc.
+3. After the content renders, load and initialize the widgets and libraries on the frontend that need initialization, such as slider, tabs, etc.
+<!-- {% endraw %} -->
 
 ## Integration with Magento and custom modules
 
 When PageBuilder is enabled in the system configuration, it replaces all WYSIWYG instances.
 It does this by intercepting the WYSIWYG UI Component field and replacing the traditional WYSIWYG editor with the PageBuilder editor.
 
-This means that any custom extension that utilises the WYSIWYG field UI Component automatically supports the PageBuilder editor.
+This means that any custom extension that utilizes the WYSIWYG field UI Component automatically supports the PageBuilder editor.
 
 To revert back to using the default WYSIWYG, add the following entry to the field configuration in the XML configuration file:
 
@@ -49,7 +49,7 @@ To revert back to using the default WYSIWYG, add the following entry to the fiel
 
 ## Big picture
 
-![Page Builder big picture](images/big-picture.png)
+![Page Builder big picture](../images/big-picture.png)
 
 | Entity            | Name in configuration | Description                                                                                                    |
 | ----------------- | --------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -65,13 +65,13 @@ To revert back to using the default WYSIWYG, add the following entry to the fiel
 
 ## Data flow
 
-![Page Builder data flow](images/data-flow.png)
+![Page Builder data flow](../images/data-flow.png)
 
 The following is a simple overview of the data flow:
 
 1. Data is read by reader `Magento_PageBuilder/js/master-format/read/configurable`.
 2. Data for each element (`border`, `border_color`, `border_width` etc) is converted to an internal format by element converters.
-3. Data is converted by mass converters. For more details see [converter interface](content-type-configuration.md).
+3. Data is converted by mass converters. For more details see [converter interface](../configurations/content-type-configuration.md).
 4. Content type is created and `Magento_PageBuilder/js/data-store` is populated with data.
 5. Data in the data store is modified in the form or using live edit.
 6. Data is converted by mass converters.
@@ -85,23 +85,23 @@ A Mass converter modifies data for all content type elements.
 For example, the content type of two elements, main and image has data stored in the fields `border`, `border_color`, `border_width`, `background_image`.
 A mass converter allows you to modify all these fields.
 
-For more information, read about how [data is stored internally](#Data store). 
+For more information, read about how [data is stored internally](#Datastore). 
 
 ### Element converter
 
 An element converter modifies a single field at a time.
 
-## Data store
+## Datastore
 
 Data for content types are stored in a simple object called the DataStore `Magento_PageBuilder/js/data-store`.
 
-`var` from [content type configuration](content-type-configuration.md) is the name of a parameter in the DataStore.
+`var` from [content type configuration](../configurations/content-type-configuration.md) is the name of a parameter in the DataStore.
 
 You can use the `subscribe` method to subscribe to changes in the data and perform custom action on it.
 
 ## Content type configuration
 
-Please see [content type configuration](content-type-configuration.md#Converter Interfaces) for information on content type configuration.
+Please see [content type configuration](../configurations/content-type-configuration.md) for information on content type configuration.
 
 ## Appearances
 
@@ -127,6 +127,4 @@ Appearances allow you to make the following customization on existing content ty
 
 [TypeScript]: https://www.typescriptlang.org/
 [master format]: master-format.md
-[content type]: how-to-add-new-content-type.md
-
-<!-- {% endraw %} -->
+[content type]: ../how-to/how-to-develop-new-content-type.md

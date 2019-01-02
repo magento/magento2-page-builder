@@ -6,13 +6,13 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "Magento_PageBuilder/js/events";
 import widgetInitializer from "Magento_PageBuilder/js/widget-initializer";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -42,6 +42,26 @@ export default class Preview extends BasePreview {
     ) {
         super(parent, config, observableUpdater);
         this.placeholderText = ko.observable(this.messages.NOT_SELECTED);
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
     }
 
     /**

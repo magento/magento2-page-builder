@@ -45,10 +45,6 @@ define(["underscore"], function (_underscore) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      if (value === "") {
-        value = "javascript:void(0)";
-      }
-
       return value;
     };
     /**
@@ -62,13 +58,21 @@ define(["underscore"], function (_underscore) {
 
     _proto.toDom = function toDom(name, data) {
       var link = data[name];
+      var href = "";
 
-      if (typeof link === "undefined" || typeof link[link.type] === "string" && !link[link.type].length) {
-        return "javascript:void(0)";
+      if (!link) {
+        return href;
       }
 
-      var href = link[link.type];
-      href = this.convertToWidget(href, link.type);
+      var linkType = link.type;
+      var isHrefId = !isNaN(parseInt(link[linkType], 10));
+
+      if (isHrefId && link) {
+        href = this.convertToWidget(link[linkType], linkType);
+      } else if (typeof link[linkType] === "string") {
+        href = link[linkType];
+      }
+
       return href;
     };
     /**

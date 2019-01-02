@@ -314,73 +314,6 @@
         </actionGroup>
         <dontSeeElement selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="checkNoRequiredField"/>
     </test>
-    <test name="BannerCheckInvalidOverlayTransparencyInputs">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Banner"/>
-            <title value="Invalid Overlay Transparency Values"/>
-            <description value="Banner edit form does not save with invalid overlay transparency values"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MAGETWO-81599"/>
-            <testCaseId value="MC-2823"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCommon"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
-            <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <!-- Check Invalid Min -->
-        <comment userInput="Check Invalid Min" stepKey="commentCheckInvalidMin"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMin">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMin">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
-        </actionGroup>
-        <!-- Check Invalid Max -->
-        <comment userInput="Check Invalid Max" stepKey="commentCheckInvalidMax"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidMax">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMax">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
-        </actionGroup>
-        <!-- Check Invalid Type -->
-        <comment userInput="Check Invalid Type" stepKey="commentCheckInvalidType"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerOverlayTransparencyInvalidType">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidType">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
-        </actionGroup>
-        <!-- Check Valid -->
-        <comment userInput="Check Valid" stepKey="commentCheckValid"/>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBannerOverlayTransparencyValid">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-    </test>
     <test name="BannerHasExpectedFieldsAndDefaults">
         <annotations>
             <features value="PageBuilder"/>
@@ -470,9 +403,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayColorProperty">
             <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayTransparencyProperty">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
-        </actionGroup>
         <!-- Validate Edit Panel Defaults -->
         <comment userInput="Validate Edit Panel Defaults" stepKey="commentValidateEditPanelDefaults"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultMinimumHeightProperty">
@@ -507,9 +437,6 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBannerShowContentOverlayProperty">
             <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutIsZeroProperty" stepKey="seeDefaultOverlayTransparencyProperty">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
-        </actionGroup>
         <!-- Validate Edit Panel Disabled -->
         <comment userInput="Validate Edit Panel Disabled" stepKey="commentValidateEditPanelDisabled"/>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerButtonTextPropertyIsDisabled">
@@ -520,9 +447,6 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayColorPropertyIsDisabled">
             <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayTransparencyPropertyIsDisabled">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
         </actionGroup>
     </test>
     <test name="BannerValidateBackgroundSectionDefaultValues">
@@ -1041,8 +965,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty_EmptyFrontend.value)}}" stepKey="seeJavaScriptVoid0UrlInDom"/>
-        <click selector="{{BannerOnFrontend.linkUrl('1', PageBuilderBannerLinkUrlProperty_EmptyFrontend.value)}}" stepKey="clickLinkUrl"/>
+        <seeElement selector="{{BannerOnFrontendEmptyLink.linkUrl('1', PageBuilderBannerLinkUrlProperty_Empty.value)}}" stepKey="seeBannerLinkElementIsADiv"/>
+        <click selector="{{BannerOnFrontendEmptyLink.linkUrl('1', PageBuilderBannerLinkUrlProperty_Empty.value)}}" stepKey="clickLinkElement"/>
         <wait time="3" stepKey="waitArbitraryTimeForPotentialNavigationToOccur" />
         <seeCurrentUrlEquals url="{{_ENV.MAGENTO_BASE_URL}}{{PageBuilderBannerContentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="seeThatCurrentUrlIsUnchanged" />
     </test>
@@ -1603,10 +1527,7 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
-            <argument name="property" value="PageBuilderBannerOverlayColor_FF0000"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayTransparency">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
+            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <!-- Update Advanced Section -->
         <comment userInput="Update Advanced Section" stepKey="commentUpdateAdvancedSection"/>
@@ -1681,7 +1602,7 @@
         <seeElement selector="{{BannerOnBackend.buttonType('2', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStage"/>
         <seeElement selector="{{BannerOnBackend.buttonText('2', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStage"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('2', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeOverlayStateStage"/>
-        <seeElement selector="{{BannerOnBackend.overlayColorAndTransparency('2', PageBuilderBannerOverlayColor_FF0000.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage"/>
+        <seeElement selector="{{BannerOnBackend.overlayBackgroundColor('2', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayBackgroundStage"/>
         <seeElement selector="{{BannerOnBackend.alignment('2', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage"/>
         <seeElement selector="{{BannerOnBackend.border('2', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage"/>
         <seeElement selector="{{BannerOnBackend.borderColor('2', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage"/>
@@ -1719,7 +1640,7 @@
         <seeElement selector="{{BannerOnBackend.buttonType('2', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStage2"/>
         <seeElement selector="{{BannerOnBackend.buttonText('2', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStage2"/>
         <seeElement selector="{{BannerOnBackend.showOverlay('2', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeOverlayStateStage2"/>
-        <seeElement selector="{{BannerOnBackend.overlayColorAndTransparency('2', PageBuilderBannerOverlayColor_FF0000.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayColorAndTransparencyStage2"/>
+        <seeElement selector="{{BannerOnBackend.overlayBackgroundColor('2', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayBackgroundStorefront2"/>
         <seeElement selector="{{BannerOnBackend.alignment('2', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStage2"/>
         <seeElement selector="{{BannerOnBackend.border('2', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStage2"/>
         <seeElement selector="{{BannerOnBackend.borderColor('2', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStage2"/>
@@ -1783,10 +1704,7 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayColor">
-            <argument name="property" value="PageBuilderBannerOverlayColor_FF0000"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeOverlayTransparency">
-            <argument name="property" value="PageBuilderBannerOverlayTransparencyProperty"/>
+            <argument name="property" value="PageBuilderBannerOverlayColor_Blue_Opaque"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -1844,7 +1762,7 @@
         <seeElement selector="{{BannerOnFrontend.buttonType('2', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeButtonTypeStorefront"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('2', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('2', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeOverlayStateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('2', PageBuilderBannerOverlayColor_FF0000.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeOverlayColorAndTransparencyStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('2', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayBackgroundStorefront"/>
         <seeElement selector="{{BannerOnFrontend.alignment('2', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeAlignmentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.border('2', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeBorderStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderColor('2', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeBorderColorStorefront"/>
@@ -1872,7 +1790,7 @@
         <seeElement selector="{{BannerOnFrontend.buttonType('2', PageBuilderBannerButtonTypeSecondaryProperty.value)}}" stepKey="seeMobileButtonTypeStorefront"/>
         <seeElement selector="{{BannerOnFrontend.buttonText('2', PageBuilderBannerButtonTextProperty2.value)}}" stepKey="seeMobileButtonTextStorefront"/>
         <seeElement selector="{{BannerOnFrontend.showOverlay('2', PageBuilderBannerShowContentOverlayAlwaysProperty.value)}}" stepKey="seeMobileOverlayStateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.overlayColorAndTransparency('2', PageBuilderBannerOverlayColor_FF0000.rgb, PageBuilderBannerOverlayTransparencyProperty.decimal)}}" stepKey="seeMobileOverlayColorAndTransparencyStorefront"/>
+        <seeElement selector="{{BannerOnFrontend.overlayBackgroundColor('2', PageBuilderBannerOverlayColor_Blue_Opaque.value)}}" stepKey="seeMobileOverlayBackgroundStorefront"/>
         <seeElement selector="{{BannerOnFrontend.alignment('2', PageBuilderAdvancedAlignmentPropertyCenter.value)}}" stepKey="seeMobileAlignmentStorefront"/>
         <seeElement selector="{{BannerOnFrontend.border('2', PageBuilderAdvancedBorderPropertyDouble.value)}}" stepKey="seeMobileBorderStorefront"/>
         <seeElement selector="{{BannerOnFrontend.borderColor('2', PageBuilderAdvancedBorderColorProperty_green.rgb)}}" stepKey="seeMobileBorderColorStorefront"/>
@@ -2222,7 +2140,6 @@
         <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
-            <argument name="expectedIndex" value="2"/>
             <argument name="contentTypeXCoordinate" value="10"/>
             <argument name="contentTypeYCoordinate" value="0"/>
         </actionGroup>

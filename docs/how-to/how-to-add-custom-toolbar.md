@@ -1,12 +1,10 @@
 # How to add a custom Toolbar
 
-<!-- {% raw %} -->
-
 ## What's in this topic
 
 This document outlines how to implement the inline editing toolbar for any content type. This feature is used within the heading to allow for easy modification of the heading type and alignment. It can be used within your content types to quickly change common things without needing to open the full editor.
 
-![Page Builder toolbar](images/toolbar.png)
+![Page Builder toolbar](../images/toolbar.png)
 
 ## Overview
 
@@ -15,7 +13,7 @@ To add a custom toolbar to a Page Builder content block:
 1. [Add a toolbar configuration](#toolbarConfig)
 2. [Add a toolbar template](#toolbarTpl)
 
-## Add a toolbar configuration
+## Add a toolbar configuration {#toolbarConfig}
 
 To add a Toolbar configuration to your content block, you need to create a new instance of the `Toolbar` class, then add configuration options to it. 
 
@@ -65,7 +63,7 @@ Option property descriptions:
 | `label`             | Label of the option. If no icon is specified, this will be displayed               |
 | `icon`              | Name of CSS class to use for the icon.                                             |
 
-## Add toolbar template
+## Add toolbar template {#toolbarTpl}
 
 In your content block template, add the toolbar events to your main toolbar container, and insert the toolbar template:
 
@@ -79,5 +77,3 @@ In your content block template, add the toolbar events to your main toolbar cont
 
 An example implementation can be found in the Heading content block:
 `app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
-
-<!-- {% endraw %} -->

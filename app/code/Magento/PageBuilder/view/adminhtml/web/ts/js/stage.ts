@@ -7,7 +7,6 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
-import domObserver from "Magento_Ui/js/lib/view/utils/dom-observer";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import "./binding/sortable";
@@ -40,7 +39,6 @@ export default class Stage {
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
     public userSelect: KnockoutObservable<boolean> = ko.observable(true);
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
-    public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
     private template: string = "Magento_PageBuilder/content-type/preview";
@@ -67,6 +65,11 @@ export default class Stage {
         this.id = parent.id;
         generateAllowedParents();
 
+        // Fire an event after the DOM has rendered
+        this.afterRenderDeferred.promise.then(() => {
+            events.trigger(`stage:${ this.id }:renderAfter`, {stage: this});
+        });
+
         // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
             buildStage(this, this.parent.initialValue),
@@ -86,10 +89,7 @@ export default class Stage {
     /**
      * The stage has been initiated fully and is ready
      */
-    public ready([buildResults, canvasElement]: [any[], HTMLElement]) {
-        // Disable the dom observer from running on our canvas
-        domObserver.disableNode(canvasElement);
-
+    public ready() {
         events.trigger(`stage:${ this.id }:readyAfter`, {stage: this});
         this.loading(false);
         this.initListeners();
@@ -199,7 +199,9 @@ export default class Stage {
         });
         events.on("stage:interactionStop", (args: {force: boolean}) => {
             const forced = (_.isObject(args) && args.force === true);
-            if (--interactionLevel === 0 || forced) {
+            interactionLevel = Math.max(interactionLevel - 1, 0);
+
+            if (interactionLevel === 0 || forced) {
                 this.interacting(false);
                 if (forced) {
                     interactionLevel = 0;
