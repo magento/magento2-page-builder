@@ -4,9 +4,9 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/utils/loader";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import ContentTypeInterface from "../content-type.d";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
 import converterResolver from "./converter-resolver";
 import Master from "./master";
 import MasterCollection from "./master-collection";
@@ -24,7 +24,7 @@ export default function create(
     config: ContentTypeConfigInterface,
 ): Promise<Master | MasterCollection> {
     return new Promise(
-        (resolve: (masterComponent: Master | MasterCollection) => void, reject: (error: string) => void
+        (resolve: (masterComponent: Master | MasterCollection) => void, reject: (error: string) => void,
     ) => {
         observableUpdaterFactory(config, converterResolver).then((observableUpdater) => {
             loadModule([config.master_component], (masterComponent: typeof Master | typeof MasterCollection) => {

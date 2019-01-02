@@ -637,7 +637,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _createClass(Preview, [{
       key: "previewTemplate",
       get: function get() {
-        var appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
+        var appearance = this.parent.dataStore.get("appearance") ? this.parent.dataStore.get("appearance").toString() : undefined;
         return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
       }
     }]);

@@ -93,8 +93,13 @@ export default class Preview {
      * @returns {string}
      */
     get previewTemplate(): string {
-        const appearance = this.previewData.appearance ? this.previewData.appearance() as string : undefined;
-        return appearanceConfig(this.config.name, appearance).preview_template;
+        const appearance = this.parent.dataStore.get("appearance") ?
+            this.parent.dataStore.get("appearance").toString() : undefined;
+
+        return appearanceConfig(
+            this.config.name,
+            appearance
+        ).preview_template;
     }
 
     /**

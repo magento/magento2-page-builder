@@ -87,7 +87,7 @@ function createElementContentType(
     parent = parent || stage;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
     if (!role) {
-        return Promise.reject(`Invalid master format: Content type element does not contain 
+        return Promise.reject(`Invalid master format: Content type element does not contain
             ${Config.getConfig("dataRoleAttributeName")} attribute.`);
     }
 
@@ -120,8 +120,8 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
         return "";
     });
 
-    return new Promise((resolve: (result: object) => void, reject: (e: string) => void) => {
-        const role = element.dataset.role;
+    return new Promise((resolve: (result: object) => void) => {
+        const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
         if (!Config.getConfig("content_types").hasOwnProperty(role)) {
             resolve(result);
         } else {
@@ -147,15 +147,17 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
  * @param {HTMLElement} element
  * @returns {Array<HTMLElement>}
  */
-function getElementChildren(element: HTMLElement): Array<HTMLElement> {
+function getElementChildren(element: HTMLElement): HTMLElement[] {
     if (element.hasChildNodes()) {
         let children: any[] = [];
 
         _.forEach(element.childNodes, (child: HTMLElement) => {
-            if (child.hasAttribute(Config.getConfig("dataRoleAttributeName"))) {
-                children.push(child);
-            } else {
-                children = getElementChildren(child);
+            if (child.nodeType === Node.ELEMENT_NODE) {
+                if (child.hasAttribute(Config.getConfig("dataRoleAttributeName"))) {
+                    children.push(child);
+                } else {
+                    children = getElementChildren(child);
+                }
             }
         });
 

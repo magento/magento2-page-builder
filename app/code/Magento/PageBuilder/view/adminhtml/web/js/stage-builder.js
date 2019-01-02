@@ -71,7 +71,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 
     if (!role) {
-      return Promise.reject("Invalid master format: Content type element does not contain \n            " + _config.getConfig("dataRoleAttributeName") + " attribute.");
+      return Promise.reject("Invalid master format: Content type element does not contain\n            " + _config.getConfig("dataRoleAttributeName") + " attribute.");
     }
 
     var config = _config.getContentTypeConfig(role);
@@ -99,8 +99,8 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
       return "";
     });
 
-    return new Promise(function (resolve, reject) {
-      var role = element.dataset.role;
+    return new Promise(function (resolve) {
+      var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 
       if (!_config.getConfig("content_types").hasOwnProperty(role)) {
         resolve(result);
@@ -138,10 +138,12 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
       var children = [];
 
       _.forEach(element.childNodes, function (child) {
-        if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
-          children.push(child);
-        } else {
-          children = getElementChildren(child);
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
+            children.push(child);
+          } else {
+            children = getElementChildren(child);
+          }
         }
       });
 

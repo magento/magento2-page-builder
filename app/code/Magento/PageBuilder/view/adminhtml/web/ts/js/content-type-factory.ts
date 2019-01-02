@@ -36,8 +36,8 @@ export default function createContentType(
 ): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
     return new Promise(
         (resolve: (contentType: ContentType | ContentTypeCollection) => void,
-         reject: (error: string) => void
-    )=> {
+         reject: (error: string) => void,
+    ) => {
         loadModule([config.component], (contentTypeComponent: typeof ContentType | typeof ContentTypeCollection) => {
             try {
                 const contentType = new contentTypeComponent(

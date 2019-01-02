@@ -4,9 +4,9 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/utils/loader";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import ContentTypeInterface from "../content-type.d";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
 import observableUpdaterFactory from "./observable-updater-factory";
 import Preview from "./preview";
 import PreviewCollection from "./preview-collection";
@@ -24,7 +24,7 @@ export default function create(
     config: ContentTypeConfigInterface,
 ): Promise<Preview | PreviewCollection> {
     return new Promise(
-        (resolve: (previewComponent: Preview | PreviewCollection) => void, reject: (e: string) => void
+        (resolve: (previewComponent: Preview | PreviewCollection) => void, reject: (e: string) => void,
     ) => {
         observableUpdaterFactory(config, previewConverterResolver).then((observableUpdater) => {
             loadModule([config.preview_component], (previewComponent: typeof Preview | typeof PreviewCollection) => {
