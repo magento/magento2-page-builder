@@ -46,7 +46,13 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
         return Promise.all(childrenPromises.map(function (child, index) {
           parent.addChild(child);
           return buildElementIntoStage(childElements[index], child, stage);
-        }));
+        })).catch(function (error) {
+          console.error(error);
+          return null;
+        });
+      }).catch(function (error) {
+        console.error(error);
+        return null;
       });
     }
   }
@@ -106,6 +112,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
           });
         });
       }
+    }).catch(function (error) {
+      console.error(error);
+      return null;
     });
   }
   /**

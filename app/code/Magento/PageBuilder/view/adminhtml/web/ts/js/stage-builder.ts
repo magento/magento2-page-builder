@@ -44,7 +44,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
-        const childPromises: Array<Promise<ContentTypeInterface>> = [];
+        const childPromises: Array<Promise<ContentTypeInterface | ContentTypeCollectionInterface>> = [];
         const childElements: Element[] = [];
         const children = getElementChildren(element);
 
@@ -57,10 +57,16 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
 
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
-            return Promise.all(childrenPromises.map((child: ContentTypeCollectionInterface, index) => {
+            return Promise.all(childrenPromises.map((child, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
-            }));
+            })).catch((error) => {
+                console.error(error);
+                return null;
+            });
+        }).catch((error) => {
+            console.error(error);
+            return null;
         });
     }
 }
@@ -121,6 +127,9 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
                 });
             });
         }
+    }).catch((error) => {
+        console.error(error);
+        return null;
     });
 }
 
@@ -218,6 +227,6 @@ export default function build(
             title: $t("Advanced CMS Error"),
         });
         events.trigger("stage:error", error);
-        console.error( error );
+        console.error(error);
     });
 }

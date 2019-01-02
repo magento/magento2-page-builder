@@ -11,6 +11,7 @@ import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
+import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeConfigInterface from "./content-type-config";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
 import ContentTypeInterface from "./content-type.d";
@@ -52,9 +53,11 @@ export default class Stage {
      */
     private applyBindingsDebounce = _.debounce(() => {
         this.render.applyBindings(this.children)
-            .then((renderedOutput) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
+            .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
-            }));
+            })).catch((error) => {
+                console.error(error);
+            });
     }, 500);
 
     /**
@@ -74,7 +77,9 @@ export default class Stage {
         Promise.all([
             buildStage(this, this.parent.initialValue),
             this.afterRenderDeferred.promise,
-        ]).then(this.ready.bind(this));
+        ]).then(this.ready.bind(this)).catch((error) => {
+            console.error(error);
+        });
     }
 
     /**
@@ -119,7 +124,7 @@ export default class Stage {
      *
      * @returns {KnockoutObservableArray<ContentTypeInterface>}
      */
-    public getChildren(): KnockoutObservableArray<ContentTypeInterface> {
+    public getChildren(): KnockoutObservableArray<ContentTypeCollectionInterface> {
         return this.collection.getChildren();
     }
 
