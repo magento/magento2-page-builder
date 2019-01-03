@@ -65,10 +65,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
 
   function getPreviewStageIdProxy(preview) {
-    if (preview.config.name === "stage") {
-      return preview.id;
-    }
-
     return preview.parent.stageId;
   }
   /**
@@ -80,10 +76,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
 
   function getParentProxy(instance) {
-    if (instance.config.name === "stage") {
-      return instance;
-    }
-
     return instance.parent;
   }
 

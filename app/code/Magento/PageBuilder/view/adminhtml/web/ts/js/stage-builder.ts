@@ -29,7 +29,7 @@ function buildFromContent(stage: Stage, value: string) {
     const stageDocument = document.createElement("div");
     stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage, stage);
+    return buildElementIntoStage(stageDocument, stage.root, stage);
 }
 
 /**
@@ -69,16 +69,16 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
  * Parse an element in the structure and build the required element
  *
  * @param {Element} element
- * @param {ContentTypeInterface} parent
+ * @param {ContentTypeCollectionInterface} parent
  * @param {stage} stage
  * @returns {Promise<ContentTypeInterface>}
  */
 function createElementContentType(
     element: HTMLElement,
     stage: Stage,
-    parent?: ContentTypeInterface,
+    parent?: ContentTypeCollectionInterface,
 ): Promise<ContentTypeInterface> {
-    parent = parent || stage;
+    parent = parent || stage.root;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
     const config = Config.getContentTypeConfig(role);
 
@@ -161,17 +161,18 @@ function getElementChildren(element: Element) {
 
 function buildEmpty(stage: Stage, initialValue: string) {
     const stageConfig = Config.getConfig("stage_config");
+    const root = stage.root;
     const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, stage, stage.id, {})
+        return createContentType(rootContentTypeConfig, root, stage.id, {})
             .then((row: ContentTypeCollectionInterface) => {
-                stage.addChild(row);
+                root.addChild(row);
                 if (htmlDisplayContentTypeConfig && initialValue) {
                     return createContentType(
                         htmlDisplayContentTypeConfig,
-                        stage,
+                        root,
                         stage.id,
                         {
                             html: initialValue,
@@ -204,7 +205,7 @@ export default function build(
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
             .catch(() => {
-                stage.children([]);
+                stage.root.children([]);
                 currentBuild = buildEmpty(stage, content);
             });
     } else {

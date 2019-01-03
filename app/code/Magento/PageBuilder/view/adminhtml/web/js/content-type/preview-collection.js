@@ -49,7 +49,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
           if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
             contentType.children().forEach(function (subChild) {
-              var subChildClone = subChild.preview.clone(subChild, false);
+              var subChildClone = duplicate.preview.clone(subChild, false);
 
               if (subChildClone) {
                 subChildClone.then(function (duplicateSubChild) {

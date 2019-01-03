@@ -74,7 +74,13 @@ class Config
     private $widgetInitializerConfig;
 
     /**
+     * @var array
+     */
+    private $rootConfig;
+
+    /**
      * Config constructor.
+     *
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
@@ -84,6 +90,7 @@ class Config
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
+     * @param array $rootConfig
      * @param array $data
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -98,6 +105,7 @@ class Config
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
+        array $rootConfig = [],
         array $data = []
     ) {
         $this->config = $config;
@@ -109,6 +117,7 @@ class Config
         $this->activeEditor = $activeEditor;
         $this->inlineEditingChecker = $inlineEditingChecker;
         $this->widgetInitializerConfig = $widgetInitializerConfig;
+        $this->rootConfig = $rootConfig;
         $this->data = $data;
     }
 
@@ -123,6 +132,7 @@ class Config
             'groups' => $this->getGroups(),
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
+            'root_config' => $this->getRootConfig(),
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
             'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
             'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
@@ -130,6 +140,18 @@ class Config
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
         ];
+    }
+
+    /**
+     * Return the root configuration for the stage
+     *
+     * @return array
+     */
+    private function getRootConfig() : array {
+        $rootConfig = $this->rootConfig;
+        $rootConfig['preview_component'] = $rootConfig['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT;
+        $rootConfig['master_component'] = $rootConfig['master_component'] ?? self::DEFAULT_MASTER_COMPONENT;
+        return $rootConfig;
     }
 
     /**

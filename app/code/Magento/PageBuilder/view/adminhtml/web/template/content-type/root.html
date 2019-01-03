@@ -1,0 +1,13 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="pagebuilder-root content-type-drop content-type-container root-container"
+     each="parent.getChildren()"
+     data-bind="sortable: getSortableOptions()">
+    <div class="pagebuilder-drop-indicator"></div>
+    <div class="pagebuilder-content-type-wrapper" attr="id: id" template="{ name: preview.previewTemplate, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" css="{'pagebuilder-content-type-hidden': !preview.display()}"></div>
+    <div class="pagebuilder-drop-indicator"></div>
+</div>
