@@ -6,19 +6,19 @@
 import $ from "jquery";
 import mageUtils from "mageUtils";
 import _ from "underscore";
+import {
+    ContentTypeConfigAppearanceElementInterface,
+    DataMappingAttributesInterface,
+    DataMappingStyleInterface,
+} from "../../content-type-config";
 import appearanceConfig from "../../content-type/appearance-config";
-import PropertyReaderPool from "../../property/property-reader-pool";
 import ConverterPool from "../../converter/converter-pool";
 import converterPoolFactory from "../../converter/converter-pool-factory";
 import MassConverterPool from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
+import PropertyReaderPool from "../../property/property-reader-pool";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {ReadInterface} from "../read-interface";
-import {
-    ContentTypeConfigAppearanceElementInterface,
-    DataMappingAttributesInterface,
-    DataMappingStyleInterface
-} from "../../content-type-config";
 
 /**
  * @api
@@ -215,7 +215,7 @@ export default class Configurable implements ReadInterface {
         config: ContentTypeConfigAppearanceElementInterface,
         element: HTMLElement,
         data: object,
-        converterPool: typeof ConverterPool
+        converterPool: typeof ConverterPool,
     ) {
         const result: {[key: string]: string} = {};
         let value = element.innerHTML;

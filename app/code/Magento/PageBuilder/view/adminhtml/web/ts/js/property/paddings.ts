@@ -33,5 +33,5 @@ export interface DataObjectPaddings {
         top: string;
         right: string;
         bottom: string;
-    }
+    };
 }

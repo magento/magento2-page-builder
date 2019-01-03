@@ -4,9 +4,9 @@
  */
 
 import {DataObject} from "../../data-store";
-import ConverterInterface from "../converter-interface";
-import {DataObjectPaddings} from "../../property/paddings";
 import {DataObjectMargins} from "../../property/margins";
+import {DataObjectPaddings} from "../../property/paddings";
+import ConverterInterface from "../converter-interface";
 
 /**
  * @api
@@ -26,7 +26,7 @@ export default class Paddings implements ConverterInterface {
                     left: value.padding.left.replace("px", ""),
                     right: value.padding.right.replace("px", ""),
                     bottom: value.padding.bottom.replace("px", ""),
-                }
+                },
             };
         }
         return {};

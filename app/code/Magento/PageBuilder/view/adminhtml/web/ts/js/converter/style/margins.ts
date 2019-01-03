@@ -4,8 +4,8 @@
  */
 
 import {DataObject} from "../../data-store";
-import ConverterInterface from "../converter-interface";
 import {DataObjectMargins} from "../../property/margins";
+import ConverterInterface from "../converter-interface";
 
 /**
  * @api
@@ -25,7 +25,7 @@ export default class Margins implements ConverterInterface {
                     left: value.margin.left.replace("px", ""),
                     right: value.margin.right.replace("px", ""),
                     bottom: value.margin.bottom.replace("px", ""),
-                }
+                },
             };
         }
         return {};

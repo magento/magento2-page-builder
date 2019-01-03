@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import _ from "underscore";
+import {ConverterInterface} from "../content-type-config";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
@@ -12,7 +13,6 @@ import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
 import Master from "./master";
 import Preview from "./preview";
-import {ConverterInterface} from "../content-type-config";
 
 export default class ObservableUpdater {
     private converterPool: typeof ConverterPool;

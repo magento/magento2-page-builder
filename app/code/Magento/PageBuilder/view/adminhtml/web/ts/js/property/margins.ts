@@ -33,5 +33,5 @@ export interface DataObjectMargins {
         top: string;
         right: string;
         bottom: string;
-    }
+    };
 }

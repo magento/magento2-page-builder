@@ -22,7 +22,7 @@ export default class Margins implements ConverterInterface {
                     left: value.margin.left.replace("px", ""),
                     right: value.margin.right.replace("px", ""),
                     bottom: value.margin.bottom.replace("px", ""),
-                }
+                },
             };
         }
         return {};

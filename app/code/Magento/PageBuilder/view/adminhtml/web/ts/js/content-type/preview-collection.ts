@@ -49,7 +49,7 @@ export default class PreviewCollection extends Preview {
                     // Duplicate the instances children into the new duplicate
                     contentType.children().forEach(
                         (subChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
-                            const subChildClone = duplicate.preview.clone(subChild, false);
+                            const subChildClone = (subChild.preview as Preview).clone(subChild, false);
                             if (subChildClone) {
                                 subChildClone.then(
                                     (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
