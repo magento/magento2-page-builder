@@ -37,7 +37,7 @@ export default class Master {
      * @returns {string}
      */
     get renderTemplate(): string {
-        return appearanceConfig(this.parent.config.name, this.getData().appearance).render_template;
+        return appearanceConfig(this.parent.config.name, this.getData().appearance as string).render_template;
     }
 
     /**
@@ -47,7 +47,7 @@ export default class Master {
      * @returns {DataObject}
      * @deprecated
      */
-    public getData(element: string) {
+    public getData(element?: string): DataObject {
         let data = _.extend({}, this.parent.dataStore.get());
 
         if (undefined === element) {
@@ -59,7 +59,7 @@ export default class Master {
 
         data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
-        const result = {};
+        const result: {[key: string]: string} = {};
         if (undefined !== config[element].tag.var) {
             result[config[element].tag.var] = data[config[element].tag.var];
         }

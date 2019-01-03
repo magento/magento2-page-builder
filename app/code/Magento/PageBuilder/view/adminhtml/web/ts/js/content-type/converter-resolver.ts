@@ -3,12 +3,14 @@
  * See COPYING.txt for license details.
  */
 
+import {DataMappingInterface} from "../content-type-config";
+
 /**
  * Resolve converter
  *
- * @param {object} config
+ * @param {DataMappingInterface} config
  * @return string
  */
-export default function resolve(config): string {
+export default function resolve(config: DataMappingInterface): string {
     return config.converter;
 }

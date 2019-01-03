@@ -52,10 +52,12 @@ define([], function () {
 
     _proto.toDom = function toDom(name, data) {
       var result = {};
-      var value = data[name];
+      var value;
 
-      if (value && typeof value === "string") {
-        value = JSON.parse(value);
+      if (data[name] && typeof data[name] === "string") {
+        value = JSON.parse(data[name]);
+      } else {
+        value = data[name];
       }
 
       if (value && undefined !== value.padding) {

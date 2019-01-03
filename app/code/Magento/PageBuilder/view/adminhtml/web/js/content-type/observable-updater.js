@@ -126,10 +126,9 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
     /**
      * Process data for elements before its converted to knockout format
      *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
+     * @param {object} data
+     * @param {ConverterInterface[]} convertersConfig
+     * @returns {object}
      */
 
 

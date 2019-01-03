@@ -13,9 +13,10 @@ import ContentTypeInterface from "./content-type.d";
 import MasterCollection from "./content-type/master-collection";
 import PreviewCollection from "./content-type/preview-collection";
 
-export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
-    public preview: PreviewCollection;
-    public content: MasterCollection;
+export default class ContentTypeCollection<P extends PreviewCollection = PreviewCollection,
+    M extends MasterCollection = MasterCollection> extends ContentType<P, M>
+    implements ContentTypeCollectionInterface<P, M>
+{
     private collection: Collection = new Collection();
 
     /**
@@ -50,7 +51,7 @@ export default class ContentTypeCollection extends ContentType implements Conten
      * @param {ContentTypeInterface | ContentTypeCollectionInterface} child
      * @param {number} index
      */
-    public addChild(child: ContentTypeInterface | ContentTypeCollectionInterface, index?: number): void {
+    public addChild(child: ContentTypeInterface, index?: number): void {
         child.parent = this;
         this.collection.addChild(child, index);
 
@@ -66,20 +67,20 @@ export default class ContentTypeCollection extends ContentType implements Conten
      *
      * @param child
      */
-    public removeChild(child: any): void {
+    public removeChild(child: ContentTypeInterface): void {
         this.collection.removeChild(child);
     }
 
     /**
      * Set the children observable array into the class
      *
-     * @param children
+     * @param {KnockoutObservableArray<ContentTypeInterface>} children
      */
-    public setChildren(children: KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>) {
+    public setChildren(children: KnockoutObservableArray<ContentTypeInterface>) {
         this.collection.setChildren(children);
     }
 
-    get children(): KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface> {
+    get children(): KnockoutObservableArray<ContentTypeInterface> {
         return this.collection.getChildren();
     }
 }

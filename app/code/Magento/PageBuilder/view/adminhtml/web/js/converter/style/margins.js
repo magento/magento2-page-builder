@@ -24,18 +24,18 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      var result = {};
-
       if (undefined !== value.margin) {
-        result.margin = {
-          top: value.margin.top.replace("px", ""),
-          left: value.margin.left.replace("px", ""),
-          right: value.margin.right.replace("px", ""),
-          bottom: value.margin.bottom.replace("px", "")
+        return {
+          margin: {
+            top: value.margin.top.replace("px", ""),
+            left: value.margin.left.replace("px", ""),
+            right: value.margin.right.replace("px", ""),
+            bottom: value.margin.bottom.replace("px", "")
+          }
         };
       }
 
-      return result;
+      return {};
     };
     /**
      * Convert value to knockout format
@@ -48,10 +48,12 @@ define([], function () {
 
     _proto.toDom = function toDom(name, data) {
       var result = {};
-      var value = data[name];
+      var value;
 
-      if (value && typeof value === "string") {
-        value = JSON.parse(value);
+      if (data[name] && typeof data[name] === "string") {
+        value = JSON.parse(data[name]);
+      } else {
+        value = data[name];
       }
 
       if (value && undefined !== value.margin) {

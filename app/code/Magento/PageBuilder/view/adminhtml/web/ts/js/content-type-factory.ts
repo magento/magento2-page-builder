@@ -35,7 +35,7 @@ export default function createContentType(
     childrenLength: number = 0,
 ): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
     return new Promise((resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void) => {
-        loadModule([config.component], (contentTypeComponent: typeof ContentType | typeof ContentTypeCollection) => {
+        loadModule([config.component], (contentTypeComponent: typeof ContentType) => {
             const contentType = new contentTypeComponent(
                 parent,
                 config,

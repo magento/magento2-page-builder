@@ -85,7 +85,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     /**
      * Set the children observable array into the class
      *
-     * @param children
+     * @param {KnockoutObservableArray<ContentTypeInterface>} children
      */
 
 

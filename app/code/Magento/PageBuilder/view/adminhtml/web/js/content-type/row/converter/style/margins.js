@@ -23,21 +23,23 @@ define([], function () {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
 
 
     _proto.toDom = function toDom(name, data) {
       var result = {};
-      var value = data[name];
+      var value;
 
-      if (value && typeof value === "string") {
-        value = JSON.parse(value);
+      if (data[name] && typeof data[name] === "string") {
+        value = JSON.parse(data[name]);
+      } else {
+        value = data[name];
       }
 
-      if (undefined !== value && undefined !== value.margin) {
+      if (value && undefined !== value.margin) {
         result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
         result.marginTop = value.margin.top ? value.margin.top + "px" : "";
         result.marginRight = value.margin.right ? value.margin.right + "px" : "";

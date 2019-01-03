@@ -78,7 +78,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
     /**
      * Read attributes for element
      *
-     * @param {object} config
+     * @param {DataMappingAttributesInterface[]} config
      * @param {HTMLElement} element
      * @param {object} data
      * @param {typeof PropertyReaderPool} propertyReaderPool
@@ -128,12 +128,12 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
     /**
      * Read style properties for element
      *
-     * @param {object} config
+     * @param {DataMappingStyleInterface[]} config
      * @param {HTMLElement} element
      * @param {object} data
      * @param {typeof PropertyReaderPool} propertyReaderPool
      * @param {typeof ConverterPool} converterPool
-     * @returns {object}
+     * @returns {{[p: string]: string}}
      */
 
 
@@ -191,10 +191,10 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
     /**
      * Read element's css
      *
-     * @param {object} config
+     * @param {ContentTypeConfigAppearanceElementInterface} config
      * @param {HTMLElement} element
      * @param {object} data
-     * @returns {object}
+     * @returns {any}
      */
 
 
@@ -226,11 +226,11 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
     /**
      * Read element's content
      *
-     * @param config
+     * @param {ContentTypeConfigAppearanceElementInterface} config
      * @param {HTMLElement} element
      * @param {object} data
      * @param {typeof ConverterPool} converterPool
-     * @returns {object}
+     * @returns {any}
      */
 
 

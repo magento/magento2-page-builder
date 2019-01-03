@@ -5,6 +5,7 @@
 
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
+import {DataObjectPaddings} from "../../../../property/paddings";
 
 export default class Paddings implements ConverterInterface {
     /**
@@ -13,7 +14,7 @@ export default class Paddings implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
+    public fromDom(value: DataObjectPaddings): DataObjectPaddings {
         const result: any = {};
 
         if (undefined !== value.padding) {
@@ -45,9 +46,11 @@ export default class Paddings implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
-            value = JSON.parse(value);
+        let value: DataObjectPaddings;
+        if (data[name] && typeof data[name] === "string") {
+            value = JSON.parse(data[name]);
+        } else {
+            value = data[name];
         }
         if (value && undefined !== value.padding) {
             result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";

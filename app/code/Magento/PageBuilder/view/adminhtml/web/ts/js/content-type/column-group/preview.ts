@@ -117,13 +117,13 @@ export default class Preview extends PreviewCollection {
         events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
+                this.registerResizeHandle(args.column, args.handle);
             }
         });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).bindDraggable(args.column);
+                this.bindDraggable(args.column);
             }
         });
 

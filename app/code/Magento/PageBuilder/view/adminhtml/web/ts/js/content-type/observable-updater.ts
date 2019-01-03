@@ -12,6 +12,7 @@ import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
 import Master from "./master";
 import Preview from "./preview";
+import {ConverterInterface} from "../content-type-config";
 
 export default class ObservableUpdater {
     private converterPool: typeof ConverterPool;
@@ -98,7 +99,7 @@ export default class ObservableUpdater {
 
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
                 const css = data[config[elementName].css.var];
-                const newClasses = {};
+                const newClasses: {[key: string]: boolean} = {};
 
                 if (css && css.length > 0) {
                     css.toString().split(" ").map(
@@ -125,12 +126,11 @@ export default class ObservableUpdater {
     /**
      * Process data for elements before its converted to knockout format
      *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
+     * @param {object} data
+     * @param {ConverterInterface[]} convertersConfig
+     * @returns {object}
      */
-    public convertData(data: object, convertersConfig: object) {
+    public convertData(data: object, convertersConfig: ConverterInterface[]) {
         for (const converterConfig of convertersConfig) {
             data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }

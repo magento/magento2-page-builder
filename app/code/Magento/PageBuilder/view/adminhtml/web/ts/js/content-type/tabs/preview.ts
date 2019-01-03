@@ -122,7 +122,7 @@ export default class Preview extends PreviewCollection {
                     // a tab was moved from the right of the default active tab the left of it, changing its index
                     newDefaultActiveTab++;
                 }
-                this.updateData("default_active", newDefaultActiveTab);
+                this.updateData("default_active", newDefaultActiveTab.toString());
             }
         });
 
@@ -179,7 +179,7 @@ export default class Preview extends PreviewCollection {
     public setActiveTab(index: number) {
         if (index !== null) {
             // Added to prevent mismatched fragment error caused by not yet rendered tab-item
-            index = parseInt(index, 10);
+            index = parseInt(index.toString(), 10);
             delayUntil(
                 () => {
                     $(this.element).tabs("option", "active", index);
@@ -397,7 +397,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedTabIndex: number;
         events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
-                const tabData = args.duplicateContentType.dataStore.get();
+                const tabData = args.duplicateContentType.dataStore.get() as DataObject;
                 args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
                     "tab_name",

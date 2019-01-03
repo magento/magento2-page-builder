@@ -12,10 +12,10 @@ interface ConverterInterface {
     /**
      * Convert value to internal format
      *
-     * @param value string
-     * @returns {string | object}
+     * @param {string} value
+     * @returns {any}
      */
-    fromDom(value: string): string | object | void | boolean;
+    fromDom(value: any): any;
 
     /**
      * Convert value to knockout format

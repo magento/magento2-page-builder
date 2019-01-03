@@ -29,11 +29,11 @@ export default class Src implements ConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string}
      */
-    public toDom(name: string, data: DataObject): string {
+    public toDom(name: string, data: {[key: string]: {[key: number]: {url: string}}}): string {
         const value = data[name];
         if (value[0] === undefined || value[0].url === undefined) {
             return "";

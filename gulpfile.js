@@ -38,7 +38,7 @@ gulp.task('default', ['build', 'watch', 'lint']);
 /**
  * Check for any new errors introduced since last build
  */
-gulp.task('errors', shell.task("node_modules/typescript/bin/tsc --noEmit | node ts-error-stopgap.js"));
+gulp.task('errors', shell.task("node_modules/typescript/bin/tsc --noEmit"));
 
 /**
  * Fix all TypeScript linting issues

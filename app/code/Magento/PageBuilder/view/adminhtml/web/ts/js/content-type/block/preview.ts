@@ -83,7 +83,7 @@ export default class Preview extends BasePreview {
     public processBlockData(data: DataObject): void {
         // Only load if something changed
         this.displayPreviewPlaceholder(data, "block_id");
-        if (data.block_id && data.template.length !== 0) {
+        if (data.block_id && (data.template as string).length !== 0) {
             this.processRequest(data, "block_id", "title");
         }
     }
@@ -121,8 +121,8 @@ export default class Preview extends BasePreview {
             this.placeholderText("");
         }
 
-        if (!data[identifierName] || (data[identifierName] && data[identifierName].length === 0) ||
-            data.template.length === 0) {
+        if (!data[identifierName] || (data[identifierName] && (data[identifierName] as string).length === 0) ||
+            (data.template as string).length === 0) {
             this.showBlockPreview(false);
             this.placeholderText(this.messages.NOT_SELECTED);
             return;

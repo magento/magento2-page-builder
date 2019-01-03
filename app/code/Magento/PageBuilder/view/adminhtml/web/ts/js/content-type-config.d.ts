@@ -30,18 +30,20 @@ export default interface ContentTypeConfigInterface {
     additional_data: AdditionalDataConfigInterface;
 }
 
+export interface ContentTypeConfigAppearanceElementInterface {
+    style: DataMappingStyleInterface[];
+    attributes: DataMappingAttributesInterface[];
+    html: DataMappingHtmlInterface;
+    css: DataMappingCssInterface;
+    tag: DataMappingTagInterface;
+}
+
 export interface ContentTypeConfigAppearanceInterface {
     reader: string;
     path: string;
     converters: ConverterInterface[];
     elements: {
-        [key: string]: {
-            style: DataMappingStyleInterface[];
-            attributes: DataMappingAttributesInterface[];
-            html: DataMappingHtmlInterface;
-            css: DataMappingCssInterface[];
-            tag: DataMappingTagInterface[];
-        };
+        [key: string]: ContentTypeConfigAppearanceElementInterface;
     };
     preview_template: string;
     render_template: string;
@@ -82,21 +84,22 @@ export interface DataMappingAttributesInterface {
     static?: boolean;
 }
 
-export interface DataMappingHtmlInterface {
-    var: string;
+export interface DataMappingInterface {
     converter: string;
     preview_converter: string;
+    var: string;
 }
 
-export interface DataMappingCssInterface {
-    var: string;
-    converter: string;
+export interface DataMappingHtmlInterface extends DataMappingInterface {
+
+}
+
+export interface DataMappingCssInterface extends DataMappingInterface {
     filter: string[];
 }
 
-export interface DataMappingTagInterface {
-    var: string;
-    converter: string;
+export interface DataMappingTagInterface extends DataMappingInterface {
+
 }
 
 export interface AdditionalDataConfigInterface {

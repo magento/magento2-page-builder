@@ -5,6 +5,8 @@
 
 import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
+import {DataObjectPaddings} from "../../property/paddings";
+import {DataObjectMargins} from "../../property/margins";
 
 /**
  * @api
@@ -16,17 +18,18 @@ export default class Paddings implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
-        const result = {};
+    public fromDom(value: DataObjectPaddings): DataObjectPaddings {
         if (undefined !== value.padding) {
-            result.padding = {
-                top: value.padding.top.replace("px", ""),
-                left: value.padding.left.replace("px", ""),
-                right: value.padding.right.replace("px", ""),
-                bottom: value.padding.bottom.replace("px", ""),
+            return {
+                padding: {
+                    top: value.padding.top.replace("px", ""),
+                    left: value.padding.left.replace("px", ""),
+                    right: value.padding.right.replace("px", ""),
+                    bottom: value.padding.bottom.replace("px", ""),
+                }
             };
         }
-        return result;
+        return {};
     }
 
     /**
@@ -40,9 +43,11 @@ export default class Paddings implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
-            value = JSON.parse(value);
+        let value: DataObjectPaddings;
+        if (data[name] && typeof data[name] === "string") {
+            value = JSON.parse(data[name]);
+        } else {
+            value = data[name];
         }
         if (value && undefined !== value.padding) {
             result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";

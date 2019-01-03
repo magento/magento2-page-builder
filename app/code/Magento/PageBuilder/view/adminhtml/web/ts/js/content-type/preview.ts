@@ -21,13 +21,13 @@ import Edit from "../content-type-menu/edit";
 import Option from "../content-type-menu/option";
 import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
-import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import ContentTypeInterface from "../content-type.d";
 
 /**
  * @api
@@ -46,7 +46,7 @@ export default class Preview {
     /**
      * @deprecated
      */
-    public previewData: ObservableObject = {};
+    public previewData: {[key: string]: any} = {};
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.

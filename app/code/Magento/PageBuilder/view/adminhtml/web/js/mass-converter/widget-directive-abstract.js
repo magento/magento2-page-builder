@@ -18,7 +18,7 @@ define(["underscore"], function (_underscore) {
      *
      * @param {ConverterDataInterface} data
      * @param {ConverterConfigInterface} config
-     * @returns {object}
+     * @returns {WidgetDirectiveAttributes}
      */
     _proto.fromDom = function fromDom(data, config) {
       var _this = this;
@@ -63,6 +63,7 @@ define(["underscore"], function (_underscore) {
       var result = {};
       attributes.replace(/(\w+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g, function (match, key, value) {
         result[key] = value.replace(/&quote;/g, "\"");
+        return "";
       });
       return result;
     };

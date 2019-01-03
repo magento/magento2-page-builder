@@ -31,13 +31,15 @@ define([], function () {
 
     _proto.toDom = function toDom(name, data) {
       var result = {};
-      var value = data[name];
+      var value;
 
-      if (value && typeof value === "string") {
-        value = JSON.parse(value);
+      if (data[name] && typeof data[name] === "string") {
+        value = JSON.parse(data[name]);
+      } else {
+        value = data[name];
       }
 
-      if (undefined !== value && undefined !== value.padding) {
+      if (value && undefined !== value.padding) {
         result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
         result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
         result.paddingRight = value.padding.right ? value.padding.right + "px" : "";

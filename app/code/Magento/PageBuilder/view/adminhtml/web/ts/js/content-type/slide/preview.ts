@@ -133,7 +133,7 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const dataStore = this.parent.dataStore.get();
+        const dataStore = this.parent.dataStore.get() as DataObject;
         const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
         // Create uploader

@@ -1,17 +1,17 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extractAlphaFromRgba) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ButtonVisibility =
+  var OverlayTransparency =
   /*#__PURE__*/
   function () {
     "use strict";
 
-    function ButtonVisibility() {}
+    function OverlayTransparency() {}
 
-    var _proto = ButtonVisibility.prototype;
+    var _proto = OverlayTransparency.prototype;
 
     /**
      * Convert value to internal format
@@ -20,7 +20,7 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return value;
+      return value === "transparent" ? "0" : (0, _extractAlphaFromRgba)(value);
     };
     /**
      * Convert value to knockout format
@@ -32,12 +32,12 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data.show_button === "always" ? "visible" : "hidden";
+      return data[name].toString();
     };
 
-    return ButtonVisibility;
+    return OverlayTransparency;
   }();
 
-  return ButtonVisibility;
+  return OverlayTransparency;
 });
-//# sourceMappingURL=button-visibility.js.map
+//# sourceMappingURL=overlay-transparency.js.map

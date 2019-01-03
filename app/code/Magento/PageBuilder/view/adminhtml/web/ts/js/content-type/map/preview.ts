@@ -18,7 +18,7 @@ export default class Preview extends BasePreview {
     public apiKeyValid: KnockoutObservable<boolean> = ko.observable(!!module.config().apiKey);
     public apiKeyErrorMessage: string = module.config().apiKeyErrorMessage;
     private element: Element;
-    private mapElement: GoogleMap;
+    private mapElement: MapUtilityInterface;
 
     /**
      * Return an array of options

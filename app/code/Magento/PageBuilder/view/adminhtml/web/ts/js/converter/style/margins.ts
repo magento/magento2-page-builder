@@ -5,6 +5,7 @@
 
 import {DataObject} from "../../data-store";
 import ConverterInterface from "../converter-interface";
+import {DataObjectMargins} from "../../property/margins";
 
 /**
  * @api
@@ -16,17 +17,18 @@ export default class Margins implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
-        const result = {};
+    public fromDom(value: DataObjectMargins): DataObjectMargins {
         if (undefined !== value.margin) {
-            result.margin = {
-                top: value.margin.top.replace("px", ""),
-                left: value.margin.left.replace("px", ""),
-                right: value.margin.right.replace("px", ""),
-                bottom: value.margin.bottom.replace("px", ""),
+            return {
+                margin: {
+                    top: value.margin.top.replace("px", ""),
+                    left: value.margin.left.replace("px", ""),
+                    right: value.margin.right.replace("px", ""),
+                    bottom: value.margin.bottom.replace("px", ""),
+                }
             };
         }
-        return result;
+        return {};
     }
 
     /**
@@ -40,9 +42,11 @@ export default class Margins implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
-            value = JSON.parse(value);
+        let value: DataObjectMargins;
+        if (data[name] && typeof data[name] === "string") {
+            value = JSON.parse(data[name]);
+        } else {
+            value = data[name];
         }
         if (value && undefined !== value.margin) {
             result.marginLeft = value.margin.left ? value.margin.left + "px" : "";

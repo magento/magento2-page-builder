@@ -33,8 +33,8 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/image", "
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string}
      */
 

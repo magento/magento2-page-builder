@@ -9,9 +9,8 @@ interface DataStoreEvent {
     state: DataObject;
 }
 
-export interface DataObject {
-    // State object can only contain primitives
-    [key: string]: undefined | null | string | number | boolean | any[];
+export interface DataObject<T = any> {
+    [key: string]: T;
 }
 
 export default class DataStore {

@@ -8,7 +8,7 @@ define([], function () {
   /**
    * Resolve converter
    *
-   * @param {object} config
+   * @param {DataMappingInterface} config
    * @return string
    */
   function resolve(config) {
