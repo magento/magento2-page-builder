@@ -132,7 +132,7 @@ class Config
             'groups' => $this->getGroups(),
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
-            'root_config' => $this->getRootConfig(),
+            'root_config' => $this->rootConfig,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
             'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
             'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
@@ -140,18 +140,6 @@ class Config
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
         ];
-    }
-
-    /**
-     * Return the root configuration for the stage
-     *
-     * @return array
-     */
-    private function getRootConfig() : array {
-        $rootConfig = $this->rootConfig;
-        $rootConfig['preview_component'] = $rootConfig['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT;
-        $rootConfig['master_component'] = $rootConfig['master_component'] ?? self::DEFAULT_MASTER_COMPONENT;
-        return $rootConfig;
     }
 
     /**
