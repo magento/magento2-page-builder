@@ -9,7 +9,7 @@ import loadReader from "Magento_PageBuilder/js/utils/loader";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
-import ContentTypeCollectionInterface from "./content-type-collection";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
