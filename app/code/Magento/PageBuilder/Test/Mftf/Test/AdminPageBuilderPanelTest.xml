@@ -527,6 +527,7 @@
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
         <wait time="1" stepKey="waitForFullScreenTransitionAnimationToFinish" />
         <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnTextEditorArea"/>
+        <wait time="1" stepKey="waitForInlineWysiwygToolbarTransitionAnimationToFinish" />
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForWYWSIWYGEditorPanelToBeVisible"/>
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topBoundingClientRect"/>
         <!-- Assert top bounding client rect > 0 -->
