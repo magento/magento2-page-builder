@@ -614,11 +614,10 @@
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.backgroundColor('2', PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="seeTab2BackgroundColor"/>
         <seeElement selector="{{TabOnStorefront.minHeight('2', PageBuilderTabMinimumHeight600Property.value)}}" stepKey="seeTab2MinHeight"/>
-        <comment userInput="User sees Tab 2 with height that equals to sum of min-height + paddingTop + paddingBottom" stepKey="verifyMinHeight"/>
-        <executeJS function="return {{PageBuilderTabMinimumHeight600Property.value}} + {{PageBuilderPaddingProperty40.paddingTop}} + {{PageBuilderPaddingProperty40.paddingBottom}}" stepKey="tab2ExpectedHeight"/>
+        <comment userInput="User sees Tab 2 with height that equals min-height including padding" stepKey="verifyMinHeight"/>
         <executeJS function="return document.querySelector('{{TabOnStorefront.tabContent('2')}}').offsetHeight" stepKey="tab2Height"/>
         <assertEquals stepKey="assertTabMinHeight">
-            <expectedResult type="variable">tab2ExpectedHeight</expectedResult>
+            <expectedResult type="string">{{PageBuilderTabMinimumHeight600Property.value}}</expectedResult>
             <actualResult type="variable">tab2Height</actualResult>
         </assertEquals>
     </test>
