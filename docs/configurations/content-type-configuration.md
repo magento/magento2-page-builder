@@ -497,6 +497,14 @@ define([], function () {
 });
 ```
 
+### Form
+
+Individual appearances may have different uiComponent forms in order to use different customizable content.
+
+``` xml
+<form>pagebuilder_banner_collage_left_form</form>
+```
+
 ## Preview component settings
 
 | Property                 | Description                                                                                                                         | Example        |

@@ -14,15 +14,16 @@ let headDropIndicatorStyles: HTMLStyleElement;
  * CSS engine to display these for us than manually iterating through the DOM and applying a class to the elements.
  *
  * @param {string} contentType
+ * @param {string} stageId
  * @returns {HTMLStyleElement}
  */
-export function showDropIndicators(contentType: string) {
+export function showDropIndicators(contentType: string, stageId: string) {
     const acceptedContainers = getContainersFor(contentType);
     if (acceptedContainers.length > 0) {
         const classNames = acceptedContainers.map((container: string) => {
-            return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator, " +
-                ".pagebuilder-content-type.type-container.empty-container > .content-type-container." +
-                container + "-container:before";
+            return `#${stageId} .content-type-container.${container}-container > .pagebuilder-drop-indicator, ` +
+                `#${stageId} .pagebuilder-content-type.type-container.empty-container > .content-type-container.` +
+                `${container}-container:before`;
         });
         const styles = createStyleSheet({
             [classNames.join(", ")]: {

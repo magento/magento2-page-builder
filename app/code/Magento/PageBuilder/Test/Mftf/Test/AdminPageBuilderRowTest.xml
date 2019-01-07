@@ -259,7 +259,7 @@
         </after>
         <!-- Assert row height is 320px when empty -->
         <comment userInput="Assert row height is 320px when empty" stepKey="comment1"/>
-        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setEmptyRowHeight"/>
+        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setEmptyRowHeight"/>
         <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getEmptyRowHeight"/>
         <assertEquals stepKey="assertEmptyRowHeight">
             <expectedResult type="string">320</expectedResult>
@@ -276,7 +276,7 @@
         </actionGroup>
         <!-- Assert row height has changed when content added -->
         <comment userInput="Assert row height has changed when content added" stepKey="comment2"/>
-        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight"/>
+        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setNewRowHeight"/>
         <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getNewRowHeight"/>
         <assertNotEquals stepKey="assertNewRowHeight">
             <expectedResult type="variable">getEmptyRowHeight</expectedResult>
@@ -291,7 +291,7 @@
         </actionGroup>
         <!-- Assert row height is 320px after removing children -->
         <comment userInput="Assert row height is 320px after removing children" stepKey="comment3"/>
-        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight2"/>
+        <executeJS function="document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCSS}}')[0].clientHeight)" stepKey="setNewRowHeight2"/>
         <grabAttributeFrom selector="{{RowOnStage.base('1')}}" userInput="divHeight" stepKey="getNewRowHeight2"/>
         <assertEquals stepKey="assertNewRowHeight3">
             <expectedResult type="variable">getEmptyRowHeight</expectedResult>
