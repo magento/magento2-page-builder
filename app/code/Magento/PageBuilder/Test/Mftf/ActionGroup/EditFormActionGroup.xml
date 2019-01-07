@@ -34,28 +34,6 @@
         <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
         <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
     </actionGroup>
-    <actionGroup name="saveEditPanelAndValidateFieldErrorUrlInput">
-        <arguments>
-            <argument name="property"/>
-        </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton"/>
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelFieldValidationError(property.section, property.fieldName)}}" stepKey="waitForErrorField"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelUrlInputFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
-    </actionGroup>
-    <actionGroup name="saveEditPanelAndValidateFieldErrorWysiwyg">
-        <arguments>
-            <argument name="property"/>
-        </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForColumnSaveButton"/>
-        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelWysiwygFieldValidationError(property.section, property.fieldName)}}" stepKey="waitForErrorField"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelWysiwygFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
-        <waitForElementVisible selector="{{EditPanelForm.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
-    </actionGroup>
     <actionGroup name="saveEditPanelAndValidateFieldErrorGeneralSection">
         <arguments>
             <argument name="form" defaultValue="EditPanelForm"/>

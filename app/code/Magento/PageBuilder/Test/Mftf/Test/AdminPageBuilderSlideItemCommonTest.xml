@@ -1888,7 +1888,7 @@
             <argument name="section" value="SlideOnBackend"/>
         </actionGroup>
         <!-- Check Invalid Link Url and Message Text -->
-        <comment userInput="- Check Invalid Link Url and Message Text" stepKey="commentCheckInvalidLinkUrlAndMessageText"/>
+        <comment userInput="Check Invalid Link Url and Message Text" stepKey="commentCheckInvalidLinkUrlAndMessageText"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLink">
             <argument name="property" value="PageBuilderSlideItemLinkURL_External"/>
             <argument name="selection" value="{{ExternalLink.url}}"/>
@@ -1898,10 +1898,10 @@
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorUrlInput" stepKey="validateInvalidLinkUrl">
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidLinkUrl">
             <argument name="property" value="PageBuilderSlideItemLinkUrlInvalidProperty"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldErrorWysiwyg" stepKey="validateInvalidMessageWithUrl">
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithUrl">
             <argument name="property" value="PageBuilderSlideItemMessageInvalidProperty"/>
         </actionGroup>
         <!-- Reset and Fill Url -->
@@ -1928,7 +1928,9 @@
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
         </actionGroup>
+        <seeElement selector="{{PageBuilderStage.modal(PageBuilderStageSlideItemMessageInvalidProperty.errorMessage)}}" stepKey="seeCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
+        <!-- Checks for a tags within the tinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInWysiwygBoolean"/>
         <assertFalse stepKey="assertMessageHasNoAnchorTags">
             <actualResult type="variable">grabIfAnchorInWysiwygBoolean</actualResult>
@@ -1939,9 +1941,22 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterInlineValidation">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
+        <!-- Checks for a tags within the tinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInSlideOutWysiwygBoolean"/>
         <assertFalse stepKey="assertMessageHasNoAnchorTags2">
             <actualResult type="variable">grabIfAnchorInSlideOutWysiwygBoolean</actualResult>
+        </assertFalse>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Validate No Link in Slide Item Content -->
+        <comment userInput="Storefront: Validate No Link in Slide Item Content" stepKey="CommentValidateNoLinkInSlideItemContent"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Checks for a tags within the message with regex -->
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test({{SlideOnFrontend.contentJS('1')}}.innerHTML);" stepKey="grabIfFrontendAnchorInContentBoolean"/>
+        <assertFalse stepKey="assertFrontendMessageHasNoAnchorTags">
+            <actualResult type="variable">grabIfFrontendAnchorInContentBoolean</actualResult>
         </assertFalse>
     </test>
 </tests>

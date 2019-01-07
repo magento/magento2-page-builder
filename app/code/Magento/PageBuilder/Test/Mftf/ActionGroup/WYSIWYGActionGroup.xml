@@ -22,6 +22,9 @@
         <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
+    <actionGroup name="replaceTextToTinyMCE" extends="addTextToTinyMCE">
+        <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
+    </actionGroup>
     <actionGroup name="addVariableToTinyMCE">
         <arguments>
             <argument name="variable" defaultValue=""/>
