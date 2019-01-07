@@ -241,7 +241,7 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
     }

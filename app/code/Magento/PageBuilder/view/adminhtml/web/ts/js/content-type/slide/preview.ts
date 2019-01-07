@@ -133,7 +133,7 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const dataStore = this.parent.dataStore.get();
+        const dataStore = this.parent.dataStore.get() as DataObject;
         const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
         // Create uploader
@@ -142,7 +142,7 @@ export default class Preview extends BasePreview {
             this.config.additional_data.uploaderConfig,
             this.parent.id,
             this.parent.dataStore,
-            initialImageValue,
+            (initialImageValue as object[]),
         );
     }
 
@@ -284,7 +284,7 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
