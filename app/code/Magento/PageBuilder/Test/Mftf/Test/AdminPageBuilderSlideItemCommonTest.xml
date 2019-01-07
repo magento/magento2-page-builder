@@ -1859,7 +1859,7 @@
             <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="SlideItem inline WYSIWYG editor will notify user of not adding "/>
-            <description value="Slide Item edit form and inline editor validate Slide Item TinyMCE Link and Link URL could not be added at the same time."/>
+            <description value="Slide Item edit form and inline editor validate Slide Item TinyMCE Link and Link URL cannot be added at the same time."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-5386"/>
             <testCaseId value="MC-6053"/>
@@ -1928,7 +1928,7 @@
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderStage.modal(PageBuilderStageSlideItemMessageInvalidProperty.errorMessage)}}" stepKey="seeCorrectErrorModal"/>
+        <seeElement selector="{{PageBuilderStage.modal(PageBuilderSlideItemMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
         <!-- Checks for a tags within the tinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInWysiwygBoolean"/>

@@ -2232,7 +2232,7 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Banner"/>
-            <title value="Banner inline WYSIWYG editor will notify user of could not add TinyMCE Link and Link URL at the same time"/>
+            <title value="Banner inline WYSIWYG editor will notify user that they cannot add TinyMCE Link and Link URL at the same time"/>
             <description value="Banner edit form and inline editor validate banner TinyMCE Link and Link URL could not be added at the same time."/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-5386"/>
@@ -2293,8 +2293,9 @@
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderStage.modal(PageBuilderStageBannerMessageInvalidProperty.errorMessage)}}" stepKey="seeCorrectErrorModal"/>
+        <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
+        <!-- Checks for a tags within the tinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInWysiwygBoolean"/>
         <assertFalse stepKey="assertMessageHasNoAnchorTags">
             <actualResult type="variable">grabIfAnchorInWysiwygBoolean</actualResult>
@@ -2305,6 +2306,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterInlineValidation">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
+        <!-- Checks for a tags within the tinyMCE with regex -->
         <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInSlideOutWysiwygBoolean"/>
         <assertFalse stepKey="assertMessageHasNoAnchorTags2">
             <actualResult type="variable">grabIfAnchorInSlideOutWysiwygBoolean</actualResult>
