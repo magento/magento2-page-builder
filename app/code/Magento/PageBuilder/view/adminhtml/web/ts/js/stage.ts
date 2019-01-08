@@ -9,7 +9,9 @@ import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
+import Config from "./config";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
+import RootContainer from "./content-type/root/content-type-collection";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import Render from "./master-format/render";
@@ -18,8 +20,6 @@ import buildStage from "./stage-builder";
 import StageUpdateAfterParamsInterface from "./stage-update-after-params";
 import deferred from "./utils/promise-deferred";
 import DeferredInterface from "./utils/promise-deferred.d";
-import Root from "./content-type/root";
-import Config from "./config";
 
 export default class Stage {
     public parent: PageBuilderInterface;
@@ -31,7 +31,7 @@ export default class Stage {
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
-    public root: Root;
+    public root: RootContainer;
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render = new Render();
     private collection: Collection = new Collection();
@@ -54,7 +54,7 @@ export default class Stage {
     constructor(parent: PageBuilderInterface) {
         this.parent = parent;
         this.id = parent.id;
-        this.root = new Root(Config.getConfig("root_config"), this.id);
+        this.root = new RootContainer(Config.getConfig("root_config"), this.id);
         generateAllowedParents();
 
         // Fire an event after the DOM has rendered

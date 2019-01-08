@@ -4,8 +4,8 @@
  */
 
 import {OptionsInterface} from "../../content-type-menu/option.d";
-import BasePreviewCollection from "../preview-collection";
 import {getSortableOptions} from "../../drag-drop/sortable";
+import BasePreviewCollection from "../preview-collection";
 
 /**
  * @api
@@ -18,15 +18,6 @@ export default class RootPreview extends BasePreviewCollection {
      */
     public getSortableOptions(): JQueryUI.SortableOptions | any {
         return getSortableOptions(this);
-    }
-
-    /**
-     * Return an array of options
-     *
-     * @returns {OptionsInterface}
-     */
-    public retrieveOptions(): OptionsInterface {
-        return {};
     }
 
     /**

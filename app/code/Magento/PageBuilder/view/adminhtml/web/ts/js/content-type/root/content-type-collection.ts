@@ -3,15 +3,15 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollection from "../content-type-collection";
-import ContentTypeConfigInterface from "../content-type-config";
 import alertDialog from "Magento_Ui/js/modal/alert";
-import RootPreview from "./root/preview";
+import ContentTypeCollection from "../../content-type-collection";
+import ContentTypeConfigInterface from "../../content-type-config";
+import RootPreview from "./preview";
 
 /**
  * @api
  */
-export default class Root extends ContentTypeCollection {
+export default class RootContainer extends ContentTypeCollection {
     public preview: RootPreview = new RootPreview(this, this.config, null);
 
     /**

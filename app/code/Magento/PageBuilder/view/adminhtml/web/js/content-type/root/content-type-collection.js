@@ -7,7 +7,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-define(["Magento_PageBuilder/js/content-type-collection", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type/root/preview"], function (_contentTypeCollection, _alert, _preview) {
+define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type/root/preview"], function (_alert, _contentTypeCollection, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -16,18 +16,18 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_Ui/js/modal/a
   /**
    * @api
    */
-  var Root =
+  var RootContainer =
   /*#__PURE__*/
   function (_contentTypeCollectio) {
     "use strict";
 
-    _inheritsLoose(Root, _contentTypeCollectio);
+    _inheritsLoose(RootContainer, _contentTypeCollectio);
 
     /**
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
-    function Root(config, stageId) {
+    function RootContainer(config, stageId) {
       var _this;
 
       _this = _contentTypeCollectio.call(this, null, config, stageId) || this;
@@ -41,7 +41,7 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_Ui/js/modal/a
      */
 
 
-    var _proto = Root.prototype;
+    var _proto = RootContainer.prototype;
 
     _proto.removeChild = function removeChild(child) {
       if (this.getChildren().length === 1) {
@@ -76,16 +76,16 @@ define(["Magento_PageBuilder/js/content-type-collection", "Magento_Ui/js/modal/a
      */
     _proto.bindEvents = function bindEvents() {};
 
-    _createClass(Root, [{
+    _createClass(RootContainer, [{
       key: "previewTemplate",
       get: function get() {
         return this.config.preview_template;
       }
     }]);
 
-    return Root;
+    return RootContainer;
   }(_contentTypeCollection);
 
-  return Root;
+  return RootContainer;
 });
-//# sourceMappingURL=root.js.map
+//# sourceMappingURL=content-type-collection.js.map

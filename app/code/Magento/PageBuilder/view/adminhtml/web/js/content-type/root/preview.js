@@ -5,7 +5,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/drag-drop/sortable"], function (_previewCollection, _sortable) {
+define(["Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/preview-collection"], function (_sortable, _previewCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -34,16 +34,6 @@ define(["Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageB
      */
     _proto.getSortableOptions = function getSortableOptions() {
       return (0, _sortable.getSortableOptions)(this);
-    };
-    /**
-     * Return an array of options
-     *
-     * @returns {OptionsInterface}
-     */
-
-
-    _proto.retrieveOptions = function retrieveOptions() {
-      return {};
     };
     /**
      * Retrieve the preview template

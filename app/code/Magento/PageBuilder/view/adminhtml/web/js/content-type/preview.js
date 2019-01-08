@@ -46,7 +46,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.parent = parent;
       this.config = config;
       this.edit = new _edit(this.parent, this.parent.dataStore);
-      this.optionsMenu = new _contentTypeMenu(this, this.retrieveOptions());
       this.observableUpdater = observableUpdater;
       this.displayLabel(this.config.label);
       this.placeholderCss = _knockout.observable({
@@ -265,6 +264,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.getOptions = function getOptions() {
+      if (!this.optionsMenu) {
+        this.optionsMenu = new _contentTypeMenu(this, this.retrieveOptions());
+      }
+
       return this.optionsMenu;
     };
     /**

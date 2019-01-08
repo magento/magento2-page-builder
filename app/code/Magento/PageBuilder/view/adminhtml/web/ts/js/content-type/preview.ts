@@ -76,7 +76,6 @@ export default class Preview {
         this.parent = parent;
         this.config = config;
         this.edit = new Edit(this.parent, this.parent.dataStore);
-        this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
         this.observableUpdater = observableUpdater;
         this.displayLabel(this.config.label);
         this.placeholderCss = ko.observable({
@@ -275,6 +274,10 @@ export default class Preview {
      * @returns {ContentTypeMenu}
      */
     public getOptions(): ContentTypeMenu {
+        if (!this.optionsMenu) {
+            this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
+        }
+
         return this.optionsMenu;
     }
 
