@@ -48,7 +48,7 @@ export default class Master {
      * @deprecated
      */
     public getData(element: string) {
-        let data = _.extend({}, this.parent.dataStore.get());
+        let data = _.extend({}, this.parent.dataStore.getState());
 
         if (undefined === element) {
             return data;
@@ -71,7 +71,7 @@ export default class Master {
      */
     protected bindEvents(): void {
         this.parent.dataStore.subscribe(
-            (data: DataObject) => {
+            (data) => {
                 this.updateObservables();
             },
         );
@@ -90,7 +90,7 @@ export default class Master {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({name: this.parent.config.name}, this.parent.dataStore.get()),
+            _.extend({name: this.parent.config.name}, this.parent.dataStore.getState()),
         );
         this.afterObservablesUpdated();
     }

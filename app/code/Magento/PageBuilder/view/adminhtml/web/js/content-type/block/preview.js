@@ -90,7 +90,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       _preview2.prototype.afterObservablesUpdated.call(this);
 
-      var data = this.parent.dataStore.get(); // Only load if something changed
+      var data = this.parent.dataStore.getState(); // Only load if something changed
 
       this.processBlockData(data);
     };

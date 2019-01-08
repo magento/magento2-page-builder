@@ -31,21 +31,34 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
     var _proto = Edit.prototype;
 
     _proto.open = function open() {
-      var contentTypeData = this.dataStore.get();
-      var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
-
-      if (undefined !== this.instance.config.appearances[contentTypeData.appearance].form) {
-        formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
-      }
+      var contentTypeData = this.dataStore.getState();
 
       _events.trigger("form:renderAfter", {
         data: contentTypeData,
         appearances: this.instance.config.appearances,
         defaultNamespace: this.instance.config.form,
         id: this.instance.id,
-        namespace: formNamespace,
+        namespace: this.getFormNamespace(contentTypeData),
         title: this.instance.config.label
       });
+    };
+    /**
+     * Determine the form namespace based on the currently set appearance
+     *
+     * @param {DataObject} contentTypeData
+     * @returns {string}
+     */
+
+
+    _proto.getFormNamespace = function getFormNamespace(contentTypeData) {
+      var appearance = this.dataStore.get("appearance_fieldset.appearance");
+      var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
+
+      if (undefined !== this.instance.config.appearances[appearance].form) {
+        formNamespace = this.instance.config.appearances[appearance].form;
+      }
+
+      return formNamespace;
     };
 
     return Edit;

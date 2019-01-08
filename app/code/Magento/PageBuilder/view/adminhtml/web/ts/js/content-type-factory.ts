@@ -74,14 +74,20 @@ export default function createContentType(
  * @returns {any}
  */
 function prepareData(config: ContentTypeConfigInterface, data: {}) {
-    const defaults: FieldDefaultsInterface = {
-        display: true,
-    };
+    let defaults: FieldDefaultsInterface;
+
+    // Construct initial data object for content type alongside setting default values
     if (config.fields) {
-        _.each(config.fields, (field, key: string | number) => {
-            defaults[key] = field.default;
+        defaults = _.mapObject(config.fields, (fieldset) => {
+            return _.mapObject(fieldset, (field) => {
+                return field.default;
+            });
         });
     }
+
+    // Set all content types to be displayed by default
+    defaults.display = true;
+
     return _.extend(
         defaults,
         data,

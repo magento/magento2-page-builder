@@ -94,7 +94,7 @@ export default class Preview extends BasePreview {
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 
-        const data = this.parent.dataStore.get() as DataObject;
+        const data = this.parent.dataStore.getState();
 
         // Only load if something changed
         this.processBlockData(data);

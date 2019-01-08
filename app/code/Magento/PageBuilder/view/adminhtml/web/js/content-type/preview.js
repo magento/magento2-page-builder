@@ -122,7 +122,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.updateData = function updateData(key, value) {
-      var data = this.parent.dataStore.get();
+      var data = this.parent.dataStore.getState();
       data[key] = value;
       this.parent.dataStore.update(data);
     };
@@ -313,7 +313,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         direct = false;
       }
 
-      var contentTypeData = contentType.dataStore.get();
+      var contentTypeData = contentType.dataStore.getState();
       var index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
       return new Promise(function (resolve) {
         (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
@@ -547,7 +547,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.isConfigured = function isConfigured() {
       var _this7 = this;
 
-      var data = this.parent.dataStore.get();
+      var data = this.parent.dataStore.getState();
       var hasDataChanges = false;
 
       _underscore.each(this.parent.config.fields, function (field, key) {
@@ -608,7 +608,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.updateObservables = function updateObservables() {
-      this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.get()));
+      this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.getState()));
       this.afterObservablesUpdated();
 
       _events.trigger("previewData:updateAfter", {

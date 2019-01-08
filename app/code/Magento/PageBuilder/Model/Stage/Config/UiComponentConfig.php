@@ -46,15 +46,15 @@ class UiComponentConfig
 
         $fields = $this->iterateComponents(
             $componentConfig,
-            function ($item, $key) {
+            function ($item, $fieldset, $key) {
                 // Determine if this item has a formElement key
                 if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
-                    $elementConfig
-                        = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
+                    $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
                     return [
-                        $key => [
-                            'default' => (isset($elementConfig['default'])
-                                ? $elementConfig['default'] : '')
+                        $fieldset => [
+                            $key => [
+                                'default' => (isset($elementConfig['default']) ? $elementConfig['default'] : '')
+                            ]
                         ]
                     ];
                 }
@@ -69,13 +69,14 @@ class UiComponentConfig
      *
      * @param array $config
      * @param \Closure $callback
+     * @param bool $fieldset
      * @param bool $key
      *
      * @return array
      */
-    private function iterateComponents($config, $callback, $key = false) : array
+    private function iterateComponents($config, $callback, $fieldset = false, $key = false) : array
     {
-        $values = $callback($config, $key) ?: [];
+        $values = $callback($config, $fieldset, $key) ?: [];
         if (isset($config[Converter::DATA_COMPONENTS_KEY])
             && !empty($config[Converter::DATA_COMPONENTS_KEY])
             && (!isset($config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'])
@@ -83,10 +84,15 @@ class UiComponentConfig
                 && $config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'] !== 'dynamicRows'
             )
         ) {
+            // Retrieve the fieldset name from the configuration
+            if ($config[Converter::DATA_ATTRIBUTES_KEY]['class'] === \Magento\Ui\Component\Form\Fieldset::class) {
+                $fieldset = $config[Converter::DATA_ATTRIBUTES_KEY]['name'];
+            }
+
             foreach ($config[Converter::DATA_COMPONENTS_KEY] as $key => $child) {
-                $values = array_merge(
+                $values = array_merge_recursive(
                     $values,
-                    $this->iterateComponents($child, $callback, $key) ?: []
+                    $this->iterateComponents($child, $callback, $fieldset, $key) ?: []
                 );
             }
         }

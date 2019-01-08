@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import get from "./utils/object-get";
 
 interface DataStoreEvent {
     state: DataObject;
@@ -20,17 +21,23 @@ export default class DataStore {
     private previousState: DataObject = {};
 
     /**
-     * Retrieve data from the state for an editable area
+     * Retrieve specific data from the data store
      *
      * @param {string} key
-     * @returns {DataObject | string | number | boolean | any[] | null | undefined}
+     * @param defaultValue
+     * @returns {T}
      */
-    public get(key?: string): DataObject | undefined | null | string | number | boolean | any[] {
-        if (key) {
-            return this.state[key] as undefined | null | string | number | boolean | any[];
-        }
+    public get<T>(key: string, defaultValue?: any): T {
+        return get(this.state, key, defaultValue);
+    }
 
-        return this.state as DataObject;
+    /**
+     * Retrieve the entire state of the data object
+     *
+     * @returns {DataObject}
+     */
+    public getState() {
+        return this.state;
     }
 
     /**

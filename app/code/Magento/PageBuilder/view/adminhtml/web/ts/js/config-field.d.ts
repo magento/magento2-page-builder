@@ -7,6 +7,8 @@
  */
 export default interface ConfigFieldInterface {
     [key: string]: {
-        default: null | string | number;
-    };
+        [key: string]: {
+            default: null | string | number;
+        };
+    }
 }

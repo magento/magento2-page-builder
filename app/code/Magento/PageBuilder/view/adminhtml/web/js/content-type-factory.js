@@ -65,16 +65,18 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
 
 
   function prepareData(config, data) {
-    var defaults = {
-      display: true
-    };
+    var defaults; // Construct initial data object for content type alongside setting default values
 
     if (config.fields) {
-      _underscore.each(config.fields, function (field, key) {
-        defaults[key] = field.default;
+      defaults = _underscore.mapObject(config.fields, function (fieldset) {
+        return _underscore.mapObject(fieldset, function (field) {
+          return field.default;
+        });
       });
-    }
+    } // Set all content types to be displayed by default
 
+
+    defaults.display = true;
     return _underscore.extend(defaults, data, {
       name: config.name
     });

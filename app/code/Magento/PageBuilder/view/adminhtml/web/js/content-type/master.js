@@ -44,7 +44,7 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
      * @deprecated
      */
     _proto.getData = function getData(element) {
-      var data = _underscore.extend({}, this.parent.dataStore.get());
+      var data = _underscore.extend({}, this.parent.dataStore.getState());
 
       if (undefined === element) {
         return data;
@@ -89,7 +89,7 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
         name: this.parent.config.name
-      }, this.parent.dataStore.get()));
+      }, this.parent.dataStore.getState()));
       this.afterObservablesUpdated();
     };
 

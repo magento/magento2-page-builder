@@ -27,21 +27,33 @@ export default class Edit {
      * Open the modal
      */
     public open(): void {
-        const contentTypeData = this.dataStore.get() as DataObject;
-        let formNamespace = this.instance.config.form;
-
-        // Use the default form unless a custom one is defined
-        if (undefined !== this.instance.config.appearances[contentTypeData.appearance as string].form) {
-            formNamespace = this.instance.config.appearances[contentTypeData.appearance as string].form;
-        }
+        const contentTypeData = this.dataStore.getState();
 
         events.trigger("form:renderAfter", {
             data: contentTypeData,
             appearances: this.instance.config.appearances,
             defaultNamespace: this.instance.config.form,
             id: this.instance.id,
-            namespace: formNamespace,
+            namespace: this.getFormNamespace(contentTypeData),
             title: this.instance.config.label,
         });
+    }
+
+    /**
+     * Determine the form namespace based on the currently set appearance
+     *
+     * @param {DataObject} contentTypeData
+     * @returns {string}
+     */
+    private getFormNamespace(contentTypeData: DataObject): string {
+        const appearance = this.dataStore.get<string>("appearance_fieldset.appearance");
+        let formNamespace = this.instance.config.form;
+
+        // Use the default form unless a custom one is defined
+        if (undefined !== this.instance.config.appearances[appearance].form) {
+            formNamespace = this.instance.config.appearances[appearance].form;
+        }
+
+        return formNamespace;
     }
 }
