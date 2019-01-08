@@ -88,9 +88,10 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
 
 
     _proto.findElementByName = function findElementByName(element, name) {
+      // Create a clone of the element to avoid modifying the source
       var currentElement = (0, _jquery)(element).clone(); // Remove all child instances of data-role elements
 
-      currentElement.find("[" + _config.getConfig("dataRoleAttributeName") + "]").remove(); // Find the element in the modified close with a matching element name
+      currentElement.find("[" + _config.getConfig("dataRoleAttributeName") + "]").remove(); // Attempt to find the content type element within the modified clone element
 
       return currentElement.attr("data-element") === name ? currentElement[0] : currentElement[0].querySelector("[data-element=" + name + "]");
     };

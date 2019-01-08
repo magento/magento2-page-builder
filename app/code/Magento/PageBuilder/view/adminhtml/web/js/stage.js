@@ -113,7 +113,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
 
 

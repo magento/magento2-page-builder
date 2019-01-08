@@ -98,11 +98,12 @@ export default class Configurable implements ReadInterface {
      * @returns {HTMLElement}
      */
     private findElementByName(element: HTMLElement, name: string): HTMLElement {
+        // Create a clone of the element to avoid modifying the source
         const currentElement = $(element).clone();
         // Remove all child instances of data-role elements
         currentElement.find(`[${Config.getConfig("dataRoleAttributeName")}]`).remove();
 
-        // Find the element in the modified close with a matching element name
+        // Attempt to find the content type element within the modified clone element
         return currentElement.attr("data-element") === name
             ? currentElement[0]
             : currentElement[0].querySelector<HTMLElement>(`[data-element=${name}]`);
