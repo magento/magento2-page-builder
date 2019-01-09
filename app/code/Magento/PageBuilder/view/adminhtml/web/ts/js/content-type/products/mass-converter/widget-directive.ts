@@ -5,6 +5,7 @@
 
 import {ConverterConfigInterface, ConverterDataInterface} from "../../../mass-converter/converter-interface";
 import BaseWidgetDirective from "../../../mass-converter/widget-directive-abstract";
+import {set} from "../../../utils/object";
 
 /**
  * @api
@@ -48,7 +49,7 @@ export default class WidgetDirective extends BaseWidgetDirective {
             return data;
         }
 
-        data[config.html_variable] = this.buildDirective(attributes);
+        set(data, config.html_variable, this.buildDirective(attributes));
         return data;
     }
 

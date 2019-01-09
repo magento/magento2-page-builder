@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], function (_widgetDirectiveAbstract) {
+define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Magento_PageBuilder/js/utils/object"], function (_widgetDirectiveAbstract, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -62,7 +62,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
         return data;
       }
 
-      data[config.html_variable] = this.buildDirective(attributes);
+      (0, _object.set)(data, config.html_variable, this.buildDirective(attributes));
       return data;
     };
     /**

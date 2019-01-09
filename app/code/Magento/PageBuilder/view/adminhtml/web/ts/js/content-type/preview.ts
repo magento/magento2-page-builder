@@ -25,6 +25,7 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
+import {get, set} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -147,7 +148,7 @@ export default class Preview {
     public updateData(key: string, value: string) {
         const data = this.parent.dataStore.getState();
 
-        data[key] = value;
+        set(data, key, value);
         this.parent.dataStore.update(data);
     }
 
@@ -546,7 +547,7 @@ export default class Preview {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
                 return;
             }
-            let fieldValue = data[key];
+            let fieldValue = get(data, key);
             if (!fieldValue) {
                 fieldValue = "";
             }

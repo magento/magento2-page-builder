@@ -3,7 +3,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _appearanceConfig) {
+define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/utils/object"], function (_underscore, _appearanceConfig, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -56,7 +56,7 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
       var result = {};
 
       if (undefined !== config[element].tag.var) {
-        result[config[element].tag.var] = data[config[element].tag.var];
+        result[config[element].tag.var] = (0, _object.get)(data, config[element].tag.var);
       }
 
       return result;
