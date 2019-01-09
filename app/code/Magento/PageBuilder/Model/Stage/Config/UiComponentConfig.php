@@ -72,11 +72,12 @@ class UiComponentConfig
     /**
      * Recursively generate our field array, allowing for dot notation within the key
      *
-     * @param $array
-     * @param $path
-     * @param $value
+     * @param array $array
+     * @param string $path
+     * @param string $value
      */
-    private function generateFieldArray(array &$array, $path, $value) {
+    private function generateFieldArray(array &$array, $path, $value)
+    {
         $keys = explode(".", $path);
 
         foreach ($keys as $key) {
