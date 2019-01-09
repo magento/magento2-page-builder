@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
+define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _object, _string, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -91,7 +91,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
         if (config[elementName].css !== undefined && config[elementName].css.var in data) {
           (function () {
-            var css = data[config[elementName].css.var];
+            var css = (0, _object.get)(data, config[elementName].css.var);
             var newClasses = {};
 
             if (css && css.length > 0) {
@@ -182,7 +182,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           continue;
         }
 
-        var value = data[attributeConfig.var];
+        var value = (0, _object.get)(data, attributeConfig.var);
         var converter = this.converterResolver(attributeConfig);
 
         if (this.converterPool.get(converter)) {
@@ -230,7 +230,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
           if (!!propertyConfig.static) {
             value = propertyConfig.value;
           } else {
-            value = data[propertyConfig.var];
+            value = (0, _object.get)(data, propertyConfig.var);
             var converter = this.converterResolver(propertyConfig);
 
             if (this.converterPool.get(converter)) {
@@ -262,7 +262,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
 
 
     _proto.convertHtml = function convertHtml(config, data) {
-      var value = data[config.html.var] || config.html.placeholder;
+      var value = config.html.var ? (0, _object.get)(data, config.html.var, config.html.placeholder) : config.html.placeholder;
       var converter = this.converterResolver(config.html);
 
       if (this.converterPool.get(converter)) {
