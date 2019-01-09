@@ -10,7 +10,8 @@ var config = {
             'pagebuilder/ko-dropzone': 'Magento_PageBuilder/js/resource/dropzone/knockout-dropzone',
 
             /* Utilities */
-            'google-map': 'Magento_PageBuilder/js/utils/map'
+            'google-map': 'Magento_PageBuilder/js/utils/map',
+            'object-path': 'Magento_PageBuilder/js/resource/object-path',
         }
     },
     shim: {

@@ -4,7 +4,7 @@
  */
 
 import $ from "jquery";
-import get from "./utils/object-get";
+import {get} from "./utils/object";
 
 interface DataStoreEvent {
     state: DataObject;

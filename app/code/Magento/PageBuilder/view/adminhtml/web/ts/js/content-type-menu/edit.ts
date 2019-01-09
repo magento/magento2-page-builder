@@ -46,7 +46,7 @@ export default class Edit {
      * @returns {string}
      */
     private getFormNamespace(contentTypeData: DataObject): string {
-        const appearance = this.dataStore.get<string>("appearance_fieldset.appearance");
+        const appearance = this.dataStore.get<string>("appearance");
         let formNamespace = this.instance.config.form;
 
         // Use the default form unless a custom one is defined

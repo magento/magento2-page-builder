@@ -51,7 +51,7 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
 
 
     _proto.getFormNamespace = function getFormNamespace(contentTypeData) {
-      var appearance = this.dataStore.get("appearance_fieldset.appearance");
+      var appearance = this.dataStore.get("appearance");
       var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
 
       if (undefined !== this.instance.config.appearances[appearance].form) {

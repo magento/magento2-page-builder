@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives"], function (_translate, _events, _loader, _alert, _, _config, _contentTypeFactory, _appearanceConfig, _validator, _directives) {
+define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_translate, _events, _loader, _alert, _, _config, _contentTypeFactory, _appearanceConfig, _validator, _directives, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -81,10 +81,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
   function getElementData(element, config) {
     // Create an object with all fields for the content type with an empty value
-    var result = _.mapObject(config.fields, function () {
-      return "";
-    });
-
+    var result = createInitialElementData(config.fields);
     return new Promise(function (resolve, reject) {
       var role = element.dataset.role;
 
@@ -100,11 +97,34 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
           var ReaderComponent = readers.pop();
           var reader = new ReaderComponent();
           reader.read(element).then(function (readerData) {
-            _.extend(result, readerData);
+            /**
+             * Iterate through the reader data and set the values onto the result array to ensure dot notation
+             * keys are properly handled.
+             */
+            _.each(readerData, function (value, key) {
+              (0, _object.set)(result, key, value);
+            });
 
             resolve(result);
           });
         });
+      }
+    });
+  }
+  /**
+   * Create the initial object for storing the elements data
+   *
+   * @param {ConfigFieldInterface} fields
+   * @returns {FieldDefaultsInterface}
+   */
+
+
+  function createInitialElementData(fields) {
+    return _.mapObject(fields, function (field) {
+      if (!_.isUndefined(field.default)) {
+        return "";
+      } else if (_.isObject(field)) {
+        return createInitialElementData(field);
       }
     });
   }

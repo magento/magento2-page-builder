@@ -46,17 +46,22 @@ class UiComponentConfig
 
         $fields = $this->iterateComponents(
             $componentConfig,
-            function ($item, $fieldset, $key) {
+            function ($item, $key) {
                 // Determine if this item has a formElement key
                 if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
                     $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
-                    return [
-                        $fieldset => [
-                            $key => [
-                                'default' => (isset($elementConfig['default']) ? $elementConfig['default'] : '')
-                            ]
-                        ]
-                    ];
+                    // If the field has a dataScope use that for the key instead of the name
+                    if (isset($elementConfig['dataScope'])) {
+                        $key = $elementConfig['dataScope'];
+                    }
+                    $field = [];
+                    // Generate our nested field array with defaults supporting dot notation within the key
+                    $this->generateFieldArray(
+                        $field,
+                        $key . ".default",
+                        (isset($elementConfig['default']) ? $elementConfig['default'] : '')
+                    );
+                    return $field;
                 }
             }
         );
@@ -65,18 +70,34 @@ class UiComponentConfig
     }
 
     /**
+     * Recursively generate our field array, allowing for dot notation within the key
+     *
+     * @param $array
+     * @param $path
+     * @param $value
+     */
+    private function generateFieldArray(array &$array, $path, $value) {
+        $keys = explode(".", $path);
+
+        foreach ($keys as $key) {
+            $array = &$array[$key];
+        }
+
+        $array = $value;
+    }
+
+    /**
      * Iterate over components within the configuration and run a defined callback function
      *
      * @param array $config
      * @param \Closure $callback
-     * @param bool $fieldset
      * @param bool $key
      *
      * @return array
      */
-    private function iterateComponents($config, $callback, $fieldset = false, $key = false) : array
+    private function iterateComponents($config, $callback, $key = false) : array
     {
-        $values = $callback($config, $fieldset, $key) ?: [];
+        $values = $callback($config, $key) ?: [];
         if (isset($config[Converter::DATA_COMPONENTS_KEY])
             && !empty($config[Converter::DATA_COMPONENTS_KEY])
             && (!isset($config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'])
@@ -84,15 +105,10 @@ class UiComponentConfig
                 && $config[Converter::DATA_ARGUMENTS_KEY]['data']['config']['componentType'] !== 'dynamicRows'
             )
         ) {
-            // Retrieve the fieldset name from the configuration
-            if ($config[Converter::DATA_ATTRIBUTES_KEY]['class'] === \Magento\Ui\Component\Form\Fieldset::class) {
-                $fieldset = $config[Converter::DATA_ATTRIBUTES_KEY]['name'];
-            }
-
             foreach ($config[Converter::DATA_COMPONENTS_KEY] as $key => $child) {
                 $values = array_merge_recursive(
                     $values,
-                    $this->iterateComponents($child, $callback, $fieldset, $key) ?: []
+                    $this->iterateComponents($child, $callback, $key) ?: []
                 );
             }
         }

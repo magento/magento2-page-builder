@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "Magento_PageBuilder/js/utils/object-get"], function (_jquery, _objectGet) {
+define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -25,7 +25,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/object-get"], function (_jquery,
      * @returns {T}
      */
     _proto.get = function get(key, defaultValue) {
-      return (0, _objectGet)(this.state, key, defaultValue);
+      return (0, _object.get)(this.state, key, defaultValue);
     };
     /**
      * Retrieve the entire state of the data object

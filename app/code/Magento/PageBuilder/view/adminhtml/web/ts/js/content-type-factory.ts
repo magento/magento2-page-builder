@@ -6,6 +6,7 @@
 import events from "Magento_PageBuilder/js/events";
 import loadModule from "Magento_PageBuilder/js/utils/loader";
 import _ from "underscore";
+import ConfigFieldInterface from "./config-field";
 import ContentType from "./content-type";
 import ContentTypeCollection from "./content-type-collection";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
@@ -74,16 +75,7 @@ export default function createContentType(
  * @returns {any}
  */
 function prepareData(config: ContentTypeConfigInterface, data: {}) {
-    let defaults: FieldDefaultsInterface;
-
-    // Construct initial data object for content type alongside setting default values
-    if (config.fields) {
-        defaults = _.mapObject(config.fields, (fieldset) => {
-            return _.mapObject(fieldset, (field) => {
-                return field.default;
-            });
-        });
-    }
+    const defaults: FieldDefaultsInterface = prepareDefaults(config.fields || {});
 
     // Set all content types to be displayed by default
     defaults.display = true;
@@ -95,6 +87,22 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
             name: config.name,
         },
     );
+}
+
+/**
+ * Prepare the default values for fields within the form
+ *
+ * @param {ConfigFieldInterface} fields
+ * @returns {FieldDefaultsInterface}
+ */
+function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
+    return _.mapObject(fields, (field) => {
+        if (!_.isUndefined(field.default)) {
+            return field.default;
+        } else if (_.isObject(field)) {
+            return prepareDefaults(field);
+        }
+    });
 }
 
 /**

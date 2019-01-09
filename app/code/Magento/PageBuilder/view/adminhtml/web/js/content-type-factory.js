@@ -65,20 +65,28 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
 
 
   function prepareData(config, data) {
-    var defaults; // Construct initial data object for content type alongside setting default values
-
-    if (config.fields) {
-      defaults = _underscore.mapObject(config.fields, function (fieldset) {
-        return _underscore.mapObject(fieldset, function (field) {
-          return field.default;
-        });
-      });
-    } // Set all content types to be displayed by default
-
+    var defaults = prepareDefaults(config.fields || {}); // Set all content types to be displayed by default
 
     defaults.display = true;
     return _underscore.extend(defaults, data, {
       name: config.name
+    });
+  }
+  /**
+   * Prepare the default values for fields within the form
+   *
+   * @param {ConfigFieldInterface} fields
+   * @returns {FieldDefaultsInterface}
+   */
+
+
+  function prepareDefaults(fields) {
+    return _underscore.mapObject(fields, function (field) {
+      if (!_underscore.isUndefined(field.default)) {
+        return field.default;
+      } else if (_underscore.isObject(field)) {
+        return prepareDefaults(field);
+      }
     });
   }
   /**
