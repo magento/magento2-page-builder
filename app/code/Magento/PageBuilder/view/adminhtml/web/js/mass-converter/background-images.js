@@ -24,15 +24,13 @@ define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder
       var directive = (0, _object.get)(data, config.attribute_name);
 
       if (directive) {
-        var desktopImage = (0, _object.get)(data, config.desktop_image_variable);
-        var mobileImage = (0, _object.get)(data, config.mobile_image_variable);
         var images = JSON.parse(directive.replace(/\\(.)/mg, "$1")) || {};
 
-        if (!_underscore.isUndefined(desktopImage)) {
+        if (!_underscore.isUndefined(images.desktop_image)) {
           (0, _object.set)(data, config.desktop_image_variable, (0, _image.decodeUrl)(images.desktop_image));
         }
 
-        if (!_underscore.isUndefined(mobileImage)) {
+        if (!_underscore.isUndefined(images.mobile_image)) {
           (0, _object.set)(data, config.mobile_image_variable, (0, _image.decodeUrl)(images.mobile_image));
         }
 

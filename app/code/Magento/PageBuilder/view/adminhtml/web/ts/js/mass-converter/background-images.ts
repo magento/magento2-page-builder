@@ -20,13 +20,11 @@ export default class BackgroundImages implements ConverterInterface {
     public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): ConverterDataInterface {
         const directive = get<string>(data, config.attribute_name);
         if (directive) {
-            const desktopImage = get<ImageArrayObject>(data, config.desktop_image_variable);
-            const mobileImage = get<ImageArrayObject>(data, config.mobile_image_variable);
             const images = JSON.parse(directive.replace(/\\(.)/mg, "$1")) || {};
-            if (!_.isUndefined(desktopImage)) {
+            if (!_.isUndefined(images.desktop_image)) {
                 set(data, config.desktop_image_variable, decodeUrl(images.desktop_image));
             }
-            if (!_.isUndefined(mobileImage)) {
+            if (!_.isUndefined(images.mobile_image)) {
                 set(data, config.mobile_image_variable, decodeUrl(images.mobile_image));
             }
             delete data[config.attribute_name];
