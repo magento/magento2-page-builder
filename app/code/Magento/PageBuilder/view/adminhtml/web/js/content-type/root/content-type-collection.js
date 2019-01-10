@@ -1,13 +1,7 @@
 /*eslint-disable */
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type/root/preview"], function (_alert, _contentTypeCollection, _preview) {
+define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/drag-drop/sortable"], function (_alert, _contentTypeCollection, _sortable) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -23,25 +17,26 @@ define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collec
 
     _inheritsLoose(RootContainer, _contentTypeCollectio);
 
-    /**
-     * @param {ContentTypeConfigInterface} config
-     * @param {string} stageId
-     */
-    function RootContainer(config, stageId) {
-      var _this;
-
-      _this = _contentTypeCollectio.call(this, null, config, stageId) || this;
-      _this.preview = new _preview(_assertThisInitialized(_assertThisInitialized(_this)), _this.config, null);
-      return _this;
+    function RootContainer() {
+      return _contentTypeCollectio.apply(this, arguments) || this;
     }
+
+    var _proto = RootContainer.prototype;
+
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    _proto.getSortableOptions = function getSortableOptions() {
+      return (0, _sortable.getSortableOptions)(this.preview);
+    };
     /**
      * Remove a child from the observable array
      *
      * @param child
      */
 
-
-    var _proto = RootContainer.prototype;
 
     _proto.removeChild = function removeChild(child) {
       if (this.getChildren().length === 1) {
@@ -64,24 +59,6 @@ define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collec
     _proto.isContainer = function isContainer() {
       return true;
     };
-    /**
-     * Retrieve the preview template from the config
-     *
-     * @returns {string}
-     */
-
-
-    /**
-     * Bind associated events
-     */
-    _proto.bindEvents = function bindEvents() {};
-
-    _createClass(RootContainer, [{
-      key: "previewTemplate",
-      get: function get() {
-        return this.config.preview_template;
-      }
-    }]);
 
     return RootContainer;
   }(_contentTypeCollection);

@@ -15,6 +15,8 @@
     <div class="pagebuilder-canvas"
          css="active: !loading()"
          afterRender="afterRenderDeferred.resolve">
-        <render args="{ name: root.preview.previewTemplate, data: root.preview }" />
+        <with args="rootContainer">
+            <render args="{ name: preview.previewTemplate, data: preview }" />
+        </with>
     </div>
 </div>

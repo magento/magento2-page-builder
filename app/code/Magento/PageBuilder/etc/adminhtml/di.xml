@@ -495,9 +495,18 @@
                 <item name="root_content_type" xsi:type="string">row</item>
                 <item name="html_display_content_type" xsi:type="string">html</item>
             </argument>
-            <argument name="rootConfig" xsi:type="array">
-                <item name="name" xsi:type="string">root</item>
-                <item name="preview_template" xsi:type="string">Magento_PageBuilder/content-type/root/preview</item>
+            <argument name="rootContainerConfig" xsi:type="array">
+                <item name="label" xsi:type="string">Root Container</item>
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/root/content-type-collection</item>
+                <item name="is_visible" xsi:type="string">false</item>
+                <item name="appearances" xsi:type="array">
+                    <item name="default" xsi:type="array">
+                        <item name="default" xsi:type="string">true</item>
+                        <item name="reader" xsi:type="string">Magento_PageBuilder/js/master-format/read/configurable</item>
+                        <item name="preview_template" xsi:type="string">Magento_PageBuilder/content-type/root/default/preview</item>
+                        <item name="render_template" xsi:type="string">Magento_PageBuilder/content-type/master-collection</item>
+                    </item>
+                </item>
             </argument>
         </arguments>
     </type>

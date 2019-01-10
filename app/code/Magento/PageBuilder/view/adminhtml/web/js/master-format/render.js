@@ -9,21 +9,17 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
   function () {
     "use strict";
 
-    function MasterFormatRenderer() {
-      this.rootTemplate = "Magento_PageBuilder/content-type/master";
-    }
+    function MasterFormatRenderer() {}
 
     var _proto = MasterFormatRenderer.prototype;
 
     /**
-     * Render a tree of content types instances stored in knockout
+     * Render the root container into a string
      *
-     * @param {KnockoutObservableArray<ContentTypeInterface>} tree
+     * @param {ContentTypeCollection} rootContainer
      * @returns {Promise<string>}
      */
-    _proto.applyBindings = function applyBindings(tree) {
-      var _this = this;
-
+    _proto.applyBindings = function applyBindings(rootContainer) {
       var element = (0, _jquery)("<div>");
       return new Promise(function (resolve) {
         _engine.waitForFinishRender().then(function () {
@@ -37,12 +33,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
 
         _knockout.applyBindingsToNode(element[0], {
           template: {
-            data: {
-              getChildren: function getChildren() {
-                return tree;
-              }
-            },
-            name: _this.rootTemplate
+            data: rootContainer.content,
+            name: rootContainer.content.renderTemplate
           }
         });
       });

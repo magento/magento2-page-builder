@@ -9,9 +9,8 @@ import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
-import Config from "./config";
+import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
-import RootContainer from "./content-type/root/content-type-collection";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import Render from "./master-format/render";
@@ -22,6 +21,7 @@ import deferred from "./utils/promise-deferred";
 import DeferredInterface from "./utils/promise-deferred.d";
 
 export default class Stage {
+    public static readonly rootContainerName: string = "root-container";
     public parent: PageBuilderInterface;
     public id: string;
     public loading: KnockoutObservable<boolean> = ko.observable(true);
@@ -31,7 +31,7 @@ export default class Stage {
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
-    public root: RootContainer;
+    public rootContainer: ContentTypeCollectionInterface;
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render = new Render();
     private collection: Collection = new Collection();
@@ -42,7 +42,7 @@ export default class Stage {
      * @type {(() => void) & _.Cancelable}
      */
     private applyBindingsDebounce = _.debounce(() => {
-        this.render.applyBindings(this.root.children)
+        this.render.applyBindings(this.rootContainer)
             .then((renderedOutput) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
             }));
@@ -50,11 +50,12 @@ export default class Stage {
 
     /**
      * @param {PageBuilderInterface} parent
+     * @param {ContentTypeCollectionInterface} rootContainer
      */
-    constructor(parent: PageBuilderInterface) {
+    constructor(parent: PageBuilderInterface, rootContainer: ContentTypeCollectionInterface) {
         this.parent = parent;
         this.id = parent.id;
-        this.root = new RootContainer(Config.getConfig("root_config"), this.id);
+        this.rootContainer = rootContainer;
         generateAllowedParents();
 
         // Fire an event after the DOM has rendered

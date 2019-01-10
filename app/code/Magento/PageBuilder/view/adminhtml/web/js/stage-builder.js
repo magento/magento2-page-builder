@@ -16,7 +16,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     var stageDocument = document.createElement("div");
     stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage.root, stage);
+    return buildElementIntoStage(stageDocument, stage.rootContainer, stage);
   }
   /**
    * Build an element and it's children into the stage
@@ -61,7 +61,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
 
   function createElementContentType(element, stage, parent) {
-    parent = parent || stage.root;
+    parent = parent || stage.rootContainer;
     var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 
     var config = _config.getContentTypeConfig(role);
@@ -148,18 +148,18 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
   function buildEmpty(stage, initialValue) {
     var stageConfig = _config.getConfig("stage_config");
 
-    var root = stage.root;
+    var rootContainer = stage.rootContainer;
 
     var rootContentTypeConfig = _config.getContentTypeConfig(stageConfig.root_content_type);
 
     var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _contentTypeFactory)(rootContentTypeConfig, root, stage.id, {}).then(function (row) {
-        root.addChild(row);
+      return (0, _contentTypeFactory)(rootContentTypeConfig, rootContainer, stage.id, {}).then(function (row) {
+        rootContainer.addChild(row);
 
         if (htmlDisplayContentTypeConfig && initialValue) {
-          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, root, stage.id, {
+          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, rootContainer, stage.id, {
             html: initialValue
           }).then(function (text) {
             row.addChild(text);
@@ -185,7 +185,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
     if ((0, _validator)(content)) {
       currentBuild = buildFromContent(stage, content).catch(function () {
-        stage.root.children([]);
+        stage.rootContainer.children([]);
         currentBuild = buildEmpty(stage, content);
       });
     } else {

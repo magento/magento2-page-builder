@@ -13,18 +13,14 @@ export default interface ContentTypeConfigInterface {
     label: string;
     icon: string;
     form: string;
-    contentType: string;
     group: string;
     fields: ConfigFieldInterface;
-    preview_template: string;
-    render_template: string;
     preview_component: string;
     master_component: string;
     component: string;
     appearances: {
         [key: string]: ContentTypeConfigAppearanceInterface;
     };
-    readers: string[];
     allowed_parents: string[];
     is_visible: boolean;
     additional_data: AdditionalDataConfigInterface;

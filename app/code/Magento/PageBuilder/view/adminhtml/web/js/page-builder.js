@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _panel, _stage) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_jquery, _knockout, _events, _mageUtils, _underscore, _config, _contentTypeFactory, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,7 +10,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
     "use strict";
 
     function PageBuilder(config, initialValue) {
+      var _this = this;
+
       this.template = "Magento_PageBuilder/page-builder";
+      this.stageReady = _knockout.observable(false);
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
@@ -22,8 +25,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);
-      this.config = config;
-      this.stage = new _stage(this);
+      this.config = config; // Create the required root container for the stage
+
+      (0, _contentTypeFactory)(_config.getContentTypeConfig(_stage.rootContainerName), null, this.id).then(function (rootContainer) {
+        _this.stage = new _stage(_this, rootContainer);
+
+        _this.stageReady(true);
+      });
       this.panel = new _panel(this);
       this.initListeners();
     }
@@ -35,12 +43,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
     var _proto = PageBuilder.prototype;
 
     _proto.initListeners = function initListeners() {
-      var _this = this;
+      var _this2 = this;
 
       _events.on("stage:" + this.id + ":toggleFullscreen", this.toggleFullScreen.bind(this));
 
       this.isFullScreen.subscribe(function () {
-        return _this.onFullScreenChange();
+        return _this2.onFullScreenChange();
       });
     };
     /**
@@ -51,7 +59,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
 
 
     _proto.toggleFullScreen = function toggleFullScreen(args) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (args.animate === false) {
         this.isFullScreen(!this.isFullScreen());
@@ -87,7 +95,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
           // Remove all styles we applied to fix the position once we're transitioning
           panel.css("height", "");
 
-          _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
+          _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
             var _Object$assign;
 
             return Object.assign(object, (_Object$assign = {}, _Object$assign[styleName] = "", _Object$assign));
@@ -103,14 +111,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
           panel.css("height", "");
           pageBuilderWrapper.css("height", "");
 
-          _this2.wrapperStyles(Object.keys(_this2.previousWrapperStyles).reduce(function (object, styleName) {
+          _this3.wrapperStyles(Object.keys(_this3.previousWrapperStyles).reduce(function (object, styleName) {
             var _Object$assign2;
 
             return Object.assign(object, (_Object$assign2 = {}, _Object$assign2[styleName] = "", _Object$assign2));
           }, {}));
 
-          _this2.previousWrapperStyles = {};
-          _this2.previousPanelHeight = null;
+          _this3.previousWrapperStyles = {};
+          _this3.previousPanelHeight = null;
         }, 350);
       }
     };

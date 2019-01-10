@@ -29,7 +29,7 @@ function buildFromContent(stage: Stage, value: string) {
     const stageDocument = document.createElement("div");
     stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage.root, stage);
+    return buildElementIntoStage(stageDocument, stage.rootContainer, stage);
 }
 
 /**
@@ -78,7 +78,7 @@ function createElementContentType(
     stage: Stage,
     parent?: ContentTypeCollectionInterface,
 ): Promise<ContentTypeInterface> {
-    parent = parent || stage.root;
+    parent = parent || stage.rootContainer;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
     const config = Config.getContentTypeConfig(role);
 
@@ -161,18 +161,18 @@ function getElementChildren(element: Element) {
 
 function buildEmpty(stage: Stage, initialValue: string) {
     const stageConfig = Config.getConfig("stage_config");
-    const root = stage.root;
+    const rootContainer = stage.rootContainer;
     const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, root, stage.id, {})
+        return createContentType(rootContentTypeConfig, rootContainer, stage.id, {})
             .then((row: ContentTypeCollectionInterface) => {
-                root.addChild(row);
+                rootContainer.addChild(row);
                 if (htmlDisplayContentTypeConfig && initialValue) {
                     return createContentType(
                         htmlDisplayContentTypeConfig,
-                        root,
+                        rootContainer,
                         stage.id,
                         {
                             html: initialValue,
@@ -205,7 +205,7 @@ export default function build(
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
             .catch(() => {
-                stage.root.children([]);
+                stage.rootContainer.children([]);
                 currentBuild = buildEmpty(stage, content);
             });
     } else {

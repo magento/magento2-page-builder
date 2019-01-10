@@ -5,24 +5,19 @@
 
 import alertDialog from "Magento_Ui/js/modal/alert";
 import ContentTypeCollection from "../../content-type-collection";
-import ContentTypeConfigInterface from "../../content-type-config";
-import RootPreview from "./preview";
+import {getSortableOptions} from "../../drag-drop/sortable";
 
 /**
  * @api
  */
 export default class RootContainer extends ContentTypeCollection {
-    public preview: RootPreview = new RootPreview(this, this.config, null);
-
     /**
-     * @param {ContentTypeConfigInterface} config
-     * @param {string} stageId
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
      */
-    constructor(
-        config: ContentTypeConfigInterface,
-        stageId: string,
-    ) {
-        super(null, config, stageId);
+    public getSortableOptions(): JQueryUI.SortableOptions | any {
+        return getSortableOptions(this.preview);
     }
 
     /**
@@ -48,21 +43,5 @@ export default class RootContainer extends ContentTypeCollection {
      */
     public isContainer() {
         return true;
-    }
-
-    /**
-     * Retrieve the preview template from the config
-     *
-     * @returns {string}
-     */
-    get previewTemplate(): string {
-        return this.config.preview_template;
-    }
-
-    /**
-     * Bind associated events
-     */
-    protected bindEvents() {
-
     }
 }

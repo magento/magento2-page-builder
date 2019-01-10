@@ -71,7 +71,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       });
 
       _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.parent.id === _this.parent.id) {
+        if (args.contentType.parent && args.contentType.parent.id === _this.parent.id) {
           _this.buildJarallax();
         }
       });

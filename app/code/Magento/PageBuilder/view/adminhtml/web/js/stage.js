@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/root/content-type-collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _config, _contentTypeCollection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
+define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch", "underscore", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/promise-deferred"], function (_knockout, _events, _jqueryUi, _underscore, _sortable, _collection, _dataStore, _matrix, _render, _stageBuilder, _promiseDeferred) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -17,8 +17,9 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
 
     /**
      * @param {PageBuilderInterface} parent
+     * @param {ContentTypeCollectionInterface} rootContainer
      */
-    function Stage(parent) {
+    function Stage(parent, rootContainer) {
       var _this = this;
 
       this.loading = _knockout.observable(true);
@@ -32,7 +33,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       this.render = new _render();
       this.collection = new _collection();
       this.applyBindingsDebounce = _underscore.debounce(function () {
-        _this.render.applyBindings(_this.root.children).then(function (renderedOutput) {
+        _this.render.applyBindings(_this.rootContainer).then(function (renderedOutput) {
           return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
             value: renderedOutput
           });
@@ -40,7 +41,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       }, 500);
       this.parent = parent;
       this.id = parent.id;
-      this.root = new _contentTypeCollection(_config.getConfig("root_config"), this.id);
+      this.rootContainer = rootContainer;
       (0, _matrix.generateAllowedParents)(); // Fire an event after the DOM has rendered
 
       this.afterRenderDeferred.promise.then(function () {
@@ -157,6 +158,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
     return Stage;
   }();
 
+  Stage.rootContainerName = "root-container";
   return Stage;
 });
 //# sourceMappingURL=stage.js.map

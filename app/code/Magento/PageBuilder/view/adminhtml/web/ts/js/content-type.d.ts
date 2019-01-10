@@ -12,7 +12,7 @@ import DataStore from "./data-store";
 export default interface ContentTypeInterface<P extends Preview = Preview, M extends Master = Master> {
     id: string;
     stageId: string;
-    parent: ContentTypeCollectionInterface;
+    parent?: ContentTypeCollectionInterface;
     config: ContentTypeConfigInterface;
     element: JQuery;
     dataStore: DataStore;
