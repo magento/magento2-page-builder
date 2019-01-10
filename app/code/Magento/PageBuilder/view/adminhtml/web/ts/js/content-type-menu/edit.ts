@@ -4,6 +4,7 @@
  */
 
 import events from "Magento_PageBuilder/js/events";
+import _ from "underscore";
 import ContentTypeInterface from "../content-type.d";
 import DataStore, {DataObject} from "../data-store";
 
@@ -50,7 +51,7 @@ export default class Edit {
         let formNamespace = this.instance.config.form;
 
         // Use the default form unless a custom one is defined
-        if (undefined !== this.instance.config.appearances[appearance].form) {
+        if (!_.isUndefined(this.instance.config.appearances[appearance].form)) {
             formNamespace = this.instance.config.appearances[appearance].form;
         }
 

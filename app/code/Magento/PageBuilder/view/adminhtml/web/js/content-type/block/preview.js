@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/utils/object"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _hideShowOption, _preview, _object) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _hideShowOption, _object, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

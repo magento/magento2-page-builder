@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events"], function (_events) {
+define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -54,7 +54,7 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
       var appearance = this.dataStore.get("appearance");
       var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
 
-      if (undefined !== this.instance.config.appearances[appearance].form) {
+      if (!_underscore.isUndefined(this.instance.config.appearances[appearance].form)) {
         formNamespace = this.instance.config.appearances[appearance].form;
       }
 

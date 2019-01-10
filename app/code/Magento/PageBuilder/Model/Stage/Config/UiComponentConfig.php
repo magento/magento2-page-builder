@@ -74,9 +74,9 @@ class UiComponentConfig
      *
      * @param array $array
      * @param string $path
-     * @param string $value
+     * @param string|array $value
      */
-    private function generateFieldArray(array &$array, $path, $value)
+    private function generateFieldArray(array &$array, string $path, $value)
     {
         $keys = explode(".", $path);
 
