@@ -6,13 +6,12 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import Config from "../../config";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
-import FieldDefaultsInterface from "../../field-defaults.d";
 import Uploader from "../../uploader";
+import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
@@ -245,28 +244,7 @@ export default class Preview extends BasePreview {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
-            const message = dataStore.message as string;
-            const linkUrl = dataStore.link_url as FieldDefaultsInterface;
-            const aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
-            if (message.match(aLinkRegex) &&
-            dataStore.link_url &&
-            ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 &&
-            linkUrl[linkUrl.type] &&
-            linkUrl[linkUrl.type].length !== 0) {
-                confirmationDialog({
-                    actions: {
-                        always: () => {
-                            const anchorLessMessage = message.replace(aLinkRegex, "");
-                            this.parent.dataStore.update(anchorLessMessage, "message");
-                            $("#" + this.wysiwyg.elementId).html(anchorLessMessage);
-                        },
-
-                    },
-                    content: $t("Adding link in content and outer element is not allowed. Remove the link from the element before adding links to the content."), // tslint:disable-line:max-line-length
-                    title: $t("Nesting links are not allowed"),
-                    haveCancelButton: false,
-                });
-            }
+            nestingLinkDialog(this.parent.dataStore, this.wysiwyg, "message", "link_url");
         });
     }
 

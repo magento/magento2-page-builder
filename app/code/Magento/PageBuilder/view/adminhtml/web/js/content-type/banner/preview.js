@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _dismissibleConfirm, _config, _hideShowOption, _uploader, _factory, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _config, _hideShowOption, _uploader, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -222,27 +222,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
 
-        var message = dataStore.message;
-        var linkUrl = dataStore.link_url;
-        var aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
-
-        if (message.match(aLinkRegex) && dataStore.link_url && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
-          (0, _dismissibleConfirm)({
-            actions: {
-              always: function always() {
-                var anchorLessMessage = message.replace(aLinkRegex, "");
-
-                _this4.parent.dataStore.update(anchorLessMessage, "message");
-
-                (0, _jquery)("#" + _this4.wysiwyg.elementId).html(anchorLessMessage);
-              }
-            },
-            content: (0, _translate)("Adding link in content and outer element is not allowed. Remove the link from the element before adding links to the content."),
-            // tslint:disable-line:max-line-length
-            title: (0, _translate)("Nesting links are not allowed"),
-            haveCancelButton: false
-          });
-        }
+        (0, _nestingLinkDialog)(_this4.parent.dataStore, _this4.wysiwyg, "message", "link_url");
       });
     };
     /**

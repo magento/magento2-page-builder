@@ -40,7 +40,6 @@ define([
      * @return {Boolean}
      */
     function validateIsUrl(href) {
-
         return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href);//eslint-disable-line max-len
     }
 
@@ -50,7 +49,6 @@ define([
      * @return {Boolean}
      */
     function validateWysiwygHasAnchorTags(str) {
-
         return (/<a[\s]+([^>]+)>|<a>|<\/a>/igm).test(str);
     }
 
@@ -61,7 +59,6 @@ define([
      * @return {Boolean}
      */
     function validateOneAnchorTagField(message, url) {
-
         return !(validateWysiwygHasAnchorTags(message) &&
             ['page', 'product', 'category', 'default'].indexOf(url.type) !== -1 &&
             url[url.type] &&
