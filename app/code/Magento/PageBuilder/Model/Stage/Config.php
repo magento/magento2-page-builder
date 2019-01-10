@@ -141,8 +141,6 @@ class Config
             'can_use_inline_editing_on_stage' => $this->isWysiwygProvisionedForEditingOnStage(),
             'widgets' => $this->widgetInitializerConfig->getConfig(),
         ];
-
-
     }
 
     /**
