@@ -42,6 +42,7 @@ export default class Preview {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
+    public previewTemplate: KnockoutObservable<string> = ko.observable();
 
     /**
      * @deprecated
@@ -83,23 +84,9 @@ export default class Preview {
             "visible": this.isEmpty,
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
+        this.previewTemplate(this.getPreviewTemplate());
         this.setupDataFields();
         this.bindEvents();
-    }
-
-    /**
-     * Retrieve the preview template
-     *
-     * @returns {string}
-     */
-    get previewTemplate(): string {
-        const appearance = this.parent.dataStore.get("appearance") ?
-            this.parent.dataStore.get("appearance").toString() : undefined;
-
-        return appearanceConfig(
-            this.config.name,
-            appearance
-        ).preview_template;
     }
 
     /**
@@ -501,8 +488,15 @@ export default class Preview {
                 this.updatePlaceholderVisibility(data);
                 // Keep a reference to the display state in an observable for adding classes to the wrapper
                 this.display(!!data.display);
+
             },
         );
+
+        // If the appearance of the content type changes, update the preview template
+        this.parent.dataStore.subscribe(() => {
+            this.previewTemplate(this.getPreviewTemplate());
+        }, "appearance");
+
         if (this.parent instanceof ContentTypeCollection) {
             this.parent.children.subscribe(
                 (children: any[]) => {
@@ -577,6 +571,21 @@ export default class Preview {
             return;
         });
         return hasDataChanges;
+    }
+
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+    private getPreviewTemplate() {
+        const appearance = this.parent.dataStore.get("appearance") ?
+            this.parent.dataStore.get("appearance").toString() : undefined;
+
+        return appearanceConfig(
+            this.config.name,
+            appearance
+        ).preview_template;
     }
 
     /**

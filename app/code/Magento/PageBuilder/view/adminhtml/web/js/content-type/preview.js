@@ -1,8 +1,4 @@
 /*eslint-disable */
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _option, _titleOption, _registry, _sortable2, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
@@ -39,6 +35,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.display = _knockout.observable(true);
       this.isPlaceholderVisible = _knockout.observable(true);
       this.isEmpty = _knockout.observable(true);
+      this.previewTemplate = _knockout.observable();
       this.previewData = {};
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
@@ -53,24 +50,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         "visible": this.isEmpty,
         "empty-placeholder-background": this.isPlaceholderVisible
       });
+      this.previewTemplate(this.getPreviewTemplate());
       this.setupDataFields();
       this.bindEvents();
     }
-    /**
-     * Retrieve the preview template
-     *
-     * @returns {string}
-     */
-
-
-    var _proto = Preview.prototype;
-
     /**
      * Calls methods by event name.
      *
      * @param {string}  eventName
      * @param {any} params
      */
+
+
+    var _proto = Preview.prototype;
+
     _proto.trigger = function trigger(eventName, params) {
       var _this = this;
 
@@ -500,7 +493,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
         _this5.display(!!data.display);
-      });
+      }); // If the appearance of the content type changes, update the preview template
+
+      this.parent.dataStore.subscribe(function () {
+        _this5.previewTemplate(_this5.getPreviewTemplate());
+      }, "appearance");
 
       if (this.parent instanceof _contentTypeCollection) {
         this.parent.children.subscribe(function (children) {
@@ -588,6 +585,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return hasDataChanges;
     };
     /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+
+
+    _proto.getPreviewTemplate = function getPreviewTemplate() {
+      var appearance = this.parent.dataStore.get("appearance") ? this.parent.dataStore.get("appearance").toString() : undefined;
+      return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
+    };
+    /**
      * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
      * all elements as underlying elements could still receive the events if a parent is hidden.
      *
@@ -633,14 +641,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var paddingTop = parseFloat(padding.top) || 0;
       this.isPlaceholderVisible(paddingBottom + paddingTop + minHeight >= 130);
     };
-
-    _createClass(Preview, [{
-      key: "previewTemplate",
-      get: function get() {
-        var appearance = this.parent.dataStore.get("appearance") ? this.parent.dataStore.get("appearance").toString() : undefined;
-        return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
-      }
-    }]);
 
     return Preview;
   }();
