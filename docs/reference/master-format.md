@@ -462,6 +462,7 @@ Attributes
 
 Inline styles
 1. justify-content
+2. margin
 
 ### inner element
 
@@ -482,8 +483,7 @@ Inline styles
 2. border-color
 3. border-width
 4. border-radius
-5. margin
-6. padding
+5. padding
 
 ### video element
 
