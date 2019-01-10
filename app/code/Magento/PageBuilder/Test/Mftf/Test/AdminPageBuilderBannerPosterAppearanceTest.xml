@@ -1783,7 +1783,7 @@
             <stories value="Banner"/>
             <title value="Poster - Alignment Inherits"/>
             <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4290"/>
             <testCaseId value="MC-6015"/>
             <group value="pagebuilder"/>
@@ -1821,10 +1821,29 @@
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonType">
+            <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterButtonText">
+            <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveBannerEditPanelSettings"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext()).textAlign" stepKey="grabDefaultButtonComputedTextAlign"/>
+        <assertEquals stepKey="assertDefaultButtonComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultButtonComputedTextAlign</actualResult>
+        </assertEquals>
+        <executeJS function="return window.getComputedStyle({{BannerOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlign"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlign</actualResult>
+        </assertEquals>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusBannerEditor"/>
         <!-- Fill Out Row Edit Panel -->
         <comment userInput="Fill Out Row Edit Panel" stepKey="commentFillRowEditPanel"/>
@@ -1839,6 +1858,11 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusRowEditor"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext()).textAlign" stepKey="grabButtonComputedTextAlign"/>
+        <assertEquals stepKey="assertButtonComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabButtonComputedTextAlign</actualResult>
+        </assertEquals>
         <executeJS function="return window.getComputedStyle({{BannerOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabComputedTextAlign"/>
         <assertEquals stepKey="assertComputedTextAlign">
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
@@ -1848,6 +1872,11 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext()).textAlign" stepKey="grabButtonComputedTextAlignAfterSave"/>
+        <assertEquals stepKey="assertButtonComputedTextAlignAfterSave">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabButtonComputedTextAlignAfterSave</actualResult>
+        </assertEquals>
         <executeJS function="return window.getComputedStyle({{BannerOnBackend.wrapperJS('1')}}).textAlign" stepKey="grabComputedTextAlignAfterSave"/>
         <assertEquals stepKey="assertComputedTextAlignAfterSave">
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
@@ -1858,6 +1887,11 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext()).textAlign" stepKey="grabButtonComputedTextAlignStoreFront"/>
+        <assertEquals stepKey="assertButtonComputedTextAlignStoreFront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabButtonComputedTextAlignStoreFront</actualResult>
+        </assertEquals>
         <executeJS function="return window.getComputedStyle({{BannerOnFrontend.wrapperJS('1')}}).textAlign" stepKey="grabComputedTextAlignStoreFront"/>
         <assertEquals stepKey="assertComputedTextAlignStoreFront">
             <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>

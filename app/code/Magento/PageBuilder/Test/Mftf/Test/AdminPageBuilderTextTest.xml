@@ -2615,7 +2615,7 @@
             <stories value="Text"/>
             <title value="Text - Alignment Inherits"/>
             <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
-            <severity value="CRITICAL"/>
+            <severity value="MAJOR"/>
             <useCaseId value="MC-4290"/>
             <testCaseId value="MC-6019"/>
             <group value="pagebuilder"/>
@@ -2653,6 +2653,11 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveTextEditPanelSettings"/>
+        <executeJS function="return window.getComputedStyle({{TextOnStage.contentJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlign"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlign</actualResult>
+        </assertEquals>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusTextEditor2"/>
         <!-- Fill Out Row Edit Panel -->
         <comment userInput="Fill Out Row Edit Panel" stepKey="commentFillRowEditPanel"/>
