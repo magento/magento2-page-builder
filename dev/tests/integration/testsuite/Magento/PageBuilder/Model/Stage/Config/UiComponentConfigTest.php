@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Stage;
+namespace Magento\PageBuilder\Model\Stage\Config;
 
 use Magento\TestFramework\Helper\Bootstrap;
 
