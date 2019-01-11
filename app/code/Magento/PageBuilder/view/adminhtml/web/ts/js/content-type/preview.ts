@@ -586,7 +586,7 @@ export default class Preview {
 
         return appearanceConfig(
             this.config.name,
-            appearance
+            appearance,
         ).preview_template;
     }
 

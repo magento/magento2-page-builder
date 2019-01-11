@@ -46,13 +46,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
         return Promise.all(childrenPromises.map(function (child, index) {
           parent.addChild(child);
           return buildElementIntoStage(childElements[index], child, stage);
-        })).catch(function (error) {
-          console.error(error);
-          return null;
-        });
-      }).catch(function (error) {
-        console.error(error);
-        return null;
+        }));
       });
     }
   }
@@ -120,9 +114,6 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
           });
         });
       }
-    }).catch(function (error) {
-      console.error(error);
-      return null;
     });
   }
   /**
@@ -202,7 +193,8 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
     content = (0, _directives.removeQuotesInMediaDirectives)(content); // Determine if we're building from existing page builder content
 
     if ((0, _validator)(content)) {
-      currentBuild = buildFromContent(stage, content).catch(function () {
+      currentBuild = buildFromContent(stage, content).catch(function (error) {
+        console.error(error);
         stage.children([]);
         currentBuild = buildEmpty(stage, content);
       });

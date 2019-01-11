@@ -6,6 +6,7 @@
 import $ from "jquery";
 import mageUtils from "mageUtils";
 import _ from "underscore";
+import Config from "../../config";
 import appearanceConfig from "../../content-type/appearance-config";
 import PropertyReaderPool from "../../converter/converter-pool";
 import ConverterPool from "../../converter/converter-pool";
@@ -14,7 +15,6 @@ import MassConverterPool from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {ReadInterface} from "../read-interface";
-import Config from "../../config";
 
 /**
  * @api

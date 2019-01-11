@@ -60,13 +60,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
             return Promise.all(childrenPromises.map((child, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
-            })).catch((error) => {
-                console.error(error);
-                return null;
-            });
-        }).catch((error) => {
-            console.error(error);
-            return null;
+            }));
         });
     }
 }
@@ -135,9 +129,6 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
                 });
             });
         }
-    }).catch((error) => {
-        console.error(error);
-        return null;
     });
 }
 
@@ -223,7 +214,8 @@ export default function build(
     // Determine if we're building from existing page builder content
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
-            .catch(() => {
+            .catch((error: Error) => {
+                console.error(error);
                 stage.children([]);
                 currentBuild = buildEmpty(stage, content);
             });
