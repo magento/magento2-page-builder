@@ -62,7 +62,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="2"/>
             <argument name="dropZoneIndex" value="2"/>
@@ -80,9 +80,9 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
-        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
-        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
-        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
     <test name="RowAddAdditionalRowAboveInitialRow">
         <annotations>
@@ -115,7 +115,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="2"/>
             <argument name="dropZoneIndex" value="1"/>
@@ -134,9 +134,9 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
-        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
-        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
-        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
+        <waitForElement selector="{{PageBuilderStage.dropZone(PageBuilderRootContainerContentType.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
     <test name="RowRemoveRowFromStage">
         <annotations>
@@ -1197,7 +1197,7 @@
         <comment userInput="Add 2nd row and set appearance to Full Width" stepKey="commentAdd2ndRow"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow2IntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="2"/>
             <argument name="dropZoneIndex" value="2"/>
@@ -1230,7 +1230,7 @@
         <comment userInput="Add 3rd row and set appearance to Full Bleed" stepKey="commentAdd3rdRow"/>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow3IntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetType" value="PageBuilderRootContainerContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="3"/>
             <argument name="dropZoneIndex" value="4"/>
