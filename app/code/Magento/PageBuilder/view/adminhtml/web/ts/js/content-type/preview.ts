@@ -42,7 +42,6 @@ export default class Preview {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
-    public previewTemplate: KnockoutObservable<string> = ko.observable();
 
     /**
      * @deprecated
@@ -84,9 +83,18 @@ export default class Preview {
             "visible": this.isEmpty,
             "empty-placeholder-background": this.isPlaceholderVisible,
         });
-        this.previewTemplate(this.getPreviewTemplate());
         this.setupDataFields();
         this.bindEvents();
+    }
+
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+    get previewTemplate(): string {
+        const appearance = this.previewData.appearance ? this.previewData.appearance() as string : undefined;
+        return appearanceConfig(this.config.name, appearance).preview_template;
     }
 
     /**
@@ -491,12 +499,6 @@ export default class Preview {
 
             },
         );
-
-        // If the appearance of the content type changes, update the preview template
-        this.parent.dataStore.subscribe(() => {
-            this.previewTemplate(this.getPreviewTemplate());
-        }, "appearance");
-
         if (this.parent instanceof ContentTypeCollection) {
             this.parent.children.subscribe(
                 (children: any[]) => {
