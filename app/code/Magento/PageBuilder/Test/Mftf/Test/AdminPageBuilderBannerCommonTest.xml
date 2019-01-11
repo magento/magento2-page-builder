@@ -2289,9 +2289,10 @@
         <comment userInput="Check inline editor will validate for not allowing TinyMCE Link and Link URL at the same time" stepKey="commentCheckInlineEditorPreventAddingBothUrls"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
-        <actionGroup ref="addPageLinkToTinyMCEInline" stepKey="insertLinkInStageInlineEditor">
+        <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInStageInlineEditor">
             <argument name="url" value="{{ExternalLink.googleUrl}}"/>
             <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="wysiwygArea" value=""/>
         </actionGroup>
         <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeCorrectErrorModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>

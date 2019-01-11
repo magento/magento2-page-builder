@@ -140,10 +140,11 @@
             <argument name="url" type="string"/>
             <argument name="textToDisplay" type="string"/>
             <argument name="title" type="string" defaultValue=""/>
+            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
         </arguments>
         <comment userInput="insertLinkInWYSIWYG" stepKey="comment"/>
-        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>
@@ -152,10 +153,6 @@
         <click selector="{{WYSIWYGInsertLinkModal.okButton}}" stepKey="clickOkButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementNotVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModalGone"/>
-    </actionGroup>
-    <actionGroup name="addPageLinkToTinyMCEInline" extends="insertLinkInWYSIWYG">
-        <waitForElementVisible selector="{{TinyMCESection.InsertLink}}" stepKey="waitForInsertLinkButton"/>
-        <click selector="{{TinyMCESection.InsertLink}}" stepKey="clickInsertLinkButton"/>
     </actionGroup>
     <actionGroup name="assertTextareaContainsValue">
         <arguments>
