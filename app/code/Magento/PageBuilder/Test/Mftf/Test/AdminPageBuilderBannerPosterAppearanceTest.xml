@@ -1878,7 +1878,7 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
         <executeJS function="return {{BannerOnBackend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionAfterSave"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPositionAfterSave"/>
-        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
         <assertLessThanOrEqual stepKey="assertButtonRightAlignedAfterSave">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">overlayMinusButtonMinusPaddingAfterSave</actualResult>
@@ -1895,7 +1895,7 @@
         </actionGroup>
         <executeJS function="return {{BannerOnFrontend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionStoreFront"/>
         <executeJS function="return document.evaluate(&quot;{{BannerOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPositionStoreFront"/>
-        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
         <assertLessThanOrEqual stepKey="assertButtonRightAlignedStoreFront">
             <expectedResult type="int">5</expectedResult>
             <actualResult type="variable">overlayMinusButtonMinusPaddingStoreFront</actualResult>
