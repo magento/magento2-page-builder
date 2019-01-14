@@ -60,7 +60,9 @@ export default class WidgetDirective extends BaseWidgetDirective {
         return content.replace(/\{/g, "^[")
             .replace(/\}/g, "^]")
             .replace(/"/g, "`")
-            .replace(/\\/g, "|");
+            .replace(/\\/g, "|")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
     }
 
     /**
@@ -71,6 +73,8 @@ export default class WidgetDirective extends BaseWidgetDirective {
         return content.replace(/\^\[/g, "{")
             .replace(/\^\]/g, "}")
             .replace(/`/g, "\"")
-            .replace(/\|/g, "\\");
+            .replace(/\|/g, "\\")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">");
     }
 }
