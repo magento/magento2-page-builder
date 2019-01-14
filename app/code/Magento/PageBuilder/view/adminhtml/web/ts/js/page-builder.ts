@@ -20,7 +20,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
     public panel: Panel;
     public stage: Stage;
-    public stageReady: KnockoutObservable<boolean> = ko.observable(false);
+    public isStageReady: KnockoutObservable<boolean> = ko.observable(false);
     public config: object;
     public initialValue: string;
     public id: string = utils.uniqueid();
@@ -44,7 +44,7 @@ export default class PageBuilder implements PageBuilderInterface {
             this.id,
         ).then((rootContainer: ContentTypeCollectionInterface) => {
             this.stage = new Stage(this, rootContainer);
-            this.stageReady(true);
+            this.isStageReady(true);
         });
 
         this.panel = new Panel(this);

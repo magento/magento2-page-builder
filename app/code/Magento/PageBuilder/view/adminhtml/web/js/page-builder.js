@@ -13,7 +13,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       var _this = this;
 
       this.template = "Magento_PageBuilder/page-builder";
-      this.stageReady = _knockout.observable(false);
+      this.isStageReady = _knockout.observable(false);
       this.id = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
@@ -30,7 +30,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       (0, _contentTypeFactory)(_config.getContentTypeConfig(_stage.rootContainerName), null, this.id).then(function (rootContainer) {
         _this.stage = new _stage(_this, rootContainer);
 
-        _this.stageReady(true);
+        _this.isStageReady(true);
       });
       this.panel = new _panel(this);
       this.initListeners();
