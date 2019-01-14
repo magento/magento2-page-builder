@@ -14,7 +14,7 @@ import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
  * Validate inline editor for having nested link
  * Creates a dialog and removes inline editor link if present
  *
- * @param {DataObject} dataStore
+ * @param {DataStore} dataStore
  * @param {WysiwygInterface} wysiwyg
  * @param {string} inlineMessageField
  * @param {string} linkUrlField
@@ -23,7 +23,8 @@ export default function nestingLinkDialog(
     dataStore: DataStore,
     wysiwyg: WysiwygInterface,
     inlineMessageField: string,
-    linkUrlField: string) {
+    linkUrlField: string,
+) {
     const dataStoreContent = dataStore.get() as DataObject;
     const inlineMessage = dataStoreContent[inlineMessageField] as string;
     const linkUrl = dataStoreContent[linkUrlField] as FieldDefaultsInterface;

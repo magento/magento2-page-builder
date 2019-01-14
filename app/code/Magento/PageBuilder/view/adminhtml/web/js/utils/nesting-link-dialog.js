@@ -9,7 +9,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
    * Validate inline editor for having nested link
    * Creates a dialog and removes inline editor link if present
    *
-   * @param {DataObject} dataStore
+   * @param {DataStore} dataStore
    * @param {WysiwygInterface} wysiwyg
    * @param {string} inlineMessageField
    * @param {string} linkUrlField
