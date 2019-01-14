@@ -72,7 +72,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
 
 
     _proto.encodeWysiwygCharacters = function encodeWysiwygCharacters(content) {
-      return content.replace(/\{/g, "^[").replace(/\}/g, "^]").replace(/"/g, "`").replace(/\\/g, "|");
+      return content.replace(/\{/g, "^[").replace(/\}/g, "^]").replace(/"/g, "`").replace(/\\/g, "|").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     };
     /**
      * @param {string} content
@@ -81,7 +81,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract", "Mage
 
 
     _proto.decodeWysiwygCharacters = function decodeWysiwygCharacters(content) {
-      return content.replace(/\^\[/g, "{").replace(/\^\]/g, "}").replace(/`/g, "\"").replace(/\|/g, "\\");
+      return content.replace(/\^\[/g, "{").replace(/\^\]/g, "}").replace(/`/g, "\"").replace(/\|/g, "\\").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     };
 
     return WidgetDirective;
