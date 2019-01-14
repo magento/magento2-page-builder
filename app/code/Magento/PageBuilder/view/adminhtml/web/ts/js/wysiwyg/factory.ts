@@ -9,9 +9,10 @@ import {AdditionalDataConfigInterface} from "../content-type-config";
 import DataStore from "../data-store";
 import Wysiwyg from "./tinymce4";
 import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface";
+import ContentTypeInterface from "../content-type.d";
 
 /**
- * @param {String} contentTypeId The ID in the registry of the content type.
+ * @param {ContentTypeInterface} contentType The content type in the registry.
  * @param {String} elementId The ID of the editor element in the DOM.
  * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
  * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
@@ -20,7 +21,7 @@ import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface
  * @returns {Wysiwyg}
  */
 export default function create(
-    contentTypeId: string,
+    contentType: ContentTypeInterface,
     elementId: string,
     contentTypeName: string,
     config: AdditionalDataConfigInterface,
@@ -40,7 +41,7 @@ export default function create(
                         (ConfigModifierType: any) => {
                             const modifier = new ConfigModifierType();
                             // Allow dynamic settings to be set before editor is initialized
-                            modifier.modify(contentTypeId, config);
+                            modifier.modify(contentType.id, config);
                             configResolve();
                         },
                     );
@@ -51,11 +52,12 @@ export default function create(
             }).then(() => {
                 // Instantiate the component
                 const wysiwyg = new WysiwygInstance(
-                    contentTypeId,
+                    contentType.id,
                     elementId,
                     config,
                     dataStore,
                     fieldName,
+                    contentType.stageId
                 );
 
                 if (config.adapter_config.component_initializers

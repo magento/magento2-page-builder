@@ -35,6 +35,11 @@ export default class Wysiwyg implements WysiwygInterface {
     public contentTypeId: string;
 
     /**
+     * Id of the stage
+     */
+    public stageId: string;
+
+    /**
      * Wysiwyg adapter instance
      */
     private wysiwygAdapter: WysiwygInstanceInterface;
@@ -55,6 +60,7 @@ export default class Wysiwyg implements WysiwygInterface {
      * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
      * @param {DataStore} dataStore The datastore to store the content in.
      * @param {String} fieldName The key in the provided datastore to set the data.
+     * @param {String} stageId The ID in the registry of the stage containing the content type.
      */
     constructor(
         contentTypeId: string,
@@ -62,12 +68,14 @@ export default class Wysiwyg implements WysiwygInterface {
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
         fieldName: string,
+        stageId: string,
     ) {
         this.contentTypeId = contentTypeId;
         this.elementId = elementId;
         this.fieldName = fieldName;
         this.config = config;
         this.dataStore = dataStore;
+        this.stageId = stageId;
 
         if (this.config.adapter_config.mode === "inline") {
             /**
@@ -105,6 +113,9 @@ export default class Wysiwyg implements WysiwygInterface {
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
         events.on(`form:${this.contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
+
+        // Clear padding on stage after fullscreen mode is toggled
+        events.on(`stage:${this.stageId}:fullScreenModeChangeAfter`, this.revertFullScreenPadding.bind(this));
     }
 
     /**
@@ -120,16 +131,18 @@ export default class Wysiwyg implements WysiwygInterface {
     private onFocus() {
         this.clearSelection();
 
-        $(`#${this.elementId}`)
-            .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
+        this.getFixedToolbarContainer()
             .addClass("pagebuilder-toolbar-active");
 
         events.trigger("stage:interactionStart");
 
         // Wait for everything else to finish
         _.defer(() => {
-            $(this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline")
+            this.getFixedToolbarContainer()
+                .find(".mce-tinymce-inline")
                 .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
+
+            _.delay(this.adjustFullScreenPaddingToAccommodateInlineToolbar.bind(this), 200);
         });
     }
 
@@ -139,9 +152,9 @@ export default class Wysiwyg implements WysiwygInterface {
     private onBlur() {
         this.clearSelection();
 
-        $(`#${this.elementId}`)
-            .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
+        this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active");
+
         events.trigger("stage:interactionStop");
     }
 
@@ -175,5 +188,59 @@ export default class Wysiwyg implements WysiwygInterface {
                 window.getSelection().removeAllRanges();
             }
         }
+    }
+
+    /**
+     * Adjust padding on stage if in fullscreen mode to accommodate inline wysiwyg toolbar overflowing fixed viewport
+     */
+    private adjustFullScreenPaddingToAccommodateInlineToolbar() {
+        if (this.config.adapter_config.mode !== "inline") {
+            return;
+        }
+
+        const $stage = $(`#${this.stageId}`);
+        const $fullScreenStageWrapper = $stage.closest(".stage-full-screen");
+        const isInFullScreenMode = !!$fullScreenStageWrapper.length;
+
+        if (!isInFullScreenMode) {
+            return;
+        }
+
+        _.delay(() => {
+            const $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
+
+            if (!$inlineToolbar.length) {
+                return;
+            }
+
+            const inlineToolbarClientRectTop = $inlineToolbar.get(0).getBoundingClientRect().top;
+
+            if (inlineToolbarClientRectTop >= 0) { // inline toolbar not out of bounds; continue
+                return;
+            }
+
+            const paddingTopToApplyToStage = Math.abs(inlineToolbarClientRectTop);
+
+            // increase padding top and adjust scrollTop accordingly to make it seamless
+            $stage.css("paddingTop", paddingTopToApplyToStage);
+            $fullScreenStageWrapper.scrollTop($fullScreenStageWrapper.scrollTop() + paddingTopToApplyToStage);
+        }, 200);
+    }
+
+    /**
+     * Revert padding previously applied for accommodating inline wysiwyg toolbar overflowing fixed viewport
+     * in fullscreen mode
+     */
+    private revertFullScreenPadding() {
+        $(`#${this.stageId}`).css("paddingTop", "");
+    }
+
+    /**
+     * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
+     *
+     * @returns {jQuery}
+     */
+    private getFixedToolbarContainer() {
+        return $(`#${this.elementId}`).closest(`${this.config.adapter.settings.fixed_toolbar_container}`);
     }
 }

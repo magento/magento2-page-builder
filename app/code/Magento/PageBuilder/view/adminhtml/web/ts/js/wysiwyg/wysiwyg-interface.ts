@@ -16,6 +16,7 @@ export interface WysiwygConstructorInterface {
      * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
      * @param {DataStore} dataStore The datastore to store the content in.
      * @param {String} fieldName The key in the provided datastore to set the data.
+     * @param {string} stageId The ID in the registry of the stage containing the content type.
      * @return {WysiwygInterface}
      */
     new (
@@ -24,6 +25,7 @@ export interface WysiwygConstructorInterface {
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
         fieldName: string,
+        stageId: string,
     ): WysiwygInterface;
 }
 
@@ -32,6 +34,7 @@ export interface WysiwygConstructorInterface {
  */
 export interface WysiwygInterface {
     contentTypeId: string;
+    stageId: string,
     elementId: string;
     config: AdditionalDataConfigInterface;
 

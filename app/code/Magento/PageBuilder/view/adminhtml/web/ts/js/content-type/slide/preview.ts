@@ -252,6 +252,9 @@ export default class Preview extends BasePreview {
 
     /**
      * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
      */
     public initWysiwyg(focus: boolean = false) {
         if (this.wysiwyg) {
@@ -265,7 +268,7 @@ export default class Preview extends BasePreview {
         }
 
         return WysiwygFactory(
-            this.parent.id,
+            this.parent,
             this.element.id,
             this.config.name,
             wysiwygConfig,
