@@ -41,12 +41,10 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <comment userInput="Validate Initial Column Height On Stage Matches Expected" stepKey="commentValidateColumnHeight"/>
-        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialColumnHeightMatchesExpected">
+        <actionGroup ref="validateContentTypeHeightOnStageWithoutPadding" stepKey="assertInitialColumnHeightMatchesExpected">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderEmptyColumnHeightProperty"/>
-            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
-            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
