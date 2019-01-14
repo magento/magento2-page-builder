@@ -75,7 +75,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     /**
      * Remove a child from the observable array
      *
-     * @param child
+     * @param {ContentTypeInterface} child
      */
 
 

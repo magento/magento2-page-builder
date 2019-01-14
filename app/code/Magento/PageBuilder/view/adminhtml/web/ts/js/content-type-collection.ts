@@ -65,7 +65,7 @@ export default class ContentTypeCollection<P extends PreviewCollection = Preview
     /**
      * Remove a child from the observable array
      *
-     * @param child
+     * @param {ContentTypeInterface} child
      */
     public removeChild(child: ContentTypeInterface): void {
         this.collection.removeChild(child);

@@ -6,10 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
-import Config from "../config";
 import ContentTypeCollectionInterface from "../content-type-collection";
-import ContentTypeInterface from "../content-type.d";
-import Stage from "../stage";
 import decodeAllDataUrlsInString from "../utils/directives";
 import filterHtml from "./filter-html";
 
