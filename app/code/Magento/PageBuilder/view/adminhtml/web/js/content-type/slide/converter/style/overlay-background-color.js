@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -32,8 +32,10 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      if (data.show_overlay === "always" && data[name] !== "" && data[name] !== undefined) {
-        return data[name].toString();
+      var value = (0, _object.get)(data, name);
+
+      if (data.show_overlay === "always" && value !== "" && value !== undefined) {
+        return value;
       }
 
       return "transparent";

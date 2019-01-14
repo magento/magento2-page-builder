@@ -3,8 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
+import MarginObject from "../../../../converter/margin-object";
 import {DataObject} from "../../../../data-store";
+import {get} from "../../../../utils/object";
 
 export default class Margins implements ConverterInterface {
     /**
@@ -13,7 +16,7 @@ export default class Margins implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
+    public fromDom(value: MarginObject): string | object {
         const result: any = {};
         if (undefined !== value.margin) {
             result.margin = {
@@ -38,10 +41,11 @@ export default class Margins implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
+        let value = get<MarginObject>(data, name);
+        if (value && _.isString(value)) {
             value = JSON.parse(value);
         }
+
         if (value && undefined !== value.margin) {
             result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
             result.marginTop = value.margin.top ? value.margin.top + "px" : "";

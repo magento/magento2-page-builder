@@ -9,14 +9,17 @@ import loadReader from "Magento_PageBuilder/js/utils/loader";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
+import ConfigFieldInterface from "./config-field";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
 import appearanceConfig from "./content-type/appearance-config";
+import FieldDefaultsInterface from "./field-defaults";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
+import {set} from "./utils/object";
 
 /**
  * Build the stage with the provided value
@@ -102,9 +105,7 @@ function createElementContentType(
  */
 function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value
-    const result = _.mapObject(config.fields, () => {
-        return "";
-    });
+    const result = createInitialElementData(config.fields);
 
     return new Promise((resolve: (result: object) => void, reject: (e: string) => void) => {
         const role = element.dataset.role;
@@ -116,10 +117,32 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
                 const ReaderComponent = readers.pop();
                 const reader = new ReaderComponent();
                 reader.read(element).then((readerData: any) => {
-                    _.extend(result, readerData);
+                    /**
+                     * Iterate through the reader data and set the values onto the result array to ensure dot notation
+                     * keys are properly handled.
+                     */
+                    _.each(readerData, (value: any, key: string) => {
+                        set(result, key, value);
+                    });
                     resolve(result);
                 });
             });
+        }
+    });
+}
+
+/**
+ * Create the initial object for storing the elements data
+ *
+ * @param {ConfigFieldInterface} fields
+ * @returns {FieldDefaultsInterface}
+ */
+function createInitialElementData(fields: ConfigFieldInterface): FieldDefaultsInterface {
+    return _.mapObject(fields, (field) => {
+        if (!_.isUndefined(field.default)) {
+            return "";
+        } else if (_.isObject(field)) {
+            return createInitialElementData(field);
         }
     });
 }

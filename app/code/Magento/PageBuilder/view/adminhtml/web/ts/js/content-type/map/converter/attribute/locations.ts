@@ -3,8 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
+import LocationObject from "../../../../converter/location-object";
 import {DataObject} from "../../../../data-store";
+import {get} from "../../../../utils/object";
 
 export default class Locations implements ConverterInterface {
 
@@ -29,12 +32,12 @@ export default class Locations implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
-        let content = data[name];
-        if (typeof content === "string" && content !== "") {
+        let content = get<LocationObject[]>(data, name);
+        if (_.isString(content) && content !== "") {
             content = JSON.parse(content);
         }
         if (content && Object.keys(content).length) {
-            content.each((marker: any) => {
+            content.forEach((marker: any) => {
                 if (marker.position) {
                     marker.position.latitude = parseFloat(marker.position.latitude);
                     marker.position.longitude = parseFloat(marker.position.longitude);
