@@ -2559,4 +2559,50 @@
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel" before="enterText"/>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextProperty.value}}" stepKey="enterText"/>
     </test>
+    <test name="InlineTinyMceEditingIsNotFocusedOnEditSave">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Text"/>
+            <title value="TinyMCE should not be incorrectly focused"/>
+            <description value="Verify the inline editing mode for TinyMCE isn't focused automatically when saving content within the edit panel"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-3812"/>
+            <testCaseId value="MC-5728"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Drag text into stage -->
+        <comment userInput="Drag text into stage" stepKey="commentDragTextIntoStage"/>
+        <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnEditorArea"/>
+        <seeElement selector="{{TextOnStage.tinymceFocused('1')}}" stepKey="seeFocusedTinyMce"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocusFromWYSIWYG1"/>
+        <dontSeeElement selector="{{TextOnStage.tinymceFocused('1')}}" stepKey="dontSeeFocusedTinyMce"/>
+        <!-- Open and save slide out panel -->
+        <comment userInput="Open and save slide out panel" stepKey="commentOpenAndSaveSlideOut"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify TinyMCE is not automatically focused -->
+        <comment userInput="Verify TinyMCE is not automatically focused" stepKey="commentVerifyNotFocused"/>
+        <dontSeeElement selector="{{TextOnStage.tinymceFocused('1')}}" stepKey="dontSeeTinyMceFocused"/>
+    </test>
 </tests>
