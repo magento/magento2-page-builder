@@ -576,21 +576,6 @@ export default class Preview {
     }
 
     /**
-     * Retrieve the preview template
-     *
-     * @returns {string}
-     */
-    private getPreviewTemplate() {
-        const appearance = this.parent.dataStore.get("appearance") ?
-            this.parent.dataStore.get("appearance").toString() : undefined;
-
-        return appearanceConfig(
-            this.config.name,
-            appearance,
-        ).preview_template;
-    }
-
-    /**
      * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
      * all elements as underlying elements could still receive the events if a parent is hidden.
      *

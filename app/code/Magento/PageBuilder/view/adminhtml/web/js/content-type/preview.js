@@ -588,17 +588,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return hasDataChanges;
     };
     /**
-     * Retrieve the preview template
-     *
-     * @returns {string}
-     */
-
-
-    _proto.getPreviewTemplate = function getPreviewTemplate() {
-      var appearance = this.parent.dataStore.get("appearance") ? this.parent.dataStore.get("appearance").toString() : undefined;
-      return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
-    };
-    /**
      * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
      * all elements as underlying elements could still receive the events if a parent is hidden.
      *
