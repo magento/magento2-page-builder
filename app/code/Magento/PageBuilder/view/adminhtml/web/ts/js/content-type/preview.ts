@@ -496,7 +496,6 @@ export default class Preview {
                 this.updatePlaceholderVisibility(data);
                 // Keep a reference to the display state in an observable for adding classes to the wrapper
                 this.display(!!data.display);
-
             },
         );
         if (this.parent instanceof ContentTypeCollection) {
