@@ -1359,4 +1359,54 @@
             <expectedResult type="variable">productActionsWidthFrontend</expectedResult>
         </assertGreaterThan>
     </test>
+    <test name="ProductConditionsInvulnerableToXSS">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Products"/>
+            <title value="Product Content Type is invulnerable to XSS via product condition payload injection"/>
+            <description value="As a Content Manager I want Product Content Type to be invulnerable to XSS via product condition payload injection so that the security of my admin experience is retained"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-5835"/>
+            <testCaseId value="MC-6486"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
+            <group value="pagebuilder-security"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragProductsOntoStage">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDrop">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <actionGroup ref="addCategoryConditionToProductsBlock" stepKey="addCategory">
+            <argument name="page" value="ProductsContentTypeForm"/>
+            <argument name="category" value="{{PageBuilderXSSPayloadProperty.value}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStageAfterSaving"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderProductsContentType"/>
+        </actionGroup>
+        <dontSeeJsError stepKey="doNotSeeAnyJSErrorsOnStorefront"/>
+    </test>
 </tests>
