@@ -34,7 +34,7 @@ export interface WysiwygConstructorInterface {
  */
 export interface WysiwygInterface {
     contentTypeId: string;
-    stageId: string,
+    stageId: string;
     elementId: string;
     config: AdditionalDataConfigInterface;
 

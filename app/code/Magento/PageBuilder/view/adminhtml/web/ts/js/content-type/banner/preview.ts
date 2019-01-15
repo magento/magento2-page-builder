@@ -177,12 +177,13 @@ export default class Preview extends BasePreview {
         config.adapter.settings.fixed_toolbar_container = "#" + this.parent.id + " .pagebuilder-banner-text-content";
 
         WysiwygFactory(
-            this.parent,
+            this.parent.id,
             element.id,
             this.config.name,
             config,
             this.parent.dataStore,
             "message",
+            this.parent.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });

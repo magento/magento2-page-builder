@@ -73,12 +73,13 @@ export default class Preview extends BasePreview {
         wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
 
         WysiwygFactory(
-            this.parent,
+            this.parent.id,
             element.id,
             this.config.name,
             wysiwygConfig,
             this.parent.dataStore,
             "content",
+            this.parent.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });

@@ -153,7 +153,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       element.id = this.parent.id + "-editor";
       var config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
       config.adapter.settings.fixed_toolbar_container = "#" + this.parent.id + " .pagebuilder-banner-text-content";
-      (0, _factory)(this.parent, element.id, this.config.name, config, this.parent.dataStore, "message").then(function (wysiwyg) {
+      (0, _factory)(this.parent.id, element.id, this.config.name, config, this.parent.dataStore, "message", this.parent.stageId).then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });
     };

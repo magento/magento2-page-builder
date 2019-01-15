@@ -268,12 +268,13 @@ export default class Preview extends BasePreview {
         }
 
         return WysiwygFactory(
-            this.parent,
+            this.parent.id,
             this.element.id,
             this.config.name,
             wysiwygConfig,
             this.parent.dataStore,
             "content",
+            this.parent.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });

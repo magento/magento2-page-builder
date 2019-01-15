@@ -6,15 +6,16 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
    */
 
   /**
-   * @param {ContentTypeInterface} contentType The content type in the registry.
+   * @param {String} contentTypeId The ID in the registry of the content type.
    * @param {String} elementId The ID of the editor element in the DOM.
    * @param {String} contentTypeName The type of content type this editor will be used in. E.g. "banner".
    * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
    * @param {DataStore} dataStore The datastore to store the content in.
    * @param {String} fieldName The key in the provided datastore to set the data.
+   * @param {String} stageId The ID in the registry of the stage containing the content type.
    * @returns {Wysiwyg}
    */
-  function create(contentType, elementId, contentTypeName, config, dataStore, fieldName) {
+  function create(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName, stageId) {
     config = _jquery.extend(true, {}, config);
     return new Promise(function (resolve) {
       (0, _loader)([config.adapter_config.component], function (WysiwygInstance) {
@@ -23,7 +24,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
             (0, _loader)([config.adapter_config.config_modifiers[contentTypeName]], function (ConfigModifierType) {
               var modifier = new ConfigModifierType(); // Allow dynamic settings to be set before editor is initialized
 
-              modifier.modify(contentType.id, config);
+              modifier.modify(contentTypeId, config);
               configResolve();
             });
           } else {
@@ -31,7 +32,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
           }
         }).then(function () {
           // Instantiate the component
-          var wysiwyg = new WysiwygInstance(contentType.id, elementId, config, dataStore, fieldName, contentType.stageId);
+          var wysiwyg = new WysiwygInstance(contentTypeId, elementId, config, dataStore, fieldName, stageId);
 
           if (config.adapter_config.component_initializers && config.adapter_config.component_initializers[contentTypeName]) {
             (0, _loader)([config.adapter_config.component_initializers[contentTypeName]], function (InitializerType) {
