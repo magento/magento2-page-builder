@@ -219,7 +219,8 @@ export default class Wysiwyg implements WysiwygInterface {
                 return;
             }
 
-            const paddingTopToApplyToStage = Math.abs(inlineToolbarClientRectTop);
+            const currentStagePaddingTop = parseInt($stage.css("paddingTop") || "0", 10);
+            const paddingTopToApplyToStage = Math.abs(inlineToolbarClientRectTop) + currentStagePaddingTop;
 
             // increase padding top and adjust scrollTop accordingly to make it seamless
             $stage.css("paddingTop", paddingTopToApplyToStage);

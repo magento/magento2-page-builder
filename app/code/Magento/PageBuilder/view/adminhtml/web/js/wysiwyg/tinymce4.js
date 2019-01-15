@@ -191,7 +191,8 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
           return;
         }
 
-        var paddingTopToApplyToStage = Math.abs(inlineToolbarClientRectTop); // increase padding top and adjust scrollTop accordingly to make it seamless
+        var currentStagePaddingTop = parseInt($stage.css("paddingTop") || "0", 10);
+        var paddingTopToApplyToStage = Math.abs(inlineToolbarClientRectTop) + currentStagePaddingTop; // increase padding top and adjust scrollTop accordingly to make it seamless
 
         $stage.css("paddingTop", paddingTopToApplyToStage);
         $fullScreenStageWrapper.scrollTop($fullScreenStageWrapper.scrollTop() + paddingTopToApplyToStage);
