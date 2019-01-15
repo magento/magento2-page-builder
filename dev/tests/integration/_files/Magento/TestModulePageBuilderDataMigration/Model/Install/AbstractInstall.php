@@ -24,7 +24,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     private $installData;
 
     /**
-     * @var \Magento\PageBuilder\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity
      */
     protected $entity;
 
@@ -49,7 +49,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
-     * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
+     * @param \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity $entity
      * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory
      * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType
      *        $contentTypeResource
@@ -62,7 +62,7 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
-        \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity $entity,
         \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory,
         \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType $contentTypeResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
