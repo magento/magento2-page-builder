@@ -497,6 +497,8 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -525,8 +527,11 @@
         <waitForElementVisible selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="waitForStageFullScreen"/>
         <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitFullScreenButton"/>
         <waitForElementNotVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="verifyStageNotNormalScreen"/>
+        <!-- Explicit wait for CSS animation to complete -->
         <wait time="1" stepKey="waitForFullScreenTransitionAnimationToFinish" />
+        <waitForElementVisible selector="{{TextOnStage.wysiwyg('1')}}" stepKey="waitForTextEditorToBeVisible" />
         <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnTextEditorArea"/>
+        <!-- Explicit wait for CSS animation to complete -->
         <wait time="1" stepKey="waitForInlineWysiwygToolbarTransitionAnimationToFinish" />
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForWYWSIWYGEditorPanelToBeVisible"/>
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topBoundingClientRect"/>
@@ -535,6 +540,31 @@
         <assertGreaterThanOrEqual stepKey="assertTopBoundingClientRectIsGreaterThan0">
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">$topBoundingClientRect</actualResult>
+        </assertGreaterThanOrEqual>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <comment userInput="Shrink column down to 1/3 its original size" stepKey="commentShrinkColumnToOneThirdItsOriginalSize" />
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumnAgain">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+            <argument name="contentTypeXCoordinate" value="10"/>
+            <argument name="contentTypeYCoordinate" value="0"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnTextEditorArea2"/>
+        <!-- Explicit wait for CSS animation to complete -->
+        <wait time="1" stepKey="waitForInlineWysiwygToolbarTransitionAnimationToFinish2" />
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForWYWSIWYGEditorPanelToBeVisible2"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topBoundingClientRect2"/>
+        <!-- Assert top bounding client rect > 0 -->
+        <comment userInput="Assert top bounding client rect > 0 when column is 1/3 its original size" stepKey="commentAssertInlineEditorAppearsInSmallerColumn" />
+        <assertGreaterThanOrEqual stepKey="assertTopBoundingClientRectIsGreaterThan0InSmallerColumn">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$topBoundingClientRect2</actualResult>
         </assertGreaterThanOrEqual>
     </test>
 </tests>
