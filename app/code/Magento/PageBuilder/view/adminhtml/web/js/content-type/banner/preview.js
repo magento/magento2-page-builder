@@ -218,7 +218,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this4.parent.dataStore.get();
 
-        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+
+        if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
+          _this4.parent.dataStore.update("", "message");
+        }
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
       });

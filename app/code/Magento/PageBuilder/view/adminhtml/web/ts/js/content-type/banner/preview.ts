@@ -242,6 +242,10 @@ export default class Preview extends BasePreview {
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+            if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
+                this.parent.dataStore.update("", "message");
+            }
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
     }
