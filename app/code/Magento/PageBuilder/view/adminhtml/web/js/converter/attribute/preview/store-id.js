@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["jquery"], function (_jquery) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -40,7 +40,8 @@ define([], function () {
         return "";
       }
 
-      return data[name].replace(/\}\}$/, " store_id=\"0\"}}");
+      var storeId = (0, _jquery)('[data-role="store-view-id"]').val() || "0";
+      return data[name].replace(/}}$/, " store_id=\"" + storeId + "\"}}");
     };
 
     return StoreId;

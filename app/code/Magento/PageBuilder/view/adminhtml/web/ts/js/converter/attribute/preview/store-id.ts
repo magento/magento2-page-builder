@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import {DataObject} from "../../../data-store";
 import ConverterInterface from "../../converter-interface";
 
@@ -33,6 +34,8 @@ export default class StoreId implements ConverterInterface {
             return "";
         }
 
-        return (data[name] as string).replace(/\}\}$/, " store_id=\"0\"}}");
+        const storeId = $('[data-role="store-view-id"]').val() || "0";
+
+        return (data[name] as string).replace(/}}$/, ` store_id="${storeId}"}}`);
     }
 }
