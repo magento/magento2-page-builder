@@ -4,8 +4,8 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/utils/loader";
-import ContentTypeConfigInterface from "../content-type-config.d";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeConfigInterface from "../content-type-config.types";
+import ContentTypeInterface from "../content-type.types";
 import observableUpdaterFactory from "./observable-updater-factory";
 import Preview from "./preview";
 import PreviewCollection from "./preview-collection";

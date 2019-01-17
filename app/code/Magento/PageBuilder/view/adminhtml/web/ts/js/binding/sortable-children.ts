@@ -10,7 +10,7 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import {moveContentType} from "../drag-drop/move-content-type";
 import {moveArrayItem} from "../utils/array";
 

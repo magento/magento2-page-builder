@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeConfigInterface from "./content-type-config.types";
 import Master from "./content-type/master";
 import Preview from "./content-type/preview";
 import DataStore from "./data-store";

@@ -10,7 +10,7 @@ import _ from "underscore";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";

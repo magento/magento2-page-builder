@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import PreviewCollection from "../preview-collection";
 import TabsPreview from "../tabs/preview";
 

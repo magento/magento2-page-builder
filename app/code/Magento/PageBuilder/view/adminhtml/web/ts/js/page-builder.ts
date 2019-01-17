@@ -11,7 +11,7 @@ import _ from "underscore";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import createContentType from "./content-type-factory";
-import PageBuilderInterface from "./page-builder.d";
+import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
 import StageToggleFullScreenParamsInterface from "./stage-toggle-full-screen-params";

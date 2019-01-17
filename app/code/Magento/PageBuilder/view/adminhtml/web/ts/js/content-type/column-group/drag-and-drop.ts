@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ColumnPreview from "../column/preview";
 import ColumnGroupPreview from "./preview";
 

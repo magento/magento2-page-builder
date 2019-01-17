@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {DataMappingInterface} from "../content-type-config";
+import {DataMappingInterface} from "../content-type-config.types";
 
 /**
  * Resolve converter

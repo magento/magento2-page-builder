@@ -4,7 +4,7 @@
  */
 import _ from "underscore";
 import Config from "../config";
-import ContentTypeConfigInterface from "../content-type-config";
+import ContentTypeConfigInterface from "../content-type-config.types";
 import {AllowedParentsInterface} from "./allowed-parents.d";
 
 const allowedParents: AllowedParentsInterface = {};

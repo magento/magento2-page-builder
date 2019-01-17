@@ -10,7 +10,7 @@ import {
     ContentTypeConfigAppearanceElementInterface,
     DataMappingAttributesInterface,
     DataMappingStyleInterface,
-} from "../../content-type-config";
+} from "../../content-type-config.types";
 import appearanceConfig from "../../content-type/appearance-config";
 import ConverterPool from "../../converter/converter-pool";
 import converterPoolFactory from "../../converter/converter-pool-factory";

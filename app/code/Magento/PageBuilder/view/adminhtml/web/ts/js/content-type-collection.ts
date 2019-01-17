@@ -7,9 +7,9 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Collection from "./collection";
 import ContentType from "./content-type";
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeConfigInterface from "./content-type-config.d";
-import ContentTypeInterface from "./content-type.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeConfigInterface from "./content-type-config.types";
+import ContentTypeInterface from "./content-type.types";
 import MasterCollection from "./content-type/master-collection";
 import PreviewCollection from "./content-type/preview-collection";
 

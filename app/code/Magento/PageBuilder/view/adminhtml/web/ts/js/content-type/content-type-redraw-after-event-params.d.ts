@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeInterface from "../content-type";
+import ContentTypeCollectionInterface from "../content-type-collection";
 
 /**
  * Content type event fired whenever content changes dimensions or visibility
@@ -12,6 +12,6 @@ import ContentTypeInterface from "../content-type";
  * @api
  */
 export default interface ContentTypeRedrawAfterEventParamsInterface {
-    id: string,
-    contentType: ContentTypeInterface | ContentTypeCollectionInterface
+    id: string;
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface;
 }

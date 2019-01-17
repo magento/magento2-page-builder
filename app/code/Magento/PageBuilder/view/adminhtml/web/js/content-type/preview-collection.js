@@ -88,7 +88,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
 
       (_preview2$prototype$d = _preview2.prototype.delegate).call.apply(_preview2$prototype$d, [this].concat(args));
 
-      this.parent.getChildren().each(function (elem) {
+      this.parent.getChildren()().forEach(function (elem) {
         elem.preview.delegate.apply(elem.preview, args);
       });
     };

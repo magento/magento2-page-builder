@@ -4,7 +4,7 @@
  */
 
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import createContentType from "../../content-type-factory";
 import ColumnPreview from "../column/preview";
 

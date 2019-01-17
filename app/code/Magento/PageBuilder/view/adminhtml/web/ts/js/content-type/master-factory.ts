@@ -4,8 +4,8 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/utils/loader";
-import ContentTypeConfigInterface from "../content-type-config.d";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeConfigInterface from "../content-type-config.types";
+import ContentTypeInterface from "../content-type.types";
 import converterResolver from "./converter-resolver";
 import Master from "./master";
 import MasterCollection from "./master-collection";

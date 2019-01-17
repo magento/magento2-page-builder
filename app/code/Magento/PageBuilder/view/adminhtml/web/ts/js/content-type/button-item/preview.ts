@@ -7,7 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import ButtonsPreview from "../buttons/preview";
 import BasePreview from "../preview";
 

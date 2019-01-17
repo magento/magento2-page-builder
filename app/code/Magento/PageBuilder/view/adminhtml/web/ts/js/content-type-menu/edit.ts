@@ -4,7 +4,7 @@
  */
 
 import events from "Magento_PageBuilder/js/events";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import DataStore, {DataObject} from "../data-store";
 
 export default class Edit {

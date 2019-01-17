@@ -1,12 +1,15 @@
 const gulp = require('gulp'),
     path = require('path'),
     fs = require('fs'),
+    prepend = require('prepend'),
     plugins = require('gulp-load-plugins')(),
     header = require('gulp-header'),
     newer = require('gulp-newer'),
-    shell = require('gulp-shell');
+    shell = require('gulp-shell'),
+    dtsGenerator = require('dts-generator').default;
 
 const config = {
+    moduleName: 'Magento_PageBuilder',
     basePath: 'app/code/Magento/PageBuilder',
     tsPath: 'view/adminhtml/web/ts/',
     buildPath: 'view/adminhtml/web/',
@@ -78,4 +81,50 @@ gulp.task('watch', function() {
     gulp.watch([
         path.join(config.basePath, config.tsPath, '**/*.ts')
     ], ['buildChanged']);
+});
+
+/**
+ * Resolve a file system path to the Magento module import path
+ *
+ * @param currentModuleId
+ * @returns {*}
+ */
+function resolveModuleIdToMagentoPath(currentModuleId) {
+    return currentModuleId.replace(
+        path.join(config.basePath, config.tsPath),
+        config.moduleName + "/"
+    );
+}
+
+const typePrefix = `/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* tslint:disable */`;
+
+/**
+ * Build the types d.ts file for Page Builder
+ */
+gulp.task('build:types', function (done) {
+    dtsGenerator({
+        project: './',
+        out: 'page-builder-types/index.d.ts',
+        resolveModuleId: (params) => {
+            return resolveModuleIdToMagentoPath(params.currentModuleId);
+        },
+        resolveModuleImport: (params) => {
+            return resolveModuleIdToMagentoPath(
+                path.resolve(
+                    path.dirname(params.currentModuleId),
+                    params.importedModuleId,
+                ).replace(
+                    process.cwd() + '/',
+                    ''
+                )
+            );
+        }
+    }).then(() => {
+        prepend('page-builder-types/index.d.ts', typePrefix, done);
+    });
 });

@@ -8,7 +8,7 @@ import events from "Magento_PageBuilder/js/events";
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import module from "module";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import BasePreview from "../preview";
 
 /**

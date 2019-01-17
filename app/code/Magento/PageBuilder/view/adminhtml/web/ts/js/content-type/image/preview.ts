@@ -5,7 +5,7 @@
 
 import events from "Magento_PageBuilder/js/events";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import BasePreview from "../preview";

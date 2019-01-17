@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import OptionInterface, {OptionsInterface} from "./content-type-menu/option.d";
+import OptionInterface, {OptionsInterface} from "./content-type-menu/option.types";
 import Preview from "./content-type/preview";
 
 /**

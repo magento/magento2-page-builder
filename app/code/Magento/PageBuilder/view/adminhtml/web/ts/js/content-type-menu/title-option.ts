@@ -5,7 +5,7 @@
 
 import Option from "./option";
 import OptionConfigInterface from "./option-config";
-import OptionInterface from "./option.d";
+import OptionInterface from "./option.types";
 
 export default class TitleOption extends Option implements OptionInterface {
     /**

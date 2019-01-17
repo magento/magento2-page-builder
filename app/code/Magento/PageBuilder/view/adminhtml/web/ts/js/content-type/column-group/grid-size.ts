@@ -5,7 +5,7 @@
 
 import $t from "mage/translate";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ColumnPreview from "../column/preview";
 import {updateColumnWidth} from "../column/resize";
 import ColumnGroupPreview from "./preview";

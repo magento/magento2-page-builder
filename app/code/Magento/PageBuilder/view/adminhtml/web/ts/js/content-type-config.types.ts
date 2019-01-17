@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ConfigFieldInterface from "./config-field.d";
+import ConfigFieldInterface from "./config-field.types";
 
 /**
  * @api

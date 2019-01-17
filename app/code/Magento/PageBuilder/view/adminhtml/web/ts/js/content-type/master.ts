@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";

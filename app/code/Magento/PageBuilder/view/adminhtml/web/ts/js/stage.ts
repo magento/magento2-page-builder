@@ -14,11 +14,10 @@ import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import Render from "./master-format/render";
-import PageBuilderInterface from "./page-builder.d";
+import PageBuilderInterface from "./page-builder.types";
 import buildStage from "./stage-builder";
 import StageUpdateAfterParamsInterface from "./stage-update-after-params";
-import deferred from "./utils/promise-deferred";
-import DeferredInterface from "./utils/promise-deferred.d";
+import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 export default class Stage {
     public static readonly rootContainerName: string = "root-container";

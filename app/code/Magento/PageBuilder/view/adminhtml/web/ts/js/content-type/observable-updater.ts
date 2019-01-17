@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import {ConverterInterface} from "../content-type-config";
+import {ConverterInterface} from "../content-type-config.types";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";

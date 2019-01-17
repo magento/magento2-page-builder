@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import ContentTypeConfigInterface from "./content-type-config";
+import ContentTypeConfigInterface from "./content-type-config.types";
 
 export default class Config {
 

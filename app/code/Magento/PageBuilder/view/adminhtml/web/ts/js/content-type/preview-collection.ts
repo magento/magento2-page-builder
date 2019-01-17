@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "../content-type-collection.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import Preview from "./preview";
 
@@ -82,7 +82,7 @@ export default class PreviewCollection extends Preview {
     public delegate(...args: any[]) {
         super.delegate(...args);
 
-        this.parent.getChildren().each((elem: ContentTypeInterface) => {
+        this.parent.getChildren()().forEach((elem: ContentTypeInterface) => {
             elem.preview.delegate.apply(elem.preview, args);
         });
     }
