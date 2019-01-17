@@ -534,12 +534,17 @@
         <!-- Explicit wait for CSS animation to complete -->
         <wait time="1" stepKey="waitForInlineWysiwygToolbarTransitionAnimationToFinish" />
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForWYWSIWYGEditorPanelToBeVisible"/>
-        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topBoundingClientRect"/>
-        <!-- Assert top bounding client rect > 0 -->
-        <comment userInput="Assert top bounding client rect > 0" stepKey="commentAssertTopBoundingClientRectGreaterThan0" />
-        <assertGreaterThanOrEqual stepKey="assertTopBoundingClientRectIsGreaterThan0">
+        <!-- Assert editor panel is below text wysiwyg and not overflow-->
+        <comment userInput="Assert top editor panel bounding client rect > bottom text wysiwyg bounding client rect when overflow" stepKey="commentAssertWysiwygIsAboveEditorPanel" />
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="bottomTextWysiwygClientRect"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topEditorPanelBoundingClientRect"/>
+        <assertGreaterThanOrEqual stepKey="assertTopEditorPanelBoundingClientRectIsNotNegative">
             <expectedResult type="int">0</expectedResult>
-            <actualResult type="variable">$topBoundingClientRect</actualResult>
+            <actualResult type="variable">$topEditorPanelBoundingClientRectInSmallerColumn</actualResult>
+        </assertGreaterThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertTopEditorPanelBoundingClientRectIsGreaterThanBottomTextWysiwygClientRect">
+            <expectedResult type="variable">$bottomTextWysiwygClientRect</expectedResult>
+            <actualResult type="variable">$topEditorPanelBoundingClientRect</actualResult>
         </assertGreaterThanOrEqual>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
         <!-- Shrink column down to 1/3 its original size -->
@@ -560,12 +565,17 @@
         <!-- Explicit wait for CSS animation to complete -->
         <wait time="1" stepKey="waitForInlineWysiwygToolbarTransitionAnimationToFinish2" />
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForWYWSIWYGEditorPanelToBeVisible2"/>
-        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topBoundingClientRect2"/>
-        <!-- Assert top bounding client rect > 0 when column is 1/3 its original size -->
-        <comment userInput="Assert top bounding client rect > 0 when column is 1/3 its original size" stepKey="commentAssertInlineEditorAppearsInSmallerColumn" />
-        <assertGreaterThanOrEqual stepKey="assertTopBoundingClientRectIsGreaterThan0InSmallerColumn">
+        <!-- Assert editor panel is below text wysiwyg and not overflow when column is 1/3 its original size-->
+        <comment userInput="Assert top editor panel bounding client rect > bottom text wysiwyg bounding client rect when column is 1/3 its original size" stepKey="commentAssertWysiwygIsAboveEditorPanelInSmallerColumn" />
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="bottomTextWysiwygClientRectInSmallerColumn"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="topEditorPanelBoundingClientRectInSmallerColumn"/>
+        <assertGreaterThanOrEqual stepKey="assertTopEditorPanelBoundingClientRectIsNotNegativeInSmallerColumn">
             <expectedResult type="int">0</expectedResult>
-            <actualResult type="variable">$topBoundingClientRect2</actualResult>
+            <actualResult type="variable">$topEditorPanelBoundingClientRectInSmallerColumn</actualResult>
+        </assertGreaterThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertTopEditorPanelBoundingClientRectIsGreaterThanBottomTextWysiwygClientRectInSmallerColumn">
+            <expectedResult type="variable">$bottomTextWysiwygClientRectInSmallerColumn</expectedResult>
+            <actualResult type="variable">$topEditorPanelBoundingClientRectInSmallerColumn</actualResult>
         </assertGreaterThanOrEqual>
     </test>
 </tests>

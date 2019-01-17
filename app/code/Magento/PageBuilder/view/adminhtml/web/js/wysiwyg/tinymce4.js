@@ -79,7 +79,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       } // Update content in our data store after our stage preview wysiwyg gets updated
 
 
-      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterChangeContent, _underscore.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
+      this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterChangeContent, this.onChangeContent.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
       _events2.on("form:" + this.contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this)); // Clear padding on stage after fullscreen mode is toggled
 
@@ -113,8 +113,20 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       _underscore.defer(function () {
         _this.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this.config.adapter_config.minToolbarWidth + "px");
 
-        _underscore.delay(_this.adjustFullScreenPaddingToAccommodateInlineToolbar.bind(_this), 200);
+        _underscore.delay(_this.invertInlineEditorToAccommodateOffscreenToolbar.bind(_this), 100);
       });
+    };
+    /**
+     * Called for the onChangeContent event
+     */
+
+
+    _proto.onChangeContent = function onChangeContent() {
+      var saveContent = _underscore.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100);
+
+      saveContent();
+
+      _underscore.delay(this.invertInlineEditorToAccommodateOffscreenToolbar.bind(this), 100);
     };
     /**
      * Called for the onBlur events
@@ -123,7 +135,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.onBlur = function onBlur() {
       this.clearSelection();
-      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active");
+      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").removeClass("transform-up").css("transform", "");
 
       _events2.trigger("stage:interactionStop");
     };
@@ -162,7 +174,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
      */
 
 
-    _proto.adjustFullScreenPaddingToAccommodateInlineToolbar = function adjustFullScreenPaddingToAccommodateInlineToolbar() {
+    _proto.invertInlineEditorToAccommodateOffscreenToolbar = function invertInlineEditorToAccommodateOffscreenToolbar() {
       var _this2 = this;
 
       if (this.config.adapter_config.mode !== "inline") {
@@ -172,31 +184,28 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       var $stage = (0, _jquery)("#" + this.stageId);
       var $fullScreenStageWrapper = $stage.closest(".stage-full-screen");
       var isInFullScreenMode = !!$fullScreenStageWrapper.length;
+      var $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
 
       if (!isInFullScreenMode) {
+        $inlineToolbar.addClass("transform-up");
         return;
       }
 
       _underscore.delay(function () {
-        var $inlineToolbar = _this2.getFixedToolbarContainer().find(".mce-tinymce-inline");
-
         if (!$inlineToolbar.length) {
           return;
         }
 
-        var inlineToolbarClientRectTop = $inlineToolbar.get(0).getBoundingClientRect().top;
+        var inlineWysiwygClientRectTop = _this2.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
 
-        if (inlineToolbarClientRectTop >= 0) {
+        if ($inlineToolbar.height() < inlineWysiwygClientRectTop) {
           // inline toolbar not out of bounds; continue
+          $inlineToolbar.addClass("transform-up");
           return;
         }
 
-        var currentStagePaddingTop = parseInt($stage.css("paddingTop") || "0", 10);
-        var paddingTopToApplyToStage = Math.abs(inlineToolbarClientRectTop) + currentStagePaddingTop; // increase padding top and adjust scrollTop accordingly to make it seamless
-
-        $stage.css("paddingTop", paddingTopToApplyToStage);
-        $fullScreenStageWrapper.scrollTop($fullScreenStageWrapper.scrollTop() + paddingTopToApplyToStage);
-      }, 200);
+        $inlineToolbar.css("transform", "translateY(" + _this2.getFixedToolbarContainer().height() + "px)");
+      }, 100);
     };
     /**
      * Revert padding previously applied for accommodating inline wysiwyg toolbar overflowing fixed viewport
