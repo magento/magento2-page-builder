@@ -11,11 +11,11 @@
     <section name="PageBuilderStage">
         <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="openFullScreen" type="button" selector="//i[@class='icon-pagebuilder-fullscreen']"/>
-        <element name="exitFullScreen" type="button" selector=".pagebuilder-header .action-close"/>
+        <element name="exitFullScreen" type="button" selector=".pagebuilder-header .icon-pagebuilder-fullscreen-exit"/>
         <element name="stageLoading" type="button" selector="div.pagebuilder-stage-loading"/>
         <element name="stageWrapper" type="button" selector="//div[@class='pagebuilder-stage-wrapper']"/>
-        <element name="enabled" type="button" selector="//div[not(contains(@class, '_disabled')) and contains(@data-bind,'visible: visible')]/div[@class='pagebuilder-stage-wrapper']"/>
-        <element name="disabled" type="button" selector="//div[contains(@class, '_disabled') and contains(@data-bind,'visible: visible')]/div[@class='pagebuilder-stage-wrapper']"/>
+        <element name="enabled" type="button" selector="//div[not(contains(@class, '_disabled'))]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
+        <element name="disabled" type="button" selector="//div[contains(@class, '_disabled')]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
         <element name="stageWidthJS" type="button" selector="document.querySelector('div[class~=\'stage-container\']').clientWidth"/>
         <element name="modal" type="text" selector='aside.modal-popup._show'/>
@@ -26,6 +26,7 @@
         <element name="modalDoNotShowThisAgain" type="input" selector="aside.modal-popup._show input[name='modal-dnsa'] + label"/>
         <element name="errorModal" type="button" selector="//div[@class='modal-content']//div[contains(text(), '{{arg1}}')]" parameterized="true"/>
         <element name="dropZone" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-drop-indicator")][{{arg3}}]' parameterized="true"/>
+        <element name="contentTypeTotalInStage" type="button" selector=".pagebuilder-content-type.pagebuilder-{{arg1}}" parameterized="true"/>
         <element name="contentTypeInStage" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")]' parameterized="true"/>
         <element name="contentTypeInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentTypeContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>

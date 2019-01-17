@@ -1,6 +1,6 @@
-## PageBuilder Early Access Program
+# PageBuilder Early Adopters Program
 
-The Page Builder Early Access Program (EAP) gives partners the following perks:
+The Page Builder Early Adopters Program (EAP) gives partners the following perks:
  
 * Explore extension points to build custom modules and integrations for 3rd party services, such as Facebook and Instagram.
 * Try out customization options and extend its functionality beyond its default features.
@@ -71,8 +71,8 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ### Other
 
-* [Component status](../component-status.md)
-* [Known issues](../known-issues.md)
+* [Release notes](../release-notes.md)
+* [Component status](../comp-status2.md)
 * [Contribution guide](https://github.com/magento/magento2-page-builder/blob/develop/CONTRIBUTING.md)
 
 <!-- {% endcomment %} -->

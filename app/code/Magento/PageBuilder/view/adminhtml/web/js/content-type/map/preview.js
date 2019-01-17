@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/content-type/preview"], function (_events, _map, _preview) {
+define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "module", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _events, _map, _module, _hideShowOption, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -18,24 +18,51 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
     _inheritsLoose(Preview, _preview2);
 
     function Preview() {
-      return _preview2.apply(this, arguments) || this;
+      var _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _preview2.call.apply(_preview2, [this].concat(args)) || this;
+      _this.apiKeyValid = _knockout.observable(!!_module.config().apiKey);
+      _this.apiKeyErrorMessage = _module.config().apiKeyErrorMessage;
+      return _this;
     }
 
     var _proto = Preview.prototype;
 
     /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _preview2.prototype.retrieveOptions.call(this);
+
+      options.hideShow = new _hideShowOption({
+        preview: this,
+        icon: _hideShowOption.showIcon,
+        title: _hideShowOption.showText,
+        action: this.onOptionVisibilityToggle,
+        classes: ["hide-show-content-type"],
+        sort: 40
+      });
+      return options;
+    };
+    /**
      * Open edit menu on map content type drop with a delay of 300ms
      */
+
+
     _proto.bindEvents = function bindEvents() {
-      var _this = this;
+      var _this2 = this;
 
       _preview2.prototype.bindEvents.call(this); // When the map api key fails, empties out the content type and adds the placeholder
 
 
       _events.on("googleMaps:authFailure", function () {
-        if (_this.element) {
-          _this.mapElement.usePlaceholder(_this.element);
-        }
+        _this2.apiKeyValid(false);
       });
     };
     /**
@@ -47,14 +74,18 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "Ma
 
 
     _proto.renderMap = function renderMap(element) {
-      var _this2 = this;
+      var _this3 = this;
+
+      if (!this.apiKeyValid()) {
+        return;
+      }
 
       this.generateMap(element);
       this.element = element;
 
-      if (this.mapElement.map) {
+      if (this.mapElement && this.mapElement.map) {
         this.data.main.attributes.subscribe(function () {
-          _this2.updateMap();
+          _this3.updateMap();
         });
       }
     };

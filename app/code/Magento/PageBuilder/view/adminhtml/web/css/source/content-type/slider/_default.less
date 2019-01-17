@@ -18,18 +18,23 @@
     border: none;
     transition: none;
 
-    .slider-container {
-        .pagebuilder-system-border;
+    .slick-list,
+    .slick-track,
+    .slick-slide {
+        min-height: inherit;
 
-        .slick-list,
-        .slick-track,
-        .slick-slide {
+        > div {
             min-height: inherit;
+            width: 100%;
 
-            > div {
-                width: 100%;
+            .pagebuilder-content-type-wrapper {
+                min-height: inherit;
             }
         }
+    }
+
+    .slider-container {
+        .pagebuilder-system-border;
 
         .slider-small-width {
             .pagebuilder-image-uploader-container {
@@ -220,6 +225,10 @@
                         background: @color-very-dark-grayish-orange;
                         border: none;
                         transition: all .3s;
+                    }
+
+                    .pagebuilder-options {
+                        z-index: auto;
                     }
                 }
 

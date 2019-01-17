@@ -4,7 +4,7 @@
  */
 
 import ConverterInterface from "../../../../converter/converter-interface";
-import {toHex} from "../../../../utils/color-converter";
+import {DataObject} from "../../../../data-store";
 
 export default class OverlayColor implements ConverterInterface {
     /**
@@ -14,17 +14,21 @@ export default class OverlayColor implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return value === "transparent" ? "" : toHex(value);
+        return value === "transparent" ? "" : value;
     }
 
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        return data[name];
+    public toDom(name: string, data: DataObject): string | object {
+        if (data.overlay_color) {
+            return data.overlay_color.toString();
+        }
+
+        return "";
     }
 }

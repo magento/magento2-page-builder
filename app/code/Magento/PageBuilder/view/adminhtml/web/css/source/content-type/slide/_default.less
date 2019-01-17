@@ -9,6 +9,7 @@
 
 .pagebuilder-slide {
     cursor: text;
+    min-height: inherit;
 
     .pagebuilder-slide-wrapper {
         background-color: @color-gray98;
@@ -20,7 +21,7 @@
         font-weight: lighter;
     }
     .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
-        max-width: 50%;
+        max-width: 540px;
     }
 
     .pagebuilder-slide-button {
@@ -113,16 +114,28 @@
 //  _____________________________________________________
 
 [data-role='slide'] {
+    min-height: inherit;
+
+    > [data-element='link'],
+    > [data-element='empty_link'] {
+        min-height: inherit;
+    }
+
     .pagebuilder-slide-wrapper {
+        min-height: inherit;
         overflow-wrap: break-word;
         word-wrap: break-word;
 
         .pagebuilder-overlay:not(.pagebuilder-poster-overlay) {
-            max-width: 50%;
+            max-width: 540px;
         }
 
         [data-element='content'] {
             min-height: 50px;
+
+            img {
+                height: auto;
+            }
         }
 
         .pagebuilder-slide-button {

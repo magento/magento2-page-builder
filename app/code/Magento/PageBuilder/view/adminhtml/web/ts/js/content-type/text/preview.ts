@@ -7,6 +7,8 @@ import $ from "jquery";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
+import HideShowOption from "../../content-type-menu/hide-show-option";
+import {OptionsInterface} from "../../content-type-menu/option.d";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
@@ -36,6 +38,26 @@ export default class Preview extends BasePreview {
      */
     public isWysiwygSupported(): boolean {
         return Config.getConfig("can_use_inline_editing_on_stage");
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {OptionsInterface}
+     */
+    public retrieveOptions(): OptionsInterface {
+        const options = super.retrieveOptions();
+
+        options.hideShow = new HideShowOption({
+            preview: this,
+            icon: HideShowOption.showIcon,
+            title: HideShowOption.showText,
+            action: this.onOptionVisibilityToggle,
+            classes: ["hide-show-content-type"],
+            sort: 40,
+        });
+
+        return options;
     }
 
     /**
