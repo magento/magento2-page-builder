@@ -38,6 +38,9 @@ export default class MasterFormatRenderer {
                     },
                 },
             );
+        }).catch((error) => {
+            console.error(error);
+            return null;
         });
     }
 }

@@ -10,6 +10,55 @@
       "rawSnippet": "10 import keyCodes from \"Magento_Ui/js/lib/key-codes\";\n                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     }
   ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts",
+      "line": "16",
+      "column": "22",
+      "errorCode": "TS2415",
+      "message": "Class 'ContentTypeCollection' incorrectly extends base class 'ContentType'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts(16,22): error TS2415: Class 'ContentTypeCollection' incorrectly extends base class 'ContentType'.\n  Types of property 'preview' are incompatible.\n    Type 'PreviewCollection' is not assignable to type 'Preview'.",
+      "rawSnippet": "16 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {\n                        ~~~~~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts",
+      "line": "16",
+      "column": "22",
+      "errorCode": "TS2420",
+      "message": "Class 'ContentTypeCollection' incorrectly implements interface 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts(16,22): error TS2420: Class 'ContentTypeCollection' incorrectly implements interface 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Types of property 'getChildren' are incompatible.\n    Type '() => KnockoutObservableArray<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterf...' is not assignable to type '() => KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.\n      Type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<Pr...' is not assignable to type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.",
+      "rawSnippet": "16 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {\n                        ~~~~~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts",
+      "line": "54",
+      "column": "9",
+      "errorCode": "TS2322",
+      "message": "Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-collection.ts(54,9): error TS2322: Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Type 'ContentTypeCollection' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "54         child.parent = this;\n           ~~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-factory.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-factory.ts",
+      "line": "50",
+      "column": "40",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentType | ContentTypeCollection' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-factory.ts(50,40): error TS2345: Argument of type 'ContentType | ContentTypeCollection' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...'.\n  Type 'ContentTypeCollection' is not assignable to type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...'.\n    Type 'ContentTypeCollection' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n      Types of property 'getChildren' are incompatible.\n        Type '() => KnockoutObservableArray<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterf...' is not assignable to type '() => KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.\n          Type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<Pr...' is not assignable to type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.\n            Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.\n              Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "50                         previewFactory(contentType, config),\n                                          ~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-factory.ts",
+      "line": "51",
+      "column": "39",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentType | ContentTypeCollection' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type-factory.ts(51,39): error TS2345: Argument of type 'ContentType | ContentTypeCollection' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...'.\n  Type 'ContentTypeCollection' is not assignable to type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...'.\n    Type 'ContentTypeCollection' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "51                         masterFactory(contentType, config),\n                                         ~~~~~~~~~~~"
+    }
+  ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/preview.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/banner/preview.ts",
@@ -70,6 +119,180 @@
       "rawSnippet": "125             data.template.length === 0) {\n                              ~~~~~~"
     }
   ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts",
+      "line": "48",
+      "column": "15",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts(48,15): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "48         super(parent, config, observableUpdater);\n                 ~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts",
+      "line": "114",
+      "column": "17",
+      "errorCode": "TS2322",
+      "message": "Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts(114,17): error TS2322: Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "114                 duplicatedButton = args.duplicateContentType;\n                    ~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts",
+      "line": "132",
+      "column": "34",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts(132,34): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.\n      Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "132         options.add = new Option({\n                                     ~133             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n138             sort: 10,\n    ~~~~~~~~~~~~~~~~~~~~~139         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts",
+      "line": "141",
+      "column": "47",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts(141,47): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.",
+      "rawSnippet": "141         options.hideShow = new HideShowOption({\n                                                  ~142             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n147             sort: 40,\n    ~~~~~~~~~~~~~~~~~~~~~148         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts",
+      "line": "157",
+      "column": "15",
+      "errorCode": "TS2322",
+      "message": "Type 'Promise<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection,...' is not assignable to type 'Promise<ContentTypeInterface<Preview, Master>>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/buttons/preview.ts(157,15): error TS2322: Type 'Promise<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection,...' is not assignable to type 'Promise<ContentTypeInterface<Preview, Master>>'.\n  Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.\n    Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "157         const createButtonItemPromise: Promise<ContentTypeInterface> = createContentType(\n                  ~~~~~~~~~~~~~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/factory.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/factory.ts",
+      "line": "30",
+      "column": "25",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<Preview, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/factory.ts(30,25): error TS2345: Argument of type 'ContentTypeCollectionInterface<Preview, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "30         parent.addChild(column, index);\n                           ~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts",
+      "line": "85",
+      "column": "13",
+      "errorCode": "TS2345",
+      "message": "Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts(85,13): error TS2345: Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.\n  Types of parameters 'column' and 'value' are incompatible.\n    Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<Preview, MasterCollection>'.",
+      "rawSnippet": "85             (column: ContentTypeCollectionInterface<ColumnPreview>) => {\n               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts",
+      "line": "135",
+      "column": "13",
+      "errorCode": "TS2345",
+      "message": "Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>, index: number) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts(135,13): error TS2345: Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>, index: number) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.\n  Types of parameters 'column' and 'value' are incompatible.\n    Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<Preview, MasterCollection>'.",
+      "rawSnippet": "135             (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts",
+      "line": "151",
+      "column": "9",
+      "errorCode": "TS2345",
+      "message": "Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>, index: number) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/grid-size.ts(151,9): error TS2345: Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>, index: number) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.\n  Types of parameters 'column' and 'value' are incompatible.\n    Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<Preview, MasterCollection>'.",
+      "rawSnippet": "151         (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {\n            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts",
+      "line": "45",
+      "column": "22",
+      "errorCode": "TS2345",
+      "message": "Argument of type '(column: ContentTypeCollection) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts(45,22): error TS2345: Argument of type '(column: ContentTypeCollection) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.\n  Types of parameters 'column' and 'value' are incompatible.\n    Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollection'.\n      Property 'collection' is missing in type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "45             .forEach((column: ColumnGroup) => {\n                        ~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts",
+      "line": "95",
+      "column": "15",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollection' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts(95,15): error TS2345: Argument of type 'ContentTypeCollection' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Types of property 'preview' are incompatible.\n    Type 'PreviewCollection' is not assignable to type 'Preview'.",
+      "rawSnippet": "95         super(parent, config, observableUpdater);\n                 ~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts",
+      "line": "1033",
+      "column": "17",
+      "errorCode": "TS2345",
+      "message": "Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column-group/preview.ts(1033,17): error TS2345: Argument of type '(column: ContentTypeCollectionInterface<Preview, MasterCollection>) => void' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.\n  Types of parameters 'column' and 'value' are incompatible.\n    Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<Preview, MasterCollection>'.",
+      "rawSnippet": "1033                 (column: ContentTypeCollectionInterface<ColumnPreview>) => {\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts",
+      "line": "103",
+      "column": "35",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; classes: string[]; sort: number; }' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts(103,35): error TS2345: Argument of type '{ preview: this; icon: string; title: string; classes: string[]; sort: number; }' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.\n      Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "103         options.move = new Option({\n                                      ~104             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n108             sort: 10,\n    ~~~~~~~~~~~~~~~~~~~~~109         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts",
+      "line": "162",
+      "column": "46",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<Preview, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts(162,46): error TS2345: Argument of type 'ContentTypeCollectionInterface<Preview, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Types of property 'preview' are incompatible.\n    Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.",
+      "rawSnippet": "162                         columnGroup.addChild(columns[0], 0);\n                                                 ~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts",
+      "line": "163",
+      "column": "46",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<Preview, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts(163,46): error TS2345: Argument of type 'ContentTypeCollectionInterface<Preview, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "163                         columnGroup.addChild(columns[1], 1);\n                                                 ~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts",
+      "line": "164",
+      "column": "53",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts(164,53): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "164                         this.parent.parent.addChild(columnGroup, index);\n                                                        ~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts",
+      "line": "166",
+      "column": "45",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/preview.ts(166,45): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "166                         this.fireMountEvent(columnGroup, columns[0], columns[1]);\n                                                ~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/resize.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/resize.ts",
+      "line": "355",
+      "column": "16",
+      "errorCode": "TS2345",
+      "message": "Argument of type '(otherColumn: ContentTypeCollectionInterface<Preview, MasterCollection>) => number' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/column/resize.ts(355,16): error TS2345: Argument of type '(otherColumn: ContentTypeCollectionInterface<Preview, MasterCollection>) => number' is not assignable to parameter of type '(value: ContentTypeInterface<Preview, Master>, index: number, array: ContentTypeInterface<Preview...'.\n  Types of parameters 'otherColumn' and 'value' are incompatible.\n    Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<Preview, MasterCollection>'.\n      Property 'children' is missing in type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "355         }).map((otherColumn: ContentTypeCollectionInterface<ColumnPreview>) => {\n                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    }
+  ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/converter-resolver.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/converter-resolver.ts",
@@ -101,6 +324,17 @@
       "message": "Cannot find module 'Magento_PageBuilder/js/utils/map'.",
       "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/map/preview.ts(8,23): error TS2307: Cannot find module 'Magento_PageBuilder/js/utils/map'.",
       "rawSnippet": "8 import GoogleMap from \"Magento_PageBuilder/js/utils/map\";\n                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/master-factory.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/master-factory.ts",
+      "line": "33",
+      "column": "25",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/master-factory.ts(33,25): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "33                         contentType,\n                           ~~~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/master.ts": [
@@ -263,6 +497,24 @@
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts",
+      "line": "12",
+      "column": "22",
+      "errorCode": "TS2415",
+      "message": "Class 'PreviewCollection' incorrectly extends base class 'Preview'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts(12,22): error TS2415: Class 'PreviewCollection' incorrectly extends base class 'Preview'.\n  Types of property 'parent' are incompatible.\n    Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "12 export default class PreviewCollection extends Preview {\n                        ~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts",
+      "line": "37",
+      "column": "64",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts(37,64): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "37         const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;\n                                                                  ~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts",
       "line": "52",
       "column": "75",
       "errorCode": "TS2345",
@@ -272,12 +524,32 @@
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts",
-      "line": "85",
-      "column": "35",
-      "errorCode": "TS2339",
-      "message": "Property 'each' does not exist on type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts(85,35): error TS2339: Property 'each' does not exist on type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.",
-      "rawSnippet": "85         this.parent.getChildren().each((elem: ContentTypeInterface) => {\n                                     ~~~~"
+      "line": "57",
+      "column": "60",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts(57,60): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "57                                         duplicate.addChild(duplicateSubChild);\n                                                              ~~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts",
+      "line": "68",
+      "column": "49",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-collection.ts(68,49): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "68                     contentType.parent.addChild(duplicate, index);\n                                                   ~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-factory.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-factory.ts",
+      "line": "33",
+      "column": "25",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview-factory.ts(33,25): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "33                         contentType,\n                           ~~~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts": [
@@ -301,21 +573,12 @@
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts",
-      "line": "166",
-      "column": "17",
-      "errorCode": "TS2322",
-      "message": "Type 'KnockoutObservableArray<any>' is not assignable to type '{ [key: string]: KnockoutObservable<any>; }'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(166,17): error TS2322: Type 'KnockoutObservableArray<any>' is not assignable to type '{ [key: string]: KnockoutObservable<any>; }'.\n  Index signature is missing in type 'KnockoutObservableArray<any>'.",
-      "rawSnippet": "166                 this.previewData[key] = ko.observableArray(value);\n                    ~~~~~~~~~~~~~~~~~~~~~"
-    },
-    {
-      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts",
-      "line": "168",
-      "column": "17",
-      "errorCode": "TS2322",
-      "message": "Type 'KnockoutObservable<any>' is not assignable to type '{ [key: string]: KnockoutObservable<any>; }'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(168,17): error TS2322: Type 'KnockoutObservable<any>' is not assignable to type '{ [key: string]: KnockoutObservable<any>; }'.\n  Index signature is missing in type 'KnockoutObservable<any>'.",
-      "rawSnippet": "168                 this.previewData[key] = ko.observable(value);\n                    ~~~~~~~~~~~~~~~~~~~~~"
+      "line": "317",
+      "column": "66",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/preview.ts(317,66): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "317         const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;\n                                                                     ~~~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/products/mass-converter/widget-directive.ts": [
@@ -513,6 +776,26 @@
       "message": "Property 'padding' does not exist on type 'string | number | boolean | any[]'.",
       "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/converter/style/paddings.ts(39,65): error TS2339: Property 'padding' does not exist on type 'string | number | boolean | any[]'.\n  Property 'padding' does not exist on type 'string'.",
       "rawSnippet": "39             result.paddingBottom = value.padding.bottom ? value.padding.bottom + \"px\" : \"\";\n                                                                   ~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/preview.ts",
+      "line": "103",
+      "column": "54",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; code?: string; icon?: string; title: string; action?: () => void; classes?: stri...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/preview.ts(103,54): error TS2345: Argument of type '{ preview: this; code?: string; icon?: string; title: string; action?: () => void; classes?: stri...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.\n      Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "103         options.remove = new ConditionalRemoveOption({\n                                                         ~104             ...options.remove.config,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~105             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~106         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/preview.ts",
+      "line": "108",
+      "column": "47",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/row/preview.ts(108,47): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.",
+      "rawSnippet": "108         options.hideShow = new HideShowOption({\n                                                  ~109             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n114             sort: 40,\n    ~~~~~~~~~~~~~~~~~~~~~115         });\n    ~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slide/converter/style/button-opacity.ts": [
@@ -813,7 +1096,83 @@
       "rawSnippet": "287             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};\n                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     }
   ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts",
+      "line": "81",
+      "column": "15",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts(81,15): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "81         super(parent, config, observableUpdater);\n                 ~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts",
+      "line": "137",
+      "column": "34",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts(137,34): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.\n      Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "137         options.add = new Option({\n                                     ~138             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n143             sort: 10,\n    ~~~~~~~~~~~~~~~~~~~~~144         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts",
+      "line": "146",
+      "column": "47",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts(146,47): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.",
+      "rawSnippet": "146         options.hideShow = new HideShowOption({\n                                                  ~147             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n152             sort: 40,\n    ~~~~~~~~~~~~~~~~~~~~~153         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts",
+      "line": "310",
+      "column": "34",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts(310,34): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "310             this.parent.addChild(slide, this.parent.children().length);\n                                     ~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts",
+      "line": "378",
+      "column": "79",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts(378,79): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "378             const itemIndex = args.contentType.parent.getChildren()().indexOf(args.contentType);\n                                                                                  ~~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts",
+      "line": "414",
+      "column": "17",
+      "errorCode": "TS2322",
+      "message": "Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/slider/preview.ts(414,17): error TS2322: Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "414                 duplicatedSlide = args.duplicateContentType;\n                    ~~~~~~~~~~~~~~~"
+    }
+  ],
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tab-item/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tab-item/preview.ts",
+      "line": "93",
+      "column": "54",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; code?: string; icon?: string; title: string; action?: () => void; classes?: stri...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tab-item/preview.ts(93,54): error TS2345: Argument of type '{ preview: this; code?: string; icon?: string; title: string; action?: () => void; classes?: stri...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.\n      Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "93         options.remove = new ConditionalRemoveOption({\n                                                        ~94             ...options.remove.config,\n   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~95             preview: this,\n   ~~~~~~~~~~~~~~~~~~~~~~~~~~96         });\n   ~~~~~~~~~"
+    }
+  ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts": [
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
+      "line": "57",
+      "column": "15",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts(57,15): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "57         super(parent, config, observableUpdater);\n                 ~~~~~~"
+    },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
       "line": "114",
@@ -843,12 +1202,48 @@
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
+      "line": "219",
+      "column": "34",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts(219,34): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.\n      Type 'Preview' is not assignable to type 'Preview'. Two different types with this name exist, but they are unrelated.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "219         options.add = new Option({\n                                     ~220             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n225             sort: 10,\n    ~~~~~~~~~~~~~~~~~~~~~226         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
+      "line": "228",
+      "column": "47",
+      "errorCode": "TS2345",
+      "message": "Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts(228,47): error TS2345: Argument of type '{ preview: this; icon: string; title: string; action: () => void; classes: string[]; sort: number...' is not assignable to parameter of type 'OptionConfigInterface'.\n  Types of property 'preview' are incompatible.\n    Type 'this' is not assignable to type 'Preview'.",
+      "rawSnippet": "228         options.hideShow = new HideShowOption({\n                                                  ~229             preview: this,\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~... \n234             sort: 40,\n    ~~~~~~~~~~~~~~~~~~~~~235         });\n    ~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
+      "line": "255",
+      "column": "34",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts(255,34): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "255             this.parent.addChild(tab, this.parent.children().length);\n                                     ~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
       "line": "402",
       "column": "29",
       "errorCode": "TS2339",
       "message": "Property 'tab_name' does not exist on type 'string | number | boolean | any[] | DataObject'.",
       "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts(402,29): error TS2339: Property 'tab_name' does not exist on type 'string | number | boolean | any[] | DataObject'.\n  Property 'tab_name' does not exist on type 'string'.",
       "rawSnippet": "402                     tabData.tab_name.toString() + \" copy\",\n                                ~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
+      "line": "405",
+      "column": "17",
+      "errorCode": "TS2322",
+      "message": "Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts(405,17): error TS2322: Type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "405                 duplicatedTab = args.duplicateContentType;\n                    ~~~~~~~~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/tabs/preview.ts",
@@ -1245,15 +1640,24 @@
       "rawSnippet": "33             return \"url(\" + value[0].url + \")\";\n                               ~~~~~~~~"
     }
   ],
-  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/converter/style/width.ts": [
+  "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/drag-drop/move-content-type.ts": [
     {
-      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/converter/style/width.ts",
-      "line": "39",
-      "column": "54",
-      "errorCode": "TS2339",
-      "message": "Property 'margin' does not exist on type 'string | number | boolean | any[]'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/converter/style/width.ts(39,54): error TS2339: Property 'margin' does not exist on type 'string | number | boolean | any[]'.\n  Property 'margin' does not exist on type 'string'.",
-      "rawSnippet": "39             const margins = data.margins_and_padding.margin || \"\";\n                                                        ~~~~~~"
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/drag-drop/move-content-type.ts",
+      "line": "48",
+      "column": "59",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/drag-drop/move-content-type.ts(48,59): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.\n    Types of property 'preview' are incompatible.\n      Type 'PreviewCollection' is not assignable to type 'Preview'.\n        Types of property 'parent' are incompatible.\n          Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "48         targetParent.getChildren().splice(targetIndex, 0, contentType);\n                                                             ~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/drag-drop/move-content-type.ts",
+      "line": "60",
+      "column": "41",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/drag-drop/move-content-type.ts(60,41): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "60         children.splice(targetIndex, 0, contentType);\n                                           ~~~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/mass-converter/widget-directive-abstract.ts": [
@@ -1297,66 +1701,66 @@
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "71",
+      "line": "75",
       "column": "57",
       "errorCode": "TS2339",
       "message": "Property 'var' does not exist on type 'DataMappingTagInterface[]'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(71,57): error TS2339: Property 'var' does not exist on type 'DataMappingTagInterface[]'.",
-      "rawSnippet": "71                     if (undefined !== elementConfig.tag.var) {\n                                                           ~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(75,57): error TS2339: Property 'var' does not exist on type 'DataMappingTagInterface[]'.",
+      "rawSnippet": "75                     if (undefined !== elementConfig.tag.var) {\n                                                           ~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "74",
+      "line": "79",
       "column": "57",
       "errorCode": "TS2339",
       "message": "Property 'var' does not exist on type 'DataMappingCssInterface[]'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(74,57): error TS2339: Property 'var' does not exist on type 'DataMappingCssInterface[]'.",
-      "rawSnippet": "74                     if (undefined !== elementConfig.css.var) {\n                                                           ~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(79,57): error TS2339: Property 'var' does not exist on type 'DataMappingCssInterface[]'.",
+      "rawSnippet": "79                     if (undefined !== elementConfig.css.var) {\n                                                           ~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "104",
+      "line": "130",
       "column": "39",
       "errorCode": "TS2488",
       "message": "Type must have a '[Symbol.iterator]()' method that returns an iterator.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(104,39): error TS2488: Type must have a '[Symbol.iterator]()' method that returns an iterator.",
-      "rawSnippet": "104         for (const attributeConfig of config) {\n                                          ~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(130,39): error TS2488: Type must have a '[Symbol.iterator]()' method that returns an iterator.",
+      "rawSnippet": "130         for (const attributeConfig of config) {\n                                          ~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "110",
+      "line": "136",
       "column": "66",
       "errorCode": "TS2339",
       "message": "Property 'read' does not exist on type 'ConverterInterface'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(110,66): error TS2339: Property 'read' does not exist on type 'ConverterInterface'.",
-      "rawSnippet": "110                 : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);\n                                                                     ~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(136,66): error TS2339: Property 'read' does not exist on type 'ConverterInterface'.",
+      "rawSnippet": "136                 : propertyReaderPool.get(attributeConfig.reader).read(element, attributeConfig.name);\n                                                                     ~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "143",
+      "line": "169",
       "column": "38",
       "errorCode": "TS2488",
       "message": "Type must have a '[Symbol.iterator]()' method that returns an iterator.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(143,38): error TS2488: Type must have a '[Symbol.iterator]()' method that returns an iterator.",
-      "rawSnippet": "143         for (const propertyConfig of config) {\n                                         ~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(169,38): error TS2488: Type must have a '[Symbol.iterator]()' method that returns an iterator.",
+      "rawSnippet": "169         for (const propertyConfig of config) {\n                                         ~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "149",
+      "line": "175",
       "column": "65",
       "errorCode": "TS2339",
       "message": "Property 'read' does not exist on type 'ConverterInterface'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(149,65): error TS2339: Property 'read' does not exist on type 'ConverterInterface'.",
-      "rawSnippet": "149                 : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);\n                                                                    ~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(175,65): error TS2339: Property 'read' does not exist on type 'ConverterInterface'.",
+      "rawSnippet": "175                 : propertyReaderPool.get(propertyConfig.reader).read(element, propertyConfig.name);\n                                                                    ~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts",
-      "line": "214",
+      "line": "240",
       "column": "13",
       "errorCode": "TS2322",
       "message": "Type 'string | boolean | void | object' is not assignable to type 'string'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(214,13): error TS2322: Type 'string | boolean | void | object' is not assignable to type 'string'.\n  Type 'true' is not assignable to type 'string'.",
-      "rawSnippet": "214             value = converterPool.get(config.html.converter).fromDom(value);\n                ~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/master-format/read/configurable.ts(240,13): error TS2322: Type 'string | boolean | void | object' is not assignable to type 'string'.\n  Type 'true' is not assignable to type 'string'.",
+      "rawSnippet": "240             value = converterPool.get(config.html.converter).fromDom(value);\n                ~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts": [
@@ -1365,9 +1769,36 @@
       "line": "32",
       "column": "49",
       "errorCode": "TS2345",
-      "message": "Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollection'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(32,49): error TS2345: Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollection'.\n  Property 'preview' is missing in type 'Stage'.",
+      "message": "Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(32,49): error TS2345: Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Property 'stageId' is missing in type 'Stage'.",
       "rawSnippet": "32     return buildElementIntoStage(stageDocument, stage, stage);\n                                                   ~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
+      "line": "53",
+      "column": "82",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(53,82): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "53                 childPromises.push(createElementContentType(childElement, stage, parent));\n                                                                                    ~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
+      "line": "61",
+      "column": "33",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(61,33): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.\n  Type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "61                 parent.addChild(child);\n                                   ~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
+      "line": "62",
+      "column": "68",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(62,68): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<PreviewCollection, MasterC...' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Type 'ContentTypeInterface<Preview, Master>' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "62                 return buildElementIntoStage(childElements[index], child, stage);\n                                                                      ~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
@@ -1380,41 +1811,59 @@
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
-      "line": "88",
+      "line": "96",
       "column": "13",
       "errorCode": "TS2345",
       "message": "Argument of type 'ContentTypeInterface<Preview, Master>' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(88,13): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master>' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawSnippet": "88             parent,\n               ~~~~~~"
-    },
-    {
-      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
-      "line": "168",
-      "column": "57",
-      "errorCode": "TS2345",
-      "message": "Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(168,57): error TS2345: Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Property 'stageId' is missing in type 'Stage'.",
-      "rawSnippet": "168         return createContentType(rootContentTypeConfig, stage, stage.id, {})\n                                                            ~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(96,13): error TS2345: Argument of type 'ContentTypeInterface<Preview, Master>' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "96             parent,\n               ~~~~~~"
     },
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
       "line": "174",
+      "column": "57",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(174,57): error TS2345: Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "174         return createContentType(rootContentTypeConfig, stage, stage.id, {})\n                                                            ~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
+      "line": "180",
+      "column": "32",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(180,32): error TS2345: Argument of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>' is not assignable to parameter of type 'ContentTypeInterface<Preview, Master>'.",
+      "rawSnippet": "180                 stage.addChild(rootContentType);\n                                   ~~~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts",
+      "line": "185",
       "column": "25",
       "errorCode": "TS2345",
       "message": "Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(174,25): error TS2345: Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawSnippet": "174                         stage,\n                            ~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage-builder.ts(185,25): error TS2345: Argument of type 'Stage' is not assignable to parameter of type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "185                         stage,\n                            ~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts": [
     {
       "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts",
-      "line": "133",
+      "line": "55",
+      "column": "35",
+      "errorCode": "TS2345",
+      "message": "Argument of type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<Pr...' is not assignable to parameter of type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.",
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(55,35): error TS2345: Argument of type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master> | ContentTypeCollectionInterface<Pr...' is not assignable to parameter of type 'KnockoutObservableArray<ContentTypeInterface<Preview, Master>>'.",
+      "rawSnippet": "55         this.render.applyBindings(this.children)\n                                     ~~~~~~~~~~~~~"
+    },
+    {
+      "file": "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts",
+      "line": "138",
       "column": "9",
       "errorCode": "TS2322",
       "message": "Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(133,9): error TS2322: Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Type 'Stage' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
-      "rawSnippet": "133         child.parent = this;\n            ~~~~~~~~~~~~"
+      "rawError": "\napp/code/Magento/PageBuilder/view/adminhtml/web/ts/js/stage.ts(138,9): error TS2322: Type 'this' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.\n  Type 'Stage' is not assignable to type 'ContentTypeCollectionInterface<PreviewCollection, MasterCollection>'.",
+      "rawSnippet": "138         child.parent = this;\n            ~~~~~~~~~~~~"
     }
   ],
   "app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/types/jarallax.d.ts": [

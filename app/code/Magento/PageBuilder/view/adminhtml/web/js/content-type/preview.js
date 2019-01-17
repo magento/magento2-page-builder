@@ -325,6 +325,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           resolve(duplicateContentType);
         });
+      }).catch(function (error) {
+        console.error(error);
+        return null;
       });
     };
     /**
@@ -463,8 +466,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} originalContentType
-     * @param {ContentTypeInterface} duplicateContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} duplicateContentType
      * @param {number} index
      * @param {boolean} direct
      */

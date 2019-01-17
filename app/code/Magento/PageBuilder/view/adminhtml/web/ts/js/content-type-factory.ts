@@ -35,28 +35,42 @@ export default function createContentType(
     data: object = {},
     childrenLength: number = 0,
 ): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
-    return new Promise((resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void) => {
+    return new Promise(
+        (resolve: (contentType: ContentType | ContentTypeCollection) => void,
+         reject: (error: string) => void,
+    ) => {
         loadModule([config.component], (contentTypeComponent: typeof ContentType | typeof ContentTypeCollection) => {
-            const contentType = new contentTypeComponent(
-                parent,
-                config,
-                stageId,
-            );
-            Promise.all(
-                [
-                    previewFactory(contentType, config),
-                    masterFactory(contentType, config),
-                ],
-            ).then(([previewComponent, masterComponent]) => {
-                contentType.preview = previewComponent;
-                contentType.content = masterComponent;
-                contentType.dataStore.update(
-                    prepareData(config, data),
+            try {
+                const contentType = new contentTypeComponent(
+                    parent,
+                    config,
+                    stageId,
                 );
-                resolve(contentType);
-            });
+                Promise.all(
+                    [
+                        previewFactory(contentType, config),
+                        masterFactory(contentType, config),
+                    ],
+                ).then(([previewComponent, masterComponent]) => {
+                    contentType.preview = previewComponent;
+                    contentType.content = masterComponent;
+                    contentType.dataStore.update(
+                        prepareData(config, data),
+                    );
+                    resolve(contentType);
+                }).catch((error) => {
+                    reject(error);
+                });
+            } catch (error) {
+                reject(`Error within component (${config.component}) for ${config.name}.`);
+                console.error(error);
+            }
+        }, (error: string) => {
+            reject(`Unable to load component (${config.component}) for ${config.name}. Please check component exists`
+                + ` and content type configuration is correct.`);
+            console.error(error);
         });
-    }).then((contentType: ContentTypeInterface | ContentTypeCollectionInterface) => {
+    }).then((contentType) => {
         events.trigger("contentType:createAfter", {id: contentType.id, contentType});
         events.trigger(config.name + ":createAfter", {id: contentType.id, contentType});
         fireContentTypeReadyEvent(contentType, childrenLength);
@@ -108,10 +122,10 @@ function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
 /**
  * A content type is ready once all of its children have mounted
  *
- * @param {ContentType} contentType
+ * @param {ContentType | ContentTypeCollection} contentType
  * @param {number} childrenLength
  */
-function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
+function fireContentTypeReadyEvent(contentType: ContentType | ContentTypeCollection, childrenLength: number) {
     const fire = () => {
         const params = {id: contentType.id, contentType, expectChildren: childrenLength};
         events.trigger("contentType:mountAfter", params);

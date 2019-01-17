@@ -313,7 +313,7 @@ export default class Preview {
         contentType: ContentTypeInterface | ContentTypeCollectionInterface,
         autoAppend: boolean = true,
         direct: boolean = false,
-    ): Promise<ContentTypeInterface> | void {
+    ): Promise<ContentTypeInterface> {
         const contentTypeData = contentType.dataStore.getState();
         const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
 
@@ -332,6 +332,9 @@ export default class Preview {
 
                 resolve(duplicateContentType);
             });
+        }).catch((error) => {
+            console.error(error);
+            return null;
         });
     }
 
@@ -462,14 +465,14 @@ export default class Preview {
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} originalContentType
-     * @param {ContentTypeInterface} duplicateContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} duplicateContentType
      * @param {number} index
      * @param {boolean} direct
      */
     protected dispatchContentTypeCloneEvents(
-        originalContentType: ContentTypeInterface,
-        duplicateContentType: ContentTypeInterface,
+        originalContentType: ContentTypeInterface | ContentTypeCollectionInterface,
+        duplicateContentType: ContentTypeInterface | ContentTypeCollectionInterface,
         index: number,
         direct: boolean,
     ) {
