@@ -152,7 +152,12 @@ export default class ObservableUpdater {
             if ("read" === attributeConfig.persistence_mode) {
                 continue;
             }
-            let value = get(data, attributeConfig.var);
+            let value;
+            if (!!attributeConfig.static) {
+                value = attributeConfig.value;
+            } else {
+                value = get(data, attributeConfig.var);
+            }
             const converter = this.converterResolver(attributeConfig);
             if (this.converterPool.get(converter)) {
                 value = this.converterPool.get(converter).toDom(attributeConfig.var, data);
