@@ -185,9 +185,9 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
         var value = void 0;
 
         if (!!attributeConfig.static) {
-          value = (0, _object.get)(data, attributeConfig.var);
+          value = attributeConfig.value;
         } else {
-          value = data[attributeConfig.var];
+          value = (0, _object.get)(data, attributeConfig.var);
         }
 
         var converter = this.converterResolver(attributeConfig);
