@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Setup\DataConverter;
+namespace Magento\PageBuilderDataMigration\Setup\DataConverter;
 
 use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
@@ -29,7 +29,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
     private static $dbAdapter;
 
     /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\TreeConverter
+     * @var \Magento\PageBuilderDataMigration\Setup\DataConverter\TreeConverter
      */
     private static $treeConverter;
 
@@ -110,7 +110,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         $installData->install($moduleDataSetup, $moduleContext);
 
         self::$treeConverter = self::$objectManager->create(
-            \Magento\PageBuilder\Setup\DataConverter\TreeConverter::class
+            \Magento\PageBuilderDataMigration\Setup\DataConverter\TreeConverter::class
         );
     }
 
@@ -1156,8 +1156,8 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      */
     private function saveContentType($contentTypeCode, $data)
     {
-        /** @var \Magento\PageBuilder\Model\Entity */
-        $entity = self::$objectManager->create(\Magento\PageBuilder\Model\Entity::class);
+        /** @var \Magento\PageBuilderDataMigration\Model\Entity */
+        $entity = self::$objectManager->create(\Magento\PageBuilderDataMigration\Model\Entity::class);
 
         $data['attribute_set_id'] = $this->getContentTypeId($contentTypeCode);
 
@@ -1182,9 +1182,9 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
 
         $entity->setData($data);
 
-        /* @var \Magento\PageBuilder\Model\ResourceModel\Entity $entityResource */
+        /* @var \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity $entityResource */
         $entityResource = self::$objectManager->create(
-            \Magento\PageBuilder\Model\ResourceModel\Entity::class
+            \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity::class
         );
         $entityResource->save($entity);
     }

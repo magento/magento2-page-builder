@@ -24,6 +24,10 @@ class StyleExtractor implements StyleExtractorInterface
      */
     private $colorConverter;
 
+    /**
+     * @param Json $serializer
+     * @param ColorConverter $colorConverter
+     */
     public function __construct(
         Json $serializer,
         ColorConverter $colorConverter

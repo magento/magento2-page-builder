@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilderDataMigration\Setup\DataConverter;
 
+/**
+ * Class ColorConverter
+ */
 class ColorConverter
 {
     /**

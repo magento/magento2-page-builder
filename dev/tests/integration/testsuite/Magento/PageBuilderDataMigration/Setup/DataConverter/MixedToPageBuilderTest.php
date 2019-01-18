@@ -3,9 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Setup\DataConverter;
+namespace Magento\PageBuilderDataMigration\Setup\DataConverter;
 
-use Magento\Framework\ObjectManagerInterface;
 use Magento\TestFramework\Helper\Bootstrap;
 
 class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
@@ -19,7 +18,7 @@ class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
     {
         $objectManager = Bootstrap::getObjectManager();
         $mixedToPageBuilderConverter = $objectManager->create(
-            \Magento\PageBuilder\Setup\DataConverter\MixedToPageBuilder::class
+            \Magento\PageBuilderDataMigration\Setup\DataConverter\MixedToPageBuilder::class
         );
 
         $this->assertEquals(

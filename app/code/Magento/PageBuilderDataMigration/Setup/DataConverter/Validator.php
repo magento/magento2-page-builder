@@ -9,6 +9,9 @@ namespace Magento\PageBuilderDataMigration\Setup\DataConverter;
 
 use Magento\Framework\Serialize\Serializer\Json;
 
+/**
+ * Class Validator
+ */
 class Validator
 {
     /**

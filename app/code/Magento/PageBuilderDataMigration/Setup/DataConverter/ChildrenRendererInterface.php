@@ -17,7 +17,7 @@ interface ChildrenRendererInterface
      * Render children for element
      *
      * @param array $children
-     * @param $renderChildCallback
+     * @param \Closure $renderChildCallback
      *
      * @return string
      */

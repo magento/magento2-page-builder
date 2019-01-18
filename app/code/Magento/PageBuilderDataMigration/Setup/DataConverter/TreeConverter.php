@@ -65,10 +65,9 @@ class TreeConverter
     /**
      * Render JSON format to new master format
      *
-     * @param $string
+     * @param string $string
      *
      * @return string
-     * @throws UnableMigrateWithOutParentException
      */
     public function convert(string $string) : string
     {
@@ -86,13 +85,13 @@ class TreeConverter
     /**
      * Convert content type item
      *
-     * @param $itemData
+     * @param array $itemData
      * @param array $additionalData
      * @param array $children
+     *
      * @return string
-     * @throws UnableMigrateWithOutParentException
      */
-    private function convertTreeItem($itemData, $additionalData = [], $children = [])
+    private function convertTreeItem(array $itemData, array $additionalData = [], array $children = []) : string
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRenderer($contentType);
@@ -151,11 +150,14 @@ class TreeConverter
      * @param RendererInterface $renderer
      * @param array $itemData
      * @param array $itemAdditionalData
+     *
      * @return string
-     * @throws UnableMigrateWithOutParentException
      */
-    private function processItemRendering($renderer, array $itemData, array $itemAdditionalData = []) : string
-    {
+    private function processItemRendering(
+        RendererInterface $renderer,
+        array $itemData,
+        array $itemAdditionalData = []
+    ) : string {
         $defaultRenderer = $this->rendererPool->getRenderer('default');
 
         try {
@@ -186,8 +188,10 @@ class TreeConverter
     }
 
     /**
-     * Handle render exception. Migrate as html if content type can be migrated without parent,
-     * otherwise throw UnableMigrateWithOutParentException
+     * Handle a render exception
+     *
+     * Migrate as html if content type can be migrated without parent, otherwise throw
+     * UnableMigrateWithOutParentException.
      *
      * @param \Exception $exception
      * @param RendererInterface $defaultRenderer
@@ -212,8 +216,10 @@ class TreeConverter
     }
 
     /**
-     * Check whether content type is unseparatable, can not be part of another content type and parent content type
-     * can not contain content types of different type
+     * Check whether content type is un-separatable
+     *
+     * It can not be part of another content type and parent content type can not contain content types of different
+     * type
      *
      * @param array $itemData
      * @return bool

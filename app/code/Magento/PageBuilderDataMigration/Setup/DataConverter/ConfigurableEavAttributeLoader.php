@@ -12,6 +12,8 @@ use Magento\PageBuilderDataMigration\Model\AttributeFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
+ * Class ConfigurableEavAttributeLoader
+ *
  * Using dependency injection, a virtual type can extend this class and be used by your renderer, to configure
  * additional attributes that you want to extract from the EAV during hydration.
  *
@@ -34,6 +36,11 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
      */
     private $attributeFactory;
 
+    /**
+     * @param EntityFactory $entityFactory
+     * @param AttributeFactory $attributeFactory
+     * @param array $additionalEavAttributes
+     */
     public function __construct(
         EntityFactory $entityFactory,
         AttributeFactory $attributeFactory,
@@ -49,6 +56,8 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
 
     /**
      * @inheritdoc
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function load($entityId) : array
     {

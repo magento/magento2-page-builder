@@ -13,7 +13,7 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\PageBuilderDataMigration\Setup\MoveImages;
 
 /**
- * Migrate from BlueFoot to Page Builder
+ * Migrate from BlueFoot to PageBuilder
  */
 class MigrateToPageBuilder implements DataPatchInterface
 {

@@ -20,6 +20,8 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Render product to PageBuilder format
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Product implements RendererInterface
 {
