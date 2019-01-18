@@ -2,6 +2,12 @@
 
 Here are the Page Builder beta release notes and the higher priority known issues. We are actively working on many of these items and will update this document with each beta release.
 
+## Beta 4 - January 14, 2019
+
+- Resolved: Collage Center/Left/Right does not work correctly in a container smaller than 100% width <!-- MC-5372 -->
+- Resolved: Contained row appearance renders too small when in smaller container or in Block/Dynamic Block <!-- MC-5432 -->
+- Resolved: XSS Vulnerability in Page Builder <!-- MC-5835 -->
+
 ## Beta 3 - December 19, 2018
 
 - Improved: Handling of invalid Google Maps API keys <!-- MC-5723 -->
