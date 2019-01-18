@@ -64,7 +64,8 @@ define([
             promptContentTmpl: promptContentTmpl,
             dismissible: false, // Can the modal be dismissed?
             dismissKey: 'default', // The key we'll check to see if the modal has already been dismissed
-            dismissMessage: $t('Do not show this again') // Message to display next to the dismiss checkbox
+            dismissMessage: $t('Do not show this again'), // Message to display next to the dismiss checkbox
+            dismissCheckbox: '[name="modal-dnsa"]' // Selector to retrieve dismiss checkbox
         },
 
         /**
