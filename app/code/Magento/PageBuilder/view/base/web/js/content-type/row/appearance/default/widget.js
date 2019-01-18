@@ -22,11 +22,13 @@ define([
         $element.addClass('jarallax');
         $element.attr('data-jarallax', '');
 
+        var parallaxSpeed = parseFloat($element.data('parallaxSpeed'));
+
         window.jarallax($element[0], {
             imgPosition: $element[0].style.backgroundPosition || '50% 50%',
             imgRepeat: $element[0].style.backgroundRepeat || 'no-repeat',
             imgSize: $element[0].style.backgroundSize || 'cover',
-            speed: parseFloat($element.data('parallaxSpeed')) || 0.5
+            speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
         });
     };
 });
