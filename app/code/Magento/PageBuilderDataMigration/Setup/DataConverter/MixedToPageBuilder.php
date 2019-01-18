@@ -10,6 +10,8 @@ namespace Magento\PageBuilderDataMigration\Setup\DataConverter;
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
 
 /**
+ * Class MixedToPageBuilder
+ *
  * Convert mixed PageBuilder & PageBuilder content to Magento PageBuilder compatible HTML structures, this should be
  * utilised for 3rd party extensions outside of core that previously extended PageBuilder's functionality.
  */
@@ -45,7 +47,7 @@ class MixedToPageBuilder implements DataConverterInterface
      * @param string $value
      * @return string
      */
-    public function convert($value)
+    public function convert(string $value)
     {
         if (strstr($value, Format::UNMIGRATED_KEY) !== false) {
             return $this->convertMixed($value);
@@ -57,10 +59,10 @@ class MixedToPageBuilder implements DataConverterInterface
     /**
      * Convert any instances of un-migrated content to the new format
      *
-     * @param $value
+     * @param string $value
      * @return string
      */
-    private function convertMixed($value)
+    private function convertMixed(string $value)
     {
         /**
          * Match all instances of any un-migrated content within the value argument. This will automatically retrieve
