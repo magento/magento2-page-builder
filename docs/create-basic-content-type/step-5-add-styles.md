@@ -1,15 +1,12 @@
 # Step 5: Add styles
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 In this step, we will create CSS styles (using LESS) so that we can give end-users different options for customizing the Quote's appearance in the Admin and on the storefront.
 
 ## About styles
 
-Page Builder specifies two ways to 
+Page Builder provides you with two ways to add styles to your content types:
+
+
 
 Describe how the Quote content type combines the usage of style files from end-user specification of classes in forms, to non-interactive styles used in the templates. 
 
@@ -35,8 +32,6 @@ Add your LESS files here:
 CSS classes from your LESS files are typically used within your HTML templates. However, you can also allow end-users to apply CSS classes to your content types from within the form editor, using the CSS Classess input field as shown here:
 
 ![Create config file](../images/css-classes-input-field.png)
-
-
 
 ```xml
 <elements>

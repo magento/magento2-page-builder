@@ -1,10 +1,5 @@
 # Step 3: Add components (optional)
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 In this step, we will create a preview component in order to customize the options menu for our Quote. The options menu is the popup menu that appears when you mouseover a content type, as shown here:
 
 ![Create config file](../images/options-menu-default.png)

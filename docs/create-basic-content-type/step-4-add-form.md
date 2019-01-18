@@ -1,10 +1,5 @@
 # Step 4: Add form
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 In this step, we will create a UI component form. This form will give users another way to enter text for the quote and style its appearance.
 
 ## About forms

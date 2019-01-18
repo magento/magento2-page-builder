@@ -1,10 +1,5 @@
 # Step 1: Add configuration
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 The configuration file defines the settings and references to your content type files. You will return to this file often to update references and change settings during the development process. 
 
 Files referenced from the configuration include the HTML templates, the JavaScript components, the icon displayed for your content type in the Page Builder panel, and the UI component form for your content type editor within the Admin.
@@ -72,7 +67,7 @@ The `type` element defines the key properties of your content type. The attribut
 | `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. The preview component does not need to specify the `.js` extension. If you don't provide the `preview_component`, Page Builder uses the base `Preview` component shown in the code: `Magento_PageBuilder/js/content-type/preview`. |
 | `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. The master component does not need to specify the `.js` extension. If you don't provide the `master_component`, Page Builder uses the base `Master` component shown in the code: `Magento_PageBuilder/js/content-type/master`. |
 | `form`              | UI component form that provides the form controls for editing your content type. |
-| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. If no icon value is provided, the content type will simply be displayed in the Page Builder panel without an icon. |
+| `icon`              | Optional. Class name for your PNG or SVG image (or font icon) displayed in the Page Builder panel alongside the label. If no icon value is provided, the content type will simply be displayed in the Page Builder panel without an icon. |
 | `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder`s of 10 and 20. |
 | `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
 
