@@ -10,7 +10,7 @@ import events from "Magento_PageBuilder/js/events";
 import "tabs";
 import _ from "underscore";
 import {ActiveOptionsInterface} from "../../binding/active-options.types";
-import {SortableOptionsInterface, PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
+import {PreviewSortableSortUpdateEventParams, SortableOptionsInterface} from "../../binding/sortable-children.types";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";

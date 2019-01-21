@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/map", "module", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _events, _map, _module, _hideShowOption, _preview) {

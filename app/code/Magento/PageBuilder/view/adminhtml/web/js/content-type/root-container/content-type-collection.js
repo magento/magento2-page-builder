@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-collection"], function (_alert, _contentTypeCollection) {

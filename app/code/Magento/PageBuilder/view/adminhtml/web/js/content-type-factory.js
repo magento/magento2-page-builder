@@ -119,6 +119,10 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
       }, "contentType:" + contentType.id + ":mountAfter");
     }
   }
+  /**
+   * @api
+   */
+
 
   return createContentType;
 });
