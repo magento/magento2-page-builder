@@ -8,7 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import {SortableOptionsInterface} from "../../binding/sortable-options";
+import {SortableOptionsInterface} from "../../binding/sortable-children.types";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";

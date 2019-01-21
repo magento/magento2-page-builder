@@ -5,6 +5,7 @@
 
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import ContentTypeInterface from "../content-type.types";
+import Preview from "./preview";
 
 /**
  * @api
@@ -98,4 +99,32 @@ export interface ContentTypeRemovedEventParamsInterface {
     index: number;
     parent: ContentTypeCollectionInterface;
     stageId: string;
+}
+
+/**
+ * @api
+ */
+export interface ContentTypeRemovedParamsInterface {
+    parent: ContentTypeCollectionInterface;
+    index: number;
+    contentType: ContentTypeInterface;
+    stageId: string;
+}
+
+/**
+ * @api
+ */
+export interface ContentTypeMoveParamsInterface {
+    contentType: ContentTypeInterface;
+    sourceParent: ContentTypeCollectionInterface;
+    targetParent: ContentTypeCollectionInterface;
+    targetIndex: number;
+    stageId: string;
+}
+
+/**
+ * @api
+ */
+export default interface PreviewDataUpdateAfterParamsInterface {
+    preview: Preview;
 }

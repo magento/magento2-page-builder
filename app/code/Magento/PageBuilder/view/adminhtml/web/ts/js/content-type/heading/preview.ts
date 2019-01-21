@@ -10,7 +10,7 @@ import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import Toolbar from "../../content-type-toolbar";
-import {OptionInterface} from "../../content-type-toolbar/option.d";
+import {OptionInterface} from "../../content-type-toolbar.types";
 import ContentTypeInterface from "../../content-type.types";
 import {ContentTypeDroppedCreateEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";

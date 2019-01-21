@@ -6,8 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
-import {OptionInterface} from "./content-type-toolbar/option";
-import ValueInterface from "./content-type-toolbar/value";
+import {OptionInterface, ValueInterface} from "./content-type-toolbar.types";
 import Preview from "./content-type/preview";
 
 /**

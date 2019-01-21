@@ -14,7 +14,7 @@ import createContentType from "./content-type-factory";
 import PageBuilderInterface from "./page-builder.types";
 import Panel from "./panel";
 import Stage from "./stage";
-import StageToggleFullScreenParamsInterface from "./stage-toggle-full-screen-params";
+import {StageToggleFullScreenParamsInterface} from "./stage-events.types";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";

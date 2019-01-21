@@ -10,7 +10,7 @@ import events from "Magento_PageBuilder/js/events";
 import "slick";
 import _ from "underscore";
 import "../../binding/focus";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";

@@ -9,9 +9,8 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "tabs";
 import _ from "underscore";
-import {ActiveOptionsInterface} from "../../binding/active-options.d";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
-import {SortableOptionsInterface} from "../../binding/sortable-options.d";
+import {ActiveOptionsInterface} from "../../binding/active-options.types";
+import {SortableOptionsInterface, PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import ContentTypeConfigInterface from "../../content-type-config.types";
@@ -19,7 +18,6 @@ import createContentType from "../../content-type-factory";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.types";
 import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
@@ -29,6 +27,7 @@ import {
     ContentTypeDuplicateEventParamsInterface,
     ContentTypeMountEventParamsInterface,
     ContentTypeRemovedEventParamsInterface,
+    ContentTypeRemovedParamsInterface,
 } from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";

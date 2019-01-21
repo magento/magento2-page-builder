@@ -10,13 +10,13 @@ import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
 import ContentTypeCollectionInterface from "./content-type-collection";
-import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
+import {ContentTypeRemovedParamsInterface} from "./content-type/content-type-events.types";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.types";
 import buildStage from "./stage-builder";
-import StageUpdateAfterParamsInterface from "./stage-update-after-params";
+import {StageUpdateAfterParamsInterface} from "./stage-events.types";
 import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 export default class Stage {

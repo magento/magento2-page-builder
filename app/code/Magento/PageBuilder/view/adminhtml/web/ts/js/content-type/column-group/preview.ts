@@ -18,8 +18,7 @@ import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
-import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
-import InitElementEventParamsInterface from "../column/init-element-event-params";
+import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
 import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,

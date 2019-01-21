@@ -26,8 +26,8 @@ import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
 import appearanceConfig from "./appearance-config";
-import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import ObservableObject from "./observable-updater.types";
 
 /**
  * @api

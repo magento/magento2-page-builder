@@ -13,7 +13,6 @@ import ContentTypeInterface from "./content-type.types";
 import {ContentTypeMountEventParamsInterface} from "./content-type/content-type-events.types";
 import masterFactory from "./content-type/master-factory";
 import previewFactory from "./content-type/preview-factory";
-import FieldDefaultsInterface from "./field-defaults.d";
 
 /**
  * Create new content type
@@ -119,4 +118,11 @@ function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLe
             }
         }, `contentType:${contentType.id}:mountAfter` );
     }
+}
+
+/**
+ * @api
+ */
+export interface FieldDefaultsInterface {
+    [key: string]: any;
 }
