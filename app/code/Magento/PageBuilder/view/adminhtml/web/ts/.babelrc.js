@@ -10,15 +10,11 @@ module.exports = {
             plugins: [
                 ['@babel/plugin-proposal-class-properties', {
                     loose: true
-                }]
+                }],
+                '@babel/plugin-transform-modules-amd',
+                './babel/plugin-amd-to-magento-amd',
             ]
         },
-        [
-            'es6-to-magento-amd',
-            {
-                magentoClasses: ['uiComponent', 'uiElement', 'uiClass']
-            }
-        ],
         [
             '@babel/preset-env',
             {
@@ -32,7 +28,7 @@ module.exports = {
     ],
     plugins: [
         '@babel/plugin-transform-typescript',
-        ['./babel/resolve-imports', {
+        ['./babel/plugin-resolve-magento-imports', {
             prefix: 'Magento_PageBuilder/'
         }],
         '@babel/plugin-syntax-object-rest-spread'
