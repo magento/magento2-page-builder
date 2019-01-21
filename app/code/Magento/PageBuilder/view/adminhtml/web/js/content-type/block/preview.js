@@ -54,11 +54,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Runs the widget initializer for each configured widget
      */
-
+    ;
 
     _proto.initializeWidgets = function initializeWidgets(element) {
       if (element) {
@@ -67,12 +67,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
           config: _config.getConfig("widgets")
         }, element);
       }
-    };
+    }
     /**
      * Updates the view state using the data provided
      * @param {DataObject} data
      */
-
+    ;
 
     _proto.processBlockData = function processBlockData(data) {
       // Only load if something changed
@@ -81,11 +81,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       if (data.block_id && data.template.length !== 0) {
         this.processRequest(data, "block_id", "title");
       }
-    };
+    }
     /**
      * @inheritdoc
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       _preview2.prototype.afterObservablesUpdated.call(this);
@@ -93,14 +93,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       var data = this.parent.dataStore.get(); // Only load if something changed
 
       this.processBlockData(data);
-    };
+    }
     /**
      * Display preview placeholder
      *
      * @param {DataObject} data
      * @param {string} identifierName
      */
-
+    ;
 
     _proto.displayPreviewPlaceholder = function displayPreviewPlaceholder(data, identifierName) {
       // Only load if something changed
@@ -121,14 +121,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
-    };
+    }
     /**
      *
      * @param {DataObject} data
      * @param {string} identifierName
      * @param {string} labelKey
      */
-
+    ;
 
     _proto.processRequest = function processRequest(data, identifierName, labelKey) {
       var _this2 = this;
@@ -183,12 +183,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
       }).always(function () {
         _this2.loading(false);
       });
-    };
+    }
     /**
      * Toggle display of block preview.  If showing block preview, add hidden mode to PB preview.
      * @param {boolean} isShow
      */
-
+    ;
 
     _proto.showBlockPreview = function showBlockPreview(isShow) {
       this.displayingBlockPreview(isShow);

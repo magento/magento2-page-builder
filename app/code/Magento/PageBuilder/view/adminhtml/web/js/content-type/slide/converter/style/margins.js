@@ -32,7 +32,7 @@ define([], function () {
       }
 
       return {};
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -40,7 +40,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var result = {};

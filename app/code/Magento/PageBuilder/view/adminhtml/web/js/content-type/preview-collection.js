@@ -71,13 +71,13 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
           resolve(duplicate);
         });
       });
-    };
+    }
     /**
      * Tries to call specified method of a current content type,
      * and delegates attempt to its' children.
      * @param args
      */
-
+    ;
 
     _proto.delegate = function delegate() {
       var _preview2$prototype$d;
@@ -91,13 +91,13 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
       this.parent.getChildren()().forEach(function (elem) {
         elem.preview.delegate.apply(elem.preview, args);
       });
-    };
+    }
     /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
-
+    ;
 
     _proto.isConfigured = function isConfigured() {
       if (this.parent.children().length > 0) {

@@ -14,8 +14,7 @@ import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 

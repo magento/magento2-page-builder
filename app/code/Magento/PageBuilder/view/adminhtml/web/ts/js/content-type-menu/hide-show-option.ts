@@ -5,8 +5,7 @@
 import $t from "mage/translate";
 import {DataObject} from "../data-store";
 import Option from "./option";
-import OptionConfigInterface from "./option-config";
-import OptionInterface from "./option.types";
+import OptionInterface, {OptionConfigInterface} from "./option.types";
 
 export default class HideShowOption extends Option implements OptionInterface {
 

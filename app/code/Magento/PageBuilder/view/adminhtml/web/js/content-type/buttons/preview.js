@@ -118,13 +118,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this2.focusedButton(duplicatedButtonIndex);
         }
       });
-    };
+    }
     /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);
@@ -146,11 +146,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Add button-item to buttons children array
      */
-
+    ;
 
     _proto.addButton = function addButton() {
       var _this3 = this;
@@ -167,7 +167,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }).catch(function (error) {
         console.error(error);
       });
-    };
+    }
     /**
      * Get the sortable options for the buttons sorting
      *
@@ -175,7 +175,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {string} tolerance
      * @returns {JQueryUI.Sortable}
      */
-
+    ;
 
     _proto.getSortableOptions = function getSortableOptions(orientation, tolerance) {
       if (orientation === void 0) {
@@ -244,11 +244,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _events.trigger("stage:interactionStop");
         }
       };
-    };
+    }
     /**
      * Resize width of all child buttons. Dependently make them the same width if configured.
      */
-
+    ;
 
     _proto.resizeChildButtons = function resizeChildButtons() {
       if (this.wrapperElement) {
@@ -270,14 +270,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         buttonItems.css("min-width", buttonResizeValue);
       }
-    };
+    }
     /**
      * Find the largest button width for calculating same size value.
      *
      * @param {JQuery} buttonItems
      * @returns {number}
      */
-
+    ;
 
     _proto.findLargestButtonWidth = function findLargestButtonWidth(buttonItems) {
       var _this4 = this;
@@ -285,14 +285,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       return _underscore.max(_underscore.map(buttonItems, function (buttonItem) {
         return _this4.calculateButtonWidth((0, _jquery)(buttonItem));
       }));
-    };
+    }
     /**
      * Manually calculate button width using content plus box widths (padding, border)
      *
      * @param {JQuery} buttonItem
      * @returns {number}
      */
-
+    ;
 
     _proto.calculateButtonWidth = function calculateButtonWidth(buttonItem) {
       if (buttonItem.is(":visible") === false) {

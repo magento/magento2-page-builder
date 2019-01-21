@@ -86,11 +86,11 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.getAdapter = function getAdapter() {
       return this.wysiwygAdapter;
-    };
+    }
     /**
      * Called for the onFocus event
      */
-
+    ;
 
     _proto.onFocus = function onFocus() {
       var _this = this;
@@ -104,38 +104,38 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       _underscore.defer(function () {
         (0, _jquery)(_this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline").css("min-width", _this.config.adapter_config.minToolbarWidth + "px");
       });
-    };
+    }
     /**
      * Called for the onBlur events
      */
-
+    ;
 
     _proto.onBlur = function onBlur() {
       this.clearSelection();
       (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container).removeClass("pagebuilder-toolbar-active");
 
       _events2.trigger("stage:interactionStop");
-    };
+    }
     /**
      * Update content in our data store after our stage preview wysiwyg gets updated
      */
-
+    ;
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
       this.dataStore.update(this.getAdapter().getContent(), this.fieldName);
-    };
+    }
     /**
      * Update content in our stage wysiwyg after our data store gets updated
      */
-
+    ;
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
       this.getAdapter().setContent(this.dataStore.get(this.fieldName));
-    };
+    }
     /**
      * Clear any selections in the editable area
      */
-
+    ;
 
     _proto.clearSelection = function clearSelection() {
       if (window.getSelection) {

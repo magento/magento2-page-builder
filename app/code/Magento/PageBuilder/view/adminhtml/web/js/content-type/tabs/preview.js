@@ -162,13 +162,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       } catch (e) {
         this.buildTabs();
       }
-    };
+    }
     /**
      * Set the active tab, we maintain a reference to it in an observable for when we rebuild the tab instance
      *
      * @param {number} index
      */
-
+    ;
 
     _proto.setActiveTab = function setActiveTab(index) {
       var _this2 = this;
@@ -189,14 +189,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return (0, _jquery)(_this2.element).find(".pagebuilder-tab-item").length >= index + 1;
         });
       }
-    };
+    }
     /**
      * Set the focused tab
      *
      * @param {number} index
      * @param {boolean} force
      */
-
+    ;
 
     _proto.setFocusedTab = function setFocusedTab(index, force) {
       if (force === void 0) {
@@ -210,13 +210,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       this.focusedTab(index);
-    };
+    }
     /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);
@@ -238,11 +238,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Add a tab
      */
-
+    ;
 
     _proto.addTab = function addTab() {
       var _this3 = this;
@@ -261,24 +261,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         tab.dataStore.update((0, _translate)("Tab") + " " + (_this3.parent.children.indexOf(tab) + 1), "tab_name");
       });
-    };
+    }
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
-
+    ;
 
     _proto.onContainerRender = function onContainerRender(element) {
       this.element = element;
       this.onContainerRenderDeferred.resolve(element);
-    };
+    }
     /**
      * Copy over border styles to the tab headers
      *
      * @returns {any}
      */
-
+    ;
 
     _proto.getTabHeaderStyles = function getTabHeaderStyles() {
       var headerStyles = this.data.headers.style();
@@ -286,13 +286,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         marginBottom: "-" + headerStyles.borderWidth,
         marginLeft: "-" + headerStyles.borderWidth
       });
-    };
+    }
     /**
      * Get the sortable options for the tab heading sorting
      *
      * @returns {JQueryUI.SortableOptions}
      */
-
+    ;
 
     _proto.getSortableOptions = function getSortableOptions() {
       var self = this;
@@ -375,11 +375,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         }
       };
-    };
+    }
     /**
      * Bind events
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
@@ -431,11 +431,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         }
       });
-    };
+    }
     /**
      * Update data store with active options
      */
-
+    ;
 
     _proto.updateTabNamesInDataStore = function updateTabNamesInDataStore() {
       var activeOptions = [];
@@ -448,13 +448,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         });
       });
       this.parent.dataStore.update(activeOptions, "_default_active_options");
-    };
+    }
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
      *
      * @type {(() => void) & _.Cancelable}
      */
-
+    ;
 
     _proto.buildTabs = function buildTabs(activeTabIndex) {
       var _this5 = this;

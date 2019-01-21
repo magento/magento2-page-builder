@@ -48,28 +48,28 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
       var defaultValue = this.preview.config.fields[option.key].default;
       var currentValue = this.preview.parent.dataStore.get(option.key);
       this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
-    };
+    }
     /**
      * Set state based on toolbar focusin event for the preview
      *
      * @param {Preview} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusIn = function onFocusIn(context, event) {
       var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStart");
-    };
+    }
     /**
      * Set state based on toolbar focusout event for the preview
      *
      * @param {Preview} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusOut = function onFocusOut(context, event) {
       var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");

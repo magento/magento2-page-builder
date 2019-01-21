@@ -52,11 +52,11 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
       return this.options().find(function (option) {
         return option.code === code;
       });
-    };
+    }
     /**
      * Sort the options
      */
-
+    ;
 
     _proto.sort = function sort() {
       this.options.sort(function (a, b) {

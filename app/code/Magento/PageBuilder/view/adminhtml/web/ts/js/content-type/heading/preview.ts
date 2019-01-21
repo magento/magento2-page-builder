@@ -12,7 +12,7 @@ import {OptionsInterface} from "../../content-type-menu/option.types";
 import Toolbar from "../../content-type-toolbar";
 import {OptionInterface} from "../../content-type-toolbar/option.d";
 import ContentTypeInterface from "../../content-type.types";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
+import {ContentTypeDroppedCreateEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 

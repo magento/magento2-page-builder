@@ -38,7 +38,7 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
       }
 
       return data;
-    };
+    }
     /**
      * Process data before it's converted by element converters
      *
@@ -46,7 +46,7 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
      * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       var directiveData = {};

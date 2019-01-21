@@ -28,7 +28,7 @@ define(["underscore"], function (_underscore) {
         attributes = _this.parseAttributesString(attributeString);
       }.bind(this));
       return attributes;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -36,28 +36,28 @@ define(["underscore"], function (_underscore) {
      * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       data[config.html_variable] = this.buildDirective(data);
       return data;
-    };
+    }
     /**
      * Build the directive string using the supplies attributes
      *
      * @param {object} attributes
      * @returns {string}
      */
-
+    ;
 
     _proto.buildDirective = function buildDirective(attributes) {
       return "{{widget " + this.createAttributesString(attributes) + "}}";
-    };
+    }
     /**
      * @param {string} attributes
      * @return {Object}
      */
-
+    ;
 
     _proto.parseAttributesString = function parseAttributesString(attributes) {
       var result = {};
@@ -66,12 +66,12 @@ define(["underscore"], function (_underscore) {
         return "";
       });
       return result;
-    };
+    }
     /**
      * @param {Object} attributes
      * @return {string}
      */
-
+    ;
 
     _proto.createAttributesString = function createAttributesString(attributes) {
       var result = "";

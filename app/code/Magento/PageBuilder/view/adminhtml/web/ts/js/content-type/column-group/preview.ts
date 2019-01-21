@@ -25,7 +25,7 @@ import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
+import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";

@@ -36,7 +36,7 @@ define([], function () {
       }
 
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -44,18 +44,18 @@ define([], function () {
      * @param data Object
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       return data[name] ? data[name].toString() : "";
-    };
+    }
     /**
      * Convert from int to hex
      *
      * @param {number} value
      * @returns {string}
      */
-
+    ;
 
     _proto.fromIntToHex = function fromIntToHex(value) {
       var hex = value.toString(16);

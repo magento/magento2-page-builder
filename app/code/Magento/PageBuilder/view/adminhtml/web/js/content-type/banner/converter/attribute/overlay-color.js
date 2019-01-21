@@ -21,7 +21,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "" : value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -29,7 +29,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       if (data.overlay_color) {

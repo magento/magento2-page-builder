@@ -55,11 +55,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * @inheritdoc
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this2 = this;

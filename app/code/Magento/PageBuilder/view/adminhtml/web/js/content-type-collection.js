@@ -47,14 +47,14 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
     _proto.getChildren = function getChildren() {
       return this.collection.getChildren();
-    };
+    }
     /**
      * Add a child into the observable array
      *
      * @param {ContentTypeInterface | ContentTypeCollectionInterface} child
      * @param {number} index
      */
-
+    ;
 
     _proto.addChild = function addChild(child, index) {
       child.parent = this;
@@ -71,23 +71,23 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
           contentType: child
         });
       });
-    };
+    }
     /**
      * Remove a child from the observable array
      *
      * @param {ContentTypeInterface} child
      */
-
+    ;
 
     _proto.removeChild = function removeChild(child) {
       this.collection.removeChild(child);
-    };
+    }
     /**
      * Set the children observable array into the class
      *
      * @param {KnockoutObservableArray<ContentTypeInterface>} children
      */
-
+    ;
 
     _proto.setChildren = function setChildren(children) {
       this.collection.setChildren(children);

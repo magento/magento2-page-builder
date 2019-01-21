@@ -25,7 +25,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return value === "initial" ? "" : value.replace("px", "");
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -33,7 +33,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {string | object}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       if (data[name]) {

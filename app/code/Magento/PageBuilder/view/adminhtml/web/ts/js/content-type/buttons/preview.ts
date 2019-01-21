@@ -18,10 +18,12 @@ import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
 import delayUntil from "../../utils/delay-until";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
+import {
+    ContentTypeAfterRenderEventParamsInterface,
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -69,7 +71,7 @@ export default class Preview extends PreviewCollection {
                 );
             } else {
                 // We have to force the stop as the event firing is inconsistent for certain operations
-                events.trigger("stage:interactionStop", {force : true});
+                events.trigger("stage:interactionStop", {force: true});
             }
         }, 1));
     }

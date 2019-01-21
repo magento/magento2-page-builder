@@ -50,13 +50,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       this.isFullScreen.subscribe(function () {
         return _this2.onFullScreenChange();
       });
-    };
+    }
     /**
      * Tells the stage wrapper to expand to fullScreen
      *
      * @param {StageToggleFullScreenParamsInterface} args
      */
-
+    ;
 
     _proto.toggleFullScreen = function toggleFullScreen(args) {
       var _this3 = this;
@@ -121,11 +121,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
           _this3.previousPanelHeight = null;
         }, 350);
       }
-    };
+    }
     /**
      * Change window scroll base on full screen mode.
      */
-
+    ;
 
     _proto.onFullScreenChange = function onFullScreenChange() {
       if (this.isFullScreen()) {
@@ -137,13 +137,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "mageUtils", "und
       _events.trigger("stage:" + this.id + ":fullScreenModeChangeAfter", {
         fullScreen: this.isFullScreen()
       });
-    };
+    }
     /**
      * Get template.
      *
      * @returns {string}
      */
-
+    ;
 
     _proto.getTemplate = function getTemplate() {
       return this.template;

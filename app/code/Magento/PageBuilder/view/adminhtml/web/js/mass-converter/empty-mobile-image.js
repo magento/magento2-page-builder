@@ -29,7 +29,7 @@ define([], function () {
       }
 
       return data;
-    };
+    }
     /**
      * Process data before it's converted by element converters
      *
@@ -37,7 +37,7 @@ define([], function () {
      * @param {object} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       if (data[config.mobile_image_variable] === undefined || data[config.mobile_image_variable][0] === undefined) {

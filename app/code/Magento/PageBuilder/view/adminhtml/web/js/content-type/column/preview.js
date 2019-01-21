@@ -74,13 +74,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         });
       }
-    };
+    }
     /**
      * Make a reference to the element in the column
      *
      * @param element
      */
-
+    ;
 
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
@@ -91,13 +91,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         element: (0, _jquery)(element),
         parent: this.parent.parent
       });
-    };
+    }
     /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);
@@ -110,13 +110,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         sort: 10
       });
       return options;
-    };
+    }
     /**
      * Init the resize handle for the resizing functionality
      *
      * @param handle
      */
-
+    ;
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
       _events.trigger("column:resizeHandleBindAfter", {
@@ -124,13 +124,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         handle: (0, _jquery)(handle),
         parent: this.parent.parent
       });
-    };
+    }
     /**
      * Wrap the current column in a group if it not in a column-group
      *
      * @returns {Promise<ContentTypeCollectionInterface>}
      */
-
+    ;
 
     _proto.createColumnGroup = function createColumnGroup() {
       var _this3 = this;
@@ -161,7 +161,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         });
       }
-    };
+    }
     /**
      * Duplicate a child of the current instance
      *
@@ -169,7 +169,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {boolean} autoAppend
      * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
-
+    ;
 
     _proto.clone = function clone(contentType, autoAppend) {
       if (autoAppend === void 0) {
@@ -223,11 +223,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         }
       }
-    };
+    }
     /**
      * Update the display label for the column
      */
-
+    ;
 
     _proto.updateDisplayLabel = function updateDisplayLabel() {
       if (this.parent.parent.preview instanceof _preview) {
@@ -236,11 +236,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         this.displayLabel((0, _translate)("Column") + " " + newLabel);
       }
-    };
+    }
     /**
      * Syncs the column-width-* class on the children-wrapper with the current width to the nearest tenth rounded up
      */
-
+    ;
 
     _proto.updateColumnWidthClass = function updateColumnWidthClass() {
       // Only update once instantiated
@@ -256,13 +256,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
       this.element.addClass("column-width-" + roundedWidth);
-    };
+    }
     /**
      * Fire the mount event for content types
      *
      * @param {ContentTypeInterface[]} contentTypes
      */
-
+    ;
 
     _proto.fireMountEvent = function fireMountEvent() {
       for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -280,11 +280,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           contentType: contentType
         });
       });
-    };
+    }
     /**
      * Delegate trigger call on children elements.
      */
-
+    ;
 
     _proto.triggerChildren = function triggerChildren() {
       if (this.parent.parent.preview instanceof _preview) {

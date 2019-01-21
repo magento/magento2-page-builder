@@ -23,19 +23,19 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
     _proto.getGridSize = function getGridSize() {
       return parseInt(this.columnGroup.dataStore.get("grid_size").toString(), 10);
-    };
+    }
     /**
      * Get the smallest column width possible
      *
      * @param {number} gridSize
      * @returns {number}
      */
-
+    ;
 
     _proto.getSmallestColumnWidth = function getSmallestColumnWidth(gridSize) {
       gridSize = gridSize || this.getGridSize();
       return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0));
-    };
+    }
     /**
      * Get an accepted column width to resolve rounding issues, e.g. turn 49.995% into 50%
      *
@@ -43,7 +43,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {number} gridSize
      * @returns {number}
      */
-
+    ;
 
     _proto.getAcceptedColumnWidth = function getAcceptedColumnWidth(width, gridSize) {
       gridSize = gridSize || this.getGridSize();
@@ -59,24 +59,24 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       }
 
       return newWidth;
-    };
+    }
     /**
      * Return the width of the column
      *
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @returns {number}
      */
-
+    ;
 
     _proto.getColumnWidth = function getColumnWidth(column) {
       return this.getAcceptedColumnWidth(column.dataStore.get("width").toString());
-    };
+    }
     /**
      * Get the total width of all columns in the group
      *
      * @returns {number}
      */
-
+    ;
 
     _proto.getColumnsWidth = function getColumnsWidth() {
       var _this = this;
@@ -86,7 +86,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       }).reduce(function (widthA, widthB) {
         return widthA + (widthB ? widthB : 0);
       }).toString());
-    };
+    }
     /**
      * Determine the pixel position of every column that can be created within the group
      *
@@ -94,7 +94,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {GroupPositionCache} groupPosition
      * @returns {ColumnWidth[]}
      */
-
+    ;
 
     _proto.determineColumnWidths = function determineColumnWidths(column, groupPosition) {
       var gridSize = this.getGridSize();
@@ -143,7 +143,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       }
 
       return columnWidths;
-    };
+    }
     /**
      * Find a column which can be shrunk for the current resize action
      *
@@ -151,7 +151,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {"left" | "right"} direction
      * @returns {ContentTypeCollectionInterface<ColumnPreview>}
      */
-
+    ;
 
     _proto.findShrinkableColumnForResize = function findShrinkableColumnForResize(column, direction) {
       var _this2 = this;
@@ -173,14 +173,14 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       return searchArray.find(function (groupColumn) {
         return _this2.getColumnWidth(groupColumn) > _this2.getSmallestColumnWidth();
       });
-    };
+    }
     /**
      * Find a shrinkable column outwards from the current column
      *
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @returns {ContentTypeCollectionInterface<ColumnPreview>}
      */
-
+    ;
 
     _proto.findShrinkableColumn = function findShrinkableColumn(column) {
       var _this3 = this;
@@ -188,7 +188,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       return (0, _array.outwardSearch)(column.parent.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
         return _this3.getColumnWidth(neighbourColumn) > _this3.getSmallestColumnWidth();
       });
-    };
+    }
     /**
      * Calculate the ghost size for the resizing action
      *
@@ -199,7 +199,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {MaxGhostWidth} maxGhostWidth
      * @returns {number}
      */
-
+    ;
 
     _proto.calculateGhostWidth = function calculateGhostWidth(groupPosition, currentPos, column, modifyColumnInPair, maxGhostWidth) {
       var ghostWidth = currentPos - groupPosition.left;
@@ -227,7 +227,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       }
 
       return ghostWidth;
-    };
+    }
     /**
      * Determine which column in the group should be adjusted for the current resize action
      *
@@ -236,7 +236,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {ResizeHistory} history
      * @returns {[ContentTypeCollectionInterface<ColumnPreview>, string, string]}
      */
-
+    ;
 
     _proto.determineAdjustedColumn = function determineAdjustedColumn(currentPos, column, history) {
       var modifyColumnInPair = "left";
@@ -275,7 +275,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       }
 
       return [adjustedColumn, modifyColumnInPair, usedHistory];
-    };
+    }
     /**
      * Resize a column to a specific width
      *
@@ -283,7 +283,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {number} width
      * @param {ContentTypeCollectionInterface<Preview>} shrinkableColumn
      */
-
+    ;
 
     _proto.resizeColumn = function resizeColumn(column, width, shrinkableColumn) {
       var current = this.getColumnWidth(column);
@@ -315,7 +315,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       if (allowedToShrink) {
         updateColumnWidth(column, width);
       }
-    };
+    }
     /**
      * Determine if the grid supports the new proposed grid size
      *
@@ -325,7 +325,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * @param {number} shrinkableColumnNewWidth
      * @returns {boolean}
      */
-
+    ;
 
     _proto.gridSupportsResize = function gridSupportsResize(column, newWidth, shrinkableColumn, shrinkableColumnNewWidth) {
       var _this4 = this;

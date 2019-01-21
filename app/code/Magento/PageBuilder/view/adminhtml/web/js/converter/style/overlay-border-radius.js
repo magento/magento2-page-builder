@@ -27,7 +27,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -35,7 +35,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       var borderRadius = data.border_radius ? parseInt(data.border_radius, 10) : 0;

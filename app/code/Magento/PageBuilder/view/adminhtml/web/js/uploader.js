@@ -64,29 +64,29 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
 
     _proto.onImageChanged = function onImageChanged(data) {
       this.dataStore.update(data, this.config.dataScope);
-    };
+    }
     /**
      * Default callback for image deleted event
      */
-
+    ;
 
     _proto.onImageDeleted = function onImageDeleted() {
       this.dataStore.update("", this.config.dataScope);
-    };
+    }
     /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Function}
      */
-
+    ;
 
     _proto.getUiComponent = function getUiComponent() {
       return _uiRegistry.async(this.config.name);
-    };
+    }
     /**
      * Instantiate uploader through layout UI component renderer
      */
-
+    ;
 
     _proto.render = function render() {
       (0, _uiLayout)([this.config]);

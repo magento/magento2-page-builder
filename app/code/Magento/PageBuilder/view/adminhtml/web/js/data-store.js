@@ -29,14 +29,14 @@ define(["jquery"], function (_jquery) {
       }
 
       return this.state;
-    };
+    }
     /**
      * Update the state for the content type
      *
      * @param {DataObject | string | number | boolean | any[] | null | undefined} data
      * @param {string | number} key
      */
-
+    ;
 
     _proto.update = function update(data, key) {
       this.previousState = Object.assign({}, this.state);
@@ -48,26 +48,26 @@ define(["jquery"], function (_jquery) {
       }
 
       this.emitState();
-    };
+    }
     /**
      * Remove item from DataStore
      *
      * @param {string | number} key
      */
-
+    ;
 
     _proto.unset = function unset(key) {
       var storeState = this.state;
       delete storeState[key];
       this.update(storeState);
-    };
+    }
     /**
      * Subscribe to data changes within the data store of a content type
      *
      * @param {(state: DataObject, event: Event) => void} handler
      * @param {string | number} key
      */
-
+    ;
 
     _proto.subscribe = function subscribe(handler, key) {
       var _this = this;
@@ -83,11 +83,11 @@ define(["jquery"], function (_jquery) {
           }
         }
       });
-    };
+    }
     /**
      * Emit state updates through events
      */
-
+    ;
 
     _proto.emitState = function emitState() {
       this.events.trigger("state", {

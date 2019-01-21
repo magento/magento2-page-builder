@@ -60,11 +60,11 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
       }
 
       return result;
-    };
+    }
     /**
      * Attach event to updating data in data store to update observables
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this = this;
@@ -72,19 +72,19 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
       this.parent.dataStore.subscribe(function (data) {
         _this.updateObservables();
       });
-    };
+    }
     /**
      * After observables updated, allows to modify observables
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       return;
-    };
+    }
     /**
      * Update observables
      */
-
+    ;
 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({

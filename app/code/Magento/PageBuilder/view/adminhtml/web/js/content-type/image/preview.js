@@ -40,23 +40,23 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
      */
-
+    ;
 
     _proto.getUploader = function getUploader() {
       var dataStore = this.parent.dataStore.get();
       var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
       return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
-    };
+    }
     /**
      * @inheritDoc
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this = this;

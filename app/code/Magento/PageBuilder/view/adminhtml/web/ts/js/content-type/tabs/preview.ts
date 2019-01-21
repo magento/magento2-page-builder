@@ -24,10 +24,12 @@ import ContentTypeInterface from "../../content-type.types";
 import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
 import deferred, {DeferredInterface} from "../../utils/promise-deferred";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
+import {
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 

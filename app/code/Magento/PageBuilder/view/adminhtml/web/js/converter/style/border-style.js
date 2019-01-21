@@ -29,7 +29,7 @@ define([], function () {
       }
 
       return value;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -37,7 +37,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       if (data[name] && data[name] !== "_default") {

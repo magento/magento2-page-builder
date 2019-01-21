@@ -38,7 +38,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
       data.template = attributes.template;
       data.block_id = attributes.block_id;
       return data;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -46,7 +46,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
      * @param {object} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       var attributes = {

@@ -11,12 +11,10 @@ interface MapUtilityInterface {
     setMarkers(newMarkers: object): void;
 }
 
-interface MapUtilityConstructorInterface {
-    new(element: Element, markers: [any], additionalOptions: object): MapUtilityInterface;
-}
+type MapUtilityConstructorInterface = new(element: Element, markers: [any], additionalOptions: object)
+    => MapUtilityInterface;
 
 declare var mapUtilityConstructor: MapUtilityConstructorInterface;
 declare module "Magento_PageBuilder/js/utils/map" {
     export = mapUtilityConstructor;
 }
-

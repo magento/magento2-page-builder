@@ -63,11 +63,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
-    };
+    }
     /**
      * The stage has been initiated fully and is ready
      */
-
+    ;
 
     _proto.ready = function ready() {
       _events.trigger("stage:" + this.id + ":readyAfter", {
@@ -80,11 +80,11 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       _events.trigger("stage:updateAfter", {
         stageId: this.id
       });
-    };
+    }
     /**
      * Init listeners
      */
-
+    ;
 
     _proto.initListeners = function initListeners() {
       var _this2 = this;
@@ -143,13 +143,13 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
       _events.on("stage:childFocusStop", function () {
         return _this2.focusChild(false);
       });
-    };
+    }
     /**
      * On content type removed
      *
      * @param params
      */
-
+    ;
 
     _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
       params.parent.removeChild(params.contentType);

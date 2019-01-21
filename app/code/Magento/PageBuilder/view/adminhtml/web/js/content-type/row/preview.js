@@ -102,13 +102,13 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Init the parallax element
      *
      * @param {Element} element
      */
-
+    ;
 
     _proto.initParallax = function initParallax(element) {
       var _this2 = this;

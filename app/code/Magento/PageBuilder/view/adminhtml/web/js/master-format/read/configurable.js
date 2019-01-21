@@ -74,7 +74,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
           console.error(error);
         });
       });
-    };
+    }
     /**
      * Read attributes for element
      *
@@ -85,7 +85,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
      * @param {typeof ConverterPool} converterPool
      * @returns {any}
      */
-
+    ;
 
     _proto.readAttributes = function readAttributes(config, element, data, propertyReaderPool, converterPool) {
       var result = {};
@@ -124,7 +124,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
       }
 
       return _underscore.extend(data, result);
-    };
+    }
     /**
      * Read style properties for element
      *
@@ -135,7 +135,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
      * @param {typeof ConverterPool} converterPool
      * @returns {{[p: string]: string}}
      */
-
+    ;
 
     _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
       var result = _underscore.extend({}, data);
@@ -172,7 +172,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
       }
 
       return result;
-    };
+    }
     /**
      * Read element's tag
      *
@@ -181,13 +181,13 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
      * @param {object} data
      * @returns {object}
      */
-
+    ;
 
     _proto.readHtmlTag = function readHtmlTag(config, element, data) {
       var result = {};
       result[config.tag.var] = element.nodeName.toLowerCase();
       return _underscore.extend(data, result);
-    };
+    }
     /**
      * Read element's css
      *
@@ -196,7 +196,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
      * @param {object} data
      * @returns {any}
      */
-
+    ;
 
     _proto.readCss = function readCss(config, element, data) {
       var result = {};
@@ -222,7 +222,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
 
       result[config.css.var] = css.replace(/\s{2,}/g, " ").trim();
       return _underscore.extend(data, result);
-    };
+    }
     /**
      * Read element's content
      *
@@ -232,7 +232,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
      * @param {typeof ConverterPool} converterPool
      * @returns {any}
      */
-
+    ;
 
     _proto.readHtml = function readHtml(config, element, data, converterPool) {
       var result = {};
@@ -244,7 +244,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
 
       result[config.html.var] = value;
       return _underscore.extend(data, result);
-    };
+    }
     /**
      * Convert data after it's read for all elements
      *
@@ -253,7 +253,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
      * @param {typeof MassConverterPool} massConverterPool
      * @returns {object}
      */
-
+    ;
 
     _proto.convertData = function convertData(config, data, massConverterPool) {
       for (var _iterator4 = config.converters, _isArray4 = Array.isArray(_iterator4), _i5 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {

@@ -36,7 +36,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
       data.conditions_encoded = this.decodeWysiwygCharacters(attributes.conditions_encoded || "");
       data.products_count = attributes.products_count;
       return data;
-    };
+    }
     /**
      * Convert value to knockout format
      *
@@ -44,7 +44,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
      * @param {object} config
      * @returns {object}
      */
-
+    ;
 
     _proto.toDom = function toDom(data, config) {
       var attributes = {
@@ -64,21 +64,21 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], func
 
       data[config.html_variable] = this.buildDirective(attributes);
       return data;
-    };
+    }
     /**
      * @param {string} content
      * @returns {string}
      */
-
+    ;
 
     _proto.encodeWysiwygCharacters = function encodeWysiwygCharacters(content) {
       return content.replace(/\{/g, "^[").replace(/\}/g, "^]").replace(/"/g, "`").replace(/\\/g, "|").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    };
+    }
     /**
      * @param {string} content
      * @returns {string}
      */
-
+    ;
 
     _proto.decodeWysiwygCharacters = function decodeWysiwygCharacters(content) {
       return content.replace(/\^\[/g, "{").replace(/\^\]/g, "}").replace(/`/g, "\"").replace(/\|/g, "\\").replace(/&lt;/g, "<").replace(/&gt;/g, ">");

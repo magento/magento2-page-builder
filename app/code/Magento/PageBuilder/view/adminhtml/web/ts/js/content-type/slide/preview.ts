@@ -16,7 +16,7 @@ import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
+import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
 

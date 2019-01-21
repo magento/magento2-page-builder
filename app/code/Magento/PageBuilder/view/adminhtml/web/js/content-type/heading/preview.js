@@ -52,13 +52,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
-
+    ;
 
     _proto.afterRender = function afterRender(element) {
       this.element = element;
@@ -78,13 +78,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
         }
       });
-    };
+    }
     /**
      * Build and return the tool bar options for heading
      *
      * @returns {OptionInterface[]}
      */
-
+    ;
 
     _proto.getToolbarOptions = function getToolbarOptions() {
       return [{

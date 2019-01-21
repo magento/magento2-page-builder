@@ -25,7 +25,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return !(value === "none");
-    };
+    }
     /**
      * Convert value to knockout format, if buttons are displayed they should be inline block
      *
@@ -33,7 +33,7 @@ define([], function () {
      * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       if (typeof data[name] !== "undefined" && data[name] === false) {

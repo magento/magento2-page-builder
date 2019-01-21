@@ -3,9 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import Preview from "../content-type/preview";
-import OptionConfigInterface from "./option-config";
 
 /**
  * @api
@@ -27,4 +25,18 @@ export default interface OptionInterface {
  */
 export interface OptionsInterface {
     [key: string]: OptionInterface;
+}
+
+/**
+ * @api
+ */
+export interface OptionConfigInterface {
+    preview: Preview;
+    code?: string;
+    icon?: string;
+    title: string;
+    action?: () => void;
+    classes?: string[];
+    sort?: number;
+    template?: string;
 }

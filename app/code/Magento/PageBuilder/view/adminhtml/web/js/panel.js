@@ -41,11 +41,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.afterRender = function afterRender(element) {
       this.element = element;
-    };
+    }
     /**
      * Init listeners
      */
-
+    ;
 
     _proto.initListeners = function initListeners() {
       var _this = this;
@@ -59,17 +59,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         _this.isVisible(true);
       });
-    };
+    }
     /**
      * Return the template string
      *
      * @returns {string}
      */
-
+    ;
 
     _proto.getTemplate = function getTemplate() {
       return this.template;
-    };
+    }
     /**
      * Conduct a search on the available content types,
      * and find matches for beginning of words.
@@ -77,7 +77,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param self
      * @param event
      */
-
+    ;
 
     _proto.search = function search(self, event) {
       var _this2 = this;
@@ -97,24 +97,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
         }));
       }
-    };
+    }
     /**
      * Collapse the panel into the side of the UI
      */
-
+    ;
 
     _proto.collapse = function collapse() {
       this.isCollapsed(!this.isCollapsed());
-    };
+    }
     /**
      * Clear Search Results
      */
-
+    ;
 
     _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
-    };
+    }
     /**
      * Toggle stickiness of panel based on browser scroll position and height of panel
      * Enable panel stickiness if panel and stage are available
@@ -122,7 +122,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * Stick panel to top when scroll reaches top position of stage
      * Stick panel to bottom when scroll reaches bottom position of stage
      */
-
+    ;
 
     _proto.onScroll = function onScroll() {
       var self = this;
@@ -163,13 +163,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         }
       });
-    };
+    }
     /**
      * Retrieve the draggable options for the panel items
      *
      * @returns {JQueryUI.DraggableOptions}
      */
-
+    ;
 
     _proto.getDraggableOptions = function getDraggableOptions(element) {
       // If we're within a modal make the containment be the current modal
@@ -229,11 +229,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           });
         }
       };
-    };
+    }
     /**
      * Populate the panel with the content types
      */
-
+    ;
 
     _proto.populateContentTypes = function populateContentTypes() {
       var _this3 = this;
