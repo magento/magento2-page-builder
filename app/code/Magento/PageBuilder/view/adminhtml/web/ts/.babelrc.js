@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+const tsDirectory = 'app/code/Magento/PageBuilder/view/adminhtml/web/ts/';
+const moduleName = 'Magento_PageBuilder';
+
 module.exports = {
     passPerPreset: true,
     presets: [
@@ -29,11 +32,16 @@ module.exports = {
     plugins: [
         '@babel/plugin-transform-typescript',
         ['./babel/plugin-resolve-magento-imports', {
-            prefix: 'Magento_PageBuilder/'
+            path: tsDirectory,
+            prefix: moduleName
+        }],
+        ['@comandeer/babel-plugin-banner', {
+            'banner': "/*eslint-disable */\n"
         }],
         '@babel/plugin-syntax-object-rest-spread'
     ],
     ignore: [
-        '/**/*.d.ts'
+        '/**/*.d.ts',
+        '/**/*.types.ts',
     ]
 };

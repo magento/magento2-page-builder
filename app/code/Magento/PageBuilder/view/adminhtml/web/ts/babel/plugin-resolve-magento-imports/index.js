@@ -32,7 +32,10 @@ module.exports = function () {
                 // Is the file being imported from another directory?
                 if (!path.isAbsolute(importExpression) && importExpression.includes('./')) {
                     importPath.node.source.value = path.resolve(
-                        path.dirname(state.file.opts.filenameRelative),
+                        path.dirname(state.file.opts.filename.replace(
+                            state.opts.path,
+                            ""
+                        )),
                         importExpression
                     ).replace(
                         process.cwd(),
