@@ -106,7 +106,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <!-- Add second tab -->
-        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <comment userInput="When I delete second default state Tab from the stage" stepKey="AC2"/>
         <!-- Remove second tab -->
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
@@ -157,9 +159,12 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Fill tab config-->
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -218,7 +223,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
@@ -325,10 +332,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabContent('2')}}" stepKey="waitForNewTabContent2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForNewTabHeader2"/>
-        <actionGroup ref="addTab" stepKey="addThirdTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabContent('3')}}" stepKey="waitForNewTabContent3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('3')}}" stepKey="waitForNewTabHeader3"/>
         <comment userInput="When I delete third Tab from the stage" stepKey="AC2"/>
