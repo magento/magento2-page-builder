@@ -20,7 +20,7 @@ As mentioned, you can create a PNG or an SVG icon, but we recommend creating SVG
 
 ![Create config file](../images/step6-icon-properties.png)
 
-As the illustration shows, the artboard represents the actual width and height of your icon when it is exported from your graphics application (16 x 16px). The artwork represents the content of your icon. Following these dimensions ensures your icons will match the size and positioning of the existing Page Builder icons within the panel.
+As the illustration shows, the *artboard* represents the actual width and height of your icon when it is exported from your graphics application (16 x 16px). The *artwork* represents the content of your icon. Following these dimensions ensures your icons will match the size and positioning of the existing Page Builder icons within the panel.
 
 When finished, add your icon to your `images` directory as follows:
 
@@ -36,7 +36,7 @@ The CSS for integrating SVG and PNG images with the font icons used by Page Buil
 
 ```css
 .icon-pagebuilder-quote {
-    content: url(../Example_PageBuilderQuote/css/images/content-type/example-quote/appearance/icon-pagebuilder-quote.svg);
+    content: url('@{baseDir}Example_PageBuilderQuote/css/images/content-type/example-quote/appearance/icon-pagebuilder-quote.svg');
     width: 18px;
     height: 18px;
     margin-bottom: -1px;
@@ -46,27 +46,14 @@ The CSS for integrating SVG and PNG images with the font icons used by Page Buil
 | Attribute       | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | `class name`    | To match the class names of Page Builder's native icons, we recommend prefixing your icon names with `icon-pagebuilder` as we have done with our Quote icon. |
-| `content`       | The relative path to your SVG or PNG icon when rendered from `pub/static`. More details follow below. |
+| `content`       | The relative path to your SVG or PNG icon when rendered from `pub/static`. Referencing your image from your CSS icon class ensures that the link to your image will be created in the static output and the icon will resolve in the browser. Using the `@{baseDir}` variable also ensures that the static path to your image file will resolve correctly. |
 | `width`         | Sets the width of the content area that most closely matches the widths of Page Builder icon fonts. |
 | `height`        | Sets the height of the content area that most closely matches the widths of Page Builder icon fonts. |
 | `margin-bottom` | Pulls the SVG or PNG image down within the panel container to more closely match the positioning of Page Builder's font icon. |
 
-### Content path to icon image
-
-When you add the relative content path to your SVG or PNG image, you must start from the consolidated `styles.css` within `pub/static` as shown below. 
+When deployed, your icon images are linked from `pub/static` as shown here: 
 
 ![Create config file](../images/step6-icon-link-static.png)
-
-In the case of our Quote icon, the relative path must be set as: 
-
-```css
-.icon-pagebuilder-quote {
-  content: url(../Example_PageBuilderQuote/css/images/content-type/example-quote/appearance/icon-pagebuilder-quote.svg);
-  ...
-}
-```
-
-This referencing your image from your CSS icon class ensures that the link to your image will be created in the static output and the icon will resolve in the browser. 
 
 ## Add icon class to config file
 
@@ -89,6 +76,8 @@ The last step is to add our icon's class name to our config file. Previous to th
 
 That's it. Now you can regenerate your static assets, empty your browser cache, and do a hard reload of your Admin page to see your new icon in the panel. 
 
+## Next
 
+Congratulations! You just finished the last step in this tutorial. To wrap things up, find out [What's next](whats-next.md).
 
 

@@ -127,4 +127,3 @@ Appearances allow you to make the following customization on existing content ty
 
 [TypeScript]: https://www.typescriptlang.org/
 [master format]: master-format.md
-[content type]: ../how-to/how-to-develop-new-content-type.md

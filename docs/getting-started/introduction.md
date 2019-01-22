@@ -48,7 +48,6 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ### How tos
 
-* [How to develop a new content type](../how-to/how-to-develop-new-content-type.md)
 * [How to develop a container content type](../how-to/how-to-develop-container-content-type.md)
 * [How to use the Image Uploader](../how-to/how-to-use-image-uploader.md)
 * [How to use the Image Uploader](../how-to/how-to-use-image-uploader.md)

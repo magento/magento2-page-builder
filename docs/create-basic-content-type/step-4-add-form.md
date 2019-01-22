@@ -1,6 +1,6 @@
 # Step 4: Add form
 
-In this step, we will create a UI component form. This form will give users another way to enter text for the quote and style its appearance.
+In this step, we will create a UI component form. This form will give users another way to enter text for the Quote and style its appearance.
 
 ## About forms
 
@@ -70,7 +70,7 @@ The purpose of each field is described as follows:
 | Quote         | A textarea for writing or pasting in the quote's text.       |
 | Author        | A text input field for the author's name.                    |
 | Description   | A text input field to describe the author's title or origin of the quote. |
-| CSS for Quote | A text input field for end-users to add css class names for styling the text in the Quote field. |
+| CSS for Quote | A text input field for end-users to add css class names for styling the text in the Quote field. This option is detailed in [Step 5: Add styles](step-5-add-styles.md). |
 
 The Quote form is shown in full here for you to copy into your `pagebuilder_example_form.xml` file, followed by descriptions of the key parts.
 
@@ -303,7 +303,7 @@ The `<css>` element sets the binding for the CSS Classes form field (`css_classe
 | --------- | ------------------------------------------------ |
 | `name`    | Specifies the name of the form field to bind to. |
 
-For example, in our Quote configuration, we define an  `<element>` named `quote` with a `<css>` element bound to an input field in our form named `quote_css`, as shown here: 
+For example, in our Quote configuration, we define an `<element>` named `quote` with a `<css>` element bound to an input field in our form named `quote_css`, as shown here: 
 
 ```xml
 <!-- from example_quote.xml -->
@@ -337,6 +337,8 @@ And the `css` binding is applied in the `preview.html` template, as shown here:
 <!-- from preview.html -->
 <blockquote css="data.quote.css" ...></blockquote>
 ```
+
+In [Step 5: Add styles](step-5-add-styles.md), we will revisit the `css` attribute in detail to show how it is used to allow users to style templates with additional CSS classes. 
 
 #### html
 
