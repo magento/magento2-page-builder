@@ -48,7 +48,7 @@ class BlueFootToPageBuilder implements DataConverterInterface
      * @param string $value
      * @return string
      */
-    public function convert(string $value)
+    public function convert($value)
     {
         if (preg_match('/<!--' . Format::BLUEFOOT_KEY . '="(.*)"-->/', $value, $matches)) {
             if ($this->validator->validate($matches[1])) {

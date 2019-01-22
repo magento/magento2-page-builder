@@ -47,7 +47,7 @@ class MixedToPageBuilder implements DataConverterInterface
      * @param string $value
      * @return string
      */
-    public function convert(string $value)
+    public function convert($value)
     {
         if (strstr($value, Format::UNMIGRATED_KEY) !== false) {
             return $this->convertMixed($value);
