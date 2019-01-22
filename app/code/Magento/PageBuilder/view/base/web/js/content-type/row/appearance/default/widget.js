@@ -9,7 +9,8 @@ define([
     'use strict';
 
     return function (config, element) {
-        var $element = $(element);
+        var $element = $(element),
+            parallaxSpeed = null;
 
         if ($element.data('appearance') === 'contained') {
             $element = $(element).find('[data-element="inner"]');
@@ -22,7 +23,7 @@ define([
         $element.addClass('jarallax');
         $element.attr('data-jarallax', '');
 
-        var parallaxSpeed = parseFloat($element.data('parallaxSpeed'));
+        parallaxSpeed = parseFloat($element.data('parallaxSpeed'));
 
         window.jarallax($element[0], {
             imgPosition: $element[0].style.backgroundPosition || '50% 50%',
