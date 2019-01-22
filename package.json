@@ -10,7 +10,7 @@
         "ts:lint": "node_modules/tslint/bin/tslint --fix --project .",
         "ts:defs": "node ./dev/dts-generator.js",
         "ts:build": "npx babel app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/ --out-dir app/code/Magento/PageBuilder/view/adminhtml/web/js/ --extensions '.ts,.tsx' --source-maps",
-        "ts:watch": "npm run build -- --watch",
+        "ts:watch": "npm run ts:build -- --watch",
         "start": "npx concurrently -n \"compiler,errors\" -c \"green,red\" \"npm run ts:watch\" \"npm run ts:errors:watch\""
     },
     "repository": {
