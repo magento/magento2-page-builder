@@ -160,7 +160,7 @@ The Quote form is shown in full here for you to copy into your `pagebuilder_exam
 
 ### fieldset
 
-Page Builder requires fields to be grouped within named `<fieldset>`s. Fieldsets provide your fields with a basic grouping mechanism and an optional label. You can define as many fieldsets as you want.
+Page Builder requires fields to be grouped within named `<fieldset>` elements. Fieldsets provide your fields with a basic grouping mechanism and an optional label. You can define as many fieldsets as you want.
 
 | Attribute   | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
@@ -271,7 +271,7 @@ The `<element>` element provides a scope for the data bindings within it.
 
 | Attribute | Description                                                  |
 | --------- | ------------------------------------------------------------ |
-| `name`    | Specifies the name of the element's scope for data binding when applied to template elements. In our example, we use the element name of `main` as the scope for binding styles and other attributes to the top-level `<div>` element in our template: `<div attr="data.main.attributes" ko-style="data.main.style">` |
+| `name`    | Specifies the name of the element scope for the data binding when applied to template elements. In our example, the element name of `main` is used as the scope for binding styles and other attributes to the top-level `<div>` element in our template: `<div attr="data.main.attributes" ko-style="data.main.style">` |
 
 #### style
 
@@ -281,19 +281,19 @@ The `<style>` element configures the bindings from the form style fields to the 
 | ------------------- | ------------------------------------------------------------ |
 | `name`              | By convention, the name of the element should match the source. |
 | `source`            | The name of the form field you want the style bound to.      |
-| `converter`         | [Please add description/purpose]                             |
-| `preview_converter` | [Please add description/purpose]                             |
-| `storage_key`       | [Please add description/purpose]                             |
-| `reader`            | [Please add description/purpose]                             |
+| `converter`         | Converts the value after reading or before saving to the DOM. |
+| `preview_converter` | Converts the value for the preview. Used for cases where the conversion logic is different between the two views. |
+| `storage_key`       | Optional variable name for value in the data storage. If no value is provided, the `name` attribute will be used. |
+| `reader`            | Reader used for parsing attributes and properties out of the DOM. Should not be used with read-only persistence_mode. |
 
 #### attribute
 
-The `<attribute>` element provides... [Please describe the purpose of this element.]
+The `<attribute>` element provides a mechanism to attach DOM attributes to template elements.
 
 | Attribute | Description                                                  |
 | --------- | ------------------------------------------------------------ |
-| `name`    | [Please add description/purpose as it applies to the code example above] |
-| `source`  | [Please add description/purpose as it applies to the code example above] |
+| `name`    | Unique name used for configuration merging, and the default value for storage_key if none is provided. |
+| `source`  | The name of the property or attribute in the DOM. Must be in snake_case. |
 
 #### css
 

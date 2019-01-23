@@ -15,7 +15,7 @@ The name of your configuration file should reflect the name of your content type
 ![Create config file](../images/step1-add-config-file.png)
 
 {: .bs-callout .bs-callout-info }
-The reason we suggest prefIxing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
+The reason we suggest prefixing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
 
 ## The `example_quote` configuration
 
@@ -31,7 +31,7 @@ The following configuration is from the Quote content type. An overview of these
         label="Quote"
         group="elements"
         component="Magento_PageBuilder/js/content-type"
-        preview_component="Magento_PageBuilder/js/content-type/preview"
+        preview_component="Example_PageBuilderQuote/js/content-type/example-quote/preview"
         master_component="Magento_PageBuilder/js/content-type/master"
         form="pagebuilder_example_quote_form"
         icon="icon-pagebuilder-heading"
