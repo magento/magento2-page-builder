@@ -35,7 +35,7 @@ The steps for creating the Quote content type are illustrated and described belo
 3. **Add component**: Create a JavaScript file that defines the behavior of your content type on the Admin stage (`preview.js`) and the storefront (`master.js`).
 4. **Add form**: Create a UI component form and a layout so Admin users can edit your content type within the Page Builder editor.
 5. **Add styles**: Create LESS files to style your content types when rendered in the Admin UI and on the storefront. 
-6. **Add icon**: Create an SVG icon to visually identify your content type within the Page Builder panel.
+6. **Add an icon**: Create an SVG icon to visually identify your content type within the Page Builder panel.
 
 ## Quote file structure
 

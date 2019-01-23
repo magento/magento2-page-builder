@@ -16,10 +16,10 @@ Conventions for adding content type templates are as follows.
 
   ```xml
   <appearances>
-    <appearance name="collage-left"...>
-    <appearance name="collage-centered"...>
-    <appearance name="collage-right"...>
-    <appearance name="poster" default="true" ...>
+      <appearance name="collage-left"...>
+      <appearance name="collage-centered"...>
+      <appearance name="collage-right"...>
+      <appearance name="poster" default="true" ...>
   </appearances>
   ```
 
@@ -33,8 +33,8 @@ The Quote example defines only one `appearance`. Therefore, by convention, set t
 
 ```xml
 <appearances>
-  <appearance name="default"
-  ...
+    <appearance name="default"
+    ...
 ```
 
 ![Create config file](../images/step2-add-templates.png)
@@ -43,13 +43,13 @@ These files can be blank initially; they just need to exist in their proper loca
 
 ```xml
 <appearances>
-  <appearance name="default"
+    <appearance name="default"
               default="true"
               preview_template="Example_PageBuilderQuote/content-type/example-quote/default/preview"
               render_template="Example_PageBuilderQuote/content-type/example-quote/default/master"
               reader="Magento_PageBuilder/js/master-format/read/configurable">
     <elements...>
-  </appearance>
+    </appearance>
 </appearances>
 ```
 
@@ -74,24 +74,24 @@ The Quote `preview_template`  (`preview.html`) is shown here in full, followed b
      class="pagebuilder-content-type" 
      css="data.main.css" 
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-  <render args="getOptions().template" />
-  <blockquote attr="data.quote.attributes" 
+    <render args="getOptions().template" />
+    <blockquote attr="data.quote.attributes" 
               ko-style="data.quote.style" 
               css="data.quote.css" 
               data-bind="liveEdit: { field: 'quote_text', placeholder: $t('Enter Quote') }">
-  </blockquote>
-  <div class="quote-author" 
+    </blockquote>
+    <div class="quote-author" 
        attr="data.author.attributes" 
        ko-style="data.author.style" 
        css="data.author.css" 
        data-bind="liveEdit: { field: 'quote_author', placeholder: $t('Enter Author') }">
-  </div>
-  <div class="quote-title" 
+    </div>
+    <div class="quote-title" 
        attr="data.author_title.attributes" 
        ko-style="data.author_title.style" 
        css="data.author_title.css" 
        data-bind="liveEdit: { field: 'quote_author_desc', placeholder: $t('Enter Description') }">
-  </div>
+    </div>
 </div>
 ```
 
@@ -104,8 +104,8 @@ The value for `attr` is derived from the `element` name in the configuration fil
 ```xml
 <!-- quote.xml -->
 <element name="quote">
-  <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-  <css name="quote_css"/>
+    <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+    <css name="quote_css"/>
 </element>
 ```
 
@@ -118,15 +118,15 @@ The `ko-style` attribute applies the `<style>` attributes from the form to a tem
 ```xml
 <!-- quote.xml -->
 <element name="main">
-  <style name="text_align" source="text_align"/>
-  <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-  <style name="border_color" source="border_color"/>
-  <style name="background_color" source="background_color"/>
-  <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-  <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-  <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-  <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-  ...
+    <style name="text_align" source="text_align"/>
+    <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+    <style name="border_color" source="border_color"/>
+    <style name="background_color" source="background_color"/>
+    <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+    <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+    <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+    <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+    ...
 </element>
 ```
 
@@ -173,23 +173,24 @@ The Quote `render_template` (`master.html`) is shown here in full. The same attr
 ```html
 <!--master.html-->
 <div attr="data.main.attributes">
-  <blockquote attr="data.quote.attributes" 
+    <blockquote class="quote-content"
+              attr="data.quote.attributes" 
               ko-style="data.quote.style" 
               css="data.quote.css" 
               html="data.quote.html">
-  </blockquote>
-  <div class="quote-author" 
+    </blockquote>
+    <div class="quote-author" 
        attr="data.author.attributes" 
        ko-style="data.author.style" 
        css="data.author.css" 
        html="data.author.html">
-  </div>
-  <div class="quote-title" 
+    </div>
+    <div class="quote-title" 
        attr="data.author_title.attributes" 
        ko-style="data.author_title.style" 
        css="data.author_title.css" 
        html="data.author_title.html">
-  </div>
+    </div>
 </div>
 ```
 
@@ -216,8 +217,8 @@ The `html` value is derived from the configuration `element` name  (`quote`) and
 
 ```xml
 <element name="quote">
-  <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-	...
+    <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+    ...
 </element>
 ```
 

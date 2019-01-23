@@ -1,6 +1,6 @@
 # Step 4: Add form
 
-In this step, we will create a UI component form. This form will give users another way to enter text for the Quote and style its appearance.
+In this step, we will create a UI component form. This form will give users another way to enter text for the Quote and style the text's appearance.
 
 ## About forms
 
@@ -47,7 +47,7 @@ In your configuration file, add your form name (without the .xml file extension)
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="example_quote"
+    <type name="example_quote"
         label="Quote"
         form="pagebuilder_example_quote_form"
         ...>
@@ -70,91 +70,91 @@ The purpose of each field is described as follows:
 | Quote         | A textarea for writing or pasting in the quote's text.       |
 | Author        | A text input field for the author's name.                    |
 | Description   | A text input field to describe the author's title or origin of the quote. |
-| CSS for Quote | A text input field for end-users to add css class names for styling the text in the Quote field. This option is detailed in [Step 5: Add styles](step-5-add-styles.md). |
+| CSS for Quote | A text input field for end-users to add CSS class names for styling the text in the Quote field. This option is detailed in [Step 5: Add styles](step-5-add-styles.md). |
 
 The Quote form is shown in full here for you to copy into your `pagebuilder_example_form.xml` file, followed by descriptions of the key parts.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form_with_background_attributes">
-  <argument name="data" xsi:type="array">
-    <item name="js_config" xsi:type="array">
-      <item name="provider" xsi:type="string">pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</item>
-    </item>
-    <item name="label" xsi:type="string" translate="true">Quote</item>
-  </argument>
-  <settings>
-    <namespace>pagebuilder_example_quote_form</namespace>
-    <deps>
-      <dep>pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</dep>
-    </deps>
-  </settings>
-  <dataSource name="pagebuilder_example_quote_form_data_source">
     <argument name="data" xsi:type="array">
-      <item name="js_config" xsi:type="array">
-        <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
-      </item>
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Quote</item>
     </argument>
-    <dataProvider name="pagebuilder_example_quote_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
-      <settings>
-        <requestFieldName/>
-        <primaryFieldName/>
-      </settings>
-    </dataProvider>
-  </dataSource>
-  <fieldset name="general" sortOrder="20">
     <settings>
-      <label/>
+        <namespace>pagebuilder_example_quote_form</namespace>
+        <deps>
+            <dep>pagebuilder_example_quote_form.pagebuilder_example_quote_form_data_source</dep>
+        </deps>
     </settings>
-    <field name="quote_text" sortOrder="10" formElement="textarea">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_text</dataScope>
-        <dataType>text</dataType>
-        <label translate="true">Quote</label>
-      </settings>
-    </field>
-    <field name="quote_author" sortOrder="20" formElement="input">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_author</dataScope>
-        <dataType>text</dataType>
-        <label translate="false">Author</label>
-      </settings>
-    </field>
-    <field name="quote_author_desc" sortOrder="30" formElement="input">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_author_desc</dataScope>
-        <dataType>text</dataType>
-        <label translate="false">Author Description</label>
-      </settings>
-    </field>
-    <field name="quote_css" sortOrder="40" formElement="input">
-      <argument name="data" xsi:type="array">
-        <item name="config" xsi:type="array">
-          <item name="source" xsi:type="string">page</item>
-        </item>
-      </argument>
-      <settings>
-        <dataScope>quote_css</dataScope>
-        <dataType>text</dataType>
-        <label translate="true">CSS for Quote</label>
-      </settings>
-    </field>
-  </fieldset>
+    <dataSource name="pagebuilder_example_quote_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
+            </item>
+        </argument>
+        <dataProvider name="pagebuilder_example_quote_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+            <settings>
+                <requestFieldName/>
+                <primaryFieldName/>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="20">
+        <settings>
+            <label/>
+        </settings>
+        <field name="quote_text" sortOrder="10" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                  <item name="source" xsi:type="string">page</item>
+                </item>
+            </argument>
+            <settings>
+                <dataScope>quote_text</dataScope>
+                <dataType>text</dataType>
+                <label translate="true">Quote</label>
+            </settings>
+        </field>
+        <field name="quote_author" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                  <item name="source" xsi:type="string">page</item>
+                </item>
+            </argument>
+            <settings>
+                <dataScope>quote_author</dataScope>
+                <dataType>text</dataType>
+                <label translate="false">Author</label>
+            </settings>
+        </field>
+        <field name="quote_author_desc" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                </item>
+            </argument>
+            <settings>
+                <dataScope>quote_author_desc</dataScope>
+                <dataType>text</dataType>
+                <label translate="false">Author Description</label>
+            </settings>
+        </field>
+        <field name="quote_css" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+              <item name="source" xsi:type="string">page</item>
+            </item>
+            </argument>
+            <settings>
+            <dataScope>quote_css</dataScope>
+            <dataType>text</dataType>
+            <label translate="true">CSS for Quote</label>
+            </settings>
+        </field>
+    </fieldset>
 </form>
 ```
 
@@ -183,9 +183,9 @@ Defines the data source for the field. The source` node's value corresponds to a
 
 ```xml
 <field name="quote_text" sortOrder="10" formElement="textarea">
-  <argument name="data" xsi:type="array">
+    <argument name="data" xsi:type="array">
     <item name="config" xsi:type="array">
-      <item name="source" xsi:type="string">page</item>
+        <item name="source" xsi:type="string">page</item>
     </item>
   </argument>
 ```
@@ -198,9 +198,9 @@ The `<settings>` element defines the data scope, data type, and label to use for
 
 ```xml
 <settings>
-  <dataScope>quote_text</dataScope>
-  <dataType>text</dataType>
-  <label translate="true">Quote</label>
+    <dataScope>quote_text</dataScope>
+    <dataType>text</dataType>
+    <label translate="true">Quote</label>
 </settings>
 ```
 
@@ -234,34 +234,34 @@ The following elements are from our `example_quote.xml` configuration. These ele
 
 ```xml
 <elements>
-  <element name="main">
-    <style name="text_align" source="text_align"/>
-    <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-    <style name="border_color" source="border_color"/>
-    <style name="background_color" source="background_color"/>
-    <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
-    <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
-    <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-    <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-    <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-    <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
-    <attribute name="name" source="data-role"/>
-    <attribute name="appearance" source="data-appearance"/>
-    <css name="css_classes"/>
-  </element>
-  <element name="quote">
-    <style name="text_align" source="text_align"/>
-    <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-    <css name="quote_css"/>
-  </element>
-  <element name="author">
-    <style name="text_align" source="text_align"/>
-    <html name="quote_author" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-  </element>
-  <element name="author_title">
-    <style name="text_align" source="text_align"/>
-    <html name="quote_author_desc" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-  </element>
+    <element name="main">
+        <style name="text_align" source="text_align"/>
+        <style name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+        <style name="border_color" source="border_color"/>
+        <style name="background_color" source="background_color"/>
+        <style name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+        <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+        <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+        <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+        <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
+        <style name="display" source="display" converter="Magento_PageBuilder/js/converter/style/display" preview_converter="Magento_PageBuilder/js/converter/style/preview/display"/>
+        <attribute name="name" source="data-role"/>
+        <attribute name="appearance" source="data-appearance"/>
+        <css name="css_classes"/>
+    </element>
+    <element name="quote">
+        <style name="text_align" source="text_align"/>
+        <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+        <css name="quote_css"/>
+    </element>
+    <element name="author">
+        <style name="text_align" source="text_align"/>
+        <html name="quote_author" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+    </element>
+    <element name="author_title">
+        <style name="text_align" source="text_align"/>
+        <html name="quote_author_desc" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+    </element>
 </elements>
 ```
 
@@ -308,8 +308,8 @@ For example, in our Quote configuration, we define an `<element>` named `quote` 
 ```xml
 <!-- from example_quote.xml -->
 <element name="quote">
-	...
-  <css name="quote_css"/>
+    ...
+    <css name="quote_css"/>
 </element>
 ```
 
@@ -318,16 +318,16 @@ The corresponding `quote_css` form field is shown here:
 ```xml
 <!-- from pagebuilder_example_quote_form.xml -->
 <field name="quote_css" sortOrder="40" formElement="input">
-  <argument name="data" xsi:type="array">
-    <item name="config" xsi:type="array">
-      <item name="source" xsi:type="string">page</item>
-    </item>
-  </argument>
-  <settings>
-    <dataScope>quote_css</dataScope>
-    <dataType>text</dataType>
-    <label translate="true">CSS for Quote</label>
-  </settings>
+    <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+            <item name="source" xsi:type="string">page</item>
+        </item>
+    </argument>
+    <settings>
+        <dataScope>quote_css</dataScope>
+        <dataType>text</dataType>
+        <label translate="true">CSS for Quote</label>
+    </settings>
 </field>
 ```
 
@@ -338,7 +338,7 @@ And the `css` binding is applied in the `preview.html` template, as shown here:
 <blockquote css="data.quote.css" ...></blockquote>
 ```
 
-In [Step 5: Add styles](step-5-add-styles.md), we will revisit the `css` attribute in detail to show how it is used to allow users to style templates with additional CSS classes. 
+In [Step 5: Add styles](step-5-add-styles.md), we will revisit the `css` attribute in detail to show how users can style templates with additional CSS classes.
 
 #### html
 
@@ -353,9 +353,9 @@ For example, as with the previous `css` binding, the Quote configuration defines
 ```xml
 <!-- from example_quote.xml -->
 <element name="quote">
-  ...
-  <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-  <css name="quote_css"/>
+    ...
+    <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+    <css name="quote_css"/>
 </element>
 ```
 
@@ -364,16 +364,16 @@ The corresponding `quote_text` form field is shown here:
 ```xml
 <!-- from pagebuilder_example_quote_form.xml -->
 <field name="quote_text" sortOrder="10" formElement="textarea">
-  <argument name="data" xsi:type="array">
-    <item name="config" xsi:type="array">
-      <item name="source" xsi:type="string">page</item>
-    </item>
-  </argument>
-  <settings>
-    <dataScope>quote_text</dataScope>
-    <dataType>text</dataType>
-    <label translate="true">Quote</label>
-  </settings>
+    <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+            <item name="source" xsi:type="string">page</item>
+        </item>
+    </argument>
+    <settings>
+        <dataScope>quote_text</dataScope>
+        <dataType>text</dataType>
+        <label translate="true">Quote</label>
+    </settings>
 </field>
 ```
 

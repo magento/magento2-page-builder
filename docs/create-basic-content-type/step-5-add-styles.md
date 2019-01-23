@@ -12,13 +12,13 @@ Page Builder provides two ways to style your content type's HTML templates using
 
 ### `class` attribute
 
-The `class` attribute is of course the typical way to style HTML templates. In Page Builder, you can think of using the `class` attribute as the way to define the "built-in" styles for your content type. In contrast, using the `css` attribute lets users add or change certain CSS styles to customize your content type.
+The `class` attribute is the typical, non-dynamic way to including static class styles in HTML templates. This means the `class` will always be present to define the "built-in" styles for your content type. Styles assigned to `class` cannot be changed by the content editor. In contrast, using the `css` attribute lets users add or change certain CSS class styles to customize your content type.
 
 ### `css` attribute
 
 The `css` attribute is how Page Builder gives end-users the option to customize the appearance of your content type using CSS classes. As the developer, you determine the list of CSS classes you want to provide as options. 
 
-Unlike the `class` attribute, which references a CSS style directly, the `css` attribute provides a binding to a form field in your content type. End-users then use that form field to add the CSS class values that are in turn applied to the HTML template.
+Unlike the `class` attribute, which always includes the defined classes, the `css` attribute provides a binding to a form field in your content type. End-users then use that form field to add the CSS class values that are in turn applied to the HTML template.
 
 The following diagram details how the `css` binding works starting from the HTML template (`preview.html`), the configuration (`example_quote.xml`), the form field from `pagebuilder_example_quote_form.xml`, to the CSS stylesheet (`_import.less`) and finally to the rendered HTML. The highlighted parts of the code and the arrows between them should give you a good idea for how things are connected to make the `css` binding work. 
 
@@ -32,11 +32,9 @@ The `pagebuilder_base_form` has a form field for the `css` attribute already bui
 
 As the notice below the field indicates, the end-user can enter multiple classes, which are all then applied to the element in the template to which the `css` attribute is bound.
 
-Using the `css` attribute in your templates is completely optional. But if you want to give end-users some custom styling options using CSSS, it provides an easy way to do so as you will learn from our Quote control later in this topic.
-
 ## Add LESS files
 
-The first thing we need to do is add our LESS files to appropriate places in our module, according to convention. 
+The first thing we need to do is add our LESS files to appropriate places in our module, according to convention. The conventions for LESS files and how they work within Page Builder are identical to how they work in core Magento.
 
 To ensure that Magento can merge your content type styles with all the other styles, you need to add a single LESS file named `_module.less` to both your `adminhtml/web/css/source` and `frontend/web/css/source` directories as shown here:
 
@@ -44,7 +42,7 @@ To ensure that Magento can merge your content type styles with all the other sty
 
 The `_module.less` file serves as the facade for importing your content type's styles. By convention, it should only contain `@import` statements for your content type's LESS files, such as:
 
-```less
+```css
 @import "content-type/example-quote/_import.less";
 ```
 
@@ -60,7 +58,7 @@ These files will contain the actual styles for our Quote control type.
 
 You can name your LESS file (or files) whatever you want as long as you import them using the correct path and name in your `_module.less` files. For example, since we are only using one file (`_imports.less`) in each area, the contents of our `_module.less` files for both areas are identical:
 
-```less
+```css
 @import "content-type/example-quote/_import.less";
 ```
 
@@ -70,7 +68,7 @@ If you want to break your styles into multiple LESS files, feel free to do so as
 
 The `class` styles used for our Quote content type are provided in full here:
 
-```less
+```css
 // Content type's base styling
 blockquote {
   .quote-content {
@@ -125,19 +123,19 @@ These styles are referenced by the `class` attributes in both our Admin preview 
 ```html
 <!--preview.html-->
 <div attr="data.main.attributes" ko-style="data.main.style" class="pagebuilder-content-type" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-  <render args="getOptions().template" />
-  <blockquote class="quote-content" css="data.quote.css" attr="data.quote.attributes" ko-style="data.quote.style" data-bind="liveEdit: { field: 'quote_text', placeholder: $t('Enter Quote') }"></blockquote>
-  <div class="quote-author" attr="data.author.attributes" ko-style="data.author.style" data-bind="liveEdit: { field: 'quote_author', placeholder: $t('Enter Author') }"></div>
-  <div class="quote-description" attr="data.author_title.attributes" ko-style="data.author_title.style" data-bind="liveEdit: { field: 'quote_author_desc', placeholder: $t('Enter Description') }"></div>
+    <render args="getOptions().template" />
+    <blockquote class="quote-content" css="data.quote.css" attr="data.quote.attributes" ko-style="data.quote.style" data-bind="liveEdit: { field: 'quote_text', placeholder: $t('Enter Quote') }"></blockquote>
+    <div class="quote-author" attr="data.author.attributes" ko-style="data.author.style" data-bind="liveEdit: { field: 'quote_author', placeholder: $t('Enter Author') }"></div>
+    <div class="quote-description" attr="data.author_title.attributes" ko-style="data.author_title.style" data-bind="liveEdit: { field: 'quote_author_desc', placeholder: $t('Enter Description') }"></div>
 </div>
 ```
 
 ```html
 <!--master.html-->
 <div attr="data.main.attributes">
-  <blockquote class="quote-content" attr="data.quote.attributes" ko-style="data.quote.style" css="data.quote.css" html="data.quote.html"></blockquote>
-  <div class="quote-author" attr="data.author.attributes" ko-style="data.author.style" css="data.author.css" html="data.author.html"></div>
-  <div class="quote-description" attr="data.author_title.attributes" ko-style="data.author_title.style" css="data.author_title.css" html="data.author_title.html"></div>
+    <blockquote class="quote-content" attr="data.quote.attributes" ko-style="data.quote.style" css="data.quote.css" html="data.quote.html"></blockquote>
+    <div class="quote-author" attr="data.author.attributes" ko-style="data.author.style" css="data.author.css" html="data.author.html"></div>
+    <div class="quote-description" attr="data.author_title.attributes" ko-style="data.author_title.style" css="data.author_title.css" html="data.author_title.html"></div>
 </div>
 ```
 
@@ -153,7 +151,7 @@ For our Quote content type, we will provide users with the option to change the 
 
 To change the color of our Quote's text, we will define a few color CSS classes to use as follows (formatting is semi-compressed to save space):
 
-```less
+```css
 // Content type's CSS classes for end-user styling options
 .black-quote { color: #333333; &:before { color: #333333; } }
 .blue-quote { color: #007ab9; &:before { color: #71adcc; } }
@@ -170,11 +168,11 @@ The simplest way to provide end-user CSS styling for our Quote is to add a text 
 
 ```xml
 <field name="quote_css" sortOrder="40" formElement="input">
-  <settings>
-    <dataType>text</dataType>
-    <label translate="true">Quote Color</label>
-    <notice translate="true">Classes you can enter include blue-quote, green-quote, red-quote, purple-quote, black-quote</notice>
-  </settings>
+    <settings>
+        <dataType>text</dataType>
+        <label translate="true">Quote Color</label>
+        <notice translate="true">Classes you can enter include blue-quote, green-quote, red-quote, purple-quote, black-quote</notice>
+    </settings>
 </field>
 ```
 
@@ -184,43 +182,43 @@ Instead, we will use a simple `selector` to define and limit the color options a
 
 ```xml
 <field name="quote_css" sortOrder="40" formElement="select">
-  <argument name="data" xsi:type="array">
-    <item name="config" xsi:type="array">
-      <item name="default" xsi:type="string">black-quote</item>
-    </item>
-  </argument>
-  <settings>
-    <dataType>text</dataType>
-    <label translate="true">Quote Color</label>
-  </settings>
-  <formElements>
-    <select>
-      <settings>
-        <options>
-          <option name="0" xsi:type="array">
-            <item name="value" xsi:type="string">black-quote</item>
-            <item name="label" xsi:type="string" translate="true">Black</item>
-          </option>
-          <option name="1" xsi:type="array">
-            <item name="value" xsi:type="string">blue-quote</item>
-            <item name="label" xsi:type="string" translate="true">Blue</item>
-          </option>
-          <option name="2" xsi:type="array">
-            <item name="value" xsi:type="string">green-quote</item>
-            <item name="label" xsi:type="string" translate="true">Green</item>
-          </option>
-          <option name="3" xsi:type="array">
-            <item name="value" xsi:type="string">red-quote</item>
-            <item name="label" xsi:type="string" translate="true">Red</item>
-          </option>
-          <option name="4" xsi:type="array">
-            <item name="value" xsi:type="string">purple-quote</item>
-            <item name="label" xsi:type="string" translate="true">Purple</item>
-          </option>
-        </options>
-      </settings>
-    </select>
-  </formElements>
+    <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+            <item name="default" xsi:type="string">black-quote</item>
+        </item>
+    </argument>
+    <settings>
+        <dataType>text</dataType>
+        <label translate="true">Quote Color</label>
+    </settings>
+    <formElements>
+        <select>
+            <settings>
+                <options>
+                    <option name="0" xsi:type="array">
+                        <item name="value" xsi:type="string">black-quote</item>
+                        <item name="label" xsi:type="string" translate="true">Black</item>
+                    </option>
+                    <option name="1" xsi:type="array">
+                        <item name="value" xsi:type="string">blue-quote</item>
+                        <item name="label" xsi:type="string" translate="true">Blue</item>
+                    </option>
+                    <option name="2" xsi:type="array">
+                        <item name="value" xsi:type="string">green-quote</item>
+                        <item name="label" xsi:type="string" translate="true">Green</item>
+                    </option>
+                    <option name="3" xsi:type="array">
+                        <item name="value" xsi:type="string">red-quote</item>
+                        <item name="label" xsi:type="string" translate="true">Red</item>
+                    </option>
+                    <option name="4" xsi:type="array">
+                        <item name="value" xsi:type="string">purple-quote</item>
+                        <item name="label" xsi:type="string" translate="true">Purple</item>
+                    </option>
+                </options>
+            </settings>
+        </select>
+    </formElements>
 </field>
 ```
 
@@ -241,9 +239,9 @@ To create the binding between the CSS class values selected in our `quote_css` f
 
 ```xml
 <element name="quote">
-  <style name="text_align" source="text_align"/>
-  <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
-  <css name="quote_css"/>
+    <style name="text_align" source="text_align"/>
+    <html name="quote_text" converter="Magento_PageBuilder/js/converter/html/tag-escaper"/>
+    <css name="quote_css"/>
 </element>
 ```
 
@@ -252,9 +250,9 @@ To create the binding between the CSS class values selected in our `quote_css` f
 ```html
 <!--preview.html-->
 <div attr="data.main.attributes" ko-style="data.main.style" class="pagebuilder-content-type" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-  <blockquote class="quote-content" css="data.quote.css" attr="data.quote.attributes" ko-style="data.quote.style" data-bind="liveEdit: { field: 'quote_text', placeholder: $t('Enter Quote') }"></blockquote>
-  <div class="quote-author" attr="data.author.attributes" ko-style="data.author.style" data-bind="liveEdit: { field: 'quote_author', placeholder: $t('Enter Author') }"></div>
-  <div class="quote-description" attr="data.author_title.attributes" ko-style="data.author_title.style" data-bind="liveEdit: { field: 'quote_author_desc', placeholder: $t('Enter Description') }"></div>
+    <blockquote class="quote-content" css="data.quote.css" attr="data.quote.attributes" ko-style="data.quote.style" data-bind="liveEdit: { field: 'quote_text', placeholder: $t('Enter Quote') }"></blockquote>
+    <div class="quote-author" attr="data.author.attributes" ko-style="data.author.style" data-bind="liveEdit: { field: 'quote_author', placeholder: $t('Enter Author') }"></div>
+    <div class="quote-description" attr="data.author_title.attributes" ko-style="data.author_title.style" data-bind="liveEdit: { field: 'quote_author_desc', placeholder: $t('Enter Description') }"></div>
 </div>
 ```
 
@@ -262,7 +260,7 @@ To create the binding between the CSS class values selected in our `quote_css` f
 
 The `_import.less` file for the Admin preview template is provided here in full: 
 
-```less
+```css
 // Content type's base styling
 blockquote {
   .quote-content {
@@ -321,7 +319,7 @@ div {
 
 The `_import.less` file for the master format storefront template is provided here in full:
 
-```less
+```css
 // Content type's base styling
 blockquote {
   &.quote-text {

@@ -1,4 +1,4 @@
-# Step 6: Add icon
+# Step 6: Add an icon
 
 In this last step, we will create a panel icon for our Quote content type so that it has a unique but visually consistent identity alongside Page Builder's native font icons. When finished, the panel icon for our Quote content type will look something like this:
 
@@ -16,7 +16,7 @@ A summary of the steps for creating and adding this icon are listed here:
 
 ## Create your icon
 
-As mentioned, you can create a PNG or an SVG icon, but we recommend creating SVG icons for their smaller size and resolution independent rendering in browsers and mobile devices. Use the following specifications to create a panel icon that integrates seemlessly with the existing panel icons.
+As mentioned, you can create a PNG or an SVG icon, but we recommend creating SVG icons because they are smaller and render more clearly on high-resolution screens, including mobile devices. Use the following specifications to create a panel icon that integrates seamlessly with the existing panel icons.
 
 ![Create config file](../images/step6-icon-properties.png)
 
@@ -26,9 +26,9 @@ When finished, add your icon to your `images` directory as follows:
 
 ![Create config file](../images/step6-add-icon.png)
 
-## Create CSS class for icon
+## Create a CSS class for the icon
 
-The next step to integrating your icon into the panel is creating a CSS class that references your SVG file. This class should be added to your LESS file in `adminhtml` as shown here:
+Next we'll create a CSS class that references your SVG file. Add this class to your LESS file in `adminhtml` as shown here:
 
 ![Create config file](../images/step6-icon-style.png)
 
@@ -55,13 +55,13 @@ When deployed, your icon images are linked from `pub/static` as shown here:
 
 ![Create config file](../images/step6-icon-link-static.png)
 
-## Add icon class to config file
+## Add the icon class to the config file
 
 The last step is to add our icon's class name to our config file. Previous to this step, we used an existing icon class: `icon-pagebuilder-heading`. Now we can replace this class with our new class: `icon-pagebuilder-quote`, as shown here:  
 
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="example_quote"
+    <type name="example_quote"
         label="Quote"
         group="elements"
         component="Magento_PageBuilder/js/content-type"
@@ -71,7 +71,7 @@ The last step is to add our icon's class name to our config file. Previous to th
         icon="icon-pagebuilder-quote"
         sortOrder="21"
         translate="label"
-  >
+    >
 ```
 
 That's it. Now you can regenerate your static assets, empty your browser cache, and do a hard reload of your Admin page to see your new icon in the panel. 

@@ -26,9 +26,9 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Step 1: Add configuration](../create-basic-content-type/step-1-add-configuration.md)
 * [Step 2: Add templates](../create-basic-content-type/step-2-add-templates.md)
 * [Step 3: Add components](../create-basic-content-type/step-3-add-components.md)
-* [Step 4: Add editor](../create-basic-content-type/step-4-add-form.md)
+* [Step 4: Add form](../create-basic-content-type/step-4-add-form.md)
 * [Step 5: Add styles](../create-basic-content-type/step-5-add-styles.md)
-* [Step 6: Add icon](../create-basic-content-type/step-6-add-icon.md)
+* [Step 6: Add an icon](../create-basic-content-type/step-6-add-icon.md)
 * [What's next](../create-basic-content-type/whats-next.md)
 
 ### Configurations
