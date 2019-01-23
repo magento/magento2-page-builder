@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/utils/loader";
 import ContentTypeConfigInterface from "../content-type-config.types";
 import ContentTypeInterface from "../content-type.types";
+import loadModule from "../utils/loader";
 import observableUpdaterFactory from "./observable-updater-factory";
 import Preview from "./preview";
 import PreviewCollection from "./preview-collection";

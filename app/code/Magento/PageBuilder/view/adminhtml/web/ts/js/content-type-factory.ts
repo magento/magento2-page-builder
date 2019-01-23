@@ -4,8 +4,8 @@
  */
 
 import events from "Magento_PageBuilder/js/events";
-import loadModule from "Magento_PageBuilder/js/utils/loader";
 import _ from "underscore";
+import loadModule from "utils/loader";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import ContentTypeConfigInterface from "./content-type-config.types";

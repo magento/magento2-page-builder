@@ -7,11 +7,11 @@
         "test:static:log": "npm run test:static -- -o ./static-error-log.xml -t junit",
         "ts:errors": "tsc --noEmit",
         "ts:errors:watch": "npm run ts:errors -- -watch",
-        "ts:lint": "node_modules/tslint/bin/tslint --fix --project .",
+        "ts:lint": "tslint --fix --project .",
         "ts:defs": "node ./dev/dts-generator.js",
-        "ts:build": "npx babel app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/ --out-dir app/code/Magento/PageBuilder/view/adminhtml/web/js/ --extensions '.ts,.tsx' --source-maps",
+        "ts:build": "babel app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/ --out-dir app/code/Magento/PageBuilder/view/adminhtml/web/js/ --extensions '.ts,.tsx' --source-maps",
         "ts:watch": "npm run ts:build -- --watch",
-        "start": "npx concurrently -n \"compiler,errors\" -c \"green,red\" \"npm run ts:watch\" \"npm run ts:errors:watch\""
+        "start": "concurrently -n 'compiler,errors' -c 'green,red' 'npm run ts:watch' 'npm run ts:errors:watch'"
     },
     "repository": {
         "type": "git",

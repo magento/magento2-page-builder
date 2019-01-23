@@ -5,9 +5,9 @@
 
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import loadReader from "Magento_PageBuilder/js/utils/loader";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
+import loadReader from "utils/loader";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeConfigInterface from "./content-type-config.types";

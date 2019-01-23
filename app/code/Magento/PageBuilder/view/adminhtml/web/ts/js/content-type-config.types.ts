@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import ConfigFieldInterface from "./config-field.types";
-
 /**
  * @api
  */
@@ -24,6 +22,12 @@ export default interface ContentTypeConfigInterface {
     allowed_parents: string[];
     is_visible: boolean;
     additional_data: AdditionalDataConfigInterface;
+}
+
+export interface ConfigFieldInterface {
+    [key: string]: {
+        default: null | string | number;
+    };
 }
 
 export interface ContentTypeConfigAppearanceElementInterface {

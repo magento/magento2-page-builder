@@ -60,7 +60,7 @@ require('dts-generator').default({
             let modifiedContents = contents
                 .replace(/.*\/\*\*\n.*Copyright © Magento.*\n.*\n.*\*\//gm, '') // Strip all Magento copyright
                 .replace(/.*\/\*\*\n.*@api.*\n.*\*\//gm, ''); // Strip all @api comments
-            modifiedContents = `${copyrightComment}\n/* tslint:disable */\n${modifiedContents}`;
+            modifiedContents = `${copyrightComment}\n${modifiedContents}`;
             fs.writeFile(typesFile, prettier.format(modifiedContents, {parser: "typescript"}), null, () => {
                 console.log("Type definition generation completed.");
                 process.exit();

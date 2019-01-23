@@ -125,6 +125,6 @@ export interface ContentTypeMoveParamsInterface {
 /**
  * @api
  */
-export default interface PreviewDataUpdateAfterParamsInterface {
+export interface PreviewDataUpdateAfterParamsInterface {
     preview: Preview;
 }
