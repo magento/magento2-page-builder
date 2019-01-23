@@ -170,6 +170,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         optionsMenu = optionsMenu.first();
       }
 
+      var middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2; // if there are space for moving options menu to the middle
+
+      if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
+        optionsMenu.parent().addClass("pagebuilder-options-middle");
+      }
+
       optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
@@ -200,6 +206,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
 
           optionsMenu.parent().removeClass("pagebuilder-options-visible");
+
+          _underscore.delay(function () {
+            optionsMenu.parent().removeClass("pagebuilder-options-middle");
+          }, 200);
+
           (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
         }
       }, 100); // 100 ms delay to allow for users hovering over other elements

@@ -21,6 +21,7 @@ import Edit from "../content-type-menu/edit";
 import Option from "../content-type-menu/option";
 import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
+import Toolbar from "../content-type-toolbar";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
@@ -42,6 +43,7 @@ export default class Preview {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
+    public toolbar?: Toolbar;
 
     /**
      * @deprecated
@@ -183,14 +185,20 @@ export default class Preview {
 
         // Ensure no other options panel is displayed
         $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-
         this.mouseover = true;
         this.mouseoverContext = context;
-        const currentTarget = event.currentTarget;
+        const currentTarget = event.currentTarget as HTMLElement;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
+        }
+
+        const middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2;
+
+        // if there are space for moving options menu to the middle
+        if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
+            optionsMenu.parent().addClass("pagebuilder-options-middle");
         }
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");
@@ -221,6 +229,9 @@ export default class Preview {
                 }
 
                 optionsMenu.parent().removeClass("pagebuilder-options-visible");
+                _.delay(() => {
+                    optionsMenu.parent().removeClass("pagebuilder-options-middle");
+                }, 200);
                 $(currentTarget).removeClass("pagebuilder-content-type-active");
             }
         }, 100); // 100 ms delay to allow for users hovering over other elements

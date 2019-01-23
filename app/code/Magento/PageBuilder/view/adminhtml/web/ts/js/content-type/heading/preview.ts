@@ -20,7 +20,6 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    public toolbar: Toolbar;
     private element: Element;
 
     /**

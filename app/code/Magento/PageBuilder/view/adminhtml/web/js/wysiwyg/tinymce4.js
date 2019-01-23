@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore"], function (_jquery, _events, _setup, _events2, _underscore) {
+define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_mce/setup", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/utils/check-stage-full-screen"], function (_jquery, _events, _setup, _events2, _underscore, _checkStageFullScreen) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -81,10 +81,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
       this.wysiwygAdapter.eventBus.attachEventHandler(_events.afterChangeContent, this.onChangeContent.bind(this)); // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
 
-      _events2.on("form:" + this.contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this)); // Clear padding on stage after fullscreen mode is toggled
-
-
-      _events2.on("stage:" + this.stageId + ":fullScreenModeChangeAfter", this.revertFullScreenPadding.bind(this));
+      _events2.on("form:" + this.contentTypeId + ":saveAfter", this.setContentFromDataStoreToWysiwyg.bind(this));
     }
     /**
      * @returns {WysiwygInstanceInterface}
@@ -113,7 +110,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       _underscore.defer(function () {
         _this.getFixedToolbarContainer().find(".mce-tinymce-inline").css("min-width", _this.config.adapter_config.minToolbarWidth + "px");
 
-        _underscore.delay(_this.invertInlineEditorToAccommodateOffscreenToolbar.bind(_this), 100);
+        _this.invertInlineEditorToAccommodateOffscreenToolbar();
       });
     };
     /**
@@ -125,8 +122,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       var saveContent = _underscore.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100);
 
       saveContent();
-
-      _underscore.delay(this.invertInlineEditorToAccommodateOffscreenToolbar.bind(this), 100);
+      this.invertInlineEditorToAccommodateOffscreenToolbar();
     };
     /**
      * Called for the onBlur events
@@ -135,7 +131,7 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.onBlur = function onBlur() {
       this.clearSelection();
-      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").removeClass("transform-up").css("transform", "");
+      this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").css("transform", "");
 
       _events2.trigger("stage:interactionStop");
     };
@@ -175,46 +171,24 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
 
     _proto.invertInlineEditorToAccommodateOffscreenToolbar = function invertInlineEditorToAccommodateOffscreenToolbar() {
-      var _this2 = this;
-
       if (this.config.adapter_config.mode !== "inline") {
         return;
       }
 
-      var $stage = (0, _jquery)("#" + this.stageId);
-      var $fullScreenStageWrapper = $stage.closest(".stage-full-screen");
-      var isInFullScreenMode = !!$fullScreenStageWrapper.length;
       var $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
 
-      if (!isInFullScreenMode) {
-        $inlineToolbar.addClass("transform-up");
+      if (!$inlineToolbar.length) {
         return;
       }
 
-      _underscore.delay(function () {
-        if (!$inlineToolbar.length) {
-          return;
-        }
+      var inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
 
-        var inlineWysiwygClientRectTop = _this2.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
+      if (!(0, _checkStageFullScreen)(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
+        $inlineToolbar.css("transform", "translateY(-100%)");
+        return;
+      }
 
-        if ($inlineToolbar.height() < inlineWysiwygClientRectTop) {
-          // inline toolbar not out of bounds; continue
-          $inlineToolbar.addClass("transform-up");
-          return;
-        }
-
-        $inlineToolbar.css("transform", "translateY(" + _this2.getFixedToolbarContainer().height() + "px)");
-      }, 100);
-    };
-    /**
-     * Revert padding previously applied for accommodating inline wysiwyg toolbar overflowing fixed viewport
-     * in fullscreen mode
-     */
-
-
-    _proto.revertFullScreenPadding = function revertFullScreenPadding() {
-      (0, _jquery)("#" + this.stageId).css("paddingTop", "");
+      $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
     };
     /**
      * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings

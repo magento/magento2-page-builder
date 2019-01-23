@@ -11,6 +11,7 @@ import _ from "underscore";
 import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config";
 import DataStore from "../data-store";
+import CheckStageFullScreen from "../utils/check-stage-full-screen";
 import WysiwygInterface from "./wysiwyg-interface";
 
 /**
@@ -113,9 +114,6 @@ export default class Wysiwyg implements WysiwygInterface {
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
         events.on(`form:${this.contentTypeId}:saveAfter`, this.setContentFromDataStoreToWysiwyg.bind(this));
-
-        // Clear padding on stage after fullscreen mode is toggled
-        events.on(`stage:${this.stageId}:fullScreenModeChangeAfter`, this.revertFullScreenPadding.bind(this));
     }
 
     /**
@@ -142,7 +140,7 @@ export default class Wysiwyg implements WysiwygInterface {
                 .find(".mce-tinymce-inline")
                 .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
 
-            _.delay(this.invertInlineEditorToAccommodateOffscreenToolbar.bind(this), 100);
+            this.invertInlineEditorToAccommodateOffscreenToolbar();
         });
     }
 
@@ -152,7 +150,7 @@ export default class Wysiwyg implements WysiwygInterface {
     private onChangeContent() {
         const saveContent = _.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100);
         saveContent();
-        _.delay(this.invertInlineEditorToAccommodateOffscreenToolbar.bind(this), 100);
+        this.invertInlineEditorToAccommodateOffscreenToolbar();
     }
 
     /**
@@ -164,7 +162,6 @@ export default class Wysiwyg implements WysiwygInterface {
         this.getFixedToolbarContainer()
             .removeClass("pagebuilder-toolbar-active")
             .find(".mce-tinymce-inline")
-            .removeClass("transform-up")
             .css("transform", "");
 
         events.trigger("stage:interactionStop");
@@ -210,38 +207,19 @@ export default class Wysiwyg implements WysiwygInterface {
             return;
         }
 
-        const $stage = $(`#${this.stageId}`);
-        const $fullScreenStageWrapper = $stage.closest(".stage-full-screen");
-        const isInFullScreenMode = !!$fullScreenStageWrapper.length;
         const $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
 
-        if (!isInFullScreenMode) {
-            $inlineToolbar.addClass("transform-up");
+        if (!$inlineToolbar.length) {
             return;
         }
 
-        _.delay(() => {
+        const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
 
-            if (!$inlineToolbar.length) {
-                return;
-            }
-
-            const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
-
-            if ($inlineToolbar.height() < inlineWysiwygClientRectTop) { // inline toolbar not out of bounds; continue
-                $inlineToolbar.addClass("transform-up");
-                return;
-            }
-            $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
-        }, 100);
-    }
-
-    /**
-     * Revert padding previously applied for accommodating inline wysiwyg toolbar overflowing fixed viewport
-     * in fullscreen mode
-     */
-    private revertFullScreenPadding() {
-        $(`#${this.stageId}`).css("paddingTop", "");
+        if (!CheckStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
+            $inlineToolbar.css("transform", "translateY(-100%)");
+            return;
+        }
+        $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
     }
 
     /**
