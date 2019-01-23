@@ -1,14 +1,14 @@
 # Step 6: Add an icon
 
-In this last step, we will create a panel icon for our Quote content type so that it has a unique but visually consistent identity alongside Page Builder's native font icons. When finished, the panel icon for our Quote content type will look something like this:
+In this last step, we will create a panel icon for our Quote content type so that it has a unique but visually consistent identity alongside Page Builder's native font icons. When finished, the panel icon for our Quote content type will look like this:
 
 ![Create config file](../images/step6-quote-panel-icon.png)
 
 ## About icons
 
-The icons used for Page Builder's built-in content types are actually font icons. You could create your own font icons and use those within your module in a similar manner, but we recommend a simpler, more straightforward way by using SVG or PNG images instead.
+The icons used for Page Builder's built-in content types are actually font icons. Although you could create your own font icons and use those within your module, we recommend a using SVG or PNG images instead.
 
-A summary of the steps for creating and adding this icon are listed here:
+To create and add an icon, you must:
 
 1. Create your SVG or PNG icon.
 2. Create a CSS class for the icon.
