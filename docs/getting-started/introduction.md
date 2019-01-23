@@ -61,7 +61,6 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Architecture](../reference/architecture.md)
 * [Events](../reference/events.md)
 * [Knockout bindings](../reference/knockout-bindings.md)
-* [Master format](../reference/master-format.md)
 
 ### Migration
 
