@@ -68,6 +68,8 @@ class TreeConverter
      * @param string $string
      *
      * @return string
+     * @throws NoSuchEntityException
+     * @throws UnableMigrateWithOutParentException
      */
     public function convert(string $string) : string
     {
@@ -90,6 +92,8 @@ class TreeConverter
      * @param array $children
      *
      * @return string
+     * @throws NoSuchEntityException
+     * @throws UnableMigrateWithOutParentException
      */
     private function convertTreeItem(array $itemData, array $additionalData = [], array $children = []) : string
     {
@@ -152,6 +156,8 @@ class TreeConverter
      * @param array $itemAdditionalData
      *
      * @return string
+     * @throws NoSuchEntityException
+     * @throws UnableMigrateWithOutParentException
      */
     private function processItemRendering(
         RendererInterface $renderer,
@@ -199,6 +205,7 @@ class TreeConverter
      * @param array $itemAdditionalData
      * @return string
      * @throws UnableMigrateWithOutParentException
+     * @throws NoSuchEntityException
      */
     private function handleRenderException(
         \Exception $exception,

@@ -17,6 +17,7 @@ class MixedToPageBuilderTest extends \PHPUnit\Framework\TestCase
     public function testConvert($originalContentFileName, $migratedContentFileName)
     {
         $objectManager = Bootstrap::getObjectManager();
+        /* @var \Magento\PageBuilderDataMigration\Setup\DataConverter\MixedToPageBuilder $mixedToPageBuilderConverter*/
         $mixedToPageBuilderConverter = $objectManager->create(
             \Magento\PageBuilderDataMigration\Setup\DataConverter\MixedToPageBuilder::class
         );
