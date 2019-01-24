@@ -4,6 +4,7 @@
  */
 
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -31,8 +32,9 @@ export default class BorderStyleDefault implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        if (data[name] && data[name] !== "_default") {
-            return data[name].toString();
+        const value = get<string>(data, name);
+        if (value && value !== "_default") {
+            return value;
         }
     }
 }

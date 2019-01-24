@@ -5,6 +5,7 @@
 
 import {escape, unescape} from "underscore";
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 export default class TagEscaper implements ConverterInterface {
@@ -28,6 +29,6 @@ export default class TagEscaper implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return escape(data[name].toString());
+        return escape(get(data, name));
     }
 }

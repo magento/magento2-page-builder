@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 import ContentTypeInterface from "./content-type";
-import ContentTypeCollectionInterface from "./content-type-collection";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
 
 /**
  * @api
