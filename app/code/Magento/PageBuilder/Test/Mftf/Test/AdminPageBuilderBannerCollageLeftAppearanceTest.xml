@@ -305,25 +305,6 @@
             <argument name="pageNamePrefix" value="banner"/>
         </actionGroup>
     </test>
-    <test name="BannerCollageLeftContentCanWordWrap" extends="BannerPosterContentCanWordWrap">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Banner"/>
-            <title value="Collage Left - Banner content can wrap words to multiple lines"/>
-            <description value="A user can see banner collage left content word wrap to multiple lines"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5632"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCollageLeft"/>
-            <group value="pagebuilder-wordWrap"/>
-        </annotations>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
-        </actionGroup>
-        <comment userInput="keyForRemoval" stepKey="duplicateColumn"/>
-    </test>
     <test name="BannerCollageLeftButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
@@ -1362,5 +1343,57 @@
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">$overlayBorderRadiusStorefront2</actualResult>
         </assertEquals>
+    </test>
+    <test name="BannerOverlayAndButtonDoNotGoOutsideContainerOnCollageLeftAppearance" extends="BannerOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Banner Overlay and Button do not go outside container on collage left appearance"/>
+            <description value="User should be able to place a banner with Collage Left appearance inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5818"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateBannerOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="element" value="BannerOnBackend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonCollage" stepKey="validateBannerOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="element" value="BannerOnFrontend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
+    <test name="BannerCollageLeftAlignmentInheritance" extends="BannerPosterAlignmentInheritance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Collage Left - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6017"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCollageLeft"/>
+        </annotations>
+        <!-- Fill Out Banner Edit Panel -->
+        <comment userInput="Fill Out Banner Edit Panel" stepKey="commentFillBannerEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        </actionGroup>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-30))" stepKey="buttonMinusOverlayMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-30))" stepKey="overlayMinusButtonMinusPadding"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-30))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-30))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
     </test>
 </tests>

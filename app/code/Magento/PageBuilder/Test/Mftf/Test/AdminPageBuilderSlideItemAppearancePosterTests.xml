@@ -235,53 +235,6 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.messageContent('1', PageBuilderSlideItemContent_Slide1.value)}}" stepKey="seeMessageContentStorefront"/>
     </test>
-    <test name="SlideItemPosterContentCanWordWrap" extends="BannerPosterContentCanWordWrap">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Slider"/>
-            <title value="Poster - Slide content can wrap words to multiple lines"/>
-            <description value="A user can see slide poster content word wrap to multiple lines"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5633"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-slide"/>
-            <group value="pagebuilder-slideItemPoster"/>
-            <group value="pagebuilder-wordWrap"/>
-        </annotations>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="content" value="{{PageBuilderMessageProperty_WordBreak.value}}"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
-            <argument name="section" value="SlideOnBackend"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
-            <argument name="page" value="SlideOnBackend"/>
-            <argument name="height" value="110"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
-            <argument name="page" value="SlideOnBackend"/>
-            <argument name="height" value="80"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="50"/>
-        </actionGroup>
-    </test>
     <test name="SlideItemPosterButtonNeverShow">
         <annotations>
             <features value="PageBuilder"/>
@@ -1504,5 +1457,241 @@
         <seeElement selector="{{SlideOnBackend.overlayBackgroundColor('1', PageBuilderSlideItemOverlayColor_Blue_Opaque.value)}}" stepKey="seeOverlayColorAndTransparencyStage3"/>
         <seeElement selector="{{SlideOnBackend.posterPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seePosterPadding2" />
         <dontSeeElement selector="{{SlideOnBackend.collagePadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="dontSeeCollagePadding2" />
+    </test>
+    <test name="SlideOverlayAndButtonDoNotGoOutsideContainerOnPosterAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Poster - Slide Overlay and Button do not go outside container on poster appearance"/>
+            <description value="User should be able to place a slide with Poster appearance inside a narrow column without the contents spilling outside of the column."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5372"/>
+            <testCaseId value="MC-5939"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Column to Stage -->
+        <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Duplicate column to achieve 3/12 width -->
+        <comment userInput="Duplicate column to achieve 3/12 width" stepKey="duplicateColumn"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Slider to Stage -->
+        <comment userInput="Add Slider to Stage" stepKey="addSliderToStage"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupMedia">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoColumn">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openSliderEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
+            <argument name="property" value="PageBuilderSlideItemMessage_Long"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterButtonText">
+            <argument name="property" value="PageBuilderSlideItemButtonText_Slide1"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowOverlay">
+            <argument name="property" value="PageBuilderSlideItemShowOverlay_Always"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterOverlayColor">
+            <argument name="property" value="PageBuilderSlideItemOverlayColor_Blue_Opaque"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateOverlayAndButtonPoster" stepKey="validateSlideOnStage">
+            <argument name="column" value="ColumnOnBackend"/>
+            <argument name="element" value="SlideOnBackend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="2"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateOverlayAndButtonPoster" stepKey="validateSlideOnStorefront">
+            <argument name="column" value="ColumnOnFrontend"/>
+            <argument name="element" value="SlideOnFrontend"/>
+            <argument name="elementBorderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="diffThreshold" value="0"/>
+        </actionGroup>
+    </test>
+    <test name="SliderPosterAlignmentInheritance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Poster - Alignment Inherits"/>
+            <description value="A user should be able to have a parent container content type pass its alignment to its children"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-4290"/>
+            <testCaseId value="MC-6014"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slide"/>
+            <group value="pagebuilder-sliderPoster"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Add Slider To Row -->
+        <comment userInput="Add Slider To Row" stepKey="commentAddSliderToRow"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openSliderEditPanelOnStage">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
+        <!-- Fill Out Slide Item Edit Panel -->
+        <comment userInput="Fill Out Slide Item Edit Panel" stepKey="commentFillSlideItemEditPanel"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
+            <argument name="property" value="PageBuilderAppearance_Poster"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterMessageText">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide1"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButton">
+            <argument name="property" value="PageBuilderSlideItemShowButton_Always"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonType">
+            <argument name="property" value="PageBuilderSlideItemButtonType_Primary"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterButtonText">
+            <argument name="property" value="PageBuilderSlideItemButtonText_Common"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentDefault">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveSlideItemEditPanelSettings"/>
+        <executeJS function="return window.getComputedStyle(document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext()).textAlign" stepKey="grabDefaultButtonComputedTextAlign"/>
+        <assertEquals stepKey="assertDefaultButtonComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultButtonComputedTextAlign</actualResult>
+        </assertEquals>
+        <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().left" stepKey="overlayLeftPosition"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().left" stepKey="buttonLeftPosition"/>
+        <executeJS function="return Math.abs(Math.round({$buttonLeftPosition}-{$overlayLeftPosition}-{{PageBuilderPaddingProperty40.paddingLeft}}))" stepKey="buttonMinusOverlayMinusPadding"/>
+        <assertLessThanOrEqual stepKey="assertButtonLeftAligned">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">buttonMinusOverlayMinusPadding</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnBackend.contentJS('1')}}).textAlign" stepKey="grabDefaultComputedTextAlign"/>
+        <assertEquals stepKey="assertDefaultComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyStart.value}}</expectedResult>
+            <actualResult type="variable">grabDefaultComputedTextAlign</actualResult>
+        </assertEquals>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlideItemEditor"/>
+        <!-- Fill Out Row Edit Panel -->
+        <comment userInput="Fill Out Row Edit Panel" stepKey="commentFillRowEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openRowEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <comment userInput="Update Values" stepKey="commentUpdateValues"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusRowEditor"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPosition"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPosition"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPosition}-{$buttonRightPosition}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPadding"/>
+        <assertLessThanOrEqual stepKey="assertButtonRightAligned">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">overlayMinusButtonMinusPadding</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnBackend.contentJS('1')}}).textAlign" stepKey="grabComputedTextAlign"/>
+        <assertEquals stepKey="assertComputedTextAlign">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlign</actualResult>
+        </assertEquals>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <executeJS function="return {{SlideOnBackend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionAfterSave"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnBackend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPositionAfterSave"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionAfterSave}-{$buttonRightPositionAfterSave}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingAfterSave"/>
+        <assertLessThanOrEqual stepKey="assertButtonRightAlignedAfterSave">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">overlayMinusButtonMinusPaddingAfterSave</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnBackend.contentJS('1')}}).textAlign" stepKey="grabComputedTextAlignAfterSave"/>
+        <assertEquals stepKey="assertComputedTextAlignAfterSave">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignAfterSave</actualResult>
+        </assertEquals>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <executeJS function="return {{SlideOnFrontend.overlayJS('1')}}.getBoundingClientRect().right" stepKey="overlayRightPositionStoreFront"/>
+        <executeJS function="return document.evaluate(&quot;{{SlideOnFrontend.button('1')}}&quot;, document.body).iterateNext().getBoundingClientRect().right" stepKey="buttonRightPositionStoreFront"/>
+        <executeJS function="return Math.abs(Math.round({$overlayRightPositionStoreFront}-{$buttonRightPositionStoreFront}-{{PageBuilderPaddingProperty40.paddingRight}}))" stepKey="overlayMinusButtonMinusPaddingStoreFront"/>
+        <assertLessThanOrEqual stepKey="assertButtonRightAlignedStoreFront">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">overlayMinusButtonMinusPaddingStoreFront</actualResult>
+        </assertLessThanOrEqual>
+        <executeJS function="return window.getComputedStyle({{SlideOnFrontend.contentJS('1')}}).textAlign" stepKey="grabComputedTextAlignStoreFront"/>
+        <assertEquals stepKey="assertComputedTextAlignStoreFront">
+            <expectedResult type="string">{{PageBuilderAdvancedAlignmentPropertyRight.value}}</expectedResult>
+            <actualResult type="variable">grabComputedTextAlignStoreFront</actualResult>
+        </assertEquals>
     </test>
 </tests>

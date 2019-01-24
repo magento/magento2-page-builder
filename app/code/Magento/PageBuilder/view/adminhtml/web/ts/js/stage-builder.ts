@@ -9,14 +9,17 @@ import loadReader from "Magento_PageBuilder/js/utils/loader";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
-import ContentTypeCollectionInterface from "./content-type-collection";
+import ConfigFieldInterface from "./config-field";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
 import appearanceConfig from "./content-type/appearance-config";
+import FieldDefaultsInterface from "./field-defaults";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
+import {set} from "./utils/object";
 
 /**
  * Build the stage with the provided value
@@ -44,7 +47,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
-        const childPromises: Array<Promise<ContentTypeInterface>> = [];
+        const childPromises: Array<Promise<ContentTypeInterface | ContentTypeCollectionInterface>> = [];
         const childElements: Element[] = [];
         const children = getElementChildren(element);
 
@@ -57,7 +60,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
 
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
-            return Promise.all(childrenPromises.map((child: ContentTypeCollectionInterface, index) => {
+            return Promise.all(childrenPromises.map((child, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
             }));
@@ -80,7 +83,15 @@ function createElementContentType(
 ): Promise<ContentTypeInterface> {
     parent = parent || stage;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+    if (!role) {
+        return Promise.reject(`Invalid master format: Content type element does not contain
+            ${Config.getConfig("dataRoleAttributeName")} attribute.`);
+    }
+
     const config = Config.getContentTypeConfig(role);
+    if (!config) {
+        return Promise.reject(`Unable to load Page Builder configuration for content type "${role}".`);
+    }
 
     return getElementData(element, config).then(
         (data: object) => createContentType(
@@ -102,12 +113,10 @@ function createElementContentType(
  */
 function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value
-    const result = _.mapObject(config.fields, () => {
-        return "";
-    });
+    const result = createInitialElementData(config.fields);
 
-    return new Promise((resolve: (result: object) => void, reject: (e: string) => void) => {
-        const role = element.dataset.role;
+    return new Promise((resolve: (result: object) => void) => {
+        const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
         if (!Config.getConfig("content_types").hasOwnProperty(role)) {
             resolve(result);
         } else {
@@ -116,7 +125,13 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
                 const ReaderComponent = readers.pop();
                 const reader = new ReaderComponent();
                 reader.read(element).then((readerData: any) => {
-                    _.extend(result, readerData);
+                    /**
+                     * Iterate through the reader data and set the values onto the result array to ensure dot notation
+                     * keys are properly handled.
+                     */
+                    _.each(readerData, (value: any, key: string) => {
+                        set(result, key, value);
+                    });
                     resolve(result);
                 });
             });
@@ -125,18 +140,33 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
 }
 
 /**
+ * Create the initial object for storing the elements data
+ *
+ * @param {ConfigFieldInterface} fields
+ * @returns {FieldDefaultsInterface}
+ */
+function createInitialElementData(fields: ConfigFieldInterface): FieldDefaultsInterface {
+    return _.mapObject(fields, (field) => {
+        if (!_.isUndefined(field.default)) {
+            return "";
+        } else if (_.isObject(field)) {
+            return createInitialElementData(field);
+        }
+    });
+}
+
+/**
  * Return elements children, search for direct descendants, or traverse through to find deeper children
  *
- * @param element
- * @returns {Array}
+ * @param {HTMLElement} element
+ * @returns {Array<HTMLElement>}
  */
-function getElementChildren(element: Element) {
+function getElementChildren(element: HTMLElement): HTMLElement[] {
     if (element.hasChildNodes()) {
         let children: any[] = [];
         // Find direct children of the element
         _.forEach(element.childNodes, (child: HTMLElement) => {
-            // Only search elements which tagName's and not script tags
-            if (child.tagName && child.tagName !== "SCRIPT") {
+            if (child.nodeType === Node.ELEMENT_NODE) {
                 if (child.hasAttribute(Config.getConfig("dataRoleAttributeName"))) {
                     children.push(child);
                 } else {
@@ -158,7 +188,6 @@ function getElementChildren(element: Element) {
  * @param {string} initialValue
  * @returns {Promise<any>}
  */
-
 function buildEmpty(stage: Stage, initialValue: string) {
     const stageConfig = Config.getConfig("stage_config");
     const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
@@ -166,8 +195,13 @@ function buildEmpty(stage: Stage, initialValue: string) {
 
     if (rootContentTypeConfig) {
         return createContentType(rootContentTypeConfig, stage, stage.id, {})
-            .then((row: ContentTypeCollectionInterface) => {
-                stage.addChild(row);
+            .then((rootContentType: ContentTypeCollectionInterface) => {
+                if (!rootContentType) {
+                    return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +
+                        ` within stage.`);
+                }
+                stage.addChild(rootContentType);
+
                 if (htmlDisplayContentTypeConfig && initialValue) {
                     return createContentType(
                         htmlDisplayContentTypeConfig,
@@ -177,7 +211,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
                             html: initialValue,
                         },
                     ).then((text: ContentTypeInterface) => {
-                        row.addChild(text);
+                        rootContentType.addChild(text);
                     });
                 }
             });
@@ -203,7 +237,8 @@ export default function build(
     // Determine if we're building from existing page builder content
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
-            .catch(() => {
+            .catch((error: Error) => {
+                console.error(error);
                 stage.children([]);
                 currentBuild = buildEmpty(stage, content);
             });
@@ -214,10 +249,11 @@ export default function build(
     // Once the build process is finished the stage is ready
     return currentBuild.catch((error: Error) => {
         alertDialog({
-            content: $t("An error has occurred while initiating the content area."),
-            title: $t("Advanced CMS Error"),
+            content: $t("An error has occurred while initiating Page Builder. Please consult with your technical " +
+                "support contact."),
+            title: $t("Page Builder Error"),
         });
         events.trigger("stage:error", error);
-        console.error( error );
+        console.error(error);
     });
 }

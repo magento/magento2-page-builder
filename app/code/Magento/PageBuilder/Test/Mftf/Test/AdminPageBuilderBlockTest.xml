@@ -1069,7 +1069,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <!-- User sees tabs displayed with 1st default tab item created by default -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
@@ -1546,77 +1548,70 @@
             <argument name="minHeight" value="PageBuilderMinHeightProperty_500.value"/>
         </actionGroup>
     </test>
-    <test name="BlockBannerPosterContentCanWordWrap">
+    <test name="BlockRowContainedAppearanceHasEqualWidthToContents">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Banner Poster Content Can Word Wrap In Block"/>
-            <description value="A user can see banner poster content word wrap to multiple lines in a Block"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5642"/>
+            <title value="Row contained appearance has equal width to contents in Block"/>
+            <description value="A user can see a row contained appearance has equal width to contents in a Block"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5432"/>
+            <testCaseId value="MC-5958"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowAppearances"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerPoster"/>
-            <group value="pagebuilder-wordWrap"/>
-            <skip>
-                <issueId value="MC-5686"/>
-            </skip>
         </annotations>
         <before>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <resizeWindow width="1280" height="1024" stepKey="resetWindowToDesktopBefore"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
             <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
                 <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
             </actionGroup>
         </before>
         <after>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <resizeWindow width="1280" height="1024" stepKey="resizeWindowToDesktopAfter"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add Column to Stage -->
-        <comment userInput="Add Column to Stage" stepKey="addColumnToStage"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        <!-- Edit Block and configure Row -->
+        <comment userInput="Edit Block and configure Row" stepKey="commentConfigureRowInBlock"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <!-- Duplicate Column to create small width -->
-        <comment userInput="Duplicate Column to create small width" stepKey="commentDuplicateColumnToCreateSmallWidth"/>
-        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="targetIndex" value="1"/>
-            <argument name="contentTypeXCoordinate" value="10"/>
-            <argument name="contentTypeYCoordinate" value="0"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
         </actionGroup>
-        <!-- Add content type to Column -->
-        <comment userInput="Add content type to Column" stepKey="addContentTypeToColumn"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
+        <!-- Edit Block and configure Banner -->
+        <comment userInput="Edit Block and configure Banner" stepKey="commentConfigureBannerInBlock"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
             <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
-            <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="content" value="{{PageBuilderMessageProperty_WordBreak.value}}"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderAppearance_Poster"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
+            <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsInBlock2"/>
         <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="saveBlock"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
-        <!-- Go to CMS Page and choose Block -->
-        <comment userInput="Go to CMS Page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Go to CMS page and choose Block -->
+        <comment userInput="Go to CMS page and choose Block" stepKey="commentGoToCMSPage"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
@@ -1633,192 +1628,104 @@
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Height Before Save -->
-        <comment userInput="Validate Height Before Save" stepKey="commentValidateBeforeSave"/>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
-            <argument name="page" value="BannerOnFrontend"/>
-            <argument name="height" value="80"/>
+        <!-- Validate width before save -->
+        <comment userInput="Validate width before save" stepKey="commentValidateBeforeSave"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
+            <argument name="containerIndex" value="2"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!-- Validate Height After Save -->
-        <comment userInput="Validate Height After Save" stepKey="commentValidateAfterSave"/>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
-            <argument name="page" value="BannerOnFrontend"/>
-            <argument name="height" value="80"/>
+         <!-- Validate width after save -->
+        <comment userInput="Validate width after save" stepKey="commentValidateAfterSave"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
+            <argument name="containerIndex" value="2"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <!-- Validate Height Storefront -->
-        <comment userInput="Validate Height Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
-            <argument name="height" value="50"/>
+        <!-- Validate width storefront -->
+        <comment userInput="Validate width storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceContainedCSS}}"/>
+            <argument name="containerIndex" value="2"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
     </test>
-    <test name="BlockBannerCollageLeftContentCanWordWrap" extends="BlockBannerPosterContentCanWordWrap">
+    <test name="BlockRowFullWidthAppearanceHasEqualWidthToContents" extends="BlockRowContainedAppearanceHasEqualWidthToContents">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Banner Collage Left Content Can Word Wrap In Block"/>
-            <description value="A user can see banner collage left content word wrap to multiple lines in a Block"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5643"/>
+            <title value="Row full width appearance has equal width to contents in Block"/>
+            <description value="A user can see a row full width appearance has equal width to contents in a Block"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5432"/>
+            <testCaseId value="MC-6012"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowAppearances"/>
             <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerCollageLeft"/>
-            <group value="pagebuilder-wordWrap"/>
+            <group value="pagebuilder-bannerPoster"/>
         </annotations>
-        <comment userInput="keyForRemoval" stepKey="duplicateColumn"/>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
-            <argument name="page" value="BannerOnFrontend"/>
-            <argument name="height" value="120"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceFullWidthCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
-            <argument name="page" value="BannerOnFrontend"/>
-            <argument name="height" value="120"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceFullWidthCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
+        </actionGroup>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceFullWidthCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
     </test>
-    <test name="BlockSlidePosterContentCanWordWrap" extends="BlockBannerPosterContentCanWordWrap">
+    <test name="BlockRowFullBleedAppearanceHasEqualWidthToContents" extends="BlockRowContainedAppearanceHasEqualWidthToContents">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Block"/>
-            <title value="Slide Poster Content Can Word Wrap In Block"/>
-            <description value="A user can see slide poster content word wrap to multiple lines in a Block"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5644"/>
+            <title value="Row full bleed appearance has equal width to contents in Block"/>
+            <description value="A user can see a row full bleed appearance has equal width to contents in a Block"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5432"/>
+            <testCaseId value="MC-6011"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
-            <group value="pagebuilder-slide"/>
-            <group value="pagebuilder-slideItemPoster"/>
-            <group value="pagebuilder-wordWrap"/>
-            <skip>
-                <issueId value="MC-5686"/>
-            </skip>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowAppearances"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerPoster"/>
         </annotations>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
-            <argument name="group" value="PageBuilderSliderContentType"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterRowAppearance">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthBeforeSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceFullBleedCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="content" value="{{PageBuilderMessageProperty_WordBreak.value}}"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthAfterSave">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceFullBleedCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
-            <argument name="section" value="SlideOnBackend"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="80"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="80"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="50"/>
-        </actionGroup>
-    </test>
-    <test name="BlockSlideCollageLeftContentCanWordWrap" extends="BlockBannerPosterContentCanWordWrap">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Slide Collage Left Content Can Word Wrap In Block"/>
-            <description value="A user can see slide collage left content word wrap to multiple lines in a Block"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5645"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-slide"/>
-            <group value="pagebuilder-slideItemCollageLeft"/>
-            <group value="pagebuilder-wordWrap"/>
-        </annotations>
-        <comment userInput="keyForRemoval" stepKey="duplicateColumn"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="inlineEditWYSIWYGFromStage" stepKey="inlineEdit">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="content" value="{{PageBuilderMessageProperty_WordBreak.value}}"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
-            <argument name="section" value="SlideOnBackend"/>
-        </actionGroup>
-        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty">
-            <argument name="property" value="PageBuilderAppearance_CollageLeft"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="120"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="120"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
-            <argument name="page" value="SlideOnFrontend"/>
-            <argument name="height" value="50"/>
-        </actionGroup>
-    </test>
-    <test name="BlockTextContentCanWordWrap" extends="BlockBannerPosterContentCanWordWrap">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Block"/>
-            <title value="Text Content Can Word Wrap In Block"/>
-            <description value="A user can see text content word wrap to multiple lines in a Block"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-4965"/>
-            <testCaseId value="MC-5646"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-block"/>
-            <group value="pagebuilder-text"/>
-            <group value="pagebuilder-wordWrap"/>
-        </annotations>
-        <actionGroup ref="duplicateContentType" after="duplicateColumn" stepKey="duplicateColumnAgain">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-            <argument name="targetIndex" value="1"/>
-            <argument name="contentTypeXCoordinate" value="10"/>
-            <argument name="contentTypeYCoordinate" value="0"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
-            <argument name="group" value="PageBuilderTextContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
-            <argument name="contentType" value="PageBuilderTextContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <fillField selector="{{TextOnStage.wysiwyg('1')}}" userInput="{{PageBuilderMessageProperty_WordBreak.value}}" after="dragIntoStage" stepKey="fillTextToTextarea"/>
-        <comment userInput="keyForRemoval" stepKey="inlineEdit"/>
-        <comment userInput="keyForRemoval" stepKey="openEditMenuOnStage"/>
-        <comment userInput="keyForRemoval" stepKey="enterAppearanceProperty"/>
-        <comment userInput="keyForRemoval" stepKey="saveEditPanelSettingsInBlock"/>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStage">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="height" value="120"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightAfterSave">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="height" value="120"/>
-        </actionGroup>
-        <actionGroup ref="validateContentWordHeight" stepKey="validateContentWordHeightStorefront">
-            <argument name="page" value="TextOnStorefront"/>
-            <argument name="height" value="70"/>
+        <actionGroup ref="validateContentWidthEqualToContainerWidth" stepKey="validateContentWidthEqualToContainerWidthStorefront">
+            <argument name="content" value="{{BannerOnFrontend.appearancePosterCSS}}"/>
+            <argument name="container" value="{{RowOnStorefront.appearanceFullBleedCSS}}"/>
+            <argument name="containerPadding" value="PageBuilderPaddingPropertyRowDefault"/>
         </actionGroup>
     </test>
     <test name="BlockMove">

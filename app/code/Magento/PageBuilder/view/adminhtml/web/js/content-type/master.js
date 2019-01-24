@@ -3,7 +3,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _appearanceConfig) {
+define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/appearance-config"], function (_underscore, _object, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -44,7 +44,7 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
      * @deprecated
      */
     _proto.getData = function getData(element) {
-      var data = _underscore.extend({}, this.parent.dataStore.get());
+      var data = _underscore.extend({}, this.parent.dataStore.getState());
 
       if (undefined === element) {
         return data;
@@ -56,7 +56,7 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
       var result = {};
 
       if (undefined !== config[element].tag.var) {
-        result[config[element].tag.var] = data[config[element].tag.var];
+        result[config[element].tag.var] = (0, _object.get)(data, config[element].tag.var);
       }
 
       return result;
@@ -89,7 +89,7 @@ define(["underscore", "Magento_PageBuilder/js/content-type/appearance-config"], 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
         name: this.parent.config.name
-      }, this.parent.dataStore.get()));
+      }, this.parent.dataStore.getState()));
       this.afterObservablesUpdated();
     };
 

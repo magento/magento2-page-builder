@@ -121,6 +121,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="waitForPageBuilderDisplay" />
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.showHideEditor}}" stepKey="waitForShowHideEditor" />
+        <waitForPageLoad stepKey="waitForEditor"/>
         <click selector="{{CmsNewPagePageActionsSection.showHideEditor}}" stepKey="clickShowHideEditor"/>
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.content}}" stepKey="waitForContentField" />
         <fillField selector="{{CmsNewPagePageActionsSection.content}}" userInput="{{cmsPageNonexistentDataRole.content}}" stepKey="enterContent"/>

@@ -45,6 +45,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
           return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
             value: renderedOutput
           });
+        }).catch(function (error) {
+          console.error(error);
         });
       }, 500);
       this.parent = parent;
@@ -57,7 +59,9 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
         });
       }); // Wait for the stage to be built alongside the stage being rendered
 
-      Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
+      Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
+        console.error(error);
+      });
     }
     /**
      * Get template.
@@ -109,7 +113,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
     /**
      * Return the children of the current element
      *
-     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
      */
 
 
