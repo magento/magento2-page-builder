@@ -24,7 +24,6 @@ import {supportsPositionSticky} from "./utils/position-sticky";
 export default class Panel {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
-    public isCollapsed: KnockoutObservable<boolean> = ko.observable(false);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyTop: KnockoutObservable<boolean> = ko.observable(false);
@@ -104,13 +103,6 @@ export default class Panel {
                 }),
             );
         }
-    }
-
-    /**
-     * Collapse the panel into the side of the UI
-     */
-    public collapse(): void {
-        this.isCollapsed(!this.isCollapsed());
     }
 
     /**

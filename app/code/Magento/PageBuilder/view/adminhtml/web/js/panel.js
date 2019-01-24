@@ -16,7 +16,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     function Panel(parent) {
       this.groups = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
-      this.isCollapsed = _knockout.observable(false);
       this.isVisible = _knockout.observable(false);
       this.isStickyBottom = _knockout.observable(false);
       this.isStickyTop = _knockout.observable(false);
@@ -97,14 +96,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
         }));
       }
-    }
-    /**
-     * Collapse the panel into the side of the UI
-     */
-    ;
-
-    _proto.collapse = function collapse() {
-      this.isCollapsed(!this.isCollapsed());
     }
     /**
      * Clear Search Results
