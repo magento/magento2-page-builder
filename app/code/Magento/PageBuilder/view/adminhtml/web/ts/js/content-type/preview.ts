@@ -197,8 +197,10 @@ export default class Preview {
         const middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2;
 
         // if there are space for moving options menu to the middle
-        if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
-            optionsMenu.parent().addClass("pagebuilder-options-middle");
+        if (!(window.innerWidth - middleOfPreview > optionsMenu.width() / 2)) {
+            optionsMenu.parent().addClass("pagebuilder-options-right");
+        } else {
+            optionsMenu.parent().removeClass("pagebuilder-options-right");
         }
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");
@@ -229,9 +231,6 @@ export default class Preview {
                 }
 
                 optionsMenu.parent().removeClass("pagebuilder-options-visible");
-                _.delay(() => {
-                    optionsMenu.parent().removeClass("pagebuilder-options-middle");
-                }, 200);
                 $(currentTarget).removeClass("pagebuilder-content-type-active");
             }
         }, 100); // 100 ms delay to allow for users hovering over other elements
