@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -21,8 +21,8 @@ define([], function () {
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
-      var desktopImage = data[config.desktop_image_variable];
-      var mobileImage = data[config.mobile_image_variable];
+      var desktopImage = (0, _object.get)(data, config.desktop_image_variable);
+      var mobileImage = (0, _object.get)(data, config.mobile_image_variable);
 
       if (mobileImage && desktopImage && mobileImage[0] !== undefined && desktopImage[0] !== undefined && mobileImage[0].url === desktopImage[0].url) {
         delete data[config.mobile_image_variable];
@@ -40,8 +40,10 @@ define([], function () {
 
 
     _proto.toDom = function toDom(data, config) {
-      if (data[config.mobile_image_variable] === undefined || data[config.mobile_image_variable][0] === undefined) {
-        data[config.mobile_image_variable] = data[config.desktop_image_variable];
+      var mobileImage = (0, _object.get)(data, config.mobile_image_variable);
+
+      if (mobileImage === undefined || mobileImage[0] === undefined) {
+        (0, _object.set)(data, config.mobile_image_variable, (0, _object.get)(data, config.desktop_image_variable));
       }
 
       return data;

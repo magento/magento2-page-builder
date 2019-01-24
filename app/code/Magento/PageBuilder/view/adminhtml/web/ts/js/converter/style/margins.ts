@@ -3,7 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -40,8 +42,8 @@ export default class Margins implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
+        let value = get(data, name);
+        if (value && _.isString(value)) {
             value = JSON.parse(value);
         }
         if (value && undefined !== value.margin) {

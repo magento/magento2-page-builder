@@ -6,8 +6,10 @@
 import Config from "../../config";
 import {DataObject} from "../../data-store";
 import {decodeUrl} from "../../utils/image";
+import {get} from "../../utils/object";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import ConverterInterface from "../converter-interface";
+import ImageArrayObject from "../image-array-object";
 
 /**
  * @api
@@ -34,7 +36,7 @@ export default class Src implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const value = data[name];
+        const value = get<ImageArrayObject>(data, name);
         if (value[0] === undefined || value[0].url === undefined) {
             return "";
         }

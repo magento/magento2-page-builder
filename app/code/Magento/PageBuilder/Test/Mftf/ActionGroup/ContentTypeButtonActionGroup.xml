@@ -8,26 +8,6 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addButton">
-        <arguments>
-            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
-        </arguments>
-        <comment userInput="Adding Button" stepKey="comment"/>
-        <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-button-item').length+1)" stepKey="initialNumberOfButtonsPlusOne"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonLiveEdit1"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderButtonsContentType.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForOptionsMenu"/>
-        <waitForElementVisible time="10" selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="seeAddButton"/>
-        <click selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="clickAddButton"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <executeJS function="return document.getElementsByClassName('pagebuilder-button-item').length" stepKey="numberOfButtonsAfterAdd"/>
-        <assertEquals stepKey="assertOneMoreButton">
-            <expectedResult type="variable">initialNumberOfButtonsPlusOne</expectedResult>
-            <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
-        </assertEquals>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonLiveEdit2"/>
-    </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>
             <argument name="page"/>
@@ -48,6 +28,7 @@
         <arguments>
             <argument name="text"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <comment userInput="inlineEditButton" stepKey="comment"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
@@ -55,7 +36,7 @@
         <fillField selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="seeButtonText"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
         <waitForPageLoad stepKey="waitForUnFocus"/>
     </actionGroup>
     <actionGroup name="moveButton">
