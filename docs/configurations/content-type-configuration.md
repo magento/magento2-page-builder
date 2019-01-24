@@ -315,12 +315,12 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 
 The name attribute in the element tags gets converted to a `data-element` attribute in the master format in order for readers to access the desired element.
 
-### Attributes for `property` and `attribute`
+### Attributes for `style`, `property` and `attribute`
 
 | Attribute             | Description                                                                                                           |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------|
 | `name`                | Unique name used for configuration merging, and the default value for storage_key if none is provided.                |
-| `storage_key`         | Optional variable name for value in the data storage. If no value is provided, name will be used.                     |
+| `storage_key`         | Optional variable name for value in the data storage. If no value is provided, name will be used. This is the form fields data scope which is typically the name unless a `dataScope` is provided on the field. Supports the dot notation for `dataScope` (such as `layout.min_height`) |
 | `source`              | The name of the property or attribute in the DOM. Must be in snake case.                                              |
 | `converter`           | Converts the value after reading or before saving to the DOM.                                                         |
 | `preview_converter`   | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.     |
@@ -398,12 +398,14 @@ The `fromDom` method is called after data is read from the master format.
 
 The `toDom` method is called before observables are updated in the cycle rendering preview or master format.
 
+When accessing data provided into the above functions **you should** utilise the `get` and `set` utility functions from `Magento_PageBuilder/js/utils/object` to ensure any data mapping entries which traverse deeper into the data set with the dot notation can correctly retrieve and set their data.
+
 **Example:**
 
 The following is a converter that determines the output for an overlay background color:
 
 ``` js
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/utils/object"], function (colorConverter, numberConverter, objectUtil) {
     var OverlayBackgroundColor = function () {};
     
     /**
@@ -444,6 +446,8 @@ The `fromDom` method is called after data is read for all elements and converted
 
 The `toDom` method is called before data is converted by element converters to update observables.
 
+When accessing data provided into the above functions **you should** utilise the `get` and `set` utility functions from `Magento_PageBuilder/js/utils/object` to ensure any data mapping entries which traverse deeper into the data set with the dot notation can correctly retrieve and set their data.
+
 **Example:** Mass converter that defaults mobile image value to desktop image value if not configured 
 ``` xml
 <converters>
@@ -457,7 +461,7 @@ The `toDom` method is called before data is converted by element converters to u
 ```
 
 ``` js
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (objectUtil) {
     var EmptyMobileImage = function () {};
     
     /**
@@ -468,14 +472,14 @@ define([], function () {
      * @returns {object}
      */
     EmptyMobileImage.prototype.fromDom = function fromDom(data, config) {
-      var desktopImage = data[config.desktop_image_variable];
-      var mobileImage = data[config.mobile_image_variable];
-
-      if (mobileImage && desktopImage && mobileImage[0] !== undefined && desktopImage[0] !== undefined && mobileImage[0].url === desktopImage[0].url) {
-        delete data[config.mobile_image_variable];
-      }
-
-      return data;
+        var desktopImage = objectUtil.get(data, config.desktop_image_variable);
+        var mobileImage = objectUtil.get(data, config.mobile_image_variable);
+        
+        if (mobileImage && desktopImage && mobileImage[0] !== undefined && desktopImage[0] !== undefined && mobileImage[0].url === desktopImage[0].url) {
+            delete data[config.mobile_image_variable];
+        }
+        
+        return data;
     };
     
     /**
@@ -486,11 +490,13 @@ define([], function () {
      * @returns {object}
      */
     EmptyMobileImage.prototype.toDom = function toDom(data, config) {
-      if (data[config.mobile_image_variable] === undefined || data[config.mobile_image_variable][0] === undefined) {
-        data[config.mobile_image_variable] = data[config.desktop_image_variable];
-      }
-
-      return data;
+        var mobileImage = objectUtil.get(data, config.mobile_image_variable);
+        
+        if (mobileImage === undefined || mobileImage[0] === undefined) {
+            objectUtil.set(data, config.mobile_image_variable, objectUtil.get(data, config.desktop_image_variable));
+        }
+        
+        return data;
     };
     
     return EmptyMobileImage;
