@@ -1,4 +1,11 @@
-/*eslint-disable */
+/* jscs:disable */
+/* eslint-disable */
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 "use strict";
 
 exports.__esModule = true;
