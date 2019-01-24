@@ -5,7 +5,6 @@
 
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import loadModule from "utils/loader";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.types";
 import ContentTypeConfigInterface from "./content-type-config.types";
@@ -13,6 +12,7 @@ import ContentTypeInterface from "./content-type.types";
 import {ContentTypeMountEventParamsInterface} from "./content-type/content-type-events.types";
 import masterFactory from "./content-type/master-factory";
 import previewFactory from "./content-type/preview-factory";
+import loadModule from "./utils/loader";
 
 /**
  * Create new content type

@@ -7,7 +7,6 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
-import loadReader from "utils/loader";
 import Config from "./config";
 import ContentTypeCollectionInterface from "./content-type-collection";
 import ContentTypeConfigInterface from "./content-type-config.types";
@@ -17,6 +16,7 @@ import appearanceConfig from "./content-type/appearance-config";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
+import loadReader from "./utils/loader";
 
 /**
  * Build the stage with the provided value

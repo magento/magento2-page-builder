@@ -8,7 +8,10 @@
      css="'stage-full-screen': isFullScreen"
      ko-style="wrapperStyles">
     <div class="admin__field pagebuilder-header">
-        <i click="function() { toggleFullScreen($element); }" css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"></i>
+        <i click="function() { toggleFullScreen($element); }"
+           css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"
+           attr="{title: isFullScreen() ? $t('Close Full Screen') : $t('Open in Full Screen')}">
+        </i>
     </div>
     <with args="panel">
         <render/>
