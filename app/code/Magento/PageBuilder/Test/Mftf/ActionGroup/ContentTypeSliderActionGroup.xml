@@ -8,26 +8,6 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addSlide">
-        <arguments>
-            <argument name="slideGroupIndex" defaultValue="1" type="string"/>
-        </arguments>
-        <comment userInput="Adding Slide" stepKey="comment"/>
-        <executeJS function="return document.getElementsByClassName('pagebuilder-slide').length+1" stepKey="initialNumberOfSlidesPlusOne"/>
-        <scrollTo selector="{{PageBuilderPanel.searchPanel}}" x="0" y="-150" stepKey="scrollToSearchPanel"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderSliderContentType.role, slideGroupIndex)}}" stepKey="mouseOverSlider"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="waitForOptionsMenu"/>
-        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="waitForAddSlideButton"/>
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="clickAddSlideButton"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <executeJS function="return document.getElementsByClassName('pagebuilder-slide').length" stepKey="numberOfSlidesAfterAdd"/>
-        <assertEquals stepKey="assertOneMoreSlide">
-            <expectedResult type="variable">initialNumberOfSlidesPlusOne</expectedResult>
-            <actualResult type="variable">numberOfSlidesAfterAdd</actualResult>
-        </assertEquals>
-    </actionGroup>
     <actionGroup name="switchSlide">
         <arguments>
             <argument name="section" defaultValue="SliderOnFrontend"/>

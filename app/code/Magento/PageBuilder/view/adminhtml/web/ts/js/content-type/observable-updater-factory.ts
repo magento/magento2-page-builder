@@ -35,6 +35,7 @@ export default function create(
             );
         }).catch((error) => {
             console.error(error);
+            return null;
         });
     });
 }
