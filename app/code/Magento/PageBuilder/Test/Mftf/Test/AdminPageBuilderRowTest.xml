@@ -2050,6 +2050,9 @@
         </actionGroup>
         <!-- Add 2nd row and set appearance to Full Bleed -->
         <comment userInput="Add 2nd row and set appearance to Full Width" stepKey="commentAdd2ndRow"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupRow">
+            <argument name="group" value="PageBuilderRowContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow2IntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
@@ -2082,7 +2085,7 @@
         <waitForElementVisible selector="{{RowOnStage.appearanceContained(('2', PageBuilderRowAppearance_Contained.value)}}" stepKey="waitForContainedAppearanceVisible"/>
         <!-- Drag heading into 2nd row to make sure still works -->
         <comment userInput="Drag heading into 2nd row to make sure still works" stepKey="comment2ndRowRevertFunctional"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupHeading">
             <argument name="group" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeaderToRow2Revert">
