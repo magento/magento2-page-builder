@@ -15,7 +15,6 @@ use Magento\Store\Model\Store;
 class ProductCollection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
 {
     /**
-     * Prevent usage of catalog index for querying visibility, as it relies on a specific store id.
      * @inheritdoc
      */
     public function setVisibility($visibility)
@@ -30,7 +29,6 @@ class ProductCollection extends \Magento\Catalog\Model\ResourceModel\Product\Col
     }
 
     /**
-     * Prevent usage of price index for querying prices, as it relies on a specific store id.
      * @inheritdoc
      */
     protected function _productLimitationJoinPrice()
