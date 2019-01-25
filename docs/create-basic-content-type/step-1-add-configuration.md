@@ -1,10 +1,5 @@
 # Step 1: Add configuration
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 The configuration file defines the settings and references to your content type files. You will return to this file often to update references and change settings during the development process. 
 
 Files referenced from the configuration include the HTML templates, the JavaScript components, the icon displayed for your content type in the Page Builder panel, and the UI component form for your content type editor within the Admin.
@@ -20,7 +15,7 @@ The name of your configuration file should reflect the name of your content type
 ![Create config file](../images/step1-add-config-file.png)
 
 {: .bs-callout .bs-callout-info }
-The reason we suggest prefIxing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
+The reason we suggest prefixing your content type with your vendor name is to prevent Magento from merging your content type configuration file with another configuration file of the same name, or with a future content type published by Magento.
 
 ## The `example_quote` configuration
 
@@ -32,11 +27,11 @@ The following configuration is from the Quote content type. An overview of these
 ```xml
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="example_quote"
+    <type name="example_quote"
         label="Quote"
         group="elements"
         component="Magento_PageBuilder/js/content-type"
-        preview_component="Magento_PageBuilder/js/content-type/preview"
+        preview_component="Example_PageBuilderQuote/js/content-type/example-quote/preview"
         master_component="Magento_PageBuilder/js/content-type/master"
         form="pagebuilder_example_quote_form"
         icon="icon-pagebuilder-heading"
@@ -44,18 +39,18 @@ The following configuration is from the Quote content type. An overview of these
         translate="label">
     <children default_policy="deny"/>
     <parents default_policy="deny">
-      <parent name="column" policy="allow"/>
+        <parent name="column" policy="allow"/>
     </parents>
     <appearances>
-      <appearance name="default"
+        <appearance name="default"
                   default="true"
                   preview_template="Example_PageBuilderQuote/content-type/acme_quote/default/preview"
                   render_template="Example_PageBuilderQuote/content-type/acme_quote/default/master"
                   reader="Magento_PageBuilder/js/master-format/read/configurable">
         <elements...>
-      </appearance>
+        </appearance>
     </appearances>
-  </type>
+    </type>
 </config>
 ```
 
@@ -72,8 +67,8 @@ The `type` element defines the key properties of your content type. The attribut
 | `preview_component` | Optional. JavaScript file (`preview.js`) that provides rendering logic within the Admin UI. The preview component does not need to specify the `.js` extension. If you don't provide the `preview_component`, Page Builder uses the base `Preview` component shown in the code: `Magento_PageBuilder/js/content-type/preview`. |
 | `master_component`  | Optional. JavaScript file (`master.js`) that provides rendering logic generic for all appearances of your content type when rendered on the storefront. The master component does not need to specify the `.js` extension. If you don't provide the `master_component`, Page Builder uses the base `Master` component shown in the code: `Magento_PageBuilder/js/content-type/master`. |
 | `form`              | UI component form that provides the form controls for editing your content type. |
-| `icon`              | Optional. PNG or SVG image displayed in the Page Builder panel alongside the label. If no icon value is provided, the content type will simply be displayed in the Page Builder panel without an icon. |
-| `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder`s of 10 and 20. |
+| `icon`              | Optional. Class name for your PNG or SVG image (or font icon) displayed in the Page Builder panel alongside the label. If you don't provide an icon value, the Page Builder panel displays the content type name without an icon. |
+| `sortOrder`         | Optional. The listed order within the menu group. For example, `sortOrder=21` puts the content type third in the `Elements` menu group, after the content types with `sortOrder` values of 10 and 20. |
 | `translate`         | Identifies the attribute you want Magento to translate. Here, the `label` value is set for translation. |
 
 ## The  `children` element
@@ -92,7 +87,7 @@ The `parents` element determines if other content types can be a parent to your 
 
 ```xml
 <parents default_policy="deny">
-  <parent name="column" policy="allow"/>
+    <parent name="column" policy="allow"/>
 </parents>
 ```
 
@@ -108,10 +103,10 @@ Each of these views is defined as an `appearance` within the Banner configuratio
 
 ```xml
 <appearances>
-  <appearance name="collage-left"...>
-  <appearance name="collage-centered"...>
-  <appearance name="collage-right"...>
-  <appearance name="poster" default="true" ...>
+    <appearance name="collage-left"...>
+    <appearance name="collage-centered"...>
+    <appearance name="collage-right"...>
+    <appearance name="poster" default="true" ...>
 </appearances>
 ```
 
