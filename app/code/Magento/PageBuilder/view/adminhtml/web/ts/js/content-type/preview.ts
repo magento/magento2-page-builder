@@ -196,11 +196,11 @@ export default class Preview {
 
         const middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2;
 
-        // if there are space for moving options menu to the middle
-        if (!(window.innerWidth - middleOfPreview > optionsMenu.width() / 2)) {
-            optionsMenu.parent().addClass("pagebuilder-options-right");
+        // Check for space for option menu
+        if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
+            optionsMenu.parent().addClass("pagebuilder-options-middle");
         } else {
-            optionsMenu.parent().removeClass("pagebuilder-options-right");
+            optionsMenu.parent().removeClass("pagebuilder-options-middle");
         }
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");

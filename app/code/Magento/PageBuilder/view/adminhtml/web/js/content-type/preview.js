@@ -170,12 +170,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         optionsMenu = optionsMenu.first();
       }
 
-      var middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2; // if there are space for moving options menu to the middle
+      var middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2; // Check for space for option menu
 
-      if (!(window.innerWidth - middleOfPreview > optionsMenu.width() / 2)) {
-        optionsMenu.parent().addClass("pagebuilder-options-right");
+      if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
+        optionsMenu.parent().addClass("pagebuilder-options-middle");
       } else {
-        optionsMenu.parent().removeClass("pagebuilder-options-right");
+        optionsMenu.parent().removeClass("pagebuilder-options-middle");
       }
 
       optionsMenu.parent().addClass("pagebuilder-options-visible");
