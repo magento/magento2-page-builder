@@ -449,10 +449,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (!this.gridFormOpen()) {
         this.gridSizeHistory = new Map();
-        this.recordGridResize(this.gridSize());
+        this.recordGridResize(this.gridSize()); // inline tooltip out of bounds
 
         if ((0, _checkStageFullScreen)(this.parent.stageId) && 0 > tooltip[0].getBoundingClientRect().top) {
-          // inline tooltip out of bounds
           this.gridToolTipOverFlow(true);
         }
 

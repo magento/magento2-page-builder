@@ -21,7 +21,6 @@ import Edit from "../content-type-menu/edit";
 import Option from "../content-type-menu/option";
 import {OptionsInterface} from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title-option";
-import Toolbar from "../content-type-toolbar";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
@@ -43,7 +42,6 @@ export default class Preview {
     public placeholderCss: KnockoutObservable<object>;
     public isPlaceholderVisible: KnockoutObservable<boolean> = ko.observable(true);
     public isEmpty: KnockoutObservable<boolean> = ko.observable(true);
-    public toolbar?: Toolbar;
 
     /**
      * @deprecated

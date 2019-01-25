@@ -8,8 +8,8 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import {OptionInterface} from "./content-type-toolbar/option";
 import ValueInterface from "./content-type-toolbar/value";
-import Preview from "./content-type/preview";
-import CheckStageFullScreen from "./utils/check-stage-full-screen";
+import Preview from "./content-type/heading/preview";
+import checkStageFullScreen from "./utils/check-stage-full-screen";
 
 /**
  * @api
@@ -62,16 +62,20 @@ export default class Toolbar {
         const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
         const toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options");
         // Change toolbar orientation if overflow on full screen mode
-        if (CheckStageFullScreen(context.parent.stageId)
-            && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
+        if (checkStageFullScreen(context.parent.stageId)
+            && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()
+        ) {
             context.toolbar.observer = new MutationObserver(() => {
                 toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
             });
-            context.toolbar.observer.observe(currentContentTypeTarget[0], {
+            context.toolbar.observer.observe(
+                currentContentTypeTarget[0],
+                {
                     attributes: true,
                     childList: true,
                     subtree: true,
-                });
+                },
+            );
             toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
         } else {
             toolbarOptions.css("transform", "translateY(-100%)");

@@ -16,7 +16,7 @@ import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
-import CheckStageFullScreen from "../../utils/check-stage-full-screen";
+import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
@@ -463,8 +463,10 @@ export default class Preview extends PreviewCollection {
         if (!this.gridFormOpen()) {
             this.gridSizeHistory = new Map();
             this.recordGridResize(this.gridSize());
-            if (CheckStageFullScreen(this.parent.stageId)
-                && 0 > tooltip[0].getBoundingClientRect().top) { // inline tooltip out of bounds
+            // inline tooltip out of bounds
+            if (checkStageFullScreen(this.parent.stageId)
+                && 0 > tooltip[0].getBoundingClientRect().top
+            ) {
                 this.gridToolTipOverFlow(true);
             }
             this.gridFormOpen(true);
