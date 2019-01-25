@@ -323,6 +323,9 @@
 }
 
 .pagebuilder-options {
+    -moz-transition: opacity 200ms, visibility 200ms;
+    -o-transition: opacity 200ms, visibility 200ms;
+    -webkit-transition: opacity 200ms, visibility 200ms;
     height: 40px;
     opacity: 0;
     position: absolute;
@@ -330,9 +333,6 @@
     text-align: center;
     top: 0;
     transform: translate(0, -50%);
-    -moz-transition: opacity 200ms, visibility 200ms;
-    -o-transition: opacity 200ms, visibility 200ms;
-    -webkit-transition: opacity 200ms, visibility 200ms;
     transition: opacity 200ms, visibility 200ms;
     visibility: hidden;
     z-index: 105;
@@ -461,12 +461,12 @@
 
 .focus-options {
     .pagebuilder-options {
-        right: 50%;
-        top: -20px;
-        transform: translate(50%, -50%);
         -moz-transition: opacity 200ms, visibility 200ms, transform 200ms;
         -o-transition: opacity 200ms, visibility 200ms, transform 200ms;
         -webkit-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        right: 50%;
+        top: -20px;
+        transform: translate(50%, -50%);
         transition: opacity 200ms, visibility 200ms, transform 200ms;
         transition-delay: 0ms !important; // Arrow options have no delay in transitioning out
 

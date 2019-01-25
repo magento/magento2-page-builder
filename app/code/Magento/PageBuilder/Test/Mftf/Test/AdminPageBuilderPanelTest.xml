@@ -757,7 +757,7 @@
         </actionGroup>
         <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRightFullScreen"/>
         <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflowFullScreen">
-            <expectedResult type="variable">$getWindowWidthFullScreen</expectedResult>
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
             <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRightFullScreen</actualResult>
         </assertLessThanOrEqual>
         <!-- Assert text options menu did not overflow -->
@@ -768,7 +768,7 @@
         </actionGroup>
         <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRightFullScreen"/>
         <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflowFullScreen">
-            <expectedResult type="variable">$getWindowWidthFullScreen</expectedResult>
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
             <actualResult type="variable">$getTextOptionMenuBoundingClientRectRightFullScreen</actualResult>
         </assertLessThanOrEqual>
     </test>
