@@ -26,6 +26,7 @@
             <argument name="sectionSelector" defaultValue="{{AdminProductContentSection.sectionHeader}}" type="string"/>
             <argument name="sectionDependentSelector" defaultValue="{{AdminProductContentSection.sectionHeader}}._show" type="string"/>
         </arguments>
+        <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <waitForElementVisible time="30" selector="{{sectionSelector}}" stepKey="waitForSection"/>
         <conditionalClick selector="{{sectionSelector}}" dependentSelector="{{sectionDependentSelector}}" visible="false" stepKey="expandSection"/>
         <waitForPageLoad time="30" stepKey="waitForSectionToExpand"/>

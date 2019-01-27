@@ -1104,7 +1104,7 @@
         <before>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <createData entity="productAttributeWysiwyg" stepKey="createProductAttribute"/>
-            <createData entity="AddToDefaultSetContentSectionBelowShortDescription" stepKey="addAttributeToDefaultAttributeSet">
+            <createData entity="AddToDefaultSetTopOfContentSection" stepKey="addAttributeToDefaultAttributeSet">
                 <requiredEntity createDataKey="createProductAttribute"/>
             </createData>
             <createData entity="_defaultProduct" stepKey="createProduct">
@@ -1125,6 +1125,10 @@
             <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
                 <argument name="product" value="$$createProduct$$"/>
             </actionGroup>
+            <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
+                <argument name="designSection" value="ProductDesignSection"/>
+                <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+            </actionGroup>
             <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
         </before>
         <after>
@@ -1141,69 +1145,6 @@
             <actionGroup ref="NavigateToAndResetProductAttributeGridToDefaultView" stepKey="NavigateToAndResetProductAttributeGridToDefaultView"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Edit Product Description -->
-        <comment userInput="Edit Product Description" stepKey="commentEditProductDescription"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
-        <!-- Add Buttons -->
-        <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupButtons">
-            <argument name="group" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <!-- Edit Button Item -->
-        <comment userInput="Edit Button Item" stepKey="commentEditButtonItem"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForButtonItem">
-            <argument name="section" value="ButtonItemOnStage"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
-            <argument name="property" value="PageBuilderButtonItemText_First"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForButtonItem"/>
-        <!-- Add 2nd Button -->
-        <comment userInput="Add 2nd Button" stepKey="commentAddSecondButton"/>
-        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
-            <argument name="contentType" value="PageBuilderButtonsContentType"/>
-        </actionGroup>
-        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
-            <argument name="text" value="PageBuilderButtonItemText_Second"/>
-            <argument name="index" value="2"/>
-        </actionGroup>
-        <!-- Validate Product Description Stage -->
-        <comment userInput="Validate Product Description Stage" stepKey="commentValidateProductDescriptionStage"/>
-        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStage"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1TextStage"/>
-        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2TextStage"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDescription"/>
-        <!-- Edit Product Short Description -->
-        <comment userInput="Edit Product Short Description" stepKey="commentEditProductShortDescription"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForShortDescription">
-            <argument name="attributeCode" value="short_description"/>
-            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupDivider">
-            <argument name="group" value="PageBuilderDividerContentType"/>
-            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerIntoRow">
-            <argument name="contentType" value="PageBuilderDividerContentType"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="2"/>
-            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuForDivider">
-            <argument name="contentType" value="PageBuilderDividerContentType"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
-            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForDivider"/>
-        <!-- Validate Product Short Description Stage -->
-        <comment userInput="Validate Product Short Description Stage" stepKey="commentValidateShortProductDescriptionStage"/>
-        <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_FF5733.rgb)}}" stepKey="seeDividerColorStage"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenShortDescription"/>
         <!-- Edit Product Custom Attribute -->
         <comment userInput="Edit Product Custom Attribute" stepKey="commentEditProductCustomAttribute"/>
         <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForCustomAttribute">
@@ -1217,7 +1158,6 @@
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
-            <argument name="containerTargetIndex" value="3"/>
             <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
@@ -1238,18 +1178,95 @@
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleStage"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextStage"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenCustomAttribute"/>
-        <actionGroup ref="setLayout" stepKey="setFullWidthLayout">
-            <argument name="designSection" value="ProductDesignSection"/>
-            <argument name="layoutOption" value="PageBuilderFullWidthLayout.product"/>
+        <!-- Edit Product Description -->
+        <comment userInput="Edit Product Description" stepKey="commentEditProductDescription"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription">
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
         </actionGroup>
+        <!-- Add Buttons -->
+        <comment userInput="Add Buttons" stepKey="commentAddButtons"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupButtons">
+            <argument name="group" value="PageBuilderButtonsContentType"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonsToRow">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <!-- Edit Button Item -->
+        <comment userInput="Edit Button Item" stepKey="commentEditButtonItem"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuForButtonItem">
+            <argument name="section" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
+            <argument name="property" value="PageBuilderButtonItemText_First"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForButtonItem"/>
+        <!-- Add 2nd Button -->
+        <comment userInput="Add 2nd Button" stepKey="commentAddSecondButton"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
+        <!-- Validate Product Description Stage -->
+        <comment userInput="Validate Product Description Stage" stepKey="commentValidateProductDescriptionStage"/>
+        <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1TextStage"/>
+        <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2TextStage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenDescription"/>
+        <!-- Edit Product Short Description -->
+        <comment userInput="Edit Product Short Description" stepKey="commentEditProductShortDescription"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForShortDescription">
+            <argument name="attributeCode" value="short_description"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPanelGroupDivider">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerIntoRow">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="3"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('short_description')}}"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuForDivider">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
+            <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditFormForDivider"/>
+        <!-- Validate Product Short Description Stage -->
+        <comment userInput="Validate Product Short Description Stage" stepKey="commentValidateShortProductDescriptionStage"/>
+        <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_FF5733.rgb)}}" stepKey="seeDividerColorStage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenShortDescription"/>
         <!-- Save Product -->
         <comment userInput="Save Product" stepKey="commentSaveProduct"/>
         <actionGroup ref="saveProductForm" stepKey="saveProduct"/>
         <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
         <actionGroup ref="expandAdminProductSection" stepKey="expandAdminProductSection"/>
+        <!-- Validate Product Custom Attribute Stage After Save -->
+        <comment userInput="Validate Product Custom Attribute Stage After Save" stepKey="commentValidateProductCustomAttributeStageAfterSave"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForCustomAttributeAfterSave">
+            <argument name="attributeCode" value="$$createProductAttribute.attribute_code$$"/>
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
+        </actionGroup>
+        <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleStageAfterSave"/>
+        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextStageAfterSave"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenCustomAttributeAfterSave"/>
         <!-- Validate Product Description Stage After Save -->
         <comment userInput="Validate Product Description Stage After Save" stepKey="commentValidateProductDescriptionStageAfterSave"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterSave"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescriptionAfterSave">
+            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea('description')}}"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStage.all}}" userInput="2" stepKey="see2ButtonItemsStageAfterSave"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="seeButton1TextStageAfterSave"/>
         <seeElement selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="seeButton2TextStageAfterSave"/>
@@ -1262,15 +1279,6 @@
         </actionGroup>
         <seeElement selector="{{DividerOnStage.color('1', PageBuilderDividerLineColor_FF5733.rgb)}}" stepKey="seeDividerColorStageAfterSave"/>
         <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenShortDescriptionAfterSave"/>
-        <!-- Validate Product Custom Attribute Stage After Save -->
-        <comment userInput="Validate Product Custom Attribute Stage After Save" stepKey="commentValidateProductCustomAttributeStageAfterSave"/>
-        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForCustomAttributeAfterSave">
-            <argument name="attributeCode" value="$$createProductAttribute.attribute_code$$"/>
-            <argument name="pageBuilderArea" value="{{PageBuilderProductAttribute.PageBuilderArea($$createProductAttribute.attribute_code$$)}}"/>
-        </actionGroup>
-        <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="seeHeadingStyleStageAfterSave"/>
-        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeProperty_H1.value, PageBuilderHeadingTextProperty.value, '1')}}" stepKey="seeHeadingTextStageAfterSave"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreenCustomAttributeAfterSave"/>
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createProduct.name$$.html"/>
         </actionGroup>
