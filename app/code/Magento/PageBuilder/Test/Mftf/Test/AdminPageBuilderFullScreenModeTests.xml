@@ -28,8 +28,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <executeJS function="return document.documentElement.clientHeight;" stepKey="viewportHeight"/>
-        <executeJS function="return document.documentElement.clientWidth;" stepKey="viewportWidth"/>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
+        <executeJS function="return window.innerWidth;" stepKey="viewportWidth"/>
         <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
         <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().top" stepKey="topPositionOfStageWrapper"/>
         <executeJS function="return document.querySelector('{{PageBuilderStage.stageWrapperFullScreen}}').getBoundingClientRect().left" stepKey="leftPositionOfStageWrapper"/>
@@ -72,7 +72,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <executeJS function="return document.documentElement.clientHeight;" stepKey="viewportHeight"/>
+        <executeJS function="return window.innerHeight;" stepKey="viewportHeight"/>
         <actionGroup ref="openPageBuilderFullScreen" stepKey="openPageBuilderFullScreen"/>
         <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().top" stepKey="topPositionOfLeftPanel"/>
         <executeJS function="return document.querySelector('{{PageBuilderPanel.leftPanel}}').getBoundingClientRect().left" stepKey="leftPositionOfLeftPanel"/>
