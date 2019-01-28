@@ -64,8 +64,8 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const dataStore = this.parent.dataStore.get() as DataObject;
-        const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+        const initialImageValue = this.parent.dataStore
+            .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         // Create uploader
         return new Uploader(
@@ -73,7 +73,7 @@ export default class Preview extends BasePreview {
             this.config.additional_data.uploaderConfig,
             this.parent.id,
             this.parent.dataStore,
-            (initialImageValue as object[]),
+            initialImageValue,
         );
     }
 
@@ -197,12 +197,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.parent.dataStore.get("message") as string;
+        this.textarea.value = this.parent.dataStore.get<string>("message");
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, () => {
-            this.textarea.value = this.parent.dataStore.get("message") as string;
+            this.textarea.value = this.parent.dataStore.get<string>("message");
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -241,8 +241,12 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
-            const dataStore = this.parent.dataStore.get() as DataObject;
+            const dataStore = this.parent.dataStore.getState();
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+            if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
+                this.parent.dataStore.update("", "message");
+            }
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
             nestingLinkDialog(this.parent.dataStore, this.wysiwyg, "message", "link_url");
         });

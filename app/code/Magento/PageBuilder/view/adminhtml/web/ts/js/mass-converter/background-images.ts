@@ -3,7 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
+import ImageArrayObject from "../converter/image-array-object";
 import {decodeUrl, urlToDirective} from "../utils/image";
+import {get, set} from "../utils/object";
 import ConverterInterface, {ConverterConfigInterface, ConverterDataInterface} from "./converter-interface";
 
 export default class BackgroundImages implements ConverterInterface {
@@ -14,15 +17,15 @@ export default class BackgroundImages implements ConverterInterface {
      * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-    public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
-        const directive = data[config.attribute_name];
+    public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): ConverterDataInterface {
+        const directive = get<string>(data, config.attribute_name);
         if (directive) {
             const images = JSON.parse(directive.replace(/\\(.)/mg, "$1")) || {};
-            if (typeof images.desktop_image !== "undefined") {
-                data[config.desktop_image_variable] = decodeUrl(images.desktop_image);
+            if (!_.isUndefined(images.desktop_image)) {
+                set(data, config.desktop_image_variable, decodeUrl(images.desktop_image));
             }
-            if (typeof images.mobile_image !== "undefined") {
-                data[config.mobile_image_variable] = decodeUrl(images.mobile_image);
+            if (!_.isUndefined(images.mobile_image)) {
+                set(data, config.mobile_image_variable, decodeUrl(images.mobile_image));
             }
             delete data[config.attribute_name];
         }
@@ -36,29 +39,27 @@ export default class BackgroundImages implements ConverterInterface {
      * @param {ConverterConfigInterface} config
      * @returns {object}
      */
-    public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
+    public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): ConverterDataInterface {
+        const desktopImage = get<ImageArrayObject>(data, config.desktop_image_variable);
+        const mobileImage = get<ImageArrayObject>(data, config.mobile_image_variable);
         const directiveData: {
             desktop_image?: string,
             mobile_image?: string,
         } = {};
 
-        if (typeof data[config.desktop_image_variable] !== "undefined"
-            && data[config.desktop_image_variable]
-            && typeof data[config.desktop_image_variable][0] !== "undefined"
-        ) {
-            directiveData.desktop_image = urlToDirective(data[config.desktop_image_variable][0].url);
+        if (!_.isUndefined(desktopImage) && desktopImage && !_.isUndefined(desktopImage[0])) {
+            directiveData.desktop_image = urlToDirective(desktopImage[0].url);
         }
-
-        if (typeof data[config.mobile_image_variable] !== "undefined"
-            && data[config.mobile_image_variable]
-            && typeof data[config.mobile_image_variable][0] !== "undefined"
-        ) {
-            directiveData.mobile_image = urlToDirective(data[config.mobile_image_variable][0].url);
+        if (!_.isUndefined(mobileImage) && mobileImage && !_.isUndefined(mobileImage[0])) {
+            directiveData.mobile_image = urlToDirective(mobileImage[0].url);
         }
 
         // Add the directive data, ensuring we escape double quotes
-        data[config.attribute_name] = JSON.stringify(directiveData)
-            .replace(/[\\"']/g, "\\$&").replace(/\u0000/g, "\\0");
+        set(
+            data,
+            config.attribute_name,
+            JSON.stringify(directiveData).replace(/[\\"']/g, "\\$&").replace(/\u0000/g, "\\0"),
+        );
 
         return data;
     }

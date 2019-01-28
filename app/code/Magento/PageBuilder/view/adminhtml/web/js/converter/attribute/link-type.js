@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,7 +36,8 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] && data[name].type ? data[name].type : "default";
+      var value = (0, _object.get)(data, name);
+      return value && value.type ? value.type : "default";
     };
 
     return CreateValueForLinkType;

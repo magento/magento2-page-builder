@@ -8,43 +8,6 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addTab">
-        <arguments>
-            <argument name="x" defaultValue="10" type="string"/>
-            <argument name="y" defaultValue="0" type="string"/>
-        </arguments>
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForMouseOverAnimation" />
-        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderTabsContentType.role)}}" stepKey="waitForOptions" />
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderTabsContentType.role)}}" stepKey="clickAddContentType"/>
-        <waitForPageLoad stepKey="waitForNewTab" time="30"/>
-    </actionGroup>
-    <actionGroup name="addTabAndOpenNewTabOptions">
-        <arguments>
-            <argument name="from" defaultValue="1" type="string"/>
-            <argument name="to" defaultValue="2" type="string"/>
-            <argument name="x" defaultValue="10" type="string"/>
-            <argument name="y" defaultValue="0" type="string"/>
-        </arguments>
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForMouseOverAnimation" time="30"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderTabsContentType.role)}}" stepKey="waitForOptions" />
-        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderTabsContentType.role)}}" stepKey="clickAddContentType"/>
-        <waitForPageLoad stepKey="waitForNewTab" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContent(to)}}" stepKey="waitForNewTabContent"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader(to)}}" stepKey="waitForNewTabHeader"/>
-        <waitForElementVisible selector="{{TabOnStage.optionsMenu(to)}}" stepKey="waitForTabOptionsPanel"/>
-        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton(to, 'edit')}}" stepKey="seeTabOptionsEdit2"/>
-        <click selector="{{TabOnStage.optionsMenuButton(to, 'edit')}}" stepKey="clickEditContentType2"/>
-        <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <see userInput="Edit Tab" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
-    </actionGroup>
     <actionGroup name="switchTabs">
         <arguments>
             <argument name="section"/>

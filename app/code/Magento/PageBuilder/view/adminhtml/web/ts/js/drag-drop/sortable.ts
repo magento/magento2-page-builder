@@ -7,7 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import ContentTypeInterface from "../content-type";
-import ContentTypeCollectionInterface from "../content-type-collection";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
 import Stage from "../stage";

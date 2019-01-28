@@ -115,8 +115,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
 
     _proto.getUploader = function getUploader() {
-      var dataStore = this.parent.dataStore.get();
-      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+      var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
 
       return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     };
@@ -269,7 +268,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
       _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this5.parent.dataStore.get();
+        var dataStore = _this5.parent.dataStore.getState();
 
         var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 

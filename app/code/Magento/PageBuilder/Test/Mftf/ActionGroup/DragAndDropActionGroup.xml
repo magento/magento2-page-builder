@@ -11,25 +11,27 @@
     <actionGroup name="dragContentTypeToStage">
         <arguments>
             <argument name="contentType"/>
+            <argument name="containerTargetType" defaultValue="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
-        <waitForPageLoad stepKey="waitForContentTypeToLoad" time="30"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStage" />
-        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToStageByIndex">
         <arguments>
             <argument name="contentType"/>
             <argument name="contentTypeNumber" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStage" />
-        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToContainer">
         <arguments>
@@ -39,10 +41,11 @@
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
             <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
             <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="lostFocus"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="lostFocus"/>
+        <waitForElementVisible time="30" selector="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
+        <dragAndDrop selector1="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage" />
@@ -89,10 +92,11 @@
             <argument name="dropZoneIndex" defaultValue="1" type="string"/>
             <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
             <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
-        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElement time="30" selector="{{PageBuilderStage.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" stepKey="waitForStageActive"/>
-        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="loseFocus"/>
+        <waitForElementVisible time="30" selector="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" stepKey="waitForContentTypeInPanel"/>
+        <dragAndDrop selector1="{{pageBuilderArea}}{{PageBuilderPanel.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderStage.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
         <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
