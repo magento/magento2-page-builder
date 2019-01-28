@@ -1,10 +1,5 @@
 # Step 3: Add components (optional)
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 In this step, we will create a preview component in order to customize the options menu for our Quote. The options menu is the popup menu that appears when you mouseover a content type, as shown here:
 
 ![Create config file](../images/options-menu-default.png)
@@ -55,13 +50,13 @@ In your configuration file, reference your Admin `preview_component` (`preview.j
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
-  <type name="example_quote"
+    <type name="example_quote"
         label="Quote"
         component="Magento_PageBuilder/js/content-type"
         preview_component="Example_PageBuilderQuote/js/content-type/example_quote/preview"
         master_component="Magento_PageBuilder/js/content-type/master">
         ...
-  </type>
+    </type>
 </config>
 ```
 
@@ -81,37 +76,37 @@ The Quote `preview_component`  (`preview.js`) example is shown here in full for 
 define([
   'Magento_PageBuilder/js/content-type/preview',
 ], function (PreviewBase) {
-  'use strict';
-  var $super;
-
-  function Preview(parent, config, stageId) {
+    'use strict';
+    var $super;
+    
+    function Preview(parent, config, stageId) {
     PreviewBase.call(this, parent, config, stageId);
-  }
-
-  Preview.prototype = Object.create(PreviewBase.prototype);
-  $super = PreviewBase.prototype;
-
-  Preview.prototype.retrieveOptions = function retrieveOptions() {
+    }
+    
+    Preview.prototype = Object.create(PreviewBase.prototype);
+    $super = PreviewBase.prototype;
+    
+    Preview.prototype.retrieveOptions = function retrieveOptions() {
     var options = $super.retrieveOptions.call(this, arguments);
-
+    
     // Change option menu icons
     options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
-
+    
     // Change tooltips
     options.edit.title = "Open Editor";
     options.remove.title = "Delete";
     // options.move.title = "Move";
     // options.duplicate.title = "Duplicate";
-
+    
     // Remove menu options
     // delete options.move;
     // delete options.duplicate;
     // delete options.edit;
     // delete options.remove;
-
+    
     return options;
-  };
-  return Preview;
+    };
+    return Preview;
 });
 ```
 
@@ -123,15 +118,15 @@ The first thing we do in our preview component is extend Page Builder's `Preview
 define([
   'Magento_PageBuilder/js/content-type/preview',
 ], function (PreviewBase) {
-  'use strict';
-  var $super;
-
-  function Preview(parent, config, stageId) {
+    'use strict';
+    var $super;
+    
+    function Preview(parent, config, stageId) {
     PreviewBase.call(this, parent, config, stageId);
-  }
-
-  Preview.prototype = Object.create(PreviewBase.prototype);
-  $super = PreviewBase.prototype;
+    }
+    
+    Preview.prototype = Object.create(PreviewBase.prototype);
+    $super = PreviewBase.prototype;
 ```
 
 You don't have to extend `Preview` this way, but if you do, you get access to both its public and protected functions. In our Quote example, we need access to one protected function, discussed next.
@@ -146,24 +141,24 @@ To do this, we need to override the protected `retrieveOptions()` function from 
 
 ```js
 Preview.prototype.retrieveOptions = function retrieveOptions() {
-  var options = $super.retrieveOptions.call(this, arguments);
-  
-  // Change option menu icons
-  options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
-
-  // Change tooltips
-  options.edit.title = "Open Editor";
-  options.remove.title = "Delete";
-  // options.move.title = "Move";
-  // options.duplicate.title = "Duplicate";
-
-  // Remove menu options
-  // delete options.move;
-  // delete options.duplicate;
-  // delete options.edit;
-  // delete options.remove;
-
-  return options;
+    var options = $super.retrieveOptions.call(this, arguments);
+    
+    // Change option menu icons
+    options.remove.icon = "<i class='icon-admin-pagebuilder-error'></i>";
+    
+    // Change tooltips
+    options.edit.title = "Open Editor";
+    options.remove.title = "Delete";
+    // options.move.title = "Move";
+    // options.duplicate.title = "Duplicate";
+    
+    // Remove menu options
+    // delete options.move;
+    // delete options.duplicate;
+    // delete options.edit;
+    // delete options.remove;
+    
+    return options;
 };
 ```
 
