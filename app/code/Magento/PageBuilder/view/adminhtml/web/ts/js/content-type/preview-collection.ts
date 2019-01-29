@@ -42,7 +42,7 @@ export default class PreviewCollection extends Preview {
                 contentType.config,
                 contentType.parent,
                 contentType.stageId,
-                contentType.dataStore.get() as DataObject,
+                contentType.dataStore.getState(),
                 childrenLength,
             ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {

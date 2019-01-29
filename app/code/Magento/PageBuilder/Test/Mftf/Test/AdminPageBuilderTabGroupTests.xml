@@ -217,7 +217,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <!-- Open Tabs Panel -->
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">

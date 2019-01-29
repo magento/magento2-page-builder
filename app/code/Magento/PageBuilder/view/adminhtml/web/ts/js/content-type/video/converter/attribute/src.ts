@@ -5,6 +5,7 @@
 
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
+import {get} from "../../../../utils/object";
 
 export default class Src implements ConverterInterface {
     /**
@@ -25,7 +26,7 @@ export default class Src implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const value = data[name].toString();
+        const value = get<string>(data, name);
         if (value === undefined) {
             return "";
         }

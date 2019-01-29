@@ -483,7 +483,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAddSlide">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -946,7 +948,9 @@
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusSlide"/>
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -1575,7 +1579,9 @@
         <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="dontSeeSlideOptionsMenu"/>
         <!-- Add 2nd Slide -->
         <comment userInput="Add 2nd Slide" stepKey="commentAddSlide"/>
-        <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <!-- Validate Slide 2 Is Shown -->
         <comment userInput="Validate Slide 2 Is Shown" stepKey="commentValidateStage2"/>
         <seeElement selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="seeSecondDot"/>
@@ -1643,7 +1649,9 @@
             <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterDrop">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
@@ -1747,7 +1755,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
         <!-- Switch to Slide 2 -->
         <comment userInput="Switch to Slide 2" stepKey="commentSwitchToSlide2Stage"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlide2Stage"/>

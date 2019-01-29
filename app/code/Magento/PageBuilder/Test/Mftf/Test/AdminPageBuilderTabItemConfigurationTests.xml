@@ -58,7 +58,9 @@
         <!-- Add second tab and view on stage -->
         <comment userInput="Add second tab and view on stage" stepKey="AC6"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTab" stepKey="addTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="Tab 2" stepKey="seeTab2DefaultTitleAdmin"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateTab2BackgroundAttributesWithNoImageOrColor">
@@ -380,9 +382,12 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentRight">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyRight"/>
@@ -550,7 +555,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin1"/>
         <comment userInput="User adds new tab to Tabs from the stage, new Tab becomes active and gets focus. " stepKey="AC5"/>
-        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabContent('2')}}" stepKey="waitForNewTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForNewTabHeader"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab1ContentHidden"/>
@@ -676,9 +683,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -807,9 +817,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -934,9 +947,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1067,9 +1083,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1206,9 +1225,12 @@
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1363,9 +1385,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1500,9 +1525,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1669,9 +1697,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1816,9 +1847,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
@@ -1984,9 +2018,12 @@
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTabAndOpenNewTabOptions" stepKey="addTabAndOpenNewTabOptions">
-            <argument name="from" value="1"/>
-            <argument name="to" value="2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>

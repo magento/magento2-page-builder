@@ -7,6 +7,7 @@ import MassConverterInterface, {
     ConverterConfigInterface,
     ConverterDataInterface,
 } from "../../../mass-converter/converter-interface";
+import {get} from "../../../utils/object";
 
 export default class HeaderAlignment implements MassConverterInterface {
 
@@ -29,7 +30,7 @@ export default class HeaderAlignment implements MassConverterInterface {
      * @returns {object}
      */
     public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
-        data.css_classes += " tab-align-" + (data[config.navigation_alignment_variable] || "left");
+        data.css_classes += " tab-align-" + get(data, config.navigation_alignment_variable, "left");
         return data;
     }
 }
