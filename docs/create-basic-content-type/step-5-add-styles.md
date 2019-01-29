@@ -71,9 +71,8 @@ If you break your styles into multiple LESS files, make sure you `@import` each 
 The following sample shows the `class` styles used for our Quote content type:
 
 ```css
-// Content type's base styling
+// Content type base styling
 blockquote {
-  .quote-content {
     display: block;
     font-size: 1.2em;
     margin: 1em;
@@ -99,7 +98,6 @@ blockquote {
       line-height: 0;
       margin-left: 0;
     }
-  }
 }
 div {
   &.quote-author {
@@ -269,7 +267,6 @@ The `_import.less` file content for the Admin preview template:
 ```css
 // Content type's base styling
 blockquote {
-  .quote-content {
     display: block;
     font-size: 1.2em;
     margin: 1em;
@@ -295,7 +292,6 @@ blockquote {
       line-height: 0;
       margin-left: 0;
     }
-  }
 }
 div {
   &.quote-author {
@@ -330,7 +326,6 @@ The `_import.less` file content for the master format storefront template:
 ```css
 // Content type's base styling
 blockquote {
-  &.quote-text {
     display: block;
     font-size: 1.2em;
     margin: 1em;
@@ -356,7 +351,6 @@ blockquote {
       line-height: 0;
       margin-left: 0;
     }
-  }
 }
 
 div {

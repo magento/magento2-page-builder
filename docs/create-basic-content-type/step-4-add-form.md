@@ -102,6 +102,45 @@ The Quote form is shown in full here for you to copy into your `pagebuilder_exam
             </settings>
         </dataProvider>
     </dataSource>
+    <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+        <settings>
+            <label translate="true">Appearance</label>
+            <additionalClasses>
+                <class name="admin__fieldset-visual-select-large">true</class>
+            </additionalClasses>
+            <collapsible>false</collapsible>
+            <opened>true</opened>
+            <imports>
+                <link name="hideFieldset">${$.name}.appearance:options</link>
+                <link name="hideLabel">${$.name}.appearance:options</link>
+            </imports>
+        </settings>
+        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-visual-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">default</item>
+                </item>
+            </argument>
+            <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="admin__field-visual-select-container">true</class>
+                </additionalClasses>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="AppearanceSourceQuote"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
     <fieldset name="general" sortOrder="20">
         <settings>
             <label/>
@@ -109,7 +148,7 @@ The Quote form is shown in full here for you to copy into your `pagebuilder_exam
         <field name="quote_text" sortOrder="10" formElement="textarea">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                  <item name="source" xsi:type="string">page</item>
+                    <item name="source" xsi:type="string">page</item>
                 </item>
             </argument>
             <settings>
@@ -121,7 +160,7 @@ The Quote form is shown in full here for you to copy into your `pagebuilder_exam
         <field name="quote_author" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                  <item name="source" xsi:type="string">page</item>
+                    <item name="source" xsi:type="string">page</item>
                 </item>
             </argument>
             <settings>
@@ -144,19 +183,48 @@ The Quote form is shown in full here for you to copy into your `pagebuilder_exam
         </field>
         <field name="quote_css" sortOrder="40" formElement="input">
             <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-              <item name="source" xsi:type="string">page</item>
-            </item>
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                </item>
             </argument>
             <settings>
-            <dataScope>quote_css</dataScope>
-            <dataType>text</dataType>
-            <label translate="true">CSS for Quote</label>
+                <dataScope>quote_css</dataScope>
+                <dataType>text</dataType>
+                <label translate="true">CSS for Quote</label>
             </settings>
         </field>
     </fieldset>
 </form>
 ```
+
+### appearance fieldset and field
+
+Page Builder requires you to add the `appearance_fieldset` (the first fieldset shown in the form) and its `appearance` field for all your content type forms. Even though our Quote content type doesn’t have any additional appearances, the `appearance` field is still required/expected so that other modules can add appearances to a content type as needed.
+
+To ensure your appearance field renders, you need to create a `di.xml` file located here:
+
+![Create config file](../images/step4-field-appearance-class.png)
+
+ Then add the source implementation as referenced in the `appearance` field: `<options class="AppearanceSourceQuote"/>` as shown here:
+
+```xml
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="AppearanceSourceQuote" type="Magento\PageBuilder\Model\Source\VisualSelect">
+        <arguments>
+            <argument name="optionsSize" xsi:type="string">large</argument>
+            <argument name="optionsData" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="value" xsi:type="string">default</item>
+                    <item name="title" xsi:type="string" translate="true">Default</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>
+```
+
+Again, even though our Quote control doesn't currently define an appearance, we must implement all the parts so that other modules can expect each Page Builder content type to have an appearance defined, even if it is not used. 
 
 ### fieldset
 
