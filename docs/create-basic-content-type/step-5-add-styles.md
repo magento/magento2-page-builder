@@ -22,7 +22,7 @@ Unlike the `class` attribute, which always includes the defined classes, the `cs
 
 The following diagram details how the `css` binding works starting from the HTML template (`preview.html`), the configuration (`example_quote.xml`), the form field from `pagebuilder_example_quote_form.xml`, to the CSS stylesheet (`_import.less`) and finally to the rendered HTML. The highlighted parts of the code and the arrows between them should give you a good idea for how things are connected to make the `css` binding work. 
 
-![Create config file](../images/step5-css-binding.png)
+![Create config file](../images/step5-css-binding.png){:width="745px" height="auto"}
 
 As shown, the end result appends the user-entered CSS classes to the rendered template element along with any other `class` styles you already defined.
 
