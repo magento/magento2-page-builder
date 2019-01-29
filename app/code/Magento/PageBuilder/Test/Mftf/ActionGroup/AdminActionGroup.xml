@@ -32,6 +32,13 @@
         <waitForElementNotVisible selector="{{PageBuilderStage.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
         <waitForElementVisible time="30" selector="{{RowOnStage.base(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
+    <actionGroup name="saveCMSBlock">
+        <!-- This goes in CE repo -->
+        <waitForElementVisible selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="waitForSaveButton"/>
+        <click selector="{{CmsNewBlockBlockActionsSection.savePage}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="You saved the block." stepKey="seeSuccessfulSaveMessage"/>
+    </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
         <!-- This goes in CE repo -->
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForSaveAndContinueVisibility"/>
