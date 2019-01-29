@@ -25,6 +25,7 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
+import {get, set} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -145,9 +146,9 @@ export default class Preview {
      * @param {string} value
      */
     public updateData(key: string, value: string) {
-        const data = this.parent.dataStore.get() as DataObject;
+        const data = this.parent.dataStore.getState();
 
-        data[key] = value;
+        set(data, key, value);
         this.parent.dataStore.update(data);
     }
 
@@ -297,7 +298,7 @@ export default class Preview {
      * Reverse the display data currently in the data store
      */
     public onOptionVisibilityToggle(): void {
-        const display = this.parent.dataStore.get("display");
+        const display = this.parent.dataStore.get<boolean>("display");
         this.parent.dataStore.update(!display, "display");
     }
 
@@ -320,8 +321,8 @@ export default class Preview {
         contentType: ContentTypeInterface | ContentTypeCollectionInterface,
         autoAppend: boolean = true,
         direct: boolean = false,
-    ): Promise<ContentTypeInterface> | void {
-        const contentTypeData = contentType.dataStore.get() as DataObject;
+    ): Promise<ContentTypeInterface> {
+        const contentTypeData = contentType.dataStore.getState();
         const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
 
         return new Promise((resolve) => {
@@ -339,6 +340,9 @@ export default class Preview {
 
                 resolve(duplicateContentType);
             });
+        }).catch((error) => {
+            console.error(error);
+            return null;
         });
     }
 
@@ -469,14 +473,14 @@ export default class Preview {
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} originalContentType
-     * @param {ContentTypeInterface} duplicateContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} duplicateContentType
      * @param {number} index
      * @param {boolean} direct
      */
     protected dispatchContentTypeCloneEvents(
-        originalContentType: ContentTypeInterface,
-        duplicateContentType: ContentTypeInterface,
+        originalContentType: ContentTypeInterface | ContentTypeCollectionInterface,
+        duplicateContentType: ContentTypeInterface | ContentTypeCollectionInterface,
         index: number,
         direct: boolean,
     ) {
@@ -548,13 +552,13 @@ export default class Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        const data = this.parent.dataStore.get() as DataObject;
+        const data = this.parent.dataStore.getState();
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
                 return;
             }
-            let fieldValue = data[key];
+            let fieldValue = get(data, key);
             if (!fieldValue) {
                 fieldValue = "";
             }
@@ -600,7 +604,7 @@ export default class Preview {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({}, this.parent.dataStore.get() as DataObject),
+            _.extend({}, this.parent.dataStore.getState()),
         );
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});

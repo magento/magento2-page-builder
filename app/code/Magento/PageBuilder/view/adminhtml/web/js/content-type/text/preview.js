@@ -127,14 +127,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       _events.trigger("stage:interactionStop");
     };
     /**
-     * Retrieve the margin & padding styles for the placeholder
+     * Retrieve the margin & padding & alignment styles for the placeholder
      *
      * @returns {any}
      */
 
 
     _proto.getPlaceholderStyle = function getPlaceholderStyle() {
-      var keys = ["marginBottom", "marginLeft", "marginRight", "marginTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop"];
+      var keys = ["marginBottom", "marginLeft", "marginRight", "marginTop", "paddingBottom", "paddingLeft", "paddingRight", "paddingTop", "textAlign"];
       return _underscore.pick(this.data.main.style(), function (style, key) {
         return keys.indexOf(key) !== -1;
       });

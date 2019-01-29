@@ -8,6 +8,7 @@ import _ from "underscore";
 import ConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
 import MassConverterPool from "../mass-converter/converter-pool";
+import {get} from "../utils/object";
 import {fromSnakeToCamelCase} from "../utils/string";
 import appearanceConfig from "./appearance-config";
 import Master from "./master";
@@ -65,6 +66,7 @@ export default class ObservableUpdater {
             if (config[elementName].style !== undefined) {
                 const currentStyles = viewModel.data[elementName].style();
                 let newStyles = this.convertStyle(config[elementName], data);
+
                 if (currentStyles) {
                     /**
                      * If so we need to retrieve the previous styles applied to this element and create a new object
@@ -97,7 +99,7 @@ export default class ObservableUpdater {
             }
 
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
-                const css = data[config[elementName].css.var];
+                const css = get<string>(data, config[elementName].css.var);
                 const newClasses = {};
 
                 if (css && css.length > 0) {
@@ -150,7 +152,12 @@ export default class ObservableUpdater {
             if ("read" === attributeConfig.persistence_mode) {
                 continue;
             }
-            let value = data[attributeConfig.var];
+            let value;
+            if (!!attributeConfig.static) {
+                value = attributeConfig.value;
+            } else {
+                value = get(data, attributeConfig.var);
+            }
             const converter = this.converterResolver(attributeConfig);
             if (this.converterPool.get(converter)) {
                 value = this.converterPool.get(converter).toDom(attributeConfig.var, data);
@@ -179,7 +186,7 @@ export default class ObservableUpdater {
                 if (!!propertyConfig.static) {
                     value = propertyConfig.value;
                 } else {
-                    value = data[propertyConfig.var];
+                    value = get(data, propertyConfig.var);
                     const converter = this.converterResolver(propertyConfig);
                     if (this.converterPool.get(converter)) {
                         value = this.converterPool.get(converter).toDom(propertyConfig.var, data);
@@ -206,7 +213,7 @@ export default class ObservableUpdater {
      * @returns {string}
      */
     private convertHtml(config: any, data: DataObject) {
-        let value = data[config.html.var] || config.html.placeholder;
+        let value = config.html.var ? get(data, config.html.var, config.html.placeholder) : config.html.placeholder;
         const converter = this.converterResolver(config.html);
         if (this.converterPool.get(converter)) {
             value = this.converterPool.get(converter).toDom(config.html.var, data);

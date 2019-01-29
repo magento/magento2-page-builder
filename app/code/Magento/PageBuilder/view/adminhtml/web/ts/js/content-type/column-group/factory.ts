@@ -29,5 +29,8 @@ export function createColumn(
     ).then((column: ContentTypeCollectionInterface<ColumnPreview>) => {
         parent.addChild(column, index);
         return column;
+    }).catch((error) => {
+        console.error(error);
+        return null;
     });
 }

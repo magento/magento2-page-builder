@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_underscore, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,14 +36,14 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      var content = data[name];
+      var content = (0, _object.get)(data, name);
 
-      if (typeof content === "string" && content !== "") {
+      if (_underscore.isString(content) && content !== "") {
         content = JSON.parse(content);
       }
 
       if (content && Object.keys(content).length) {
-        content.each(function (marker) {
+        content.forEach(function (marker) {
           if (marker.position) {
             marker.position.latitude = parseFloat(marker.position.latitude);
             marker.position.longitude = parseFloat(marker.position.longitude);

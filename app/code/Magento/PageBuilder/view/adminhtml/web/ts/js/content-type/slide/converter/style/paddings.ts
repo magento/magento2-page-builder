@@ -3,8 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
+import PaddingObject from "../../../../converter/padding-object";
 import {DataObject} from "../../../../data-store";
+import {get} from "../../../../utils/object";
 
 export default class Paddings implements ConverterInterface {
     /**
@@ -13,7 +16,7 @@ export default class Paddings implements ConverterInterface {
      * @param value string
      * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
+    public fromDom(value: PaddingObject): string | object {
         const result: any = {};
 
         if (undefined !== value.padding) {
@@ -45,8 +48,8 @@ export default class Paddings implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = data[name];
-        if (value && typeof value === "string") {
+        let value = get<PaddingObject>(data, name);
+        if (value && _.isString(value)) {
             value = JSON.parse(value);
         }
         if (value && undefined !== value.padding) {

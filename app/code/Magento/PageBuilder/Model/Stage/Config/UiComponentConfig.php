@@ -49,19 +49,42 @@ class UiComponentConfig
             function ($item, $key) {
                 // Determine if this item has a formElement key
                 if (isset($item[Converter::DATA_ARGUMENTS_KEY]['data']['config']['formElement'])) {
-                    $elementConfig
-                        = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
-                    return [
-                        $key => [
-                            'default' => (isset($elementConfig['default'])
-                                ? $elementConfig['default'] : '')
-                        ]
-                    ];
+                    $elementConfig = $item[Converter::DATA_ARGUMENTS_KEY]['data']['config'];
+                    // If the field has a dataScope use that for the key instead of the name
+                    if (isset($elementConfig['dataScope'])) {
+                        $key = $elementConfig['dataScope'];
+                    }
+                    $field = [];
+                    // Generate our nested field array with defaults supporting dot notation within the key
+                    $this->generateFieldArray(
+                        $field,
+                        $key . ".default",
+                        (isset($elementConfig['default']) ? $elementConfig['default'] : '')
+                    );
+                    return $field;
                 }
             }
         );
 
         return $fields;
+    }
+
+    /**
+     * Recursively generate our field array, allowing for dot notation within the key
+     *
+     * @param array $array
+     * @param string $path
+     * @param string|array $value
+     */
+    private function generateFieldArray(array &$array, string $path, $value)
+    {
+        $keys = explode(".", $path);
+
+        foreach ($keys as $key) {
+            $array = &$array[$key];
+        }
+
+        $array = $value;
     }
 
     /**
@@ -84,7 +107,7 @@ class UiComponentConfig
             )
         ) {
             foreach ($config[Converter::DATA_COMPONENTS_KEY] as $key => $child) {
-                $values = array_merge(
+                $values = array_merge_recursive(
                     $values,
                     $this->iterateComponents($child, $callback, $key) ?: []
                 );

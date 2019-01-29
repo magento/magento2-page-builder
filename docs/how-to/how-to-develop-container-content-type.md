@@ -1027,7 +1027,6 @@ Use the configuration form in the container group's edit panel to switch between
 
 ![Custom Containers Form](../images/custom-containers-form.png)
 
-[How to develop a new content type]: how-to-develop-new-content-type.md
 [Register your component]: https://devdocs.magento.com/guides/v2.2/extension-dev-guide/build/component-registration.html
 [custom container]: #custom-container
 [custom container group]: #custom-container-group
