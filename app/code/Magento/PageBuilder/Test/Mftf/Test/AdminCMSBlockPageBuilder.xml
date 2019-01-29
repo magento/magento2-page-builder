@@ -736,4 +736,52 @@
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
     </test>
+    <test name="PageBuilderCmsBlockFullScreenCoversEntireScreen" extends="PageBuilderFullScreenCoversEntireScreen">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Verify that full-screen mode covers entire screen in CMS Block"/>
+            <description value="This test is to ensure that the PageBuilder full-screen mode covers the entire screen when opened for CMS Block."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3328"/>
+            <testCaseId value="MC-13766"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+            </actionGroup>
+            <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct" before="logout"/>
+        </after>
+    </test>
+    <test name="PageBuilderCmsBlockFullScreenLeftPanelHeightAndFunctionality" extends="PageBuilderFullScreenLeftPanelHeightAndFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="CMS Block"/>
+            <title value="Left panel is full-height and works in full-screen mode in CMS Block"/>
+            <description value="This test is to ensure that the PageBuilder left panel works and grows to span the full height of the viewport in full-screen mode when opened for CMS Block."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3328"/>
+            <testCaseId value="MC-13767"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-fullScreen"/>
+            <group value="pagebuilder-cms-block"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" after="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="CMSBlockPage" value="$$createPreReqBlock$$" />
+            </actionGroup>
+            <comment userInput="---merging to remove step---" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatedProduct" before="logout"/>
+        </after>
+    </test>
 </tests>
