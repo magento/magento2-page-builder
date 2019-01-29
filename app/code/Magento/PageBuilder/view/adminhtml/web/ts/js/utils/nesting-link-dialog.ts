@@ -25,25 +25,30 @@ export default function nestingLinkDialog(
     inlineMessageField: string,
     linkUrlField: string,
 ) {
-    const dataStoreContent = dataStore.get() as DataObject;
+    const dataStoreContent = dataStore.getState() as DataObject;
     const inlineMessage = dataStoreContent[inlineMessageField] as string;
     const linkUrl = dataStoreContent[linkUrlField] as FieldDefaultsInterface;
     const aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
-    if (inlineMessage.match(aLinkRegex) &&
+    if (wysiwyg &&
+        inlineMessage.match(aLinkRegex) &&
         linkUrl &&
         ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 &&
         linkUrl[linkUrl.type] &&
-        linkUrl[linkUrl.type].length !== 0) {
+        linkUrl[linkUrl.type].length !== 0
+    ) {
+        const inlineEditor = $("#" + wysiwyg.elementId);
+        inlineEditor.blur();
         confirmationDialog({
             actions: {
                 always: () => {
-                    const anchorLessInlineMessage = inlineMessage.replace(aLinkRegex, "");
-                    dataStore.update(anchorLessInlineMessage, inlineMessageField);
-                    $("#" + wysiwyg.elementId).html(anchorLessInlineMessage);
+                    const anchorLessDataStoreMessage = inlineMessage.replace(aLinkRegex, "");
+                    const anchorLessInlineMessage = inlineEditor.html().replace(aLinkRegex, "");
+                    dataStore.update(anchorLessDataStoreMessage, inlineMessageField);
+                    inlineEditor.html(anchorLessInlineMessage);
                 },
             },
-            content: $t("Adding link in content and outer element is not allowed. Remove the link from the element before adding links to the content."), // tslint:disable-line:max-line-length
-            title: $t("Nesting links are not allowed"),
+            content: $t("We are unable to support links within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a link within the content. We will automatically remove the links within the content field."), // tslint:disable-line:max-line-length
+            title: $t("Nested links are not allowed"),
             haveCancelButton: false,
         });
     }

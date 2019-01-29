@@ -15,23 +15,26 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-co
    * @param {string} linkUrlField
    */
   function nestingLinkDialog(dataStore, wysiwyg, inlineMessageField, linkUrlField) {
-    var dataStoreContent = dataStore.get();
+    var dataStoreContent = dataStore.getState();
     var inlineMessage = dataStoreContent[inlineMessageField];
     var linkUrl = dataStoreContent[linkUrlField];
     var aLinkRegex = /<a[\s]+([^>]+)>|<a>|<\/a>/igm;
 
-    if (inlineMessage.match(aLinkRegex) && linkUrl && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
+    if (wysiwyg && inlineMessage.match(aLinkRegex) && linkUrl && ["page", "product", "category", "default"].indexOf(linkUrl.type) !== -1 && linkUrl[linkUrl.type] && linkUrl[linkUrl.type].length !== 0) {
+      var inlineEditor = (0, _jquery)("#" + wysiwyg.elementId);
+      inlineEditor.blur();
       (0, _dismissibleConfirm)({
         actions: {
           always: function always() {
-            var anchorLessInlineMessage = inlineMessage.replace(aLinkRegex, "");
-            dataStore.update(anchorLessInlineMessage, inlineMessageField);
-            (0, _jquery)("#" + wysiwyg.elementId).html(anchorLessInlineMessage);
+            var anchorLessDataStoreMessage = inlineMessage.replace(aLinkRegex, "");
+            var anchorLessInlineMessage = inlineEditor.html().replace(aLinkRegex, "");
+            dataStore.update(anchorLessDataStoreMessage, inlineMessageField);
+            inlineEditor.html(anchorLessInlineMessage);
           }
         },
-        content: (0, _translate)("Adding link in content and outer element is not allowed. Remove the link from the element before adding links to the content."),
+        content: (0, _translate)("We are unable to support links within the content field whilst having a link set on the content type. Please remove the content type link if you'd like to set a link within the content. We will automatically remove the links within the content field."),
         // tslint:disable-line:max-line-length
-        title: (0, _translate)("Nesting links are not allowed"),
+        title: (0, _translate)("Nested links are not allowed"),
         haveCancelButton: false
       });
     }
