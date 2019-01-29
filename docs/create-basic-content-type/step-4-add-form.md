@@ -201,7 +201,7 @@ The Quote form is shown in full here for you to copy into your `pagebuilder_exam
 
 Page Builder requires you to add the `appearance_fieldset` (the first fieldset shown in the form) and its `appearance` field for all your content type forms. Even though our Quote content type doesn’t have any additional appearances, the `appearance` field is still required/expected so that other modules can add appearances to a content type as needed.
 
-To ensure your appearance field renders, you need to create a `di.xml` file located here:
+To ensure your appearance field renders, create a `di.xml` file located here:
 
 ![Create config file](../images/step4-field-appearance-class.png)
 
