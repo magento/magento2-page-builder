@@ -3,8 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import ConverterInterface from "../../../../../converter/converter-interface";
 import {DataObject} from "../../../../../data-store";
+import {get} from "../../../../../utils/object";
 
 /**
  * @api
@@ -28,7 +30,8 @@ export default class Flex implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        if (typeof data[name] !== "undefined" && data[name] === false) {
+        const value = get(data, name);
+        if (!_.isUndefined(value) && value === false) {
             return "none";
         }
         return "flex";
