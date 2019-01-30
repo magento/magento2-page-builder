@@ -49,10 +49,11 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingAlignment" defaultValue="PageBuilderHeadingAlignmentProperty_left"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
         <comment userInput="Click outside heading editable area" stepKey="commentClickOutside"/>
-        <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
-        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <moveMouseOver selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation2"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTypeToolbar(index, headingType.toolbar)}}" stepKey="dontSeeHeadingTypeToolbar"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbar(index, headingAlignment.toolbar)}}" stepKey="dontSeeHeadingAlignmentToolbar"/>
