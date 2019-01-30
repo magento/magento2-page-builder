@@ -1848,8 +1848,8 @@
     <test name="ProductFromDifferentWebsiteInsideBlockShowsOnStage">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Products"/>
-            <title value="Product from Different Website Shows on Stage"/>
+            <stories value="Block"/>
+            <title value="Product from Different Website Inside Block Shows on Stage"/>
             <description value="As a product manager I want to be able to see products from all store views rendered inside blocks on stage in admin so that I don't get worried that conditions are being applied incorrectly"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-5373"/>
@@ -1872,33 +1872,29 @@
                 <argument name="StoreGroup" value="customStoreGroup"/>
                 <argument name="customStore" value="customStore"/>
             </actionGroup>
+            <createData entity="SimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
         </before>
         <after>
             <actionGroup ref="DeleteCustomWebsiteActionGroup" stepKey="deleteWebsite">
                 <argument name="websiteName" value="$createCustomWebsite.website[name]$"/>
             </actionGroup>
             <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
-            <actionGroup ref="DeleteCategory" stepKey="deleteCategory">
-                <argument name="categoryEntity" value="SimpleSubCategory"/>
-            </actionGroup>
-            <actionGroup ref="deleteProductBySku" stepKey="deleteProduct">
-                <argument name="sku" value="{{SimpleProduct.sku}}"/>
-            </actionGroup>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
             <actionGroup ref="logout" stepKey="logoutOfAdmin"/>
         </after>
-        <!-- Create product and assign to store view -->
-        <comment userInput="Create product and assign to store view" stepKey="commentCreateProductAndAssignToStoreView"/>
-        <actionGroup ref="FillAdminSimpleProductForm" stepKey="createProduct">
-            <argument name="category" value="SimpleSubCategory"/>
-            <argument name="simpleProduct" value="SimpleProduct"/>
+        <!-- Create product and assign to created store view -->
+        <comment userInput="Assign product to created store view" stepKey="commentAssignProductToCreatedStoreView"/>
+        <actionGroup ref="navigateToCreatedProductEditPage" stepKey="navigateToCreatedProductEditPage">
+            <argument name="product" value="$$createProduct$$"/>
         </actionGroup>
         <actionGroup ref="SelectProductInWebsitesActionGroup" stepKey="setWebsite2">
             <argument name="website" value="$createCustomWebsite.website[name]$"/>
         </actionGroup>
         <uncheckOption selector="{{ProductInWebsitesSection.website('Main Website')}}" stepKey="uncheckMainWebsite"/>
-        <click selector="{{AdminProductFormActionSection.saveButton}}" stepKey="clickSaveProduct"/>
-        <waitForPageLoad stepKey="waitForProductToSave"/>
-        <see userInput="You saved the product." stepKey="seeSuccessfulProductSaveMessage"/>
+        <actionGroup ref="saveProductForm" stepKey="saveProductForm2" />
         <!-- Create block with product inside -->
         <comment userInput="Create block with product inside" stepKey="commentCreateBlockWithProductInside"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage">
@@ -1976,21 +1972,13 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
         </actionGroup>
-        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts"/>
-        <assertCount stepKey="assertStorefrontCountIs0">
-            <expectedResult type="int">0</expectedResult>
-            <actualResult type="variable">$grabStorefrontProducts</actualResult>
-        </assertCount>
+        <seeNumberOfElements selector="{{ProductsOnStorefront.product('1')}}" userInput="0" stepKey="seeZeroProducts" />
         <!-- Validate Storefront with correct store view -->
         <comment userInput="Validate Storefront with correct Store View shows product" stepKey="commentValidateStorefrontWithCorrectStoreView"/>
         <actionGroup ref="navigateToStoreFrontWithStoreView" stepKey="navigateToStoreFrontWithStoreView">
             <argument name="contentType" value="PageBuilderProductsContentType"/>
             <argument name="storeView" value="customStore"/>
         </actionGroup>
-        <grabMultiple selector="{{ProductsOnStorefront.product('1')}}" stepKey="grabStorefrontProducts2"/>
-        <assertCount stepKey="assertStorefrontCountIs1">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">$grabStorefrontProducts2</actualResult>
-        </assertCount>
+        <seeNumberOfElements selector="{{ProductsOnStorefront.product('1')}}" userInput="1" stepKey="seeOneProduct" />
     </test>
 </tests>
