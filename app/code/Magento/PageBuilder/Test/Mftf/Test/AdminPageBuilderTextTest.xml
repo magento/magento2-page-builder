@@ -2647,4 +2647,53 @@
             <actualResult type="variable">grabComputedTextAlignStoreFront</actualResult>
         </assertEquals>
     </test>
+    <test name="TextTooltipMenusAreNotCutOffInFullScreenMode" extends="HeadingLiveEditToolbarNotCutOffInFullScreenMode">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Text tooltip menus should not overflow viewport bounds (get 'cut off') in full screen mode"/>
+            <description value="As a content creator I want text tooltip menus to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-6491"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4" before="enableWYSIWYG"/>
+            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG" before="navigateToAPageWithPageBuilder"/>
+        </before>
+        <!-- Add Text Content Type -->
+        <comment userInput="Add Text Content Type" stepKey="commentAddInnerContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderInnerContentTypePanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragInnerContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" stepKey="waitForToolbarVisible"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="toolbarBottomPosition"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPosition"/>
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPosition"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TextOnStage.wysiwyg('1')}}" stepKey="waitForContentTypeToBeVisible"/>
+        <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnInnerContentType"/>
+        <waitForPageLoad after="focusOnInnerContentType" stepKey="waitForToolbarAnimationAfterOverflow"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPositionAfterOverflow"/>
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="inputBoxBottomPositionAfterOverflow"/>
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPositionAfterOverflow"/>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusEditorAfterOverflow">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnInnerContentTypeAfterExitFullScreen"/>
+        <waitForPageLoad after="focusOnInnerContentTypeAfterExitFullScreen" stepKey="waitForToolbarAnimationAfterExitFullScreen"/>
+        <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPositionAfterExitFullScreen"/>
+        <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
+    </test>
 </tests>

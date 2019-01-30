@@ -1302,4 +1302,243 @@
         <dontSeeElementInDOM selector="{{HeadingOnStorefront.hidden('1')}}" stepKey="dontSeeHiddenElement"/>
         <seeElement selector="{{HeadingOnStorefront.base('1')}}" stepKey="waitForContentTypeVisible" />
     </test>
+    <test name="HeadingLiveEditToolbarNotCutOffInFullScreenMode">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Heading live edit toolbar should not overflow viewport bounds (get 'cut off') in full screen mode"/>
+            <description value="As a content creator I want live edit toolbar for heading content type to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-13682"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column Content Type -->
+        <comment userInput="Add Column Content Type" stepKey="commentAddColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForColumnContentType">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Heading Content Type -->
+        <comment userInput="Add Heading Content Type" stepKey="commentAddInnerContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderInnerContentTypePanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <!-- Duplicate left column 3 times to create 1/12 column on the left configuration -->
+        <comment userInput="Duplicate left column 3 times to create 1/12 column on the left configuration" stepKey="commentInitialResize"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn1Of3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn2Of3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn3Of3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('1','1/12')}}" stepKey="validateFirstColumnWidth"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragInnerContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{HeadingOnStage.headingTypeToolbar('1',PageBuilderHeadingTypeProperty_H6.toolbar)}}" stepKey="waitForToolbarVisible"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionBottom('0')}}" stepKey="toolbarBottomPosition"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPosition"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPosition"/>
+        <!-- Assert toolbar did not overflow -->
+        <comment userInput="Assert toolbar did not overflow" stepKey="commentAssertToolbarNotOverflow"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegative">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$toolbarTopPosition</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Assert bottom of toolbar is above top of input box -->
+        <comment userInput="Assert bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBox"/>
+        <assertLessThanOrEqual stepKey="assertToolbarAboveInputBox">
+            <expectedResult type="variable">$inputBoxTopPosition</expectedResult>
+            <actualResult type="variable">$toolbarBottomPosition</actualResult>
+        </assertLessThanOrEqual>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusEditor">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Set PageBuilder to full screen -->
+        <comment userInput="Set PageBuilder to full screen" stepKey="commentSetFullScreen"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openFullScreen"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeToBeVisible" />
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnInnerContentType">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionAfterOverflow"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionBottom('0')}}" stepKey="inputBoxBottomPositionAfterOverflow"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionAfterOverflow"/>
+        <!-- Assert toolbar did not overflow -->
+        <comment userInput="Assert toolbar did not overflow" stepKey="commentAssertToolbarNotOverflowAfterOverflow"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeAfterOverflow">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$inputBoxTopPositionAfterOverflow</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Check top of toolbar is below bottom of input box -->
+        <comment userInput="Check top of toolbar is below bottom of input box" stepKey="commentCheckToolbarBelowInputBoxAfterOverflow"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarAboveInputBoxAfterOverflow">
+            <expectedResult type="variable">$inputBoxBottomPositionAfterOverflow</expectedResult>
+            <actualResult type="variable">$toolbarTopPositionAfterOverflow</actualResult>
+        </assertGreaterThanOrEqual>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusEditorAfterOverflow">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Exit full screen -->
+        <comment userInput="Exit full screen" stepKey="commentExitFullScreen"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitFullScreen"/>
+        <actionGroup ref="clickInsideLiveEditHeading" stepKey="focusOnInnerContentTypeAfterExitFullScreen">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionBottom('0')}}" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
+        <executeJS function="{{HeadingOnStage.headingToolbarViewportPositionTop('0')}}" stepKey="toolbarTopPositionAfterExitFullScreen"/>
+        <executeJS function="{{HeadingOnStage.headingContentTypeViewportPositionTop('0')}}" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
+        <!-- Assert toolbar did not overflow after exit full screen-->
+        <comment userInput="Assert toolbar did not overflow after exit full screen" stepKey="commentAssertToolbarNotOverflowAfterExitFullScreen"/>
+        <assertGreaterThanOrEqual stepKey="assertToolbarTopBoundingClientRectIsNotNegativeAfterExitFullScreen">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$toolbarTopPositionAfterExitFullScreen</actualResult>
+        </assertGreaterThanOrEqual>
+        <!-- Check bottom of toolbar is above top of input box -->
+        <comment userInput="Check bottom of toolbar is above top of input box" stepKey="commentCheckToolbarAboveInputBoxAfterExitFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertToolbarAboveInputBoxAfterExitFullScreen">
+            <expectedResult type="variable">$inputBoxTopPositionAfterExitFullScreen</expectedResult>
+            <actualResult type="variable">$toolbarBottomPositionAfterExitFullScreen</actualResult>
+        </assertLessThanOrEqual>
+    </test>
+    <test name="HeadingOptionsMenuNotOverflowRight">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Panel"/>
+            <title value="Heading options menu should not overflow viewport bounds (get 'cut off') on the right"/>
+            <description value="As a content creator I want heading options menus to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5383"/>
+            <testCaseId value="MC-13716"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Column Content Type -->
+        <comment userInput="Add Column Content Type" stepKey="commentAddColumnContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForColumnContentType">
+            <argument name="group" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Duplicate right column 2 times to create 1/12 column on the right configuration -->
+        <comment userInput="Duplicate right column 2 times to create 1/12 column on the right configuration" stepKey="commentInitialResize"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateLastColumn1Of2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateLastColumn2Of2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColumnOnBackend.displayLabel('3','1/12')}}" stepKey="validateLastColumnWidth"/>
+        <!-- Add Heading Content Type -->
+        <comment userInput="Add Heading Content Type" stepKey="commentAddHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandHeadingPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="unFocusHeadingEditor">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Text Content Type -->
+        <comment userInput="Add Text Content Type" stepKey="commentAddTextContentType"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandTextPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragInnerContentTypeIntoColumn">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="unFocusOptionMenu" stepKey="unFocusTextEditor">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+        </actionGroup>
+        <!-- Get window width -->
+        <comment userInput="Get window width" stepKey="commentGetWindowWidth"/>
+        <executeJS function="return window.innerWidth" stepKey="getWindowWidth"/>
+        <!-- Assert heading options menu did not overflow -->
+        <comment userInput="Assert heading options menu did not overflow" stepKey="commentAssertHeadingOptionMenuNotOverflow"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openHeadingOptionMenu">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRight"/>
+        <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflow">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRight</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Assert text options menu did not overflow -->
+        <comment userInput="Assert text options menu did not overflow" stepKey="commentAssertTextOptionMenuNotOverflow"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openTextOptionMenu">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRight"/>
+        <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflow">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getTextOptionMenuBoundingClientRectRight</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Set PageBuilder to full screen -->
+        <comment userInput="Set PageBuilder to full screen" stepKey="commentSetFullScreen"/>
+        <actionGroup ref="openPageBuilderFullScreen" stepKey="openFullScreen"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base('1')}}" stepKey="waitForContentTypeToBeVisible"/>
+        <!-- Assert heading options menu did not overflow -->
+        <comment userInput="Assert heading options menu did not overflow" stepKey="commentAssertHeadingOptionMenuNotOverflowFullScreen"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openHeadingOptionMenuFullScreen">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderHeadingContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getHeadingOptionMenuBoundingClientRectRightFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertHeadingOptionMenuNotOverflowFullScreen">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getHeadingOptionMenuBoundingClientRectRightFullScreen</actualResult>
+        </assertLessThanOrEqual>
+        <!-- Assert text options menu did not overflow -->
+        <comment userInput="Assert text options menu did not overflow" stepKey="commentAssertTextOptionMenuNotOverflowFullScreen"/>
+        <actionGroup ref="openOptionsMenu" stepKey="openTextOptionMenuFullScreen">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(`{{PageBuilderContentTypeOptionsMenu.contentTypeEditByIndex(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().right" stepKey="getTextOptionMenuBoundingClientRectRightFullScreen"/>
+        <assertLessThanOrEqual stepKey="assertTextOptionMenuNotOverflowFullScreen">
+            <expectedResult type="variable">$getWindowWidth</expectedResult>
+            <actualResult type="variable">$getTextOptionMenuBoundingClientRectRightFullScreen</actualResult>
+        </assertLessThanOrEqual>
+    </test>
 </tests>

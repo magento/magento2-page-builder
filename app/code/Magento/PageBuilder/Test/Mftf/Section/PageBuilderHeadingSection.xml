@@ -25,10 +25,10 @@
         <element name="headingTextAlignToolbar" type="button" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]//i[contains(@class,'icon-pagebuilder-align-{{arg2}}')]" parameterized="true"/>
         <element name="headingTextAlignToolbarSelected" type="button" selector="(//div[contains(@class,'pagebuilder-heading')])[{{arg1}}]//a[contains(@class, 'toolbar-active')]//i[contains(@class,'icon-pagebuilder-align-{{arg2}}')]" parameterized="true"/>
         <element name="headingToolbarButtonViewportPositionTop" type="button" selector="return document.querySelector('.pagebuilder-toolbar-options-wrapper ul:{{arg1}}-child li:{{arg1}}-child').getBoundingClientRect().top;" parameterized="true"/>
-        <element name="headingToolbarViewportPositionTop" type="button" selector="return document.querySelector('.pagebuilder-toolbar-options-wrapper').getBoundingClientRect().top;"/>
-        <element name="headingToolbarViewportPositionBottom" type="button" selector="return document.querySelector('.pagebuilder-toolbar-options-wrapper').getBoundingClientRect().bottom;"/>
-        <element name="allViewportPositionTop" type="button" selector="return document.querySelector('.pagebuilder-heading').getBoundingClientRect().top;"/>
-        <element name="allViewportPositionBottom" type="button" selector="return document.querySelector('.pagebuilder-heading').getBoundingClientRect().bottom;"/>
+        <element name="headingToolbarViewportPositionTop" type="button" selector="return document.querySelectorAll('.pagebuilder-heading .pagebuilder-toolbar-options-wrapper')[{{arg1}}].getBoundingClientRect().top;" parameterized="true"/>
+        <element name="headingToolbarViewportPositionBottom" type="button" selector="return document.querySelectorAll('.pagebuilder-heading .pagebuilder-toolbar-options-wrapper')[{{arg1}}].getBoundingClientRect().bottom;" parameterized="true"/>
+        <element name="headingContentTypeViewportPositionTop" type="button" selector="return document.querySelectorAll('.pagebuilder-heading')[{{arg1}}].getBoundingClientRect().top;" parameterized="true"/>
+        <element name="headingContentTypeViewportPositionBottom" type="button" selector="return document.querySelectorAll('.pagebuilder-heading')[{{arg1}}].getBoundingClientRect().bottom;" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-heading')]//{{arg1}})[{{arg2}}][contains(@style,'text-align: {{arg3}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//{{arg1}})[{{arg2}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
