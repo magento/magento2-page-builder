@@ -2,22 +2,57 @@
 
 ## Overview
 
-PageBuilder Admin icons follow the same design principles as the core [Magento Admin icons].
-They are simple, flat, and monochromatic to prevent the loss of detail at smaller sizes and makes the shapes easier to comprehend.
+PageBuilder Admin icons follow the same design principles as the core [Magento Admin icons]. They are simple, flat, and monochromatic to prevent the loss of detail at smaller sizes, while making their shapes easier to comprehend.
 
 ## Page Builder icons
 
-The following image shows all available PageBuilder Admin icons with class names to reference them by:
+Here are the available PageBuilder Admin font icons (with class names) for use within your content type as needed:
 
 ![PageBuilder admin icons](../images/pagebuilder-icons.png){:width="870px" height="auto"}
 
-You can use these icons when extending or customizing the PageBuilder module or create your own icons using SVG files or icon fonts as described next.
+Page Builder references these icons by their class names. For example, Page Builder's Heading content type references `icon-pagebuilder-heading` for its panel icon configuration file as shown here:
+
+```xml
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="heading"
+          label="Heading"
+          icon="icon-pagebuilder-heading"
+          ...>
+```
+
+Page Builder's Heading also references three more icons in its toolbar as defined in `Magento/PageBuilder/view/adminhtml/web/js/content-type/heading/preview.js` shown here:
+
+```js
+{
+    key: "text_align",
+    type: "select",
+    values: [{
+				value: "left",
+        label: "Left",
+        icon: "icon-pagebuilder-align-left"
+      }, {
+        value: "center",
+        label: "Center",
+        icon: "icon-pagebuilder-align-center"
+      }, {
+        value: "right",
+        label: "Right",
+        icon: "icon-pagebuilder-align-right"
+      }]
+}];
+```
+
+The icons are render in the Heading's toolbar as shown here:
+
+![Create config file](../images/iconography-toolbar-icons.png)
+
+You can use these icon class names in your own content types or create your own icons using SVG files (recommended) or PNGs as described next.
 
 ## Creating SVG or PNG icons
 
-To add your own icons, we recommend creating SVG icons because they are smaller and render more clearly on high-resolution screens, including mobile devices. 
+To add your own icons, we recommend creating SVG images because they are smaller and render more clearly on high-resolution screens, including mobile devices. 
 
-The size of the icons you create depends on where within Page Builder you want to use them. You can add icons to Page Builder in three areas:
+The size, appearance, and color of your images depends on where within Page Builder you want to use them. You can add icons to Page Builder in three areas:
 
 - Panel
 - Form
@@ -29,29 +64,39 @@ To create a panel icon that integrates seamlessly with the existing panel icons,
 
 ![Create config file](../images/step6-icon-properties.png)
 
-The *artboard* represents the actual width and height of your icon when it is exported from your graphics application (16 x 16px). The *artwork* represents the content of your icon. Following these dimensions ensures your icons will match the size and positioning of the existing Page Builder icons within the panel.
+The *artboard* represents the actual width and height of your icon when it is exported from your graphics application (16 x 16px). The *artwork* represents the content of your icon. Following these dimensions to ensure your icons match the size and positioning of the existing Page Builder font icons within the panel.
 
-### Form and stage icons
+### Form icons
 
-The native Page Builder icons found in forms and on the Admin stage are a variety of sizes, from 20 x 20px up to almost 200px in width, as shown here:
+Most of the images used in the Page Builder base forms are one of three sizes: 20 x 20px, 148 x 60px, and 194 x 98px.
 
 ![Create config file](../images/iconography-form-icons.png)
 
-The best way to decide how big to create your form or stage icons is to inspect the sizes of the Page Builder's existing icons from the browser dev tools. The idea is to emulate the icon sizes as closely as possible to ensure that your icons integrate well and look professional alongside Page Builder's existing icons. 
+Your images should match Page Builder's images in both size and appearance. This ensures a professional, integrated look alongside Page Builder's existing icons. We recommend creating three artboards to match these three sizes. Then give your artwork 1-2 pixels of white space from the artboard's edge, as described for panel icons.
 
-## Adding your icons
+### Stage icons
+
+Stage images can be a variety of sizes. For example, Page Builder's `cms-empty-row.svg` image (shown for an empty row, no doubt) is 468 x 103px with a color of #AAA6A0:
+
+![Create config file](../images/iconography-stage-images.png)
+
+Again, take note of its simple design and subtle color. 
+
+## Adding your images
 
 Add all your SVG and/or PNG icons to the `adminhtml/web/css/images` directory for your content type. For example, if your content type is called `example-quote`, you would put your icons in `adminhtml/web/css/images/content-type/example-quote/appearance/` as follows: 
 
 ![Create config file](../images/iconography-adding-icons.png)
 
-## Create CSS classes for your icons
+## Create CSS classes
 
-For each SVG or PNG icon you create, add a CSS class to your LESS file in `adminhtml` as shown here:
+As discussed earlier in this topic, Page Builder references its icon fonts using class names from a variety of locations, such as the panel, the toolbar, and the visual selectors within forms. Creating your own CSS classes for the SVG and PNG images you plan on referencing by class name is required if you want to participate in Page Builder's system of CSS class references. 
+
+Add the CSS classes for your icons to your LESS file in `adminhtml` (and to the `frontend` LESS file if relevant) as shown here:
 
 ![Create config file](../images/step6-icon-style.png)
 
-Creating a  CSS class for each icon provides an easy way to reference and display your icons in a variety of places throughout Page Builder. The following CSS rule set shows one way to link to your icons through CSS:  
+The following CSS rule set shows one general way to link your icons through CSS:  
 
 ```css
 .icon-pagebuilder-quote {
@@ -61,19 +106,28 @@ Creating a  CSS class for each icon provides an easy way to reference and displa
 }
 ```
 
+If you are creating an icon for the panel, replace the `background-image` attribute with `content` (as described in the content type tutorial, [Step 6: Add an icon](../create-basic-content-type/step-6-add-icon.md)).
+
 | Attribute              | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |
 | `class name`           | To match the class names of Page Builder's native icons, we recommend prefixing your icon names with `icon-pagebuilder` as we have done with the Quote panel icon. |
-| `background-image url` | The `url` used for the `background-image` is the most critical part of the CSS. Always use the `@{baseDir}` variable followed by your full module name, followed by the path to your image, starting with `css`. When deployed, Page Builder creates a link in the static output where the browser can resolve it as described below. |
+| `background-image url` | The `url` used for the `background-image` is the most critical part of your own CSS classes. Always use the `@{baseDir}` variable followed by your full module name, followed by the path to your image, starting with `css`. When deployed, Page Builder creates a link in the static output where the browser can resolve it as described below. |
 | `width`                | Sets the width of the icon image.                            |
 | `height`               | Sets the height of the icon image.                           |
 
-When deployed, your icon images are linked from `pub/static` as shown here: 
+When deployed, your CSS classes and links to your icons are generated in `pub/static` as shown here: 
 
 ![Create config file](../images/step6-icon-link-static.png)
 
+For more general information about Magento's Admin icons and how to create your own icons for use in Magento, take a look at these topics:
+
+* [Magento Admin icons]
+* [Create your own icons]
+* [The CMS icons repository]
+
+
 
 [Magento Admin icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html
-[create your own icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html#creating-icons
-[cms-icons repository]: https://github.com/magento-ux/cms-icons
+[Create your own icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html#creating-icons
+[The CMS icons repository]: https://github.com/magento-ux/cms-icons
 
