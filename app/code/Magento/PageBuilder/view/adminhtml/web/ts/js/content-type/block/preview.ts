@@ -13,6 +13,7 @@ import ContentTypeConfigInterface from "../../content-type-config";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -94,7 +95,7 @@ export default class Preview extends BasePreview {
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 
-        const data = this.parent.dataStore.get() as DataObject;
+        const data = this.parent.dataStore.getState();
 
         // Only load if something changed
         this.processBlockData(data);
@@ -108,8 +109,9 @@ export default class Preview extends BasePreview {
      * @param {string} identifierName
      */
     protected displayPreviewPlaceholder(data: DataObject, identifierName: string): void {
+        const blockId = get<number>(data, identifierName);
         // Only load if something changed
-        if (this.lastBlockId === data[identifierName] && this.lastTemplate === data.template) {
+        if (this.lastBlockId === blockId && this.lastTemplate === data.template) {
             // The mass converter will have transformed the HTML property into a directive
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
@@ -121,8 +123,7 @@ export default class Preview extends BasePreview {
             this.placeholderText("");
         }
 
-        if (!data[identifierName] || (data[identifierName] && data[identifierName].length === 0) ||
-            data.template.length === 0) {
+        if (!blockId || (blockId && blockId.toString().length === 0) || data.template.length === 0) {
             this.showBlockPreview(false);
             this.placeholderText(this.messages.NOT_SELECTED);
             return;
@@ -137,7 +138,7 @@ export default class Preview extends BasePreview {
      */
     protected processRequest(data: DataObject, identifierName: string, labelKey: string): void {
         const url = Config.getConfig("preview_url");
-        const identifier = data[identifierName];
+        const identifier = get(data, identifierName);
         const requestConfig = {
             // Prevent caching
             method: "POST",

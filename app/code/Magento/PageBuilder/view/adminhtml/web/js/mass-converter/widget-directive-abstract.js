@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore"], function (_underscore) {
+define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_underscore, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,7 +24,7 @@ define(["underscore"], function (_underscore) {
       var _this = this;
 
       var attributes = {};
-      data[config.html_variable].replace(/\{\{widget(.*?)\}\}/i, function (match, attributeString) {
+      (0, _object.get)(data, config.html_variable).replace(/\{\{widget(.*?)\}\}/i, function (match, attributeString) {
         attributes = _this.parseAttributesString(attributeString);
       }.bind(this));
       return attributes;
@@ -39,7 +39,7 @@ define(["underscore"], function (_underscore) {
 
 
     _proto.toDom = function toDom(data, config) {
-      data[config.html_variable] = this.buildDirective(data);
+      (0, _object.set)(data, config.html_variable, this.buildDirective(data));
       return data;
     };
     /**

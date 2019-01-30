@@ -5,6 +5,7 @@
 
 import ConverterInterface from "../../../../converter/converter-interface";
 import {DataObject} from "../../../../data-store";
+import {get} from "../../../../utils/object";
 
 export default class OverlayBackgroundColor implements ConverterInterface {
     /**
@@ -25,8 +26,9 @@ export default class OverlayBackgroundColor implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string | object {
-        if (data.show_overlay === "always" && data[name] !== "" && data[name] !== undefined) {
-            return data[name].toString();
+        const value = get(data, name);
+        if (data.show_overlay === "always" && value !== "" && value !== undefined) {
+            return value;
         }
 
         return "transparent";
