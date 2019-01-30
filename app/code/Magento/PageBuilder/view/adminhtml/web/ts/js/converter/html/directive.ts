@@ -5,6 +5,7 @@
 
 import {DataObject} from "../../data-store";
 import {convertMediaDirectivesToUrls, removeQuotesInMediaDirectives} from "../../utils/directives";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -29,6 +30,6 @@ export default class Directives implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return convertMediaDirectivesToUrls(removeQuotesInMediaDirectives(data[name]));
+        return convertMediaDirectivesToUrls(removeQuotesInMediaDirectives(get(data, name)));
     }
 }

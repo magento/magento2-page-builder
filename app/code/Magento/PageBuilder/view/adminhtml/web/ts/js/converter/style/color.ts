@@ -4,6 +4,7 @@
  */
 
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -40,7 +41,7 @@ export default class Color implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: DataObject): string {
-        return data[name] ? data[name].toString() : "";
+        return get(data, name, "");
     }
 
     /**

@@ -23,6 +23,13 @@
         <amOnPage url="{{storeView.code}}/{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
+    <actionGroup name="navigateToStorefrontForCreatedCMSPage">
+        <arguments>
+            <argument name="CMSPage" type="string"/>
+        </arguments>
+        <amOnPage url="{{CMSPage}}" stepKey="goToStorefront"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefront">
         <arguments>
             <argument name="contentType"/>

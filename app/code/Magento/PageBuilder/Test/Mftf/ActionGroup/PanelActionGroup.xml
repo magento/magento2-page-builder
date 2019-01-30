@@ -11,10 +11,11 @@
     <actionGroup name="expandPageBuilderPanelGroup">
         <arguments>
             <argument name="group"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderPanel.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
-        <conditionalClick selector="{{PageBuilderPanel.panelGroup(group.section)}}" dependentSelector="{{PageBuilderPanel.panelGroupActive(group.section)}}" visible="false" stepKey="expandGroup"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
+        <conditionalClick selector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroup(group.section)}}" dependentSelector="{{PageBuilderPanel.panelGroupActive(group.section)}}" visible="false" stepKey="expandGroup"/>
+        <waitForElementVisible selector="{{pageBuilderArea}}{{PageBuilderPanel.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
     </actionGroup>
     <actionGroup name="closePageBuilderPanelGroups">
         <click selector="{{PageBuilderPanel.elementsGroup}}" stepKey="clickElementsGroup"/>

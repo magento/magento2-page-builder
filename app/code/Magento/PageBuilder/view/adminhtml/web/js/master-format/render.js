@@ -45,6 +45,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
             name: _this.rootTemplate
           }
         });
+      }).catch(function (error) {
+        console.error(error);
+        return null;
       });
     };
 
