@@ -7,7 +7,6 @@ This document contains reference information for events dispatched in Page Build
 
 ## Events list {#eventslist}
 
-- [Events list {#eventslist}](#events-list-eventslist)
 - [`contentType:*` events](#contenttype-events)
     - [`contentType:createAfter`](#contenttypecreateafter)
     - [`contentType:mountAfter`](#contenttypemountafter)
@@ -28,7 +27,6 @@ This document contains reference information for events dispatched in Page Build
 - [`image:mountAfter`](#imagemountafter)
 - [`image:uploadAfter`](#imageuploadafter)
 - [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-- [`stage:{{id}}:renderAfter`](#stageidrenderafter)
 - [`stage:interactionStart`](#stageinteractionstart)
 - [`stage:interactionStop`](#stageinteractionstop)
 - [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)

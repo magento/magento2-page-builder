@@ -6,6 +6,7 @@
 import events from "Magento_PageBuilder/js/events";
 import loadModule from "Magento_PageBuilder/js/utils/loader";
 import _ from "underscore";
+import ConfigFieldInterface from "./config-field";
 import ContentType from "./content-type";
 import ContentTypeCollection from "./content-type-collection";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
@@ -34,28 +35,42 @@ export default function createContentType(
     data: object = {},
     childrenLength: number = 0,
 ): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
-    return new Promise((resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void) => {
+    return new Promise(
+        (resolve: (contentType: ContentType | ContentTypeCollection) => void,
+         reject: (error: string) => void,
+    ) => {
         loadModule([config.component], (contentTypeComponent: typeof ContentType | typeof ContentTypeCollection) => {
-            const contentType = new contentTypeComponent(
-                parent,
-                config,
-                stageId,
-            );
-            Promise.all(
-                [
-                    previewFactory(contentType, config),
-                    masterFactory(contentType, config),
-                ],
-            ).then(([previewComponent, masterComponent]) => {
-                contentType.preview = previewComponent;
-                contentType.content = masterComponent;
-                contentType.dataStore.update(
-                    prepareData(config, data),
+            try {
+                const contentType = new contentTypeComponent(
+                    parent,
+                    config,
+                    stageId,
                 );
-                resolve(contentType);
-            });
+                Promise.all(
+                    [
+                        previewFactory(contentType, config),
+                        masterFactory(contentType, config),
+                    ],
+                ).then(([previewComponent, masterComponent]) => {
+                    contentType.preview = previewComponent;
+                    contentType.content = masterComponent;
+                    contentType.dataStore.update(
+                        prepareData(config, data),
+                    );
+                    resolve(contentType);
+                }).catch((error) => {
+                    reject(error);
+                });
+            } catch (error) {
+                reject(`Error within component (${config.component}) for ${config.name}.`);
+                console.error(error);
+            }
+        }, (error: string) => {
+            reject(`Unable to load component (${config.component}) for ${config.name}. Please check component exists`
+                + ` and content type configuration is correct.`);
+            console.error(error);
         });
-    }).then((contentType: ContentTypeInterface | ContentTypeCollectionInterface) => {
+    }).then((contentType) => {
         events.trigger("contentType:createAfter", {id: contentType.id, contentType});
         events.trigger(config.name + ":createAfter", {id: contentType.id, contentType});
         fireContentTypeReadyEvent(contentType, childrenLength);
@@ -74,14 +89,11 @@ export default function createContentType(
  * @returns {any}
  */
 function prepareData(config: ContentTypeConfigInterface, data: {}) {
-    const defaults: FieldDefaultsInterface = {
-        display: true,
-    };
-    if (config.fields) {
-        _.each(config.fields, (field, key: string | number) => {
-            defaults[key] = field.default;
-        });
-    }
+    const defaults: FieldDefaultsInterface = prepareDefaults(config.fields || {});
+
+    // Set all content types to be displayed by default
+    defaults.display = true;
+
     return _.extend(
         defaults,
         data,
@@ -92,12 +104,28 @@ function prepareData(config: ContentTypeConfigInterface, data: {}) {
 }
 
 /**
+ * Prepare the default values for fields within the form
+ *
+ * @param {ConfigFieldInterface} fields
+ * @returns {FieldDefaultsInterface}
+ */
+function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
+    return _.mapObject(fields, (field) => {
+        if (!_.isUndefined(field.default)) {
+            return field.default;
+        } else if (_.isObject(field)) {
+            return prepareDefaults(field);
+        }
+    });
+}
+
+/**
  * A content type is ready once all of its children have mounted
  *
- * @param {ContentType} contentType
+ * @param {ContentType | ContentTypeCollection} contentType
  * @param {number} childrenLength
  */
-function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
+function fireContentTypeReadyEvent(contentType: ContentType | ContentTypeCollection, childrenLength: number) {
     const fire = () => {
         const params = {id: contentType.id, contentType, expectChildren: childrenLength};
         events.trigger("contentType:mountAfter", params);

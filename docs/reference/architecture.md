@@ -18,7 +18,7 @@ It also uses additional libraries to help with various content types shipped wit
 
 ## Storage format
 
-PageBuilder uses XHTML with inline styles and data attributes for storage and as the [master format].
+PageBuilder uses XHTML with inline styles and data attributes for storage and as the master format.
 This allows the content to be displayed with minimum changes to the Magento storefront and other third-party systems.
 
 To display Page Builder content on storefront Magento and third party systems need to do the following
@@ -126,5 +126,3 @@ Appearances allow you to make the following customization on existing content ty
 *We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like slider, tabs, etc.*
 
 [TypeScript]: https://www.typescriptlang.org/
-[master format]: master-format.md
-[content type]: ../how-to/how-to-develop-new-content-type.md

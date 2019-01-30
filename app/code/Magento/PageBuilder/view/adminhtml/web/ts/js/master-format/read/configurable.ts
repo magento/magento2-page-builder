@@ -6,6 +6,7 @@
 import $ from "jquery";
 import mageUtils from "mageUtils";
 import _ from "underscore";
+import Config from "../../config";
 import appearanceConfig from "../../content-type/appearance-config";
 import PropertyReaderPool from "../../converter/converter-pool";
 import ConverterPool from "../../converter/converter-pool";
@@ -27,7 +28,7 @@ export default class Configurable implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        const role = element.getAttribute("data-role");
+        const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
         const config = appearanceConfig(role, element.getAttribute("data-appearance"));
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
@@ -40,13 +41,13 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const currentElement = element.getAttribute("data-element") === elementName
-                        ? element
-                        : element.querySelector<HTMLElement>("[data-element = '" + elementName + "']");
+                    const currentElement = this.findElementByName(element, elementName);
 
+                    // If we cannot locate the current element skip trying to read any attributes from it
                     if (currentElement === null || currentElement === undefined) {
                         continue;
                     }
+
                     if (elementConfig.style.length) {
                         data = this.readStyle(
                             elementConfig.style,
@@ -56,6 +57,7 @@ export default class Configurable implements ReadInterface {
                             converterPool,
                         );
                     }
+
                     if (elementConfig.attributes.length) {
                         data = this.readAttributes(
                             elementConfig.attributes,
@@ -65,22 +67,46 @@ export default class Configurable implements ReadInterface {
                             converterPool,
                         );
                     }
+
                     if (undefined !== elementConfig.html.var) {
                         data = this.readHtml(elementConfig, currentElement, data, converterPool);
                     }
+
                     if (undefined !== elementConfig.tag.var) {
                         data = this.readHtmlTag(elementConfig, currentElement, data);
                     }
+
                     if (undefined !== elementConfig.css.var) {
                         data = this.readCss(elementConfig, currentElement, data);
                     }
                 }
+
                 data = this.convertData(config, data, massConverterPool);
                 resolve(data);
             }).catch((error) => {
                 console.error(error);
             });
         });
+    }
+
+    /**
+     * Find the element for the current content type by it's name, avoiding searching in other content types by
+     * removing any other element which contains it's own data-role.
+     *
+     * @param {HTMLElement} element
+     * @param {string} name
+     * @returns {HTMLElement}
+     */
+    private findElementByName(element: HTMLElement, name: string): HTMLElement {
+        // Create a clone of the element to avoid modifying the source
+        const currentElement = $(element).clone();
+        // Remove all child instances of data-role elements
+        currentElement.find(`[${Config.getConfig("dataRoleAttributeName")}]`).remove();
+
+        // Attempt to find the content type element within the modified clone element
+        return currentElement.attr("data-element") === name
+            ? currentElement[0]
+            : currentElement[0].querySelector<HTMLElement>(`[data-element=${name}]`);
     }
 
     /**

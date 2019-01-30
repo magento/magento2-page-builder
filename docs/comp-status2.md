@@ -1,6 +1,6 @@
 # Component status
 
-**Last Updated: December 19, 2018**
+**Last Updated: January 14, 2019**
 
 <style type="text/css" style="display: none">
 .status {
