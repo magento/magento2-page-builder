@@ -42,7 +42,7 @@ Page Builder's Heading also references three more icons in its toolbar as define
 }];
 ```
 
-The icons are render in the Heading's toolbar as shown here:
+The icons render in the Heading's toolbar, as shown here:
 
 ![Create config file](../images/iconography-toolbar-icons.png)
 
