@@ -2650,7 +2650,7 @@
     <test name="TextTooltipMenusAreNotCutOffInFullScreenMode" extends="HeadingLiveEditToolbarNotCutOffInFullScreenMode">
         <annotations>
             <features value="PageBuilder"/>
-            <stories value="Panel"/>
+            <stories value="Text"/>
             <title value="Text tooltip menus should not overflow viewport bounds (get 'cut off') in full screen mode"/>
             <description value="As a content creator I want text tooltip menus to be always positioned within viewport bounds so that they are accessible to me within the UI"/>
             <severity value="MAJOR"/>
@@ -2684,6 +2684,7 @@
         <waitForElementVisible selector="{{TextOnStage.wysiwyg('1')}}" stepKey="waitForContentTypeToBeVisible"/>
         <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnInnerContentType"/>
         <waitForPageLoad after="focusOnInnerContentType" stepKey="waitForToolbarAnimationAfterOverflow"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" after="waitForToolbarAnimationAfterOverflow" stepKey="waitForToolbarVisibleAfterOverflow"/>
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPositionAfterOverflow"/>
         <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="inputBoxBottomPositionAfterOverflow"/>
         <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPositionAfterOverflow"/>
@@ -2692,6 +2693,7 @@
         </actionGroup>
         <click selector="{{TextOnStage.wysiwyg('1')}}" stepKey="focusOnInnerContentTypeAfterExitFullScreen"/>
         <waitForPageLoad after="focusOnInnerContentTypeAfterExitFullScreen" stepKey="waitForToolbarAnimationAfterExitFullScreen"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}" after="waitForToolbarAnimationAfterExitFullScreen" stepKey="waitForToolbarVisibleAfterExitFullScreen"/>
         <executeJS function="return document.evaluate(`{{TextOnStage.wysiwyg('1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="inputBoxTopPositionAfterExitFullScreen"/>
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().top" stepKey="toolbarTopPositionAfterExitFullScreen"/>
         <executeJS function="return document.evaluate(`{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderTextContentType.role, '1')}}`, document.body).iterateNext().getBoundingClientRect().bottom" stepKey="toolbarBottomPositionAfterExitFullScreen"/>
