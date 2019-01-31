@@ -12,7 +12,7 @@ use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterfac
 use Magento\Framework\File\Size;
 
 /**
- * Provides save URL for uploader
+ * Provides maximum file size for uploader
  */
 class GetMaxFileSize implements ProviderInterface
 {
