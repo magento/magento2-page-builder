@@ -1863,6 +1863,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <magentoCLI command="config:set web/url/use_store 1" stepKey="turnOnStoreUrlUsage"/>
             <createData entity="customWebsite" stepKey="createCustomWebsite"/>
             <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
             <createData entity="SimpleSubCategory" stepKey="createCategory"/>
@@ -1879,6 +1880,7 @@
             </createData>
         </before>
         <after>
+            <magentoCLI command="config:set web/url/use_store 0" stepKey="turnOffStoreUrlUsage"/>
             <actionGroup ref="DeleteCustomWebsiteActionGroup" stepKey="deleteWebsite">
                 <argument name="websiteName" value="$createCustomWebsite.website[name]$"/>
             </actionGroup>
