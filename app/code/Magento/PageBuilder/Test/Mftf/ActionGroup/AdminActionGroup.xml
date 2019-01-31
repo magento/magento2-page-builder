@@ -10,24 +10,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="navigateToAPageWithPageBuilder">
         <waitForPageLoad stepKey="waitForDashboardPageLoad"/>
-        <amOnPage url="{{PageBuilderCmsPage.url}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{CmsPagesPage.url}}/new" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-    </actionGroup>
-    <actionGroup name="searchAndViewCmsPage">
-        <arguments>
-            <argument name="contentType"/>
-        </arguments>
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPagesPageActionsSection"/>
-        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
-        <click selector="{{CmsPagesPageActionsSection.filterButton}}" stepKey="clickFiltersBtn" />
-        <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="{{contentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
-        <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
-        <waitForPageLoad stepKey="waitForSearchResults" />
-        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <click selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="waitForFirstItemEditButton"/>
-        <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
-        <waitForPageLoad stepKey="waitForEditCmsPage"/>
     </actionGroup>
     <actionGroup name="addPageBuilderPageTitle">
         <arguments>
@@ -49,6 +33,7 @@
         <waitForElementVisible time="30" selector="{{RowOnStage.base(rowIndex)}}" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
+        <!-- This goes in CE repo -->
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForSaveAndContinueVisibility"/>
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageLoad"/>
@@ -56,6 +41,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
     </actionGroup>
     <actionGroup name="saveCmsPage">
+        <!-- This goes in CE repo -->
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="waitForSplitButton"/>
         <click selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="expandSplitButton"/>
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="waitForSaveCmsPage"/>
@@ -77,6 +63,7 @@
         <dontSee selector="{{PageBuilderPanel.layoutGroup}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
     <actionGroup name="setLayout">
+        <!-- This goes in CE repo -->
         <arguments>
             <argument name="designSection"/>
             <argument name="layoutOption"/>
@@ -101,12 +88,5 @@
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">rowWidth</actualResult>
         </assertGreaterThan>
-    </actionGroup>
-    <actionGroup name="openPageBuilderOnCatalog">
-        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
-        <!--See PageBuilder fullsize-->
-        <comment userInput="See PageBuilder fullsize" stepKey="commentSeePageBuilderFullsize"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.layoutGroup}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
     </actionGroup>
 </actionGroups>
