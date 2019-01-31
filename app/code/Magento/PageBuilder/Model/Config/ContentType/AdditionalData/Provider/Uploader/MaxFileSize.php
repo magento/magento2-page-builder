@@ -14,7 +14,7 @@ use Magento\Framework\File\Size;
 /**
  * Provides maximum file size for uploader
  */
-class GetMaxFileSize implements ProviderInterface
+class MaxFileSize implements ProviderInterface
 {
     /**
      * @var Size
