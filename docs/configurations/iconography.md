@@ -46,7 +46,7 @@ The icons render in the Heading's toolbar, as shown here:
 
 ![Create config file](../images/iconography-toolbar-icons.png)
 
-You can use these icon class names in your own content types or create your own icons using SVG files (recommended) or PNGs as described next.
+You can use these icon class names in your own content types or create your own icons using SVG files (recommended) or PNGs, as described next.
 
 ## Creating SVG or PNG icons
 
