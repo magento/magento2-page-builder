@@ -84,7 +84,7 @@ Again, take note of its simple design and subtle color.
 
 ## Adding your images
 
-Add all your SVG and/or PNG icons to the `adminhtml/web/css/images` directory for your content type. For example, if your content type is called `example-quote`, you would put your icons in `adminhtml/web/css/images/content-type/example-quote/appearance/` as follows: 
+Add all your SVG and/or PNG icons to the `adminhtml/web/css/images` directory for your content type. For example, if your content type is called `example-quote`, you would put your icons in `adminhtml/web/css/images/content-type/example-quote/appearance/`, as follows: 
 
 ![Create config file](../images/iconography-adding-icons.png)
 
