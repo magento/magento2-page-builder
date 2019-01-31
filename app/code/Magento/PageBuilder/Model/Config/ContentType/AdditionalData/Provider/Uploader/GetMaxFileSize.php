@@ -26,7 +26,8 @@ class GetMaxFileSize implements ProviderInterface
      */
     public function __construct(Size $fileSize)
     {
-        $this->fileSize = $fileSize;}
+        $this->fileSize = $fileSize;
+    }
 
     /**
      * @inheritdoc
