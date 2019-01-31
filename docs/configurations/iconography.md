@@ -110,7 +110,7 @@ If you are creating an icon for the panel, replace the `background-image` attrib
 
 | Attribute              | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |
-| `class name`           | To match the class names of Page Builder's native icons, we recommend prefixing your icon names with `icon-pagebuilder` as we have done with the Quote panel icon. |
+| `class name`           | To match the class names of Page Builder's native icons, we recommend prefixing your icon names with `icon-pagebuilder`, as we have done with the Quote panel icon. |
 | `background-image url` | The `url` used for the `background-image` is the most critical part of your own CSS classes. Always use the `@{baseDir}` variable followed by your full module name, followed by the path to your image, starting with `css`. When deployed, Page Builder creates a link in the static output where the browser can resolve it as described below. |
 | `width`                | Sets the width of the icon image.                            |
 | `height`               | Sets the height of the icon image.                           |
