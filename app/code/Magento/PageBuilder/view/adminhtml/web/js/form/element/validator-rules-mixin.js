@@ -41,7 +41,7 @@ define([
      */
     function validateIsUrl(href) {
 
-        return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href)//eslint-disable-line max-len);
+        return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href);//eslint-disable-line max-len
     }
 
     /**
@@ -61,9 +61,11 @@ define([
                     return rule.handler(value, params);
                 }
 
-                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                _.flatten(_.map(value, _.values)).forEach(function (val) {
                     if (!rule.handler(val, params)) {
-                        return allNumbers = false;
+                        allNumbers = false;
+
+                        return allNumbers;
                     }
                 });
 
@@ -127,13 +129,17 @@ define([
         validator.addRule(
             'required-entry',
             function (value) {
+                var allFilled;
+
                 // Validation only for margins and paddings
                 if (typeof value === 'object' && !!(value.padding || value.margin)) {
-                    var allFilled = true;
+                    allFilled = true;
 
-                    _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    _.flatten(_.map(value, _.values)).forEach(function (val) {
                         if (utils.isEmpty(val)) {
-                            return allFilled = false;
+                            allFilled = false;
+
+                            return allFilled;
                         }
                     });
 
