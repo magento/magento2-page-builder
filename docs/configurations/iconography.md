@@ -92,7 +92,7 @@ Add all your SVG and/or PNG icons to the `adminhtml/web/css/images` directory fo
 
 As discussed earlier in this topic, Page Builder references its icon fonts using class names from a variety of locations, such as the panel, the toolbar, and the visual selectors within forms. Creating your own CSS classes for the SVG and PNG images you plan on referencing by class name is required if you want to participate in Page Builder's system of CSS class references. 
 
-Add the CSS classes for your icons to your LESS file in `adminhtml` (and to the `frontend` LESS file if relevant) as shown here:
+Add the CSS classes for your icons to your LESS file in `adminhtml` (and to the `frontend` LESS file, if relevant) as shown here:
 
 ![Create config file](../images/step6-icon-style.png)
 
