@@ -76,7 +76,7 @@ Your images should match Page Builder's images in both size and appearance. This
 
 ### Stage icons
 
-Stage images can be a variety of sizes. For example, Page Builder's `cms-empty-row.svg` image (shown for an empty row, no doubt) is 468 x 103px with a color of #AAA6A0:
+Stage images can be a variety of sizes. For example, Page Builder's `cms-empty-row.svg` image (shown for an empty row, no doubt) is 468 x 103px with a color of #AAA6A0, as shown here:
 
 ![Create config file](../images/iconography-stage-images.png)
 
