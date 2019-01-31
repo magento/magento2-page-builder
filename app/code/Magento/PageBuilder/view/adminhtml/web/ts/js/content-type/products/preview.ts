@@ -11,7 +11,6 @@ import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import {DataObject} from "../../data-store";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 

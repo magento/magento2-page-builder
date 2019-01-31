@@ -9,7 +9,6 @@ import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
@@ -19,6 +18,7 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
+    public buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * Wysiwyg instance
@@ -34,8 +34,6 @@ export default class Preview extends BasePreview {
      * The textarea element in disabled mode
      */
     private textarea: HTMLTextAreaElement;
-
-    private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * Return an array of options

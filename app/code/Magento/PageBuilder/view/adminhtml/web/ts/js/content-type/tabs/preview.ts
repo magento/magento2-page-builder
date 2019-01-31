@@ -19,7 +19,6 @@ import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import ContentTypeInterface from "../../content-type.types";
-import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
 import deferred, {DeferredInterface} from "../../utils/promise-deferred";
 import {

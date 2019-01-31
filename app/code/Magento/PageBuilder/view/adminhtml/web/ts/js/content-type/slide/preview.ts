@@ -11,7 +11,6 @@ import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-child
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import WysiwygFactory from "../../wysiwyg/factory";
@@ -24,7 +23,7 @@ import SliderPreview from "../slider/preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    private buttonPlaceholder: string = $t("Edit Button Text");
+    public buttonPlaceholder: string = $t("Edit Button Text");
     /**
      * Wysiwyg instance
      */

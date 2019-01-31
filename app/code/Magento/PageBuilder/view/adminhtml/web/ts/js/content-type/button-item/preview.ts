@@ -15,7 +15,7 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    private buttonPlaceholder: string = $t("Edit Button Text");
+    public buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * Use the conditional remove to disable the option when the parent has a single child

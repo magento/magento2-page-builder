@@ -4,7 +4,6 @@
  */
 
 import Config from "../../config";
-import {DataObject} from "../../data-store";
 import {decodeUrl} from "../../utils/image";
 import {get} from "../../utils/object";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";

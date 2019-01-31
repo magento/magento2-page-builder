@@ -10,7 +10,6 @@ import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
-import Stage from "../stage";
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";
 import {getAllowedContainersClasses} from "./matrix";
 import {moveContentType} from "./move-content-type";
