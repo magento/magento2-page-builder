@@ -10,7 +10,7 @@ Here are the available PageBuilder Admin font icons (with class names) for use w
 
 ![PageBuilder admin icons](../images/pagebuilder-icons.png){:width="870px" height="auto"}
 
-Page Builder references these icons by their class names. For example, Page Builder's Heading content type references `icon-pagebuilder-heading` for its panel icon configuration file as shown here:
+Page Builder references these icons by their class names. For example, Page Builder's Heading content type references `icon-pagebuilder-heading` for its panel icon configuration file, as shown here:
 
 ```xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
