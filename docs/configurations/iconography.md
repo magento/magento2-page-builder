@@ -20,7 +20,7 @@ Page Builder references these icons by their class names. For example, Page Buil
           ...>
 ```
 
-Page Builder's Heading also references three more icons in its toolbar as defined in `Magento/PageBuilder/view/adminhtml/web/js/content-type/heading/preview.js` shown here:
+Page Builder's Heading also references three more icons in its toolbar as defined in `Magento/PageBuilder/view/adminhtml/web/js/content-type/heading/preview.js`, shown here:
 
 ```js
 {
@@ -90,9 +90,9 @@ Add all your SVG and/or PNG icons to the `adminhtml/web/css/images` directory fo
 
 ## Create CSS classes
 
-As discussed earlier in this topic, Page Builder references its icon fonts using class names from a variety of locations, such as the panel, the toolbar, and the visual selectors within forms. Creating your own CSS classes for the SVG and PNG images you plan on referencing by class name is required if you want to participate in Page Builder's system of CSS class references. 
+As discussed earlier in this topic, Page Builder references its icon fonts using class names from a variety of locations, such as the panel, the toolbar, and the visual selectors within forms. To participate in this icon system, you need to create a CSS class for each SVG and/or PNG image you want to reference by class name. 
 
-Add the CSS classes for your icons to your LESS file in `adminhtml` (and to the `frontend` LESS file, if relevant) as shown here:
+Add the CSS classes for your icons to your LESS file in `adminhtml` (and to the `frontend` LESS file if relevant), as shown here:
 
 ![Create config file](../images/step6-icon-style.png)
 
@@ -111,11 +111,11 @@ If you are creating an icon for the panel, replace the `background-image` attrib
 | Attribute              | Description                                                  |
 | ---------------------- | ------------------------------------------------------------ |
 | `class name`           | To match the class names of Page Builder's native icons, we recommend prefixing your icon names with `icon-pagebuilder`, as we have done with the Quote panel icon. |
-| `background-image url` | The `url` used for the `background-image` is the most critical part of your own CSS classes. Always use the `@{baseDir}` variable followed by your full module name, followed by the path to your image, starting with `css`. When deployed, Page Builder creates a link in the static output where the browser can resolve it as described below. |
+| `background-image url` | The `url` used for the `background-image` is the most critical part of your own CSS classes. Always use the `@{baseDir}` variable followed by your full module name, followed by the path to your image, starting with `css`. When deployed, Page Builder creates a link in the static output where the browser can resolve it, as described below. |
 | `width`                | Sets the width of the icon image.                            |
 | `height`               | Sets the height of the icon image.                           |
 
-When deployed, your CSS classes and links to your icons are generated in `pub/static` as shown here: 
+When deployed, your CSS classes and links to your icons are generated in `pub/static`, as shown here: 
 
 ![Create config file](../images/step6-icon-link-static.png)
 
