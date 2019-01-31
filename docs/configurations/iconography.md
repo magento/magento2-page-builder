@@ -52,7 +52,7 @@ You can use these icon class names in your own content types or create your own 
 
 To add your own icons, we recommend creating SVG images because they are smaller and render more clearly on high-resolution screens, including mobile devices. 
 
-The size, appearance, and color of your images depends on where within Page Builder you want to use them. You can add icons to Page Builder in three areas:
+The size, appearance, and color of your images depend on where within Page Builder you want to use them. You can add icons to Page Builder in three areas:
 
 - Panel
 - Form
