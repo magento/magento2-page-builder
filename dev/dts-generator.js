@@ -15,8 +15,8 @@ const copyrightComment = `/**
 /**
  * Resolve a file system path to the Magento module import path
  *
- * @param currentModuleId
- * @returns {*}
+ * @param {string} currentModuleId
+ * @returns {string}
  */
 function resolveModuleIdToMagentoPath(currentModuleId) {
     return currentModuleId.replace(
@@ -45,6 +45,7 @@ require('dts-generator').default({
                 )
             );
         }
+
         return params.importedModuleId;
     }
 }).then(() => {
