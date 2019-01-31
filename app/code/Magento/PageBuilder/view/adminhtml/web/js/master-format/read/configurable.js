@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
+define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_jquery, _mageUtils, _underscore, _config, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -26,7 +26,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
     _proto.read = function read(element) {
       var _this = this;
 
-      var role = element.getAttribute("data-role");
+      var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance"));
       var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
       return new Promise(function (resolve) {
@@ -41,7 +41,9 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
           for (var _i = 0; _i < _arr.length; _i++) {
             var elementName = _arr[_i];
             var elementConfig = config.elements[elementName];
-            var currentElement = element.getAttribute("data-element") === elementName ? element : element.querySelector("[data-element = '" + elementName + "']");
+
+            var currentElement = _this.findElementByName(element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
+
 
             if (currentElement === null || currentElement === undefined) {
               continue;
@@ -74,6 +76,24 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/content-typ
           console.error(error);
         });
       });
+    }
+    /**
+     * Find the element for the current content type by it's name, avoiding searching in other content types by
+     * removing any other element which contains it's own data-role.
+     *
+     * @param {HTMLElement} element
+     * @param {string} name
+     * @returns {HTMLElement}
+     */
+    ;
+
+    _proto.findElementByName = function findElementByName(element, name) {
+      // Create a clone of the element to avoid modifying the source
+      var currentElement = (0, _jquery)(element).clone(); // Remove all child instances of data-role elements
+
+      currentElement.find("[" + _config.getConfig("dataRoleAttributeName") + "]").remove(); // Attempt to find the content type element within the modified clone element
+
+      return currentElement.attr("data-element") === name ? currentElement[0] : currentElement[0].querySelector("[data-element=" + name + "]");
     }
     /**
      * Read attributes for element

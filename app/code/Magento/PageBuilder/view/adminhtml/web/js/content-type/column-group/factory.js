@@ -19,6 +19,9 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-fa
     }).then(function (column) {
       parent.addChild(column, index);
       return column;
+    }).catch(function (error) {
+      console.error(error);
+      return null;
     });
   }
 

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -33,7 +33,7 @@ define([], function () {
     ;
 
     _proto.toDom = function toDom(data, config) {
-      data.css_classes += " tab-align-" + (data[config.navigation_alignment_variable] || "left");
+      data.css_classes += " tab-align-" + (0, _object.get)(data, config.navigation_alignment_variable, "left");
       return data;
     };
 

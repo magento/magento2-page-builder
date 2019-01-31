@@ -9,7 +9,7 @@ import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
-import ContentTypeCollectionInterface from "./content-type-collection";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
 import {ContentTypeRemovedParamsInterface} from "./content-type/content-type-events.types";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
@@ -42,9 +42,11 @@ export default class Stage {
      */
     private applyBindingsDebounce = _.debounce(() => {
         this.render.applyBindings(this.rootContainer)
-            .then((renderedOutput) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
+            .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
-            }));
+            })).catch((error: Error) => {
+                console.error(error);
+            });
     }, 500);
 
     /**
@@ -66,7 +68,9 @@ export default class Stage {
         Promise.all([
             buildStage(this, this.parent.initialValue),
             this.afterRenderDeferred.promise,
-        ]).then(this.ready.bind(this));
+        ]).then(this.ready.bind(this)).catch((error) => {
+            console.error(error);
+        });
     }
 
     /**

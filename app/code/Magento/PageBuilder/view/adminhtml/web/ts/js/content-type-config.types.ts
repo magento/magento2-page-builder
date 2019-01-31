@@ -26,7 +26,8 @@ export default interface ContentTypeConfigInterface {
 
 export interface ConfigFieldInterface {
     [key: string]: {
-        default: null | string | number;
+        default: string;
+        [key: string]: ConfigFieldInterface | any;
     };
 }
 

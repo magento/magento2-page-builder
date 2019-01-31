@@ -55,7 +55,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         (0, _delayUntil)(function () {
           _this.element = element;
           _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlickDebounce);
-          _this.previousData = _this.parent.dataStore.get();
+          _this.previousData = _this.parent.dataStore.getState();
 
           _this.parent.dataStore.subscribe(function (data) {
             if (_this.hasDataChanged(_this.previousData, data)) {
@@ -529,7 +529,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.buildSlickConfig = function buildSlickConfig() {
-      var data = this.parent.dataStore.get();
+      var data = this.parent.dataStore.getState();
       return {
         arrows: data.show_arrows === "true",
         autoplay: data.autoplay === "true",

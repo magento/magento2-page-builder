@@ -26,9 +26,9 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Step 1: Add configuration](../create-basic-content-type/step-1-add-configuration.md)
 * [Step 2: Add templates](../create-basic-content-type/step-2-add-templates.md)
 * [Step 3: Add components](../create-basic-content-type/step-3-add-components.md)
-* [Step 4: Add editor](../create-basic-content-type/step-4-add-form.md)
+* [Step 4: Add form](../create-basic-content-type/step-4-add-form.md)
 * [Step 5: Add styles](../create-basic-content-type/step-5-add-styles.md)
-* [Step 6: Add frontend widget](../create-basic-content-type/step-6-add-frontend-widget.md)
+* [Step 6: Add an icon](../create-basic-content-type/step-6-add-icon.md)
 * [What's next](../create-basic-content-type/whats-next.md)
 
 ### Configurations
@@ -48,7 +48,6 @@ See [Install Page Builder](install-pagebuilder.md)
 
 ### How tos
 
-* [How to develop a new content type](../how-to/how-to-develop-new-content-type.md)
 * [How to develop a container content type](../how-to/how-to-develop-container-content-type.md)
 * [How to use the Image Uploader](../how-to/how-to-use-image-uploader.md)
 * [How to use the Image Uploader](../how-to/how-to-use-image-uploader.md)
@@ -62,7 +61,6 @@ See [Install Page Builder](install-pagebuilder.md)
 * [Architecture](../reference/architecture.md)
 * [Events](../reference/events.md)
 * [Knockout bindings](../reference/knockout-bindings.md)
-* [Master format](../reference/master-format.md)
 
 ### Migration
 

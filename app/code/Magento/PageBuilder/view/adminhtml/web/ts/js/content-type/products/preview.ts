@@ -67,7 +67,7 @@ export default class Preview extends BasePreview {
         super.afterObservablesUpdated();
         this.displayPreview(false);
 
-        const data = this.parent.dataStore.get() as DataObject;
+        const data = this.parent.dataStore.getState();
 
         if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
             this.placeholderText(this.messages.EMPTY);

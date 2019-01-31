@@ -37,6 +37,8 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
           return _events.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
             value: renderedOutput
           });
+        }).catch(function (error) {
+          console.error(error);
         });
       }, 500);
       this.parent = parent;
@@ -50,7 +52,9 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
         });
       }); // Wait for the stage to be built alongside the stage being rendered
 
-      Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this));
+      Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
+        console.error(error);
+      });
     }
     /**
      * Get template.

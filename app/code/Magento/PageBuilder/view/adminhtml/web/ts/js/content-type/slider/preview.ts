@@ -94,8 +94,8 @@ export default class Preview extends PreviewCollection {
                     this.element = element as HTMLElement;
 
                     this.childSubscribe = this.parent.children.subscribe(this.buildSlickDebounce);
-                    this.previousData = this.parent.dataStore.get() as DataObject;
-                    this.parent.dataStore.subscribe((data: DataObject) => {
+                    this.previousData = this.parent.dataStore.getState();
+                    this.parent.dataStore.subscribe((data) => {
                         if (this.hasDataChanged(this.previousData, data)) {
                             this.buildSlickDebounce();
                         }
@@ -529,7 +529,7 @@ export default class Preview extends PreviewCollection {
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
-        const data = this.parent.dataStore.get() as DataObject;
+        const data = this.parent.dataStore.getState();
         return {
             arrows: data.show_arrows === "true",
             autoplay: data.autoplay === "true",

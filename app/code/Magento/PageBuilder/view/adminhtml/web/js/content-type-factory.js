@@ -25,17 +25,27 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       childrenLength = 0;
     }
 
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
       (0, _loader)([config.component], function (contentTypeComponent) {
-        var contentType = new contentTypeComponent(parent, config, stageId);
-        Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
-          var previewComponent = _ref[0],
-              masterComponent = _ref[1];
-          contentType.preview = previewComponent;
-          contentType.content = masterComponent;
-          contentType.dataStore.update(prepareData(config, data));
-          resolve(contentType);
-        });
+        try {
+          var contentType = new contentTypeComponent(parent, config, stageId);
+          Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
+            var previewComponent = _ref[0],
+                masterComponent = _ref[1];
+            contentType.preview = previewComponent;
+            contentType.content = masterComponent;
+            contentType.dataStore.update(prepareData(config, data));
+            resolve(contentType);
+          }).catch(function (error) {
+            reject(error);
+          });
+        } catch (error) {
+          reject("Error within component (" + config.component + ") for " + config.name + ".");
+          console.error(error);
+        }
+      }, function (error) {
+        reject("Unable to load component (" + config.component + ") for " + config.name + ". Please check component exists" + " and content type configuration is correct.");
+        console.error(error);
       });
     }).then(function (contentType) {
       _events.trigger("contentType:createAfter", {
@@ -65,24 +75,34 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
 
 
   function prepareData(config, data) {
-    var defaults = {
-      display: true
-    };
+    var defaults = prepareDefaults(config.fields || {}); // Set all content types to be displayed by default
 
-    if (config.fields) {
-      _underscore.each(config.fields, function (field, key) {
-        defaults[key] = field.default;
-      });
-    }
-
+    defaults.display = true;
     return _underscore.extend(defaults, data, {
       name: config.name
     });
   }
   /**
+   * Prepare the default values for fields within the form
+   *
+   * @param {ConfigFieldInterface} fields
+   * @returns {FieldDefaultsInterface}
+   */
+
+
+  function prepareDefaults(fields) {
+    return _underscore.mapObject(fields, function (field) {
+      if (!_underscore.isUndefined(field.default)) {
+        return field.default;
+      } else if (_underscore.isObject(field)) {
+        return prepareDefaults(field);
+      }
+    });
+  }
+  /**
    * A content type is ready once all of its children have mounted
    *
-   * @param {ContentType} contentType
+   * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
    * @param {number} childrenLength
    */
 

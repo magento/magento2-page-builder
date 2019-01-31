@@ -4,7 +4,9 @@
  */
 
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
+import LinkObject from "../link-object.types";
 
 /**
  * @api
@@ -28,10 +30,11 @@ export default class CreateValueForTarget implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        if (!data[name]) {
+        const value = get<LinkObject>(data, name);
+        if (!value) {
             return "";
         }
 
-        return data[name].setting ? "_blank" : "";
+        return value.setting ? "_blank" : "";
     }
 }

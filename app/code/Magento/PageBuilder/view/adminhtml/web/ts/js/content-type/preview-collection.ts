@@ -6,7 +6,6 @@
 import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
 import ContentTypeInterface from "../content-type.types";
-import {DataObject} from "../data-store";
 import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
@@ -42,7 +41,7 @@ export default class PreviewCollection extends Preview {
                 contentType.config,
                 contentType.parent,
                 contentType.stageId,
-                contentType.dataStore.get() as DataObject,
+                contentType.dataStore.getState(),
                 childrenLength,
             ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {

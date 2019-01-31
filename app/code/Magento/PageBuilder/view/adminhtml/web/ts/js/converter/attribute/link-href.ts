@@ -2,9 +2,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import _ from "underscore";
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
+import LinkObject from "../link-object.types";
 
 /**
  * @api
@@ -60,7 +63,7 @@ export default class CreateValueForHref implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const link = data[name] as any;
+        const link = get<LinkObject>(data, name);
         let href = "";
 
         if (!link) {

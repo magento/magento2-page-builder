@@ -4,7 +4,9 @@
  */
 
 import {DataObject} from "../../data-store";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
+import LinkObject from "../link-object.types";
 
 /**
  * @api
@@ -29,6 +31,7 @@ export default class CreateValueForLinkType implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return data[name] && data[name].type ? data[name].type : "default";
+        const value = get<LinkObject>(data, name);
+        return value && value.type ? value.type : "default";
     }
 }

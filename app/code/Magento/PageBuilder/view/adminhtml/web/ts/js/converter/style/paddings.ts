@@ -3,9 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import {DataObject} from "../../data-store";
-import {DataObjectMargins} from "../../property/margins";
 import {DataObjectPaddings} from "../../property/paddings";
+import {get} from "../../utils/object";
 import ConverterInterface from "../converter-interface";
 
 /**
@@ -43,11 +44,9 @@ export default class Paddings implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value: DataObjectPaddings;
-        if (data[name] && typeof data[name] === "string") {
-            value = JSON.parse(data[name]);
-        } else {
-            value = data[name];
+        let value = get<DataObjectPaddings>(data, name);
+        if (value && _.isString(value)) {
+            value = JSON.parse(value);
         }
         if (value && undefined !== value.padding) {
             result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";

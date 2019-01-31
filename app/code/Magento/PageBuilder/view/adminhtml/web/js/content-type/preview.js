@@ -4,7 +4,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _option, _titleOption, _registry, _sortable2, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title-option", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _events, _dismissibleConfirm, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeCollection, _contentTypeFactory, _contentTypeMenu, _edit, _option, _titleOption, _registry, _sortable2, _object, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -123,8 +123,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.updateData = function updateData(key, value) {
-      var data = this.parent.dataStore.get();
-      data[key] = value;
+      var data = this.parent.dataStore.getState();
+      (0, _object.set)(data, key, value);
       this.parent.dataStore.update(data);
     }
     /**
@@ -314,7 +314,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         direct = false;
       }
 
-      var contentTypeData = contentType.dataStore.get();
+      var contentTypeData = contentType.dataStore.getState();
       var index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
       return new Promise(function (resolve) {
         (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
@@ -326,6 +326,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           resolve(duplicateContentType);
         });
+      }).catch(function (error) {
+        console.error(error);
+        return null;
       });
     }
     /**
@@ -464,8 +467,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} originalContentType
-     * @param {ContentTypeInterface} duplicateContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} originalContentType
+     * @param {ContentTypeInterface | ContentTypeCollectionInterface} duplicateContentType
      * @param {number} index
      * @param {boolean} direct
      */
@@ -548,7 +551,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.isConfigured = function isConfigured() {
       var _this7 = this;
 
-      var data = this.parent.dataStore.get();
+      var data = this.parent.dataStore.getState();
       var hasDataChanges = false;
 
       _underscore.each(this.parent.config.fields, function (field, key) {
@@ -556,7 +559,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           return;
         }
 
-        var fieldValue = data[key];
+        var fieldValue = (0, _object.get)(data, key);
 
         if (!fieldValue) {
           fieldValue = "";
@@ -609,7 +612,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.updateObservables = function updateObservables() {
-      this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.get()));
+      this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.getState()));
       this.afterObservablesUpdated();
 
       _events.trigger("previewData:updateAfter", {

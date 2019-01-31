@@ -4,6 +4,7 @@
  */
 
 import _ from "underscore";
+import {get, set} from "../utils/object";
 import ConverterInterface, {ConverterConfigInterface, ConverterDataInterface} from "./converter-interface";
 
 export default class WidgetDirectiveAbstract implements ConverterInterface {
@@ -17,9 +18,10 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
     public fromDom(data: ConverterDataInterface, config: ConverterConfigInterface): WidgetDirectiveAttributes {
         let attributes: object = {};
 
-        data[config.html_variable].replace(/\{\{widget(.*?)\}\}/i, ((match: string, attributeString: string) => {
-            attributes = this.parseAttributesString(attributeString);
-        }).bind(this));
+        get<string>(data, config.html_variable)
+            .replace(/\{\{widget(.*?)\}\}/i, ((match: string, attributeString: string) => {
+                attributes = this.parseAttributesString(attributeString);
+            }).bind(this));
 
         return attributes;
     }
@@ -32,7 +34,7 @@ export default class WidgetDirectiveAbstract implements ConverterInterface {
      * @returns {object}
      */
     public toDom(data: ConverterDataInterface, config: ConverterConfigInterface): object {
-        data[config.html_variable] = this.buildDirective(data);
+        set(data, config.html_variable, this.buildDirective(data));
         return data;
     }
 

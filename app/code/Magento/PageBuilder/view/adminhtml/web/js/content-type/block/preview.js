@@ -2,7 +2,7 @@
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _hideShowOption, _preview) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-initializer", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _widgetInitializer, _config, _hideShowOption, _object, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -91,7 +91,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       _preview2.prototype.afterObservablesUpdated.call(this);
 
-      var data = this.parent.dataStore.get(); // Only load if something changed
+      var data = this.parent.dataStore.getState(); // Only load if something changed
 
       this.processBlockData(data);
     }
@@ -104,8 +104,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     ;
 
     _proto.displayPreviewPlaceholder = function displayPreviewPlaceholder(data, identifierName) {
-      // Only load if something changed
-      if (this.lastBlockId === data[identifierName] && this.lastTemplate === data.template) {
+      var blockId = (0, _object.get)(data, identifierName); // Only load if something changed
+
+      if (this.lastBlockId === blockId && this.lastTemplate === data.template) {
         // The mass converter will have transformed the HTML property into a directive
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
@@ -117,7 +118,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
         this.placeholderText("");
       }
 
-      if (!data[identifierName] || data[identifierName] && data[identifierName].length === 0 || data.template.length === 0) {
+      if (!blockId || blockId && blockId.toString().length === 0 || data.template.length === 0) {
         this.showBlockPreview(false);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
@@ -136,7 +137,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
 
       var url = _config.getConfig("preview_url");
 
-      var identifier = data[identifierName];
+      var identifier = (0, _object.get)(data, identifierName);
       var requestConfig = {
         // Prevent caching
         method: "POST",

@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import consoleLogger from "consoleLogger";
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
@@ -259,7 +260,8 @@ export default class Panel {
             }
 
         } else {
-            console.warn("Configuration is not properly initialized, please check the Ajax response.");
+            consoleLogger.error("Unable to retrieve content types from server, please inspect network requests " +
+                "response.");
         }
     }
 }

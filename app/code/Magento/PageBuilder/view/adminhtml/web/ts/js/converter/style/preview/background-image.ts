@@ -4,7 +4,9 @@
  */
 
 import {DataObject} from "../../../data-store";
+import {get} from "../../../utils/object";
 import ConverterInterface from "../../converter-interface";
+import ImageArrayObject from "../../image-array-object.types";
 
 /**
  * @api
@@ -28,7 +30,7 @@ export default class BackgroundImage implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        const value = data[name];
+        const value = get<ImageArrayObject>(data, name);
         if (value && typeof value[0] === "object") {
             return "url(" + value[0].url + ")";
         }

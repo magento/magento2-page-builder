@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery"], function (_jquery) {
+define(["jquery", "Magento_PageBuilder/js/utils/object"], function (_jquery, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -18,16 +18,23 @@ define(["jquery"], function (_jquery) {
     var _proto = DataStore.prototype;
 
     /**
-     * Retrieve data from the state for an editable area
+     * Retrieve specific data from the data store
      *
      * @param {string} key
-     * @returns {DataObject | string | number | boolean | any[] | null | undefined}
+     * @param defaultValue
+     * @returns {T}
      */
-    _proto.get = function get(key) {
-      if (key) {
-        return this.state[key];
-      }
+    _proto.get = function get(key, defaultValue) {
+      return (0, _object.get)(this.state, key, defaultValue);
+    }
+    /**
+     * Retrieve the entire state of the data object
+     *
+     * @returns {DataObject}
+     */
+    ;
 
+    _proto.getState = function getState() {
       return this.state;
     }
     /**

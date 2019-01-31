@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/image"], function (_image) {
+define(["underscore", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/utils/object"], function (_underscore, _image, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -21,17 +21,17 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
-      var directive = data[config.attribute_name];
+      var directive = (0, _object.get)(data, config.attribute_name);
 
       if (directive) {
         var images = JSON.parse(directive.replace(/\\(.)/mg, "$1")) || {};
 
-        if (typeof images.desktop_image !== "undefined") {
-          data[config.desktop_image_variable] = (0, _image.decodeUrl)(images.desktop_image);
+        if (!_underscore.isUndefined(images.desktop_image)) {
+          (0, _object.set)(data, config.desktop_image_variable, (0, _image.decodeUrl)(images.desktop_image));
         }
 
-        if (typeof images.mobile_image !== "undefined") {
-          data[config.mobile_image_variable] = (0, _image.decodeUrl)(images.mobile_image);
+        if (!_underscore.isUndefined(images.mobile_image)) {
+          (0, _object.set)(data, config.mobile_image_variable, (0, _image.decodeUrl)(images.mobile_image));
         }
 
         delete data[config.attribute_name];
@@ -49,18 +49,20 @@ define(["Magento_PageBuilder/js/utils/image"], function (_image) {
     ;
 
     _proto.toDom = function toDom(data, config) {
+      var desktopImage = (0, _object.get)(data, config.desktop_image_variable);
+      var mobileImage = (0, _object.get)(data, config.mobile_image_variable);
       var directiveData = {};
 
-      if (typeof data[config.desktop_image_variable] !== "undefined" && data[config.desktop_image_variable] && typeof data[config.desktop_image_variable][0] !== "undefined") {
-        directiveData.desktop_image = (0, _image.urlToDirective)(data[config.desktop_image_variable][0].url);
+      if (!_underscore.isUndefined(desktopImage) && desktopImage && !_underscore.isUndefined(desktopImage[0])) {
+        directiveData.desktop_image = (0, _image.urlToDirective)(desktopImage[0].url);
       }
 
-      if (typeof data[config.mobile_image_variable] !== "undefined" && data[config.mobile_image_variable] && typeof data[config.mobile_image_variable][0] !== "undefined") {
-        directiveData.mobile_image = (0, _image.urlToDirective)(data[config.mobile_image_variable][0].url);
+      if (!_underscore.isUndefined(mobileImage) && mobileImage && !_underscore.isUndefined(mobileImage[0])) {
+        directiveData.mobile_image = (0, _image.urlToDirective)(mobileImage[0].url);
       } // Add the directive data, ensuring we escape double quotes
 
 
-      data[config.attribute_name] = JSON.stringify(directiveData).replace(/[\\"']/g, "\\$&").replace(/\u0000/g, "\\0");
+      (0, _object.set)(data, config.attribute_name, JSON.stringify(directiveData).replace(/[\\"']/g, "\\$&").replace(/\u0000/g, "\\0"));
       return data;
     };
 

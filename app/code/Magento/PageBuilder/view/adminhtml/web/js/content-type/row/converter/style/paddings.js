@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_underscore, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -31,12 +31,10 @@ define([], function () {
 
     _proto.toDom = function toDom(name, data) {
       var result = {};
-      var value;
+      var value = (0, _object.get)(data, name);
 
-      if (data[name] && typeof data[name] === "string") {
-        value = JSON.parse(data[name]);
-      } else {
-        value = data[name];
+      if (value && _underscore.isString(value)) {
+        value = JSON.parse(value);
       }
 
       if (value && undefined !== value.padding) {

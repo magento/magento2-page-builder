@@ -133,8 +133,8 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const dataStore = this.parent.dataStore.get() as DataObject;
-        const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+        const initialImageValue = this.parent.dataStore
+            .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         // Create uploader
         return new Uploader(
@@ -213,12 +213,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.textarea.value = this.parent.dataStore.get<string>("content");
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
         events.on(`form:${this.parent.id}:saveAfter`, () => {
-            this.textarea.value = this.parent.dataStore.get("content") as string;
+            this.textarea.value = this.parent.dataStore.get<string>("content");
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -283,7 +283,7 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
-            const dataStore = this.parent.dataStore.get() as DataObject;
+            const dataStore = this.parent.dataStore.getState();
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });

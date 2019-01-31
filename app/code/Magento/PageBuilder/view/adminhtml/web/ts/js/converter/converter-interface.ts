@@ -12,7 +12,7 @@ interface ConverterInterface {
     /**
      * Convert value to internal format
      *
-     * @param {string} value
+     * @param {any} value
      * @returns {any}
      */
     fromDom(value: any): any;
@@ -22,9 +22,9 @@ interface ConverterInterface {
      *
      * @param {string} name
      * @param {DataObject} data
-     * @returns {string | object}
+     * @returns {any}
      */
-    toDom(name: string, data: DataObject): string | object;
+    toDom(name: string, data: DataObject): any;
 }
 
 export default ConverterInterface;

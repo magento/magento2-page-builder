@@ -8,18 +8,28 @@ define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/content-t
   /**
    * Create new content instance
    *
-   * @param {ContentTypeInterface} contentType
+   * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
    * @param {ContentTypeConfigInterface} config
    * @returns {Promise<ContentTypeInterface>}
    */
   function create(contentType, config) {
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
       (0, _observableUpdaterFactory)(config, _converterResolver).then(function (observableUpdater) {
-        (0, _loader)([config.master_component], function (contentComponent) {
-          resolve(new contentComponent(contentType, observableUpdater));
+        (0, _loader)([config.master_component], function (masterComponent) {
+          try {
+            var master = new masterComponent(contentType, observableUpdater);
+            resolve(master);
+          } catch (error) {
+            reject("Error within master component (" + config.master_component + ") for " + config.name + ".");
+            console.error(error);
+          }
+        }, function (error) {
+          reject("Unable to load preview component (" + config.master_component + ") for " + config.name + ". Please " + "check preview component exists and content type configuration is correct.");
+          console.error(error);
         });
       }).catch(function (error) {
         console.error(error);
+        return null;
       });
     });
   }

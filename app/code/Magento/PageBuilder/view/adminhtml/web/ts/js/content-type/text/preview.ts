@@ -130,7 +130,7 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Retrieve the margin & padding styles for the placeholder
+     * Retrieve the margin & padding & alignment styles for the placeholder
      *
      * @returns {any}
      */
@@ -145,6 +145,7 @@ export default class Preview extends BasePreview {
             "paddingLeft",
             "paddingRight",
             "paddingTop",
+            "textAlign",
         ];
         return _.pick(this.data.main.style(), (style: string, key: string) => {
             return keys.indexOf(key) !== -1;

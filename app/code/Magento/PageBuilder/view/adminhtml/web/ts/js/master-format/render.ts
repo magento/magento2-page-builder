@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
-import ContentTypeCollectionInterface from "../content-type-collection";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import decodeAllDataUrlsInString from "../utils/directives";
 import filterHtml from "./filter-html";
 
@@ -36,6 +36,9 @@ export default class MasterFormatRenderer {
                     },
                 },
             );
+        }).catch((error) => {
+            console.error(error);
+            return null;
         });
     }
 }

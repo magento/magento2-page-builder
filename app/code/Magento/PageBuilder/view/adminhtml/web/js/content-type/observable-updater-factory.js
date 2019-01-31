@@ -21,6 +21,7 @@ define(["Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_Page
         resolve(new _observableUpdater(converterPool, massConverterPool, converterResolver));
       }).catch(function (error) {
         console.error(error);
+        return null;
       });
     });
   }

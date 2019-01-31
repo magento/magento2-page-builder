@@ -58,8 +58,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     ;
 
     _proto.getUploader = function getUploader() {
-      var dataStore = this.parent.dataStore.get();
-      var initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+      var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
 
       return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
     }
@@ -217,9 +216,13 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       _preview2.prototype.bindEvents.call(this);
 
       _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this4.parent.dataStore.get();
+        var dataStore = _this4.parent.dataStore.getState();
 
-        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
+
+        if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
+          _this4.parent.dataStore.update("", "message");
+        }
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
       });

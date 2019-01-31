@@ -410,7 +410,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _events.on("tab-item:duplicateAfter", function (args) {
         if (_this4.parent.id === args.duplicateContentType.parent.id && args.direct) {
-          var tabData = args.duplicateContentType.dataStore.get();
+          var tabData = args.duplicateContentType.dataStore.getState();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
@@ -441,7 +441,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.updateTabNamesInDataStore = function updateTabNamesInDataStore() {
       var activeOptions = [];
       this.parent.children().forEach(function (tab, index) {
-        var tabData = tab.dataStore.get();
+        var tabData = tab.dataStore.getState();
         activeOptions.push({
           label: tabData.tab_name.toString(),
           labeltitle: tabData.tab_name.toString(),
