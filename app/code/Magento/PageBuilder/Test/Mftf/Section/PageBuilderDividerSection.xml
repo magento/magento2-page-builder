@@ -10,7 +10,9 @@
           xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="DividerOnStage">
         <element name="allDividers" type="text" selector="//div[contains(@class,'pagebuilder-divider')]"/>
+        <element name="baseCSS" type="text" selector="[data-role=divider]"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
+        <element name="lineElementCSS" type="text" selector="[data-role=divider] hr"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]/parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
@@ -34,7 +36,9 @@
     </section>
     <section name="DividerOnStorefront">
         <element name="allDividers" type="text" selector="//div[@data-role='divider']"/>
+        <element name="baseCSS" type="text" selector="[data-role=divider]"/>
         <element name="base" type="text" selector="(//div[@data-role='divider'])[{{arg1}}]" parameterized="true"/>
+        <element name="lineElementCSS" type="text" selector="[data-role=divider] hr"/>
         <element name="hidden" type="text" selector="(//div[@data-role='divider'])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[@data-role='divider'])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[@data-role='divider'])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
