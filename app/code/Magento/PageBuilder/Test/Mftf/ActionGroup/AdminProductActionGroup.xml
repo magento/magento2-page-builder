@@ -7,8 +7,8 @@
 -->
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
-    <!-- Consider moving action group to core, or utilising core action group if one is added at a later date -->
     <actionGroup name="addUpSellProductBySku" extends="addRelatedProductBySku">
+        <!-- This goes in CE repo -->
         <click selector="{{AdminProductFormRelatedUpSellCrossSellSection.AddUpSellProductsButton}}" stepKey="clickAddRelatedProductButton"/>
         <conditionalClick selector="{{AdminAddUpSellProductsModalSection.Modal}} {{AdminProductGridFilterSection.clearFilters}}" dependentSelector="{{AdminAddUpSellProductsModalSection.Modal}} {{AdminProductGridFilterSection.clearFilters}}" visible="true" stepKey="clickClearFilters"/>
         <click selector="{{AdminAddUpSellProductsModalSection.Modal}} {{AdminProductGridFilterSection.filters}}" stepKey="openProductFilters"/>

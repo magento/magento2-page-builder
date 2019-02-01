@@ -9,7 +9,8 @@ define([
     'use strict';
 
     return function (config, element) {
-        var $element = $(element);
+        var $element = $(element),
+            parallaxSpeed = null;
 
         if ($element.data('appearance') === 'contained') {
             $element = $(element).find('[data-element="inner"]');
@@ -22,11 +23,13 @@ define([
         $element.addClass('jarallax');
         $element.attr('data-jarallax', '');
 
+        parallaxSpeed = parseFloat($element.data('parallaxSpeed'));
+
         window.jarallax($element[0], {
             imgPosition: $element[0].style.backgroundPosition || '50% 50%',
             imgRepeat: $element[0].style.backgroundRepeat || 'no-repeat',
             imgSize: $element[0].style.backgroundSize || 'cover',
-            speed: parseFloat($element.data('parallaxSpeed')) || 0.5
+            speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
         });
     };
 });

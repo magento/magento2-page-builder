@@ -8,6 +8,19 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderFullScreen">
+        <waitForElementVisible selector="{{PageBuilderStage.openFullScreen}}" stepKey="waitForFullScreenButton"/>
+        <click selector="{{PageBuilderStage.openFullScreen}}" stepKey="clickFullScreenButton"/>
+        <waitForPageLoad stepKey="waitForFullScreenAnimation"/>
+        <seeElement selector="{{PageBuilderStage.stageWrapperFullScreen}}" stepKey="seeStageFullScreen"/>
+        <seeElement selector="{{PageBuilderStage.exitFullScreen}}" stepKey="seeExitFullScreenButton"/>
+    </actionGroup>
+    <actionGroup name="exitPageBuilderFullScreen">
+        <waitForElementVisible selector="{{PageBuilderStage.exitFullScreen}}" stepKey="waitForExitPageBuilderFullScreenButton"/>
+        <click selector="{{PageBuilderStage.exitFullScreen}}" stepKey="exitPageBuilderFullScreen"/>
+        <waitForPageLoad stepKey="waitForExitFullScreen"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.exitFullScreen}}" stepKey="dontSeeExitPageBuilderFullScreenButton"/>
+    </actionGroup>
     <actionGroup name="validateContentTypeHeightOnStage">
         <arguments>
             <argument name="contentType"/>
