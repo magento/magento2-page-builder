@@ -20,4 +20,35 @@
         <assertElementContainsAttribute selector="{{section.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{section.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
     </actionGroup>
+    <actionGroup name="inlineEditTabItemName">
+        <arguments>
+            <argument name="tabName" defaultValue="{{PageBuilderTabNameRandom1.value}}" type="string"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pageBuilderArea" defaultValue="" type="string"/>
+        </arguments>
+        <comment userInput="inlineEditTabItemName" stepKey="comment"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderEditableTitle(index)}}" stepKey="waitForTabHeaderVisible"/>
+        <pressKey selector="{{TabOnStage.tabHeaderEditableTitle(index)}}" userInput="{{tabName}}" stepKey="enterTabName"/>
+        <see selector="{{TabOnStage.tabHeader(index)}}" userInput="{{tabName}}" stepKey="seeTabName"/>
+        <click selector="{{pageBuilderArea}}{{PageBuilderPanel.searchPanel}}" stepKey="unFocusLiveEdit"/>
+        <waitForPageLoad stepKey="waitForUnFocus"/>
+    </actionGroup>
+    <actionGroup name="moveTabItem">
+        <arguments>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+            <argument name="tabGroupIndex" defaultValue="1" type="string"/>
+            <argument name="tabItemIndexToMove" defaultValue="1" type="string"/>
+            <argument name="tabItemIndexToMoveTo" defaultValue="2" type="string"/>
+        </arguments>
+        <comment userInput="moveTabItem" stepKey="comment"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="waitForTabItem1"/>
+        <click selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="clickTabItem1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <!-- Note MFTF Bug: MQE-1185. We cannot reliably use offsets and therefore, dropping to index x will result in an actual drop of index x-1 -->
+        <!-- Once bug is fixed, we need to add executeJS to calculate width & height of tab item to determine default offsets -->
+        <dragAndDrop selector1="{{TabOnStage.moveHandle(tabGroupIndex, tabItemIndexToMove)}}" selector2="{{TabOnStage.tabHeader(tabItemIndexToMoveTo)}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropTabItem"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader(tabItemIndexToMove)}}" stepKey="waitForTabItem2"/>
+    </actionGroup>
 </actionGroups>
