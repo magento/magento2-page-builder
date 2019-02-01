@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore"], function (_underscore) {
+define(["underscore", "Magento_PageBuilder/js/utils/object"], function (_underscore, _object) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -34,7 +34,7 @@ define(["underscore"], function (_underscore) {
 
 
     _proto.toDom = function toDom(name, data) {
-      return (0, _underscore.escape)(data[name].toString());
+      return (0, _underscore.escape)((0, _object.get)(data, name));
     };
 
     return TagEscaper;

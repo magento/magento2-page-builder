@@ -397,7 +397,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedTabIndex: number;
         events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
-                const tabData = args.duplicateContentType.dataStore.get();
+                const tabData = args.duplicateContentType.dataStore.getState();
                 args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
                     "tab_name",
@@ -426,7 +426,7 @@ export default class Preview extends PreviewCollection {
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptionsInterface[] = [];
         this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
-            const tabData = tab.dataStore.get() as DataObject;
+            const tabData = tab.dataStore.getState();
             activeOptions.push({
                 label: tabData.tab_name.toString(),
                 labeltitle: tabData.tab_name.toString(),

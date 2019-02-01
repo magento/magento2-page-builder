@@ -1,10 +1,5 @@
 # Overview
 
-***
-The development of this tutorial is currently **IN PROGRESS**.
-
-***
-
 Page Builder comes with several content types (controls) you can use to build your storefront pages. In this tutorial, you will add a new content type: a **Quote** control, which you can use to show customer testimonials or other types of quotations within your storefront.
 
 ![Page Builder Content Types](../images/panel-horizontal.png)
@@ -18,8 +13,6 @@ The following screenshot shows three instances of the Quote control you will bui
 And the same three Quote controls are shown rendered here on a mock testimonial page in the storefront:
 
 ![StorefrontTestimonials](../images/StorefrontTestimonials.png)
-
-
 
 ## Quote module
 
@@ -35,14 +28,14 @@ After registering your module (`bin/magento setup:upgrade`) you will be ready to
 
 The steps for creating the Quote content type are illustrated and described below. The reality is not quite this linear, but these steps do represent the basic phases and flow for building new Page Builder content types.
 
-![Creating Custom Content Types](../images/content-type-overview.png)
+![Creating Custom Content Types](../images/content-type-overview.svg)
 
 1. **Add configuration**: Create an XML file to define your content type and reference the other files that control the appearance and behavior of your content type.  
 2. **Add templates**: Create HTML templates that define the appearance of your content types on the Admin stage (`preview.html`) and the storefront (`master.html`).
 3. **Add component**: Create a JavaScript file that defines the behavior of your content type on the Admin stage (`preview.js`) and the storefront (`master.js`).
 4. **Add form**: Create a UI component form and a layout so Admin users can edit your content type within the Page Builder editor.
 5. **Add styles**: Create LESS files to style your content types when rendered in the Admin UI and on the storefront. 
-6. **Add frontend widget**: Create a JavaScript file to control the UI behavior (user interactivity) of your content type on the storefront.  
+6. **Add an icon**: Create an SVG icon to visually identify your content type within the Page Builder panel.
 
 ## Quote file structure
 

@@ -2,6 +2,21 @@
 
 Here are the Page Builder beta release notes and the higher priority known issues. We are actively working on many of these items and will update this document with each beta release.
 
+## Beta 5 - January 28, 2019
+
+- Resolved: Prefixed field names with section name to avoid field name collision <!-- MC-5232 -->
+- Resolved: MFTF: Rewrite Selectors/ActionGroups to allow using PageBuilder in non-CMS page areas <!-- MC-4231 -->
+- Resolved: Right/Left Margin Not Working For Content Types <!-- MC-5025 -->
+- Resolved: Alignment doesn't work for Slide, Banners, & Text Placeholders & for Slide Content & Banner Poster Content <!-- MMC-4290 -->
+- Resolved: Implement better developer error reporting <!-- MC-5691 -->
+- Resolved: Banner placeholder disappears when user switching between different appearances <!-- MC-5727 -->
+
+## Beta 4 - January 14, 2019
+
+- Resolved: Collage Center/Left/Right does not work correctly in a container smaller than 100% width <!-- MC-5372 -->
+- Resolved: Contained row appearance renders too small when in smaller container or in Block/Dynamic Block <!-- MC-5432 -->
+- Resolved: XSS Vulnerability in Page Builder <!-- MC-5835 -->
+
 ## Beta 3 - December 19, 2018
 
 - Improved: Handling of invalid Google Maps API keys <!-- MC-5723 -->
@@ -29,14 +44,11 @@ Here are the Page Builder beta release notes and the higher priority known issue
 
 ## Known Issues
 
-* Degraded admin experience in IE 11.
-    * Inline editing placeholders behave strangely within the admin and won't disappear when typing starts.
+* Degraded admin experience when using IE 11.
 * Product does not display in admin when it is assigned to a specific website. <!-- MC-5373 -->
-* TinyMCE inline editing mode is focused after saving a content type within the admin. <!-- MC-3812 -->
-* Issues with padding, margins, and box-sizing on numerous content types.
-* Floating option menus and other controls can be displayed off screen when content types are rendered near the edge of the screen.
+* Issues with padding, margins, and box-sizing on numerous content types. <!-- MC-11021 -->
+* Floating option menus and other controls can be displayed off screen when content types are rendered near the edge of the screen. <!-- MC-5383 -->
 * Degraded Parallax performance on storefront and in admin within some browsers. <!-- MC-5480 -->
 * Using Page Builder within a slide out form has a degraded experience.
     * Left-side panel will not scroll with the user.
     * Dragging and dropping can become broken due to another instance of Page Builder being loaded.
-* Scrolling within full-screen mode can cause the underlying page to scroll instead of the Page Builder content.

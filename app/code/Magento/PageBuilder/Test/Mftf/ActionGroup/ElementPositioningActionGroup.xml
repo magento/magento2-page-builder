@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <!-- Element Position -->
+    <actionGroup name="validatePositionRightWithinContainer">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="contentMargins" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="container" type="string"/>
+            <argument name="containerBorder" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="containerPadding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <!-- Validate right edge of content is within parent -->
+        <comment userInput="Validate right edge of content is within parent" stepKey="commentValidateRightEdgeOfContentIsWithinParent"/>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{index}}-1].getBoundingClientRect().right+{{contentMargins.marginRight}}" stepKey="contentRightPosition"/>
+        <executeJS function="return document.querySelectorAll('{{container}}')[{{index}}-1].getBoundingClientRect().right-{{containerPadding.paddingRight}}-{{containerBorder.value}}" stepKey="parentRightPosition"/>
+        <executeJS function="return Math.round({$parentRightPosition}-{$contentRightPosition})" stepKey="rightPositionDifference"/>
+        <assertLessThanOrEqual stepKey="assertRightPositionDifference">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">rightPositionDifference</actualResult>
+        </assertLessThanOrEqual>
+        <assertGreaterThanOrEqual stepKey="assertRightPositionIsGreaterThanZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">rightPositionDifference</actualResult>
+        </assertGreaterThanOrEqual>
+    </actionGroup>
+    <!-- Element Size -->
+    <actionGroup name="validateContentWidthEqualToContainerWidth">
+        <arguments>
+            <argument name="content" type="string"/>
+            <argument name="contentIndex" defaultValue="1" type="string"/>
+            <argument name="contentMargins" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="container" type="string"/>
+            <argument name="containerBorder" defaultValue="PageBuilderAdvancedBorderWidthProperty0"/>
+            <argument name="containerIndex" defaultValue="1" type="string"/>
+            <argument name="containerPadding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="pixelBuffer" defaultValue="5" type="string"/>
+        </arguments>
+        <!-- Validate width of content and width of container are equal -->
+        <comment userInput="Validate width of content and width of container are equal" stepKey="commentValidateWidthOfContentAndWidthOfContainerAreEqual"/>
+        <executeJS function="return document.querySelectorAll('{{content}}')[{{contentIndex}}-1].getBoundingClientRect().width+{{contentMargins.marginLeft}}+{{contentMargins.marginRight}}" stepKey="contentWidth"/>
+        <executeJS function="return document.querySelectorAll('{{container}}')[{{containerIndex}}-1].getBoundingClientRect().width-{{containerPadding.paddingLeft}}-{{containerPadding.paddingRight}}-({{containerBorder.value}}*2)" stepKey="parentWidth"/>
+        <executeJS function="return Math.round(Math.abs({$contentWidth}-{$parentWidth}))" stepKey="widthDifference"/>
+        <assertLessThanOrEqual stepKey="assertWidthDifference">
+            <expectedResult type="int">{{pixelBuffer}}</expectedResult>
+            <actualResult type="variable">widthDifference</actualResult>
+        </assertLessThanOrEqual>
+    </actionGroup>
+</actionGroups>
