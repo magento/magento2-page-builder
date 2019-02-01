@@ -87,5 +87,4 @@ We will push new beta releases once a week, including work from the backlog. We 
 
 To participate in technical discussions and ask questions, join us in [Slack], where a number of Page Builder team members are present.
 
-
 [Slack]: https://magentocommeng.slack.com/messages/GANS1R4C9

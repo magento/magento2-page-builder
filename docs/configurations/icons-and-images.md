@@ -1,4 +1,4 @@
-# Iconography
+# Icons and images
 
 ## Overview
 
