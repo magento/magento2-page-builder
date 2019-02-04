@@ -64,6 +64,7 @@ class TemplatePlugin
             $this->decodeHtmlContentTypes($document);
         }
 
+        // If a document was retrieved we've modified the output so need to retrieve it from within the document
         if (isset($document)) {
             // Match the contents of the body from our generated document
             preg_match(
@@ -72,7 +73,7 @@ class TemplatePlugin
                 $matches
             );
 
-            $result = !empty($matches) ? $matches[1] : $result;
+            return !empty($matches) ? $matches[1] : $result;
         }
 
         return $result;
