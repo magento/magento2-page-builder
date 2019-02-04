@@ -453,7 +453,8 @@
         <!--Input image into stage-->
         <comment userInput="Input image into stage" stepKey="commentInputImageIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon" />
+        <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
+        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
@@ -616,6 +617,7 @@
             <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
+        <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
         <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon" />
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
@@ -2156,7 +2158,8 @@
         <!--Input image into stage-->
         <comment userInput="Input image into stage" stepKey="commentInputImageIntoStage"/>
         <click selector="{{TextOnStage.tinymce('1')}}" stepKey="focusOnTextEditorArea"/>
-        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon" />
+        <waitForElementVisible selector="{{TinyMCESection.InsertImageIcon}}" stepKey="waitForInsertImageIcon"/>
+        <click selector="{{TinyMCESection.InsertImageIcon}}" stepKey="clickInsertImageIcon"/>
         <waitForPageLoad stepKey="waitForPageLoad" />
         <actionGroup ref="clickBrowseBtnOnUploadPopup" stepKey="clickBrowserBtn"/>
         <actionGroup ref="VerifyMediaGalleryStorageActions" stepKey="VerifyMediaGalleryStorageBtn"/>
