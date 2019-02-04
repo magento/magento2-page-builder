@@ -11,24 +11,22 @@ namespace Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribu
 class ContentType extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
 {
     /**
-     * @var \Magento\PageBuilder\Model\ResourceModel\Entity
+     * @var \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity
      */
     private $entity;
 
     /**
-     * Constructor
-     *
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Config $eavConfig
-     * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
-     * @param string|null $connectionName
+     * @param \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity $entity
+     * @param null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\GroupFactory $attrGroupFactory,
         \Magento\Eav\Model\Config $eavConfig,
-        \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
+        \Magento\PageBuilderDataMigration\Model\ResourceModel\Entity $entity,
         $connectionName = null
     ) {
         parent::__construct($context, $attrGroupFactory, $eavConfig, $connectionName);
