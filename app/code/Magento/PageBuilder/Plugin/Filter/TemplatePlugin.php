@@ -52,6 +52,8 @@ class TemplatePlugin
      */
     public function afterFilter(\Magento\Framework\Filter\Template $subject, string $result) : string
     {
+        $this->domDocument = false;
+
         // Validate if the filtered result requires background image processing
         if (strpos($result, self::DATA_BACKGROUND_IMAGE) !== false) {
             $document = $this->getDomDocument($result);
