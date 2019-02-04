@@ -10,7 +10,7 @@ import ConverterInterface from "../converter-interface";
 /**
  * @api
  */
-export default class Encode implements ConverterInterface {
+export default class Decode implements ConverterInterface {
     /**
      * Convert value to internal format
      *

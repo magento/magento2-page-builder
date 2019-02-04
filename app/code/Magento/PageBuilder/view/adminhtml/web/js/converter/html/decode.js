@@ -8,14 +8,14 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
   /**
    * @api
    */
-  var Encode =
+  var Decode =
   /*#__PURE__*/
   function () {
     "use strict";
 
-    function Encode() {}
+    function Decode() {}
 
-    var _proto = Encode.prototype;
+    var _proto = Decode.prototype;
 
     /**
      * Convert value to internal format
@@ -41,9 +41,9 @@ define(["Magento_PageBuilder/js/utils/object"], function (_object) {
       return (0, _object.get)(data, name);
     };
 
-    return Encode;
+    return Decode;
   }();
 
-  return Encode;
+  return Decode;
 });
-//# sourceMappingURL=encode.js.map
+//# sourceMappingURL=decode.js.map
