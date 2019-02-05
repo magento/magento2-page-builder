@@ -133,7 +133,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         }
         $appearanceData['converters'] = $this->convertConvertersData($appearanceNode);
         $appearanceData['preview_template'] = $this->getAttributeValue($appearanceNode, 'preview_template');
-        $appearanceData['render_template'] = $this->getAttributeValue($appearanceNode, 'render_template');
+        $appearanceData['master_template'] = $this->getAttributeValue($appearanceNode, 'master_template');
         $appearanceData['reader'] = $this->getAttributeValue($appearanceNode, 'reader');
         $appearanceData['default'] = $this->getAttributeValue($appearanceNode, 'default');
         $formNode = $appearanceNode->getElementsByTagName('form')->item(0);

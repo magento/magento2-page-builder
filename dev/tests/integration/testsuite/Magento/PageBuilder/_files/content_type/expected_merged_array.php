@@ -40,7 +40,7 @@ return [
             'appearances' => [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -218,7 +218,7 @@ return [
             'icon' => 'pagebuilder-type2-custom-icon',
             'component' => 'Path/to/custom/component',
             'preview_component' => 'Path/to/preview/custom/component',
-            'is_visible' => 'false',
+            'is_system' => 'false',
             'form' => 'pagebuilder_type2_custom_form',
             'group' => 'group2',
             'allowed_parents' => [
@@ -230,7 +230,7 @@ return [
                     'data2' => 'value2',
                     'data3' => 'value3',
                     'preview_template' => 'Path/to/preview/custom/template',
-                    'render_template' => 'Path/to/render/custom/template',
+                    'master_template' => 'Path/to/render/custom/template',
                     'elements' => [
                         'first_element' => [
                             'style' => [
@@ -500,7 +500,7 @@ return [
                 ],
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -546,21 +546,21 @@ return [
                 ],
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'default' => 'false',
                     'converters' => [],
                     'reader' => 'Path/to/reader'
                 ],
                 'appearance3' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'converters' => [],
                     'default' => 'false',
                     'reader' => null
                 ],
                 'appearance4' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [
@@ -621,7 +621,7 @@ return [
             'appearances' => [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
-                    'render_template' => 'Path/to/render/template',
+                    'master_template' => 'Path/to/render/template',
                     'elements' => [
                         'main' => [
                             'style' => [

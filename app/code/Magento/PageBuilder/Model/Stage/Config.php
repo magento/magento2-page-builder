@@ -204,7 +204,7 @@ class Config
             'additional_data' => isset($contentType['additional_data'])
                 ? $this->additionalDataParser->toArray($contentType['additional_data'])
                 : [],
-            'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
+            'is_system' => isset($contentType['is_system']) && $contentType['is_system'] === 'false' ? false : true
         ];
     }
 
