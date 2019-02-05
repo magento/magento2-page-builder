@@ -14,7 +14,7 @@ Use the content type and group configuration to add new content types, extend ex
 | `parents`           | List of parent content types that can accept this type as a child.                                                                          |
 | `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
-| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
+| `is_system`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
 | `additional_data`   | Allows to specify additional data for component, see [additional configurations](additional-configurations.md) for more information. |
 {:style="table-layout:auto"}
 
@@ -60,7 +60,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
         <appearance default="true"
                     name="poster"
                     preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                    master_template="Magento_PageBuilder/content-type/banner/poster/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <elements>
                 <element name="main">
@@ -125,19 +125,19 @@ The following is an example of a content type configuration in `view/adminhtml/p
         </appearance>
         <appearance name="collage-left"
                     preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                    master_template="Magento_PageBuilder/content-type/banner/collage-left/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <!-- Collage left appearance configuration -->
         </appearance>
         <appearance name="collage-centered"
                     preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                    master_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <!-- Collage centered appearance configuration -->
         </appearance>
         <appearance name="collage-right"
                     preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
-                    render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                    master_template="Magento_PageBuilder/content-type/banner/collage-right/master"
                     reader="Magento_PageBuilder/js/master-format/read/configurable">
             <!-- Collage right appearance configuration -->
         </appearance>
@@ -228,7 +228,7 @@ It controls the templates, how data is read from the master format, and how to a
 | Attribute           | Description                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `preview_template`  | Template used to display the element in the preview                                    |
-| `render_template`   | Template used to render the content type to the master format                          |
+| `master_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
 {:style="table-layout:auto"}
 
@@ -240,7 +240,7 @@ It reads data based on the configuration specified in `data_mapping`.
 <appearance default="true"
             name="poster"
             preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
-            render_template="Magento_PageBuilder/content-type/banner/poster/master"
+            master_template="Magento_PageBuilder/content-type/banner/poster/master"
             reader="Magento_PageBuilder/js/master-format/read/configurable">
 </appearance>
 ```

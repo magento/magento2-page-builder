@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="type2" translate="label" sortOrder="2" label="Type 2 Label" icon="pagebuilder-type2-custom-icon" component="Path/to/custom/component" preview_component="Path/to/preview/custom/component" form="pagebuilder_type2_custom_form" group="group2">
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <parents>
             <parent name="stage" policy="deny"/>
             <parent name="type1" policy="allow"/>
@@ -16,7 +16,7 @@
             <child name="type3" policy="allow"/>
         </children>
         <appearances>
-            <appearance name="default" default="true" preview_template="Path/to/preview/custom/template" render_template="Path/to/render/custom/template" reader="Path/to/custom/reader">
+            <appearance name="default" default="true" preview_template="Path/to/preview/custom/template" master_template="Path/to/render/custom/template" reader="Path/to/custom/reader">
                 <data name="data1">custom_value</data>
                 <data name="data3">value3</data>
                 <elements>
@@ -66,7 +66,7 @@
                 </converters>
                 <form>Path/to/custom/form</form>
             </appearance>
-            <appearance name="appearance4" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+            <appearance name="appearance4" preview_template="Path/to/preview/template" master_template="Path/to/render/template" reader="Path/to/reader">
                 <elements>
                     <element name="main">
                         <style name="style_converter" source="converter" converter="Path/to/converter"/>

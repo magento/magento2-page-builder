@@ -32,7 +32,7 @@ export default class MasterFormatRenderer {
                 {
                     template: {
                         data: rootContainer.content,
-                        name: rootContainer.content.renderTemplate,
+                        name: rootContainer.content.template,
                     },
                 },
             );

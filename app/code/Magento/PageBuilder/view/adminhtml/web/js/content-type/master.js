@@ -95,9 +95,9 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     };
 
     _createClass(Master, [{
-      key: "renderTemplate",
+      key: "template",
       get: function get() {
-        return (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).render_template;
+        return (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).master_template;
       }
     }]);
 

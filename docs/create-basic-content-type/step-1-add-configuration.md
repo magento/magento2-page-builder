@@ -45,7 +45,7 @@ The following configuration is from the Quote content type. An overview of these
         <appearance name="default"
                   default="true"
                   preview_template="Example_PageBuilderQuote/content-type/acme_quote/default/preview"
-                  render_template="Example_PageBuilderQuote/content-type/acme_quote/default/master"
+                  master_template="Example_PageBuilderQuote/content-type/acme_quote/default/master"
                   reader="Magento_PageBuilder/js/master-format/read/configurable">
         <elements...>
         </appearance>

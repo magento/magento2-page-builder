@@ -7,13 +7,13 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="type2" translate="label" label="Type 2" icon="pagebuilder-type2-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type2_form" group="group1">
-        <is_visible>true</is_visible>
+        <is_system>true</is_system>
         <parents default_policy="deny">
             <parent name="stage" policy="allow"/>
         </parents>
         <children default_policy="allow"/>
         <appearances>
-            <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+            <appearance name="default" default="true" preview_template="Path/to/preview/template" master_template="Path/to/render/template" reader="Path/to/reader">
                 <data name="data1">value1</data>
                 <data name="data2">value2</data>
                 <elements>
@@ -63,7 +63,7 @@
                 </converters>
                 <form>Path/to/form</form>
             </appearance>
-            <appearance name="appearance1" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
+            <appearance name="appearance1" default="false" preview_template="Path/to/preview/template" master_template="Path/to/render/template" reader="Path/to/reader">
                 <elements>
                     <element name="main">
                         <style name="style_converter" source="converter" converter="Path/to/converter"/>
@@ -74,8 +74,8 @@
                 </elements>
                 <form>Path/to/form</form>
             </appearance>
-            <appearance name="appearance2" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader"/>
-            <appearance name="appearance3" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template"/>
+            <appearance name="appearance2" default="false" preview_template="Path/to/preview/template" master_template="Path/to/render/template" reader="Path/to/reader"/>
+            <appearance name="appearance3" default="false" preview_template="Path/to/preview/template" master_template="Path/to/render/template"/>
         </appearances>
     </type>
 </config>

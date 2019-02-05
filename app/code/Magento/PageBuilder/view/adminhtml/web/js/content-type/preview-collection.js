@@ -109,7 +109,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     };
 
     _createClass(PreviewCollection, [{
-      key: "previewChildTemplate",
+      key: "childTemplate",
 
       /**
        * Retrieve the preview child template

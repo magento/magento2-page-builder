@@ -95,7 +95,7 @@ export default class Panel {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentType.label.toLowerCase().match(regEx);
                         return matches &&
-                            contentType.is_visible === true;
+                            contentType.is_system === true;
                     },
                 ),
                 (contentType, identifier: string) => {
@@ -237,7 +237,7 @@ export default class Panel {
                     _.map(
                         _.where(contentTypes, {
                             group: id,
-                            is_visible: true,
+                            is_system: true,
                         }), /* Retrieve content types with group id */
                         (contentType: ContentTypeConfigInterface, identifier: string) => {
                             return new GroupContentType(

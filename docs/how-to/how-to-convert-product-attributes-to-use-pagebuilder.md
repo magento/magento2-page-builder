@@ -37,9 +37,9 @@ $categorySetup->addAttribute(
         'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
         'group' => 'Content',
         'is_used_in_grid' => true,
-        'is_visible_in_grid' => false,
+        'is_system_in_grid' => false,
         'is_filterable_in_grid' => false,
-        'is_visible_on_front' => true,
+        'is_system_on_front' => true,
         'default' => 'Hello World'
     ]
 );

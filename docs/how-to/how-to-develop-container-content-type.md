@@ -48,7 +48,7 @@ Write the following content into this configuration file:
             <appearance default="true"
                         name="left"
                         preview_template="VendorName_CustomContainer/content-type/custom-container-group/left/preview"
-                        render_template="VendorName_CustomContainer/content-type/custom-container-group/left/master"
+                        master_template="VendorName_CustomContainer/content-type/custom-container-group/left/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -67,7 +67,7 @@ Write the following content into this configuration file:
             </appearance>
             <appearance name="right"
                         preview_template="VendorName_CustomContainer/content-type/custom-container-group/right/preview"
-                        render_template="VendorName_CustomContainer/content-type/custom-container-group/right/master"
+                        master_template="VendorName_CustomContainer/content-type/custom-container-group/right/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -156,12 +156,12 @@ Write the following content into this configuration file:
             <child name="tabs" policy="deny"/>
             <child name="tab-item" policy="deny"/>
         </children>
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <appearances>
             <appearance default="true"
                         name="default"
                         preview_template="VendorName_CustomContainer/content-type/custom-container/default/preview"
-                        render_template="VendorName_CustomContainer/content-type/custom-container/default/master"
+                        master_template="VendorName_CustomContainer/content-type/custom-container/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -496,7 +496,7 @@ Content:
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
     <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
+    <render args="childTemplate" />
 </div>
 ```
 
@@ -508,7 +508,7 @@ Content:
 
 ``` xml
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 
@@ -525,7 +525,7 @@ Content:
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
     <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
+    <render args="childTemplate" />
 </div>
 ```
 
@@ -537,7 +537,7 @@ Content:
 
 ``` xml
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 
@@ -558,7 +558,7 @@ Content:
      css="Object.assign(data.main.css(), {'empty-container': parent.children().length == 0})"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <render args="previewChildTemplate" />
+    <render args="childTemplate" />
 
     <div class="pagebuilder-display-label" html="function () { return displayLabel().toUpperCase(); }()"></div>
     <div class="pagebuilder-empty-container" css="{visible: parent.children().length == 0}" translate="'Empty Container'">
@@ -575,7 +575,7 @@ Content:
 
 ``` html
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <render args="renderChildTemplate"/>
+    <render args="masterTemplate"/>
 </div>
 ```
 

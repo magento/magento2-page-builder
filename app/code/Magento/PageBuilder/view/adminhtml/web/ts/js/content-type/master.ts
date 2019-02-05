@@ -37,8 +37,8 @@ export default class Master {
      *
      * @returns {string}
      */
-    get renderTemplate(): string {
-        return appearanceConfig(this.parent.config.name, this.getData().appearance as string).render_template;
+    get template(): string {
+        return appearanceConfig(this.parent.config.name, this.getData().appearance as string).master_template;
     }
 
     /**

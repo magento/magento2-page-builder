@@ -34,7 +34,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
         _knockout.applyBindingsToNode(element[0], {
           template: {
             data: rootContainer.content,
-            name: rootContainer.content.renderTemplate
+            name: rootContainer.content.template
           }
         });
       }).catch(function (error) {

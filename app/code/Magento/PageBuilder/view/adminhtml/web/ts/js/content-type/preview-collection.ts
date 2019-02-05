@@ -16,7 +16,7 @@ export default class PreviewCollection extends Preview {
      *
      * @returns {string}
      */
-    get previewChildTemplate(): string {
+    get childTemplate(): string {
         return "Magento_PageBuilder/content-type/preview-collection";
     }
 

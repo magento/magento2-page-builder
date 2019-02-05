@@ -14,7 +14,7 @@
                     <xs:complexType>
                         <xs:all>
                             <xs:element type="xs:string" name="preview_template" minOccurs="0"/>
-                            <xs:element type="xs:string" name="render_template" minOccurs="0"/>
+                            <xs:element type="xs:string" name="master_template" minOccurs="0"/>
                             <xs:element type="parents" name="parents" minOccurs="0" maxOccurs="1"/>
                             <xs:element type="children" name="children" minOccurs="0" maxOccurs="1"/>
                             <xs:element name="appearances" minOccurs="0" maxOccurs="1">
@@ -25,7 +25,7 @@
                                 </xs:complexType>
                             </xs:element>
                             <xs:element type="additional_data" name="additional_data" minOccurs="0" maxOccurs="1"/>
-                            <xs:element type="xs:string" name="is_visible" minOccurs="0"/>
+                            <xs:element type="xs:string" name="is_system" minOccurs="0"/>
                         </xs:all>
                         <xs:attribute type="xs:string" name="name" use="required"/>
                         <xs:attribute type="xs:string" name="translate" use="required"/>
@@ -60,7 +60,7 @@
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:boolean" name="default" use="optional"/>
         <xs:attribute type="xs:string" name="preview_template" use="required"/>
-        <xs:attribute type="xs:string" name="render_template" use="required"/>
+        <xs:attribute type="xs:string" name="master_template" use="required"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
     <xs:complexType name="parents">

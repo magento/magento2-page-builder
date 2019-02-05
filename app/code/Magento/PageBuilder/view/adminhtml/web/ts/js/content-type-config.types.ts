@@ -20,7 +20,7 @@ export default interface ContentTypeConfigInterface {
         [key: string]: ContentTypeConfigAppearanceInterface;
     };
     allowed_parents: string[];
-    is_visible: boolean;
+    is_system: boolean;
     additional_data: AdditionalDataConfigInterface;
 }
 
@@ -47,7 +47,7 @@ export interface ContentTypeConfigAppearanceInterface {
         [key: string]: ContentTypeConfigAppearanceElementInterface;
     };
     preview_template: string;
-    render_template: string;
+    master_template: string;
     render: string;
     default: string;
     form: string;

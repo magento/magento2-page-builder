@@ -636,7 +636,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     };
 
     _createClass(Preview, [{
-      key: "previewTemplate",
+      key: "template",
       get: function get() {
         var appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
         return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
