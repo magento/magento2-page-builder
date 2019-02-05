@@ -11,6 +11,8 @@ use Magento\Store\Model\Store;
 
 /**
  * PageBuilder ProductCollection class for allowing store-agnostic collections
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class ProductCollection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
 {
