@@ -41,12 +41,10 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnOnBackend.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <comment userInput="Validate Initial Column Height On Stage Matches Expected" stepKey="commentValidateColumnHeight"/>
-        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialColumnHeightMatchesExpected">
+        <actionGroup ref="validateContentTypeHeightOnStageWithoutPadding" stepKey="assertInitialColumnHeightMatchesExpected">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="index" value="1"/>
-            <argument name="containerDefaultHeight" value="PageBuilderEmptyColumnHeightProperty"/>
-            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
-            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+            <argument name="containerDefaultHeight" value="PageBuilderMinHeightProperty_300"/>
         </actionGroup>
         <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
@@ -201,13 +199,9 @@
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightBeforeSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="validateContentTypeHeightEqualToMinHeight" stepKey="validateContentTypeHeightAfterSave">
             <argument name="content" value="{{ColumnOnBackend.baseCSS}}"/>
-            <argument name="border" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="padding" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>

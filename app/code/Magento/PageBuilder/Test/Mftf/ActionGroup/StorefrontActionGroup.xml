@@ -16,6 +16,7 @@
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="navigateToStoreFrontWithStoreView">
+        <!-- This goes in CE repo -->
         <arguments>
             <argument name="contentType"/>
             <argument name="storeView"/>
@@ -25,9 +26,9 @@
     </actionGroup>
     <actionGroup name="navigateToStorefrontForCreatedCMSPage">
         <arguments>
-            <argument name="CMSPage" type="string"/>
+            <argument name="page" type="string"/>
         </arguments>
-        <amOnPage url="{{CMSPage}}" stepKey="goToStorefront"/>
+        <amOnPage url="{{page}}" stepKey="goToStorefront"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefront">

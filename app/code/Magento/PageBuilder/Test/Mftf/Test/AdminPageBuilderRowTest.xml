@@ -2023,4 +2023,84 @@
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
+    <test name="RowFullBleedAppearanceNoErrorThrown">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Row"/>
+            <title value="Can change from full-bleed appearance to contained appearance with no console error"/>
+            <description value="If user drags have a full-bleed appearance row in stage, they should be able to switch to contained appearance with no console error and failure."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-11821"/>
+            <testCaseId value="MC-13726"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-heading"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Add 2nd row and set appearance to Full Bleed -->
+        <comment userInput="Add 2nd row and set appearance to Full Width" stepKey="commentAdd2ndRow"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupRow">
+            <argument name="group" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow2IntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="dropZoneIndex" value="2"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStageRow2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow2">
+            <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow2"/>
+        <seeElement selector="{{RowOnStage.appearanceFullWidthFullBleed(('2', PageBuilderRowAppearance_FullBleed.value)}}" stepKey="seeFullBleedAppearanceElement"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Set 2nd row appearance back to Contained -->
+        <comment userInput="Set 2nd row appearance back to Contained" stepKey="comment2ndRowRevert"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStageRow2Revert">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceRow2Revert">
+            <argument name="property" value="PageBuilderRowAppearance_Contained"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow2Revert"/>
+        <seeElement selector="{{RowOnStage.appearanceContained(('2', PageBuilderRowAppearance_Contained.value)}}" stepKey="seeContainedAppearanceElement"/>
+        <!-- Drag heading into 2nd row to make sure still works -->
+        <comment userInput="Drag heading into 2nd row to make sure still works" stepKey="comment2ndRowRevertFunctional"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupHeading">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow2Revert">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <dontSee selector="{{RowOnStage.empty('2')}}" stepKey="dontSeeRowTwoPlaceholder"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeadingFromRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <dontSeeJsError stepKey="doNotSeeJSErrorInConsole"/>
+    </test>
 </tests>

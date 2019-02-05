@@ -49,6 +49,7 @@ export default class Preview extends PreviewCollection {
         ) {
             _.defer(() => {
                 // Build Parallax on elements with the correct class
+                const parallaxSpeed = Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string);
                 jarallax(
                     this.element,
                     {
@@ -58,7 +59,7 @@ export default class Preview extends PreviewCollection {
                             (this.parent.dataStore.get("background_repeat") as "repeat" | "no-repeat") || "no-repeat"
                         ),
                         imgSize: this.parent.dataStore.get("background_size") as string || "cover",
-                        speed: Number.parseFloat(this.parent.dataStore.get("parallax_speed") as string) || 0.5,
+                        speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5,
                     },
                 );
 

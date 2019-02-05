@@ -16,7 +16,7 @@ class ContentType extends \Magento\Eav\Model\Entity\Attribute\Set
     const AREA_ADMINHTML = 'adminhtml';
 
     /**
-     * @var \Magento\PageBuilder\Model\ResourceModel\EntityFactory
+     * @var \Magento\PageBuilderDataMigration\Model\ResourceModel\EntityFactory
      */
     private $entityFactory;
 
@@ -31,7 +31,7 @@ class ContentType extends \Magento\Eav\Model\Entity\Attribute\Set
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $attrGroupFactory
      * @param \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute
-     * @param \Magento\PageBuilder\Model\ResourceModel\EntityFactory $entityFactory
+     * @param \Magento\PageBuilderDataMigration\Model\ResourceModel\EntityFactory $entityFactory
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -47,7 +47,7 @@ class ContentType extends \Magento\Eav\Model\Entity\Attribute\Set
         \Magento\Eav\Model\Entity\Attribute\GroupFactory $attrGroupFactory,
         \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute $resourceAttribute,
-        \Magento\PageBuilder\Model\ResourceModel\EntityFactory $entityFactory,
+        \Magento\PageBuilderDataMigration\Model\ResourceModel\EntityFactory $entityFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
