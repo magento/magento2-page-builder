@@ -6,9 +6,40 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Analytics:etc/analytics.xsd">
-    <file name="pba">
+    <file name="pagebuilder-page">
         <providers>
-            <customProvider name="pba" class="Magento\PageBuilderAnalytics\Model\PageBuilderProvider"/>
+            <reportProvider name="pagebuilder-page" class="Magento\Analytics\ReportXml\ReportProvider">
+                <parameters>
+                    <name>pagebuilder-page</name>
+                </parameters>
+            </reportProvider>
+        </providers>
+    </file>
+    <file name="pagebuilder-block">
+        <providers>
+            <reportProvider name="pagebuilder-block" class="Magento\Analytics\ReportXml\ReportProvider">
+                <parameters>
+                    <name>pagebuilder-block</name>
+                </parameters>
+            </reportProvider>
+        </providers>
+    </file>
+    <file name="pagebuilder-product">
+        <providers>
+            <reportProvider name="pagebuilder-product" class="Magento\Analytics\ReportXml\ReportProvider">
+                <parameters>
+                    <name>pagebuilder-product</name>
+                </parameters>
+            </reportProvider>
+        </providers>
+    </file>
+    <file name="pagebuilder-category">
+        <providers>
+            <reportProvider name="pagebuilder-category" class="Magento\Analytics\ReportXml\ReportProvider">
+                <parameters>
+                    <name>pagebuilder-category</name>
+                </parameters>
+            </reportProvider>
         </providers>
     </file>
 </config>
