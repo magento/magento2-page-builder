@@ -51,12 +51,13 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.parent.dataStore.get("background_image").length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
+            var parallaxSpeed = Number.parseFloat(_this.parent.dataStore.get("parallax_speed"));
             jarallax(_this.element, {
               imgSrc: _this.parent.dataStore.get("background_image")[0].url,
               imgPosition: _this.parent.dataStore.get("background_position") || "50% 50%",
               imgRepeat: _this.parent.dataStore.get("background_repeat") || "no-repeat",
               imgSize: _this.parent.dataStore.get("background_size") || "cover",
-              speed: Number.parseFloat(_this.parent.dataStore.get("parallax_speed")) || 0.5
+              speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
             });
             jarallax(_this.element, "onResize");
           });
