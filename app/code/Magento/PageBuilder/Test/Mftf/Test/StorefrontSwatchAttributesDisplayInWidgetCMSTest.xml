@@ -10,11 +10,9 @@
     <test name="StorefrontSwatchAttributesDisplayInWidgetCMSTest">
         <before>
             <magentoCLI command="config:set cms/pagebuilder/enabled 0" stepKey="disablePageBuilder"/>
-            <magentoCLI command="config:set cms/wysiwyg/enabled disabled" stepKey="disableWYSIWYG"/>
         </before>
         <after>
-            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder" before="disableWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="disableWYSIWYG" before="logoutFromAdmin"/>
+            <magentoCLI command="config:set cms/pagebuilder/enabled 1" stepKey="enablePageBuilder"/>
         </after>
     </test>
 </tests>
