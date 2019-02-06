@@ -16,10 +16,10 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
      */
 
     /**
-     * @param {PageBuilderInterface} parent
+     * @param {PageBuilderInterface} pageBuilder
      * @param {ContentTypeCollectionInterface} rootContainer
      */
-    function Stage(parent, rootContainer) {
+    function Stage(pageBuilder, rootContainer) {
       var _this = this;
 
       this.loading = _knockout.observable(true);
@@ -41,8 +41,8 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
           console.error(error);
         });
       }, 500);
-      this.parent = parent;
-      this.id = parent.id;
+      this.pageBuilder = pageBuilder;
+      this.id = pageBuilder.id;
       this.rootContainer = rootContainer;
       (0, _matrix.generateAllowedParents)(); // Fire an event after the DOM has rendered
 
@@ -52,7 +52,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
         });
       }); // Wait for the stage to be built alongside the stage being rendered
 
-      Promise.all([(0, _stageBuilder)(this, this.parent.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
+      Promise.all([(0, _stageBuilder)(this, this.pageBuilder.initialValue), this.afterRenderDeferred.promise]).then(this.ready.bind(this)).catch(function (error) {
         console.error(error);
       });
     }
@@ -156,7 +156,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/res
     ;
 
     _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
-      params.parent.removeChild(params.contentType);
+      params.containerContentType.removeChild(params.contentType);
     };
 
     return Stage;

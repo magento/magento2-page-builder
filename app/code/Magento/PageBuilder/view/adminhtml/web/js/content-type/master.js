@@ -19,12 +19,12 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     "use strict";
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} containerContentType
      * @param {ObservableUpdater} observableUpdater
      */
-    function Master(parent, observableUpdater) {
+    function Master(containerContentType, observableUpdater) {
       this.data = {};
-      this.parent = parent;
+      this.containerContentType = containerContentType;
       this.observableUpdater = observableUpdater;
       this.bindEvents();
     }
@@ -45,13 +45,13 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
      * @deprecated
      */
     _proto.getData = function getData(element) {
-      var data = _underscore.extend({}, this.parent.dataStore.getState());
+      var data = _underscore.extend({}, this.containerContentType.dataStore.getState());
 
       if (undefined === element) {
         return data;
       }
 
-      var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
+      var appearanceConfiguration = (0, _appearanceConfig)(this.containerContentType.config.name, data.appearance);
       var config = appearanceConfiguration.elements;
       data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
       var result = {};
@@ -70,7 +70,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      this.parent.dataStore.subscribe(function () {
+      this.containerContentType.dataStore.subscribe(function () {
         _this.updateObservables();
       });
     }
@@ -89,15 +89,15 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
-        name: this.parent.config.name
-      }, this.parent.dataStore.getState()));
+        name: this.containerContentType.config.name
+      }, this.containerContentType.dataStore.getState()));
       this.afterObservablesUpdated();
     };
 
     _createClass(Master, [{
       key: "template",
       get: function get() {
-        return (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).master_template;
+        return (0, _appearanceConfig)(this.containerContentType.config.name, this.getData().appearance).master_template;
       }
     }]);
 

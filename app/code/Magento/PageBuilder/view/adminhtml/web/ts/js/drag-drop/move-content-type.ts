@@ -19,8 +19,9 @@ export function moveContentType(
     targetIndex: number,
     targetParent: ContentTypeCollectionInterface = null,
 ) {
-    const sourceParent: ContentTypeCollectionInterface = (contentType.parent as ContentTypeCollectionInterface);
-    const sourceIndex = (contentType.parent as ContentTypeCollectionInterface)
+    const sourceParent: ContentTypeCollectionInterface =
+        (contentType.containerContentType as ContentTypeCollectionInterface);
+    const sourceIndex = (contentType.containerContentType as ContentTypeCollectionInterface)
         .children()
         .indexOf(contentType);
     const sourceParentChildren = sourceParent.getChildren();
@@ -42,7 +43,7 @@ export function moveContentType(
     });
 
     if (targetParent && sourceParent !== targetParent) {
-        contentType.parent = targetParent;
+        contentType.containerContentType = targetParent;
         // Handle dragging between sortable elements
         sourceParentChildren.splice(sourceIndex, 1);
         targetParent.getChildren().splice(targetIndex, 0, contentType);

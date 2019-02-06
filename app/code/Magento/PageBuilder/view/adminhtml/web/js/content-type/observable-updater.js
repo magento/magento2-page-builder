@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _object, _string, _appearanceConfig) {
+define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/content-type/master"], function (_knockout, _underscore, _object, _string, _appearanceConfig, _master) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -31,7 +31,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
 
     _proto.update = function update(viewModel, data) {
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
-      var appearanceConfiguration = (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
+      var configName = viewModel instanceof _master ? viewModel.containerContentType.config.name : viewModel.master.config.name;
+      var appearanceConfiguration = (0, _appearanceConfig)(configName, appearance);
 
       if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.elements) {
         return;

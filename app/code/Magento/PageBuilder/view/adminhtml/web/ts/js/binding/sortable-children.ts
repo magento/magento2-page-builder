@@ -28,7 +28,7 @@ ko.bindingHandlers.sortableChildren = {
      * @param context
      */
     init(element, valueAccessor, allBindingsAccessor, data, context: KnockoutBindingContext) {
-        const instance: ContentTypeCollectionInterface = context.$data.parent;
+        const instance: ContentTypeCollectionInterface = context.$data.master;
         const options: JQueryUI.SortableOptions = ko.unwrap(valueAccessor());
         let originalPosition: number;
         $(element).sortable(options)
@@ -51,12 +51,12 @@ ko.bindingHandlers.sortableChildren = {
             .on("sortupdate", function(event: JQueryEventObject, ui: JQueryUI.SortableUIParams) {
                 if (this === ui.item.parent()[0]) {
                     const index = ui.item.index();
-                    const targetParent = ko.dataFor(ui.item.parent()[0]).parent;
+                    const targetParent = ko.dataFor(ui.item.parent()[0]).master;
                     if (targetParent &&
-                        (originalPosition !== index || draggedContentType.parent !== targetParent)
+                        (originalPosition !== index || draggedContentType.containerContentType !== targetParent)
                     ) {
                         ui.item.remove();
-                        if (draggedContentType.parent === targetParent) {
+                        if (draggedContentType.containerContentType === targetParent) {
                             moveArrayItem(instance.children, originalPosition, index);
                         } else {
                             moveContentType(draggedContentType, index, targetParent);

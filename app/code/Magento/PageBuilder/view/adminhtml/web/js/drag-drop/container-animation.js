@@ -44,7 +44,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore"], function (_jqu
       var ns = block.id + ".afterRender.container.animate";
 
       _events.on("contentType:renderAfter", function (args) {
-        if (args.contentType.parent === block.parent) {
+        if (args.contentType.containerContentType === block.parent) {
           animateContainerHeight(true, element);
 
           _events.off(ns);

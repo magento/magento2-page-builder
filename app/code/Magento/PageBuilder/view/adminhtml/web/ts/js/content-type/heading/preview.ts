@@ -74,7 +74,7 @@ export default class Preview extends BasePreview {
 
         // When a heading is dropped for the first time show heading toolbar
         events.on("heading:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+            if (args.id === this.master.id) {
                 _.delay(() => {
                     $(this.element).focus();
                 }, 100); // 100 ms delay to allow for heading to render

@@ -126,7 +126,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       var mountCounter = 0;
 
       _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.parent.id === contentType.id) {
+        if (args.contentType.containerContentType.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {

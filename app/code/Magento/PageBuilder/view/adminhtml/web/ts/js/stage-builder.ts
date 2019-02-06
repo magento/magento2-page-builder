@@ -28,7 +28,7 @@ import {set} from "./utils/object";
  */
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = document.createElement("div");
-    stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage.rootContainer, stage);
 }
@@ -37,13 +37,13 @@ function buildFromContent(stage: Stage, value: string) {
  * Build an element and it's children into the stage
  *
  * @param {Element} element
- * @param {ContentTypeCollectionInterface} parent
+ * @param {ContentTypeCollectionInterface} contentType
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: ContentTypeCollectionInterface, stage: Stage): Promise<any> {
+function buildElementIntoStage(element: Element, contentType: ContentTypeCollectionInterface, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
-        && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
+        && element.getAttribute(Config.getConfig("dataContentTypeAttributeName"))
     ) {
         const childPromises: Array<Promise<ContentTypeInterface | ContentTypeCollectionInterface>> = [];
         const childElements: Element[] = [];
@@ -51,7 +51,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
 
         if (children.length > 0) {
             _.forEach(children, (childElement: HTMLElement) => {
-                childPromises.push(createElementContentType(childElement, stage, parent));
+                childPromises.push(createElementContentType(childElement, stage, contentType));
                 childElements.push(childElement);
             });
         }
@@ -59,7 +59,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
             return Promise.all(childrenPromises.map((child: ContentTypeCollectionInterface, index) => {
-                parent.addChild(child);
+                contentType.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
             }));
         });
@@ -70,20 +70,20 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
  * Parse an element in the structure and build the required element
  *
  * @param {Element} element
- * @param {ContentTypeCollectionInterface} parent
+ * @param {ContentTypeCollectionInterface} contentType
  * @param {stage} stage
  * @returns {Promise<ContentTypeInterface>}
  */
 function createElementContentType(
     element: HTMLElement,
     stage: Stage,
-    parent?: ContentTypeCollectionInterface,
+    contentType?: ContentTypeCollectionInterface,
 ): Promise<ContentTypeInterface> {
-    parent = parent || stage.rootContainer;
-    const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+    contentType = contentType || stage.rootContainer;
+    const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
     if (!role) {
         return Promise.reject(`Invalid master format: Content type element does not contain
-            ${Config.getConfig("dataRoleAttributeName")} attribute.`);
+            ${Config.getConfig("dataContentTypeAttributeName")} attribute.`);
     }
 
     const config = Config.getContentTypeConfig(role);
@@ -94,7 +94,7 @@ function createElementContentType(
     return getElementData(element, config).then(
         (data: object) => createContentType(
             config,
-            parent,
+            contentType,
             stage.id,
             data,
             getElementChildren(element).length,
@@ -114,7 +114,7 @@ function getElementData(element: HTMLElement, config: ContentTypeConfigInterface
     const result = createInitialElementData(config.fields);
 
     return new Promise((resolve: (result: object) => void) => {
-        const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+        const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
         if (!Config.getConfig("content_types").hasOwnProperty(role)) {
             resolve(result);
         } else {
@@ -165,7 +165,7 @@ function getElementChildren(element: HTMLElement): HTMLElement[] {
         // Find direct children of the element
         _.forEach(element.childNodes, (child: HTMLElement) => {
             if (child.nodeType === Node.ELEMENT_NODE) {
-                if (child.hasAttribute(Config.getConfig("dataRoleAttributeName"))) {
+                if (child.hasAttribute(Config.getConfig("dataContentTypeAttributeName"))) {
                     children.push(child);
                 } else {
                     children = getElementChildren(child);
@@ -220,7 +220,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
 }
 
 /**
- * Build a stage with the provided parent, content observable and initial value
+ * Build a stage with the provided content type, content observable and initial value
  *
  * @param {Stage} stage
  * @param {string} content

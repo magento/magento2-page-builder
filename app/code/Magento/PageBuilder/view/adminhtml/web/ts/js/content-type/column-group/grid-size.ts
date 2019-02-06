@@ -208,7 +208,7 @@ function redistributeColumnWidths(
                 totalNewWidths += parseFloat(newWidth);
                 updateColumnWidth(column, parseFloat(newWidth));
             }
-            (column.preview as ColumnPreview).updateDisplayLabel.bind(column)();
+            (column.preview as ColumnPreview).updateDisplayLabel();
         },
     );
 

@@ -48,15 +48,15 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         } catch (e) {// Failure of destroying is acceptable
         }
 
-        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.parent.dataStore.get("background_image").length) {
+        if (_this.element && (0, _jquery)(_this.element).hasClass("jarallax") && _this.master.dataStore.get("background_image").length) {
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
-            var parallaxSpeed = Number.parseFloat(_this.parent.dataStore.get("parallax_speed"));
+            var parallaxSpeed = Number.parseFloat(_this.master.dataStore.get("parallax_speed"));
             jarallax(_this.element, {
-              imgSrc: _this.parent.dataStore.get("background_image")[0].url,
-              imgPosition: _this.parent.dataStore.get("background_position") || "50% 50%",
-              imgRepeat: _this.parent.dataStore.get("background_repeat") || "no-repeat",
-              imgSize: _this.parent.dataStore.get("background_size") || "cover",
+              imgSrc: _this.master.dataStore.get("background_image")[0].url,
+              imgPosition: _this.master.dataStore.get("background_position") || "50% 50%",
+              imgRepeat: _this.master.dataStore.get("background_repeat") || "no-repeat",
+              imgSize: _this.master.dataStore.get("background_size") || "cover",
               speed: !isNaN(parallaxSpeed) ? parallaxSpeed : 0.5
             });
             jarallax(_this.element, "onResize");
@@ -64,16 +64,16 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
         }
       }, 50);
 
-      _this.parent.dataStore.subscribe(_this.buildJarallax);
+      _this.master.dataStore.subscribe(_this.buildJarallax);
 
       _events.on("row:mountAfter", function (args) {
-        if (args.id === _this.parent.id) {
+        if (args.id === _this.master.id) {
           _this.buildJarallax();
         }
       });
 
       _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.parent && args.contentType.parent.id === _this.parent.id) {
+        if (args.contentType.containerContentType && args.contentType.containerContentType.id === _this.master.id) {
           _this.buildJarallax();
         }
       });
@@ -123,7 +123,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
 
       new _ResizeObserver(function () {
         // Observe for resizes of the element and force jarallax to display correctly
-        if ((0, _jquery)(_this2.element).hasClass("jarallax") && _this2.parent.dataStore.get("background_image").length) {
+        if ((0, _jquery)(_this2.element).hasClass("jarallax") && _this2.master.dataStore.get("background_image").length) {
           jarallax(_this2.element, "onResize");
           jarallax(_this2.element, "onScroll");
         }

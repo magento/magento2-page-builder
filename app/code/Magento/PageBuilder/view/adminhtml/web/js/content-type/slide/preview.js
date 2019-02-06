@@ -40,7 +40,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
      */
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
-      element.id = this.parent.id + "-editor";
+      element.id = this.master.id + "-editor";
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
        * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
@@ -116,9 +116,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.getUploader = function getUploader() {
-      var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
+      var initialImageValue = this.master.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
 
-      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
+      return new _uploader("imageuploader_" + this.master.id, this.config.additional_data.uploaderConfig, this.master.id, this.master.dataStore, initialImageValue);
     }
     /**
      * Makes WYSIWYG active
@@ -194,11 +194,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       this.textarea = element; // set initial value of textarea based on data store
 
-      this.textarea.value = this.parent.dataStore.get("content");
+      this.textarea.value = this.master.dataStore.get("content");
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
-      _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.parent.dataStore.get("content");
+      _events.on("form:" + this.master.id + ":saveAfter", function () {
+        _this3.textarea.value = _this3.master.dataStore.get("content");
 
         _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
@@ -210,7 +210,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.parent.dataStore.update(this.textarea.value, "content");
+      this.master.dataStore.update(this.textarea.value, "content");
     }
     /**
      * Start stage interaction on textarea blur
@@ -254,7 +254,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
       }
 
-      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+      return (0, _factory)(this.master.id, this.element.id, this.config.name, wysiwygConfig, this.master.dataStore, "content").then(function (wysiwyg) {
         _this4.wysiwyg = wysiwyg;
       });
     }
@@ -268,39 +268,39 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       _preview2.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this5.parent.dataStore.getState();
+      _events.on(this.config.name + ":" + this.master.id + ":updateAfter", function () {
+        var dataStore = _this5.master.dataStore.getState();
 
         var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this5.master.id + ":assignAfter", imageObject);
       }); // Remove wysiwyg before assign new instance.
 
 
       _events.on("childContentType:sortUpdate", function (args) {
-        if (args.instance.id === _this5.parent.parent.id) {
+        if (args.instance.id === _this5.master.containerContentType.id) {
           _this5.wysiwyg = null;
         }
       });
 
       _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this5.parent.id) {
+        if (args.id === _this5.master.id) {
           // Update the display label for the slide
-          var slider = _this5.parent.parent;
+          var slider = _this5.master.containerContentType;
 
-          _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
+          _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.master) + 1)));
 
           slider.children.subscribe(function (children) {
-            var index = children.indexOf(_this5.parent);
+            var index = children.indexOf(_this5.master);
 
-            _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
+            _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.master) + 1)));
           });
         }
       });
 
       _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.id === _this5.parent.id) {
-          var slider = _this5.parent.parent;
+        if (args.id === _this5.master.id) {
+          var slider = _this5.master.containerContentType;
           (0, _jquery)(slider.preview.element).on("beforeChange", function () {
             _this5.slideChanged = false;
           });
@@ -318,7 +318,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
+      this.master.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     }
     /**
      * Adjust textarea's height based on scrollHeight

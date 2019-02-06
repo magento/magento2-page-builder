@@ -72,7 +72,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
       _events.on("heading:dropAfter", function (args) {
-        if (args.id === _this2.parent.id) {
+        if (args.id === _this2.master.id) {
           _underscore.delay(function () {
             (0, _jquery)(_this2.element).focus();
           }, 100); // 100 ms delay to allow for heading to render

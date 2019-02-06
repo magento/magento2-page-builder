@@ -67,17 +67,17 @@ export default class Preview extends BasePreview {
         this.element = element;
         element.innerHTML = this.data.main.html();
 
-        element.id = this.parent.id + "-editor";
+        element.id = this.master.id + "-editor";
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
+        wysiwygConfig.adapter.settings.auto_focus = this.master.dropped ? element.id : null;
 
         WysiwygFactory(
-            this.parent.id,
+            this.master.id,
             element.id,
             this.config.name,
             wysiwygConfig,
-            this.parent.dataStore,
+            this.master.dataStore,
             "content",
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
@@ -92,12 +92,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.textarea.value = this.master.dataStore.get("content") as string;
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
-        events.on(`form:${this.parent.id}:saveAfter`, () => {
-            this.textarea.value = this.parent.dataStore.get("content") as string;
+        events.on(`form:${this.master.id}:saveAfter`, () => {
+            this.textarea.value = this.master.dataStore.get("content") as string;
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -108,7 +108,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.parent.dataStore.update(this.textarea.value, "content");
+        this.master.dataStore.update(this.textarea.value, "content");
     }
 
     /**

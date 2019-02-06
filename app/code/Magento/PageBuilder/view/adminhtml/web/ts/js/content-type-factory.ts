@@ -137,7 +137,7 @@ function fireContentTypeReadyEvent(
     } else {
         let mountCounter = 0;
         events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.contentType.parent.id === contentType.id) {
+            if (args.contentType.containerContentType.id === contentType.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {

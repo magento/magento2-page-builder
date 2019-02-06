@@ -13,7 +13,7 @@ import ColumnPreview from "./preview";
 export interface BindResizeHandleEventParamsInterface {
     column: ContentTypeCollectionInterface<ColumnPreview>;
     handle: JQuery;
-    parent: ContentTypeCollectionInterface<ColumnGroupPreview>;
+    columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>;
 }
 
 /**
@@ -22,5 +22,5 @@ export interface BindResizeHandleEventParamsInterface {
 export interface InitElementEventParamsInterface {
     column: ContentTypeCollectionInterface<ColumnPreview>;
     element: JQuery;
-    parent: ContentTypeCollectionInterface<ColumnGroupPreview>;
+    columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>;
 }

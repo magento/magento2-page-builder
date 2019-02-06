@@ -13,7 +13,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
   function () {
     "use strict";
 
-    function Panel(parent) {
+    function Panel(pageBuilder) {
       this.groups = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
       this.isVisible = _knockout.observable(false);
@@ -25,8 +25,8 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
       this.searchNoResult = (0, _translate)("Nothing found");
       this.searchTitle = (0, _translate)("Clear Search");
       this.template = "Magento_PageBuilder/panel";
-      this.parent = parent;
-      this.id = this.parent.id;
+      this.pageBuilder = pageBuilder;
+      this.id = this.pageBuilder.id;
       this.initListeners();
     }
     /**
@@ -93,7 +93,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           return matches && contentType.is_system === true;
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
-          return new _contentType.ContentType(identifier, contentType, _this2.parent.stage.id);
+          return new _contentType.ContentType(identifier, contentType, _this2.pageBuilder.stage.id);
         }));
       }
     }
@@ -198,11 +198,11 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
                 (0, _jquery)(this).sortable("option", "tolerance", "intersect");
               }
             });
-            (0, _dropIndicators.showDropIndicators)(block.config.name, self.parent.stage.id);
+            (0, _dropIndicators.showDropIndicators)(block.config.name, self.pageBuilder.stage.id);
             (0, _registry.setDraggedContentTypeConfig)(block.config);
 
             _events.trigger("stage:interactionStart", {
-              stage: self.parent.stage
+              stage: self.pageBuilder.stage
             });
           }
         },
@@ -216,7 +216,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           (0, _registry.setDraggedContentTypeConfig)(null);
 
           _events.trigger("stage:interactionStop", {
-            stage: self.parent.stage
+            stage: self.pageBuilder.stage
           });
         }
       };
@@ -244,8 +244,8 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           }),
           /* Retrieve content types with group id */
           function (contentType, identifier) {
-            return new _contentType.ContentType(identifier, contentType, _this3.parent.stage.id);
-          }), _this3.parent.stage.id));
+            return new _contentType.ContentType(identifier, contentType, _this3.pageBuilder.stage.id);
+          }), _this3.pageBuilder.stage.id));
         }); // Display the panel
 
 

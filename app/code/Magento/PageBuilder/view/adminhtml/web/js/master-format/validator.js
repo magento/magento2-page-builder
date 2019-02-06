@@ -13,9 +13,9 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    */
   function Validate(content) {
     var stageDocument = document.createElement("div");
-    stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
     stageDocument.innerHTML = content;
-    return !!stageDocument.querySelector("[" + _config.getConfig("dataRoleAttributeName") + "=\"row\"]");
+    return !!stageDocument.querySelector("[" + _config.getConfig("dataContentTypeAttributeName") + "=\"row\"]");
   }
 
   return Validate;

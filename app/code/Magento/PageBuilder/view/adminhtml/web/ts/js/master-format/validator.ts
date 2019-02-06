@@ -14,9 +14,9 @@ import Config from "../config";
 export default function Validate(content: string) {
     const stageDocument = document.createElement("div");
 
-    stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
     stageDocument.innerHTML = content;
     return !!stageDocument.querySelector(
-        "[" + Config.getConfig("dataRoleAttributeName") + "=\"row\"]",
+        "[" + Config.getConfig("dataContentTypeAttributeName") + "=\"row\"]",
     );
 }

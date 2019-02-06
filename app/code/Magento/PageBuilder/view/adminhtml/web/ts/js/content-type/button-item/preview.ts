@@ -53,8 +53,8 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusOut(index: number, event: JQueryEventObject): void {
-        if (this.parent && this.parent.parent) {
-            const parentPreview = this.parent.parent.preview as ButtonsPreview;
+        if (this.master && this.master.containerContentType) {
+            const parentPreview = this.master.containerContentType.preview as ButtonsPreview;
             const unfocus = () => {
                 window.getSelection().removeAllRanges();
                 parentPreview.focusedButton(null);
@@ -66,10 +66,10 @@ export default class Preview extends BasePreview {
                 } else {
                     // Have we moved the focus onto another button in the current group?
                     const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (buttonItem && buttonItem.parent && buttonItem.parent.parent
-                        && buttonItem.parent.parent.id === this.parent.parent.id
+                    if (buttonItem && buttonItem.master && buttonItem.master.containerContentType
+                        && buttonItem.master.containerContentType.id === this.master.containerContentType.id
                     ) {
-                        const newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
+                        const newIndex = buttonItem.master.containerContentType.children().indexOf(buttonItem.master);
                         parentPreview.focusedButton(newIndex);
                     } else {
                         unfocus();
@@ -88,7 +88,7 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusIn(index: number, event: Event): void {
-        const parentPreview = this.parent.parent.preview as ButtonsPreview;
+        const parentPreview = this.master.containerContentType.preview as ButtonsPreview;
         if (parentPreview.focusedButton() !== index) {
             parentPreview.focusedButton(index);
         }

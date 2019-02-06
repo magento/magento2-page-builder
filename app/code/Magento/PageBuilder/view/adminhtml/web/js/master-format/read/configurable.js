@@ -26,7 +26,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     _proto.read = function read(element) {
       var _this = this;
 
-      var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
+      var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance"));
       var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
       return new Promise(function (resolve) {
@@ -91,7 +91,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
       // Create a clone of the element to avoid modifying the source
       var currentElement = (0, _jquery)(element).clone(); // Remove all child instances of data-content-type elements
 
-      currentElement.find("[" + _config.getConfig("dataRoleAttributeName") + "]").remove(); // Attempt to find the content type element within the modified clone element
+      currentElement.find("[" + _config.getConfig("dataContentTypeAttributeName") + "]").remove(); // Attempt to find the content type element within the modified clone element
 
       return currentElement.attr("data-element") === name ? currentElement[0] : currentElement[0].querySelector("[data-element=" + name + "]");
     }

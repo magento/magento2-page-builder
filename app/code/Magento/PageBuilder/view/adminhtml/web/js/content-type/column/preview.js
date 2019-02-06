@@ -28,25 +28,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(master, config, observableUpdater) {
       var _this;
 
-      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
+      _this = _previewCollection2.call(this, master, config, observableUpdater) || this; // Update the width label for the column
 
       _this.resizing = _knockout.observable(false);
       _this.fieldsToIgnoreOnRemove = ["width"];
 
-      _this.parent.dataStore.subscribe(_this.updateColumnWidthClass.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
+      _this.master.dataStore.subscribe(_this.updateColumnWidthClass.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
+      _this.master.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
+      _this.master.dataStore.subscribe(_this.triggerChildren.bind(_assertThisInitialized(_assertThisInitialized(_this))), "width");
 
-      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "grid_size");
+      _this.master.containerContentType.dataStore.subscribe(_this.updateDisplayLabel.bind(_assertThisInitialized(_assertThisInitialized(_this))), "grid_size");
 
       return _this;
     }
@@ -63,14 +63,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _previewCollection2.prototype.bindEvents.call(this);
 
       _events.on("column:moveAfter", function (args) {
-        if (args.contentType.id === _this2.parent.id) {
+        if (args.contentType.id === _this2.master.id) {
           _this2.updateDisplayLabel();
         }
       });
 
       if (_config.getContentTypeConfig("column-group")) {
         _events.on("column:dropAfter", function (args) {
-          if (args.id === _this2.parent.id) {
+          if (args.id === _this2.master.id) {
             _this2.createColumnGroup();
           }
         });
@@ -88,9 +88,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.updateColumnWidthClass();
 
       _events.trigger("column:initializeAfter", {
-        column: this.parent,
+        column: this.master,
         element: (0, _jquery)(element),
-        parent: this.parent.parent
+        columnGroup: this.master.containerContentType
       });
     }
     /**
@@ -121,9 +121,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
       _events.trigger("column:resizeHandleBindAfter", {
-        column: this.parent,
+        column: this.master,
         handle: (0, _jquery)(handle),
-        parent: this.parent.parent
+        columnGroup: this.master.containerContentType
       });
     }
     /**
@@ -136,25 +136,25 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.createColumnGroup = function createColumnGroup() {
       var _this3 = this;
 
-      if (this.parent.parent.config.name !== "column-group") {
-        var index = this.parent.parent.children().indexOf(this.parent); // Remove child instantly to stop content jumping around
+      if (this.master.containerContentType.config.name !== "column-group") {
+        var index = this.master.containerContentType.children().indexOf(this.master); // Remove child instantly to stop content jumping around
 
-        this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
+        this.master.containerContentType.removeChild(this.master); // Create a new instance of column group to wrap our columns with
 
         var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
-        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId, {
+        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.master.containerContentType, this.master.stageId, {
           grid_size: defaultGridSize
         }).then(function (columnGroup) {
           var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
-          return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
+          return Promise.all([(0, _contentTypeFactory)(_this3.master.config, columnGroup, columnGroup.stageId, {
             width: col1Width + "%"
-          }), (0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
+          }), (0, _contentTypeFactory)(_this3.master.config, columnGroup, columnGroup.stageId, {
             width: 100 - parseFloat(col1Width) + "%"
           })]).then(function (columns) {
             columnGroup.addChild(columns[0], 0);
             columnGroup.addChild(columns[1], 1);
 
-            _this3.parent.parent.addChild(columnGroup, index);
+            _this3.master.containerContentType.addChild(columnGroup, index);
 
             _this3.fireMountEvent(columnGroup, columns[0], columns[1]);
 
@@ -177,9 +177,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         autoAppend = true;
       }
 
-      var resizeUtils = this.parent.parent.preview.getResizeUtils(); // Are we duplicating from a parent?
+      var resizeUtils = this.master.containerContentType.preview.getResizeUtils(); // Are we duplicating from a container content type?
 
-      if (contentType.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
+      if (contentType.config.name !== "column" || this.master.containerContentType.children().length === 0 || this.master.containerContentType.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
         return _previewCollection2.prototype.clone.call(this, contentType, autoAppend);
       } // Attempt to split the current column into parts
 
@@ -231,9 +231,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.updateDisplayLabel = function updateDisplayLabel() {
-      if (this.parent.parent.preview instanceof _preview) {
-        var newWidth = parseFloat(this.parent.dataStore.get("width").toString());
-        var gridSize = this.parent.parent.preview.gridSize();
+      if (this.master.containerContentType.preview instanceof _preview) {
+        var newWidth = parseFloat(this.master.dataStore.get("width").toString());
+        var gridSize = this.master.containerContentType.preview.gridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         this.displayLabel((0, _translate)("Column") + " " + newLabel);
       }
@@ -255,7 +255,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.element.removeClass(currentClass[1]);
       }
 
-      var roundedWidth = Math.ceil(parseFloat(this.parent.dataStore.get("width").toString()) / 10) * 10;
+      var roundedWidth = Math.ceil(parseFloat(this.master.dataStore.get("width").toString()) / 10) * 10;
       this.element.addClass("column-width-" + roundedWidth);
     }
     /**
@@ -288,8 +288,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.triggerChildren = function triggerChildren() {
-      if (this.parent.parent.preview instanceof _preview) {
-        var newWidth = parseFloat(this.parent.dataStore.get("width").toString());
+      if (this.master.containerContentType.preview instanceof _preview) {
+        var newWidth = parseFloat(this.master.dataStore.get("width").toString());
         this.delegate("trigger", "columnWidthChangeAfter", {
           width: newWidth
         });

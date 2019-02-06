@@ -33,14 +33,14 @@ export default class Panel {
     public searchPlaceholder: string = $t("Find items");
     public searchNoResult: string = $t("Nothing found");
     public searchTitle: string = $t("Clear Search");
-    public parent: PageBuilder;
+    public pageBuilder: PageBuilder;
     public id: string;
     private element: Element;
     private template: string = "Magento_PageBuilder/panel";
 
-    constructor(parent: PageBuilder) {
-        this.parent = parent;
-        this.id = this.parent.id;
+    constructor(pageBuilder: PageBuilder) {
+        this.pageBuilder = pageBuilder;
+        this.id = this.pageBuilder.id;
         this.initListeners();
     }
 
@@ -100,7 +100,7 @@ export default class Panel {
                 ),
                 (contentType, identifier: string) => {
                     // Create a new instance of GroupContentType for each result
-                    return new GroupContentType(identifier, contentType, this.parent.stage.id);
+                    return new GroupContentType(identifier, contentType, this.pageBuilder.stage.id);
                 }),
             );
         }
@@ -201,9 +201,9 @@ export default class Panel {
                             $(this).sortable("option", "tolerance", "intersect");
                         }
                     });
-                    showDropIndicators(block.config.name, self.parent.stage.id);
+                    showDropIndicators(block.config.name, self.pageBuilder.stage.id);
                     setDraggedContentTypeConfig(block.config);
-                    events.trigger("stage:interactionStart", {stage: self.parent.stage});
+                    events.trigger("stage:interactionStart", {stage: self.pageBuilder.stage});
                 }
             },
             stop() {
@@ -214,7 +214,7 @@ export default class Panel {
                 });
                 hideDropIndicators();
                 setDraggedContentTypeConfig(null);
-                events.trigger("stage:interactionStop", {stage: self.parent.stage});
+                events.trigger("stage:interactionStop", {stage: self.pageBuilder.stage});
             },
         };
     }
@@ -243,11 +243,11 @@ export default class Panel {
                             return new GroupContentType(
                                 identifier,
                                 contentType,
-                                this.parent.stage.id,
+                                this.pageBuilder.stage.id,
                             );
                         },
                     ),
-                    this.parent.stage.id,
+                    this.pageBuilder.stage.id,
                 ));
             });
 

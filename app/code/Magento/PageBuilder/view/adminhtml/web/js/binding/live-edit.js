@@ -207,7 +207,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.textContent = viewModel.parent.dataStore.get(field);
+      element.textContent = viewModel.master.dataStore.get(field);
       element.contentEditable = "true";
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
@@ -221,8 +221,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
-      viewModel.parent.dataStore.subscribe(function () {
-        element.textContent = viewModel.parent.dataStore.get(field);
+      viewModel.master.dataStore.subscribe(function () {
+        element.textContent = viewModel.master.dataStore.get(field);
         handlePlaceholderClass(element);
       }, field); // Resolve issues of content editable being within an anchor
 
@@ -244,7 +244,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "underscore"], func
       var _valueAccessor2 = valueAccessor(),
           field = _valueAccessor2.field;
 
-      element.textContent = viewModel.parent.dataStore.get(field);
+      element.textContent = viewModel.master.dataStore.get(field);
       handlePlaceholderClass(element);
     }
   };

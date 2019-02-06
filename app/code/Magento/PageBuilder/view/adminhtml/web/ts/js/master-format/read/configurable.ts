@@ -33,7 +33,7 @@ export default class Configurable implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+        const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
         const config = appearanceConfig(role, element.getAttribute("data-appearance"));
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
@@ -106,7 +106,7 @@ export default class Configurable implements ReadInterface {
         // Create a clone of the element to avoid modifying the source
         const currentElement = $(element).clone();
         // Remove all child instances of data-content-type elements
-        currentElement.find(`[${Config.getConfig("dataRoleAttributeName")}]`).remove();
+        currentElement.find(`[${Config.getConfig("dataContentTypeAttributeName")}]`).remove();
 
         // Attempt to find the content type element within the modified clone element
         return currentElement.attr("data-element") === name

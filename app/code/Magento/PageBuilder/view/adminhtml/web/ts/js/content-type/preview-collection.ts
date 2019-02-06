@@ -9,7 +9,7 @@ import ContentTypeInterface from "../content-type.types";
 import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
-    public parent: ContentTypeCollectionInterface;
+    public master: ContentTypeCollectionInterface;
 
     /**
      * Retrieve the preview child template
@@ -33,13 +33,13 @@ export default class PreviewCollection extends Preview {
         autoAppend: boolean = true,
         direct: boolean = false,
     ): Promise<ContentTypeCollectionInterface> | void {
-        const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+        const index = contentType.containerContentType.getChildren().indexOf(contentType) + 1 || null;
         const childrenLength = contentType.children ? contentType.children().length : null;
 
         return new Promise((resolve, reject) => {
             createContentType(
                 contentType.config,
-                contentType.parent,
+                contentType.containerContentType,
                 contentType.stageId,
                 contentType.dataStore.getState(),
                 childrenLength,
@@ -52,7 +52,7 @@ export default class PreviewCollection extends Preview {
                             if (subChildClone) {
                                 subChildClone.then(
                                     (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
-                                        duplicateSubChild.parent = duplicate;
+                                        duplicateSubChild.containerContentType = duplicate;
                                         duplicate.addChild(duplicateSubChild);
                                     },
                                 );
@@ -64,7 +64,7 @@ export default class PreviewCollection extends Preview {
                 }
 
                 if (autoAppend) {
-                    contentType.parent.addChild(duplicate, index);
+                    contentType.containerContentType.addChild(duplicate, index);
                 }
                 this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
 
@@ -81,7 +81,7 @@ export default class PreviewCollection extends Preview {
     public delegate(...args: any[]) {
         super.delegate(...args);
 
-        this.parent.getChildren()().forEach((elem: ContentTypeInterface) => {
+        this.master.getChildren()().forEach((elem: ContentTypeInterface) => {
             elem.preview.delegate.apply(elem.preview, args);
         });
     }
@@ -92,7 +92,7 @@ export default class PreviewCollection extends Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        if (this.parent.children().length > 0) {
+        if (this.master.children().length > 0) {
             return true;
         }
 

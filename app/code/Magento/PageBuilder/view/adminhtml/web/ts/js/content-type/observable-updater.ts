@@ -43,7 +43,10 @@ export default class ObservableUpdater {
      */
     public update(viewModel: Preview | Master, data: DataObject) {
         const appearance = data && data.appearance !== undefined ? data.appearance as string : undefined;
-        const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
+        const configName = viewModel instanceof Master
+            ? viewModel.containerContentType.config.name
+            : viewModel.master.config.name;
+        const appearanceConfiguration = appearanceConfig(configName, appearance);
         if (undefined === appearanceConfiguration
             || undefined === appearanceConfiguration.elements
         ) {

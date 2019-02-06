@@ -16,7 +16,7 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
     implements ContentTypeInterface<P, M>
 {
     public id: string = mageUtils.uniqueid();
-    public parent: ContentTypeCollectionInterface;
+    public containerContentType: ContentTypeCollectionInterface;
     public stageId: string;
     public config: ContentTypeConfigInterface;
     public element: JQuery;
@@ -26,16 +26,16 @@ export default class ContentType<P extends Preview = Preview, M extends Master =
     public dropped: boolean = false;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} containerContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
+        containerContentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         stageId: string,
     ) {
-        this.parent = parent;
+        this.containerContentType = containerContentType;
         this.config = config;
         this.stageId = stageId;
         this.bindEvents();

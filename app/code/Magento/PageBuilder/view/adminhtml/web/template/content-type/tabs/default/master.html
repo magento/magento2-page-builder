@@ -6,10 +6,10 @@
 -->
 
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <ul role="tablist" class="tabs-navigation" each="parent.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css">
+    <ul role="tablist" class="tabs-navigation" each="containerContentType.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css">
         <with args="content">
-            <li role="tab" class="tab-header" attr="Object.assign({}, parent.parent.content.data.headers.attributes(), { active: getData().default_active_tab })" ko-style="parent.parent.content.data.headers.style" css="parent.parent.content.data.headers.css">
-                <a href="#no-tab" class="tab-title" attr="{ href: '#' + parent.id }">
+            <li role="tab" class="tab-header" attr="Object.assign({}, containerContentType.containerContentType.content.data.headers.attributes(), { active: getData().default_active_tab })" ko-style="containerContentType.containerContentType.content.data.headers.style" css="containerContentType.containerContentType.content.data.headers.css">
+                <a href="#no-tab" class="tab-title" attr="{ href: '#' + containerContentType.id }">
                     <span class="tab-title" text="getData().tab_name"></span>
                 </a>
             </li>
