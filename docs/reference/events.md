@@ -1,50 +1,15 @@
-# Events {#events}
+# Page Builder Events {#events}
 
 This document contains reference information for events dispatched in Page Builder.
 
-**Note:**
-*We are revising naming conventions for events, naming may change.*
-
 ## Events list {#eventslist}
 
-- [`contentType:*` events](#contenttype-events)
-    - [`contentType:createAfter`](#contenttypecreateafter)
-    - [`contentType:mountAfter`](#contenttypemountafter)
-    - [`contentType:dropAfter`](#contenttypedropafter)
-    - [`contentType:mountAfter`](#contenttypemountafter)
-    - [`contentType:renderAfter`](#contenttyperenderafter)
-    - [`contentType:removeAfter`](#contenttyperemoveafter)
-    - [`contentType:duplicateAfter`](#contenttypeduplicateafter)
-    - [`contentType:moveBefore`](#contenttypemovebefore)
-    - [`contentType:moveAfter`](#contenttypemoveafter)
-    - [`contentType:redrawAfter`](#contenttyperedrawafter)
-        - [Backend](#backend)
-        - [Frontend](#frontend)
-- [`column:dragStart`](#columndragstart)
-- [`column:dragStop`](#columndragstop)
-- [`column:initializeAfter`](#columninitializeafter)
-- [`image:{{id}}:assignAfter`](#imageidassignafter)
-- [`image:mountAfter`](#imagemountafter)
-- [`image:uploadAfter`](#imageuploadafter)
-- [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-- [`stage:interactionStart`](#stageinteractionstart)
-- [`stage:interactionStop`](#stageinteractionstop)
-- [`stage:{{id}}:toggleFullscreen`](#stageidtogglefullscreen)
-- [`previewData:updateAfter`](#previewdataupdateafter)
-- [`previewSortable:sortstart`](#previewsortablesortstart)
-- [`previewSortable:sortupdate`](#previewsortablesortupdate)
-- [`stage:error`](#stageerror)
-- [`stage:{{id}}:readyAfter`](#stageidreadyafter)
-- [`stage:{{id}}:masterFormatRenderAfter`](#stageidmasterformatrenderafter)
-- [`stage:updateAfter`](#stageupdateafter)
-- [`stage:childFocusStart`](#stagechildfocusstart)
-- [`stage:childFocusStop`](#stagechildfocusstop)
-- [`state`](#state)
-- [`{{config.name}}:{{id}}:updateAfter`](#confignameidupdateafter)
-- [`googleMaps:authFailure`](#googlemapsauthfailure)
+
+
+
 
 ## `contentType:*` events
-All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
+Events starting with `contentType:` are triggered by every content type on the stage. can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
 * `text:createAfter`
 * `row:mountAfter`
 * `tab-item:mountAfter`
@@ -337,7 +302,7 @@ Function
 
 [Back to top]
 
-### `stage:{{id}}:readyAfter`
+### `stage:{{preview.parent.stageId}}:readyAfter`
 
 **Triggers**
 
@@ -353,7 +318,7 @@ Function
 
 [Back to top]
 
-### `stage:{{id}}:renderAfter`
+### `stage:{{preview.parent.stageId}}:renderAfter`
 
 **Triggers**
 
@@ -382,6 +347,7 @@ Function
 **Params**
 
 ``` js
+
 ```
 
 [Back to top]
@@ -400,11 +366,12 @@ Function
 **Params**
 
 ``` js
+
 ```
 
 [Back to top]
 
-### `stage:{{id}}:toggleFullscreen` {#stageidtogglefullscreen}
+### `stage:{{preview.parent.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
 
 **Triggers**
 
@@ -414,6 +381,7 @@ Function
 **Params**
 
 ``` js
+
 ```
 
 [Back to top]
@@ -484,14 +452,14 @@ Error
 
 [Back to top]
 
-### `stage:{{id}}:readyAfter` {#stageidreadyafter}
+### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
 
 **Triggers**
 
 * `Stage::ready`
 * `stage instance`
 
-### `stage:{{id}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
+### `stage:{{preview.parent.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
 **Triggers**
 
@@ -548,7 +516,7 @@ Error
 
 [Back to top]
 
-### `{{config.name}}:{{id}}:updateAfter` {#confignameidupdateafter}
+### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
 
 **Triggers**
 
