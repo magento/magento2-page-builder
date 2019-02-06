@@ -460,6 +460,7 @@ events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
 
 [Back to top]
 
+### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
 
 
 ### `stage:{{preview.parent.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
@@ -528,7 +529,7 @@ events.on("state", function (params) {});
 | ------- | ----------- |
 | `state` | `DataStore` |
 
-[Back to top]
+### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
 
 
 
