@@ -224,14 +224,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     // If the sortable instance is disabled don't complete this operation
     if ((0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
       ui.item.remove();
-      (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the parent
+      (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the master
 
       if (ui.item.length > 0 && typeof _knockout.dataFor(ui.item[0]) !== "undefined") {
-        var parent = _knockout.dataFor(ui.item[0]).parent;
+        var master = _knockout.dataFor(ui.item[0]).master;
 
-        var children = parent.getChildren()().splice(0);
-        parent.getChildren()([]);
-        parent.getChildren()(children);
+        var children = master.getChildren()().splice(0);
+        master.getChildren()([]);
+        master.getChildren()(children);
       }
 
       return;
@@ -252,7 +252,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       if (target && contentTypeInstance) {
         // Calculate the source and target index
-        var sourceParent = contentTypeInstance.parent;
+        var sourceParent = contentTypeInstance.containerContentType;
         var targetParent = getMasterProxy(target);
         var targetIndex = (0, _jquery)(placeholderContainer).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type").toArray().findIndex(function (element) {
           return element === el;
@@ -266,7 +266,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
         (0, _moveContentType.moveContentType)(contentTypeInstance, targetIndex, targetParent);
 
-        if (contentTypeInstance.parent !== targetParent) {
+        if (contentTypeInstance.containerContentType !== targetParent) {
           ui.item.remove();
         }
       }

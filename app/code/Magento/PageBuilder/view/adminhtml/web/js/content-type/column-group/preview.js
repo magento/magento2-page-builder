@@ -317,7 +317,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           var columnInstance = _knockout.dataFor((0, _jquery)(event.target)[0]); // Use the global state as columns can be dragged between groups
 
 
-          (0, _registry2.setDragColumn)(columnInstance.containerContentType);
+          (0, _registry2.setDragColumn)(columnInstance.master);
           _this4.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this4.master);
 
           _events.trigger("column:dragStart", {

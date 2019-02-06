@@ -247,12 +247,12 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
         ui.item.remove();
         $(this).sortable("cancel");
 
-        // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the parent
+        // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the master
         if (ui.item.length > 0 && typeof ko.dataFor(ui.item[0]) !== "undefined") {
-            const parent = ko.dataFor(ui.item[0]).parent as ContentTypeCollectionInterface;
-            const children = parent.getChildren()().splice(0);
-            parent.getChildren()([]);
-            parent.getChildren()(children);
+            const master = ko.dataFor(ui.item[0]).master as ContentTypeCollectionInterface;
+            const children = master.getChildren()().splice(0);
+            master.getChildren()([]);
+            master.getChildren()(children);
         }
         return;
     }
@@ -272,7 +272,7 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
 
         if (target && contentTypeInstance) {
             // Calculate the source and target index
-            const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
+            const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.containerContentType;
             const targetParent: ContentTypeCollectionInterface = getMasterProxy(target);
 
             const targetIndex = $(placeholderContainer)
@@ -290,7 +290,7 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
 
             moveContentType(contentTypeInstance, targetIndex, targetParent);
 
-            if (contentTypeInstance.parent !== targetParent) {
+            if (contentTypeInstance.containerContentType !== targetParent) {
                 ui.item.remove();
             }
         }

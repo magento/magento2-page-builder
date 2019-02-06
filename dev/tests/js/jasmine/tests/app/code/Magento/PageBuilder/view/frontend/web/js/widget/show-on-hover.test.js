@@ -26,7 +26,10 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-content-type="thing" data-show-overlay="1" data-show-button="1">' +
+                    '<div class="button-selector" ' +
+                        'data-content-type="thing" ' +
+                        'data-show-overlay="1" ' +
+                        'data-show-button="1">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -50,7 +53,10 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-content-type="thing" data-show-overlay="0" data-show-button="0">' +
+                    '<div class="button-selector" ' +
+                        'data-content-type="thing" ' +
+                        'data-show-overlay="0" ' +
+                        'data-show-button="0">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -74,7 +80,10 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-content-type="thing" data-show-overlay="1" data-show-button="0">' +
+                    '<div class="button-selector" ' +
+                        'data-content-type="thing" ' +
+                        'data-show-overlay="1" ' +
+                        'data-show-button="0">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -98,7 +107,10 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-content-type="thing" data-show-overlay="0" data-show-button="1">' +
+                    '<div class="button-selector" ' +
+                        'data-content-type="thing" ' +
+                        'data-show-overlay="0" ' +
+                        'data-show-button="1">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -122,7 +134,10 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-content-type="thing" data-show-overlay="1" data-show-button="1">' +
+                    '<div class="button-selector" ' +
+                        'data-content-type="thing" ' +
+                        'data-show-overlay="1" ' +
+                        'data-show-button="1">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'

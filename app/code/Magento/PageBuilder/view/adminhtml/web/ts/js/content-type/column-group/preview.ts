@@ -345,11 +345,10 @@ export default class Preview extends PreviewCollection {
                 return helper;
             },
             start: (event: Event) => {
-                const columnInstance: ContentTypeCollectionInterface = ko.dataFor($(event.target)[0]);
+                const columnInstance = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn((columnInstance.containerContentType as ContentTypeCollectionInterface<ColumnPreview>));
+                setDragColumn((columnInstance.master as ContentTypeCollectionInterface<ColumnPreview>));
                 this.dropPositions = calculateDropPositions(this.master);
-
                 events.trigger("column:dragStart", {
                     column: columnInstance,
                     stageId: this.master.stageId,
