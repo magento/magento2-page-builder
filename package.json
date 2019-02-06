@@ -3,8 +3,8 @@
     "version": "100.0.0-dev",
     "description": "PageBuilder module",
     "scripts": {
-        "test:static": "npm run ts:errors && tslint --project tsconfig.json",
-        "test:static:log": "npm run test:static -- -o ./static-error-log.xml -t junit",
+        "test:static": "tslint --project tsconfig.json",
+        "test:static:log": "npm run ts:errors 2>&1 | tee tsc-errors.txt && npm run test:static 2>&1 | tee tslint-errors.txt",
         "ts:errors": "tsc --noEmit",
         "ts:errors:watch": "npm run ts:errors -- -watch",
         "ts:lint": "tslint --fix --project .",
