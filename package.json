@@ -4,8 +4,9 @@
     "description": "PageBuilder module",
     "scripts": {
         "test:static": "tslint --project tsconfig.json",
-        "test:static:log": "npm run ts:errors 2>&1 | tee tsc-errors.txt && npm run test:static 2>&1 | tee tslint-errors.txt",
+        "test:static:log": "set -o pipefail; npm run test:static | tee tslint-errors.txt",
         "ts:errors": "tsc --noEmit",
+        "test:errors:log": "set -o pipefail; npm run ts:errors | tee tsc-errors.txt",
         "ts:errors:watch": "npm run ts:errors -- -watch",
         "ts:lint": "tslint --fix --project .",
         "ts:defs": "node ./dev/dts-generator.js",
