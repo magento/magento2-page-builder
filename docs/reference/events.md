@@ -1,12 +1,13 @@
-# Page Builder Events {#events}
+# Page Builder Events
 
 This document contains reference information for events dispatched in Page Builder.
 
-## Events list {#eventslist}
+## Events list
 
 
 
 
+<!-- {% raw %} -->
 
 ## `contentType:*` events
 Events starting with `contentType:` are triggered by every content type on the stage. can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
@@ -546,3 +547,4 @@ _none_
 [Back to top]
 
 [Back to top]: #eventslist
+<!-- {% endraw %} -->
