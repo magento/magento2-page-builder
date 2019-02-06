@@ -26,7 +26,7 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-role="thing" data-show-overlay="1" data-show-button="1">' +
+                    '<div class="button-selector" data-content-type="thing" data-show-overlay="1" data-show-button="1">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -50,7 +50,7 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-role="thing" data-show-overlay="0" data-show-button="0">' +
+                    '<div class="button-selector" data-content-type="thing" data-show-overlay="0" data-show-button="0">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -74,7 +74,7 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-role="thing" data-show-overlay="1" data-show-button="0">' +
+                    '<div class="button-selector" data-content-type="thing" data-show-overlay="1" data-show-button="0">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -98,7 +98,7 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-role="thing" data-show-overlay="0" data-show-button="1">' +
+                    '<div class="button-selector" data-content-type="thing" data-show-overlay="0" data-show-button="1">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'
@@ -113,7 +113,7 @@ define([
             expect($.fn.hover).toHaveBeenCalledTimes(1);
         });
 
-        it('Should call hover zero times if data-role does not match config value', function () {
+        it('Should call hover zero times if data-content-type does not match config value', function () {
             var config = {
                 dataRole: 'thing2',
                 buttonSelector: '.button-selector',
@@ -122,7 +122,7 @@ define([
 
             el = $(
                 '<div>' +
-                    '<div class="button-selector" data-role="thing" data-show-overlay="1" data-show-button="1">' +
+                    '<div class="button-selector" data-content-type="thing" data-show-overlay="1" data-show-button="1">' +
                         '<a></a>' +
                     '</div>' +
                 '</div>'

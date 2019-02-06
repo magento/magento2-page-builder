@@ -1764,8 +1764,8 @@
         <waitForPageLoad stepKey="waitForSlideAnimation"/>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '2')}}" stepKey="focusOnEditorArea"/>
         <waitForPageLoad stepKey="waitForWysiwyg"/>
-        <executeJS function="return document.querySelectorAll('[data-role=slide]')[1].getBoundingClientRect().left" stepKey="slideLeftPosition"/>
-        <executeJS function="return document.querySelectorAll('[data-role=slide]')[1].getBoundingClientRect().right" stepKey="slideRightPosition"/>
+        <executeJS function="return document.querySelectorAll('[data-content-type=slide]')[1].getBoundingClientRect().left" stepKey="slideLeftPosition"/>
+        <executeJS function="return document.querySelectorAll('[data-content-type=slide]')[1].getBoundingClientRect().right" stepKey="slideRightPosition"/>
         <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().left" stepKey="sliderLeftPosition"/>
         <executeJS function="return document.querySelectorAll('.slider-container.content-type-container')[0].getBoundingClientRect().right" stepKey="sliderRightPosition"/>
         <assertLessThan stepKey="assertSlideRightSideIsLessThanSliderRightSide">

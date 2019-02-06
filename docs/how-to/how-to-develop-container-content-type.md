@@ -59,7 +59,7 @@ Write the following content into this configuration file:
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>
@@ -78,7 +78,7 @@ Write the following content into this configuration file:
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>
@@ -178,7 +178,7 @@ Write the following content into this configuration file:
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <attribute name="background_color_format" source="data-background-color-format" persistence_mode="write"/>
                         <css name="css_classes"/>
@@ -863,14 +863,14 @@ File name and location: `view/frontend/web/css/source/content-type/custom-contai
 Content:
 
 ``` less
-div[data-role='custom-container-group'] {
+div[data-content-type='custom-container-group'] {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 200px 200px;
 
     &[data-appearance='left'] {
-        div[data-role='custom-container'] {
+        div[data-content-type='custom-container'] {
             &:nth-child(1) {
                 grid-column: 1;
                 grid-row: 1;
@@ -888,7 +888,7 @@ div[data-role='custom-container-group'] {
 }
 
 @media all and (max-width: @screen__m) {
-    div[data-role='custom-container-group'] {
+    div[data-content-type='custom-container-group'] {
         grid-template-columns: 1fr;
 
 
@@ -897,7 +897,7 @@ div[data-role='custom-container-group'] {
         }
 
         &[data-appearance='left'] {
-            div[data-role='custom-container'] {
+            div[data-content-type='custom-container'] {
                 &:nth-child(1) {
                     grid-column: 1;
                     grid-row: 1;
@@ -924,14 +924,14 @@ File name and location: `view/frontend/web/css/source/content-type/custom-contai
 Content:
 
 ``` less
-div[data-role='custom-container-group'] {
+div[data-content-type='custom-container-group'] {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 200px 200px;
 
     &[data-appearance='right'] {
-        div[data-role='custom-container'] {
+        div[data-content-type='custom-container'] {
             &:nth-child(1) {
                 grid-column: 1;
                 grid-row: ~"1 / 3";
@@ -949,7 +949,7 @@ div[data-role='custom-container-group'] {
 }
 
 @media all and (max-width: @screen__m) {
-    div[data-role='custom-container-group'] {
+    div[data-content-type='custom-container-group'] {
         grid-template-columns: 1fr;
 
         &[data-appearance='right'] {
@@ -957,7 +957,7 @@ div[data-role='custom-container-group'] {
         }
 
         &[data-appearance='right'] {
-            div[data-role='custom-container'] {
+            div[data-content-type='custom-container'] {
                 &:nth-child(1) {
                     grid-column: 1;
                     grid-row: 1;

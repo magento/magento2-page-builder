@@ -68,7 +68,7 @@ class Anchor implements RendererInterface
         }
         $anchorHtml .= '></div>';
 
-        $rootElementHtml = '<div data-element="main" data-role="html" data-appearance="default">';
+        $rootElementHtml = '<div data-element="main" data-content-type="html" data-appearance="default">';
         $rootElementHtml .= $anchorHtml . '</div>';
 
         return $rootElementHtml;

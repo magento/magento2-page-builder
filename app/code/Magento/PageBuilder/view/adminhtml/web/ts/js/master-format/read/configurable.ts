@@ -96,7 +96,7 @@ export default class Configurable implements ReadInterface {
 
     /**
      * Find the element for the current content type by it's name, avoiding searching in other content types by
-     * removing any other element which contains it's own data-role.
+     * removing any other element which contains it's own data-content-type.
      *
      * @param {HTMLElement} element
      * @param {string} name
@@ -105,7 +105,7 @@ export default class Configurable implements ReadInterface {
     private findElementByName(element: HTMLElement, name: string): HTMLElement {
         // Create a clone of the element to avoid modifying the source
         const currentElement = $(element).clone();
-        // Remove all child instances of data-role elements
+        // Remove all child instances of data-content-type elements
         currentElement.find(`[${Config.getConfig("dataRoleAttributeName")}]`).remove();
 
         // Attempt to find the content type element within the modified clone element

@@ -62,7 +62,7 @@ class Driver implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'banner',
+            'data-content-type' => 'banner',
             'data-appearance' => 'poster',
             'data-show-button' => 'never',
             'data-show-overlay' => 'never',

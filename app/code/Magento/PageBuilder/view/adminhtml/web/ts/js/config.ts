@@ -48,6 +48,6 @@ export default class Config {
     }
 
     private static config: any = {
-        dataRoleAttributeName: "data-role",
+        dataRoleAttributeName: "data-content-type",
     };
 }

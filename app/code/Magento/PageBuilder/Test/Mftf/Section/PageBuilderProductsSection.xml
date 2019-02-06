@@ -10,7 +10,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="ProductsOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]" parameterized="true"/>
-        <element name="price" type="text" selector="//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//div[contains(@data-role,'priceBox')]"/>
+        <element name="price" type="text" selector="//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')]//div[contains(@data-content-type,'priceBox')]"/>
         <element name="hidden" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]/ancestor::*[contains(@class, 'pagebuilder-content-type-wrapper') and contains(@class, 'pagebuilder-content-type-hidden')]" parameterized="true"/>
         <element name="notHidden" type="text" selector="(//div[contains(@class,'pagebuilder-products') and not(contains(@class,'placeholder'))])[{{arg1}}]//parent::*[contains(@class, 'pagebuilder-content-type-wrapper') and not(contains(@class, 'pagebuilder-content-type-hidden'))][1]" parameterized="true"/>
         <element name="product" type="text" selector="(//div[contains(@class,'pagebuilder-products')]//div[contains(@data-appearance,'grid')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
@@ -47,31 +47,31 @@
         <element name="productsCountInput" type="input" selector="input[name='products_count']"/>
     </section>
     <section name="ProductsOnStorefront">
-        <element name="base" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}]" parameterized="true"/>
-        <element name="price" type="text" selector="//div[contains(@data-role,'products')]//div[contains(@data-role,'priceBox')]"/>
-        <element name="hidden" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
-        <element name="notHidden" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
-        <element name="product" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
-        <element name="productImage" type="text" selector="(//div[contains(@data-role,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//img[@class='product-image-photo']" parameterized="true"/>
-        <element name="productImageCSS" type="text" selector="div[data-role=products] ol li.product-item img.product-image-photo"/>
-        <element name="productName" type="text" selector="(//div[contains(@data-role,'products')])//ol//li[contains(@class,'product-item')][{{arg1}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="productPrice" type="text" selector="(//div[contains(@data-role,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//span[@class='price' and .='${{arg2}}']" parameterized="true"/>
-        <element name="productPriceContainer" type="text" selector="div[data-role=products] ol li.product-item div.price-box"/>
-        <element name="productAddToCart" type="text" selector="(//div[contains(@data-role,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
-        <element name="productAddToWishList" type="text" selector="(//div[contains(@data-role,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
-        <element name="productAddToCompare" type="text" selector="(//div[contains(@data-role,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
-        <element name="productActions" type="text" selector="div[data-role=products] ol li.product-item div.product-item-actions"/>
+        <element name="base" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}]" parameterized="true"/>
+        <element name="price" type="text" selector="//div[contains(@data-content-type,'products')]//div[contains(@data-content-type,'priceBox')]"/>
+        <element name="hidden" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style, 'display: none')]" parameterized="true"/>
+        <element name="notHidden" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][not(contains(@style, 'display: none'))]" parameterized="true"/>
+        <element name="product" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}]//ol//li[contains(@class,'product-item')]" parameterized="true"/>
+        <element name="productImage" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//img[@class='product-image-photo']" parameterized="true"/>
+        <element name="productImageCSS" type="text" selector="div[data-content-type=products] ol li.product-item img.product-image-photo"/>
+        <element name="productName" type="text" selector="(//div[contains(@data-content-type,'products')])//ol//li[contains(@class,'product-item')][{{arg1}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{arg2}}')]" parameterized="true"/>
+        <element name="productPrice" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//span[@class='price' and .='${{arg2}}']" parameterized="true"/>
+        <element name="productPriceContainer" type="text" selector="div[data-content-type=products] ol li.product-item div.price-box"/>
+        <element name="productAddToCart" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
+        <element name="productAddToWishList" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
+        <element name="productAddToCompare" type="text" selector="(//div[contains(@data-content-type,'products')]//ol//li[contains(@class,'product-item')])[{{arg1}}]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
+        <element name="productActions" type="text" selector="div[data-content-type=products] ol li.product-item div.product-item-actions"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}]" parameterized="true"/>
-        <element name="margins" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="(//div[contains(@data-role,'products')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@data-content-type,'products')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
 </sections>

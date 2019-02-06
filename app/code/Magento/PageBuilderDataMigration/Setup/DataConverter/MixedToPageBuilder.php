@@ -69,7 +69,7 @@ class MixedToPageBuilder implements DataConverterInterface
          * any instance of a HTML content type (of the new format) with legacy encoded data stored inside it.
          */
         preg_match_all(
-            '/<div.*data-role="html".*>[\n\r\s]*<!--' . Format::UNMIGRATED_KEY . '="(.*)"-->[\n\r\s]*<\/div>/',
+            '/<div.*data-content-type="html".*>[\n\r\s]*<!--' . Format::UNMIGRATED_KEY . '="(.*)"-->[\n\r\s]*<\/div>/',
             $value,
             $matches,
             PREG_SET_ORDER

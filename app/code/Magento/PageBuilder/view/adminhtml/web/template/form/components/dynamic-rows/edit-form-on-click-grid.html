@@ -14,7 +14,7 @@
         <span translate="$data.label"/>
     </label>
 
-    <div class="admin__field-control" data-role="grid-wrapper">
+    <div class="admin__field-control" data-content-type="grid-wrapper">
         <div class="admin__control-table-pagination" visible="!!$data.getRecordCount()">
             <div class="admin__data-grid-pager">
                 <button class="action-previous" type="button" data-bind="attr: {title: $t('Previous Page')}, click: previousPage, disable: isFirst()"></button>
@@ -25,14 +25,14 @@
         </div>
 
         <div class="admin__control-table-wrapper">
-            <div data-role="spinner"
+            <div data-content-type="spinner"
                  class="admin__data-grid-loading-mask"
                  if="$data.showSpinner">
                 <div class="spinner">
                     <span repeat="8"/>
                 </div>
             </div>
-            <table class="admin__dynamic-rows data-grid" data-role="grid">
+            <table class="admin__dynamic-rows data-grid" data-content-type="grid">
                 <thead if="$data.columnsHeader">
                 <tr>
                     <th if="dndConfig.enabled"

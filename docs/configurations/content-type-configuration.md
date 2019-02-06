@@ -69,7 +69,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                     <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                     <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-                    <attribute name="name" source="data-role"/>
+                    <attribute name="name" source="data-content-type"/>
                     <attribute name="appearance" source="data-appearance"/>
                     <attribute name="show_button" source="data-show-button"/>
                     <attribute name="show_overlay" source="data-show-overlay"/>
@@ -269,7 +269,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         <style name="border" source="border_style"/>
         <style name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
         <style name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
-        <attribute name="name" source="data-role"/>
+        <attribute name="name" source="data-content-type"/>
         <css name="css_classes"/>
     </element>
     <element name="link">

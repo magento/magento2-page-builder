@@ -64,7 +64,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -317,7 +317,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -426,7 +426,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -454,7 +454,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -524,7 +524,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -584,7 +584,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
@@ -645,7 +645,7 @@ return [
                             'attributes' => [
                                 0 => [
                                     'var' => 'name',
-                                    'name' => 'data-role',
+                                    'name' => 'data-content-type',
                                     'converter' => null,
                                     'persistence_mode' => 'readwrite',
                                     'preview_converter' => null,
