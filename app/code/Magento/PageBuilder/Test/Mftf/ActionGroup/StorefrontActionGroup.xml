@@ -15,22 +15,6 @@
         <amOnPage url="{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
-    <actionGroup name="navigateToStoreFrontWithStoreView">
-        <!-- This goes in CE repo -->
-        <arguments>
-            <argument name="contentType"/>
-            <argument name="storeView"/>
-        </arguments>
-        <amOnPage url="{{storeView.code}}/{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
-        <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
-    </actionGroup>
-    <actionGroup name="navigateToStorefrontForCreatedCMSPage">
-        <arguments>
-            <argument name="page" type="string"/>
-        </arguments>
-        <amOnPage url="{{page}}" stepKey="goToStorefront"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-    </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefront">
         <arguments>
             <argument name="contentType"/>
