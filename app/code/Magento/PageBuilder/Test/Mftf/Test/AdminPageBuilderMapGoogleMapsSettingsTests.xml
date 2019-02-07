@@ -129,12 +129,9 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Stage: Validate Warning Message Link -->
         <comment userInput="Stage: Validate Warning Message Link" stepKey="commentValidateWarningMessageLinkStage"/>
-        <actionGroup ref="validateWarningMessageLink" stepKey="validateWarningMessageLink1">
+        <actionGroup ref="validateWarningMessageLinkNewTabTarget" stepKey="validateWarningMessageLink1">
             <argument name="section" value="MapOnStage"/>
         </actionGroup>
-        <moveBack stepKey="moveBack1"/>
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Edit Form: Validate Warning Message Link -->
         <comment userInput="Edit Form: Validate Warning Message Link" stepKey="commentValidateWarningMessageLinkEditForm"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditPanel1">
@@ -152,7 +149,7 @@
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
-        <actionGroup ref="validateWarningMessageLink" stepKey="validateWarningMessageLink3">
+        <actionGroup ref="validateWarningMessageLinkNewTabTarget" stepKey="validateWarningMessageLink3">
             <argument name="section" value="AddLocationForm"/>
         </actionGroup>
     </test>

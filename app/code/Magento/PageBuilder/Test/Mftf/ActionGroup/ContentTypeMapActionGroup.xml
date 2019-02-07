@@ -409,6 +409,11 @@
         <seeInCurrentUrl url="{{AdminContentManagementPage.url}}#cms_pagebuilder" stepKey="validateURL"/>
         <seeElement selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="seeGoogleMapsAPIKeyInputField"/>
     </actionGroup>
+    <actionGroup name="validateWarningMessageLinkNewTabTarget" extends="validateWarningMessageLink">
+        <switchToNextTab stepKey="switchToNewConfigurationTab" after="clickLink"/>
+        <closeTab stepKey="closeTab" after="seeGoogleMapsAPIKeyInputField"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab" after="closeTab"/>
+    </actionGroup>
     <actionGroup name="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" extends="validateAdvancedStyleWithAllUpdatedNotVisible">
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>
     </actionGroup>
