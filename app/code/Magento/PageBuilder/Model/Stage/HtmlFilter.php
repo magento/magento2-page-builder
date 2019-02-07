@@ -54,7 +54,7 @@ class HtmlFilter
             $item->parentNode->removeChild($item);
         }
         $xpath = new \DOMXPath($dom);
-        $htmlContentTypes = $xpath->query('//*[@data-role="html"]');
+        $htmlContentTypes = $xpath->query('//*[@data-role="html" and not(contains(@class, "placeholder-html-code"))]');
         foreach ($htmlContentTypes as $htmlContentType) {
             /* @var \DOMElement $htmlContentType */
             $innerHTML= '';
@@ -62,7 +62,6 @@ class HtmlFilter
             foreach ($children as $child) {
                 $innerHTML .= $child->ownerDocument->saveXML($child);
             }
-            $htmlContentType->removeAttribute("data-role");
             $htmlContentType->setAttribute(
                 "class",
                 $htmlContentType->getAttribute("class") . " placeholder-html-code"
