@@ -484,7 +484,7 @@ class InstallSchema implements InstallSchemaInterface
             ['unsigned' => true, 'nullable' => false, 'default' => '0'],
             'Is WYSIWYG Enabled'
         )->addColumn(
-            'is_system',
+            'is_visible',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
             null,
             ['unsigned' => true, 'nullable' => false, 'default' => '1'],

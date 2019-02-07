@@ -44,9 +44,9 @@ class ProductAttributeRepositoryTest extends \Magento\TestFramework\TestCase\Web
                 "default_value" => "",
                 "frontend_input" => "textarea",
                 "is_wysiwyg_enabled" => 1,
-                "is_system_on_front" => true,
+                "is_visible_on_front" => true,
                 "is_searchable" => true,
-                "is_system_in_advanced_search" => true,
+                "is_visible_in_advanced_search" => true,
                 "is_filterable" => true,
                 "is_filterable_in_search" => true,
                 \Magento\Framework\Api\ExtensibleDataInterface::EXTENSION_ATTRIBUTES_KEY => [

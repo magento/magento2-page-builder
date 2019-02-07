@@ -90,7 +90,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
         this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentType) {
           var regEx = new RegExp("\\b" + self.searchValue(), "gi");
           var matches = !!contentType.label.toLowerCase().match(regEx);
-          return matches && contentType.is_system === true;
+          return matches && contentType.is_visible === true;
         }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
           return new _contentType.ContentType(identifier, contentType, _this2.pageBuilder.stage.id);
@@ -240,7 +240,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           // Push the group instance into the observable array to update the UI
           _this3.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
-            is_system: true
+            is_visible: true
           }),
           /* Retrieve content types with group id */
           function (contentType, identifier) {

@@ -237,7 +237,7 @@ export default class Panel {
                     _.map(
                         _.where(contentTypes, {
                             group: id,
-                            is_system: true,
+                            is_visible: true,
                         }), /* Retrieve content types with group id */
                         (contentType: ContentTypeConfigInterface, identifier: string) => {
                             return new GroupContentType(

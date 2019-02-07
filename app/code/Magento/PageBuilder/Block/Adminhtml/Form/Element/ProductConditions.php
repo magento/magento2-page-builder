@@ -85,7 +85,7 @@ class ProductConditions extends Template
     public function getConfigJson(): string
     {
         return $this->serializer->serialize([
-            '[data-content-type=pagebuilder-conditions-form-placeholder-' . $this->getData('attribute') . ']' => [
+            '[data-role=pagebuilder-conditions-form-placeholder-' . $this->getData('attribute') . ']' => [
                 'Magento_PageBuilder/js/form/element/conditions-loader' => $this->getConfig(),
             ]
         ]);
