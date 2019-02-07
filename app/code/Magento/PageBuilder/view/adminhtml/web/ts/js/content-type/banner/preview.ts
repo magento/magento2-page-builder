@@ -11,6 +11,7 @@ import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
+import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
@@ -248,6 +249,7 @@ export default class Preview extends BasePreview {
                 this.parent.dataStore.update("", "message");
             }
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+            nestingLinkDialog(this.parent.dataStore, this.wysiwyg, "message", "link_url");
         });
     }
 

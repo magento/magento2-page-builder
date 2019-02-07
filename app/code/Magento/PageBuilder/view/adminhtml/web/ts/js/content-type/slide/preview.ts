@@ -14,6 +14,7 @@ import {OptionsInterface} from "../../content-type-menu/option.d";
 import {DataObject} from "../../data-store";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
+import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
@@ -290,6 +291,7 @@ export default class Preview extends BasePreview {
             const dataStore = this.parent.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
+            nestingLinkDialog(this.parent.dataStore, this.wysiwyg, "content", "link_url");
         });
 
         // Remove wysiwyg before assign new instance.

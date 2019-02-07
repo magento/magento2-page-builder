@@ -1,7 +1,7 @@
 /*eslint-disable */
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _config, _hideShowOption, _uploader, _factory, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _config, _hideShowOption, _uploader, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -224,6 +224,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         }
 
         _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
+
+        (0, _nestingLinkDialog)(_this4.parent.dataStore, _this4.wysiwyg, "message", "link_url");
       });
     };
     /**
