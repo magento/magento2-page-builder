@@ -233,6 +233,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     };
     /**
      * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
      */
 
 
@@ -253,7 +256,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
       }
 
-      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content", this.parent.stageId).then(function (wysiwyg) {
         _this4.wysiwyg = wysiwyg;
       });
     };

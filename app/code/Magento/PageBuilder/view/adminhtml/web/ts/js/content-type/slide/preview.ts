@@ -252,6 +252,9 @@ export default class Preview extends BasePreview {
 
     /**
      * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
      */
     public initWysiwyg(focus: boolean = false) {
         if (this.wysiwyg) {
@@ -271,6 +274,7 @@ export default class Preview extends BasePreview {
             wysiwygConfig,
             this.parent.dataStore,
             "content",
+            this.parent.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
@@ -284,7 +288,7 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
             const dataStore = this.parent.dataStore.getState();
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
         });
 
