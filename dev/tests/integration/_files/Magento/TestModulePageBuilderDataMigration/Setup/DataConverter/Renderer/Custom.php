@@ -5,7 +5,7 @@
  */
 namespace Magento\TestModulePageBuilderDataMigration\Setup\DataConverter\Renderer;
 
-use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
+use Magento\PageBuilderDataMigration\Setup\DataConverter\RendererInterface;
 
 /**
  * Render custom content type to PageBuilder format
