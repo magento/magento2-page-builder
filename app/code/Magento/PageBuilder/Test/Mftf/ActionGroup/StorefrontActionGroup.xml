@@ -15,6 +15,14 @@
         <amOnPage url="{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
+    <actionGroup name="navigateToStoreFrontWithStoreView">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="storeView"/>
+        </arguments>
+        <amOnPage url="{{storeView.code}}/{{contentType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
+    </actionGroup>
     <actionGroup name="validateContentTypeInsideContainerStorefront">
         <arguments>
             <argument name="contentType"/>
