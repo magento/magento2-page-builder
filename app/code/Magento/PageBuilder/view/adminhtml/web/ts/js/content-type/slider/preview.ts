@@ -70,16 +70,16 @@ export default class Preview extends PreviewCollection {
     private previousData: DataObject;
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeCollectionInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
+        master: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(master, config, observableUpdater);
 
         // Wait for the tabs instance to mount and the container to be ready
         Promise.all([

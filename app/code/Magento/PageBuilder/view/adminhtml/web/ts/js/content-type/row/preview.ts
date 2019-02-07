@@ -68,16 +68,16 @@ export default class Preview extends PreviewCollection {
     }, 50);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        master: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(master, config, observableUpdater);
 
         this.master.dataStore.subscribe(this.buildJarallax);
         events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
@@ -93,7 +93,7 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Use the conditional remove to disable the option when the parent has a single child
+     * Use the conditional remove to disable the option when the content type has a single child
      *
      * @returns {OptionsInterface}
      */

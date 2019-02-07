@@ -18,7 +18,7 @@ import loadModule from "./utils/loader";
  * Create new content type
  *
  * @param {ContentTypeConfigInterface} config
- * @param {ContentTypeInterface} parent
+ * @param {ContentTypeInterface} containerContentType
  * @param {number} stageId
  * @param {object} data
  * @param {number} childrenLength
@@ -27,7 +27,7 @@ import loadModule from "./utils/loader";
  */
 export default function createContentType(
     config: ContentTypeConfigInterface,
-    parent: ContentTypeCollectionInterface,
+    containerContentType: ContentTypeCollectionInterface,
     stageId: string,
     data: object = {},
     childrenLength: number = 0,
@@ -39,7 +39,7 @@ export default function createContentType(
         loadModule([config.component], (contentTypeComponent: typeof ContentType) => {
             try {
                 const contentType = new contentTypeComponent(
-                    parent,
+                    containerContentType,
                     config,
                     stageId,
                 );

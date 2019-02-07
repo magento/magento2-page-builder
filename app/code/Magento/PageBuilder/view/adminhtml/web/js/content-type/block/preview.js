@@ -21,10 +21,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     /**
      * @inheritdoc
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(master, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, master, config, observableUpdater) || this;
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.messages = {

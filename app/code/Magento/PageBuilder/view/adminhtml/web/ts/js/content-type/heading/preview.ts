@@ -24,16 +24,16 @@ export default class Preview extends BasePreview {
     private element: Element;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        master: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(master, config, observableUpdater);
         this.toolbar = new Toolbar(
             this,
             this.getToolbarOptions(),

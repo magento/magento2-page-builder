@@ -27,14 +27,14 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
      */
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(master, config, observableUpdater) {
       var _this;
 
-      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this;
+      _this = _previewCollection2.call(this, master, config, observableUpdater) || this;
       _this.wrapClass = _knockout.observable(false);
       _this.buildJarallax = _underscore.debounce(function () {
         // Destroy all instances of the plugin prior
@@ -81,7 +81,7 @@ define(["jarallax", "jquery", "knockout", "Magento_PageBuilder/js/events", "Mage
       return _this;
     }
     /**
-     * Use the conditional remove to disable the option when the parent has a single child
+     * Use the conditional remove to disable the option when the content type has a single child
      *
      * @returns {OptionsInterface}
      */

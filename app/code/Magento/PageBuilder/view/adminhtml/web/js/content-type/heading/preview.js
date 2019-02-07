@@ -21,14 +21,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _inheritsLoose(Preview, _preview2);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(master, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, master, config, observableUpdater) || this;
       _this.toolbar = new _contentTypeToolbar(_assertThisInitialized(_assertThisInitialized(_this)), _this.getToolbarOptions());
       return _this;
     }

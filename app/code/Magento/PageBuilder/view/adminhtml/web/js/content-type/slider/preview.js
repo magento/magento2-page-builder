@@ -27,14 +27,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeCollectionInterface} master
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(master, config, observableUpdater) {
       var _this;
 
-      _this = _previewCollection2.call(this, parent, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
+      _this = _previewCollection2.call(this, master, config, observableUpdater) || this; // Wait for the tabs instance to mount and the container to be ready
 
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);

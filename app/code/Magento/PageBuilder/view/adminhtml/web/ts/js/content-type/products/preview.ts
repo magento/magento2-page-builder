@@ -31,11 +31,11 @@ export default class Preview extends BasePreview {
      * @inheritdoc
      */
     constructor(
-        parent: ContentTypeInterface,
+        master: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(master, config, observableUpdater);
         this.placeholderText = ko.observable(this.messages.EMPTY);
     }
 
