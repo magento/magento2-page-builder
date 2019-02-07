@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 
-export class Group {
+export class Menu {
     public hidden: KnockoutObservable<boolean> = ko.observable(false);
     public id: KnockoutObservable<number> = ko.observable();
     public code: KnockoutObservable<string> = ko.observable("");
@@ -17,25 +17,25 @@ export class Group {
     public stageId: string;
 
     /**
-     * Group constructor
+     * Menu constructor
      *
      * @param id
-     * @param group
+     * @param menu
      * @param contentTypes
      * @param stageId
      */
-    constructor(id: number, group: any, contentTypes: any[] = [], stageId: string) {
+    constructor(id: number, menu: any, contentTypes: any[] = [], stageId: string) {
         this.id(id);
-        this.code(group.code);
-        this.label(group.label);
-        this.icon(group.icon);
-        this.sort(group.sort);
+        this.code(menu.code);
+        this.label(menu.label);
+        this.icon(menu.icon);
+        this.sort(menu.sort);
         this.contentTypes(contentTypes);
         this.stageId = stageId;
     }
 
     /**
-     * Toggle the group
+     * Toggle the menu
      */
     public toggle() {
         this.active(!this.active());

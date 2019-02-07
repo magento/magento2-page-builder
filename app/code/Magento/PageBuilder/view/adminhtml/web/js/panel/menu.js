@@ -4,20 +4,20 @@ define(["knockout"], function (_knockout) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Group =
+  var Menu =
   /*#__PURE__*/
   function () {
     "use strict";
 
     /**
-     * Group constructor
+     * Menu constructor
      *
      * @param id
-     * @param group
+     * @param menu
      * @param contentTypes
      * @param stageId
      */
-    function Group(id, group, contentTypes, stageId) {
+    function Menu(id, menu, contentTypes, stageId) {
       if (contentTypes === void 0) {
         contentTypes = [];
       }
@@ -31,29 +31,29 @@ define(["knockout"], function (_knockout) {
       this.contentTypes = _knockout.observableArray([]);
       this.active = _knockout.observable(false);
       this.id(id);
-      this.code(group.code);
-      this.label(group.label);
-      this.icon(group.icon);
-      this.sort(group.sort);
+      this.code(menu.code);
+      this.label(menu.label);
+      this.icon(menu.icon);
+      this.sort(menu.sort);
       this.contentTypes(contentTypes);
       this.stageId = stageId;
     }
     /**
-     * Toggle the group
+     * Toggle the menu
      */
 
 
-    var _proto = Group.prototype;
+    var _proto = Menu.prototype;
 
     _proto.toggle = function toggle() {
       this.active(!this.active());
     };
 
-    return Group;
+    return Menu;
   }();
 
   return {
-    Group: Group
+    Menu: Menu
   };
 });
-//# sourceMappingURL=group.js.map
+//# sourceMappingURL=menu.js.map

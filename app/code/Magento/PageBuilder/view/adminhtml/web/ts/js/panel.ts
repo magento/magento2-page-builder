@@ -15,8 +15,8 @@ import ContentTypeConfigInterface from "./content-type-config.types";
 import {hideDropIndicators, showDropIndicators} from "./drag-drop/drop-indicators";
 import {setDraggedContentTypeConfig} from "./drag-drop/registry";
 import PageBuilder from "./page-builder";
-import {Group} from "./panel/group";
-import {ContentType as GroupContentType} from "./panel/group/content-type";
+import {Menu} from "./panel/menu";
+import {ContentType as GroupContentType} from "./panel/menu/content-type";
 import {supportsPositionSticky} from "./utils/position-sticky";
 
 /**
@@ -231,7 +231,7 @@ export default class Panel {
             // Iterate through the groups creating new instances with their associated content types
             _.each(groups, (group, id) => {
                 // Push the group instance into the observable array to update the UI
-                this.groups.push(new Group(
+                this.groups.push(new Menu(
                     id,
                     group,
                     _.map(

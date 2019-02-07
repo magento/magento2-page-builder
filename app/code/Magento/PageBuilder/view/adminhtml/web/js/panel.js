@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_consoleLogger, _jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType, _positionSticky) {
+define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/menu", "Magento_PageBuilder/js/panel/menu/content-type", "Magento_PageBuilder/js/utils/position-sticky"], function (_consoleLogger, _jquery, _knockout, _translate, _events, _underscore, _draggable, _config, _dropIndicators, _registry, _menu, _contentType, _positionSticky) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -238,7 +238,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
         // Iterate through the groups creating new instances with their associated content types
         _underscore.each(groups, function (group, id) {
           // Push the group instance into the observable array to update the UI
-          _this3.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
+          _this3.groups.push(new _menu.Menu(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
             is_system: true
           }),
