@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Config\MenuSection;
 
+/**
+ * Converter for menu section in configuration
+ */
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
     /**

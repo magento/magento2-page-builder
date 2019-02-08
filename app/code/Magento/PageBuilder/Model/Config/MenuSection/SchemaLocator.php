@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Config\MenuSection;
 
+/**
+ * Schema locator for menu section in configuration
+ */
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {
     /**

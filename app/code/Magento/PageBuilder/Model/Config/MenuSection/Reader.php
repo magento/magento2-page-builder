@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Config\MenuSection;
 
+/**
+ * Reader for menu section in configuration
+ */
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
     /**
