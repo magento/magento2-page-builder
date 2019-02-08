@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
+use Magento\Store\Model\Store;
+
 /**
  * Renders a widget directive for the stage
  *
@@ -57,9 +59,8 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
         }
 
         try {
-            $storeId = $this->storeManager->getStore()->getId();
             $result['content'] = $this->directiveFilter
-                ->setStoreId($storeId)
+                ->setStoreId(Store::DEFAULT_STORE_ID)
                 ->filter($params['directive']);
         } catch (\Exception $e) {
             $result['error'] = __($e->getMessage());
