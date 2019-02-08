@@ -802,11 +802,25 @@ export default class Preview extends PreviewCollection {
 
                 if (this.movePosition) {
                     this.dropPlaceholder.removeClass("left right");
+                    const width = dragColumn.preview.element.outerWidth();
+                    let left = (this.movePosition.placement === "left" ? this.movePosition.left : null);
+                    // The right position is only used when moving a column to the last position in the group
+                    const right = (this.movePosition.placement === "right" ?
+                            groupPosition.outerWidth - this.movePosition.right : null
+                    );
+                    /**
+                     * If we're dragging the column from the left to the right we need to show the placeholder on
+                     * the left hand side.
+                     */
+                    if (left !== null && this.parent.children().indexOf(dragColumn) <
+                            this.parent.children().indexOf(this.movePosition.affectedColumn)
+                    ) {
+                        left = left - width;
+                    }
                     this.movePlaceholder.css({
-                        left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
-                        right: (this.movePosition.placement === "right" ?
-                                groupPosition.outerWidth - this.movePosition.right - 5 : ""
-                        ),
+                        width,
+                        left,
+                        right,
                     }).addClass("active");
                 } else {
                     this.movePlaceholder.removeClass("active");

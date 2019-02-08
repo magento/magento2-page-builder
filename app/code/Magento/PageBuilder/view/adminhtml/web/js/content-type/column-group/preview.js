@@ -775,9 +775,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           if (this.movePosition) {
             this.dropPlaceholder.removeClass("left right");
+
+            var _width = dragColumn.preview.element.outerWidth();
+
+            var _left = this.movePosition.placement === "left" ? this.movePosition.left : null; // The right position is only used when moving a column to the last position in the group
+
+
+            var _right = this.movePosition.placement === "right" ? groupPosition.outerWidth - this.movePosition.right : null;
+            /**
+             * If we're dragging the column from the left to the right we need to show the placeholder on
+             * the left hand side.
+             */
+
+
+            if (_left !== null && this.parent.children().indexOf(dragColumn) < this.parent.children().indexOf(this.movePosition.affectedColumn)) {
+              _left = _left - _width;
+            }
+
             this.movePlaceholder.css({
-              left: this.movePosition.placement === "left" ? this.movePosition.left : "",
-              right: this.movePosition.placement === "right" ? groupPosition.outerWidth - this.movePosition.right - 5 : ""
+              width: _width,
+              left: _left,
+              right: _right
             }).addClass("active");
           } else {
             this.movePlaceholder.removeClass("active");
@@ -934,9 +952,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var potentialWidth = Math.floor(formattedAvailableWidth / _i);
 
         for (var _i2 = 0; _i2 < allowedColumnWidths.length; _i2++) {
-          var _width = allowedColumnWidths[_i2];
+          var _width2 = allowedColumnWidths[_i2];
 
-          if (potentialWidth === Math.floor(_width)) {
+          if (potentialWidth === Math.floor(_width2)) {
             spreadAcross = _i;
             spreadAmount = formattedAvailableWidth / _i;
             break;
