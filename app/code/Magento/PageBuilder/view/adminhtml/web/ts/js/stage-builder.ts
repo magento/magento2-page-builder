@@ -20,6 +20,7 @@ import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
 import {set} from "./utils/object";
+import ContentTypeCollection from "./content-type-collection";
 
 /**
  * Build the stage with the provided value
@@ -62,7 +63,10 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
         return Promise.all(childPromises).then((childrenPromises) => {
             return Promise.all(childrenPromises.map((child, index) => {
                 parent.addChild(child);
-                return buildElementIntoStage(childElements[index], child, stage);
+                // Only render children if the content type implements the collection
+                if (child instanceof ContentTypeCollection) {
+                    return buildElementIntoStage(childElements[index], child, stage);
+                }
             }));
         });
     }

@@ -41,7 +41,7 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const currentElement = this.findElementByName(element, elementName);
+                    const currentElement = this.findElementByName(role, element, elementName);
 
                     // If we cannot locate the current element skip trying to read any attributes from it
                     if (currentElement === null || currentElement === undefined) {
@@ -93,20 +93,26 @@ export default class Configurable implements ReadInterface {
      * Find the element for the current content type by it's name, avoiding searching in other content types by
      * removing any other element which contains it's own data-role.
      *
+     * @param {string} role
      * @param {HTMLElement} element
      * @param {string} name
      * @returns {HTMLElement}
      */
-    private findElementByName(element: HTMLElement, name: string): HTMLElement {
+    private findElementByName(role: string, element: HTMLElement, name: string): HTMLElement {
         // Create a clone of the element to avoid modifying the source
         const currentElement = $(element).clone();
-        // Remove all child instances of data-role elements
-        currentElement.find(`[${Config.getConfig("dataRoleAttributeName")}]`).remove();
+        if (currentElement.attr("data-element") === name) {
+            return currentElement[0];
+        }
 
-        // Attempt to find the content type element within the modified clone element
-        return currentElement.attr("data-element") === name
-            ? currentElement[0]
-            : currentElement[0].querySelector<HTMLElement>(`[data-element=${name}]`);
+        // Attempt to find the element in the children of the data-role
+        const searchInChildren = currentElement.find(`[data-element="${name}"]`);
+        // Ensure the element is within the current content type
+        if (searchInChildren.length > 0 && searchInChildren.closest("[data-role]")[0] === currentElement[0]) {
+            return searchInChildren[0];
+        }
+
+        return null;
     }
 
     /**

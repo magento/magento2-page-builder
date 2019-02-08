@@ -42,7 +42,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
             var elementName = _arr[_i];
             var elementConfig = config.elements[elementName];
 
-            var currentElement = _this.findElementByName(element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
+            var currentElement = _this.findElementByName(role, element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
 
 
             if (currentElement === null || currentElement === undefined) {
@@ -81,19 +81,29 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
      * Find the element for the current content type by it's name, avoiding searching in other content types by
      * removing any other element which contains it's own data-role.
      *
+     * @param {string} role
      * @param {HTMLElement} element
      * @param {string} name
      * @returns {HTMLElement}
      */
 
 
-    _proto.findElementByName = function findElementByName(element, name) {
+    _proto.findElementByName = function findElementByName(role, element, name) {
       // Create a clone of the element to avoid modifying the source
-      var currentElement = (0, _jquery)(element).clone(); // Remove all child instances of data-role elements
+      var currentElement = (0, _jquery)(element).clone();
 
-      currentElement.find("[" + _config.getConfig("dataRoleAttributeName") + "]").remove(); // Attempt to find the content type element within the modified clone element
+      if (currentElement.attr("data-element") === name) {
+        return currentElement[0];
+      } // Attempt to find the element in the children of the data-role
 
-      return currentElement.attr("data-element") === name ? currentElement[0] : currentElement[0].querySelector("[data-element=" + name + "]");
+
+      var searchInChildren = currentElement.find("[data-element=\"" + name + "\"]"); // Ensure the element is within the current content type
+
+      if (searchInChildren.length > 0 && searchInChildren.closest("[data-role]")[0] === currentElement[0]) {
+        return searchInChildren[0];
+      }
+
+      return null;
     };
     /**
      * Read attributes for element

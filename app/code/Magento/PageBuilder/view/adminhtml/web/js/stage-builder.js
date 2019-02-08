@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object"], function (_translate, _events, _loader, _alert, _, _config, _contentTypeFactory, _appearanceConfig, _validator, _directives, _object) {
+define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilder/js/content-type-collection"], function (_translate, _events, _loader, _alert, _, _config, _contentTypeFactory, _appearanceConfig, _validator, _directives, _object, _contentTypeCollection) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -44,8 +44,11 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
 
       return Promise.all(childPromises).then(function (childrenPromises) {
         return Promise.all(childrenPromises.map(function (child, index) {
-          parent.addChild(child);
-          return buildElementIntoStage(childElements[index], child, stage);
+          parent.addChild(child); // Only render children if the content type implements the collection
+
+          if (child instanceof _contentTypeCollection) {
+            return buildElementIntoStage(childElements[index], child, stage);
+          }
         }));
       });
     }
