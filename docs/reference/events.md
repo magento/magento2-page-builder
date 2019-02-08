@@ -1,8 +1,23 @@
-# Page Builder Events
+# Page Builder events
 
-The following table provides the list of events that Page Builder dispatches.
+The pattern for consuming Page Builder events in JavaScript, such as within your content type's `preview.js` component, is to import `Magento_PageBuilder/js/events` and use the `events.on()` method to bind to the event you want to handle, as shown here:
+
+```js
+define([
+    'Magento_PageBuilder/js/events',
+], function (events) {
+    'use strict';
+
+    events.on("event:name", function (args) {
+        // do logic
+    });
+});
+
+```
 
 ## Events
+
+The events you can consume are listed here with links to the details.
 
 <!-- {% raw %} -->
 
@@ -32,42 +47,81 @@ The following table provides the list of events that Page Builder dispatches.
 
 
 ## `contentType:*` events
-Events starting with `contentType:` are triggered by every content type on the stage. These events can also be called for specific content types by prefixing the content types name before the event (`{{name}}:{{event}}`). For example:
+Events starting with `contentType:` are triggered for every content type on the stage. These events can also be called for specific content types by prefixing the content type's name before the event (``name:event`). For example:
 * `text:createAfter`
 * `row:mountAfter`
 * `tab-item:mountAfter`
 
+
+
 ### `contentType:createAfter`
 
-| Parameters    | Type                                                        |
+```js
+events.on("contentType:createAfter", function (params) {});
+```
+
+| Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
 | `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
-### `contentType:mountAfter`
 
-| Parameters       | Type                                                        |
-| ---------------- | ----------------------------------------------------------- |
-| `id`             | `string`                                                    |
-| `contentType`    | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `expectChildren` | `number`                                                    |
+
+### `contentType:mountAfter` (ContentType)
+
+```js
+events.on("contentType:mountAfter", function (params) {});
+```
+
+| Params        | Type          |
+| ------------- | ------------- |
+| `id`          | `string`      |
+| `contentType` | `ContentType` |
 
 [Back to top]
+
+
+
+### `contentType:mountAfter` (ContentTypeCollection)
+
+```js
+events.on("contentType:mountAfter", function (params) {});
+```
+
+| Params           | Type                    |
+| ---------------- | ----------------------- |
+| `id`             | `string`                |
+| `contentType`    | `ContentTypeCollection` |
+| `expectChildren` | `number`                |
+
+[Back to top]
+
+
 
 ### `contentType:dropAfter`
 
-| Parameters    | Type                                                        |
+```js
+events.on("contentType:dropAfter", function (params) {});
+```
+
+| Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
 | `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
+
+
 ### `contentType:renderAfter`
 
-| Parameters    | Type                                                        |
+```js
+events.on("contentType:renderAfter", function (params) {});
+```
+
+| Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
 | `element`     | `Element`                                                   |
@@ -75,20 +129,32 @@ Events starting with `contentType:` are triggered by every content type on the s
 
 [Back to top]
 
+
+
 ### `contentType:removeAfter`
 
-| Parameters    | Type                                                        |
-| ------------- | ----------------------------------------------------------- |
-| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
-| `index`       | `number`                                                    |
-| `parent`      | `ContentTypeCollectionInterface`                            |
-| `stageId`     | `string`                                                    |
+```js
+events.on("contentType:removeAfter", function (params) {});
+```
+
+| Params        | Type                                           |
+| ------------- | ---------------------------------------------- |
+| `contentType` | `ContentType`: `ContentTypeInterface`          |
+| `index`       | `number`                                       |
+| `parent`      | `ContentType`:`ContentTypeCollectionInterface` |
+| `stageId`     | `string`                                       |
 
 [Back to top]
 
+
+
 ### `contentType:duplicateAfter`
 
-| Parameters             | Type                                                        |
+```js
+events.on("contentType:duplicateAfter", function (params) {});
+```
+
+| Params                 | Type                                                        |
 | ---------------------- | ----------------------------------------------------------- |
 | `originalContentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 | `duplicateContentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
@@ -97,9 +163,15 @@ Events starting with `contentType:` are triggered by every content type on the s
 
 [Back to top]
 
+
+
 ### `contentType:moveBefore`
 
-| Parameters     | Type                                                        |
+```js
+events.on("contentType:moveBefore", function (params) {});
+```
+
+| Params         | Type                                                        |
 | -------------- | ----------------------------------------------------------- |
 | `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 | `sourceParent` | `ContentTypeCollectionInterface`                            |
@@ -108,10 +180,16 @@ Events starting with `contentType:` are triggered by every content type on the s
 | `stageId`      | `string`                                                    |
 
 [Back to top]
+
+
 
 ### `contentType:moveAfter`
 
-| Parameters     | Type                                                        |
+```js
+events.on("contentType:moveAfter", function (params) {});
+```
+
+| Params         | Type                                                        |
 | -------------- | ----------------------------------------------------------- |
 | `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 | `sourceParent` | `ContentTypeCollectionInterface`                            |
@@ -121,126 +199,212 @@ Events starting with `contentType:` are triggered by every content type on the s
 
 [Back to top]
 
+
+
 ### `contentType:redrawAfter`
+
+```js
+events.on("contentType:redrawAfter", function (params) {});
+```
 
 #### Backend
 
-| Parameters    | Type                                                        |
+| Params        | Type                                                        |
 | ------------- | ----------------------------------------------------------- |
 | `id`          | `string`                                                    |
 | `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 #### Frontend
 
-| Parameters | Type          |
-| ---------- | ------------- |
-| `element`  | `HTMLElement` |
+| Params    | Type          |
+| --------- | ------------- |
+| `element` | `HTMLElement` |
 
 [Back to top]
+
+
 
 ### `column:dragStart`
 
-| Parameters | Type                   |
-| ---------- | ---------------------- |
-| `column`   | `ContentTypeInterface` |
-| `stageId`  | `string`               |
+```js
+events.on("column:dragStart", function (params) {});
+```
+
+| Params    | Type                   |
+| --------- | ---------------------- |
+| `column`  | `ContentTypeInterface` |
+| `stageId` | `string`               |
 
 [Back to top]
+
+
 
 ### `column:dragStop`
 
-| Parameters | Type                   |
-| ---------- | ---------------------- |
-| `column`   | `ContentTypeInterface` |
-| `stageId`  | `string`               |
+```js
+events.on("column:dragStop", function (params) {});
+```
+
+| Params    | Type                   |
+| --------- | ---------------------- |
+| `column`  | `ContentTypeInterface` |
+| `stageId` | `string`               |
 
 [Back to top]
+
+
 
 ### `column:initializeAfter`
 
-| Parameters | Type          |
-| ---------- | ------------- |
-| `column`   | `Column`      |
-| `element`  | `Element`     |
-| `parent`   | `ColumnGroup` |
+```js
+events.on("column:initializeAfter", function (params) {});
+```
+
+| Params    | Type          |
+| --------- | ------------- |
+| `column`  | `Column`      |
+| `element` | `Element`     |
+| `parent`  | `ColumnGroup` |
 
 [Back to top]
+
+
 
 ### `image:{{preview.parent.id}}:assignAfter` {#imageidassignafter}
 
-| Parameters    | Type     |
-| ------------- | -------- |
-| `imageObject` | `??????` |
+```js
+events.on(`image:${this.parent.id}:assignAfter`, function (params) {});
+```
+
+
+| Params        | Type   |
+| ------------- | ------ |
+| `imageObject` | `File` |
 
 [Back to top]
+
+
 
 ### `image:mountAfter`
 
-| Parameters | Type       |
-| ---------- | ---------- |
-| `function` | `Function` |
+```js
+events.on("image:mountAfter", function (params) {});
+```
+
+| Params           | Type     |
+| ---------------- | -------- |
+| `id`             | `string` |
+| `expectChildren` | `number` |
 
 [Back to top]
+
+
 
 ### `image:uploadAfter`
 
-| Parameters | Type      |
-| ---------- | --------- |
-| `???????`  | `???????` |
+```js
+events.on("image:uploadAfter", function (params) {});
+```
+
+| Params | Type   |
+| ------ | ------ |
+| `file` | `File` |
 
 [Back to top]
+
+
 
 ### `stage:{{preview.parent.stageId}}:readyAfter`
 
-| Parameters | Type    |
-| ---------- | ------- |
-| `stage`    | `Stage` |
+```js
+events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
+```
+
+| Params  | Type    |
+| ------- | ------- |
+| `stage` | `Stage` |
 
 [Back to top]
+
+
 
 ### `stage:{{preview.parent.stageId}}:renderAfter`
 
-| Parameters | Type     |
-| ---------- | -------- |
-| `stageId`  | `number` |
+```js
+events.on(`stage:${this.parent.stageId}:renderAfter`, function (params) {});
+```
+
+| Params  | Type    |
+| ------- | ------- |
+| `stage` | `Stage` |
 
 [Back to top]
+
+
 
 ### `stage:interactionStart`
 
-| Parameters | Type |
-| ---------- | ---- |
-| `None`     |      |
+```js
+events.on("stage:interactionStart", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
 
 [Back to top]
+
+
 
 ### `stage:interactionStop`
 
-| Parameters | Type |
-| ---------- | ---- |
-| `None`     |      |
+```js
+events.on("stage:interactionStop", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
 
 [Back to top]
+
+
 
 ### `stage:{{preview.parent.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
 
-| Parameters | Type     |
-| ---------- | -------- |
-| `object`   | `Object` |
+```js
+events.on(`stage:${this.parent.stageId}:toggleFullscreen`, function (params) {});
+```
+
+| Params   | Type     |
+| -------- | -------- |
+| `object` | `Object` |
 
 [Back to top]
+
+
 
 ### `previewData:updateAfter`
 
-| Parameters | Type      |
-| ---------- | --------- |
-| `preview`  | `Preview` |
+```js
+events.on("previewData:updateAfter", function (params) {});
+```
+
+| Params    | Type      |
+| --------- | --------- |
+| `preview` | `Preview` |
 
 [Back to top]
 
+
+
 ### `childContentType:sortStart`
 
-| Parameters         | Type                        |
+```js
+events.on("childContentType:sortStart", function (params) {});
+```
+
+| Params             | Type                        |
 | ------------------ | --------------------------- |
 | `instance`         | `Preview`                   |
 | `originalPosition` | `number`                    |
@@ -248,9 +412,15 @@ Events starting with `contentType:` are triggered by every content type on the s
 
 [Back to top]
 
+
+
 ### `childContentType:sortUpdate`
 
-| Parameters         | Type                        |
+```js
+events.on("childContentType:sortUpdate", function (params) {});
+```
+
+| Params             | Type                        |
 | ------------------ | --------------------------- |
 | `instance`         | `ContentTypeInterface`      |
 | `newPosition`      | `number`                    |
@@ -260,78 +430,133 @@ Events starting with `contentType:` are triggered by every content type on the s
 
 [Back to top]
 
+
+
 ### `stage:error`
 
-| Parameters | Type    |
-| ---------- | ------- |
-| `error`    | `Error` |
+```js
+events.on("stage:error", function (params) {});
+```
+
+| Params  | Type    |
+| ------- | ------- |
+| `error` | `Error` |
 
 [Back to top]
+
+
 
 ### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
 
-| Parameters | Type     |
-| ---------- | -------- |
-| `value`    | `string` |
+```js
+events.on(`stage:${this.parent.stageId}:readyAfter`, function (params) {});
+```
+
+| Params  | Type    |
+| ------- | ------- |
+| `stage` | `Stage` |
 
 [Back to top]
+
+
 
 ### `stage:{{preview.parent.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
-| Parameters | Type     |
-| ---------- | -------- |
-| `value`    | `string` |
+```js
+events.on(`stage:${this.parent.stageId}:masterFormatRenderAfter`, function (params) {});
+```
+
+| Params           | Type     |
+| ---------------- | -------- |
+| `renderedOutput` | `string` |
 
 [Back to top]
+
+
 
 ### `stage:updateAfter`
 
-| Parameters | Type     |
-| ---------- | -------- |
-| `stageId`  | `string` |
+```js
+events.on("stage:updateAfter", function (params) {});
+```
+
+| Params    | Type     |
+| --------- | -------- |
+| `stageId` | `string` |
 
 [Back to top]
+
+
 
 ### `stage:childFocusStart`
 
-| Parameters | Type |
-| ---------- | ---- |
-| `None`     |      |
+```js
+events.on("stage:childFocusStart", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
 
 [Back to top]
+
+
 
 ### `stage:childFocusStop`
 
-| Parameters | Type |
-| ---------- | ---- |
-| `None`     |      |
+```js
+events.on("stage:childFocusStop", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
 
 [Back to top]
+
+
 
 ### `state`
 
-| Parameters | Type         |
-| ---------- | ------------ |
-| `state`    | `DataObject` |
+```js
+events.on("state", function (params) {});
+```
+
+| Params  | Type        |
+| ------- | ----------- |
+| `state` | `DataStore` |
 
 [Back to top]
+
+
 
 ### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
 
-| Parameters  | Type                   |
-| ----------- | ---------------------- |
-| `eventName` | `string`               |
-| `paramObj`  | `[key: string]: Stage` |
+```js
+events.on(`${this.config.name}:${this.parent.id}:updateAfter`, function (params) {});
+```
+
+| Params        | Type          |
+| ------------- | ------------- |
+| `contentType` | `ContentType` |
 
 [Back to top]
+
+
 
 ### `googleMaps:authFailure`
 
-| Parameters | Type |
-| ---------- | ---- |
-| `None`     |      |
+```js
+events.on("googleMaps:authFailure", function () {});
+```
+
+| Params | Type |
+| ------ | ---- |
+| `None` |      |
 
 [Back to top]
+
+
 
 [Back to top]: #events
 
