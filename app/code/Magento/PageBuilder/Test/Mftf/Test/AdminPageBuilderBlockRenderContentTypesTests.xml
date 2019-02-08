@@ -208,13 +208,11 @@
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <!--<actionGroup ref="validateBackgroundImageContainer" stepKey="validateTab2BackgroundImageCMSPageStage">-->
-            <!--&lt;!&ndash;todo: this action group will not work in admin and needs to be refactored&ndash;&gt;-->
-            <!--<argument name="section" value="TabOnStorefront"/>-->
-            <!--<argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>-->
-            <!--<argument name="pageNamePrefix" value=""/>-->
-            <!--<argument name="index" value="2"/>-->
-        <!--</actionGroup>-->
+        <actionGroup ref="validateBackgroundImageContainer" stepKey="validateTab2BackgroundImageCMSPageStage">
+            <argument name="section" value="TabOnStorefront"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <seeElement selector="{{TabOnStorefront.verticalAlignContainer('2', PageBuilderVerticalAlignmentPropertyCenter.value)}}" stepKey="seeTab2VerticalAlignmentCMSPageStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
@@ -244,7 +242,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateTab2BackgroundImageCMSPageStorefront">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
-            <argument name="pageNamePrefix" value=""/>
             <argument name="index" value="2"/>
         </actionGroup>
         <seeElement selector="{{TabOnStorefront.verticalAlignContainer('2', PageBuilderVerticalAlignmentPropertyCenter.value)}}" stepKey="seeTab2VerticalAlignmentCMSPageStorefront"/>
@@ -270,7 +267,6 @@
         <actionGroup ref="validateBackgroundImageContainer" stepKey="validateTab2BackgroundImageCMSPageStorefrontMobile">
             <argument name="section" value="TabOnStorefront"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundMobileImage_GIF"/>
-            <argument name="pageNamePrefix" value=""/>
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
