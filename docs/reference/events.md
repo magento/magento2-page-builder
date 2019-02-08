@@ -1,186 +1,123 @@
 # Page Builder Events
 
-This document contains reference information for events dispatched in Page Builder.
+The following table provides the list of events that Page Builder dispatches.
 
-## Events list
-
-
-
+## Events
 
 <!-- {% raw %} -->
 
+| Content Type Events                                 | Stage Events                                             |
+| --------------------------------------------------- | -------------------------------------------------------- |
+| [contentType:createAfter](#contenttypecreateafter)  | [stage:childFocusStart](#stagechildfocusstart)                                    |
+| [contentType:dropAfter](#contenttypedropafter)      | [stage:childFocusStop](#stagechildfocusstop)                                     |
+| [contentType:duplicateAfter](#contenttypeduplicateafter) | [stage:interactionStart](#stageinteractionstart)                                   |
+| [contentType:mountAfter](#contenttypemountafter)    | [stage:interactionStop](#stageinteractionstop)                                    |
+| [contentType:moveAfter](#contenttypemoveafter)      | [stage:error](#stageerror)                                              |
+| [contentType:moveBefore](#contenttypemovebefore)    | [stage:{{preview.parent.stageId}}:masterFormatRenderAfter](#stageidmasterformatrenderafter) |
+| [contentType:redrawAfter](#contenttyperedrawafter)  | [stage:{{preview.parent.stageId}}:readyAfter](#stageidreadyafter)              |
+| [contentType:removeAfter](#contenttyperemoveafter)  | [stage:{{preview.parent.stageId}}:renderAfter](#stagepreviewparentstageidrenderafter)             |
+| [contentType:renderAfter](#contenttyperenderafter)  | [stage:{{preview.parent.stageId}}:toggleFullscreen](#stageidtogglefullscreen)        |
+|                                                     | [stage:updateAfter](#stageupdateafter)                                        |
+|                                                     |                                                          |
+| **Column Events**                                   | **Preview Events**                                       |
+| [column:dragStart](#columndragstart)                | [previewSortable:sortstart](#previewsortablesortstart)                                |
+| [column:dragStop](#columndragstop)                  | [previewSortable:sortupdate](#previewsortablesortupdate)                               |
+| [column:initializeAfter](#columninitializeafter)    | [previewData:updateAfter](#previewdataupdateafter)                                  |
+|                                                     |                                                          |
+| **Image Events**                                    | **Other Events**                                         |
+| [image:{{preview.parent.id}}:assignAfter](#imageidassignafter) | [googleMaps:authFailure](#googlemapsauthfailure)                                   |
+| [image:mountAfter](#imagemountafter)                | [state](#state)                                                    |
+| [image:uploadAfter](#imageuploadafter)              | [{{config.name}}:{{preview.parent.id}}:updateAfter](#confignameidupdateafter)        |
+|                                                     |                                                          |
+
+
 ## `contentType:*` events
-Events starting with `contentType:` are triggered by every content type on the stage. can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
+Events starting with `contentType:` are triggered by every content type on the stage. These events can also be called for specific content types by prefixing the content types name before the event (`{{name}}:{{event}}`). For example:
 * `text:createAfter`
 * `row:mountAfter`
 * `tab-item:mountAfter`
 
 ### `contentType:createAfter`
 
-**Triggers**
-
-* `createContentType`
-
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
-```
+| Parameters    | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
 ### `contentType:mountAfter`
 
-**Triggers**
-
-* `createContentType`
-
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    expectedChildren: number;
-}
-```
+| Parameters       | Type                                                        |
+| ---------------- | ----------------------------------------------------------- |
+| `id`             | `string`                                                    |
+| `contentType`    | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `expectChildren` | `number`                                                    |
 
 [Back to top]
 
 ### `contentType:dropAfter`
 
-**Triggers**
-
-* `onSortReceive`
-
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
-```
-
-[Back to top]
-
-### `contentType:mountAfter`
-
-**Triggers**
-
-* `ContentTypeCollection::addChild`
-* `Column.Preview::fireMountEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
-```
+| Parameters    | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
 ### `contentType:renderAfter`
 
-**Triggers**
-
-* `Preview::dispatchAfterRenderEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    element: Element;
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-}
-```
+| Parameters    | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `element`     | `Element`                                                   |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 [Back to top]
 
 ### `contentType:removeAfter`
 
-**Triggers**
-
-* `Preview::onOptionRemove`
-
-**Params**
-
-``` js
-{
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    index: number;
-    parent: ContentTypeCollectionInterface;
-    stageId: string;
-}
-```
+| Parameters    | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `index`       | `number`                                                    |
+| `parent`      | `ContentTypeCollectionInterface`                            |
+| `stageId`     | `string`                                                    |
 
 [Back to top]
 
 ### `contentType:duplicateAfter`
 
-**Triggers**
-
-* `Preview::dispatchContentTypeCloneEvents`
-
-**Params**
-
-``` js
-{
-    originalContentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    duplicateContentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    index: number;
-    direct: boolean;
-}
-```
+| Parameters             | Type                                                        |
+| ---------------------- | ----------------------------------------------------------- |
+| `originalContentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `duplicateContentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `index`                | `number`                                                    |
+| `direct`               | `boolean`                                                   |
 
 [Back to top]
 
 ### `contentType:moveBefore`
 
-**Triggers**
-
-* `moveContentType`
-
-**Params**
-
-``` js
-{
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    sourceParent: ContentTypeCollectionInterface;
-    targetParent: ContentTypeCollectionInterface;
-    targetIndex: number;
-    stageId: string;
-}
-```
+| Parameters     | Type                                                        |
+| -------------- | ----------------------------------------------------------- |
+| `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `sourceParent` | `ContentTypeCollectionInterface`                            |
+| `targetParent` | `ContentTypeCollectionInterface`                            |
+| `targetIndex`  | `number`                                                    |
+| `stageId`      | `string`                                                    |
 
 [Back to top]
 
 ### `contentType:moveAfter`
 
-**Triggers**
-
-* `moveContentType`
-
-**Params**
-
-``` js
-{
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
-    sourceParent: ContentTypeCollectionInterface;
-    targetParent: ContentTypeCollectionInterface;
-    targetIndex: number;
-    stageId: string;
-}
-```
+| Parameters     | Type                                                        |
+| -------------- | ----------------------------------------------------------- |
+| `contentType`  | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
+| `sourceParent` | `ContentTypeCollectionInterface`                            |
+| `targetParent` | `ContentTypeCollectionInterface`                            |
+| `targetIndex`  | `number`                                                    |
+| `stageId`      | `string`                                                    |
 
 [Back to top]
 
@@ -188,363 +125,214 @@ Events starting with `contentType:` are triggered by every content type on the s
 
 #### Backend
 
-**Triggers**
-
-* `Tabs.Preview::onTabClick`
-
-**Params**
-
-``` js
-{
-    id: string,
-    contentType: ContentTypeInterface & ContentTypeCollectionInterface
-}
-```
+| Parameters    | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| `id`          | `string`                                                    |
+| `contentType` | `ContentTypeInterface` and `ContentTypeCollectionInterface` |
 
 #### Frontend
 
-**Triggers**
-
-* `Tabs.widget.ui.tabs::activate`
-
-**Params**
-
-``` js
-{
-    element: HTMLElement
-}
-```
+| Parameters | Type          |
+| ---------- | ------------- |
+| `element`  | `HTMLElement` |
 
 [Back to top]
 
 ### `column:dragStart`
 
-**Triggers**
-
-* `ColumnGroup.Preview::start`
-
-**Params**
-
-``` js
-{
-    column: ContentTypeInterface;
-    stageId: string;
-}
-```
+| Parameters | Type                   |
+| ---------- | ---------------------- |
+| `column`   | `ContentTypeInterface` |
+| `stageId`  | `string`               |
 
 [Back to top]
 
 ### `column:dragStop`
 
-**Triggers**
-
-* `ColumnGroup.Preview::stop`
-
-**Params**
-
-``` js
-{
-    column: Column,
-    stageId: string
-}
-```
+| Parameters | Type                   |
+| ---------- | ---------------------- |
+| `column`   | `ContentTypeInterface` |
+| `stageId`  | `string`               |
 
 [Back to top]
 
 ### `column:initializeAfter`
 
-**Triggers**
-
-* `Column.Preview::initColumn`
-
-**Params**
-
-``` js
-{
-    column: Column,
-    element,
-    parent: ColumnGroup
-}
-```
+| Parameters | Type          |
+| ---------- | ------------- |
+| `column`   | `Column`      |
+| `element`  | `Element`     |
+| `parent`   | `ColumnGroup` |
 
 [Back to top]
 
-### `image:{{id}}:assignAfter` {#imageidassignafter}
+### `image:{{preview.parent.id}}:assignAfter` {#imageidassignafter}
 
-**Triggers**
+| Parameters    | Type     |
+| ------------- | -------- |
+| `imageObject` | `??????` |
 
-* `Image.Preview::bindEvents`
-
-**Params**
-
-object
+[Back to top]
 
 ### `image:mountAfter`
 
-**Triggers**
-
-* `ContentTypeFactory::fireBlockReadyEvent`
-
-**Params**
-
-Function
+| Parameters | Type       |
+| ---------- | ---------- |
+| `function` | `Function` |
 
 [Back to top]
 
 ### `image:uploadAfter`
 
-**Triggers**
-
-* `ImageUploader::addFile`
-
-**Params**
-
-Function
+| Parameters | Type      |
+| ---------- | --------- |
+| `???????`  | `???????` |
 
 [Back to top]
 
 ### `stage:{{preview.parent.stageId}}:readyAfter`
 
-**Triggers**
-
-* `Stage::ready`
-
-**Params**
-
-``` js
-{
-    stage: Stage
-}
-```
+| Parameters | Type    |
+| ---------- | ------- |
+| `stage`    | `Stage` |
 
 [Back to top]
 
 ### `stage:{{preview.parent.stageId}}:renderAfter`
 
-**Triggers**
-
-* `Stage::constructor`
-
-**Params**
-
-``` js
-{
-    stageId: number
-}
-```
+| Parameters | Type     |
+| ---------- | -------- |
+| `stageId`  | `number` |
 
 [Back to top]
 
 ### `stage:interactionStart`
 
-**Triggers**
-
-* `Tabs.Preview::constructor`
-* `Slider.Preview::constructor`
-* `ColumnGroup.Preview::registerResizeHandle`
-* `ColumnGroup.Preview::start`
-* `drag-drop::onSortStart`
-
-**Params**
-
-``` js
-
-```
+| Parameters | Type |
+| ---------- | ---- |
+| `None`     |      |
 
 [Back to top]
 
 ### `stage:interactionStop`
 
-**Triggers**
-
-* `Tabs.Preview::constructor`
-* `Tabs.Preview::setFocusedTab`
-* `Slider.Preview::constructor`
-* `ColumnGroup.Preview::endAllInteractions`
-* `ColumnGroup.Preview::stop`
-* `drag-drop::onSortStop`
-
-**Params**
-
-``` js
-
-```
+| Parameters | Type |
+| ---------- | ---- |
+| `None`     |      |
 
 [Back to top]
 
 ### `stage:{{preview.parent.stageId}}:toggleFullscreen` {#stageidtogglefullscreen}
 
-**Triggers**
-
-* `Panel::fullScreen`
-* `Wysiwyg::toggleFullScreen`
-
-**Params**
-
-``` js
-
-```
+| Parameters | Type     |
+| ---------- | -------- |
+| `object`   | `Object` |
 
 [Back to top]
 
 ### `previewData:updateAfter`
 
-**Triggers**
-
-* `Preview::updateObservables`
-
-**Params**
-
-``` js
-{
-    preview
-}
-```
+| Parameters | Type      |
+| ---------- | --------- |
+| `preview`  | `Preview` |
 
 [Back to top]
 
-### `previewSortable:sortstart`
+### `childContentType:sortStart`
 
-**Triggers**
-
-* `PreviewSortable::init`
-
-**Params**
-
-``` js
-{
-    instance,
-    originalPosition,
-    ui
-}
-```
+| Parameters         | Type                        |
+| ------------------ | --------------------------- |
+| `instance`         | `Preview`                   |
+| `originalPosition` | `number`                    |
+| `ui`               | `JQueryUI.SortableUIParams` |
 
 [Back to top]
 
-### `previewSortable:sortupdate`
+### `childContentType:sortUpdate`
 
-**Triggers**
-
-* `PreviewSortable::init`
-* `PreviewSortableSortUpdateEventParams`
-
-**Params**
-
-``` js
-{
-    instance: ContentTypeInterface;
-    newPosition: number;
-    originalPosition: number;
-    ui: JQueryUI.SortableUIParams;
-}
-```
+| Parameters         | Type                        |
+| ------------------ | --------------------------- |
+| `instance`         | `ContentTypeInterface`      |
+| `newPosition`      | `number`                    |
+| `originalPosition` | `number`                    |
+| `ui`               | `JQueryUI.SortableUIParams` |
+| `event`            | `Event`                     |
 
 [Back to top]
 
 ### `stage:error`
 
-**Triggers**
-
-* `Stage::build`
-
-**Params**
-
-Error
+| Parameters | Type    |
+| ---------- | ------- |
+| `error`    | `Error` |
 
 [Back to top]
 
 ### `stage:{{preview.parent.stageId}}:readyAfter` {#stageidreadyafter}
 
-**Triggers**
+| Parameters | Type     |
+| ---------- | -------- |
+| `value`    | `string` |
 
-* `Stage::ready`
-* `stage instance`
+[Back to top]
 
 ### `stage:{{preview.parent.stageId}}:masterFormatRenderAfter` {#stageidmasterformatrenderafter}
 
-**Triggers**
-
-* `Stage`
-
-**Params**
-
-``` js
-{
-    value: string
-}
-```
+| Parameters | Type     |
+| ---------- | -------- |
+| `value`    | `string` |
 
 [Back to top]
 
 ### `stage:updateAfter`
 
-**Triggers**
-
-* `Stage::initListeners`
-* `ContentTypeCollection::constructor`
-
-**Params**
-
-``` js
-{
-    stageId: number
-}
-```
+| Parameters | Type     |
+| ---------- | -------- |
+| `stageId`  | `string` |
 
 [Back to top]
 
 ### `stage:childFocusStart`
 
+| Parameters | Type |
+| ---------- | ---- |
+| `None`     |      |
+
 [Back to top]
 
 ### `stage:childFocusStop`
+
+| Parameters | Type |
+| ---------- | ---- |
+| `None`     |      |
 
 [Back to top]
 
 ### `state`
 
-**Triggers**
-
-* `DataStore::emitState`
-
-**Params**
-
-``` js
-{
-    state: DataObject
-}
-```
+| Parameters | Type         |
+| ---------- | ------------ |
+| `state`    | `DataObject` |
 
 [Back to top]
 
 ### `{{config.name}}:{{preview.parent.id}}:updateAfter` {#confignameidupdateafter}
 
-**Triggers**
-
-* `ContentType::bindEvents`
-
-**Params**
-
-``` js
-{
-    eventName: string,
-    paramObj: [key: string]: Stage
-}
-```
+| Parameters  | Type                   |
+| ----------- | ---------------------- |
+| `eventName` | `string`               |
+| `paramObj`  | `[key: string]: Stage` |
 
 [Back to top]
 
-## `googleMaps:authFailure`
+### `googleMaps:authFailure`
 
-**Triggers**
-
-* `window.gm_authFailure`
-
-**Params**
-
-_none_
+| Parameters | Type |
+| ---------- | ---- |
+| `None`     |      |
 
 [Back to top]
 
-[Back to top]: #eventslist
+[Back to top]: #events
+
 <!-- {% endraw %} -->
