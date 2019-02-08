@@ -18,7 +18,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      *
      * @var array
      */
-    protected $_idAttributes = [
+    private $_idAttributes = [
         '/config/menu_section' => 'name'
     ];
 
