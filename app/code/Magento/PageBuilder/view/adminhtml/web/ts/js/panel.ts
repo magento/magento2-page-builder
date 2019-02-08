@@ -23,7 +23,7 @@ import {supportsPositionSticky} from "./utils/position-sticky";
  * @api
  */
 export default class Panel {
-    public groups: KnockoutObservableArray<any> = ko.observableArray([]);
+    public menuSections: KnockoutObservableArray<any> = ko.observableArray([]);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
@@ -223,22 +223,22 @@ export default class Panel {
      * Populate the panel with the content types
      */
     private populateContentTypes(): void {
-        const groups = Config.getConfig("groups");
+        const menuSections = Config.getConfig("menu_sections");
         const contentTypes = Config.getConfig("content_types");
 
         // Verify the configuration contains the required information
-        if (groups && contentTypes) {
-            // Iterate through the groups creating new instances with their associated content types
-            _.each(groups, (group, id) => {
-                // Push the group instance into the observable array to update the UI
-                this.groups.push(new Menu(
+        if (menuSections && contentTypes) {
+            // Iterate through the menu sections creating new instances with their associated content types
+            _.each(menuSections, (menuSection, id) => {
+                // Push the menu section instance into the observable array to update the UI
+                this.menuSections.push(new Menu(
                     id,
-                    group,
+                    menuSection,
                     _.map(
                         _.where(contentTypes, {
-                            group: id,
+                            menu_section: id,
                             is_system: true,
-                        }), /* Retrieve content types with group id */
+                        }), /* Retrieve content types with menu section id */
                         (contentType: ContentTypeConfigInterface, identifier: string) => {
                             return new GroupContentType(
                                 identifier,
@@ -253,10 +253,10 @@ export default class Panel {
 
             // Display the panel
             this.isVisible(true);
-            // Open first group
-            const hasGroups = 0 in this.groups();
+            // Open first menu section
+            const hasGroups = 0 in this.menuSections();
             if (hasGroups) {
-                this.groups()[0].active(true);
+                this.menuSections()[0].active(true);
             }
 
         } else {

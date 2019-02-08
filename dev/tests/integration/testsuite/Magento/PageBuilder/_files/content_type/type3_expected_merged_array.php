@@ -14,7 +14,7 @@ return [
             'icon' => 'pagebuilder-type3-icon',
             'component' => 'Path/to/custom/component',
             'form' => 'pagebuilder_type3_form',
-            'group' => 'group1',
+            'menu_section' => 'menu_section1',
             'allowed_parents' => [
                 0 => 'stage'
             ],

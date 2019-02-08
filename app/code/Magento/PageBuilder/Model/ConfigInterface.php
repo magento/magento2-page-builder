@@ -17,7 +17,7 @@ interface ConfigInterface
     /**
      * @return array
      */
-    public function getGroups() : array;
+    public function getMenuSections() : array;
 
     /**
      * @return array

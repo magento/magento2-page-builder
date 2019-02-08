@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\Group;
+namespace Magento\PageBuilder\Model\Config\MenuSection;
 
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {
@@ -31,8 +31,8 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
         \Magento\Framework\Module\Dir\Reader $moduleReader
     ) {
         $etcDir = $moduleReader->getModuleDir('etc', 'Magento_PageBuilder');
-        $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'group_merged.xsd';
-        $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'group.xsd';
+        $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'menu_section_merged.xsd';
+        $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'menu_section.xsd';
     }
 
     /**

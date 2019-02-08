@@ -14,7 +14,7 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
     "use strict";
 
     function Panel(pageBuilder) {
-      this.groups = _knockout.observableArray([]);
+      this.menuSections = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
       this.isVisible = _knockout.observable(false);
       this.isStickyBottom = _knockout.observable(false);
@@ -229,32 +229,32 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
     _proto.populateContentTypes = function populateContentTypes() {
       var _this3 = this;
 
-      var groups = _config.getConfig("groups");
+      var menuSections = _config.getConfig("menu_sections");
 
       var contentTypes = _config.getConfig("content_types"); // Verify the configuration contains the required information
 
 
-      if (groups && contentTypes) {
-        // Iterate through the groups creating new instances with their associated content types
-        _underscore.each(groups, function (group, id) {
-          // Push the group instance into the observable array to update the UI
-          _this3.groups.push(new _menu.Menu(id, group, _underscore.map(_underscore.where(contentTypes, {
-            group: id,
+      if (menuSections && contentTypes) {
+        // Iterate through the menu sections creating new instances with their associated content types
+        _underscore.each(menuSections, function (menuSection, id) {
+          // Push the menu section instance into the observable array to update the UI
+          _this3.menuSections.push(new _menu.Menu(id, menuSection, _underscore.map(_underscore.where(contentTypes, {
+            menu_section: id,
             is_system: true
           }),
-          /* Retrieve content types with group id */
+          /* Retrieve content types with menu section id */
           function (contentType, identifier) {
             return new _contentType.ContentType(identifier, contentType, _this3.pageBuilder.stage.id);
           }), _this3.pageBuilder.stage.id));
         }); // Display the panel
 
 
-        this.isVisible(true); // Open first group
+        this.isVisible(true); // Open first menu section
 
-        var hasGroups = 0 in this.groups();
+        var hasGroups = 0 in this.menuSections();
 
         if (hasGroups) {
-          this.groups()[0].active(true);
+          this.menuSections()[0].active(true);
         }
       } else {
         _consoleLogger.error("Unable to retrieve content types from server, please inspect network requests " + "response.");

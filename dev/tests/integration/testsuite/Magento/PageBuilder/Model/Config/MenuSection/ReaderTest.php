@@ -6,14 +6,14 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\Group;
+namespace Magento\PageBuilder\Model\Config\MenuSection;
 
 use Magento\TestFramework\Helper\Bootstrap;
 
 class ReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\PageBuilder\Model\Config\Group\Reader
+     * @var \Magento\PageBuilder\Model\Config\MenuSection\Reader
      */
     private $model;
 
@@ -31,7 +31,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->model = $objectManager->create(
-            \Magento\PageBuilder\Model\Config\Group\Reader::class,
+            \Magento\PageBuilder\Model\Config\MenuSection\Reader::class,
             ['fileResolver' => $this->fileResolverMock]
         );
     }
@@ -41,7 +41,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testPartial()
     {
-        $file = file_get_contents(__DIR__ . '/../../../_files/content_type/group3.xml');
+        $file = file_get_contents(__DIR__ . '/../../../_files/content_type/menu_section3.xml');
         $this->fileResolverMock->expects($this->once())
             ->method('get')
             ->willReturn([$file]);
@@ -51,15 +51,15 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     public function testMergeCompleteAndPartial()
     {
         $fileList = [
-            file_get_contents(__DIR__ . '/../../../_files/content_type/group1.xml'),
-            file_get_contents(__DIR__ . '/../../../_files/content_type/group2.xml'),
-            file_get_contents(__DIR__ . '/../../../_files/content_type/group3.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/menu_section1.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/menu_section2.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/menu_section3.xml'),
         ];
         $this->fileResolverMock->expects($this->once())
             ->method('get')
-            ->with('group.xml', 'global')
+            ->with('menu_section.xml', 'global')
             ->willReturn($fileList);
-        $expected = include __DIR__ . '/../../../_files/content_type/groups_expected_merged_array.php';
+        $expected = include __DIR__ . '/../../../_files/content_type/menu_sections_expected_merged_array.php';
         $this->assertEquals($expected, $this->model->read('global'));
     }
 }
