@@ -2647,12 +2647,12 @@
             <actualResult type="variable">grabComputedTextAlignStoreFront</actualResult>
         </assertEquals>
     </test>
-    <test name="TextNestedTextWontBreakStage">
+    <test name="TextContainingPageBuilderMarkupWontBreakStage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Text"/>
             <title value="Text - Nested Text"/>
-            <description value="Nested text content types shouldn't cause the whole stage to break"/>
+            <description value="Nested text content types shouldn't cause the whole stage to break and render all content in a HTML content type"/>
             <severity value="MAJOR"/>
             <useCaseId value="MC-13917"/>
             <testCaseId value="MC-13920"/>
@@ -2668,11 +2668,12 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <dontSeeElement selector="{{HtmlOnStage.base('1')}}" stepKey="dontSeeHtmlCode" />
         <waitForElementVisible selector="{{TextOnStage.base('1')}}" stepKey="waitForTextVisible" />
         <seeElement selector="{{TextOnStage.base('1')}}" stepKey="seeText" />
-        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextTestString.value)}}" stepKey="seeTestStringInText"/>
+        <seeElement selector="{{TextOnStage.text('1', PageBuilderTextProperty.value)}}" stepKey="seeTestStringInText"/>
     </test>
 </tests>
