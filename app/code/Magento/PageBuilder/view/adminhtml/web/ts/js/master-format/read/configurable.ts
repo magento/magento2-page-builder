@@ -41,7 +41,7 @@ export default class Configurable implements ReadInterface {
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
-                    const currentElement = this.findElementByName(role, element, elementName);
+                    const currentElement = this.findElementByName(element, elementName);
 
                     // If we cannot locate the current element skip trying to read any attributes from it
                     if (currentElement === null || currentElement === undefined) {
@@ -93,12 +93,11 @@ export default class Configurable implements ReadInterface {
      * Find the element for the current content type by it's name, avoiding searching in other content types by
      * removing any other element which contains it's own data-role.
      *
-     * @param {string} role
      * @param {HTMLElement} element
      * @param {string} name
      * @returns {HTMLElement}
      */
-    private findElementByName(role: string, element: HTMLElement, name: string): HTMLElement {
+    private findElementByName(element: HTMLElement, name: string): HTMLElement {
         // Create a clone of the element to avoid modifying the source
         const currentElement = $(element).clone();
         if (currentElement.attr("data-element") === name) {

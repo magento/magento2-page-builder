@@ -42,7 +42,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
             var elementName = _arr[_i];
             var elementConfig = config.elements[elementName];
 
-            var currentElement = _this.findElementByName(role, element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
+            var currentElement = _this.findElementByName(element, elementName); // If we cannot locate the current element skip trying to read any attributes from it
 
 
             if (currentElement === null || currentElement === undefined) {
@@ -81,14 +81,13 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
      * Find the element for the current content type by it's name, avoiding searching in other content types by
      * removing any other element which contains it's own data-role.
      *
-     * @param {string} role
      * @param {HTMLElement} element
      * @param {string} name
      * @returns {HTMLElement}
      */
 
 
-    _proto.findElementByName = function findElementByName(role, element, name) {
+    _proto.findElementByName = function findElementByName(element, name) {
       // Create a clone of the element to avoid modifying the source
       var currentElement = (0, _jquery)(element).clone();
 

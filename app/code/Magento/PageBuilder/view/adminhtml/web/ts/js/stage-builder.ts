@@ -10,6 +10,7 @@ import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
 import ConfigFieldInterface from "./config-field";
+import ContentTypeCollection from "./content-type-collection";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
@@ -20,7 +21,6 @@ import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
 import {set} from "./utils/object";
-import ContentTypeCollection from "./content-type-collection";
 
 /**
  * Build the stage with the provided value
