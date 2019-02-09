@@ -122,4 +122,14 @@
             <argument name="targetName" xsi:type="string">ns = pagebuilder_map_form, index = map_location_modal</argument>
         </arguments>
     </virtualType>
+    <virtualType name="pageBuilderProductCollectionFactory" type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Magento\PageBuilder\Ui\DataProvider\Product\ProductCollection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <arguments>
+            <argument name="productCollectionFactory" xsi:type="object">pageBuilderProductCollectionFactory</argument>
+        </arguments>
+    </type>
 </config>
