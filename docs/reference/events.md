@@ -1,5 +1,6 @@
 # Page Builder events
 
+## Event consumption
 The pattern for consuming Page Builder events in JavaScript, such as within the `preview.js` component, is to import `Magento_PageBuilder/js/events` and use the `events.on()` method to bind to the event you want to handle, as shown here:
 
 ```js
@@ -15,9 +16,9 @@ define([
 
 ```
 
-## Events
+## Events list
 
-The following table lists the Page Builder events you can consume.
+The following table lists the Page Builder events you can bind to and handle within your content type.
 
 <!-- {% raw %} -->
 
@@ -45,7 +46,7 @@ The following table lists the Page Builder events you can consume.
 | [image:uploadAfter](#imageuploadafter)              | [{{config.name}}:{{preview.parent.id}}:updateAfter](#confignameidupdateafter)        |
 |                                                     |                                                          |
 
-## Usage
+## Event details
 
 ## `contentType:*` events
 Events starting with `contentType:` are triggered for every content type on the stage. These events can also be called for specific content types by prefixing the content type's name before the event (`name:event`). For example:
@@ -559,6 +560,6 @@ events.on("googleMaps:authFailure", function () {});
 
 
 
-[Back to top]: #events
+[Back to top]: #events-list
 
 <!-- {% endraw %} -->
