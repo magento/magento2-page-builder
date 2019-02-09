@@ -130,4 +130,3 @@ For more general information about Magento's Admin icons and how to create your 
 [Magento Admin icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html
 [Create your own icons]: https://devdocs.magento.com/guides/v2.2/pattern-library/graphics/iconography/iconography.html#creating-icons
 [The CMS icons repository]: https://github.com/magento-ux/cms-icons
-
