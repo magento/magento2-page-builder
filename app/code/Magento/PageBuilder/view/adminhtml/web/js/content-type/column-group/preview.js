@@ -595,7 +595,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.handleMouseUp = function handleMouseUp() {
       if (this.dropOverElement && this.dropPosition) {
         this.onNewColumnDrop(this.dropPosition);
-        this.dropOverElement = null;
+        this.dropOverElement = null; // Re-enable the parent disabled sortable instance
+
+        _underscore.defer(function () {
+          (0, _jquery)(".element-children.ui-sortable-disabled").each(function () {
+            (0, _jquery)(this).sortable("option", "disabled", false);
+          });
+        });
       }
 
       var column = (0, _registry2.getDragColumn)();
