@@ -198,10 +198,16 @@ define(["consoleLogger", "jquery", "knockout", "mage/translate", "Magento_PageBu
           var block = _knockout.dataFor(this);
 
           if (block && block.config) {
+            // Blur any focused element
+            if (document.querySelector(":focus")) {
+              document.querySelector(":focus").blur();
+            }
             /**
              * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
              * size this yields better results when dragging
              */
+
+
             (0, _jquery)(".content-type-container.ui-sortable").each(function () {
               if ((0, _jquery)(this).data("sortable")) {
                 (0, _jquery)(this).sortable("option", "tolerance", "intersect");

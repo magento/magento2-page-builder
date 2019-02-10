@@ -201,6 +201,11 @@ export default class Panel implements PanelInterface {
             start() {
                 const block = ko.dataFor(this);
                 if (block && block.config) {
+                    // Blur any focused element
+                    if (document.querySelector(":focus")) {
+                        document.querySelector<HTMLElement>(":focus").blur();
+                    }
+                    
                     /**
                      * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
                      * size this yields better results when dragging
