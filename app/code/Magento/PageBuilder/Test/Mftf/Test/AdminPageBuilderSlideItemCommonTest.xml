@@ -1522,64 +1522,6 @@
             <actualResult type="variable">actualBoxSizingStyle</actualResult>
         </assertEquals>
     </test>
-    <test name="SlideItemInlineEditStaysFocusedWhileDraggingAndDropping">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Slider"/>
-            <title value="Slide Item - Inline Edit Stays Focused While Dragging And Dropping"/>
-            <description value="Verify that the Slide inline edit stays in focus while users drag and drop content"/>
-            <severity value="MAJOR"/>
-            <useCaseId value="MC-937"/>
-            <testCaseId value="MC-3814"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-slide"/>
-        </annotations>
-        <before>
-            <magentoCLI command="config:set cms/wysiwyg/enabled enabled" stepKey="enableWYSIWYG"/>
-            <magentoCLI command="config:set cms/wysiwyg/editor mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter" stepKey="enableTinyMCE4"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Add Slider -->
-        <comment userInput="Add Slider" stepKey="commentAddSlider"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
-            <argument name="contentType" value="PageBuilderSliderContentType"/>
-        </actionGroup>
-        <!-- Check that user can drag column when inline mode active -->
-        <comment userInput="Check that user can drag column when inline mode active" stepKey="commentDragColumnIntoStage"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupForColumn">
-            <argument name="group" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderSlideContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
-        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnOntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="seeEditorPanel"/>
-        <!-- Verify Content Type Option Menus Are Hidden -->
-        <comment userInput="Verify Content Type Option Menus Are Hidden" stepKey="commentOptionsHidden"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="mouseOverSlider"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeSliderOptionsInDOM"/>
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderOptions"/>
-        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderColumnContentType.role)}}" stepKey="mouseOverColumn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <seeElementInDOM selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderColumnContentType.role)}}" stepKey="seeColumnOptionsInDOM"/>
-        <dontSeeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderColumnContentType.role)}}" stepKey="dontSeeColumnOptions"/>
-        <!-- Verify Editor Still In Focus 2 -->
-        <comment userInput="Verify Editor Still In Focus 2" stepKey="commentEditorInFocus2"/>
-        <seeElement selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderSlideContentType.role, '1')}}" stepKey="seeEditorPanel2"/>
-    </test>
     <test name="SlideContentVariableCanWrap">
         <annotations>
             <features value="PageBuilder"/>
