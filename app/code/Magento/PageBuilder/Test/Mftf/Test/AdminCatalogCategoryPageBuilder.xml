@@ -152,4 +152,139 @@
         </actionGroup>
         <seeElement selector="{{SlideOnFrontend.backgroundColor('3', PageBuilderBackgroundColor_RGB_Blue.rgb)}}" stepKey="seeBackgroundColorSlide2Storefront"/>
     </test>
+    <test name="PageBuilderCategoryVerifyCanMoveContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can move content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-13965"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-heading"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCategory">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="openContentSection"/>
+            <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnToRow">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <!-- Add Heading to Column 2 -->
+        <comment userInput="Add Heading to Column 2" stepKey="commentAddHeadingToColumn2"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHeadingContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToColumn2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage">
+            <argument name="headingText" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Divider to Column 2 -->
+        <comment userInput="Add Divider to Column 2" stepKey="commentAddDividerToColumn2"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupElements">
+            <argument name="group" value="PageBuilderDividerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerToColumn2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="2" />
+        </actionGroup>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingPosition">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateDividerPosition">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Move Divider -->
+        <comment userInput="Move Divider" stepKey="commentMoveDivider"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveDividerToColumn1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Stage After Move -->
+        <comment userInput="Validate Stage After Move" stepKey="commentValidateStageAfterMove"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingPositionAfterMove">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateDividerPositionAfterMove">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Save Category -->
+        <comment userInput="Save Category" stepKey="commentSaveCategory"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
+        <actionGroup ref="saveCategoryForm" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoadSaveCategory"/>
+        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="openContentSection"/>
+        <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingPositionAfterSave">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateDividerPositionAfterSave">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToCategoryPage"/>
+        <scrollTo selector="//div[@class='category-description']" stepKey="scrollToCategoryDescription"/>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateHeadingPositionStorefront">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStorefront" stepKey="validateDividerPositionStorefront">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+    </test>
 </tests>
