@@ -22,7 +22,7 @@ import FieldDefaultsInterface from "./field-defaults.d";
  *
  * @param {ContentTypeConfigInterface} config
  * @param {ContentTypeInterface} parent
- * @param {number} stageId
+ * @param {string} stageId
  * @param {object} data
  * @param {number} childrenLength
  * @returns {Promise<ContentTypeInterface>}

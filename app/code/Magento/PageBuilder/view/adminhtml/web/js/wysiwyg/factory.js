@@ -12,9 +12,10 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
    * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
    * @param {DataStore} dataStore The datastore to store the content in.
    * @param {String} fieldName The key in the provided datastore to set the data.
+   * @param {String} stageId The ID in the registry of the stage containing the content type.
    * @returns {Wysiwyg}
    */
-  function create(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName) {
+  function create(contentTypeId, elementId, contentTypeName, config, dataStore, fieldName, stageId) {
     config = _jquery.extend(true, {}, config);
     return new Promise(function (resolve) {
       (0, _loader)([config.adapter_config.component], function (WysiwygInstance) {
@@ -31,7 +32,7 @@ define(["jquery", "Magento_PageBuilder/js/utils/loader"], function (_jquery, _lo
           }
         }).then(function () {
           // Instantiate the component
-          var wysiwyg = new WysiwygInstance(contentTypeId, elementId, config, dataStore, fieldName);
+          var wysiwyg = new WysiwygInstance(contentTypeId, elementId, config, dataStore, fieldName, stageId);
 
           if (config.adapter_config.component_initializers && config.adapter_config.component_initializers[contentTypeName]) {
             (0, _loader)([config.adapter_config.component_initializers[contentTypeName]], function (InitializerType) {
