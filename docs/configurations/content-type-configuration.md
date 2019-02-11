@@ -5,12 +5,12 @@
 
 <!-- {% raw %} -->
 
-Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
+Use the content type and menu section configuration to add new content types, extend existing content types, add menu_sections in the left menu, or rearrange content types in the menu sections.
 
 | Element             | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `group`             | Describes the group name, translated field, and sort order in the menu.      |
-| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
+| `menu_section`             | Describes the menu section name, translated field, and sort order in the menu.      |
+| `type`              | Describes the content type name, translated field, and sort order in the menu section. Each type should have its own configuration file.      |
 | `parents`           | List of parent content types that can accept this type as a child.                                                                          |
 | `children`          | List of children content types that can accept this type as a parent.                                                                       |
 | `appearances`       | Appearance configuration.                                                                                                                   |
@@ -26,18 +26,18 @@ Use the content type and group configuration to add new content types, extend ex
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type.                                                                                         |
-| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `menu_section`             | Existing menu menu section that contains this content type.                                                                                        |
 {:style="table-layout:auto"}
 
 ### Examples
 
-#### `group`
+#### `menu_section`
 
-The following is an example of a group configuration in `view/adminhtml/pagebuilder/group.xml`:
+The following is an example of a menu section configuration in `view/adminhtml/pagebuilder/menu_section.xml`:
 
 ``` xml
-<!-- Definition of main menu, used for grouping content types  -->
-    <group name="media" translate="label" sortOrder="10" label="Media"/>
+<!-- Definition of main menu, used for menu sectioning content types  -->
+    <menu_section name="media" translate="label" sortOrder="10" label="Media"/>
 ```
 
 #### Content type
@@ -51,7 +51,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
       component="Magento_PageBuilder/js/content-type"
       preview_component="Magento_PageBuilder/js/content-type/banner/preview"
       form="pagebuilder_banner_form"
-      group="media"
+      menu_section="media"
       icon="icon-pagebuilder-image"
       sortOrder="1"
       translate="label">
@@ -155,7 +155,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
 | `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
-| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `menu_section`      | Existing menu section that contains this content type.                                                                                      |
 {:style="table-layout:auto"}
 
 ### `form`

@@ -34,7 +34,7 @@ Write the following content into this configuration file:
           preview_component="VendorName_CustomContainer/js/content-type/custom-container-group/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_group_form"
-          group="general"
+          menu_section="general"
           icon="icon-pagebuilder-row"
           sortOrder="1"
           translate="label">
@@ -141,7 +141,7 @@ Write the following content into this configuration file:
           preview_component="VendorName_CustomContainer/js/content-type/custom-container/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_custom_container_form"
-          group="general"
+          menu_section="general"
           icon="icon-pagebuilder-row"
           sortOrder="1"
           translate="label">
