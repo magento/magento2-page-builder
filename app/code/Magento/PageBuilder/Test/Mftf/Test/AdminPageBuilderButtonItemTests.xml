@@ -650,13 +650,9 @@
         <seeElement selector="{{ButtonItemOnStage.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStage"/>
         <seeElement selector="{{ButtonItemOnStage.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStage"/>
         <seeElement selector="{{ButtonItemOnStage.noMargins('1')}}" stepKey="seeNoMarginsStage"/>
-        <!-- Validate default margin -->
-        <comment userInput="Validate default margin" stepKey="commentDefaultMarginStage"/>
-        <executeJS function="return window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).margin" stepKey="getDefaultMarginValueStage"/>
-        <assertEquals stepKey="checkDefaultMarginValueStage">
-            <expectedResult type="string">0px 10px 10px 0px</expectedResult>
-            <actualResult type="variable">getDefaultMarginValueStage</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateButtonItemsDefaultMargin" stepKey="validateDefaultMarginValueStage">
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
         <seeElement selector="{{ButtonItemOnStage.noPadding('1')}}" stepKey="seeNoPaddingStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -668,13 +664,9 @@
         <seeElement selector="{{ButtonItemOnStage.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStage2"/>
         <seeElement selector="{{ButtonItemOnStage.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStage2"/>
         <seeElement selector="{{ButtonItemOnStage.noMargins('1')}}" stepKey="seeNoMarginsStage2"/>
-        <!-- Validate default margin After Save -->
-        <comment userInput="Validate default margin After Save" stepKey="commentDefaultMarginStage2"/>
-        <executeJS function="return window.getComputedStyle({{ButtonItemOnStage.jsButtonSelector('1')}}).margin" stepKey="getDefaultMarginValueStage2"/>
-        <assertEquals stepKey="checkDefaultMarginValueStage2">
-            <expectedResult type="string">0px 10px 10px 0px</expectedResult>
-            <actualResult type="variable">getDefaultMarginValueStage2</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateButtonItemsDefaultMargin" stepKey="validateDefaultMarginValueStage2">
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
         <seeElement selector="{{ButtonItemOnStage.noPadding('1')}}" stepKey="seeNoPaddingStage2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -717,13 +709,9 @@
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderWidth('1')}}" stepKey="seeNoBorderWidthStorefront"/>
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noBorderRadius('1')}}" stepKey="seeNoBorderRadiusStorefront"/>
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noMargins('1')}}" stepKey="seeNoMarginsStorefront"/>
-        <!-- Validate default margin Storefront -->
-        <comment userInput="Validate default margin Storefront" stepKey="commentDefaultMarginStorefront"/>
-        <executeJS function="return window.getComputedStyle({{ButtonItemOnStorefrontEmptyLink.jsButtonSelector('1')}}).margin" stepKey="getDefaultMarginValueStorefront"/>
-        <assertEquals stepKey="checkDefaultMarginValueStorefront">
-            <expectedResult type="string">0px 10px 10px 0px</expectedResult>
-            <actualResult type="variable">getDefaultMarginValueStorefront</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateButtonItemsDefaultMargin" stepKey="validateDefaultMarginValueStorefront">
+            <argument name="buttonItemPage" value="ButtonItemOnStorefrontEmptyLink"/>
+        </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefrontEmptyLink.noPadding('1')}}" stepKey="seeNoPaddingStorefront"/>
     </test>
     <test name="ButtonItemUpdateAdvancedConfigurationValues">
