@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\ContentType;
 
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 
