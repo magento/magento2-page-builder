@@ -172,7 +172,7 @@
         <comment userInput="Validate stage after updating block" stepKey="validateStage2" />
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForHtmlBaseStage1"/>
-        <waitForElementVisible selector="{{BlockOnStage.html('1', '1')}}" stepKey="waitForHtmlStage1"/>
+        <see selector="{{BlockOnStage.html('1', '1')}}" userInput="{{PageBuilderHtmlPropertyButton.value}}" stepKey="waitForHtmlStage1"/>
         <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate storefront after updating block" stepKey="validateStorefront2" />
