@@ -205,7 +205,7 @@ export default class Panel implements PanelInterface {
                     if (document.querySelector(":focus")) {
                         document.querySelector<HTMLElement>(":focus").blur();
                     }
-                    
+
                     /**
                      * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
                      * size this yields better results when dragging
