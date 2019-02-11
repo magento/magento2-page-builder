@@ -318,6 +318,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           (0, _registry2.setDragColumn)(columnInstance.parent);
           _this4.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this4.parent);
+          _this4.startDragEvent = event;
 
           _events.trigger("column:dragStart", {
             column: columnInstance,
@@ -346,6 +347,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this4.dropPlaceholder.removeClass("left right");
 
           _this4.movePlaceholder.removeClass("active");
+
+          _this4.startDragEvent = null;
 
           _events.trigger("column:dragStop", {
             column: draggedColumn,
@@ -760,42 +763,24 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var columnInstance = dragColumn;
         var currentX = event.pageX - groupPosition.left; // Are we within the same column group or have we ended up over another?
 
-        if (columnInstance.parent === this.parent) {
-          var currentColumn = dragColumn.preview.element;
-          var currentColumnRight = currentColumn.position().left + currentColumn.width();
-          var lastColInGroup = this.parent.children()[this.parent.children().length - 1].preview.element;
-          var insertLastPos = lastColInGroup.position().left + lastColInGroup.width() / 2;
-          this.movePosition = this.dropPositions.find(function (position) {
-            // Only ever look for the left placement, except the last item where we look on the right
-            var placement = currentX >= insertLastPos ? "right" : "left"; // There is 200px area over each column borders
+        if (columnInstance.parent === this.parent && this.startDragEvent) {
+          var dragDirection = event.pageX <= this.startDragEvent.pageX ? "left" : "right";
+          var adjacentLeftColumn = (0, _resize.getAdjacentColumn)(dragColumn, "-1"); // Determine the current move position based on the cursors position and direction of drag
 
-            return (0, _resize.comparator)(currentX, position[placement], 100) && !(0, _resize.comparator)(currentX, currentColumnRight, 100) && position.affectedColumn !== columnInstance && // Check affected column isn't the current column
-            position.placement === placement; // Verify the position, we only check left on sorting
-          });
+          this.movePosition = this.dropPositions.find(function (position) {
+            return currentX > position.left && currentX < position.right && position.placement === dragDirection && position.affectedColumn !== dragColumn;
+          }); // Differences in the element & event positions cause a right movement to activate on the left column
+
+          if (this.movePosition && dragDirection === "right" && this.movePosition.affectedColumn === adjacentLeftColumn) {
+            this.movePosition = null;
+          }
 
           if (this.movePosition) {
             this.dropPlaceholder.removeClass("left right");
-
-            var _width = dragColumn.preview.element.outerWidth();
-
-            var _left = this.movePosition.placement === "left" ? this.movePosition.left : null; // The right position is only used when moving a column to the last position in the group
-
-
-            var _right = this.movePosition.placement === "right" ? groupPosition.outerWidth - this.movePosition.right : null;
-            /**
-             * If we're dragging the column from the left to the right we need to show the placeholder on
-             * the left hand side.
-             */
-
-
-            if (_left !== null && this.parent.children().indexOf(dragColumn) < this.parent.children().indexOf(this.movePosition.affectedColumn)) {
-              _left = _left - _width;
-            }
-
-            this.movePlaceholder.css({
-              width: _width,
-              left: _left,
-              right: _right
+            this.movePlaceholder.removeClass("left right").css({
+              left: this.movePosition.placement === "left" ? this.movePosition.left : "",
+              right: this.movePosition.placement === "right" ? groupPosition.width - this.movePosition.right : "",
+              width: dragColumn.preview.element.outerWidth() + "px"
             }).addClass("active");
           } else {
             this.movePlaceholder.removeClass("active");
@@ -952,9 +937,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var potentialWidth = Math.floor(formattedAvailableWidth / _i);
 
         for (var _i2 = 0; _i2 < allowedColumnWidths.length; _i2++) {
-          var _width2 = allowedColumnWidths[_i2];
+          var _width = allowedColumnWidths[_i2];
 
-          if (potentialWidth === Math.floor(_width2)) {
+          if (potentialWidth === Math.floor(_width)) {
             spreadAcross = _i;
             spreadAmount = formattedAvailableWidth / _i;
             break;

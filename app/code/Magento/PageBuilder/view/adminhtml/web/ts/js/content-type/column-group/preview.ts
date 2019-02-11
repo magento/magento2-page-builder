@@ -80,6 +80,7 @@ export default class Preview extends PreviewCollection {
     private resizeUtils: Resize;
     private gridSizeHistory: Map<number, number[]> = new Map();
     private interactionLevel: number = 0;
+    private startDragEvent: JQueryEventObject;
 
     /**
      *
@@ -345,11 +346,12 @@ export default class Preview extends PreviewCollection {
                 });
                 return helper;
             },
-            start: (event: Event) => {
+            start: (event: JQueryEventObject) => {
                 const columnInstance: ContentTypeCollectionInterface = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
                 setDragColumn((columnInstance.parent as ContentTypeCollectionInterface<ColumnPreview>));
                 this.dropPositions = calculateDropPositions(this.parent);
+                this.startDragEvent = event;
 
                 events.trigger("column:dragStart", {
                     column: columnInstance,
@@ -372,6 +374,7 @@ export default class Preview extends PreviewCollection {
 
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
+                this.startDragEvent = null;
 
                 events.trigger("column:dragStop", {
                     column: draggedColumn,
@@ -783,44 +786,30 @@ export default class Preview extends PreviewCollection {
             const currentX = event.pageX - groupPosition.left;
 
             // Are we within the same column group or have we ended up over another?
-            if (columnInstance.parent === this.parent) {
-                const currentColumn = dragColumn.preview.element;
-                const currentColumnRight = currentColumn.position().left + currentColumn.width();
-                const lastColInGroup = (this.parent.children()[this.parent.children().length - 1]
-                    .preview as ColumnPreview).element;
-                const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
+            if (columnInstance.parent === this.parent && this.startDragEvent) {
+                const dragDirection = (event.pageX <= this.startDragEvent.pageX ? "left" : "right");
+                const adjacentLeftColumn = getAdjacentColumn(dragColumn, "-1");
 
+                // Determine the current move position based on the cursors position and direction of drag
                 this.movePosition = this.dropPositions.find((position) => {
-                    // Only ever look for the left placement, except the last item where we look on the right
-                    const placement = (currentX >= insertLastPos ? "right" : "left");
-                    // There is 200px area over each column borders
-                    return comparator(currentX, position[placement], 100) &&
-                        !comparator(currentX, currentColumnRight, 100) &&
-                        position.affectedColumn !== columnInstance && // Check affected column isn't the current column
-                        position.placement === placement; // Verify the position, we only check left on sorting
+                    return currentX > position.left && currentX < position.right &&
+                        position.placement === dragDirection && position.affectedColumn !== dragColumn;
                 });
+
+                // Differences in the element & event positions cause a right movement to activate on the left column
+                if (this.movePosition && dragDirection === "right" &&
+                    this.movePosition.affectedColumn === adjacentLeftColumn
+                ) {
+                    this.movePosition = null;
+                }
 
                 if (this.movePosition) {
                     this.dropPlaceholder.removeClass("left right");
-                    const width = dragColumn.preview.element.outerWidth();
-                    let left = (this.movePosition.placement === "left" ? this.movePosition.left : null);
-                    // The right position is only used when moving a column to the last position in the group
-                    const right = (this.movePosition.placement === "right" ?
-                            groupPosition.outerWidth - this.movePosition.right : null
-                    );
-                    /**
-                     * If we're dragging the column from the left to the right we need to show the placeholder on
-                     * the left hand side.
-                     */
-                    if (left !== null && this.parent.children().indexOf(dragColumn) <
-                            this.parent.children().indexOf(this.movePosition.affectedColumn)
-                    ) {
-                        left = left - width;
-                    }
-                    this.movePlaceholder.css({
-                        width,
-                        left,
-                        right,
+                    this.movePlaceholder.removeClass("left right").css({
+                        left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
+                        right: (this.movePosition.placement === "right"
+                            ? groupPosition.width - this.movePosition.right : ""),
+                        width: dragColumn.preview.element.outerWidth() + "px",
                     }).addClass("active");
                 } else {
                     this.movePlaceholder.removeClass("active");
