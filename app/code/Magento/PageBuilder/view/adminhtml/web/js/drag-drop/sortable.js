@@ -65,18 +65,18 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
 
   function getPreviewStageIdProxy(preview) {
-    return preview.master.stageId;
+    return preview.contentType.stageId;
   }
   /**
-   * Retrieve the master from the preview
+   * Retrieve the contentType from the preview
    *
    * @param {Preview | Stage} instance
    * @returns {any}
    */
 
 
-  function getMasterProxy(instance) {
-    return instance.master;
+  function getcontentTypeProxy(instance) {
+    return instance.contentType;
   }
 
   var sortedContentType;
@@ -100,14 +100,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         ui.item.css("display", "block").addClass("pagebuilder-sorting-original");
         (0, _jquery)(".pagebuilder-drop-indicator.hidden-drop-indicator").css("display", "block").removeClass("hidden-drop-indicator"); // If we're the first item in the container we need to hide the first drop indicator
 
-        if (contentTypeInstance.containerContentType.getChildren().indexOf(contentTypeInstance) === 0) {
+        if (contentTypeInstance.parentContentType.getChildren().indexOf(contentTypeInstance) === 0) {
           ui.item.prev(".pagebuilder-drop-indicator").css("display", "none").addClass("hidden-drop-indicator");
         }
 
-        (0, _dropIndicators.showDropIndicators)(contentTypeInstance.config.name, preview.master.stageId);
+        (0, _dropIndicators.showDropIndicators)(contentTypeInstance.config.name, preview.contentType.stageId);
         sortedContentType = contentTypeInstance; // Dynamically change the connect with option to restrict content types
 
-        (0, _jquery)(this).sortable("option", "connectWith", (0, _matrix.getAllowedContainersClasses)(contentTypeInstance.config.name, preview.master.stageId));
+        (0, _jquery)(this).sortable("option", "connectWith", (0, _matrix.getAllowedContainersClasses)(contentTypeInstance.config.name, preview.contentType.stageId));
         (0, _jquery)(this).sortable("refresh");
       }
     }
@@ -190,10 +190,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         return element.classList.contains("pagebuilder-draggable-content-type");
       }); // Create the new content type and insert it into the parent
 
-      (0, _contentTypeFactory)(contentTypeConfig, getMasterProxy(preview), getPreviewStageIdProxy(preview)).then(function (contentType) {
+      (0, _contentTypeFactory)(contentTypeConfig, getcontentTypeProxy(preview), getPreviewStageIdProxy(preview)).then(function (contentType) {
         // Set the content type instance as "dropped", as it was dropped from the left panel
         contentType.dropped = true;
-        getMasterProxy(preview).addChild(contentType, index);
+        getcontentTypeProxy(preview).addChild(contentType, index);
 
         _events.trigger("contentType:dropAfter", {
           id: contentType.id,
@@ -224,14 +224,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     // If the sortable instance is disabled don't complete this operation
     if ((0, _jquery)(this).sortable("option", "disabled") || ui.item.parents(hiddenClass).length > 0) {
       ui.item.remove();
-      (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the master
+      (0, _jquery)(this).sortable("cancel"); // jQuery tries to reset the state but kills KO's bindings, so we'll force a re-render on the content type
 
       if (ui.item.length > 0 && typeof _knockout.dataFor(ui.item[0]) !== "undefined") {
-        var master = _knockout.dataFor(ui.item[0]).master;
+        var contentType = _knockout.dataFor(ui.item[0]).contentType;
 
-        var children = master.getChildren()().splice(0);
-        master.getChildren()([]);
-        master.getChildren()(children);
+        var children = contentType.getChildren()().splice(0);
+        contentType.getChildren()([]);
+        contentType.getChildren()(children);
       }
 
       return;
@@ -252,8 +252,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
       if (target && contentTypeInstance) {
         // Calculate the source and target index
-        var sourceParent = contentTypeInstance.containerContentType;
-        var targetParent = getMasterProxy(target);
+        var sourceParent = contentTypeInstance.parentContentType;
+        var targetParent = getcontentTypeProxy(target);
         var targetIndex = (0, _jquery)(placeholderContainer).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type").toArray().findIndex(function (element) {
           return element === el;
         });
@@ -266,7 +266,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
         (0, _moveContentType.moveContentType)(contentTypeInstance, targetIndex, targetParent);
 
-        if (contentTypeInstance.containerContentType !== targetParent) {
+        if (contentTypeInstance.parentContentType !== targetParent) {
           ui.item.remove();
         }
       }

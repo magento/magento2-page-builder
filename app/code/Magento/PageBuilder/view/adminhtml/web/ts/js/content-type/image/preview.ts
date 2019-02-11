@@ -40,14 +40,14 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const initialImageValue = this.master.dataStore
+        const initialImageValue = this.contentType.dataStore
             .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         return new Uploader(
-            "imageuploader_" + this.master.id,
+            "imageuploader_" + this.contentType.id,
             this.config.additional_data.uploaderConfig,
-            this.master.id,
-            this.master.dataStore,
+            this.contentType.id,
+            this.contentType.dataStore,
             initialImageValue,
         );
     }
@@ -58,10 +58,13 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.config.name}:${this.master.id}:updateAfter`, () => {
-            const files = this.master.dataStore.get<object[]>(this.config.additional_data.uploaderConfig.dataScope);
+        events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
+            const files = this
+                .contentType
+                .dataStore
+                .get<object[]>(this.config.additional_data.uploaderConfig.dataScope);
             const imageObject: object = files ? (files[0] as object) : {};
-            events.trigger(`image:${this.master.id}:assignAfter`, imageObject);
+            events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
         });
     }
 }

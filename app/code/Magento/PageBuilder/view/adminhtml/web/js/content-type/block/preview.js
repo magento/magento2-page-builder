@@ -21,10 +21,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     /**
      * @inheritdoc
      */
-    function Preview(master, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, master, config, observableUpdater) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayingBlockPreview = _knockout.observable(false);
       _this.loading = _knockout.observable(false);
       _this.messages = {
@@ -91,7 +91,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/widget-i
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       _preview2.prototype.afterObservablesUpdated.call(this);
 
-      var data = this.master.dataStore.getState(); // Only load if something changed
+      var data = this.contentType.dataStore.getState(); // Only load if something changed
 
       this.processBlockData(data);
     }

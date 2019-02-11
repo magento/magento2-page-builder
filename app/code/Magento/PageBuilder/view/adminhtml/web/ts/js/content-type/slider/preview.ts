@@ -70,16 +70,16 @@ export default class Preview extends PreviewCollection {
     private previousData: DataObject;
 
     /**
-     * @param {ContentTypeCollectionInterface} master
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        master: ContentTypeCollectionInterface,
+        contentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(master, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
         // Wait for the tabs instance to mount and the container to be ready
         Promise.all([
@@ -93,9 +93,9 @@ export default class Preview extends PreviewCollection {
                 () => {
                     this.element = element as HTMLElement;
 
-                    this.childSubscribe = this.master.children.subscribe(this.buildSlickDebounce);
-                    this.previousData = this.master.dataStore.getState();
-                    this.master.dataStore.subscribe((data) => {
+                    this.childSubscribe = this.contentType.children.subscribe(this.buildSlickDebounce);
+                    this.previousData = this.contentType.dataStore.getState();
+                    this.contentType.dataStore.subscribe((data) => {
                         if (this.hasDataChanged(this.previousData, data)) {
                             this.buildSlickDebounce();
                         }
@@ -292,15 +292,15 @@ export default class Preview extends PreviewCollection {
     public addSlide() {
         createContentType(
             Config.getConfig("content_types").slide,
-            this.master,
-            this.master.stageId,
+            this.contentType,
+            this.contentType.stageId,
         ).then((slide) => {
             events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.defer(() => {
                         // Wait until slick is initialized before trying to navigate
                         delayUntil(
-                            () => this.navigateToSlide(this.master.children().length - 1),
+                            () => this.navigateToSlide(this.contentType.children().length - 1),
                             () => $(this.element).hasClass("slick-initialized"),
                             10,
                         );
@@ -308,7 +308,7 @@ export default class Preview extends PreviewCollection {
                     events.off(`slide:${slide.id}:mountAfter`);
                 }
             }, `slide:${slide.id}:mountAfter`);
-            this.master.addChild(slide, this.master.children().length);
+            this.contentType.addChild(slide, this.contentType.children().length);
         });
     }
 
@@ -340,7 +340,7 @@ export default class Preview extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         events.on("slider:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.id === this.master.id) {
+            if (args.id === this.contentType.id) {
                 if (args.expectChildren !== undefined) {
                     this.mountAfterDeferred.resolve(args.expectChildren);
                 }
@@ -349,7 +349,7 @@ export default class Preview extends PreviewCollection {
 
         // Set the active slide to the new position of the sorted slide
         events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
-            if (args.instance.id === this.master.id) {
+            if (args.instance.id === this.contentType.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
                 _.defer(this.focusElement.bind(this, args.event, args.newPosition));
@@ -360,14 +360,14 @@ export default class Preview extends PreviewCollection {
         // we need to force update the content of the slider due to KO rendering issues
         let newItemIndex: number;
         events.on("slide:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.contentType.containerContentType.id === this.master.id) {
+            if (args.contentType.parentContentType.id === this.contentType.id) {
                 // Mark the previous slide as active
                 newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
 
                 this.forceContainerHeight();
-                const data = this.master.children().slice(0);
-                this.master.children([]);
-                this.master.children(data);
+                const data = this.contentType.children().slice(0);
+                this.contentType.children([]);
+                this.contentType.children(data);
 
                 _.defer(() => {
                     this.buildSlick();
@@ -376,8 +376,8 @@ export default class Preview extends PreviewCollection {
         });
 
         events.on("slide:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            const itemIndex = args.contentType.containerContentType.getChildren()().indexOf(args.contentType);
-            if ((args.contentType.containerContentType.id === this.master.id) &&
+            const itemIndex = args.contentType.parentContentType.getChildren()().indexOf(args.contentType);
+            if ((args.contentType.parentContentType.id === this.contentType.id) &&
                 (newItemIndex !== null && newItemIndex === itemIndex)
             ) {
                 _.defer(() => {
@@ -395,14 +395,14 @@ export default class Preview extends PreviewCollection {
 
         // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
         events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && this.ready && args.contentType.containerContentType.id === this.master.id) {
+            if (this.element && this.ready && args.contentType.parentContentType.id === this.contentType.id) {
                 this.forceContainerHeight();
             }
         });
 
         // ContentType being mounted onto container
         events.on("slider:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.master.id && this.master.children().length === 0) {
+            if (args.id === this.contentType.id && this.contentType.children().length === 0) {
                 this.addSlide();
             }
         });
@@ -411,7 +411,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedSlide: ContentTypeInterface;
         let duplicatedSlideIndex: number;
         events.on("slide:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (args.duplicateContentType.containerContentType.id === this.master.id && args.direct) {
+            if (args.duplicateContentType.parentContentType.id === this.contentType.id && args.direct) {
                 duplicatedSlide = args.duplicateContentType;
                 duplicatedSlideIndex = args.index;
             }
@@ -457,13 +457,13 @@ export default class Preview extends PreviewCollection {
             }
 
             // Force an update on all children, ko tries to intelligently re-render but fails
-            const data = this.master.children().slice(0);
-            this.master.children([]);
+            const data = this.contentType.children().slice(0);
+            this.contentType.children([]);
             $(this.element).empty();
-            this.master.children(data);
+            this.contentType.children(data);
 
             // Re-subscribe original event
-            this.childSubscribe = this.master.children.subscribe(this.buildSlickDebounce);
+            this.childSubscribe = this.contentType.children.subscribe(this.buildSlickDebounce);
 
             // Bind our init event for slick
             $(this.element).on("init", () => {
@@ -529,7 +529,7 @@ export default class Preview extends PreviewCollection {
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
-        const data = this.master.dataStore.getState();
+        const data = this.contentType.dataStore.getState();
         return {
             arrows: data.show_arrows === "true",
             autoplay: data.autoplay === "true",

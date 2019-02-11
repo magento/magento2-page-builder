@@ -104,9 +104,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       var columnLeft = column.preview.element.offset().left - parseInt(column.preview.element.css("margin-left"), 10);
       var adjacentRightPosition = adjacentColumn.preview.element.offset().left + adjacentColumn.preview.element.outerWidth(true); // Determine the maximum size (in pixels) that this column can be dragged to
 
-      var columnsToRight = column.containerContentType.children().length - (getColumnIndexInGroup(column) + 1);
+      var columnsToRight = column.parentContentType.children().length - (getColumnIndexInGroup(column) + 1);
       var leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth - columnsToRight * singleColumnWidth + 10;
-      var rightMaxWidthFromChildren = groupPosition.left + (column.containerContentType.children().length - columnsToRight) * singleColumnWidth - 10; // Due to rounding we add a threshold of 10
+      var rightMaxWidthFromChildren = groupPosition.left + (column.parentContentType.children().length - columnsToRight) * singleColumnWidth - 10; // Due to rounding we add a threshold of 10
       // Iterate through the amount of columns generating the position for both left & right interactions
 
       for (var i = gridSize; i > 0; i--) {
@@ -157,7 +157,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       var _this2 = this;
 
       var currentIndex = getColumnIndexInGroup(column);
-      var columnItemsArray = column.containerContentType.children();
+      var columnItemsArray = column.parentContentType.children();
       var searchArray;
 
       switch (direction) {
@@ -185,7 +185,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.findShrinkableColumn = function findShrinkableColumn(column) {
       var _this3 = this;
 
-      return (0, _array.outwardSearch)(column.containerContentType.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
+      return (0, _array.outwardSearch)(column.parentContentType.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
         return _this3.getColumnWidth(neighbourColumn) > _this3.getSmallestColumnWidth();
       });
     }
@@ -331,7 +331,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       var _this4 = this;
 
       // Determine the total width of all other columns in the grid, excluding the ones we plan to resize
-      var otherColumnsWidth = column.containerContentType.getChildren()().filter(function (gridColumn) {
+      var otherColumnsWidth = column.parentContentType.getChildren()().filter(function (gridColumn) {
         return gridColumn !== column && shrinkableColumn && gridColumn !== shrinkableColumn;
       }).map(function (otherColumn) {
         return _this4.getColumnWidth(otherColumn);
@@ -353,7 +353,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
   function getColumnIndexInGroup(column) {
-    return column.containerContentType.children().indexOf(column);
+    return column.parentContentType.children().indexOf(column);
   }
   /**
    * Retrieve the adjacent column based on a direction of +1 or -1
@@ -367,8 +367,8 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   function getAdjacentColumn(column, direction) {
     var currentIndex = getColumnIndexInGroup(column);
 
-    if (typeof column.containerContentType.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-      return column.containerContentType.children()[currentIndex + parseInt(direction, 10)];
+    if (typeof column.parentContentType.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+      return column.parentContentType.children()[currentIndex + parseInt(direction, 10)];
     }
 
     return null;

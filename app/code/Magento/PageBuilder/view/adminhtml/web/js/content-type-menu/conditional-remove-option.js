@@ -21,7 +21,7 @@ define(["Magento_PageBuilder/js/content-type-menu/option"], function (_option) {
       var _this;
 
       _this = _option2.call(this, config) || this;
-      var parentContentType = _this.preview.master.containerContentType;
+      var parentContentType = _this.preview.contentType.parentContentType;
 
       if (parentContentType.children().length < 2) {
         _this.isDisabled(true);

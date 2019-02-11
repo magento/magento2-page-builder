@@ -10,15 +10,15 @@ define(["Magento_PageBuilder/js/events", "mageUtils", "Magento_PageBuilder/js/da
     "use strict";
 
     /**
-     * @param {ContentTypeInterface} containerContentType
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
-    function ContentType(containerContentType, config, stageId) {
+    function ContentType(parentContentType, config, stageId) {
       this.id = _mageUtils.uniqueid();
       this.dataStore = new _dataStore();
       this.dropped = false;
-      this.containerContentType = containerContentType;
+      this.parentContentType = parentContentType;
       this.config = config;
       this.stageId = stageId;
       this.bindEvents();

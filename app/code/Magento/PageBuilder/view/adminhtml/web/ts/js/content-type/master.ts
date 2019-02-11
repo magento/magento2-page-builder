@@ -16,18 +16,18 @@ import ObservableObject from "./observable-updater.types";
  */
 export default class Master {
     public data: ObservableObject = {};
-    public containerContentType: ContentTypeInterface;
+    public contentType: ContentTypeInterface;
     private observableUpdater: ObservableUpdater;
 
     /**
-     * @param {ContentTypeInterface} containerContentType
+     * @param {ContentTypeInterface} contentType
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        containerContentType: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        this.containerContentType = containerContentType;
+        this.contentType = contentType;
         this.observableUpdater = observableUpdater;
         this.bindEvents();
     }
@@ -38,7 +38,7 @@ export default class Master {
      * @returns {string}
      */
     get template(): string {
-        return appearanceConfig(this.containerContentType.config.name, this.getData().appearance as string)
+        return appearanceConfig(this.contentType.config.name, this.getData().appearance as string)
             .master_template;
     }
 
@@ -50,13 +50,13 @@ export default class Master {
      * @deprecated
      */
     public getData(element?: string): DataObject {
-        let data = _.extend({}, this.containerContentType.dataStore.getState());
+        let data = _.extend({}, this.contentType.dataStore.getState());
 
         if (undefined === element) {
             return data;
         }
 
-        const appearanceConfiguration = appearanceConfig(this.containerContentType.config.name, data.appearance);
+        const appearanceConfiguration = appearanceConfig(this.contentType.config.name, data.appearance);
         const config = appearanceConfiguration.elements;
 
         data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
@@ -72,7 +72,7 @@ export default class Master {
      * Attach event to updating data in data store to update observables
      */
     protected bindEvents(): void {
-        this.containerContentType.dataStore.subscribe(
+        this.contentType.dataStore.subscribe(
             () => {
                 this.updateObservables();
             },
@@ -92,7 +92,7 @@ export default class Master {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({name: this.containerContentType.config.name}, this.containerContentType.dataStore.getState()),
+            _.extend({name: this.contentType.config.name}, this.contentType.dataStore.getState()),
         );
         this.afterObservablesUpdated();
     }

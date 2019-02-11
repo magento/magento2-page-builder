@@ -61,15 +61,15 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const initialImageValue = this.master.dataStore
+        const initialImageValue = this.contentType.dataStore
             .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         // Create uploader
         return new Uploader(
-            "imageuploader_" + this.master.id,
+            "imageuploader_" + this.contentType.id,
             this.config.additional_data.uploaderConfig,
-            this.master.id,
-            this.master.dataStore,
+            this.contentType.id,
+            this.contentType.dataStore,
             initialImageValue,
         );
     }
@@ -169,17 +169,19 @@ export default class Preview extends BasePreview {
     public initWysiwyg(element: HTMLElement) {
         this.element = element;
 
-        element.id = this.master.id + "-editor";
+        element.id = this.contentType.id + "-editor";
 
         const config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        config.adapter.settings.fixed_toolbar_container = "#" + this.master.id + " .pagebuilder-banner-text-content";
+        config.adapter.settings.fixed_toolbar_container = "#"
+            + this.contentType.id
+            + " .pagebuilder-banner-text-content";
 
         WysiwygFactory(
-            this.master.id,
+            this.contentType.id,
             element.id,
             this.config.name,
             config,
-            this.master.dataStore,
+            this.contentType.dataStore,
             "message",
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
@@ -194,12 +196,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.master.dataStore.get<string>("message");
+        this.textarea.value = this.contentType.dataStore.get<string>("message");
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
-        events.on(`form:${this.master.id}:saveAfter`, () => {
-            this.textarea.value = this.master.dataStore.get<string>("message");
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            this.textarea.value = this.contentType.dataStore.get<string>("message");
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -210,7 +212,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.master.dataStore.update(this.textarea.value, "message");
+        this.contentType.dataStore.update(this.textarea.value, "message");
     }
 
     /**
@@ -237,14 +239,14 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.config.name}:${this.master.id}:updateAfter`, () => {
-            const dataStore = this.master.dataStore.getState();
+        events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
+            const dataStore = this.contentType.dataStore.getState();
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
             if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-                this.master.dataStore.update("", "message");
+                this.contentType.dataStore.update("", "message");
             }
-            events.trigger(`image:${this.master.id}:assignAfter`, imageObject);
+            events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
         });
     }
 

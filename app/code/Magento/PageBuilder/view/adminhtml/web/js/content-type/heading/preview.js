@@ -21,14 +21,14 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
     _inheritsLoose(Preview, _preview2);
 
     /**
-     * @param {ContentTypeInterface} master
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(master, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, master, config, observableUpdater) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.toolbar = new _contentTypeToolbar(_assertThisInitialized(_assertThisInitialized(_this)), _this.getToolbarOptions());
       return _this;
     }
@@ -72,7 +72,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
 
       _events.on("heading:dropAfter", function (args) {
-        if (args.id === _this2.master.id) {
+        if (args.id === _this2.contentType.id) {
           _underscore.delay(function () {
             (0, _jquery)(_this2.element).focus();
           }, 100); // 100 ms delay to allow for heading to render

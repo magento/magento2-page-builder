@@ -19,12 +19,12 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     "use strict";
 
     /**
-     * @param {ContentTypeInterface} containerContentType
+     * @param {ContentTypeInterface} contentType
      * @param {ObservableUpdater} observableUpdater
      */
-    function Master(containerContentType, observableUpdater) {
+    function Master(contentType, observableUpdater) {
       this.data = {};
-      this.containerContentType = containerContentType;
+      this.contentType = contentType;
       this.observableUpdater = observableUpdater;
       this.bindEvents();
     }
@@ -45,13 +45,13 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
      * @deprecated
      */
     _proto.getData = function getData(element) {
-      var data = _underscore.extend({}, this.containerContentType.dataStore.getState());
+      var data = _underscore.extend({}, this.contentType.dataStore.getState());
 
       if (undefined === element) {
         return data;
       }
 
-      var appearanceConfiguration = (0, _appearanceConfig)(this.containerContentType.config.name, data.appearance);
+      var appearanceConfiguration = (0, _appearanceConfig)(this.contentType.config.name, data.appearance);
       var config = appearanceConfiguration.elements;
       data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
       var result = {};
@@ -70,7 +70,7 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      this.containerContentType.dataStore.subscribe(function () {
+      this.contentType.dataStore.subscribe(function () {
         _this.updateObservables();
       });
     }
@@ -89,15 +89,15 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
-        name: this.containerContentType.config.name
-      }, this.containerContentType.dataStore.getState()));
+        name: this.contentType.config.name
+      }, this.contentType.dataStore.getState()));
       this.afterObservablesUpdated();
     };
 
     _createClass(Master, [{
       key: "template",
       get: function get() {
-        return (0, _appearanceConfig)(this.containerContentType.config.name, this.getData().appearance).master_template;
+        return (0, _appearanceConfig)(this.contentType.config.name, this.getData().appearance).master_template;
       }
     }]);
 

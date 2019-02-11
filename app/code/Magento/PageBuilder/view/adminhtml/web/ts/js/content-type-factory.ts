@@ -18,7 +18,7 @@ import loadModule from "./utils/loader";
  * Create new content type
  *
  * @param {ContentTypeConfigInterface} config
- * @param {ContentTypeInterface} containerContentType
+ * @param {ContentTypeInterface} parentContentType
  * @param {number} stageId
  * @param {object} data
  * @param {number} childrenLength
@@ -27,7 +27,7 @@ import loadModule from "./utils/loader";
  */
 export default function createContentType(
     config: ContentTypeConfigInterface,
-    containerContentType: ContentTypeCollectionInterface,
+    parentContentType: ContentTypeCollectionInterface,
     stageId: string,
     data: object = {},
     childrenLength: number = 0,
@@ -39,7 +39,7 @@ export default function createContentType(
         loadModule([config.component], (contentTypeComponent: typeof ContentType) => {
             try {
                 const contentType = new contentTypeComponent(
-                    containerContentType,
+                    parentContentType,
                     config,
                     stageId,
                 );
@@ -137,7 +137,7 @@ function fireContentTypeReadyEvent(
     } else {
         let mountCounter = 0;
         events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.contentType.containerContentType.id === contentType.id) {
+            if (args.contentType.parentContentType.id === contentType.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {

@@ -41,7 +41,11 @@ function buildFromContent(stage: Stage, value: string) {
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, contentType: ContentTypeCollectionInterface, stage: Stage): Promise<any> {
+function buildElementIntoStage(
+    element: Element,
+    contentType: ContentTypeCollectionInterface,
+    stage: Stage,
+): Promise<any> {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataContentTypeAttributeName"))
     ) {

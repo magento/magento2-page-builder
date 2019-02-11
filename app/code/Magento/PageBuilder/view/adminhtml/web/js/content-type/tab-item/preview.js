@@ -53,7 +53,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
     ;
 
     _proto.onFocusIn = function onFocusIn(index, event) {
-      var parentPreview = this.master.containerContentType.preview;
+      var parentPreview = this.contentType.parentContentType.preview;
 
       if (parentPreview.focusedTab() !== index) {
         parentPreview.setFocusedTab(index, true);
@@ -68,8 +68,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
     ;
 
     _proto.onFocusOut = function onFocusOut(index, event) {
-      if (this.master && this.master.containerContentType) {
-        var parentPreview = this.master.containerContentType.preview;
+      if (this.contentType && this.contentType.parentContentType) {
+        var parentPreview = this.contentType.parentContentType.preview;
 
         var unfocus = function unfocus() {
           window.getSelection().removeAllRanges();
@@ -84,8 +84,8 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
             // Have we moved the focus onto another button in the current group?
             var tabItem = _knockout.dataFor(event.relatedTarget);
 
-            if (tabItem && tabItem.master && tabItem.master.containerContentType && tabItem.master.containerContentType.id === tabItem.master.containerContentType.containerContentType.id) {
-              var newIndex = tabItem.master.containerContentType.children().indexOf(tabItem.master);
+            if (tabItem && tabItem.contentType && tabItem.contentType.parentContentType && tabItem.contentType.parentContentType.id === tabItem.contentType.parentContentType.parentContentType.id) {
+              var newIndex = tabItem.contentType.parentContentType.children().indexOf(tabItem.contentType);
               parentPreview.setFocusedTab(newIndex, true);
             } else {
               unfocus();

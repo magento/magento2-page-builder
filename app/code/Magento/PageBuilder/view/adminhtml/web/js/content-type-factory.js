@@ -9,14 +9,14 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
    * Create new content type
    *
    * @param {ContentTypeConfigInterface} config
-   * @param {ContentTypeInterface} containerContentType
+   * @param {ContentTypeInterface} parentContentType
    * @param {number} stageId
    * @param {object} data
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}
    * @api
    */
-  function createContentType(config, containerContentType, stageId, data, childrenLength) {
+  function createContentType(config, parentContentType, stageId, data, childrenLength) {
     if (data === void 0) {
       data = {};
     }
@@ -28,7 +28,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     return new Promise(function (resolve, reject) {
       (0, _loader)([config.component], function (contentTypeComponent) {
         try {
-          var contentType = new contentTypeComponent(containerContentType, config, stageId);
+          var contentType = new contentTypeComponent(parentContentType, config, stageId);
           Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (_ref) {
             var previewComponent = _ref[0],
                 masterComponent = _ref[1];
@@ -126,7 +126,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
       var mountCounter = 0;
 
       _events.on("contentType:mountAfter", function (args) {
-        if (args.contentType.containerContentType.id === contentType.id) {
+        if (args.contentType.parentContentType.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {

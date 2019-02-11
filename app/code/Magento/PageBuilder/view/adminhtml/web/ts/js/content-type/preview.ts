@@ -34,7 +34,7 @@ import ObservableObject from "./observable-updater.types";
  * @api
  */
 export default class Preview {
-    public master: ContentTypeInterface;
+    public contentType: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string> = ko.observable();
@@ -65,18 +65,18 @@ export default class Preview {
     private mouseoverContext: Preview;
 
     /**
-     * @param {ContentTypeInterface} master
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        master: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        this.master = master;
+        this.contentType = contentType;
         this.config = config;
-        this.edit = new Edit(this.master, this.master.dataStore);
+        this.edit = new Edit(this.contentType, this.contentType.dataStore);
         this.optionsMenu = new ContentTypeMenu(this, this.retrieveOptions());
         this.observableUpdater = observableUpdater;
         this.displayLabel(this.config.label);
@@ -146,10 +146,10 @@ export default class Preview {
      * @param {string} value
      */
     public updateData(key: string, value: string) {
-        const data = this.master.dataStore.getState();
+        const data = this.contentType.dataStore.getState();
 
         set(data, key, value);
-        this.master.dataStore.update(data);
+        this.contentType.dataStore.update(data);
     }
 
     /**
@@ -234,13 +234,19 @@ export default class Preview {
      * @deprecated
      */
     public afterChildrenRender(element: Element): void {
-        events.trigger("contentType:childrenRenderAfter", {id: this.master.id, contentType: this.master, element});
-        events.trigger(
-            this.master.config.name + ":childrenRenderAfter",
+        events.trigger("contentType:childrenRenderAfter",
             {
-                contentType: this.master,
+                id: this.contentType.id,
+                contentType: this.contentType,
                 element,
-                id: this.master.id,
+            },
+        );
+        events.trigger(
+            this.contentType.config.name + ":childrenRenderAfter",
+            {
+                contentType: this.contentType,
+                element,
+                id: this.contentType.id,
             },
         );
     }
@@ -257,13 +263,19 @@ export default class Preview {
         if (elementNodes.length > 0) {
             const element = elementNodes[0];
             this.wrapperElement = element;
-            events.trigger("contentType:renderAfter", {id: this.master.id, contentType: this.master, element});
-            events.trigger(
-                this.master.config.name + ":renderAfter",
+            events.trigger("contentType:renderAfter",
                 {
-                    contentType: this.master,
+                    id: this.contentType.id,
+                    contentType: this.contentType,
                     element,
-                    id: this.master.id,
+                },
+            );
+            events.trigger(
+                this.contentType.config.name + ":renderAfter",
+                {
+                    contentType: this.contentType,
+                    element,
+                    id: this.contentType.id,
                 },
             );
             this.disableImageUploadOnHide(element);
@@ -290,15 +302,15 @@ export default class Preview {
      * Reverse the display data currently in the data store
      */
     public onOptionVisibilityToggle(): void {
-        const display = this.master.dataStore.get<boolean>("display");
-        this.master.dataStore.update(!display, "display");
+        const display = this.contentType.dataStore.get<boolean>("display");
+        this.contentType.dataStore.update(!display, "display");
     }
 
     /**
      * Handle duplicate of items
      */
     public onOptionDuplicate(): void {
-        this.clone(this.master, true, true);
+        this.clone(this.contentType, true, true);
     }
 
     /**
@@ -315,17 +327,17 @@ export default class Preview {
         direct: boolean = false,
     ): Promise<ContentTypeInterface> | void {
         const contentTypeData = contentType.dataStore.getState();
-        const index = contentType.containerContentType.getChildren()().indexOf(contentType) + 1 || null;
+        const index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
 
         return new Promise((resolve) => {
             createContentType(
                 contentType.config,
-                contentType.containerContentType,
+                contentType.parentContentType,
                 contentType.stageId,
                 contentTypeData,
             ).then((duplicateContentType: ContentTypeInterface) => {
                 if (autoAppend) {
-                    contentType.containerContentType.addChild(duplicateContentType, index);
+                    contentType.parentContentType.addChild(duplicateContentType, index);
                 }
 
                 this.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
@@ -345,15 +357,15 @@ export default class Preview {
         const removeContentType = () => {
             const dispatchRemoveEvent = () => {
                 const params = {
-                    contentType: this.master,
-                    index: (this.master.containerContentType as ContentTypeCollectionInterface)
+                    contentType: this.contentType,
+                    index: (this.contentType.parentContentType as ContentTypeCollectionInterface)
                         .getChildren()
-                        .indexOf(this.master),
-                    containerContentType: this.master.containerContentType,
-                    stageId: this.master.stageId,
+                        .indexOf(this.contentType),
+                    parentContentType: this.contentType.parentContentType,
+                    stageId: this.contentType.stageId,
                 };
                 events.trigger("contentType:removeAfter", params);
-                events.trigger(this.master.config.name + ":removeAfter", params);
+                events.trigger(this.contentType.config.name + ":removeAfter", params);
             };
 
             if (this.wrapperElement) {
@@ -493,7 +505,7 @@ export default class Preview {
      * Bind events
      */
     protected bindEvents() {
-        this.master.dataStore.subscribe(
+        this.contentType.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
                 this.updatePlaceholderVisibility(data);
@@ -501,8 +513,8 @@ export default class Preview {
                 this.display(!!data.display);
             },
         );
-        if (this.master instanceof ContentTypeCollection) {
-            this.master.children.subscribe(
+        if (this.contentType instanceof ContentTypeCollection) {
+            this.contentType.children.subscribe(
                 (children: any[]) => {
                     this.isEmpty(!children.length);
                 },
@@ -531,7 +543,7 @@ export default class Preview {
         }
 
         // Subscribe to this content types data in the store
-        this.master.dataStore.subscribe(
+        this.contentType.dataStore.subscribe(
             (data: DataObject) => {
                 _.forEach(data, (value, key) => {
                     this.updateDataValue(key, value);
@@ -546,9 +558,9 @@ export default class Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        const data = this.master.dataStore.getState();
+        const data = this.contentType.dataStore.getState();
         let hasDataChanges = false;
-        _.each(this.master.config.fields, (field, key: string) => {
+        _.each(this.contentType.config.fields, (field, key: string) => {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
                 return;
             }
@@ -598,7 +610,7 @@ export default class Preview {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({}, this.master.dataStore.getState()),
+            _.extend({}, this.contentType.dataStore.getState()),
         );
         this.afterObservablesUpdated();
         events.trigger("previewData:updateAfter", {preview: this});

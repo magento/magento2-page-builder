@@ -49,7 +49,7 @@ export default class Preview extends BasePreview {
      */
     public afterRenderWysiwyg(element: HTMLElement) {
         this.element = element;
-        element.id = this.master.id + "-editor";
+        element.id = this.contentType.id + "-editor";
 
         /**
          * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
@@ -132,15 +132,15 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const initialImageValue = this.master.dataStore
+        const initialImageValue = this.contentType.dataStore
             .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         // Create uploader
         return new Uploader(
-            "imageuploader_" + this.master.id,
+            "imageuploader_" + this.contentType.id,
             this.config.additional_data.uploaderConfig,
-            this.master.id,
-            this.master.dataStore,
+            this.contentType.id,
+            this.contentType.dataStore,
             initialImageValue,
         );
     }
@@ -212,12 +212,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.master.dataStore.get<string>("content");
+        this.textarea.value = this.contentType.dataStore.get<string>("content");
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
-        events.on(`form:${this.master.id}:saveAfter`, () => {
-            this.textarea.value = this.master.dataStore.get<string>("content");
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            this.textarea.value = this.contentType.dataStore.get<string>("content");
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -228,7 +228,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.master.dataStore.update(this.textarea.value, "content");
+        this.contentType.dataStore.update(this.textarea.value, "content");
     }
 
     /**
@@ -264,11 +264,11 @@ export default class Preview extends BasePreview {
         }
 
         return WysiwygFactory(
-            this.master.id,
+            this.contentType.id,
             this.element.id,
             this.config.name,
             wysiwygConfig,
-            this.master.dataStore,
+            this.contentType.dataStore,
             "content",
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
@@ -281,34 +281,34 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.config.name}:${this.master.id}:updateAfter`, () => {
-            const dataStore = this.master.dataStore.getState();
+        events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
+            const dataStore = this.contentType.dataStore.getState();
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
-            events.trigger(`image:${this.master.id}:assignAfter`, imageObject);
+            events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
         });
 
         // Remove wysiwyg before assign new instance.
         events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
-            if (args.instance.id === this.master.containerContentType.id) {
+            if (args.instance.id === this.contentType.parentContentType.id) {
                this.wysiwyg = null;
             }
         });
 
         events.on(`${this.config.name}:mountAfter`, (args: ContentTypeMountEventParamsInterface) => {
-            if (args.id === this.master.id) {
+            if (args.id === this.contentType.id) {
                 // Update the display label for the slide
-                const slider = this.master.containerContentType;
-                this.displayLabel($t(`Slide ${slider.children().indexOf(this.master) + 1}`));
+                const slider = this.contentType.parentContentType;
+                this.displayLabel($t(`Slide ${slider.children().indexOf(this.contentType) + 1}`));
                 slider.children.subscribe((children) => {
-                    const index = children.indexOf(this.master);
-                    this.displayLabel($t(`Slide ${slider.children().indexOf(this.master) + 1}`));
+                    const index = children.indexOf(this.contentType);
+                    this.displayLabel($t(`Slide ${slider.children().indexOf(this.contentType) + 1}`));
                 });
             }
         });
 
         events.on(`${this.config.name}:renderAfter`, (args: ContentTypeMountEventParamsInterface) => {
-            if (args.id === this.master.id) {
-                const slider = this.master.containerContentType;
+            if (args.id === this.contentType.id) {
+                const slider = this.contentType.parentContentType;
 
                 $((slider.preview as SliderPreview).element).on("beforeChange", () => {
                     this.slideChanged = false;
@@ -326,7 +326,7 @@ export default class Preview extends BasePreview {
      * @param {Array} data - list of each files' data
      */
     private onImageUploaded(data: object[]) {
-        this.master.dataStore.update(
+        this.contentType.dataStore.update(
             data,
             this.config.additional_data.uploaderConfig.dataScope,
         );

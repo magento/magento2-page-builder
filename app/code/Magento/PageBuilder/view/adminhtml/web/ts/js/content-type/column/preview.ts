@@ -38,22 +38,22 @@ export default class Preview extends PreviewCollection {
     protected fieldsToIgnoreOnRemove: string[] = ["width"];
 
     /**
-     * @param {ContentTypeInterface} master
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        master: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(master, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
         // Update the width label for the column
-        this.master.dataStore.subscribe(this.updateColumnWidthClass.bind(this), "width");
-        this.master.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
-        this.master.dataStore.subscribe(this.triggerChildren.bind(this), "width");
-        this.master.containerContentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
+        this.contentType.dataStore.subscribe(this.updateColumnWidthClass.bind(this), "width");
+        this.contentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
+        this.contentType.dataStore.subscribe(this.triggerChildren.bind(this), "width");
+        this.contentType.parentContentType.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
     }
 
     /**
@@ -63,14 +63,14 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         events.on("column:moveAfter", (args: ContentTypeMoveEventParamsInterface) => {
-            if (args.contentType.id === this.master.id) {
+            if (args.contentType.id === this.contentType.id) {
                 this.updateDisplayLabel();
             }
         });
 
         if (Config.getContentTypeConfig("column-group")) {
             events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
-                if (args.id === this.master.id) {
+                if (args.id === this.contentType.id) {
                     this.createColumnGroup();
                 }
             });
@@ -86,9 +86,9 @@ export default class Preview extends PreviewCollection {
         this.element = $(element);
         this.updateColumnWidthClass();
         events.trigger("column:initializeAfter", {
-            column: this.master,
+            column: this.contentType,
             element: $(element),
-            columnGroup: this.master.containerContentType,
+            columnGroup: this.contentType.parentContentType,
         });
     }
 
@@ -116,9 +116,9 @@ export default class Preview extends PreviewCollection {
      */
     public bindResizeHandle(handle: Element) {
         events.trigger("column:resizeHandleBindAfter", {
-            column: this.master,
+            column: this.contentType,
             handle: $(handle),
-            columnGroup: this.master.containerContentType,
+            columnGroup: this.contentType.parentContentType,
         });
     }
 
@@ -128,16 +128,16 @@ export default class Preview extends PreviewCollection {
      * @returns {Promise<ContentTypeCollectionInterface>}
      */
     public createColumnGroup(): Promise<ContentTypeCollectionInterface> {
-        if (this.master.containerContentType.config.name !== "column-group") {
-            const index = this.master.containerContentType.children().indexOf(this.master);
+        if (this.contentType.parentContentType.config.name !== "column-group") {
+            const index = this.contentType.parentContentType.children().indexOf(this.contentType);
             // Remove child instantly to stop content jumping around
-            this.master.containerContentType.removeChild(this.master);
+            this.contentType.parentContentType.removeChild(this.contentType);
             // Create a new instance of column group to wrap our columns with
             const defaultGridSize = getDefaultGridSize();
             return createContentType(
                 Config.getContentTypeConfig("column-group"),
-                this.master.containerContentType,
-                this.master.stageId,
+                this.contentType.parentContentType,
+                this.contentType.stageId,
                 {grid_size: defaultGridSize},
             ).then((columnGroup: ContentTypeCollectionInterface) => {
                 const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
@@ -145,13 +145,13 @@ export default class Preview extends PreviewCollection {
                 );
                 return Promise.all([
                     createContentType(
-                        this.master.config,
+                        this.contentType.config,
                         columnGroup,
                         columnGroup.stageId,
                         {width: col1Width + "%"},
                     ),
                     createContentType(
-                        this.master.config,
+                        this.contentType.config,
                         columnGroup,
                         columnGroup.stageId,
                         {width: (100 - parseFloat(col1Width)) + "%"},
@@ -160,7 +160,7 @@ export default class Preview extends PreviewCollection {
                     (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
                         columnGroup.addChild(columns[0], 0);
                         columnGroup.addChild(columns[1], 1);
-                        this.master.containerContentType.addChild(columnGroup, index);
+                        this.contentType.parentContentType.addChild(columnGroup, index);
 
                         this.fireMountEvent(columnGroup, columns[0], columns[1]);
                         return columnGroup;
@@ -181,11 +181,11 @@ export default class Preview extends PreviewCollection {
         contentType: ContentTypeCollectionInterface<Preview>,
         autoAppend: boolean = true,
     ): Promise<ContentTypeCollectionInterface> | void {
-        const resizeUtils = (this.master.containerContentType.preview as ColumnGroupPreview).getResizeUtils();
+        const resizeUtils = (this.contentType.parentContentType.preview as ColumnGroupPreview).getResizeUtils();
         // Are we duplicating from a container content type?
         if ( contentType.config.name !== "column"
-            || this.master.containerContentType.children().length === 0
-            || (this.master.containerContentType.children().length > 0 && resizeUtils.getColumnsWidth() < 100)
+            || this.contentType.parentContentType.children().length === 0
+            || (this.contentType.parentContentType.children().length > 0 && resizeUtils.getColumnsWidth() < 100)
         ) {
             return super.clone(contentType, autoAppend);
         }
@@ -252,9 +252,9 @@ export default class Preview extends PreviewCollection {
      * Update the display label for the column
      */
     public updateDisplayLabel() {
-        if (this.master.containerContentType.preview instanceof ColumnGroupPreview) {
-            const newWidth = parseFloat(this.master.dataStore.get("width").toString());
-            const gridSize = (this.master.containerContentType.preview as ColumnGroupPreview).gridSize();
+        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
+            const gridSize = (this.contentType.parentContentType.preview as ColumnGroupPreview).gridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
             this.displayLabel(`${$t("Column")} ${newLabel}`);
         }
@@ -275,7 +275,7 @@ export default class Preview extends PreviewCollection {
             this.element.removeClass(currentClass[1]);
         }
 
-        const roundedWidth = Math.ceil(parseFloat(this.master.dataStore.get("width").toString()) / 10) * 10;
+        const roundedWidth = Math.ceil(parseFloat(this.contentType.dataStore.get("width").toString()) / 10) * 10;
 
         this.element.addClass("column-width-" + roundedWidth);
     }
@@ -296,8 +296,8 @@ export default class Preview extends PreviewCollection {
      * Delegate trigger call on children elements.
      */
     private triggerChildren() {
-        if (this.master.containerContentType.preview instanceof ColumnGroupPreview) {
-            const newWidth = parseFloat(this.master.dataStore.get("width").toString());
+        if (this.contentType.parentContentType.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.contentType.dataStore.get("width").toString());
 
             this.delegate("trigger", "columnWidthChangeAfter", { width: newWidth });
         }

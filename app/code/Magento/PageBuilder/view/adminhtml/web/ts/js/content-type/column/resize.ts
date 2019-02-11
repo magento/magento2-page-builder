@@ -106,11 +106,11 @@ export default class Resize {
             adjacentColumn.preview.element.outerWidth(true);
 
         // Determine the maximum size (in pixels) that this column can be dragged to
-        const columnsToRight = column.containerContentType.children().length - (getColumnIndexInGroup(column) + 1);
+        const columnsToRight = column.parentContentType.children().length - (getColumnIndexInGroup(column) + 1);
         const leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth -
             (columnsToRight * singleColumnWidth) + 10;
         const rightMaxWidthFromChildren = groupPosition.left +
-            (column.containerContentType.children().length - columnsToRight) * singleColumnWidth - 10;
+            (column.parentContentType.children().length - columnsToRight) * singleColumnWidth - 10;
         // Due to rounding we add a threshold of 10
 
         // Iterate through the amount of columns generating the position for both left & right interactions
@@ -160,7 +160,7 @@ export default class Resize {
         direction: "left" | "right",
     ): ContentTypeCollectionInterface<ColumnPreview> {
         const currentIndex = getColumnIndexInGroup(column);
-        const columnItemsArray = column.containerContentType.children();
+        const columnItemsArray = column.parentContentType.children();
         let searchArray: Array<ContentTypeCollectionInterface<ColumnPreview>>;
         switch (direction) {
             case "right":
@@ -187,7 +187,7 @@ export default class Resize {
         column: ContentTypeCollectionInterface<ColumnPreview>,
     ): ContentTypeCollectionInterface<ColumnPreview> {
         return outwardSearch(
-            column.containerContentType.children(),
+            column.parentContentType.children(),
             getColumnIndexInGroup(column),
             (neighbourColumn) => {
                 return this.getColumnWidth(neighbourColumn) > this.getSmallestColumnWidth();
@@ -350,7 +350,7 @@ export default class Resize {
         shrinkableColumnNewWidth?: number,
     ) {
         // Determine the total width of all other columns in the grid, excluding the ones we plan to resize
-        const otherColumnsWidth = column.containerContentType.getChildren()().filter((gridColumn) => {
+        const otherColumnsWidth = column.parentContentType.getChildren()().filter((gridColumn) => {
             return gridColumn !== column && (shrinkableColumn && gridColumn !== shrinkableColumn);
         }).map((otherColumn: ContentTypeCollectionInterface<ColumnPreview>) => {
             return this.getColumnWidth(otherColumn);
@@ -374,7 +374,7 @@ export default class Resize {
  * @returns {number}
  */
 export function getColumnIndexInGroup(column: ContentTypeCollectionInterface<ColumnPreview>): number {
-    return column.containerContentType.children().indexOf(column);
+    return column.parentContentType.children().indexOf(column);
 }
 
 /**
@@ -389,8 +389,8 @@ export function getAdjacentColumn(
     direction: "+1" | "-1",
 ): ContentTypeCollectionInterface<ColumnPreview> {
     const currentIndex = getColumnIndexInGroup(column);
-    if (typeof column.containerContentType.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-        return column.containerContentType.children()[currentIndex + parseInt(direction, 10)] as
+    if (typeof column.parentContentType.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+        return column.parentContentType.children()[currentIndex + parseInt(direction, 10)] as
             ContentTypeCollectionInterface<ColumnPreview>;
     }
     return null;

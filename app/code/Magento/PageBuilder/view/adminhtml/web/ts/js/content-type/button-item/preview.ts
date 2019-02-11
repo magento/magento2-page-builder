@@ -53,8 +53,8 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusOut(index: number, event: JQueryEventObject): void {
-        if (this.master && this.master.containerContentType) {
-            const parentPreview = this.master.containerContentType.preview as ButtonsPreview;
+        if (this.contentType && this.contentType.parentContentType) {
+            const parentPreview = this.contentType.parentContentType.preview as ButtonsPreview;
             const unfocus = () => {
                 window.getSelection().removeAllRanges();
                 parentPreview.focusedButton(null);
@@ -66,10 +66,13 @@ export default class Preview extends BasePreview {
                 } else {
                     // Have we moved the focus onto another button in the current group?
                     const buttonItem = ko.dataFor(event.relatedTarget) as Preview;
-                    if (buttonItem && buttonItem.master && buttonItem.master.containerContentType
-                        && buttonItem.master.containerContentType.id === this.master.containerContentType.id
+                    if (buttonItem && buttonItem.contentType && buttonItem.contentType.parentContentType
+                        && buttonItem.contentType.parentContentType.id === this.contentType.parentContentType.id
                     ) {
-                        const newIndex = buttonItem.master.containerContentType.children().indexOf(buttonItem.master);
+                        const newIndex = buttonItem
+                            .contentType
+                            .parentContentType.children()
+                            .indexOf(buttonItem.contentType);
                         parentPreview.focusedButton(newIndex);
                     } else {
                         unfocus();
@@ -88,7 +91,7 @@ export default class Preview extends BasePreview {
      * @param {Event} event
      */
     public onFocusIn(index: number, event: Event): void {
-        const parentPreview = this.master.containerContentType.preview as ButtonsPreview;
+        const parentPreview = this.contentType.parentContentType.preview as ButtonsPreview;
         if (parentPreview.focusedButton() !== index) {
             parentPreview.focusedButton(index);
         }
