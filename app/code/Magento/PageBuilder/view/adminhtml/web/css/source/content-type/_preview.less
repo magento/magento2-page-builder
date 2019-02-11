@@ -318,7 +318,6 @@
 
 .pagebuilder-options-visible {
     opacity: 1;
-    transform: translate(-50%, -50%);
     transition-delay: 200ms;
     visibility: visible;
 }
@@ -328,18 +327,23 @@
     -o-transition: opacity 200ms, visibility 200ms;
     -webkit-transition: opacity 200ms, visibility 200ms;
     height: 40px;
-    left: 50%;
     opacity: 0;
     position: absolute;
+    right: 0;
     text-align: center;
     top: 0;
-    transform: translate(-50%, -50%);
+    transform: translate(0, -50%);
     transition: opacity 200ms, visibility 200ms;
     visibility: hidden;
-    z-index: 30;
+    z-index: 105;
+
+    &.pagebuilder-options-middle {
+        right: 50%;
+        transform: translate(50%, -50%);
+    }
 
     &.pagebuilder-options-visible {
-        .pagebuilder-options-visible;
+        .pagebuilder-options-visible
     }
 
     .pagebuilder-options-wrapper {
@@ -460,8 +464,9 @@
         -moz-transition: opacity 200ms, visibility 200ms, transform 200ms;
         -o-transition: opacity 200ms, visibility 200ms, transform 200ms;
         -webkit-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        right: 50%;
         top: -20px;
-        transform: translate(-50%, -20%);
+        transform: translate(50%, -50%);
         transition: opacity 200ms, visibility 200ms, transform 200ms;
         transition-delay: 0ms !important; // Arrow options have no delay in transitioning out
 

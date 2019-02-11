@@ -3,7 +3,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _factory, _preview) {
+define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/conditional-remove-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/delay-until", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _underscore, _config, _conditionalRemoveOption, _uploader, _delayUntil, _nestingLinkDialog, _factory, _preview) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -233,6 +233,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     };
     /**
      * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
      */
 
 
@@ -253,7 +256,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
       }
 
-      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content").then(function (wysiwyg) {
+      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content", this.parent.stageId).then(function (wysiwyg) {
         _this4.wysiwyg = wysiwyg;
       });
     };
@@ -273,6 +276,8 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
+
+        (0, _nestingLinkDialog)(_this5.parent.dataStore, _this5.wysiwyg, "content", "link_url");
       }); // Remove wysiwyg before assign new instance.
 
 
