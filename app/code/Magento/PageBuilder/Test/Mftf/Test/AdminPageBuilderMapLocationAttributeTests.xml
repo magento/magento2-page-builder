@@ -1014,14 +1014,13 @@
             <group value="pagebuilder-requiresValidMapAPIKey"/>
         </annotations>
         <before>
-            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
             <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key ''" stepKey="setEmptyGoogleMapsAPIKey"/>
-            <actionGroup ref="logout" stepKey="logout"/>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
@@ -1084,6 +1083,13 @@
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Save Page and Set Valid API Key -->
+        <comment userInput="Save Page and Set Valid API Key" stepKey="commentSavePageAndSetKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key {{googleMapsAPIKey.valid}}" stepKey="setValidGoogleMapsAPIKey"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
         <!-- Validate contents of tooltip on stage -->
         <comment userInput="Validate contents of tooltip on stage" stepKey="commentValidateContentsOfTooltip" />
         <actionGroup ref="validateMapPinLocationData" stepKey="validateMapTooltipStage">
@@ -1099,9 +1105,9 @@
         </actionGroup>
         <!-- Validate store front -->
         <comment userInput="Validate storefront" stepKey="commentValidateStorefront" />
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad" />
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToCmsPage">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
         <actionGroup ref="validateMapPinLocationData" stepKey="validateMapTooltipStorefront">
             <argument name="page" value="MapOnStorefront" />
             <argument name="locationName" value="PageBuilderMapLocationName_HtmlCode"/>
