@@ -805,7 +805,7 @@ export default class Preview extends PreviewCollection {
 
                 if (this.movePosition) {
                     this.dropPlaceholder.removeClass("left right");
-                    this.movePlaceholder.removeClass("left right").css({
+                    this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right"
                             ? groupPosition.width - this.movePosition.right : ""),
