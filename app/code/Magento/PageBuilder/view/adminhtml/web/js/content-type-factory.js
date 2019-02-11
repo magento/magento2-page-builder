@@ -10,7 +10,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
    *
    * @param {ContentTypeConfigInterface} config
    * @param {ContentTypeInterface} parent
-   * @param {number} stageId
+   * @param {string} stageId
    * @param {object} data
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}

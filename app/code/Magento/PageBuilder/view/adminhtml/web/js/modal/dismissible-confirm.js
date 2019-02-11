@@ -20,6 +20,45 @@ define([
 ], function ($, _, promptContentTmpl, $t) {
     'use strict';
 
+    /**
+     * Create buttons array for modal options
+     *
+     * @param {Boolean} haveCancelButton
+     * @return {Object}
+     */
+    function buttonsConfig(haveCancelButton) {
+        var cancelButton = {
+            text: $.mage.__('Cancel'),
+            class: 'action-secondary action-dismiss',
+
+            /**
+             * Click handler.
+             */
+            click: function () {
+                this.closeModal(false);
+            }
+        },
+            confirmButton = {
+            text: $.mage.__('OK'),
+            class: 'action-primary action-accept',
+
+            /**
+             * Click handler.
+             */
+            click: function () {
+                this.closeModal(true);
+            }
+        },
+            buttons = [];
+
+        if (haveCancelButton !== false) {
+            buttons.push(cancelButton);
+        }
+        buttons.push(confirmButton);
+
+        return buttons;
+    }
+
     $.widget('mage.dismissibleConfirm', $.mage.prompt, {
         options: {
             promptContentTmpl: promptContentTmpl,
@@ -52,7 +91,6 @@ define([
          */
         closeModal: function (result) {
             this._super(result);
-            result = result || false;
 
             if (result && this._isDismissed()) {
                 $.mage.cookies.set(this.options.dismissKey, 'true', {});
@@ -70,6 +108,9 @@ define([
     });
 
     return function (config) {
+        config.buttons = buttonsConfig(config.haveCancelButton);
+        delete config.haveCancelButton;
+
         return $('<div></div>').html(config.content).dismissibleConfirm(config);
     };
 });

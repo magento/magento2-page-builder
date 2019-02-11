@@ -91,7 +91,7 @@
         <element name="backgroundAttachment" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper'][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="contentJS" type="text" selector="document.querySelectorAll('[data-role=slide] [data-element=content]')[{{arg1}} - 1]" parameterized="true"/>
-        <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[.='{{arg2}}']" parameterized="true"/>
+        <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][not(*)]" parameterized="true"/>
         <element name="messageContentTextArea" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content'][.='{{arg2}}']" parameterized="true"/>
         <element name="messageContentTextAreaImage" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='wrapper']//div[@data-element='content']//img[contains(@src, {{arg2}})]" parameterized="true"/>
@@ -161,7 +161,7 @@
         <!-- Content Configuration -->
         <element name="contentJS" type="text" selector="document.querySelectorAll('[data-role=slider] div.inline-wysiwyg')[{{arg1}} - 1]" parameterized="true"/>
         <element name="messageContentText" type="text" selector="(//div[contains(@class,'pagebuilder-slide')])[{{arg1}}]/div//*[contains(.,'{{arg2}}') and contains(@class, 'inline-wysiwyg')]" parameterized="true"/>
-        <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//p[text()='{{arg2}}']" parameterized="true"/>
+        <element name="messageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content']//*[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="noMessageContent" type="text" selector="(//div[@data-role='slide'])[{{arg1}}]//div[@data-element='content'][.='Edit Slide Text'][not(*)]" parameterized="true"/>
         <element name="button" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]//a[@data-element='button']" parameterized="true"/>
         <element name="buttonJS" type="text" selector="document.querySelectorAll('.pagebuilder-slide-button')[{{arg1}}-1]" parameterized="true"/>
