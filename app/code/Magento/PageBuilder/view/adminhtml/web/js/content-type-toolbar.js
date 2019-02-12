@@ -4,7 +4,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquery, _knockout, _events) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/check-stage-full-screen"], function (_jquery, _knockout, _events, _checkStageFullScreen) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -59,7 +59,23 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
     ;
 
     _proto.onFocusIn = function onFocusIn(context, event) {
-      var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
+      var currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
+      var toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options"); // Change toolbar orientation if overflow on full screen mode
+
+      if ((0, _checkStageFullScreen)(context.parent.stageId) && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
+        context.toolbar.observer = new MutationObserver(function () {
+          toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
+        });
+        context.toolbar.observer.observe(currentContentTypeTarget[0], {
+          attributes: true,
+          childList: true,
+          subtree: true
+        });
+        toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
+      } else {
+        toolbarOptions.css("transform", "translateY(-100%)");
+      }
+
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStart");
@@ -73,10 +89,25 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
     ;
 
     _proto.onFocusOut = function onFocusOut(context, event) {
-      var currentContentTypeTarget = (0, _jquery)(event.currentTarget).closest(".pagebuilder-content-type");
-      (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
+      var currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
+      currentContentTypeTarget.removeClass("pagebuilder-toolbar-active");
+      currentContentTypeTarget.find(".pagebuilder-toolbar-options").css("transform", "");
+
+      if (typeof context.toolbar.observer !== "undefined") {
+        context.toolbar.observer.disconnect();
+      }
 
       _events.trigger("stage:interactionStop");
+    }
+    /**
+     * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
+     *
+     * @returns {jQuery}
+     */
+    ;
+
+    _proto.getCurrentContentTypeTarget = function getCurrentContentTypeTarget() {
+      return (0, _jquery)("#" + this.preview.parent.id).find(".pagebuilder-content-type");
     };
 
     _createClass(Toolbar, [{

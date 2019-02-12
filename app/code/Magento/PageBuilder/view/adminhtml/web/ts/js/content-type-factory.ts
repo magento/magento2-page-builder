@@ -19,7 +19,7 @@ import loadModule from "./utils/loader";
  *
  * @param {ContentTypeConfigInterface} config
  * @param {ContentTypeInterface} parent
- * @param {number} stageId
+ * @param {string} stageId
  * @param {object} data
  * @param {number} childrenLength
  * @returns {Promise<ContentTypeInterface>}

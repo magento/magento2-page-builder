@@ -171,6 +171,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         optionsMenu = optionsMenu.first();
       }
 
+      var middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2; // Check for space for option menu
+
+      if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
+        optionsMenu.parent().addClass("pagebuilder-options-middle");
+      } else {
+        optionsMenu.parent().removeClass("pagebuilder-options-middle");
+      }
+
       optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     }

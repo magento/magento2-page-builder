@@ -15,6 +15,7 @@ export type WysiwygConstructorInterface = new (
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
         fieldName: string,
+        stageId: string,
     ) => WysiwygInterface;
 
 /**
@@ -22,6 +23,7 @@ export type WysiwygConstructorInterface = new (
  */
 export interface WysiwygInterface {
     contentTypeId: string;
+    stageId: string;
     elementId: string;
     config: AdditionalDataConfigInterface;
 

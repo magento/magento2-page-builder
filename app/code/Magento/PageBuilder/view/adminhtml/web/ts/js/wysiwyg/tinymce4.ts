@@ -11,6 +11,7 @@ import _ from "underscore";
 import WysiwygInstanceInterface from "wysiwygAdapter";
 import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
+import checkStageFullScreen from "../utils/check-stage-full-screen";
 import WysiwygInterface from "./wysiwyg-interface";
 
 /**
@@ -35,6 +36,11 @@ export default class Wysiwyg implements WysiwygInterface {
     public contentTypeId: string;
 
     /**
+     * Id of the stage
+     */
+    public stageId: string;
+
+    /**
      * Wysiwyg adapter instance
      */
     private wysiwygAdapter: WysiwygInstanceInterface;
@@ -55,6 +61,7 @@ export default class Wysiwyg implements WysiwygInterface {
      * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
      * @param {DataStore} dataStore The datastore to store the content in.
      * @param {String} fieldName The key in the provided datastore to set the data.
+     * @param {String} stageId The ID in the registry of the stage containing the content type.
      */
     constructor(
         contentTypeId: string,
@@ -62,12 +69,14 @@ export default class Wysiwyg implements WysiwygInterface {
         config: AdditionalDataConfigInterface,
         dataStore: DataStore,
         fieldName: string,
+        stageId: string,
     ) {
         this.contentTypeId = contentTypeId;
         this.elementId = elementId;
         this.fieldName = fieldName;
         this.config = config;
         this.dataStore = dataStore;
+        this.stageId = stageId;
 
         if (this.config.adapter_config.mode === "inline") {
             /**
@@ -100,7 +109,7 @@ export default class Wysiwyg implements WysiwygInterface {
         // Update content in our data store after our stage preview wysiwyg gets updated
         this.wysiwygAdapter.eventBus.attachEventHandler(
             WysiwygEvents.afterChangeContent,
-            _.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100),
+            this.onChangeContent.bind(this),
         );
 
         // Update content in our stage preview wysiwyg after its slideout counterpart gets updated
@@ -120,17 +129,28 @@ export default class Wysiwyg implements WysiwygInterface {
     private onFocus() {
         this.clearSelection();
 
-        $(`#${this.elementId}`)
-            .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
+        this.getFixedToolbarContainer()
             .addClass("pagebuilder-toolbar-active");
 
         events.trigger("stage:interactionStart");
 
         // Wait for everything else to finish
         _.defer(() => {
-            $(this.config.adapter.settings.fixed_toolbar_container + " .mce-tinymce-inline")
+            this.getFixedToolbarContainer()
+                .find(".mce-tinymce-inline")
                 .css("min-width", this.config.adapter_config.minToolbarWidth + "px");
+
+            this.invertInlineEditorToAccommodateOffscreenToolbar();
         });
+    }
+
+    /**
+     * Called for the onChangeContent event
+     */
+    private onChangeContent() {
+        const saveContent = _.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100);
+        saveContent();
+        this.invertInlineEditorToAccommodateOffscreenToolbar();
     }
 
     /**
@@ -139,9 +159,11 @@ export default class Wysiwyg implements WysiwygInterface {
     private onBlur() {
         this.clearSelection();
 
-        $(`#${this.elementId}`)
-            .closest(`${this.config.adapter.settings.fixed_toolbar_container}`)
-            .removeClass("pagebuilder-toolbar-active");
+        this.getFixedToolbarContainer()
+            .removeClass("pagebuilder-toolbar-active")
+            .find(".mce-tinymce-inline")
+            .css("transform", "");
+
         events.trigger("stage:interactionStop");
     }
 
@@ -175,5 +197,37 @@ export default class Wysiwyg implements WysiwygInterface {
                 window.getSelection().removeAllRanges();
             }
         }
+    }
+
+    /**
+     * Adjust padding on stage if in fullscreen mode to accommodate inline wysiwyg toolbar overflowing fixed viewport
+     */
+    private invertInlineEditorToAccommodateOffscreenToolbar() {
+        if (this.config.adapter_config.mode !== "inline") {
+            return;
+        }
+
+        const $inlineToolbar = this.getFixedToolbarContainer().find(".mce-tinymce-inline");
+
+        if (!$inlineToolbar.length) {
+            return;
+        }
+
+        const inlineWysiwygClientRectTop = this.getFixedToolbarContainer().get(0).getBoundingClientRect().top;
+
+        if (!checkStageFullScreen(this.stageId) || $inlineToolbar.height() < inlineWysiwygClientRectTop) {
+            $inlineToolbar.css("transform", "translateY(-100%)");
+            return;
+        }
+        $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
+    }
+
+    /**
+     * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
+     *
+     * @returns {jQuery}
+     */
+    private getFixedToolbarContainer() {
+        return $(`#${this.elementId}`).closest(`${this.config.adapter.settings.fixed_toolbar_container}`);
     }
 }

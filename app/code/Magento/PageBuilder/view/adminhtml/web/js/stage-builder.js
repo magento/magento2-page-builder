@@ -13,10 +13,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
    * @returns {Promise<void>}
    */
   function buildFromContent(stage, value) {
-    var stageDocument = document.createElement("div");
-    stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
-    stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage.rootContainer, stage);
+    var stageDocument = new DOMParser().parseFromString(value, "text/html");
+    stageDocument.body.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
+    return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
   }
   /**
    * Build an element and it's children into the stage
@@ -83,7 +82,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
    *
    * @param {HTMLElement} element
    * @param {ContentTypeConfigInterface} config
-   * @returns {Promise<any>}
+   * @returns {Promise<{[p: string]: any}>}
    */
 
 
