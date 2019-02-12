@@ -10,6 +10,7 @@ import Config from "../../config";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import Uploader from "../../uploader";
+import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import BasePreview from "../preview";
@@ -183,6 +184,7 @@ export default class Preview extends BasePreview {
             config,
             this.contentType.dataStore,
             "message",
+            this.contentType.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
@@ -241,12 +243,13 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const dataStore = this.contentType.dataStore.getState();
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
             if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
                 this.contentType.dataStore.update("", "message");
             }
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
+            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
         });
     }
 

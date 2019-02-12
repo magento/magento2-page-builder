@@ -16,6 +16,7 @@ import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {hiddenClass} from "../../drag-drop/sortable";
+import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
@@ -55,6 +56,7 @@ export default class Preview extends PreviewCollection {
     public gridSizeMax: KnockoutObservable<number> = ko.observable(getMaxGridSize());
     public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
     public gridChange: KnockoutObservable<boolean> = ko.observable(false);
+    public gridToolTipOverFlow: KnockoutObservable<boolean> = ko.observable(false);
     private dropPlaceholder: JQuery;
     private movePlaceholder: JQuery;
     private groupElement: JQuery;
@@ -444,6 +446,7 @@ export default class Preview extends PreviewCollection {
         this.updateGridSize();
         if (!this.gridSizeError()) {
             this.gridFormOpen(false);
+            this.gridToolTipOverFlow(false);
             events.trigger("stage:interactionStop");
             events.trigger("stage:childFocusStop");
             $(document).off("click focusin", this.onDocumentClick);
@@ -454,10 +457,16 @@ export default class Preview extends PreviewCollection {
      * Show grid size panel on click and start interaction
      */
     public openGridForm(): void {
+        const tooltip = $(this.wrapperElement).find("[role='tooltip']");
         if (!this.gridFormOpen()) {
             this.gridSizeHistory = new Map();
             this.recordGridResize(this.gridSize());
-
+            // inline tooltip out of bounds
+            if (checkStageFullScreen(this.contentType.stageId)
+                && 0 > tooltip[0].getBoundingClientRect().top
+            ) {
+                this.gridToolTipOverFlow(true);
+            }
             this.gridFormOpen(true);
             // Wait for animation to complete
             _.delay(() => {

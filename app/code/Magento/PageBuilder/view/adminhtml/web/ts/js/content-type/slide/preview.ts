@@ -13,6 +13,7 @@ import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-
 import {OptionsInterface} from "../../content-type-menu/option.types";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
+import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
 import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
@@ -251,6 +252,9 @@ export default class Preview extends BasePreview {
 
     /**
      * Init the WYSIWYG
+     *
+     * @param {boolean} focus Should wysiwyg focus after initialization?
+     * @returns Promise
      */
     public initWysiwyg(focus: boolean = false) {
         if (this.wysiwyg) {
@@ -270,6 +274,7 @@ export default class Preview extends BasePreview {
             wysiwygConfig,
             this.contentType.dataStore,
             "content",
+            this.contentType.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
@@ -283,8 +288,9 @@ export default class Preview extends BasePreview {
 
         events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
             const dataStore = this.contentType.dataStore.getState();
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
+            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "content", "link_url");
         });
 
         // Remove wysiwyg before assign new instance.

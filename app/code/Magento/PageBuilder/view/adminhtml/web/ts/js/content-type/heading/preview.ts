@@ -9,7 +9,7 @@ import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import {OptionsInterface} from "../../content-type-menu/option.types";
-import Toolbar from "../../content-type-toolbar";
+import Toolbar, {ContentTypeToolbarPreviewInterface} from "../../content-type-toolbar";
 import {OptionInterface} from "../../content-type-toolbar.types";
 import ContentTypeInterface from "../../content-type.types";
 import {ContentTypeDroppedCreateEventParamsInterface} from "../content-type-events.types";
@@ -19,7 +19,7 @@ import BasePreview from "../preview";
 /**
  * @api
  */
-export default class Preview extends BasePreview {
+export default class Preview extends BasePreview implements ContentTypeToolbarPreviewInterface {
     public toolbar: Toolbar;
     private element: Element;
 

@@ -29,11 +29,12 @@ import {get, set} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
 import ObservableObject from "./observable-updater.types";
+import {PreviewInterface} from "./preview.types";
 
 /**
  * @api
  */
-export default class Preview {
+export default class Preview implements PreviewInterface {
     public contentType: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
@@ -184,14 +185,22 @@ export default class Preview {
 
         // Ensure no other options panel is displayed
         $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
-
         this.mouseover = true;
         this.mouseoverContext = context;
-        const currentTarget = event.currentTarget;
+        const currentTarget = event.currentTarget as HTMLElement;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
         if (!$(currentTarget).hasClass("type-nested")) {
             optionsMenu = optionsMenu.first();
+        }
+
+        const middleOfPreview = currentTarget.getBoundingClientRect().left + currentTarget.offsetWidth / 2;
+
+        // Check for space for option menu
+        if (window.innerWidth - middleOfPreview > optionsMenu.width() / 2) {
+            optionsMenu.parent().addClass("pagebuilder-options-middle");
+        } else {
+            optionsMenu.parent().removeClass("pagebuilder-options-middle");
         }
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");

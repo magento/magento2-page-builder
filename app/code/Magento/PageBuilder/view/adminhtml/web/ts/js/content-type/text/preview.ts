@@ -79,6 +79,7 @@ export default class Preview extends BasePreview {
             wysiwygConfig,
             this.contentType.dataStore,
             "content",
+            this.contentType.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });

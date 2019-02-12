@@ -75,7 +75,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
       element.id = this.contentType.id + "-editor";
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
       wysiwygConfig.adapter.settings.auto_focus = this.contentType.dropped ? element.id : null;
-      (0, _factory)(this.contentType.id, element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content").then(function (wysiwyg) {
+      (0, _factory)(this.contentType.id, element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
         _this.wysiwyg = wysiwyg;
       });
     }

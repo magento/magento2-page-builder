@@ -27,10 +27,9 @@ import {set} from "./utils/object";
  * @returns {Promise<void>}
  */
 function buildFromContent(stage: Stage, value: string) {
-    const stageDocument = document.createElement("div");
-    stageDocument.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
-    stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage.rootContainer, stage);
+    const stageDocument = new DOMParser().parseFromString(value, "text/html");
+    stageDocument.body.setAttribute(Config.getConfig("dataContentTypeAttributeName"), "stage");
+    return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
 }
 
 /**
@@ -82,7 +81,7 @@ function createElementContentType(
     element: HTMLElement,
     stage: Stage,
     contentType?: ContentTypeCollectionInterface,
-): Promise<ContentTypeInterface> {
+) {
     contentType = contentType || stage.rootContainer;
     const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
     if (!role) {
@@ -111,7 +110,7 @@ function createElementContentType(
  *
  * @param {HTMLElement} element
  * @param {ContentTypeConfigInterface} config
- * @returns {Promise<any>}
+ * @returns {Promise<{[p: string]: any}>}
  */
 function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value

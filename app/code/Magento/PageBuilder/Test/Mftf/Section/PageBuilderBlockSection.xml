@@ -9,7 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
     <section name="BlockOnStage">
-        <element name="html" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@data-bind,'html: data.main.html')])[{{arg2}}]//a[contains(@class,'pagebuilder-button-primary')]" parameterized="true"/>
+        <element name="html" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@data-bind,'html: data.main.html')])[{{arg2}}]//div[contains(@class,'placeholder-html-code')]" parameterized="true"/>
         <element name="status" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//span[contains(@class,'placeholder') and text()='{{arg}}'])" parameterized="true"/>
         <element name="deleted" type="text" selector="((//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//span[contains(@class,'placeholder') and contains(text(),'Block with ID: {{arg}} doesn')])" parameterized="true"/>
         <element name="title" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@class,'pagebuilder-options-wrapper')]//div[contains(@class,'option-title') and text()='{{arg}}']" parameterized="true"/>
@@ -64,5 +64,6 @@
         <element name="noCssClasses" type="text" selector="(//div[@data-content-type='row'])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="text" type="text" selector="(//div[@data-content-type='block'])[{{arg1}}]//div[@data-content-type='text'][{{arg2}}]" parameterized="true"/>
     </section>
 </sections>

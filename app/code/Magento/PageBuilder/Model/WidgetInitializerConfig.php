@@ -35,7 +35,7 @@ class WidgetInitializerConfig
     {
         $resultConfig = [];
         foreach ($this->config as $contentTypeName => $config) {
-            $selector = sprintf('div[data-content-type="%s"]', $contentTypeName);
+            $selector = sprintf('[data-content-type="%s"]', $contentTypeName);
             foreach ($config as $item) {
                 if (!isset($item['component'])) {
                     continue;

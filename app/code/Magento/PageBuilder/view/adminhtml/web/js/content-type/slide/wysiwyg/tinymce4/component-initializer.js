@@ -51,7 +51,14 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils
 
       var $slider = (0, _jquery)(this.$element.parents(this.sliderSelector));
       var sliderContent = this.$element.parents(this.sliderContentSelector)[0];
-      var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
+      var $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector); // If there isn't enough room for a left-aligned toolbar, right align it
+
+      if ((0, _jquery)(window).width() < this.$element.offset().left + parseInt(this.config.adapter_config.minToolbarWidth, 10)) {
+        this.$element.addClass("_right-aligned-toolbar");
+      } else {
+        this.$element.removeClass("_right-aligned-toolbar");
+      }
+
       (0, _delayUntil)(function () {
         _jquery.each(_this2.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
           _this2.$element.closest(selector).css("z-index", 100);

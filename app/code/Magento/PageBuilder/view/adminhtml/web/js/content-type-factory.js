@@ -10,7 +10,7 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
    *
    * @param {ContentTypeConfigInterface} config
    * @param {ContentTypeInterface} parentContentType
-   * @param {number} stageId
+   * @param {string} stageId
    * @param {object} data
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}

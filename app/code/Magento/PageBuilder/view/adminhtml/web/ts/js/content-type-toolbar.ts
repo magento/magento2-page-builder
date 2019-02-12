@@ -8,12 +8,16 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import {OptionInterface, ValueInterface} from "./content-type-toolbar.types";
 import Preview from "./content-type/preview";
+import {PreviewCollectionInterface} from "./content-type/preview-collection.types";
+import {PreviewInterface} from "./content-type/preview.types";
+import checkStageFullScreen from "./utils/check-stage-full-screen";
 
 /**
  * @api
  */
 export default class Toolbar {
     public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
+    public observer: MutationObserver;
     private preview: Preview;
 
     /**
@@ -52,11 +56,31 @@ export default class Toolbar {
     /**
      * Set state based on toolbar focusin event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
-    public onFocusIn(context: Preview, event: Event): void {
-        const currentContentTypeTarget = $(event.currentTarget).closest(".pagebuilder-content-type");
+    public onFocusIn(context: ContentTypeToolbarPreviewInterface, event: Event): void {
+        const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
+        const toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options");
+        // Change toolbar orientation if overflow on full screen mode
+        if (checkStageFullScreen(context.contentType.stageId)
+            && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()
+        ) {
+            context.toolbar.observer = new MutationObserver(() => {
+                toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
+            });
+            context.toolbar.observer.observe(
+                currentContentTypeTarget[0],
+                {
+                    attributes: true,
+                    childList: true,
+                    subtree: true,
+                },
+            );
+            toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
+        } else {
+            toolbarOptions.css("transform", "translateY(-100%)");
+        }
         $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
         events.trigger("stage:interactionStart");
     }
@@ -64,12 +88,35 @@ export default class Toolbar {
     /**
      * Set state based on toolbar focusout event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
-    public onFocusOut(context: Preview, event: Event): void {
-        const currentContentTypeTarget = $(event.currentTarget).closest(".pagebuilder-content-type");
-        $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
+    public onFocusOut(context: ContentTypeToolbarPreviewInterface, event: Event): void {
+        const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
+        currentContentTypeTarget.removeClass("pagebuilder-toolbar-active");
+        currentContentTypeTarget.find(".pagebuilder-toolbar-options").css("transform", "");
+        if (typeof context.toolbar.observer !== "undefined"){
+            context.toolbar.observer.disconnect();
+        }
         events.trigger("stage:interactionStop");
     }
+
+    /**
+     * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
+     *
+     * @returns {jQuery}
+     */
+    private getCurrentContentTypeTarget() {
+        return $(`#${this.preview.contentType.id}`).find(".pagebuilder-content-type");
+    }
+}
+
+/**
+ * Preview interface for preview instances implementation the toolbar functionality
+ */
+export interface ContentTypeToolbarPreviewInterface extends PreviewInterface {
+    toolbar: Toolbar;
+}
+export interface ContentTypeToolbarPreviewCollectionInterface extends PreviewCollectionInterface {
+    toolbar: Toolbar;
 }
