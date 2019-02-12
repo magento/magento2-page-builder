@@ -6,9 +6,9 @@
 import $ from "jquery";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
+import {FieldDefaultsInterface} from "../content-type-factory";
 import DataStore, {DataObject} from "../data-store";
 import WysiwygInterface from "../wysiwyg/wysiwyg-interface";
-import {FieldDefaultsInterface} from "../content-type-factory";
 
 /**
  * Validate inline editor for having nested link

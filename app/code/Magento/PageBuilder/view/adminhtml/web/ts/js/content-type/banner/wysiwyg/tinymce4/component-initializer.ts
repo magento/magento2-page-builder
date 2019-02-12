@@ -5,9 +5,9 @@
 
 import $ from "jquery";
 import WysiwygEvents from "mage/adminhtml/wysiwyg/events";
+import {AdditionalDataConfigInterface} from "../../../../content-type-config.types";
 import WysiwygComponentInitializerInterface from "../../../../wysiwyg/component-initializer-interface";
 import WysiwygInterface from "../../../../wysiwyg/wysiwyg-interface";
-import {AdditionalDataConfigInterface} from "../../../../content-type-config.types";
 
 export default class ComponentInitializer implements WysiwygComponentInitializerInterface {
     /**
