@@ -2224,4 +2224,101 @@
         <!-- Validate Image Editor On Storefront -->
         <seeElement selector="{{BannerOnFrontend.messageContentTextAreaImage('1', PageBuilderBackgroundImage_JPG.value)}}" stepKey="validateImageFrontEnd"/>
     </test>
+    <test name="BannerCannotHaveInlineWysiwygLinkAndLinkUrl">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
+            <title value="Banner inline WYSIWYG editor will notify user that they cannot add TinyMCE Link and Link URL at the same time"/>
+            <description value="Banner edit form and inline editor validate banner TinyMCE Link and Link URL could not be added at the same time."/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MC-5386"/>
+            <testCaseId value="MC-6052"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Check Invalid Link Url and Message Text -->
+        <comment userInput="Check Invalid Link Url and Message Text" stepKey="commentCheckInvalidLinkUrlAndMessageText"/>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLink">
+            <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
+        <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInWYSIWYG">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidLinkUrl">
+            <argument name="property" value="PageBuilderBannerLinkUrlInvalidProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateInvalidMessageWithUrl">
+            <argument name="property" value="PageBuilderBannerMessageInvalidProperty"/>
+        </actionGroup>
+        <!-- Correcting invalid fields -->
+        <comment userInput="Correcting invalid fields" stepKey="commentCorrectingInvalidFields"/>
+        <actionGroup ref="replaceTextToTinyMCE" stepKey="replaceMessageText">
+            <argument name="property" value="PageBuilderBannerMessageProperty"/>
+            <argument name="section" value="BannerOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Check inline editor will validate for not allowing TinyMCE Link and Link URL at the same time -->
+        <comment userInput="Check inline editor will validate for not allowing TinyMCE Link and Link URL at the same time" stepKey="commentCheckInlineEditorPreventAddingBothUrls"/>
+        <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(PageBuilderBannerContentType.role, '1')}}" stepKey="focusOnEditorArea"/>
+        <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(PageBuilderBannerContentType.role, '1')}}" stepKey="waitForEditorPanel"/>
+        <actionGroup ref="insertLinkInWYSIWYG" stepKey="insertLinkInStageInlineEditor">
+            <argument name="url" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="textToDisplay" value="{{ExternalLink.googleUrl}}"/>
+            <argument name="wysiwygArea" value=""/>
+        </actionGroup>
+        <seeElement selector="{{PageBuilderStage.modal(PageBuilderBannerMessageInvalidProperty.stageErrorMessage)}}" stepKey="seeCorrectErrorModal"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmNestingLinkModal"/>
+        <!-- Checks for a tags within the tinyMCE with regex -->
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInWysiwygBoolean"/>
+        <assertFalse stepKey="assertMessageHasNoAnchorTags">
+            <actualResult type="variable">grabIfAnchorInWysiwygBoolean</actualResult>
+        </assertFalse>
+        <!-- Check slide out editor will validate for not allowing TinyMCE Link and Link URL at the same time -->
+        <comment userInput="Check slide out editor will validate for not allowing TinyMCE Link and Link URL at the same time" stepKey="commentCheckSlideOutEditorPreventAddingBothUrls"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusEditor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageAfterInlineValidation">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Checks for a tags within the tinyMCE with regex -->
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test(tinymce.activeEditor.getContent());" stepKey="grabIfAnchorInSlideOutWysiwygBoolean"/>
+        <assertFalse stepKey="assertMessageHasNoAnchorTags2">
+            <actualResult type="variable">grabIfAnchorInSlideOutWysiwygBoolean</actualResult>
+        </assertFalse>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Storefront: Validate No Link in Banner Content -->
+        <comment userInput="Storefront: Validate No Link in Banner Content" stepKey="CommentValidateNoLinkInBannerContent"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Checks for a tags within the message with regex -->
+        <executeJS function="return (/&lt;a[\s]+([^&gt;]+)&gt;|&lt;a&gt;|&lt;\/a&gt;/igm).test({{BannerOnFrontend.contentJS('1')}}.innerHTML);" stepKey="grabIfFrontendAnchorInContentBoolean"/>
+        <assertFalse stepKey="assertFrontendMessageHasNoAnchorTags">
+            <actualResult type="variable">grabIfFrontendAnchorInContentBoolean</actualResult>
+        </assertFalse>
+    </test>
 </tests>
