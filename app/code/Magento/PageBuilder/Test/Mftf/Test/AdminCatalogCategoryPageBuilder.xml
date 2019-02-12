@@ -143,4 +143,51 @@
         <!-- TODO - rename stepKey -->
         <scrollTo selector="//div[@class='category-description']" stepKey="scrollToProductDescription"/>
     </test>
+    <test name="PageBuilderCategoryVerifyCanDuplicateContentTypesFromOnHoverOptionMenus" extends="PageBuilderProductVerifyCanDuplicateContentTypesFromOnHoverOptionMenus">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Duplicate Content Types From On-Hover Option Menus"/>
+            <description value="This test is intended to ensure that users can duplicate content types from the on-hover option menus within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14812"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-duplicate"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <comment userInput="---merging to remove step---" stepKey="createProduct"/>
+            <!-- TODO - rename stepKey -->
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <!-- TODO - rename stepKey -->
+            <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="expandAdminProductSection"/>
+        </before>
+        <after>
+            <!-- TODO - rename stepKey -->
+            <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
+            <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
+        </after>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel">
+            <argument name="baseContent" value="{{AdminCategoryMainActionsSection.SaveButton}}" />
+        </actionGroup>
+        <!-- Save Category -->
+        <!-- TODO rename stepKey -->
+        <comment userInput="Save Category" stepKey="commentSaveProduct"/>
+        <!-- TODO - rename stepKey -->
+        <actionGroup ref="saveCategoryForm" stepKey="saveProduct"/>
+        <!-- TODO - rename stepKey -->
+        <waitForPageLoad stepKey="waitForPageLoadSaveProduct"/>
+        <!-- TODO rename stepKey -->
+        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="expandAdminProductSection"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <!-- TODO - rename stepKey -->
+        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToProductStorefront"/>
+        <!-- TODO - rename stepKey -->
+        <scrollTo selector="//div[@class='category-description']" stepKey="scrollToProductDescription"/>
+    </test>
 </tests>
