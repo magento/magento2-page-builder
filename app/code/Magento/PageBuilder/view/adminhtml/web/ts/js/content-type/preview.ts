@@ -29,11 +29,12 @@ import {get, set} from "../utils/object";
 import appearanceConfig from "./appearance-config";
 import ObservableUpdater from "./observable-updater";
 import ObservableObject from "./observable-updater.types";
+import {PreviewInterface} from "./preview.types";
 
 /**
  * @api
  */
-export default class Preview {
+export default class Preview implements PreviewInterface {
     public parent: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};

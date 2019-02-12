@@ -53,7 +53,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     /**
      * Set state based on toolbar focusin event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
     ;
@@ -83,7 +83,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     /**
      * Set state based on toolbar focusout event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
     ;
@@ -119,6 +119,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
 
     return Toolbar;
   }();
+  /**
+   * Preview interface for preview instances implementation the toolbar functionality
+   */
+
 
   return Toolbar;
 });

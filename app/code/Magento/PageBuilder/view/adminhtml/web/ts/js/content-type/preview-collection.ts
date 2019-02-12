@@ -7,8 +7,9 @@ import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
 import ContentTypeInterface from "../content-type.types";
 import Preview from "./preview";
+import {PreviewCollectionInterface} from "./preview-collection.types";
 
-export default class PreviewCollection extends Preview {
+export default class PreviewCollection extends Preview implements PreviewCollectionInterface {
     public parent: ContentTypeCollectionInterface;
 
     /**

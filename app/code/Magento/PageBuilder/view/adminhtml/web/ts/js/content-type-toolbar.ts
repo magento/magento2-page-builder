@@ -8,6 +8,8 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import {OptionInterface, ValueInterface} from "./content-type-toolbar.types";
 import Preview from "./content-type/preview";
+import {PreviewCollectionInterface} from "./content-type/preview-collection.types";
+import {PreviewInterface} from "./content-type/preview.types";
 import checkStageFullScreen from "./utils/check-stage-full-screen";
 
 /**
@@ -54,10 +56,10 @@ export default class Toolbar {
     /**
      * Set state based on toolbar focusin event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
-    public onFocusIn(context: Preview, event: Event): void {
+    public onFocusIn(context: ContentTypeToolbarPreviewInterface, event: Event): void {
         const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
         const toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options");
         // Change toolbar orientation if overflow on full screen mode
@@ -86,10 +88,10 @@ export default class Toolbar {
     /**
      * Set state based on toolbar focusout event for the preview
      *
-     * @param {Preview} context
+     * @param {ContentTypeToolbarPreviewInterface} context
      * @param {Event} event
      */
-    public onFocusOut(context: Preview, event: Event): void {
+    public onFocusOut(context: ContentTypeToolbarPreviewInterface, event: Event): void {
         const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
         currentContentTypeTarget.removeClass("pagebuilder-toolbar-active");
         currentContentTypeTarget.find(".pagebuilder-toolbar-options").css("transform", "");
@@ -107,4 +109,14 @@ export default class Toolbar {
     private getCurrentContentTypeTarget() {
         return $(`#${this.preview.parent.id}`).find(".pagebuilder-content-type");
     }
+}
+
+/**
+ * Preview interface for preview instances implementation the toolbar functionality
+ */
+export interface ContentTypeToolbarPreviewInterface extends PreviewInterface {
+    toolbar: Toolbar;
+}
+export interface ContentTypeToolbarPreviewCollectionInterface extends PreviewCollectionInterface {
+    toolbar: Toolbar;
 }
