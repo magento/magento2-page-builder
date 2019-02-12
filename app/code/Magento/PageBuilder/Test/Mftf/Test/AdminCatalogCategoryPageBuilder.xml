@@ -24,28 +24,22 @@
             <group value="pagebuilder-catalog-category"/>
         </annotations>
         <before>
-            <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
             <comment userInput="---merging to remove step---" stepKey="createProduct"/>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <!-- TODO - rename stepKey -->
             <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedProductEditPage">
                 <argument name="Category" value="$$createPreReqCategory$$"/>
             </actionGroup>
             <!-- TODO - rename stepKey -->
             <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="expandAdminProductSection"/>
-            <actionGroup ref="openPageBuilderForAttribute" stepKey="openPageBuilderForDescription"/>
         </before>
         <after>
             <!-- TODO - rename stepKey -->
             <comment userInput="---merging to remove step---" stepKey="deleteCreatedProduct"/>
-            <deleteData createDataKey="createPreReqCategory" stepKey="deleteCreatedCategory"/>
             <comment userInput="---merging to remove step---" stepKey="NavigateToAndResetProductGridToDefaultView"/>
-            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Save Category -->
         <!-- TODO rename stepKey -->
         <comment userInput="Save Category" stepKey="commentSaveProduct"/>
-        <actionGroup ref="exitPageBuilderFullScreen" stepKey="exitPageBuilderFullScreen"/>
         <!-- TODO - rename stepKey -->
         <actionGroup ref="saveCategoryForm" stepKey="saveProduct"/>
         <!-- TODO - rename stepKey -->
