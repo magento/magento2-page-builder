@@ -9,11 +9,14 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
     <actionGroup name="closeEditPanelSettings">
+        <arguments>
+            <argument name="baseContent" defaultValue="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" type="string"/>
+        </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="2" selector="{{EditPanelForm.editFormClose}}" stepKey="waitForCloseButton"/>
         <click selector="{{EditPanelForm.editFormClose}}" stepKey="clickCloseButton"/>
         <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible"/>
-        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
+        <waitForElementVisible time="1" selector="{{baseContent}}" stepKey="waitForCmsPageSaveButton"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
         <arguments>
