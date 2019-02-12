@@ -2,7 +2,7 @@
 
 ## Product attribute fields
 
-The Page Builder module is compatible with all product attributes fields that use an input of type `text`.
+The Page Builder module is compatible with all product attribute fields that use an input of type `text`.
 If your module creates a custom product attribute as a feature, you can change the input of that attribute to Page Builder.
 
 For example, the following code creates a new product attribute called "Sample Field" with a default input type of `textarea`.
