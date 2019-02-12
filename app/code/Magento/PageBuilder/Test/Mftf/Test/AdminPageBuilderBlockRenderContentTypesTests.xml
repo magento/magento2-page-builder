@@ -1282,4 +1282,179 @@
         <seeElement selector="{{HtmlOnStorefront.base('1')}}" stepKey="seeHtmlBaseStorefront"/>
         <seeElement selector="{{HtmlOnStorefront.html('1', PageBuilderHtmlPropertyButton.selectorOnFrontend)}}" stepKey="seeHtmlStorefront"/>
     </test>
+    <test name="BlockRenderVideoThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Video Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the video content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=" C-14832"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Video -->
+        <comment userInput="Add Video" stepKey="commentAddVideo"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Edit Video -->
+        <comment userInput="Edit Video" stepKey="commentEditVideo"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuVideo">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsVideo"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="validateVideo" stepKey="validateBlockStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <actionGroup ref="validateVideo" stepKey="validatePageStage">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <actionGroup ref="validateVideo" stepKey="validateStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+    </test>
+    <test name="BlockRenderBlockThroughBlockContentType">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Block Content"/>
+            <title value="Render Block Through Block Content Type"/>
+            <description value="Verify that users are able to successfully render and use the block content type through the Block content type."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-14834"/>
+            <useCaseId value="MC-13769"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+            <group value="pagebuilder-block-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_emptyCmsPage" stepKey="createCMSPage"/>
+            <createData entity="_emptyCmsBlock" stepKey="createCMSBlock"/>
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+            <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
+                <argument name="CMSBlockPage" value="$$createCMSBlock$$"/>
+            </actionGroup>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createCMSBlock" stepKey="deleteCMSBlock"/>
+            <deleteData createDataKey="createCMSPage" stepKey="deleteCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Block -->
+        <comment userInput="Add Block" stepKey="commentAddBlock"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <!-- Edit Block -->
+        <comment userInput="Edit Block" stepKey="commentEditBlock"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
+        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
+        <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
+        <!-- Validate CMS Block Stage -->
+        <comment userInput="Validate CMS Block Stage" stepKey="commentValidateCMSBlockStage"/>
+        <actionGroup ref="verifyBlockOnStage" stepKey="verifyBlockOnBlockStage">
+            <argument name="block" value="$$createPreReqBlock$$"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Add Block to CMS Page -->
+        <comment userInput="Add Block to CMS Page" stepKey="commentAddBlockToCMSPage"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupAddContent">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoPageStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditAfterDropBlock">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInPageGrid">
+            <argument name="block" value="$$createCMSBlock$$"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
+        <!-- Validate CMS Page Stage -->
+        <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnPageStage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate CMS Page Storefront -->
+        <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
+        <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
+            <argument name="page" value="$$createCMSPage.identifier$$"/>
+        </actionGroup>
+        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStoreFront"/>
+    </test>
 </tests>
