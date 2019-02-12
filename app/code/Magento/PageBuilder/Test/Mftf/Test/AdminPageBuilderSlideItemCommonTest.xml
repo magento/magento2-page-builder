@@ -610,6 +610,23 @@
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings2"/>
+        <actionGroup ref="addChildContentTypeFromOptionMenu" stepKey="addChildContentType2">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanelAfterAdd2">
+            <argument name="section" value="SlideOnBackend"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
+        <!-- Edit Slide 3 -->
+        <comment userInput="Edit Slide 3" stepKey="commentEditSlide3"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText3">
+            <argument name="property" value="PageBuilderSlideItemSlideName_Slide3"/>
+        </actionGroup>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCESlide3">
+            <argument name="property" value="PageBuilderSlideItemContent_Slide3"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
         <!-- Validate Stage -->
@@ -629,16 +646,16 @@
         <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
         <executeJS function="return document.querySelectorAll('{{SliderOnStage.slideNavigationDragHandle}}')[0].clientHeight / 2" stepKey="yCoordinateToMoveTo"/>
         <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
-        <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSlideDot"/>
+        <click selector="{{SliderOnStage.slideNavigationDot('1', '3')}}" stepKey="clickSlideDot"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <dragAndDrop selector1="{{SliderOnStage.slideNavigationDragHandleByIndex('1', '2')}}" selector2="{{SliderOnStage.slideNavigationDot('1', '1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
+        <dragAndDrop selector1="{{SliderOnStage.slideNavigationDragHandleByIndex('1', '3')}}" selector2="{{SliderOnStage.slideNavigationDot('1', '1')}}" x="$xCoordinateToMoveTo" y="$yCoordinateToMoveTo" stepKey="dragAndDropSlide"/>
         <waitForPageLoad stepKey="waitForDragAndDrop"/>
         <!-- Validate Stage After Sorting -->
         <comment userInput="Validate Stage After Sorting" stepKey="commentValidateStage2"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide1ContentAfterSort"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide1ContentAfterSort"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSort"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSort"/>
-        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltipAfterSort"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide3.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName3InTooltipAfterSort"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDot"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSort"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDotAfterSort"/>
@@ -648,10 +665,10 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Validate Stage After Saving -->
         <comment userInput="Validate Stage After Saving" stepKey="commentValidateStage3"/>
-        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide2.value)}}" stepKey="seeSlide2ContentAfterSave2"/>
+        <seeElement selector="{{SlideOnBackend.messageContent('1', PageBuilderSlideItemContent_Slide3.value)}}" stepKey="seeSlide3ContentAfterSave2"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unFocusNavigationAfterSave2"/>
         <moveMouseOver selector="{{SliderOnStage.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2AfterSave"/>
-        <see userInput="{{PageBuilderSlideItemSlideName_Slide2.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName2InTooltipAfterSave2"/>
+        <see userInput="{{PageBuilderSlideItemSlideName_Slide3.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName3InTooltipAfterSave2"/>
         <moveMouseOver selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="moveMouseOverSecondSlideNavigationDotAfterSave2"/>
         <see userInput="{{PageBuilderSlideItemSlideName_Slide1.value}}" selector="{{SliderOnStage.slideNavigationDotNameTooltip('1')}}" stepKey="seeSlideName1InTooltipAfterSave2"/>
         <click selector="{{SliderOnStage.slideNavigationDot('1', '2')}}" stepKey="clickSecondNavigationDot2"/>
@@ -663,7 +680,7 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="waitForSlide1"/>
-        <see userInput="{{PageBuilderSlideItemContent_Slide2.value}}" selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="seeSlide1ContentDisplayed"/>
+        <see userInput="{{PageBuilderSlideItemContent_Slide3.value}}" selector="{{SlideOnFrontend.slickSlideIndex('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <click selector="{{SliderOnFrontend.slideNavigationDot('1', '2')}}" stepKey="clickNextSlideOnSlider"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <waitForElementVisible selector="{{SlideOnFrontend.slickSlideIndex('1')}}" stepKey="waitForSlide2"/>
