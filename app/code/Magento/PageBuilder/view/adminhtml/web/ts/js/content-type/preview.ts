@@ -13,27 +13,28 @@ import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
 import ContentTypeCollection from "../content-type-collection";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
-import ContentTypeConfigInterface from "../content-type-config.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
+import ContentTypeConfigInterface from "../content-type-config.types";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
 import Edit from "../content-type-menu/edit";
 import Option from "../content-type-menu/option";
-import {OptionsInterface} from "../content-type-menu/option.d";
+import {OptionsInterface} from "../content-type-menu/option.types";
 import TitleOption from "../content-type-menu/title-option";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {getDraggedContentTypeConfig} from "../drag-drop/registry";
 import {getSortableOptions} from "../drag-drop/sortable";
 import {get, set} from "../utils/object";
 import appearanceConfig from "./appearance-config";
-import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import ObservableObject from "./observable-updater.types";
+import {PreviewInterface} from "./preview.types";
 
 /**
  * @api
  */
-export default class Preview {
+export default class Preview implements PreviewInterface {
     public parent: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
@@ -47,7 +48,7 @@ export default class Preview {
     /**
      * @deprecated
      */
-    public previewData: ObservableObject = {};
+    public previewData: {[key: string]: any} = {};
 
     /**
      * Fields that should not be considered when evaluating whether an object has been configured.
@@ -321,7 +322,7 @@ export default class Preview {
         contentType: ContentTypeInterface | ContentTypeCollectionInterface,
         autoAppend: boolean = true,
         direct: boolean = false,
-    ): Promise<ContentTypeInterface> {
+    ): Promise<ContentTypeInterface> | void {
         const contentTypeData = contentType.dataStore.getState();
         const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
 

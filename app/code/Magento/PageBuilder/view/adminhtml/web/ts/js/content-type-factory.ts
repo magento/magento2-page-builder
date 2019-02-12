@@ -4,18 +4,15 @@
  */
 
 import events from "Magento_PageBuilder/js/events";
-import loadModule from "Magento_PageBuilder/js/utils/loader";
 import _ from "underscore";
-import ConfigFieldInterface from "./config-field";
 import ContentType from "./content-type";
-import ContentTypeCollection from "./content-type-collection";
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeConfigInterface from "./content-type-config.d";
-import ContentTypeInterface from "./content-type.d";
-import ContentTypeMountEventParamsInterface from "./content-type/content-type-mount-event-params.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";
+import ContentTypeInterface from "./content-type.types";
+import {ContentTypeMountEventParamsInterface} from "./content-type/content-type-events.types";
 import masterFactory from "./content-type/master-factory";
 import previewFactory from "./content-type/preview-factory";
-import FieldDefaultsInterface from "./field-defaults.d";
+import loadModule from "./utils/loader";
 
 /**
  * Create new content type
@@ -36,10 +33,10 @@ export default function createContentType(
     childrenLength: number = 0,
 ): Promise<ContentTypeInterface | ContentTypeCollectionInterface> {
     return new Promise(
-        (resolve: (contentType: ContentType | ContentTypeCollection) => void,
+        (resolve: (contentType: ContentTypeInterface | ContentTypeCollectionInterface) => void,
          reject: (error: string) => void,
     ) => {
-        loadModule([config.component], (contentTypeComponent: typeof ContentType | typeof ContentTypeCollection) => {
+        loadModule([config.component], (contentTypeComponent: typeof ContentType) => {
             try {
                 const contentType = new contentTypeComponent(
                     parent,
@@ -65,7 +62,7 @@ export default function createContentType(
                 reject(`Error within component (${config.component}) for ${config.name}.`);
                 console.error(error);
             }
-        }, (error: string) => {
+        }, (error: Error) => {
             reject(`Unable to load component (${config.component}) for ${config.name}. Please check component exists`
                 + ` and content type configuration is correct.`);
             console.error(error);
@@ -122,10 +119,13 @@ function prepareDefaults(fields: ConfigFieldInterface): FieldDefaultsInterface {
 /**
  * A content type is ready once all of its children have mounted
  *
- * @param {ContentType | ContentTypeCollection} contentType
+ * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
  * @param {number} childrenLength
  */
-function fireContentTypeReadyEvent(contentType: ContentType | ContentTypeCollection, childrenLength: number) {
+function fireContentTypeReadyEvent(
+    contentType: ContentTypeInterface | ContentTypeCollectionInterface,
+    childrenLength: number,
+) {
     const fire = () => {
         const params = {id: contentType.id, contentType, expectChildren: childrenLength};
         events.trigger("contentType:mountAfter", params);
@@ -148,4 +148,11 @@ function fireContentTypeReadyEvent(contentType: ContentType | ContentTypeCollect
             }
         }, `contentType:${contentType.id}:mountAfter` );
     }
+}
+
+/**
+ * @api
+ */
+export interface FieldDefaultsInterface {
+    [key: string]: any;
 }

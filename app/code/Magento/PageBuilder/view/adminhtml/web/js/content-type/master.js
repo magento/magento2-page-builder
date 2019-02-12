@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -60,31 +61,31 @@ define(["underscore", "Magento_PageBuilder/js/utils/object", "Magento_PageBuilde
       }
 
       return result;
-    };
+    }
     /**
      * Attach event to updating data in data store to update observables
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      this.parent.dataStore.subscribe(function (data) {
+      this.parent.dataStore.subscribe(function () {
         _this.updateObservables();
       });
-    };
+    }
     /**
      * After observables updated, allows to modify observables
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       return;
-    };
+    }
     /**
      * Update observables
      */
-
+    ;
 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({

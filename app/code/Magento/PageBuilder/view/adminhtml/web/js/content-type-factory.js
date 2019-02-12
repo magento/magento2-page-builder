@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_events, _loader, _underscore, _masterFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory", "Magento_PageBuilder/js/utils/loader"], function (_events, _underscore, _masterFactory, _previewFactory, _loader) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -102,7 +102,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
   /**
    * A content type is ready once all of its children have mounted
    *
-   * @param {ContentType | ContentTypeCollection} contentType
+   * @param {ContentTypeInterface | ContentTypeCollectionInterface} contentType
    * @param {number} childrenLength
    */
 
@@ -139,6 +139,10 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/utils/loader", 
       }, "contentType:" + contentType.id + ":mountAfter");
     }
   }
+  /**
+   * @api
+   */
+
 
   return createContentType;
 });

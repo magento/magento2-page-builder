@@ -7,10 +7,9 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import ContentTypeInterface from "../content-type";
-import ContentTypeCollectionInterface from "../content-type-collection.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
-import Stage from "../stage";
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";
 import {getAllowedContainersClasses} from "./matrix";
 import {moveContentType} from "./move-content-type";
@@ -28,7 +27,7 @@ export const hiddenClass = ".pagebuilder-content-type-hidden";
  * @param {Preview} preview
  * @returns {JQueryUI.SortableOptions | any}
  */
-export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableOptions | any {
+export function getSortableOptions(preview: Preview): JQueryUI.SortableOptions | any {
     return {
         cursor: "-webkit-grabbing",
         tolerance: "pointer",
@@ -74,10 +73,7 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
  * @param {Preview | Stage} preview
  * @returns {string}
  */
-function getPreviewStageIdProxy(preview: Preview | Stage): string {
-    if (preview.config.name === "stage") {
-        return (preview as Stage).id;
-    }
+function getPreviewStageIdProxy(preview: Preview): string {
     return (preview.parent as ContentTypeInterface).stageId;
 }
 
@@ -87,10 +83,7 @@ function getPreviewStageIdProxy(preview: Preview | Stage): string {
  * @param {Preview | Stage} instance
  * @returns {any}
  */
-function getParentProxy(instance: Preview | Stage): ContentTypeCollectionInterface {
-    if (instance.config.name === "stage") {
-        return (instance as any);
-    }
+function getParentProxy(instance: Preview): ContentTypeCollectionInterface {
     return (instance.parent as ContentTypeCollectionInterface);
 }
 

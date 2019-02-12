@@ -10,8 +10,8 @@ import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import {DataObject} from "../../data-store";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
@@ -19,14 +19,13 @@ import {hiddenClass} from "../../drag-drop/sortable";
 import checkStageFullScreen from "../../utils/check-stage-full-screen";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
-import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
-import InitElementEventParamsInterface from "../column/init-element-event-params";
+import {BindResizeHandleEventParamsInterface, InitElementEventParamsInterface} from "../column/column-events.types";
 import ColumnPreview from "../column/preview";
 import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
+import {ContentTypeRemovedEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
@@ -119,13 +118,13 @@ export default class Preview extends PreviewCollection {
         events.on("column:resizeHandleBindAfter", (args: BindResizeHandleEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
+                this.registerResizeHandle(args.column, args.handle);
             }
         });
         events.on("column:initializeAfter", (args: InitElementEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).bindDraggable(args.column);
+                this.bindDraggable(args.column);
             }
         });
 

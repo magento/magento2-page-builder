@@ -38,13 +38,13 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils
       }).on("afterChange", function () {
         _this.slideChanging = false;
       });
-    };
+    }
     /**
      * Event handler for wysiwyg focus
      * Fixes z-index issues for tabs and column
      * Fixes slider
      */
-
+    ;
 
     _proto.onFocus = function onFocus() {
       var _this2 = this;
@@ -83,13 +83,13 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "Magento_PageBuilder/js/utils
       }, function () {
         return !_this2.slideChanging;
       }, 10);
-    };
+    }
     /**
      * Event handler for wysiwyg blur
      * Fixes z-index issues for tabs and column
      * Fixes slider
      */
-
+    ;
 
     _proto.onBlur = function onBlur() {
       var _this3 = this;

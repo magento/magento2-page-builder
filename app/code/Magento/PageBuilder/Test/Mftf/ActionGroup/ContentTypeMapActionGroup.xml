@@ -409,9 +409,12 @@
         </arguments>
         <waitForElementVisible selector="{{section.warningMessageLink('1')}}" stepKey="waitForWarningMessageLink"/>
         <click selector="{{section.warningMessageLink('1')}}" stepKey="clickLink"/>
+        <waitForPageLoad stepKey="waitForLinkClick"/>
+        <switchToNextTab stepKey="switchToOpenedLink" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeInCurrentUrl url="{{AdminContentManagementPage.url}}#cms_pagebuilder" stepKey="validateURL"/>
         <seeElement selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="seeGoogleMapsAPIKeyInputField"/>
+        <closeTab stepKey="closeOpenedTab" />
     </actionGroup>
     <actionGroup name="validateAdvancedStyleWithAllUpdatedMapWithErrorOverlay" extends="validateAdvancedStyleWithAllUpdatedNotVisible">
         <waitForElementVisible selector="{{page.warningMessageLink(index)}}" stepKey="dontSeeElement"/>

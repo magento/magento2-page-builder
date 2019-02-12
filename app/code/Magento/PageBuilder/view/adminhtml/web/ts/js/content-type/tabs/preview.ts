@@ -9,26 +9,25 @@ import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "tabs";
 import _ from "underscore";
-import {ActiveOptionsInterface} from "../../binding/active-options.d";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
-import {SortableOptionsInterface} from "../../binding/sortable-options.d";
+import {ActiveOptionsInterface} from "../../binding/active-options.types";
+import {PreviewSortableSortUpdateEventParams, SortableOptionsInterface} from "../../binding/sortable-children.types";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import createContentType from "../../content-type-factory";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
-import ContentTypeInterface from "../../content-type.d";
-import {DataObject} from "../../data-store";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
 import delayUntil from "../../utils/delay-until";
-import deferred from "../../utils/promise-deferred";
-import DeferredInterface from "../../utils/promise-deferred.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
+import deferred, {DeferredInterface} from "../../utils/promise-deferred";
+import {
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+    ContentTypeRemovedParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -122,7 +121,7 @@ export default class Preview extends PreviewCollection {
                     // a tab was moved from the right of the default active tab the left of it, changing its index
                     newDefaultActiveTab++;
                 }
-                this.updateData("default_active", newDefaultActiveTab);
+                this.updateData("default_active", newDefaultActiveTab.toString());
             }
         });
 
@@ -179,7 +178,7 @@ export default class Preview extends PreviewCollection {
     public setActiveTab(index: number) {
         if (index !== null) {
             // Added to prevent mismatched fragment error caused by not yet rendered tab-item
-            index = parseInt(index, 10);
+            index = parseInt(index.toString(), 10);
             delayUntil(
                 () => {
                     $(this.element).tabs("option", "active", index);

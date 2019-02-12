@@ -5,7 +5,7 @@
 
 import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
-import LocationObject from "../../../../converter/location-object";
+import LocationObject from "../../../../converter/location-object.types";
 import {DataObject} from "../../../../data-store";
 import {get} from "../../../../utils/object";
 

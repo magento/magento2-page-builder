@@ -231,50 +231,6 @@
         </actionGroup>
         <dontSeeJsError stepKey="dontSeeJsError"/>
     </test>
-    <test name="PanelExpandAndCollapseAndAddToStage">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Panel"/>
-            <title value="Collapse and Expand search panel and still able to search and add to stage"/>
-            <description value="After expand and collapse search panel I can search and drop content blocks onto the stage"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-92004"/>
-            <testCaseId value="MC-2752"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-panel"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <comment userInput="Collapse and Expand panel then drag Tabs to Column" stepKey="commentDragTabs"/>
-        <waitForElementVisible selector="{{PageBuilderStage.stageWrapper}}" stepKey="waitForStage"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapseButton"/>
-        <click selector="{{PageBuilderPanel.collapsePanel}}" stepKey="clickCollapseButton"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.expandPanel}}" stepKey="waitForExpandButton"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.panelCollapsed}}" stepKey="waitForPanelCollapsed"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapsePanelButtonNotVisible"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchFieldNotVisible"/>
-        <click selector="{{PageBuilderPanel.expandPanel}}" stepKey="clickExpandButton"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.panelCollapsed}}" stepKey="waitForPanelCollapsedNotVisible"/>
-        <waitForElementNotVisible selector="{{PageBuilderPanel.expandPanel}}" stepKey="waitForExpandButtonNotVisible"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.collapsePanel}}" stepKey="waitForCollapseButtonVisible"/>
-        <waitForElementVisible selector="{{PageBuilderPanel.searchPanel}}" stepKey="waitForSearchField"/>
-        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="ta" stepKey="fillSearchFieldTa"/>
-        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
-            <argument name="contentType" value="PageBuilderTabsContentType"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
-            <argument name="containerTargetIndex" value="1"/>
-        </actionGroup>
-        <dontSeeJsError stepKey="dontSeeJsError"/>
-    </test>
     <test name="ValidatePanelContentTypesGroupedCorrectly">
         <annotations>
             <features value="PageBuilder"/>

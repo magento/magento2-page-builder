@@ -4,12 +4,12 @@
  */
 
 import _ from "underscore";
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "../content-type.types";
 import {DataObject} from "../data-store";
 import {get} from "../utils/object";
 import appearanceConfig from "./appearance-config";
-import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import ObservableObject from "./observable-updater.types";
 
 /**
  * @api
@@ -38,7 +38,7 @@ export default class Master {
      * @returns {string}
      */
     get renderTemplate(): string {
-        return appearanceConfig(this.parent.config.name, this.getData().appearance).render_template;
+        return appearanceConfig(this.parent.config.name, this.getData().appearance as string).render_template;
     }
 
     /**
@@ -48,7 +48,7 @@ export default class Master {
      * @returns {DataObject}
      * @deprecated
      */
-    public getData(element: string) {
+    public getData(element?: string): DataObject {
         let data = _.extend({}, this.parent.dataStore.getState());
 
         if (undefined === element) {
@@ -60,7 +60,7 @@ export default class Master {
 
         data = this.observableUpdater.convertData(data, appearanceConfiguration.converters);
 
-        const result = {};
+        const result: {[key: string]: string} = {};
         if (undefined !== config[element].tag.var) {
             result[config[element].tag.var] = get(data, config[element].tag.var);
         }
@@ -72,7 +72,7 @@ export default class Master {
      */
     protected bindEvents(): void {
         this.parent.dataStore.subscribe(
-            (data) => {
+            () => {
                 this.updateObservables();
             },
         );

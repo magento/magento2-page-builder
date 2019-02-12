@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/content-type/preview"], function (_events, _hideShowOption, _uploader, _preview) {
@@ -40,22 +41,22 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
      */
-
+    ;
 
     _proto.getUploader = function getUploader() {
       var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, "");
       return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
-    };
+    }
     /**
      * @inheritDoc
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this = this;

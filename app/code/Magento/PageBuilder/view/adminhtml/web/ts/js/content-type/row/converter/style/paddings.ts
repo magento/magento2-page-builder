@@ -5,8 +5,8 @@
 
 import _ from "underscore";
 import ConverterInterface from "../../../../converter/converter-interface";
-import PaddingObject from "../../../../converter/padding-object";
 import {DataObject} from "../../../../data-store";
+import {DataObjectPaddings} from "../../../../property/paddings";
 import {get} from "../../../../utils/object";
 
 export default class Paddings implements ConverterInterface {
@@ -29,19 +29,17 @@ export default class Paddings implements ConverterInterface {
         const result: {
             [key: string]: string;
         } = {};
-        let value = get<PaddingObject>(data, name);
+        let value = get<DataObjectPaddings>(data, name);
 
         if (value && _.isString(value)) {
             value = JSON.parse(value);
         }
-
-        if (undefined !== value && undefined !== value.padding) {
+        if (value && undefined !== value.padding) {
             result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
             result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
             result.paddingRight = value.padding.right ? value.padding.right + "px" : "";
             result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : "";
         }
-
         return result;
     }
 }

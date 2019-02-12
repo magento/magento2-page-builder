@@ -92,11 +92,11 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
     _proto.getAdapter = function getAdapter() {
       return this.wysiwygAdapter;
-    };
+    }
     /**
      * Called for the onFocus event
      */
-
+    ;
 
     _proto.onFocus = function onFocus() {
       var _this = this;
@@ -112,49 +112,49 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
 
         _this.invertInlineEditorToAccommodateOffscreenToolbar();
       });
-    };
+    }
     /**
      * Called for the onChangeContent event
      */
-
+    ;
 
     _proto.onChangeContent = function onChangeContent() {
       var saveContent = _underscore.debounce(this.saveContentFromWysiwygToDataStore.bind(this), 100);
 
       saveContent();
       this.invertInlineEditorToAccommodateOffscreenToolbar();
-    };
+    }
     /**
      * Called for the onBlur events
      */
-
+    ;
 
     _proto.onBlur = function onBlur() {
       this.clearSelection();
       this.getFixedToolbarContainer().removeClass("pagebuilder-toolbar-active").find(".mce-tinymce-inline").css("transform", "");
 
       _events2.trigger("stage:interactionStop");
-    };
+    }
     /**
      * Update content in our data store after our stage preview wysiwyg gets updated
      */
-
+    ;
 
     _proto.saveContentFromWysiwygToDataStore = function saveContentFromWysiwygToDataStore() {
       this.dataStore.update(this.getAdapter().getContent(), this.fieldName);
-    };
+    }
     /**
      * Update content in our stage wysiwyg after our data store gets updated
      */
-
+    ;
 
     _proto.setContentFromDataStoreToWysiwyg = function setContentFromDataStoreToWysiwyg() {
       this.getAdapter().setContent(this.dataStore.get(this.fieldName));
-    };
+    }
     /**
      * Clear any selections in the editable area
      */
-
+    ;
 
     _proto.clearSelection = function clearSelection() {
       if (window.getSelection) {
@@ -164,11 +164,11 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
           window.getSelection().removeAllRanges();
         }
       }
-    };
+    }
     /**
      * Adjust padding on stage if in fullscreen mode to accommodate inline wysiwyg toolbar overflowing fixed viewport
      */
-
+    ;
 
     _proto.invertInlineEditorToAccommodateOffscreenToolbar = function invertInlineEditorToAccommodateOffscreenToolbar() {
       if (this.config.adapter_config.mode !== "inline") {
@@ -189,13 +189,13 @@ define(["jquery", "mage/adminhtml/wysiwyg/events", "mage/adminhtml/wysiwyg/tiny_
       }
 
       $inlineToolbar.css("transform", "translateY(" + this.getFixedToolbarContainer().height() + "px)");
-    };
+    }
     /**
      * Get fixed toolbar container element referenced as selector in wysiwyg adapter settings
      *
      * @returns {jQuery}
      */
-
+    ;
 
     _proto.getFixedToolbarContainer = function getFixedToolbarContainer() {
       return (0, _jquery)("#" + this.elementId).closest("" + this.config.adapter.settings.fixed_toolbar_container);

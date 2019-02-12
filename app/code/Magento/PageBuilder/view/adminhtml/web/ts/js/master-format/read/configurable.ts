@@ -7,12 +7,17 @@ import $ from "jquery";
 import mageUtils from "mageUtils";
 import _ from "underscore";
 import Config from "../../config";
+import {
+    ContentTypeConfigAppearanceElementInterface,
+    DataMappingAttributesInterface,
+    DataMappingStyleInterface,
+} from "../../content-type-config.types";
 import appearanceConfig from "../../content-type/appearance-config";
-import PropertyReaderPool from "../../converter/converter-pool";
 import ConverterPool from "../../converter/converter-pool";
 import converterPoolFactory from "../../converter/converter-pool-factory";
 import MassConverterPool from "../../mass-converter/converter-pool";
 import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
+import PropertyReaderPool from "../../property/property-reader-pool";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {ReadInterface} from "../read-interface";
 
@@ -117,7 +122,7 @@ export default class Configurable implements ReadInterface {
     /**
      * Read attributes for element
      *
-     * @param {object} config
+     * @param {DataMappingAttributesInterface[]} config
      * @param {HTMLElement} element
      * @param {object} data
      * @param {typeof PropertyReaderPool} propertyReaderPool
@@ -125,13 +130,13 @@ export default class Configurable implements ReadInterface {
      * @returns {any}
      */
     private readAttributes(
-        config: object,
+        config: DataMappingAttributesInterface[],
         element: HTMLElement,
         data: object,
         propertyReaderPool: typeof PropertyReaderPool,
         converterPool: typeof ConverterPool,
     ) {
-        const result: {[key: string]: string} = {};
+        const result: {[key: string]: any} = {};
         for (const attributeConfig of config) {
             if ("write" === attributeConfig.persistence_mode) {
                 continue;
@@ -156,21 +161,21 @@ export default class Configurable implements ReadInterface {
     /**
      * Read style properties for element
      *
-     * @param {object} config
+     * @param {DataMappingStyleInterface[]} config
      * @param {HTMLElement} element
      * @param {object} data
      * @param {typeof PropertyReaderPool} propertyReaderPool
      * @param {typeof ConverterPool} converterPool
-     * @returns {object}
+     * @returns {{[p: string]: string}}
      */
     private readStyle(
-        config: object,
+        config: DataMappingStyleInterface[],
         element: HTMLElement,
         data: object,
         propertyReaderPool: typeof PropertyReaderPool,
         converterPool: typeof ConverterPool,
     ) {
-        const result: {[key: string]: string} = _.extend({}, data);
+        const result: {[key: string]: any} = _.extend({}, data);
         for (const propertyConfig of config) {
             if ("write" === propertyConfig.persistence_mode) {
                 continue;
@@ -206,12 +211,12 @@ export default class Configurable implements ReadInterface {
     /**
      * Read element's css
      *
-     * @param {object} config
+     * @param {ContentTypeConfigAppearanceElementInterface} config
      * @param {HTMLElement} element
      * @param {object} data
-     * @returns {object}
+     * @returns {any}
      */
-    private readCss(config: any, element: HTMLElement, data: object) {
+    private readCss(config: ContentTypeConfigAppearanceElementInterface, element: HTMLElement, data: object) {
         const result: {[key: string]: string} = {};
         let css: string = element.getAttribute("class") !== null
             ? element.getAttribute("class")
@@ -231,13 +236,18 @@ export default class Configurable implements ReadInterface {
     /**
      * Read element's content
      *
-     * @param config
+     * @param {ContentTypeConfigAppearanceElementInterface} config
      * @param {HTMLElement} element
      * @param {object} data
      * @param {typeof ConverterPool} converterPool
-     * @returns {object}
+     * @returns {any}
      */
-    private readHtml(config: any, element: HTMLElement, data: object, converterPool: typeof ConverterPool) {
+    private readHtml(
+        config: ContentTypeConfigAppearanceElementInterface,
+        element: HTMLElement,
+        data: object,
+        converterPool: typeof ConverterPool,
+    ) {
         const result: {[key: string]: string} = {};
         let value = element.innerHTML;
 

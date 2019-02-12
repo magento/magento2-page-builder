@@ -7,7 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import ButtonsPreview from "../buttons/preview";
 import BasePreview from "../preview";
 
@@ -15,7 +15,7 @@ import BasePreview from "../preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    private buttonPlaceholder: string = $t("Edit Button Text");
+    public buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * Use the conditional remove to disable the option when the parent has a single child

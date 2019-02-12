@@ -8,10 +8,9 @@ import ko from "knockout";
 import $t from "mage/translate";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
-import ContentTypeConfigInterface from "../../content-type-config";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import {DataObject} from "../../data-store";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 

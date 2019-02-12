@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _config, _hideShowOption, _preview) {
@@ -55,11 +56,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * @inheritdoc
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this2 = this;

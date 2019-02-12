@@ -36,13 +36,13 @@ define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knock
 
     _proto.getConfig = function getConfig() {
       return this.config;
-    };
+    }
     /**
      * Only connect to container sortable instances that the current content type is accepted into
      *
      * @returns {string}
      */
-
+    ;
 
     _proto.getDraggableOptions = function getDraggableOptions() {
       return {

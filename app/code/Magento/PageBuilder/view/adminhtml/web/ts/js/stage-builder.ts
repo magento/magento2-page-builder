@@ -5,21 +5,19 @@
 
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
-import loadReader from "Magento_PageBuilder/js/utils/loader";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
-import ConfigFieldInterface from "./config-field";
 import ContentTypeCollection from "./content-type-collection";
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeConfigInterface from "./content-type-config.d";
-import createContentType from "./content-type-factory";
-import ContentTypeInterface from "./content-type.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import ContentTypeConfigInterface, {ConfigFieldInterface} from "./content-type-config.types";
+import createContentType, {FieldDefaultsInterface} from "./content-type-factory";
+import ContentTypeInterface from "./content-type.types";
 import appearanceConfig from "./content-type/appearance-config";
-import FieldDefaultsInterface from "./field-defaults";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";
 import {removeQuotesInMediaDirectives} from "./utils/directives";
+import loadReader from "./utils/loader";
 import {set} from "./utils/object";
 
 /**
@@ -32,7 +30,7 @@ import {set} from "./utils/object";
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = new DOMParser().parseFromString(value, "text/html");
     stageDocument.body.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
-    return buildElementIntoStage(stageDocument.body, stage, stage);
+    return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
 }
 
 /**
@@ -43,7 +41,7 @@ function buildFromContent(stage: Stage, value: string) {
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: ContentTypeCollectionInterface, stage: Stage) {
+function buildElementIntoStage(element: Element, parent: ContentTypeCollectionInterface, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
@@ -60,7 +58,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
 
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
-            return Promise.all(childrenPromises.map((child, index) => {
+            return Promise.all(childrenPromises.map((child: ContentTypeCollectionInterface, index) => {
                 parent.addChild(child);
                 // Only render children if the content type implements the collection
                 if (child instanceof ContentTypeCollection) {
@@ -75,16 +73,16 @@ function buildElementIntoStage(element: Element, parent: ContentTypeCollectionIn
  * Parse an element in the structure and build the required element
  *
  * @param {Element} element
- * @param {ContentTypeInterface} parent
+ * @param {ContentTypeCollectionInterface} parent
  * @param {stage} stage
  * @returns {Promise<ContentTypeInterface>}
  */
 function createElementContentType(
     element: HTMLElement,
     stage: Stage,
-    parent?: ContentTypeInterface,
-): Promise<ContentTypeInterface> {
-    parent = parent || stage;
+    parent?: ContentTypeCollectionInterface,
+) {
+    parent = parent || stage.rootContainer;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
     if (!role) {
         return Promise.reject(`Invalid master format: Content type element does not contain
@@ -112,7 +110,7 @@ function createElementContentType(
  *
  * @param {HTMLElement} element
  * @param {ContentTypeConfigInterface} config
- * @returns {Promise<any>}
+ * @returns {Promise<{[p: string]: any}>}
  */
 function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value
@@ -193,22 +191,23 @@ function getElementChildren(element: HTMLElement): HTMLElement[] {
  */
 function buildEmpty(stage: Stage, initialValue: string) {
     const stageConfig = Config.getConfig("stage_config");
+    const rootContainer = stage.rootContainer;
     const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, stage, stage.id, {})
+        return createContentType(rootContentTypeConfig, rootContainer, stage.id, {})
             .then((rootContentType: ContentTypeCollectionInterface) => {
                 if (!rootContentType) {
                     return Promise.reject(`Unable to create initial ${stageConfig.root_content_type} content type ` +
                         ` within stage.`);
                 }
-                stage.addChild(rootContentType);
+                rootContainer.addChild(rootContentType);
 
                 if (htmlDisplayContentTypeConfig && initialValue) {
                     return createContentType(
                         htmlDisplayContentTypeConfig,
-                        stage,
+                        rootContainer,
                         stage.id,
                         {
                             html: initialValue,
@@ -242,7 +241,7 @@ export default function build(
         currentBuild = buildFromContent(stage, content)
             .catch((error: Error) => {
                 console.error(error);
-                stage.children([]);
+                stage.rootContainer.children([]);
                 currentBuild = buildEmpty(stage, content);
             });
     } else {

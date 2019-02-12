@@ -17,7 +17,7 @@
         <element name="enabled" type="button" selector="//div[not(contains(@class, '_disabled'))]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
         <element name="disabled" type="button" selector="//div[contains(@class, '_disabled')]/div[contains(@class, 'pagebuilder-wysiwyg-wrapper')]/div[@class='pagebuilder-stage-wrapper']"/>
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
-        <element name="stageWidthJS" type="button" selector="document.querySelector('div[class~=\'stage-container\']').clientWidth"/>
+        <element name="stageWidthJS" type="button" selector="document.querySelector('div[class~=\'root-container-container\']').clientWidth"/>
         <element name="modal" type="text" selector='aside.modal-popup._show'/>
         <element name="modalOk" type="button" selector="aside.modal-popup._show button.action-primary.action-accept"/>
         <element name="modalCancel" type="button" selector="aside.modal-popup._show button.action-secondary.action-dismiss"/>
@@ -45,9 +45,6 @@
         <element name="leftPanel" type="input" selector='#pagebuilder-panel'/>
         <element name="searchField" type="input" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
         <element name="clearSearch" type="button" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
-        <element name="collapsePanel" type="button" selector='//div[contains(@class, "panel-controls")]//a[contains(@class, "collapse")]'/>
-        <element name="panelCollapsed" type="button" selector='(//div[contains(@class, "pagebuilder-stage") and contains(@class, "panel-collapsed")])'/>
-        <element name="expandPanel" type="button" selector='//div[contains(@class, "expand")]//a'/>
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
         <element name="allPanelGroups" type="button" selector="#pagebuilder-panel-groups .group-title"/>
         <element name="allGroupContentTypes" type="button" selector="#pagebuilder-panel-groups #group-{{arg1}} .pagebuilder-draggable-content-type" parameterized="true"/>

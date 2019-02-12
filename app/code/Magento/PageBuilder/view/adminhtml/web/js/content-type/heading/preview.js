@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -52,13 +53,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
-
+    ;
 
     _proto.afterRender = function afterRender(element) {
       this.element = element;
@@ -78,13 +79,13 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
         }
       });
-    };
+    }
     /**
      * Build and return the tool bar options for heading
      *
      * @returns {OptionInterface[]}
      */
-
+    ;
 
     _proto.getToolbarOptions = function getToolbarOptions() {
       return [{

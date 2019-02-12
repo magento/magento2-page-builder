@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
 import {outwardSearch} from "../../utils/array";
 import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "../column-group/preview";
 import ColumnPreview from "./preview";

@@ -4,7 +4,7 @@
  */
 
 import ko from "knockout";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import {getAllowedContainersClasses} from "../../drag-drop/matrix";
 
 export class ContentType {

@@ -122,16 +122,15 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
           viewModel.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
       }
-    };
+    }
     /**
      * Process data for elements before its converted to knockout format
      *
-     * @param {Object} data
-     * @param {Object} convertersConfig
-     * @returns {Object}
-     * @deprecated
+     * @param {object} data
+     * @param {ConverterInterface[]} convertersConfig
+     * @returns {object}
      */
-
+    ;
 
     _proto.convertData = function convertData(data, convertersConfig) {
       for (var _iterator = convertersConfig, _isArray = Array.isArray(_iterator), _i3 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
@@ -151,7 +150,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
       }
 
       return data;
-    };
+    }
     /**
      * Convert attributes
      *
@@ -159,7 +158,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
      * @param {DataObject} data
      * @returns {object}
      */
-
+    ;
 
     _proto.convertAttributes = function convertAttributes(config, data) {
       var result = {};
@@ -200,7 +199,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
       }
 
       return result;
-    };
+    }
     /**
      * Convert style properties
      *
@@ -208,7 +207,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
      * @param {object}data
      * @returns {object}
      */
-
+    ;
 
     _proto.convertStyle = function convertStyle(config, data) {
       var result = {};
@@ -258,7 +257,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
       }
 
       return result;
-    };
+    }
     /**
      * Convert html property
      *
@@ -266,7 +265,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
      * @param {DataObject} data
      * @returns {string}
      */
-
+    ;
 
     _proto.convertHtml = function convertHtml(config, data) {
       var value = config.html.var ? (0, _object.get)(data, config.html.var, config.html.placeholder) : config.html.placeholder;

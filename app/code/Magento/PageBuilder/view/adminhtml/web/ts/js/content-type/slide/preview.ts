@@ -7,17 +7,16 @@ import $ from "jquery";
 import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
 import Config from "../../config";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import {DataObject} from "../../data-store";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import Uploader from "../../uploader";
 import delayUntil from "../../utils/delay-until";
 import nestingLinkDialog from "../../utils/nesting-link-dialog";
 import WysiwygFactory from "../../wysiwyg/factory";
 import WysiwygInterface from "../../wysiwyg/wysiwyg-interface";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params";
+import {ContentTypeMountEventParamsInterface} from "../content-type-events.types";
 import BasePreview from "../preview";
 import SliderPreview from "../slider/preview";
 
@@ -25,7 +24,7 @@ import SliderPreview from "../slider/preview";
  * @api
  */
 export default class Preview extends BasePreview {
-    private buttonPlaceholder: string = $t("Edit Button Text");
+    public buttonPlaceholder: string = $t("Edit Button Text");
     /**
      * Wysiwyg instance
      */

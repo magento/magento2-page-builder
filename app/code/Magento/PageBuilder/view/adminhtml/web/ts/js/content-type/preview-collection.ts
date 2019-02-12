@@ -3,13 +3,13 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeCollectionInterface from "../content-type-collection.d";
+import ContentTypeCollectionInterface from "../content-type-collection.types";
 import createContentType from "../content-type-factory";
-import ContentTypeInterface from "../content-type.d";
-import {DataObject} from "../data-store";
+import ContentTypeInterface from "../content-type.types";
 import Preview from "./preview";
+import {PreviewCollectionInterface} from "./preview-collection.types";
 
-export default class PreviewCollection extends Preview {
+export default class PreviewCollection extends Preview implements PreviewCollectionInterface {
     public parent: ContentTypeCollectionInterface;
 
     /**
@@ -49,7 +49,7 @@ export default class PreviewCollection extends Preview {
                     // Duplicate the instances children into the new duplicate
                     contentType.children().forEach(
                         (subChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
-                            const subChildClone = duplicate.preview.clone(subChild, false);
+                            const subChildClone = (duplicate.preview as Preview).clone(subChild, false);
                             if (subChildClone) {
                                 subChildClone.then(
                                     (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
@@ -82,7 +82,7 @@ export default class PreviewCollection extends Preview {
     public delegate(...args: any[]) {
         super.delegate(...args);
 
-        this.parent.getChildren().each((elem: ContentTypeInterface) => {
+        this.parent.getChildren()().forEach((elem: ContentTypeInterface) => {
             elem.preview.delegate.apply(elem.preview, args);
         });
     }

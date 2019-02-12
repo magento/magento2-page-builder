@@ -23,6 +23,8 @@ class Config
     const XML_PATH_COLUMN_GRID_DEFAULT = 'cms/pagebuilder/column_grid_default';
     const XML_PATH_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
 
+    const ROOT_CONTAINER_NAME = 'root-container';
+
     /**
      * @var \Magento\PageBuilder\Model\ConfigInterface
      */
@@ -74,7 +76,13 @@ class Config
     private $widgetInitializerConfig;
 
     /**
+     * @var array
+     */
+    private $rootContainerConfig;
+
+    /**
      * Config constructor.
+     *
      * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
@@ -84,6 +92,7 @@ class Config
      * @param \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor
      * @param \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker
      * @param \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig
+     * @param array $rootContainerConfig
      * @param array $data
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -98,6 +107,7 @@ class Config
         \Magento\Ui\Block\Wysiwyg\ActiveEditor $activeEditor,
         \Magento\PageBuilder\Model\Wysiwyg\InlineEditingSupportedAdapterList $inlineEditingChecker,
         \Magento\PageBuilder\Model\WidgetInitializerConfig $widgetInitializerConfig,
+        array $rootContainerConfig = [],
         array $data = []
     ) {
         $this->config = $config;
@@ -109,6 +119,7 @@ class Config
         $this->activeEditor = $activeEditor;
         $this->inlineEditingChecker = $inlineEditingChecker;
         $this->widgetInitializerConfig = $widgetInitializerConfig;
+        $this->rootContainerConfig = $rootContainerConfig;
         $this->data = $data;
     }
 
@@ -159,6 +170,12 @@ class Config
             );
         }
 
+        // The stage requires a root container to house it's children
+        $contentTypeData[self::ROOT_CONTAINER_NAME] = $this->flattenContentTypeData(
+            self::ROOT_CONTAINER_NAME,
+            $this->rootContainerConfig
+        );
+
         return $contentTypeData;
     }
 
@@ -169,32 +186,24 @@ class Config
      * @param array $contentType
      *
      * @return array
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function flattenContentTypeData(string $name, array $contentType)
     {
         return [
             'name' => $name,
             'label' => $contentType['label'],
-            'icon' => $contentType['icon'],
-            'form' => $contentType['form'],
-            'contentType' => '',
+            'icon' => isset($contentType['icon']) ? $contentType['icon'] : '',
+            'form' => isset($contentType['form']) ? $contentType['form'] : '',
             'group' => $contentType['group'] ?? 'general',
-            'fields' => $this->uiComponentConfig->getFields($contentType['form']),
-            'preview_template' => $contentType['preview_template'] ?? '',
-            'render_template' => $contentType['render_template'] ?? '',
+            'fields' => isset($contentType['form']) ? $this->uiComponentConfig->getFields($contentType['form']) : [],
             'component' => $contentType['component'],
             'preview_component' => $contentType['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT,
             'master_component' => $contentType['master_component'] ?? self::DEFAULT_MASTER_COMPONENT,
             'allowed_parents' => $contentType['allowed_parents'] ?? [],
-            'readers' => $contentType['readers'] ?? [],
             'appearances' => $contentType['appearances'] ?? [],
             'additional_data' => isset($contentType['additional_data'])
                 ? $this->additionalDataParser->toArray($contentType['additional_data'])
                 : [],
-            'elements' => $contentType['elements'] ?? [],
-            'converters' => $contentType['converters'] ?? [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];
     }

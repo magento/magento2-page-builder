@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -71,13 +72,13 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
           resolve(duplicate);
         });
       });
-    };
+    }
     /**
      * Tries to call specified method of a current content type,
      * and delegates attempt to its' children.
      * @param args
      */
-
+    ;
 
     _proto.delegate = function delegate() {
       var _preview2$prototype$d;
@@ -88,16 +89,16 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
 
       (_preview2$prototype$d = _preview2.prototype.delegate).call.apply(_preview2$prototype$d, [this].concat(args));
 
-      this.parent.getChildren().each(function (elem) {
+      this.parent.getChildren()().forEach(function (elem) {
         elem.preview.delegate.apply(elem.preview, args);
       });
-    };
+    }
     /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
-
+    ;
 
     _proto.isConfigured = function isConfigured() {
       if (this.parent.children().length > 0) {

@@ -4,37 +4,25 @@
  */
 
 import ko from "knockout";
-import $t from "mage/translate";
 import events from "Magento_PageBuilder/js/events";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch";
-import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import "./binding/sortable";
 import Collection from "./collection";
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeConfigInterface from "./content-type-config";
-import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
-import ContentTypeInterface from "./content-type.d";
+import ContentTypeCollectionInterface from "./content-type-collection.types";
+import {ContentTypeRemovedParamsInterface} from "./content-type/content-type-events.types";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
-import {getSortableOptions} from "./drag-drop/sortable";
 import Render from "./master-format/render";
-import PageBuilderInterface from "./page-builder.d";
+import PageBuilderInterface from "./page-builder.types";
 import buildStage from "./stage-builder";
-import StageUpdateAfterParamsInterface from "./stage-update-after-params";
-import deferred from "./utils/promise-deferred";
-import DeferredInterface from "./utils/promise-deferred.d";
+import {StageUpdateAfterParamsInterface} from "./stage-events.types";
+import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 export default class Stage {
+    public static readonly rootContainerName: string = "root-container";
     public parent: PageBuilderInterface;
     public id: string;
-    public config: ContentTypeConfigInterface | any = {
-        name: "stage",
-        type: "restricted-container",
-        accepts: [
-            "row",
-        ],
-    };
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
@@ -42,6 +30,7 @@ export default class Stage {
     public focusChild: KnockoutObservable<boolean> = ko.observable(false);
     public dataStore: DataStore = new DataStore();
     public afterRenderDeferred: DeferredInterface = deferred();
+    public rootContainer: ContentTypeCollectionInterface;
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render = new Render();
     private collection: Collection = new Collection();
@@ -52,7 +41,7 @@ export default class Stage {
      * @type {(() => void) & _.Cancelable}
      */
     private applyBindingsDebounce = _.debounce(() => {
-        this.render.applyBindings(this.children)
+        this.render.applyBindings(this.rootContainer)
             .then((renderedOutput: string) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                 value: renderedOutput,
             })).catch((error: Error) => {
@@ -62,10 +51,12 @@ export default class Stage {
 
     /**
      * @param {PageBuilderInterface} parent
+     * @param {ContentTypeCollectionInterface} rootContainer
      */
-    constructor(parent: PageBuilderInterface) {
+    constructor(parent: PageBuilderInterface, rootContainer: ContentTypeCollectionInterface) {
         this.parent = parent;
         this.id = parent.id;
+        this.rootContainer = rootContainer;
         generateAllowedParents();
 
         // Fire an event after the DOM has rendered
@@ -101,73 +92,6 @@ export default class Stage {
 
         // Ensure we complete an initial save of the data within the stage once we're ready
         events.trigger("stage:updateAfter", {stageId: this.id});
-    }
-
-    /**
-     * Remove a child from the observable array
-     *
-     * @param child
-     */
-    public removeChild(child: any): void {
-        if (this.collection.getChildren().length === 1) {
-            alertDialog({
-                content: $t("You are not able to remove the final row from the content."),
-                title: $t("Unable to Remove"),
-            });
-            return;
-        }
-        this.collection.removeChild(child);
-    }
-
-    /**
-     * Return the children of the current element
-     *
-     * @returns {KnockoutObservableArray<ContentTypeInterface | ContentTypeCollectionInterface>}
-     */
-    public getChildren() {
-        return this.collection.getChildren();
-    }
-
-    /**
-     * Add a child into the observable array
-     *
-     * @param child
-     * @param index
-     */
-    public addChild(child: ContentTypeInterface, index?: number): void {
-        child.parent = this;
-        this.collection.addChild(child, index);
-    }
-
-    /**
-     * Set the children observable array into the class
-     *
-     * @param children
-     */
-    public setChildren(children: KnockoutObservableArray<ContentTypeInterface>) {
-        this.collection.setChildren(children);
-    }
-
-    get children() {
-        return this.collection.getChildren();
-    }
-
-    /**
-     * Determine if the container can receive drop events?
-     *
-     * @returns {boolean}
-     */
-    public isContainer() {
-        return true;
-    }
-
-    /**
-     * Return the sortable options
-     *
-     * @returns {JQueryUI.SortableOptions}
-     */
-    public getSortableOptions(): JQueryUI.SortableOptions | any {
-        return getSortableOptions(this);
     }
 
     /**

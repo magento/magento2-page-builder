@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -85,13 +86,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           }
         }, this);
       }
-    };
+    }
     /**
      * Tries to call specified method of a current content type.
      *
      * @param args
      */
-
+    ;
 
     _proto.delegate = function delegate() {
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -104,28 +105,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       if (method) {
         method.apply(this, args.slice(1, args.length));
       }
-    };
+    }
     /**
      * Open the edit form for this content type
      */
-
+    ;
 
     _proto.openEdit = function openEdit() {
       return this.edit.open();
-    };
+    }
     /**
      * Update data store
      *
      * @param {string} key
      * @param {string} value
      */
-
+    ;
 
     _proto.updateData = function updateData(key, value) {
       var data = this.parent.dataStore.getState();
       (0, _object.set)(data, key, value);
       this.parent.dataStore.update(data);
-    };
+    }
     /**
      * Update the data value of a part of our internal Knockout data store
      *
@@ -133,7 +134,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param value
      * @deprecated
      */
-
+    ;
 
     _proto.updateDataValue = function updateDataValue(key, value) {
       if (typeof this.previewData[key] !== "undefined" && _knockout.isObservable(this.previewData[key])) {
@@ -145,14 +146,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           this.previewData[key] = _knockout.observable(value);
         }
       }
-    };
+    }
     /**
      * Set state based on mouseover event for the preview
      *
      * @param {Preview} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onMouseOver = function onMouseOver(context, event) {
       if (this.mouseover || (0, _registry.getDraggedContentTypeConfig)()) {
@@ -180,14 +181,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
-    };
+    }
     /**
      * Set state based on mouseout event for the preview
      *
      * @param {Preview} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onMouseOut = function onMouseOut(context, event) {
       var _this2 = this;
@@ -212,14 +213,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       }, 100); // 100 ms delay to allow for users hovering over other elements
 
-    };
+    }
     /**
      * After children render fire an event
      *
      * @param {Element} element
      * @deprecated
      */
-
+    ;
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
       _events.trigger("contentType:childrenRenderAfter", {
@@ -233,13 +234,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         element: element,
         id: this.parent.id
       });
-    };
+    }
     /**
      * Dispatch an after render event for individual content types
      *
      * @param {Element[]} elements
      */
-
+    ;
 
     _proto.dispatchAfterRenderEvent = function dispatchAfterRenderEvent(elements) {
       var elementNodes = elements.filter(function (renderedElement) {
@@ -264,42 +265,42 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
         this.disableImageUploadOnHide(element);
       }
-    };
+    }
     /**
      * Get the options instance
      *
      * @returns {ContentTypeMenu}
      */
-
+    ;
 
     _proto.getOptions = function getOptions() {
       return this.optionsMenu;
-    };
+    }
     /**
      * Handle user editing an instance
      */
-
+    ;
 
     _proto.onOptionEdit = function onOptionEdit() {
       this.openEdit();
-    };
+    }
     /**
      * Reverse the display data currently in the data store
      */
-
+    ;
 
     _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
       var display = this.parent.dataStore.get("display");
       this.parent.dataStore.update(!display, "display");
-    };
+    }
     /**
      * Handle duplicate of items
      */
-
+    ;
 
     _proto.onOptionDuplicate = function onOptionDuplicate() {
       this.clone(this.parent, true, true);
-    };
+    }
     /**
      * Duplicate content type
      *
@@ -308,7 +309,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {boolean} direct
      * @returns {Promise<ContentTypeInterface> | void}
      */
-
+    ;
 
     _proto.clone = function clone(contentType, autoAppend, direct) {
       var _this3 = this;
@@ -337,11 +338,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         console.error(error);
         return null;
       });
-    };
+    }
     /**
      * Handle content type removal
      */
-
+    ;
 
     _proto.onOptionRemove = function onOptionRemove() {
       var _this4 = this;
@@ -387,47 +388,47 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       } else {
         removeContentType();
       }
-    };
+    }
     /**
      * Determine if the container can receive drop events? With the current matrix system everything can unless
      * specified in an inherited preview instance.
      *
      * @returns {boolean}
      */
-
+    ;
 
     _proto.isContainer = function isContainer() {
       return true;
-    };
+    }
     /**
      * Return the sortable options
      *
      * @returns {JQueryUI.SortableOptions}
      */
-
+    ;
 
     _proto.getSortableOptions = function getSortableOptions() {
       return (0, _sortable2.getSortableOptions)(this);
-    };
+    }
     /**
      * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM
      * without causing browser issues
      *
      * @returns {{[p: string]: boolean}}
      */
-
+    ;
 
     _proto.getChildrenCss = function getChildrenCss() {
       var _ref;
 
       return _ref = {}, _ref[this.config.name + "-container"] = true, _ref;
-    };
+    }
     /**
      * Return an array of options
      *
      * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = {
@@ -470,7 +471,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         })
       };
       return options;
-    };
+    }
     /**
      * Dispatch content type clone events
      *
@@ -479,7 +480,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      * @param {number} index
      * @param {boolean} direct
      */
-
+    ;
 
     _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalContentType, duplicateContentType, index, direct) {
       var duplicateEventParams = {
@@ -492,11 +493,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("contentType:duplicateAfter", duplicateEventParams);
 
       _events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
-    };
+    }
     /**
      * Bind events
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this5 = this;
@@ -515,21 +516,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this5.isEmpty(!children.length);
         });
       }
-    };
+    }
     /**
      * After observables updated, allows to modify observables
      */
-
+    ;
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       return;
-    };
+    }
     /**
      * Setup fields observables within the data class property
      *
      * @deprecated
      */
-
+    ;
 
     _proto.setupDataFields = function setupDataFields() {
       var _this6 = this;
@@ -547,13 +548,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           _this6.updateDataValue(key, value);
         });
       });
-    };
+    }
     /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
-
+    ;
 
     _proto.isConfigured = function isConfigured() {
       var _this7 = this;
@@ -594,14 +595,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       });
 
       return hasDataChanges;
-    };
+    }
     /**
      * Any hidden element should block drag / drop events from uploading images from the OS. We have to block this for
      * all elements as underlying elements could still receive the events if a parent is hidden.
      *
      * @param {Element} element
      */
-
+    ;
 
     _proto.disableImageUploadOnHide = function disableImageUploadOnHide(element) {
       var _this8 = this;
@@ -612,11 +613,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
           event.stopPropagation();
         }
       });
-    };
+    }
     /**
      * Update observables
      */
-
+    ;
 
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.getState()));
@@ -625,13 +626,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _events.trigger("previewData:updateAfter", {
         preview: this
       });
-    };
+    }
     /**
      * Update placeholder background visibility base on height and padding
      *
      * @param {DataObject} data
      */
-
+    ;
 
     _proto.updatePlaceholderVisibility = function updatePlaceholderVisibility(data) {
       var minHeight = !_underscore.isEmpty(data.min_height) ? parseFloat(data.min_height) : 130;

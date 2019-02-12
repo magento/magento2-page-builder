@@ -25,7 +25,7 @@ define([], function () {
      */
     _proto.fromDom = function fromDom(value) {
       return;
-    };
+    }
     /**
      * Ensure the display none property doesn't persist to the preview
      *
@@ -33,7 +33,7 @@ define([], function () {
      * @param data Object
      * @returns {string}
      */
-
+    ;
 
     _proto.toDom = function toDom(name, data) {
       return;

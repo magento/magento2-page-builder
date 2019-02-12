@@ -9,13 +9,12 @@ import ko from "knockout";
 import events from "Magento_PageBuilder/js/events";
 import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver";
 import _ from "underscore";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import ConditionalRemoveOption from "../../content-type-menu/conditional-remove-option";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
+import {ContentTypeMountEventParamsInterface, ContentTypeReadyEventParamsInterface} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -87,7 +86,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.contentType.parent.id === this.parent.id) {
+            if (args.contentType.parent && args.contentType.parent.id === this.parent.id) {
                 this.buildJarallax();
             }
         });

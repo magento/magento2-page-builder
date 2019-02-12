@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-menu/hide-show-option", "Magento_PageBuilder/js/uploader", "Magento_PageBuilder/js/utils/nesting-link-dialog", "Magento_PageBuilder/js/wysiwyg/factory", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _translate, _events, _config, _hideShowOption, _uploader, _nestingLinkDialog, _factory, _preview) {
@@ -48,26 +49,26 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
         sort: 40
       });
       return options;
-    };
+    }
     /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
      */
-
+    ;
 
     _proto.getUploader = function getUploader() {
       var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
 
       return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
-    };
+    }
     /**
      * Makes WYSIWYG active
      *
      * @param {Preview} preview
      * @param {JQueryEventObject} event
      */
-
+    ;
 
     _proto.activateEditor = function activateEditor(preview, event) {
       var element = this.element || this.textarea;
@@ -77,7 +78,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       }
 
       element.focus();
-    };
+    }
     /**
      * Stop event to prevent execution of action when editing textarea.
      *
@@ -85,16 +86,16 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
      * @param {JQueryEventObject} event
      * @returns {Boolean}
      */
-
+    ;
 
     _proto.stopEvent = function stopEvent(preview, event) {
       event.stopPropagation();
       return true;
-    };
+    }
     /**
      * Set state based on overlay mouseover event for the preview
      */
-
+    ;
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {
@@ -112,11 +113,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
           visibility: "visible"
         }));
       }
-    };
+    }
     /**
      * Set state based on overlay mouseout event for the preview
      */
-
+    ;
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
       if (this.data.main.attributes()["data-show-overlay"] === "hover") {
@@ -131,19 +132,19 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
           visibility: "hidden"
         }));
       }
-    };
+    }
     /**
      * @returns {Boolean}
      */
-
+    ;
 
     _proto.isWysiwygSupported = function isWysiwygSupported() {
       return _config.getConfig("can_use_inline_editing_on_stage");
-    };
+    }
     /**
      * @param {HTMLElement} element
      */
-
+    ;
 
     _proto.initWysiwyg = function initWysiwyg(element) {
       var _this2 = this;
@@ -155,11 +156,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       (0, _factory)(this.parent.id, element.id, this.config.name, config, this.parent.dataStore, "message", this.parent.stageId).then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });
-    };
+    }
     /**
      * @param {HTMLTextAreaElement} element
      */
-
+    ;
 
     _proto.initTextarea = function initTextarea(element) {
       var _this3 = this;
@@ -174,40 +175,40 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
         _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
-    };
+    }
     /**
      * Save current value of textarea in data store
      */
-
+    ;
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
       this.parent.dataStore.update(this.textarea.value, "message");
-    };
+    }
     /**
      * Start stage interaction on textarea blur
      */
-
+    ;
 
     _proto.onTextareaFocus = function onTextareaFocus() {
       (0, _jquery)(this.textarea).closest(".pagebuilder-banner-text-content").addClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStart");
-    };
+    }
     /**
      * Stop stage interaction on textarea blur
      */
-
+    ;
 
     _proto.onTextareaBlur = function onTextareaBlur() {
       (0, _jquery)(this.textarea).closest(".pagebuilder-banner-text-content").removeClass("pagebuilder-toolbar-active");
 
       _events.trigger("stage:interactionStop");
-    };
+    }
     /**
      * @inheritDoc
      */
-
+    ;
 
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
@@ -227,11 +228,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
         (0, _nestingLinkDialog)(_this4.parent.dataStore, _this4.wysiwyg, "message", "link_url");
       });
-    };
+    }
     /**
      * Adjust textarea's height based on scrollHeight
      */
-
+    ;
 
     _proto.adjustTextareaHeightBasedOnScrollHeight = function adjustTextareaHeightBasedOnScrollHeight() {
       this.textarea.style.height = "";

@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -42,14 +43,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
     _proto.onClick = function onClick(index, event) {
       (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
       event.stopPropagation();
-    };
+    }
     /**
      * On focus in set the focused button
      *
      * @param {number} index
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusIn = function onFocusIn(index, event) {
       var parentPreview = this.parent.parent.preview;
@@ -57,14 +58,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
       if (parentPreview.focusedTab() !== index) {
         parentPreview.setFocusedTab(index, true);
       }
-    };
+    }
     /**
      * On focus out set the focused tab to null
      *
      * @param {number} index
      * @param {JQueryEventObject} event
      */
-
+    ;
 
     _proto.onFocusOut = function onFocusOut(index, event) {
       if (this.parent && this.parent.parent) {
@@ -94,13 +95,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-menu/conditio
           unfocus();
         }
       }
-    };
+    }
     /**
      * Get the options instance
      *
      * @returns {OptionsInterface}
      */
-
+    ;
 
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _previewCollection2.prototype.retrieveOptions.call(this);

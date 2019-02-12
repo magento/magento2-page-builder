@@ -10,25 +10,26 @@ import events from "Magento_PageBuilder/js/events";
 import "slick";
 import _ from "underscore";
 import "../../binding/focus";
-import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children.types";
 import Config from "../../config";
-import ContentTypeCollectionInterface from "../../content-type-collection.d";
-import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeCollectionInterface from "../../content-type-collection.types";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import createContentType from "../../content-type-factory";
 import HideShowOption from "../../content-type-menu/hide-show-option";
 import Option from "../../content-type-menu/option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
-import ContentTypeInterface from "../../content-type.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
+import ContentTypeInterface from "../../content-type.types";
 import {DataObject} from "../../data-store";
 import delayUntil from "../../utils/delay-until";
-import deferred from "../../utils/promise-deferred";
-import DeferredInterface from "../../utils/promise-deferred.d";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
-import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
-import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
-import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
+import deferred, {DeferredInterface} from "../../utils/promise-deferred";
+import {
+    ContentTypeAfterRenderEventParamsInterface,
+    ContentTypeCreateEventParamsInterface,
+    ContentTypeDroppedCreateEventParamsInterface,
+    ContentTypeDuplicateEventParamsInterface,
+    ContentTypeMountEventParamsInterface,
+    ContentTypeRemovedEventParamsInterface,
+} from "../content-type-events.types";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 

@@ -1,4 +1,5 @@
 /*eslint-disable */
+
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -47,19 +48,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
         preview: this
       }));
       return options;
-    };
+    }
     /**
      * Force the focus on the clicked button
      *
      * @param {number} index
      * @param {JQueryEventObject} event
      */
-
+    ;
 
     _proto.onClick = function onClick(index, event) {
       (0, _jquery)(event.currentTarget).find("[contenteditable]").focus();
       event.stopPropagation();
-    };
+    }
     /**
      * Handle on focus out events, when the button item is focused out we need to set our focusedButton record on the
      * buttons preview item to null. If we detect this focus out event is to focus into another button we need to ensure
@@ -68,7 +69,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
      * @param {number} index
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusOut = function onFocusOut(index, event) {
       if (this.parent && this.parent.parent) {
@@ -98,14 +99,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
           unfocus();
         }
       }
-    };
+    }
     /**
      * On focus in set the focused button
      *
      * @param {number} index
      * @param {Event} event
      */
-
+    ;
 
     _proto.onFocusIn = function onFocusIn(index, event) {
       var parentPreview = this.parent.parent.preview;
@@ -113,27 +114,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       if (parentPreview.focusedButton() !== index) {
         parentPreview.focusedButton(index);
       }
-    };
+    }
     /**
      * If the button is displayed we need to show the options menu on hover
      *
      * @param {Preview} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onButtonMouseOver = function onButtonMouseOver(context, event) {
       if (this.display() === false) {
         this.onMouseOver(context, event);
       }
-    };
+    }
     /**
      * If the button is displayed we need to hide the options menu on mouse out
      *
      * @param {Preview} context
      * @param {Event} event
      */
-
+    ;
 
     _proto.onButtonMouseOut = function onButtonMouseOut(context, event) {
       if (this.display() === false) {

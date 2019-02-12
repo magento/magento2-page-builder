@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeConfigInterface from "../content-type-config.d";
+import ContentTypeConfigInterface from "../content-type-config.types";
 import converterPoolFactory from "../converter/converter-pool-factory";
 import massConverterPoolFactory from "../mass-converter/converter-pool-factory";
 import ObservableUpdater from "./observable-updater";

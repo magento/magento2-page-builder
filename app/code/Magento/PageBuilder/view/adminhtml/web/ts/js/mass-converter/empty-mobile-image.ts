@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ImageArrayObject from "../converter/image-array-object";
+import ImageArrayObject from "../converter/image-array-object.types";
 import {get, set} from "../utils/object";
 import ConverterInterface, {ConverterConfigInterface, ConverterDataInterface} from "./converter-interface";
 

@@ -9,9 +9,9 @@ import $t from "mage/translate";
 import widgetInitializer from "Magento_PageBuilder/js/widget-initializer";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
-import ContentTypeConfigInterface from "../../content-type-config";
+import ContentTypeConfigInterface from "../../content-type-config.types";
 import HideShowOption from "../../content-type-menu/hide-show-option";
-import {OptionsInterface} from "../../content-type-menu/option.d";
+import {OptionsInterface} from "../../content-type-menu/option.types";
 import {DataObject} from "../../data-store";
 import {get} from "../../utils/object";
 import ObservableUpdater from "../observable-updater";
@@ -84,7 +84,7 @@ export default class Preview extends BasePreview {
     public processBlockData(data: DataObject): void {
         // Only load if something changed
         this.displayPreviewPlaceholder(data, "block_id");
-        if (data.block_id && data.template.length !== 0) {
+        if (data.block_id && (data.template as string).length !== 0) {
             this.processRequest(data, "block_id", "title");
         }
     }

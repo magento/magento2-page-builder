@@ -9,7 +9,7 @@ import WysiwygSetup from "mage/adminhtml/wysiwyg/tiny_mce/setup";
 import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import WysiwygInstanceInterface from "wysiwygAdapter";
-import {AdditionalDataConfigInterface} from "../content-type-config";
+import {AdditionalDataConfigInterface} from "../content-type-config.types";
 import DataStore from "../data-store";
 import checkStageFullScreen from "../utils/check-stage-full-screen";
 import WysiwygInterface from "./wysiwyg-interface";
