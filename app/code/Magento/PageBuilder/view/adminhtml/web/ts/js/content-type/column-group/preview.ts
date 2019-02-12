@@ -603,6 +603,13 @@ export default class Preview extends PreviewCollection {
         if (this.dropOverElement && this.dropPosition) {
             this.onNewColumnDrop(this.dropPosition);
             this.dropOverElement = null;
+
+            // Re-enable the parent disabled sortable instance
+            _.defer(() => {
+                $(".element-children.ui-sortable-disabled").each(function() {
+                    $(this).sortable("option", "disabled", false);
+                });
+            });
         }
 
         const column = getDragColumn();

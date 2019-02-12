@@ -96,14 +96,14 @@
         </arguments>
         <comment userInput="validateLocationGridData" stepKey="comment"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, locationName.fieldName, locationName.value)}}" stepKey="waitForLocationName"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, phoneNumber.fieldName, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, address.fieldName, address.value)}}" stepKey="waitForAddress"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, city.fieldName, city.value)}}" stepKey="waitForCity"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, state.fieldName, state.value)}}" stepKey="waitForState"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, zip.fieldName, zip.value)}}" stepKey="waitForZip"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, country.fieldName, country.value)}}" stepKey="waitForCountry"/>
-        <waitForElementVisible selector="{{PageBuilderDataGrid.gridSelectButtonByIndex(rowIndex)}}" stepKey="waitForSelectButton"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, locationName.fieldName)}}" userInput="{{locationName.value}}" stepKey="seeLocationName"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, phoneNumber.fieldName)}}" userInput="{{phoneNumber.value}}" stepKey="seePhoneNumber"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, address.fieldName)}}" userInput="{{address.value}}" stepKey="seeAddress"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, city.fieldName)}}" userInput="{{city.value}}" stepKey="seeCity"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, state.fieldName)}}" userInput="{{state.value}}" stepKey="seeState"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, zip.fieldName)}}" userInput="{{zip.value}}" stepKey="setZip"/>
+        <see selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, country.fieldName)}}" userInput="{{country.value}}" stepKey="seeCounty"/>
+        <seeElement selector="{{PageBuilderDataGrid.gridSelectButtonByIndex(rowIndex)}}" stepKey="seeSelectButton"/>
     </actionGroup>
     <actionGroup name="clickMapToAddOrMovePin">
         <arguments>
@@ -292,10 +292,14 @@
         <waitForElement selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
-        <waitForElementVisible selector="{{page.locationName(mapIndex, locationName.value)}}" stepKey="waitForLocationName"/>
-        <waitForElementVisible selector="{{page.comment(mapIndex, comment.value)}}" stepKey="waitForComment"/>
-        <waitForElementVisible selector="{{page.phoneNumber(mapIndex, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
-        <waitForElementVisible selector="{{page.addressCityStateZipCountry(mapIndex, address.value, city.value, state.tooltipValue, zip.value, country.tooltipValue)}}" stepKey="waitForAddress"/>
+        <waitForElement selector="{{page.locationNameElement(mapIndex)}}" stepKey="waitForLocationName" />
+        <see selector="{{page.locationNameElement(mapIndex)}}" userInput="{{locationName.value}}" stepKey="seeLocationName"/>
+        <waitForElement selector="{{page.commentElement(mapIndex)}}" stepKey="waitForComment" />
+        <see selector="{{page.commentElement(mapIndex)}}" userInput="{{comment.value}}" stepKey="seeComment"/>
+        <waitForElement selector="{{page.phoneNumberElement(mapIndex)}}" stepKey="waitForPhoneNumber" />
+        <see selector="{{page.phoneNumberElement(mapIndex)}}" userInput="{{phoneNumber.value}}" stepKey="seePhoneNumber"/>
+        <waitForElement selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" stepKey="waitForAddressVisible" />
+        <see selector="{{page.addressCityStateZipCountryElement(mapIndex)}}" userInput="{{address.value}}\n{{city.value}}, {{state.value}} {{zip.value}}\n{{country.value}}" stepKey="seeAddress"/>
         <moveMouseOver selector="{{page.base(mapIndex)}}" x="-1" y="0" stepKey="moveMouseOutsideMap"/>
         <waitForPageLoad stepKey="waitForOptionMenuGone"/>
         <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
