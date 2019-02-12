@@ -17,6 +17,7 @@ import WysiwygInterface, {WysiwygConstructorInterface} from "./wysiwyg-interface
  * @param {AdditionalDataConfigInterface} config The configuration for the wysiwyg.
  * @param {DataStore} dataStore The datastore to store the content in.
  * @param {String} fieldName The key in the provided datastore to set the data.
+ * @param {String} stageId The ID in the registry of the stage containing the content type.
  * @returns {Wysiwyg}
  */
 export default function create(
@@ -26,6 +27,7 @@ export default function create(
     config: AdditionalDataConfigInterface,
     dataStore: DataStore,
     fieldName: string,
+    stageId: string,
 ): Promise<WysiwygInterface> {
     config = $.extend(true, {}, config);
 
@@ -56,6 +58,7 @@ export default function create(
                     config,
                     dataStore,
                     fieldName,
+                    stageId,
                 );
 
                 if (config.adapter_config.component_initializers

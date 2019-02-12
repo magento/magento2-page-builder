@@ -30,10 +30,9 @@ import {set} from "./utils/object";
  * @returns {Promise<void>}
  */
 function buildFromContent(stage: Stage, value: string) {
-    const stageDocument = document.createElement("div");
-    stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
-    stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage, stage);
+    const stageDocument = new DOMParser().parseFromString(value, "text/html");
+    stageDocument.body.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
+    return buildElementIntoStage(stageDocument.body, stage, stage);
 }
 
 /**
@@ -44,7 +43,7 @@ function buildFromContent(stage: Stage, value: string) {
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: ContentTypeCollectionInterface, stage: Stage): Promise<any> {
+function buildElementIntoStage(element: Element, parent: ContentTypeCollectionInterface, stage: Stage) {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {

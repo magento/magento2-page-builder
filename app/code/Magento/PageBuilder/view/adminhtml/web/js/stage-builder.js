@@ -13,10 +13,9 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_PageBuilder/
    * @returns {Promise<void>}
    */
   function buildFromContent(stage, value) {
-    var stageDocument = document.createElement("div");
-    stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
-    stageDocument.innerHTML = value;
-    return buildElementIntoStage(stageDocument, stage, stage);
+    var stageDocument = new DOMParser().parseFromString(value, "text/html");
+    stageDocument.body.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
+    return buildElementIntoStage(stageDocument.body, stage, stage);
   }
   /**
    * Build an element and it's children into the stage

@@ -121,7 +121,7 @@
         </arguments>
         <click selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" stepKey="focusOnEditorArea"/>
         <waitForElementVisible selector="{{PageBuilderStage.inlineWYSIWYGEditorPanel(contentType.role, index)}}" stepKey="waitForEditorPanel"/>
-        <fillField selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
+        <pressKey selector="{{PageBuilderStage.inlineWYSIWYGEditor(contentType.role, index)}}" userInput="{{content}}" stepKey="enterContentIntoEditor"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="loseFocusFromEditor"/>
     </actionGroup>

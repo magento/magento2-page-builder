@@ -40,8 +40,29 @@ define([
      * @return {Boolean}
      */
     function validateIsUrl(href) {
+        return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href);//eslint-disable-line max-len
+    }
 
-        return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(href)//eslint-disable-line max-len);
+    /**
+     * Validate that string has an anchor tag
+     * @param {String} str
+     * @return {Boolean}
+     */
+    function validateWysiwygHasAnchorTags(str) {
+        return (/<a[\s]+([^>]+)>|<a>|<\/a>/igm).test(str);
+    }
+
+    /**
+     * Validate message field and url field anchor tag is used exclusively by one field
+     * @param {String} message
+     * @param {Object} url
+     * @return {Boolean}
+     */
+    function validateOneAnchorTagField(message, url) {
+        return !(validateWysiwygHasAnchorTags(message) &&
+            ['page', 'product', 'category', 'default'].indexOf(url.type) !== -1 &&
+            url[url.type] &&
+            url[url.type].length > 0);
     }
 
     /**
@@ -61,9 +82,11 @@ define([
                     return rule.handler(value, params);
                 }
 
-                _.flatten(_.map(value, _.values)).forEach(function(val) {
+                _.flatten(_.map(value, _.values)).forEach(function (val) {
                     if (!rule.handler(val, params)) {
-                        return allNumbers = false;
+                        allNumbers = false;
+
+                        return allNumbers;
                     }
                 });
 
@@ -127,13 +150,17 @@ define([
         validator.addRule(
             'required-entry',
             function (value) {
+                var allFilled;
+
                 // Validation only for margins and paddings
                 if (typeof value === 'object' && !!(value.padding || value.margin)) {
-                    var allFilled = true;
+                    allFilled = true;
 
-                    _.flatten(_.map(value, _.values)).forEach(function(val) {
+                    _.flatten(_.map(value, _.values)).forEach(function (val) {
                         if (utils.isEmpty(val)) {
-                            return allFilled = false;
+                            allFilled = false;
+
+                            return allFilled;
                         }
                     });
 
@@ -144,6 +171,23 @@ define([
             },
             $.mage.__(requiredInputRule.message)
         );
+
+        validator.addRule(
+            'validate-message-no-link',
+            function (url, message) {
+                return validateOneAnchorTagField(message, url);
+            },
+            $.mage.__('Adding link in both content and outer element is not allowed.')
+        );
+
+        validator.addRule(
+            'validate-no-url',
+            function (message, url) {
+                return validateOneAnchorTagField(message, url);
+            },
+            $.mage.__('Adding link in both content and outer element is not allowed.')
+        );
+
         validateObjectField(validator, 'validate-number');
         validateObjectField(validator, 'less-than-equals-to');
         validateObjectField(validator, 'greater-than-equals-to');
