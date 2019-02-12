@@ -54,7 +54,9 @@ class HtmlFilter
             $item->parentNode->removeChild($item);
         }
         $xpath = new \DOMXPath($dom);
-        $htmlContentTypes = $xpath->query('//*[@data-content-type="html" and not(contains(@class, "placeholder-html-code"))]');
+        $htmlContentTypes = $xpath->query(
+            '//*[@data-content-type="html" and not(contains(@class, "placeholder-html-code"))]'
+        );
         foreach ($htmlContentTypes as $htmlContentType) {
             /* @var \DOMElement $htmlContentType */
             $innerHTML= '';
