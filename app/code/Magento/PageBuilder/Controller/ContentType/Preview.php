@@ -9,12 +9,17 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 
 /**
  * Preview controller to render blocks preview on Stage
+ *
+ * This isn't placed within the adminhtml folder as it has to extend from the front-end controllers app action to
+ * ensure the content is rendered in the storefront scope.
+ *
  * @api
  */
-class Preview extends \Magento\Framework\App\Action\Action
+class Preview extends \Magento\Framework\App\Action\Action implements HttpPostActionInterface
 {
     /**
      * @var \Magento\PageBuilder\Model\Stage\RendererPool

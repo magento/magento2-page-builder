@@ -3,7 +3,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/utils/check-stage-full-screen", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/content-type/column/resize", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/registry"], function (_jquery, _knockout, _translate, _events, _underscore, _config, _moveContentType, _registry, _sortable, _checkStageFullScreen, _createStylesheet, _resize, _previewCollection, _dragAndDrop, _factory, _gridSize, _registry2) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -48,6 +48,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _this.gridSizeMax = _knockout.observable((0, _gridSize.getMaxGridSize)());
       _this.gridFormOpen = _knockout.observable(false);
       _this.gridChange = _knockout.observable(false);
+      _this.gridToolTipOverFlow = _knockout.observable(false);
       _this.resizeColumnWidths = [];
       _this.resizeHistory = {
         left: [],
@@ -430,6 +431,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       if (!this.gridSizeError()) {
         this.gridFormOpen(false);
+        this.gridToolTipOverFlow(false);
 
         _events.trigger("stage:interactionStop");
 
@@ -446,9 +448,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.openGridForm = function openGridForm() {
       var _this6 = this;
 
+      var tooltip = (0, _jquery)(this.wrapperElement).find("[role='tooltip']");
+
       if (!this.gridFormOpen()) {
         this.gridSizeHistory = new Map();
-        this.recordGridResize(this.gridSize());
+        this.recordGridResize(this.gridSize()); // inline tooltip out of bounds
+
+        if ((0, _checkStageFullScreen)(this.parent.stageId) && 0 > tooltip[0].getBoundingClientRect().top) {
+          this.gridToolTipOverFlow(true);
+        }
+
         this.gridFormOpen(true); // Wait for animation to complete
 
         _underscore.delay(function () {

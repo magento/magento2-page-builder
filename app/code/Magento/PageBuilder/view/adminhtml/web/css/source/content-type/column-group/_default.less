@@ -129,7 +129,7 @@
         &.resizing,
         &.grid-form-open {
             .pagebuilder-grid-size-indicator {
-                z-index: 100;
+                z-index: 105;
             }
 
             .resize-grid {
@@ -303,7 +303,7 @@
         bottom: 175%;
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
         font-size: 14px;
-        left: -390%;
+        left: -200%;
         padding: .9rem 1.8rem;
         position: absolute;
         text-align: left;
@@ -317,20 +317,44 @@
             content: '';
             display: block;
             height: 0;
-            left: 87.5%;
+            left: 70.5%;
             margin-left: -.8rem;
             position: absolute;
             top: 100%;
             width: 0;
         }
+
         &:before {
             border-top-color: @color-dark-grayish-orange;
             margin-top: 1px;
             z-index: 3;
         }
+
         &:after {
             border-top-color: @color-lazy-sun;
             z-index: 4;
+        }
+
+        &.tooltip-down {
+            bottom: -490%;
+
+            &:before,
+            &:after {
+                top: -25%;
+            }
+
+            &:before {
+                border-bottom-color: @color-lazy-sun;
+                border-top-color: transparent;
+                margin-top: 1px;
+                z-index: 4;
+            }
+
+            &:after {
+                border-bottom-color: @color-dark-grayish-orange;
+                border-top-color: transparent;
+                z-index: 3;
+            }
         }
     }
 

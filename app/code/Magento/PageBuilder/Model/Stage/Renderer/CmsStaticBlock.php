@@ -33,9 +33,9 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $loggerInterface;
 
     /**
-     * @var \Magento\PageBuilder\Model\Stage\ScriptFilter
+     * @var \Magento\PageBuilder\Model\Stage\HtmlFilter
      */
-    private $scriptFilter;
+    private $htmlFilter;
 
     /**
      * CmsStaticBlock constructor.
@@ -43,18 +43,18 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
      * @param WidgetDirective $widgetDirectiveRenderer
      * @param LoggerInterface $loggerInterface
-     * @param \Magento\PageBuilder\Model\Stage\ScriptFilter $scriptFilter
+     * @param \Magento\PageBuilder\Model\Stage\HtmlFilter $htmlFilter
      */
     public function __construct(
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         WidgetDirective $widgetDirectiveRenderer,
         LoggerInterface $loggerInterface,
-        \Magento\PageBuilder\Model\Stage\ScriptFilter $scriptFilter
+        \Magento\PageBuilder\Model\Stage\HtmlFilter $htmlFilter
     ) {
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
         $this->loggerInterface = $loggerInterface;
-        $this->scriptFilter = $scriptFilter;
+        $this->htmlFilter = $htmlFilter;
     }
 
     /**
@@ -96,7 +96,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
 
         if ($block->isActive()) {
             $directiveResult = $this->widgetDirectiveRenderer->render($params);
-            $result['content'] = $this->scriptFilter->removeScriptTags($directiveResult['content']);
+            $result['content'] = $this->htmlFilter->filterHtml($directiveResult['content']);
         } else {
             $result['error'] = __('Block disabled');
         }

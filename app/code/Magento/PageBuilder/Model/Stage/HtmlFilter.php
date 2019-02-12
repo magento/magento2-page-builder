@@ -11,11 +11,11 @@ namespace Magento\PageBuilder\Model\Stage;
 use Psr\Log\LoggerInterface;
 
 /**
- * Filters script tags from stage output
+ * Filters HTML from stage output
  *
  * @api
  */
-class ScriptFilter
+class HtmlFilter
 {
     /**
      * @var LoggerInterface
@@ -23,7 +23,7 @@ class ScriptFilter
     private $loggerInterface;
 
     /**
-     * ScriptFilter constructor.
+     * HtmlFilter constructor.
      * @param LoggerInterface $loggerInterface
      */
     public function __construct(
@@ -33,12 +33,12 @@ class ScriptFilter
     }
 
     /**
-     * Remove script tag from html
+     * Filter HTML text to remove script tags and encode HTML content types
      *
      * @param string $content
      * @return string
      */
-    public function removeScriptTags(string $content): string
+    public function filterHtml(string $content): string
     {
         $dom = new \DOMDocument();
         try {
@@ -49,8 +49,24 @@ class ScriptFilter
             $this->loggerInterface->critical($e->getMessage());
         }
         libxml_use_internal_errors($previous);
+        // Remove all <script /> tags from output
         foreach (iterator_to_array($dom->getElementsByTagName('script')) as $item) {
             $item->parentNode->removeChild($item);
+        }
+        $xpath = new \DOMXPath($dom);
+        $htmlContentTypes = $xpath->query('//*[@data-role="html" and not(contains(@class, "placeholder-html-code"))]');
+        foreach ($htmlContentTypes as $htmlContentType) {
+            /* @var \DOMElement $htmlContentType */
+            $innerHTML= '';
+            $children = $htmlContentType->childNodes;
+            foreach ($children as $child) {
+                $innerHTML .= $child->ownerDocument->saveXML($child);
+            }
+            $htmlContentType->setAttribute(
+                "class",
+                $htmlContentType->getAttribute("class") . " placeholder-html-code"
+            );
+            $htmlContentType->nodeValue = htmlentities($innerHTML);
         }
         return $dom->saveHTML();
     }
