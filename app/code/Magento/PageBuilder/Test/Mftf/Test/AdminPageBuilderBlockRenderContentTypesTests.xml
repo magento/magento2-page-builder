@@ -1289,7 +1289,7 @@
             <title value="Render Video Through Block Content Type"/>
             <description value="Verify that users are able to successfully render and use the video content type through the Block content type."/>
             <severity value="CRITICAL"/>
-            <testCaseId value=" C-14832"/>
+            <testCaseId value="MC-14832"/>
             <useCaseId value="MC-13769"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
@@ -1418,8 +1418,6 @@
         <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
             <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <waitForElementVisible selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="waitToSeeBlockTitle"/>
-        <seeElement selector="{{BlockOnForm.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitleOnForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsBlock"/>
         <actionGroup ref="saveCMSBlock" stepKey="saveCMSBlock"/>
         <!-- Validate CMS Block Stage -->
@@ -1448,13 +1446,13 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="savePageEditPanelSettingsBlock"/>
         <!-- Validate CMS Page Stage -->
         <comment userInput="Validate CMS Page Stage" stepKey="commentValidateCMSPageStage"/>
-        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnPageStage"/>
+        <see selector="{{BlockOnStage.content('1')}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnPageStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate CMS Page Storefront -->
         <comment userInput="Validate CMS Page Storefront" stepKey="commentValidateCMSPageStorefront"/>
         <actionGroup ref="navigateToStorefrontForCreatedPage" stepKey="navigateToStoreFront">
             <argument name="page" value="$$createCMSPage.identifier$$"/>
         </actionGroup>
-        <see userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStoreFront"/>
+        <see selector="{{BlockOnStorefront.base('2')}}{{BlockOnStorefront.ancestor}}" userInput="$$createPreReqBlock.content$$" stepKey="seeBlockContentOnStoreFront"/>
     </test>
 </tests>
