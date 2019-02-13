@@ -428,4 +428,40 @@
         <!-- TODO - rename stepKey -->
         <scrollTo selector="//div[@class='category-description']" stepKey="scrollToProductDescription"/>
     </test>
+    <test name="PageBuilderCategoryVerifyCanMoveButtonItems" extends="ButtonItemMoveButtonStackedAppearance">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Catalog Category"/>
+            <title value="Verify That User Can Move Button Items"/>
+            <description value="This test is intended to ensure that users can move button items within the PageBuilder stage for Category Description."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-3330"/>
+            <testCaseId value="MC-14831"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-move"/>
+            <group value="pagebuilder-catalog-category"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" before="loginAsAdmin" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToAPageWithPageBuilder">
+                <argument name="Category" value="$$createPreReqCategory$$"/>
+            </actionGroup>
+            <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" stepKey="switchToPageBuilderStage"/>
+            <actionGroup ref="openPageBuilderForAttribute" after="switchToPageBuilderStage" stepKey="openPageBuilderForDescription"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCategory" before="logout" stepKey="deleteCreatedCategory"/>
+        </after>
+        <comment userInput="---merging to remove step---" stepKey="enterPageTitle"/>
+        <actionGroup ref="saveEditPanelSettingsFullScreen" stepKey="saveEditPanelSettings1"/>
+        <comment userInput="Save Category" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="exitPageBuilderFullScreen" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="saveCategoryForm" after="switchToPageBuilderStage" stepKey="saveCategory"/>
+        <waitForPageLoad after="saveCategory" stepKey="waitForPageLoadSaveCategory"/>
+        <conditionalClick selector="{{AdminCategoryContentSection.sectionHeader}}" dependentSelector="{{AdminCategoryContentSection.uploadButton}}" visible="false" after="waitForPageLoadSaveCategory" stepKey="expandAdminCategoryContentSection"/>
+        <actionGroup ref="openPageBuilderForAttribute" after="expandAdminCategoryContentSection" stepKey="openPageBuilderForDescription"/>
+        <amOnPage url="$$createPreReqCategory.name$$.html" stepKey="navigateToStoreFront" />
+        <scrollTo selector="//div[@class='category-description']" after="navigateToStoreFront" stepKey="scrollToCategoryDescription"/>
+    </test>
 </tests>
