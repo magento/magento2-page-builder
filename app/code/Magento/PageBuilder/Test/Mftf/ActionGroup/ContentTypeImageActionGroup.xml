@@ -28,7 +28,6 @@
     <actionGroup name="validateImage">
         <arguments>
             <argument name="section"/>
-            <argument name="pageNamePrefix" defaultValue="admin" type="string"/>
             <argument name="image"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -38,8 +37,7 @@
         <grabAttributeFrom selector="{{section.imageSourceByIndex(index, image.fileName)}}" userInput="src" stepKey="contentTypeSrc"/>
         <!-- Grab base URL -->
         <comment userInput="Grab base URL" stepKey="commentGrabBaseUrl"/>
-        <executeJS function="return '{{pageNamePrefix}}'" stepKey="pageNamePrefix"/>
-        <grabFromCurrentUrl regex="/(^.+(?=\/$pageNamePrefix))/" stepKey="baseURL"/>
+        <executeJS function="return window.location.origin" stepKey="baseURL"/>
         <!-- Convert all characters in string variables to regex friendly strings  -->
         <comment userInput="Convert all characters in string variables to regex friendly strings" stepKey="commentConvert"/>
         <executeJS function="return '{$baseURL}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
