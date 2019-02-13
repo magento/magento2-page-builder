@@ -17,7 +17,7 @@
        event="{ dragstart: function(context, event) { event.preventDefault(); }}">
         <span class="button-item-drag-handle" css="{disabled: contentType.parentContentType.children().length <= 1}"></span>
         <span attr="data.link_text.attributes"
-              data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }, hasFocusNoScroll: $parent.contentType.preview.focusedButton() === $index()"
+              data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder, selectAll: true }, hasFocusNoScroll: contentType.parentContentType.preview.focusedButton() === $index()"
               event="{ focusin: function (context, event) { onFocusIn($index(), event); }, focusout: function (context, event) { onFocusOut($index(), event); } }">
         </span>
     </a>
