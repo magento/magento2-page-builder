@@ -93,12 +93,12 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
 
       if (currentElement.attr("data-element") === name) {
         return currentElement[0];
-      } // Attempt to find the element in the children of the data-role
+      } // Attempt to find the element in the children of the data-content-type
 
 
       var searchInChildren = currentElement.find("[data-element=\"" + name + "\"]"); // Ensure the element is within the current content type
 
-      if (searchInChildren.length > 0 && searchInChildren.closest("[data-role]")[0] === currentElement[0]) {
+      if (searchInChildren.length > 0 && searchInChildren.closest("[data-content-type]")[0] === currentElement[0]) {
         return searchInChildren[0];
       }
 
