@@ -67,19 +67,19 @@ export default class Preview extends BasePreview {
         this.element = element;
         element.innerHTML = this.data.main.html();
 
-        element.id = this.parent.id + "-editor";
+        element.id = this.contentType.id + "-editor";
 
         const wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
+        wysiwygConfig.adapter.settings.auto_focus = this.contentType.dropped ? element.id : null;
 
         WysiwygFactory(
-            this.parent.id,
+            this.contentType.id,
             element.id,
             this.config.name,
             wysiwygConfig,
-            this.parent.dataStore,
+            this.contentType.dataStore,
             "content",
-            this.parent.stageId,
+            this.contentType.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
@@ -93,12 +93,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.parent.dataStore.get("content") as string;
+        this.textarea.value = this.contentType.dataStore.get("content") as string;
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
-        events.on(`form:${this.parent.id}:saveAfter`, () => {
-            this.textarea.value = this.parent.dataStore.get("content") as string;
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            this.textarea.value = this.contentType.dataStore.get("content") as string;
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -109,7 +109,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.parent.dataStore.update(this.textarea.value, "content");
+        this.contentType.dataStore.update(this.textarea.value, "content");
     }
 
     /**

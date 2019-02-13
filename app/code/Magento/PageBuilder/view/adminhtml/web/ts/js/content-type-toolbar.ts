@@ -49,7 +49,7 @@ export default class Toolbar {
      */
     public onOptionClick(option: OptionInterface, value: ValueInterface) {
         const defaultValue: string = this.preview.config.fields[option.key].default as string;
-        const currentValue: string = this.preview.parent.dataStore.get<string>(option.key);
+        const currentValue: string = this.preview.contentType.dataStore.get<string>(option.key);
         this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
     }
 
@@ -63,7 +63,7 @@ export default class Toolbar {
         const currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
         const toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options");
         // Change toolbar orientation if overflow on full screen mode
-        if (checkStageFullScreen(context.parent.stageId)
+        if (checkStageFullScreen(context.contentType.stageId)
             && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()
         ) {
             context.toolbar.observer = new MutationObserver(() => {
@@ -107,7 +107,7 @@ export default class Toolbar {
      * @returns {jQuery}
      */
     private getCurrentContentTypeTarget() {
-        return $(`#${this.preview.parent.id}`).find(".pagebuilder-content-type");
+        return $(`#${this.preview.contentType.id}`).find(".pagebuilder-content-type");
     }
 }
 

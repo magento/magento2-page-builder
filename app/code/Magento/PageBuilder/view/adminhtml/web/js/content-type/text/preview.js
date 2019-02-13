@@ -72,10 +72,10 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
       this.element = element;
       element.innerHTML = this.data.main.html();
-      element.id = this.parent.id + "-editor";
+      element.id = this.contentType.id + "-editor";
       var wysiwygConfig = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      wysiwygConfig.adapter.settings.auto_focus = this.parent.dropped ? element.id : null;
-      (0, _factory)(this.parent.id, element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content", this.parent.stageId).then(function (wysiwyg) {
+      wysiwygConfig.adapter.settings.auto_focus = this.contentType.dropped ? element.id : null;
+      (0, _factory)(this.contentType.id, element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
         _this.wysiwyg = wysiwyg;
       });
     }
@@ -89,11 +89,11 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
       this.textarea = element; // set initial value of textarea based on data store
 
-      this.textarea.value = this.parent.dataStore.get("content");
+      this.textarea.value = this.contentType.dataStore.get("content");
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
-      _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this2.textarea.value = _this2.parent.dataStore.get("content");
+      _events.on("form:" + this.contentType.id + ":saveAfter", function () {
+        _this2.textarea.value = _this2.contentType.dataStore.get("content");
 
         _this2.adjustTextareaHeightBasedOnScrollHeight();
       });
@@ -105,7 +105,7 @@ define(["jquery", "Magento_PageBuilder/js/events", "underscore", "Magento_PageBu
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.parent.dataStore.update(this.textarea.value, "content");
+      this.contentType.dataStore.update(this.textarea.value, "content");
     }
     /**
      * Start stage interaction on textarea blur

@@ -63,7 +63,7 @@ The last step is to add our icon's class name to our config file. Previous to th
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <type name="example_quote"
         label="Quote"
-        group="elements"
+        menu_section="elements"
         component="Magento_PageBuilder/js/content-type"
         preview_component="Example_PageBuilderQuote/js/content-type/example-quote/preview"
         master_component="Magento_PageBuilder/js/content-type/master"

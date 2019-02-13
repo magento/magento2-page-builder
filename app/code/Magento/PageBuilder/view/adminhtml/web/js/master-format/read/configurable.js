@@ -26,7 +26,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     _proto.read = function read(element) {
       var _this = this;
 
-      var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
+      var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance"));
       var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
       return new Promise(function (resolve) {
@@ -79,7 +79,7 @@ define(["jquery", "mageUtils", "underscore", "Magento_PageBuilder/js/config", "M
     }
     /**
      * Find the element for the current content type by it's name, avoiding searching in other content types by
-     * removing any other element which contains it's own data-role.
+     * removing any other element which contains it's own data-content-type.
      *
      * @param {HTMLElement} element
      * @param {string} name

@@ -10,14 +10,14 @@ import Preview from "./preview";
 import {PreviewCollectionInterface} from "./preview-collection.types";
 
 export default class PreviewCollection extends Preview implements PreviewCollectionInterface {
-    public parent: ContentTypeCollectionInterface;
+    public contentType: ContentTypeCollectionInterface;
 
     /**
      * Retrieve the preview child template
      *
      * @returns {string}
      */
-    get previewChildTemplate(): string {
+    get childTemplate(): string {
         return "Magento_PageBuilder/content-type/preview-collection";
     }
 
@@ -34,13 +34,13 @@ export default class PreviewCollection extends Preview implements PreviewCollect
         autoAppend: boolean = true,
         direct: boolean = false,
     ): Promise<ContentTypeCollectionInterface> | void {
-        const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
+        const index = contentType.parentContentType.getChildren().indexOf(contentType) + 1 || null;
         const childrenLength = contentType.children ? contentType.children().length : null;
 
         return new Promise((resolve, reject) => {
             createContentType(
                 contentType.config,
-                contentType.parent,
+                contentType.parentContentType,
                 contentType.stageId,
                 contentType.dataStore.getState(),
                 childrenLength,
@@ -53,7 +53,7 @@ export default class PreviewCollection extends Preview implements PreviewCollect
                             if (subChildClone) {
                                 subChildClone.then(
                                     (duplicateSubChild: ContentTypeInterface | ContentTypeCollectionInterface) => {
-                                        duplicateSubChild.parent = duplicate;
+                                        duplicateSubChild.parentContentType = duplicate;
                                         duplicate.addChild(duplicateSubChild);
                                     },
                                 );
@@ -65,7 +65,7 @@ export default class PreviewCollection extends Preview implements PreviewCollect
                 }
 
                 if (autoAppend) {
-                    contentType.parent.addChild(duplicate, index);
+                    contentType.parentContentType.addChild(duplicate, index);
                 }
                 this.dispatchContentTypeCloneEvents(contentType, duplicate, index, direct);
 
@@ -82,7 +82,7 @@ export default class PreviewCollection extends Preview implements PreviewCollect
     public delegate(...args: any[]) {
         super.delegate(...args);
 
-        this.parent.getChildren()().forEach((elem: ContentTypeInterface) => {
+        this.contentType.getChildren()().forEach((elem: ContentTypeInterface) => {
             elem.preview.delegate.apply(elem.preview, args);
         });
     }
@@ -93,7 +93,7 @@ export default class PreviewCollection extends Preview implements PreviewCollect
      * @returns {boolean}
      */
     protected isConfigured() {
-        if (this.parent.children().length > 0) {
+        if (this.contentType.children().length > 0) {
             return true;
         }
 

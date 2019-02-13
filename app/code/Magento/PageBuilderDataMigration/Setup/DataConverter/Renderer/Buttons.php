@@ -52,7 +52,7 @@ class Buttons implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'buttons',
+            'data-content-type' => 'buttons',
             'data-appearance' => 'inline',
             'class' => $eavData['css_classes'] ?? '',
             'style' => 'display: inline-block;'

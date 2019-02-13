@@ -97,7 +97,7 @@ export interface ContentTypeRedrawAfterEventParamsInterface {
 export interface ContentTypeRemovedEventParamsInterface {
     contentType: ContentTypeInterface | ContentTypeCollectionInterface;
     index: number;
-    parent: ContentTypeCollectionInterface;
+    parentContentType: ContentTypeCollectionInterface;
     stageId: string;
 }
 
@@ -105,7 +105,7 @@ export interface ContentTypeRemovedEventParamsInterface {
  * @api
  */
 export interface ContentTypeRemovedParamsInterface {
-    parent: ContentTypeCollectionInterface;
+    parentContentType: ContentTypeCollectionInterface;
     index: number;
     contentType: ContentTypeInterface;
     stageId: string;

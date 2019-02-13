@@ -8,7 +8,7 @@ import ContentTypeInterface from "../content-type.types";
 import ObservableObject from "./observable-updater.types";
 
 export interface PreviewInterface {
-    parent: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     config: ContentTypeConfigInterface;
     data: ObservableObject;
     displayLabel: KnockoutObservable<string>;

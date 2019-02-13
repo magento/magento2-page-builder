@@ -52,7 +52,7 @@ class Heading implements RendererInterface
 
         $rootElementAttributes = [
             'data-element' => 'main',
-            'data-role' => 'heading',
+            'data-content-type' => 'heading',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];

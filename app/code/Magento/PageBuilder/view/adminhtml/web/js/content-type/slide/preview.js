@@ -40,7 +40,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
      */
     _proto.afterRenderWysiwyg = function afterRenderWysiwyg(element) {
       this.element = element;
-      element.id = this.parent.id + "-editor";
+      element.id = this.contentType.id + "-editor";
       /**
        * afterRenderWysiwyg is called whenever Knockout causes a DOM re-render. This occurs frequently within Slider
        * due to Slick's inability to perform a refresh with Knockout managing the DOM. Due to this the original
@@ -116,9 +116,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.getUploader = function getUploader() {
-      var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
+      var initialImageValue = this.contentType.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
 
-      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
+      return new _uploader("imageuploader_" + this.contentType.id, this.config.additional_data.uploaderConfig, this.contentType.id, this.contentType.dataStore, initialImageValue);
     }
     /**
      * Makes WYSIWYG active
@@ -194,11 +194,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       this.textarea = element; // set initial value of textarea based on data store
 
-      this.textarea.value = this.parent.dataStore.get("content");
+      this.textarea.value = this.contentType.dataStore.get("content");
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
-      _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.parent.dataStore.get("content");
+      _events.on("form:" + this.contentType.id + ":saveAfter", function () {
+        _this3.textarea.value = _this3.contentType.dataStore.get("content");
 
         _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
@@ -210,7 +210,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.parent.dataStore.update(this.textarea.value, "content");
+      this.contentType.dataStore.update(this.textarea.value, "content");
     }
     /**
      * Start stage interaction on textarea blur
@@ -257,7 +257,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
         wysiwygConfig.adapter.settings.auto_focus = this.element.id;
       }
 
-      return (0, _factory)(this.parent.id, this.element.id, this.config.name, wysiwygConfig, this.parent.dataStore, "content", this.parent.stageId).then(function (wysiwyg) {
+      return (0, _factory)(this.contentType.id, this.element.id, this.config.name, wysiwygConfig, this.contentType.dataStore, "content", this.contentType.stageId).then(function (wysiwyg) {
         _this4.wysiwyg = wysiwyg;
       });
     }
@@ -271,41 +271,41 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
 
       _preview2.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this5.parent.dataStore.getState();
+      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+        var dataStore = _this5.contentType.dataStore.getState();
 
         var imageObject = dataStore[_this5.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:" + _this5.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this5.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this5.parent.dataStore, _this5.wysiwyg, "content", "link_url");
+        (0, _nestingLinkDialog)(_this5.contentType.dataStore, _this5.wysiwyg, "content", "link_url");
       }); // Remove wysiwyg before assign new instance.
 
 
       _events.on("childContentType:sortUpdate", function (args) {
-        if (args.instance.id === _this5.parent.parent.id) {
+        if (args.instance.id === _this5.contentType.parentContentType.id) {
           _this5.wysiwyg = null;
         }
       });
 
       _events.on(this.config.name + ":mountAfter", function (args) {
-        if (args.id === _this5.parent.id) {
+        if (args.id === _this5.contentType.id) {
           // Update the display label for the slide
-          var slider = _this5.parent.parent;
+          var slider = _this5.contentType.parentContentType;
 
-          _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
+          _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.contentType) + 1)));
 
           slider.children.subscribe(function (children) {
-            var index = children.indexOf(_this5.parent);
+            var index = children.indexOf(_this5.contentType);
 
-            _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.parent) + 1)));
+            _this5.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this5.contentType) + 1)));
           });
         }
       });
 
       _events.on(this.config.name + ":renderAfter", function (args) {
-        if (args.id === _this5.parent.id) {
-          var slider = _this5.parent.parent;
+        if (args.id === _this5.contentType.id) {
+          var slider = _this5.contentType.parentContentType;
           (0, _jquery)(slider.preview.element).on("beforeChange", function () {
             _this5.slideChanged = false;
           });
@@ -323,7 +323,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "underscore
     ;
 
     _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
+      this.contentType.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     }
     /**
      * Adjust textarea's height based on scrollHeight

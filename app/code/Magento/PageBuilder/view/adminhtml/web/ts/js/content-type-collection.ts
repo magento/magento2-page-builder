@@ -20,16 +20,16 @@ export default class ContentTypeCollection<P extends PreviewCollection = Preview
     private collection: Collection = new Collection();
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
+        parentContentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         stageId: string,
     ) {
-        super(parent, config, stageId);
+        super(parentContentType, config, stageId);
         this.collection.getChildren()
             .subscribe(
                 () => events.trigger("stage:updateAfter", {stageId: this.stageId}),
@@ -52,10 +52,10 @@ export default class ContentTypeCollection<P extends PreviewCollection = Preview
      * @param {number} index
      */
     public addChild(child: ContentTypeInterface, index?: number): void {
-        child.parent = this;
+        child.parentContentType = this;
         this.collection.addChild(child, index);
 
-        // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
+        // Trigger a mount event when a child is added into a container content type, meaning it'll be re-rendered
         _.defer(() => {
             events.trigger("contentType:mountAfter", {id: child.id, contentType: child});
             events.trigger(child.config.name + ":mountAfter", {id: child.id, contentType: child});

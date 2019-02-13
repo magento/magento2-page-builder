@@ -72,8 +72,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.onFocusOut = function onFocusOut(index, event) {
-      if (this.parent && this.parent.parent) {
-        var parentPreview = this.parent.parent.preview;
+      if (this.contentType && this.contentType.parentContentType) {
+        var parentPreview = this.contentType.parentContentType.preview;
 
         var unfocus = function unfocus() {
           window.getSelection().removeAllRanges();
@@ -88,8 +88,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
             // Have we moved the focus onto another button in the current group?
             var buttonItem = _knockout.dataFor(event.relatedTarget);
 
-            if (buttonItem && buttonItem.parent && buttonItem.parent.parent && buttonItem.parent.parent.id === this.parent.parent.id) {
-              var newIndex = buttonItem.parent.parent.children().indexOf(buttonItem.parent);
+            if (buttonItem && buttonItem.contentType && buttonItem.contentType.parentContentType && buttonItem.contentType.parentContentType.id === this.contentType.parentContentType.id) {
+              var newIndex = buttonItem.contentType.parentContentType.children().indexOf(buttonItem.contentType);
               parentPreview.focusedButton(newIndex);
             } else {
               unfocus();
@@ -109,7 +109,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
     ;
 
     _proto.onFocusIn = function onFocusIn(index, event) {
-      var parentPreview = this.parent.parent.preview;
+      var parentPreview = this.contentType.parentContentType.preview;
 
       if (parentPreview.focusedButton() !== index) {
         parentPreview.focusedButton(index);

@@ -38,21 +38,21 @@ export default class Preview extends PreviewCollection {
     }, 350);
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     * @param {ContentTypeCollectionInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
+        contentType: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
 
         // Keeps track of number of button item to disable sortable if there is only 1.
-        this.parent.children.subscribe(() => {
+        this.contentType.children.subscribe(() => {
             const sortableElement = $(this.wrapperElement).find(".buttons-container");
-            if (this.parent.children().length <= 1) {
+            if (this.contentType.children().length <= 1) {
                 sortableElement.sortable("disable");
             } else {
                 sortableElement.sortable("enable");
@@ -63,7 +63,7 @@ export default class Preview extends PreviewCollection {
         this.focusedButton.subscribe(_.debounce((index: number) => {
             if (index !== null) {
                 events.trigger("stage:interactionStart");
-                const focusedButton = this.parent.children()[index];
+                const focusedButton = this.contentType.children()[index];
                 delayUntil(
                     () => $(focusedButton.preview.wrapperElement).find("[contenteditable]").focus(),
                     () => typeof focusedButton.preview.wrapperElement !== "undefined",
@@ -83,19 +83,19 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         events.on("buttons:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id && this.parent.children().length === 0) {
+            if (args.id === this.contentType.id && this.contentType.children().length === 0) {
                 this.addButton();
             }
         });
 
         events.on("buttons:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            if (args.contentType.id === this.parent.id) {
+            if (args.contentType.id === this.contentType.id) {
                 this.debouncedResizeHandler();
             }
         });
 
         events.on("button-item:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
-            if (args.contentType.parent.id === this.parent.id) {
+            if (args.contentType.parentContentType.id === this.contentType.id) {
                 this.debouncedResizeHandler();
             }
         });
@@ -112,7 +112,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedButton: ContentTypeInterface;
         let duplicatedButtonIndex: number;
         events.on("button-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
-            if (this.parent.id === args.duplicateContentType.parent.id && args.direct) {
+            if (this.contentType.id === args.duplicateContentType.parentContentType.id && args.direct) {
                 duplicatedButton = args.duplicateContentType;
                 duplicatedButtonIndex = args.index;
             }
@@ -158,14 +158,14 @@ export default class Preview extends PreviewCollection {
     public addButton() {
         const createButtonItemPromise: Promise<ContentTypeInterface> = createContentType(
             Config.getContentTypeConfig("button-item"),
-            this.parent,
-            this.parent.stageId,
+            this.contentType,
+            this.contentType.stageId,
             {},
         );
 
         createButtonItemPromise.then((button: ContentTypeInterface) => {
-            this.parent.addChild(button);
-            const buttonIndex = this.parent.children().indexOf(button);
+            this.contentType.addChild(button);
+            const buttonIndex = this.contentType.children().indexOf(button);
             this.focusedButton(buttonIndex > -1 ? buttonIndex : null);
             return button;
         }).catch((error: Error) => {
@@ -191,7 +191,7 @@ export default class Preview extends PreviewCollection {
             containment: "parent",
             tolerance,
             revert: 200,
-            disabled: this.parent.children().length <= 1,
+            disabled: this.contentType.children().length <= 1,
 
             /**
              * Provide custom helper element
@@ -256,7 +256,7 @@ export default class Preview extends PreviewCollection {
         if (this.wrapperElement) {
             const buttonItems: JQuery = $(this.wrapperElement).find(".pagebuilder-button-item > a");
             let buttonResizeValue: number = 0;
-            if (this.parent.dataStore.get("is_same_width") === "true") {
+            if (this.contentType.dataStore.get("is_same_width") === "true") {
                 if (buttonItems.length > 0) {
                     const currentLargestButtonWidth = this.findLargestButtonWidth(buttonItems);
                     const parentWrapperWidth = $(this.wrapperElement).width();

@@ -15,15 +15,15 @@ import ContentTypeConfigInterface from "./content-type-config.types";
 import {hideDropIndicators, showDropIndicators} from "./drag-drop/drop-indicators";
 import {setDraggedContentTypeConfig} from "./drag-drop/registry";
 import PageBuilder from "./page-builder";
-import {Group} from "./panel/group";
-import {ContentType as GroupContentType} from "./panel/group/content-type";
+import {Menu} from "./panel/menu";
+import {ContentType as GroupContentType} from "./panel/menu/content-type";
 import {supportsPositionSticky} from "./utils/position-sticky";
 
 /**
  * @api
  */
 export default class Panel {
-    public groups: KnockoutObservableArray<any> = ko.observableArray([]);
+    public menuSections: KnockoutObservableArray<any> = ko.observableArray([]);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isVisible: KnockoutObservable<boolean> = ko.observable(false);
     public isStickyBottom: KnockoutObservable<boolean> = ko.observable(false);
@@ -33,14 +33,14 @@ export default class Panel {
     public searchPlaceholder: string = $t("Find items");
     public searchNoResult: string = $t("Nothing found");
     public searchTitle: string = $t("Clear Search");
-    public parent: PageBuilder;
+    public pageBuilder: PageBuilder;
     public id: string;
     private element: Element;
     private template: string = "Magento_PageBuilder/panel";
 
-    constructor(parent: PageBuilder) {
-        this.parent = parent;
-        this.id = this.parent.id;
+    constructor(pageBuilder: PageBuilder) {
+        this.pageBuilder = pageBuilder;
+        this.id = this.pageBuilder.id;
         this.initListeners();
     }
 
@@ -95,12 +95,12 @@ export default class Panel {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentType.label.toLowerCase().match(regEx);
                         return matches &&
-                            contentType.is_visible === true;
+                            contentType.is_system === true;
                     },
                 ),
                 (contentType, identifier: string) => {
                     // Create a new instance of GroupContentType for each result
-                    return new GroupContentType(identifier, contentType, this.parent.stage.id);
+                    return new GroupContentType(identifier, contentType, this.pageBuilder.stage.id);
                 }),
             );
         }
@@ -206,9 +206,9 @@ export default class Panel {
                             $(this).sortable("option", "tolerance", "intersect");
                         }
                     });
-                    showDropIndicators(block.config.name, self.parent.stage.id);
+                    showDropIndicators(block.config.name, self.pageBuilder.stage.id);
                     setDraggedContentTypeConfig(block.config);
-                    events.trigger("stage:interactionStart", {stage: self.parent.stage});
+                    events.trigger("stage:interactionStart", {stage: self.pageBuilder.stage});
                 }
             },
             stop() {
@@ -219,7 +219,7 @@ export default class Panel {
                 });
                 hideDropIndicators();
                 setDraggedContentTypeConfig(null);
-                events.trigger("stage:interactionStop", {stage: self.parent.stage});
+                events.trigger("stage:interactionStop", {stage: self.pageBuilder.stage});
             },
         };
     }
@@ -228,40 +228,40 @@ export default class Panel {
      * Populate the panel with the content types
      */
     private populateContentTypes(): void {
-        const groups = Config.getConfig("groups");
+        const menuSections = Config.getConfig("menu_sections");
         const contentTypes = Config.getConfig("content_types");
 
         // Verify the configuration contains the required information
-        if (groups && contentTypes) {
-            // Iterate through the groups creating new instances with their associated content types
-            _.each(groups, (group, id) => {
-                // Push the group instance into the observable array to update the UI
-                this.groups.push(new Group(
+        if (menuSections && contentTypes) {
+            // Iterate through the menu sections creating new instances with their associated content types
+            _.each(menuSections, (menuSection, id) => {
+                // Push the menu section instance into the observable array to update the UI
+                this.menuSections.push(new Menu(
                     id,
-                    group,
+                    menuSection,
                     _.map(
                         _.where(contentTypes, {
-                            group: id,
-                            is_visible: true,
-                        }), /* Retrieve content types with group id */
+                            menu_section: id,
+                            is_system: true,
+                        }), /* Retrieve content types with menu section id */
                         (contentType: ContentTypeConfigInterface, identifier: string) => {
                             return new GroupContentType(
                                 identifier,
                                 contentType,
-                                this.parent.stage.id,
+                                this.pageBuilder.stage.id,
                             );
                         },
                     ),
-                    this.parent.stage.id,
+                    this.pageBuilder.stage.id,
                 ));
             });
 
             // Display the panel
             this.isVisible(true);
-            // Open first group
-            const hasGroups = 0 in this.groups();
+            // Open first menu section
+            const hasGroups = 0 in this.menuSections();
             if (hasGroups) {
-                this.groups()[0].active(true);
+                this.menuSections()[0].active(true);
             }
 
         } else {

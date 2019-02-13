@@ -21,10 +21,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
     /**
      * @inheritdoc
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       var _this;
 
-      _this = _preview2.call(this, parent, config, observableUpdater) || this;
+      _this = _preview2.call(this, contentType, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
       _this.messages = {
         EMPTY: (0, _translate)("Empty Products"),
@@ -68,7 +68,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/config",
       _preview2.prototype.afterObservablesUpdated.call(this);
 
       this.displayPreview(false);
-      var data = this.parent.dataStore.getState();
+      var data = this.contentType.dataStore.getState();
 
       if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
         this.placeholderText(this.messages.EMPTY);

@@ -6,5 +6,5 @@ import ContentTypeCollectionInterface from "../content-type-collection.types";
 import PreviewCollection from "./preview-collection";
 
 export interface PreviewCollectionInterface extends PreviewCollection {
-    parent: ContentTypeCollectionInterface;
+    contentType: ContentTypeCollectionInterface;
 }

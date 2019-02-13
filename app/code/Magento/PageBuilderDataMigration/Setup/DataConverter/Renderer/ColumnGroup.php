@@ -24,7 +24,7 @@ class ColumnGroup implements RendererInterface
             'data-element' => 'main',
             'class' => 'pagebuilder-column-group',
             'style' => 'display: flex;',
-            'data-role' => 'column-group',
+            'data-content-type' => 'column-group',
             'data-appearance' => 'default',
         ];
 

@@ -62,15 +62,15 @@ export default class Preview extends BasePreview {
      * @returns {Uploader}
      */
     public getUploader() {
-        const initialImageValue = this.parent.dataStore
+        const initialImageValue = this.contentType.dataStore
             .get<object[]>(this.config.additional_data.uploaderConfig.dataScope, "");
 
         // Create uploader
         return new Uploader(
-            "imageuploader_" + this.parent.id,
+            "imageuploader_" + this.contentType.id,
             this.config.additional_data.uploaderConfig,
-            this.parent.id,
-            this.parent.dataStore,
+            this.contentType.id,
+            this.contentType.dataStore,
             initialImageValue,
         );
     }
@@ -170,19 +170,21 @@ export default class Preview extends BasePreview {
     public initWysiwyg(element: HTMLElement) {
         this.element = element;
 
-        element.id = this.parent.id + "-editor";
+        element.id = this.contentType.id + "-editor";
 
         const config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-        config.adapter.settings.fixed_toolbar_container = "#" + this.parent.id + " .pagebuilder-banner-text-content";
+        config.adapter.settings.fixed_toolbar_container = "#"
+            + this.contentType.id
+            + " .pagebuilder-banner-text-content";
 
         WysiwygFactory(
-            this.parent.id,
+            this.contentType.id,
             element.id,
             this.config.name,
             config,
-            this.parent.dataStore,
+            this.contentType.dataStore,
             "message",
-            this.parent.stageId,
+            this.contentType.stageId,
         ).then((wysiwyg: WysiwygInterface): void => {
             this.wysiwyg = wysiwyg;
         });
@@ -196,12 +198,12 @@ export default class Preview extends BasePreview {
         this.textarea = element;
 
         // set initial value of textarea based on data store
-        this.textarea.value = this.parent.dataStore.get<string>("message");
+        this.textarea.value = this.contentType.dataStore.get<string>("message");
         this.adjustTextareaHeightBasedOnScrollHeight();
 
         // Update content in our stage preview textarea after its slideout counterpart gets updated
-        events.on(`form:${this.parent.id}:saveAfter`, () => {
-            this.textarea.value = this.parent.dataStore.get<string>("message");
+        events.on(`form:${this.contentType.id}:saveAfter`, () => {
+            this.textarea.value = this.contentType.dataStore.get<string>("message");
             this.adjustTextareaHeightBasedOnScrollHeight();
         });
     }
@@ -212,7 +214,7 @@ export default class Preview extends BasePreview {
     public onTextareaKeyUp()
     {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.parent.dataStore.update(this.textarea.value, "message");
+        this.contentType.dataStore.update(this.textarea.value, "message");
     }
 
     /**
@@ -239,15 +241,15 @@ export default class Preview extends BasePreview {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on(`${this.config.name}:${this.parent.id}:updateAfter`, () => {
-            const dataStore = this.parent.dataStore.getState();
+        events.on(`${this.config.name}:${this.contentType.id}:updateAfter`, () => {
+            const dataStore = this.contentType.dataStore.getState();
             const imageObject = (dataStore[this.config.additional_data.uploaderConfig.dataScope] as object[])[0] || {};
             // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
             if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-                this.parent.dataStore.update("", "message");
+                this.contentType.dataStore.update("", "message");
             }
-            events.trigger(`image:${this.parent.id}:assignAfter`, imageObject);
-            nestingLinkDialog(this.parent.dataStore, this.wysiwyg, "message", "link_url");
+            events.trigger(`image:${this.contentType.id}:assignAfter`, imageObject);
+            nestingLinkDialog(this.contentType.dataStore, this.wysiwyg, "message", "link_url");
         });
     }
 

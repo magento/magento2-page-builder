@@ -58,7 +58,7 @@ define(["underscore"], function (_underscore) {
   }();
 
   Config.config = {
-    dataRoleAttributeName: "data-role"
+    dataContentTypeAttributeName: "data-content-type"
   };
   return Config;
 });

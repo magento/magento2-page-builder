@@ -58,9 +58,9 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
     ;
 
     _proto.getUploader = function getUploader() {
-      var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
+      var initialImageValue = this.contentType.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, ""); // Create uploader
 
-      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
+      return new _uploader("imageuploader_" + this.contentType.id, this.config.additional_data.uploaderConfig, this.contentType.id, this.contentType.dataStore, initialImageValue);
     }
     /**
      * Makes WYSIWYG active
@@ -150,10 +150,10 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
       var _this2 = this;
 
       this.element = element;
-      element.id = this.parent.id + "-editor";
+      element.id = this.contentType.id + "-editor";
       var config = this.config.additional_data.wysiwygConfig.wysiwygConfigData;
-      config.adapter.settings.fixed_toolbar_container = "#" + this.parent.id + " .pagebuilder-banner-text-content";
-      (0, _factory)(this.parent.id, element.id, this.config.name, config, this.parent.dataStore, "message", this.parent.stageId).then(function (wysiwyg) {
+      config.adapter.settings.fixed_toolbar_container = "#" + this.contentType.id + " .pagebuilder-banner-text-content";
+      (0, _factory)(this.contentType.id, element.id, this.config.name, config, this.contentType.dataStore, "message", this.contentType.stageId).then(function (wysiwyg) {
         _this2.wysiwyg = wysiwyg;
       });
     }
@@ -167,11 +167,11 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       this.textarea = element; // set initial value of textarea based on data store
 
-      this.textarea.value = this.parent.dataStore.get("message");
+      this.textarea.value = this.contentType.dataStore.get("message");
       this.adjustTextareaHeightBasedOnScrollHeight(); // Update content in our stage preview textarea after its slideout counterpart gets updated
 
-      _events.on("form:" + this.parent.id + ":saveAfter", function () {
-        _this3.textarea.value = _this3.parent.dataStore.get("message");
+      _events.on("form:" + this.contentType.id + ":saveAfter", function () {
+        _this3.textarea.value = _this3.contentType.dataStore.get("message");
 
         _this3.adjustTextareaHeightBasedOnScrollHeight();
       });
@@ -183,7 +183,7 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
     _proto.onTextareaKeyUp = function onTextareaKeyUp() {
       this.adjustTextareaHeightBasedOnScrollHeight();
-      this.parent.dataStore.update(this.textarea.value, "message");
+      this.contentType.dataStore.update(this.textarea.value, "message");
     }
     /**
      * Start stage interaction on textarea blur
@@ -215,18 +215,18 @@ define(["jquery", "mage/translate", "Magento_PageBuilder/js/events", "Magento_Pa
 
       _preview2.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var dataStore = _this4.parent.dataStore.getState();
+      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+        var dataStore = _this4.contentType.dataStore.getState();
 
         var imageObject = dataStore[_this4.config.additional_data.uploaderConfig.dataScope][0] || {}; // Resolves issue when tinyMCE injects a non-breaking space on reinitialization and removes placeholder.
 
         if (dataStore.message === "<div data-bind=\"html: data.content.html\">&nbsp;</div>") {
-          _this4.parent.dataStore.update("", "message");
+          _this4.contentType.dataStore.update("", "message");
         }
 
-        _events.trigger("image:" + _this4.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this4.contentType.id + ":assignAfter", imageObject);
 
-        (0, _nestingLinkDialog)(_this4.parent.dataStore, _this4.wysiwyg, "message", "link_url");
+        (0, _nestingLinkDialog)(_this4.contentType.dataStore, _this4.wysiwyg, "message", "link_url");
       });
     }
     /**

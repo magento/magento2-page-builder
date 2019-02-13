@@ -14,28 +14,28 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
    */
   function buildFromContent(stage, value) {
     var stageDocument = new DOMParser().parseFromString(value, "text/html");
-    stageDocument.body.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
+    stageDocument.body.setAttribute(_config.getConfig("dataContentTypeAttributeName"), "stage");
     return buildElementIntoStage(stageDocument.body, stage.rootContainer, stage);
   }
   /**
    * Build an element and it's children into the stage
    *
    * @param {Element} element
-   * @param {ContentTypeCollectionInterface} parent
+   * @param {ContentTypeCollectionInterface} contentType
    * @param {stage} stage
    * @returns {Promise<void>}
    */
 
 
-  function buildElementIntoStage(element, parent, stage) {
-    if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataRoleAttributeName"))) {
+  function buildElementIntoStage(element, contentType, stage) {
+    if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataContentTypeAttributeName"))) {
       var childPromises = [];
       var childElements = [];
       var children = getElementChildren(element);
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(createElementContentType(childElement, stage, parent));
+          childPromises.push(createElementContentType(childElement, stage, contentType));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -43,7 +43,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
       return Promise.all(childPromises).then(function (childrenPromises) {
         return Promise.all(childrenPromises.map(function (child, index) {
-          parent.addChild(child); // Only render children if the content type implements the collection
+          contentType.addChild(child); // Only render children if the content type implements the collection
 
           if (child instanceof _contentTypeCollection) {
             return buildElementIntoStage(childElements[index], child, stage);
@@ -56,18 +56,18 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
    * Parse an element in the structure and build the required element
    *
    * @param {Element} element
-   * @param {ContentTypeCollectionInterface} parent
+   * @param {ContentTypeCollectionInterface} contentType
    * @param {stage} stage
    * @returns {Promise<ContentTypeInterface>}
    */
 
 
-  function createElementContentType(element, stage, parent) {
-    parent = parent || stage.rootContainer;
-    var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
+  function createElementContentType(element, stage, contentType) {
+    contentType = contentType || stage.rootContainer;
+    var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
 
     if (!role) {
-      return Promise.reject("Invalid master format: Content type element does not contain\n            " + _config.getConfig("dataRoleAttributeName") + " attribute.");
+      return Promise.reject("Invalid master format: Content type element does not contain\n            " + _config.getConfig("dataContentTypeAttributeName") + " attribute.");
     }
 
     var config = _config.getContentTypeConfig(role);
@@ -77,7 +77,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
     }
 
     return getElementData(element, config).then(function (data) {
-      return (0, _contentTypeFactory)(config, parent, stage.id, data, getElementChildren(element).length);
+      return (0, _contentTypeFactory)(config, contentType, stage.id, data, getElementChildren(element).length);
     });
   }
   /**
@@ -93,7 +93,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
     // Create an object with all fields for the content type with an empty value
     var result = createInitialElementData(config.fields);
     return new Promise(function (resolve) {
-      var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
+      var role = element.getAttribute(_config.getConfig("dataContentTypeAttributeName"));
 
       if (!_config.getConfig("content_types").hasOwnProperty(role)) {
         resolve(result);
@@ -152,7 +152,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
 
       _.forEach(element.childNodes, function (child) {
         if (child.nodeType === Node.ELEMENT_NODE) {
-          if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
+          if (child.hasAttribute(_config.getConfig("dataContentTypeAttributeName"))) {
             children.push(child);
           } else {
             children = getElementChildren(child);
@@ -204,7 +204,7 @@ define(["mage/translate", "Magento_PageBuilder/js/events", "Magento_Ui/js/modal/
     return Promise.resolve();
   }
   /**
-   * Build a stage with the provided parent, content observable and initial value
+   * Build a stage with the provided content type, content observable and initial value
    *
    * @param {Stage} stage
    * @param {string} content

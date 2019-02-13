@@ -131,7 +131,7 @@ class Config
     public function getConfig()
     {
         return [
-            'groups' => $this->getGroups(),
+            'menu_sections' => $this->getMenuSections(),
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
@@ -144,13 +144,13 @@ class Config
     }
 
     /**
-     * Retrieve the content type groups
+     * Retrieve the content type menu sections
      *
      * @return array
      */
-    private function getGroups()
+    private function getMenuSections()
     {
-        return $this->config->getGroups();
+        return $this->config->getMenuSections();
     }
 
     /**
@@ -194,7 +194,7 @@ class Config
             'label' => $contentType['label'],
             'icon' => isset($contentType['icon']) ? $contentType['icon'] : '',
             'form' => isset($contentType['form']) ? $contentType['form'] : '',
-            'group' => $contentType['group'] ?? 'general',
+            'menu_section' => $contentType['menu_section'] ?? 'general',
             'fields' => isset($contentType['form']) ? $this->uiComponentConfig->getFields($contentType['form']) : [],
             'component' => $contentType['component'],
             'preview_component' => $contentType['preview_component'] ?? self::DEFAULT_PREVIEW_COMPONENT,
@@ -204,7 +204,7 @@ class Config
             'additional_data' => isset($contentType['additional_data'])
                 ? $this->additionalDataParser->toArray($contentType['additional_data'])
                 : [],
-            'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
+            'is_system' => isset($contentType['is_system']) && $contentType['is_system'] === 'false' ? false : true
         ];
     }
 

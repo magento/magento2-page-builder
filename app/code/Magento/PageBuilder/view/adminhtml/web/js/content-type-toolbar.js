@@ -47,7 +47,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
      */
     _proto.onOptionClick = function onOptionClick(option, value) {
       var defaultValue = this.preview.config.fields[option.key].default;
-      var currentValue = this.preview.parent.dataStore.get(option.key);
+      var currentValue = this.preview.contentType.dataStore.get(option.key);
       this.preview.updateData(option.key, currentValue === value.value ? defaultValue : value.value);
     }
     /**
@@ -62,7 +62,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
       var currentContentTypeTarget = context.toolbar.getCurrentContentTypeTarget();
       var toolbarOptions = currentContentTypeTarget.find(".pagebuilder-toolbar-options"); // Change toolbar orientation if overflow on full screen mode
 
-      if ((0, _checkStageFullScreen)(context.parent.stageId) && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
+      if ((0, _checkStageFullScreen)(context.contentType.stageId) && currentContentTypeTarget[0].getBoundingClientRect().top < toolbarOptions.outerHeight()) {
         context.toolbar.observer = new MutationObserver(function () {
           toolbarOptions.css("transform", "translateY(" + currentContentTypeTarget.outerHeight() + "px)");
         });
@@ -107,7 +107,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     ;
 
     _proto.getCurrentContentTypeTarget = function getCurrentContentTypeTarget() {
-      return (0, _jquery)("#" + this.preview.parent.id).find(".pagebuilder-content-type");
+      return (0, _jquery)("#" + this.preview.contentType.id).find(".pagebuilder-content-type");
     };
 
     _createClass(Toolbar, [{

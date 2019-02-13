@@ -33,7 +33,7 @@ export default class Configurable implements ReadInterface {
      * @returns {Promise<any>}
      */
     public read(element: HTMLElement): Promise<any> {
-        const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+        const role = element.getAttribute(Config.getConfig("dataContentTypeAttributeName"));
         const config = appearanceConfig(role, element.getAttribute("data-appearance"));
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
@@ -96,7 +96,7 @@ export default class Configurable implements ReadInterface {
 
     /**
      * Find the element for the current content type by it's name, avoiding searching in other content types by
-     * removing any other element which contains it's own data-role.
+     * removing any other element which contains it's own data-content-type.
      *
      * @param {HTMLElement} element
      * @param {string} name

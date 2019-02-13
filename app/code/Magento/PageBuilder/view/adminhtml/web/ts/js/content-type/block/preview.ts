@@ -37,11 +37,11 @@ export default class Preview extends BasePreview {
      * @inheritdoc
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
         this.placeholderText = ko.observable(this.messages.NOT_SELECTED);
     }
 
@@ -95,7 +95,7 @@ export default class Preview extends BasePreview {
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 
-        const data = this.parent.dataStore.getState();
+        const data = this.contentType.dataStore.getState();
 
         // Only load if something changed
         this.processBlockData(data);

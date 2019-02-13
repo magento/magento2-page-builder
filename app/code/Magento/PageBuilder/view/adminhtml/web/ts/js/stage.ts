@@ -21,7 +21,7 @@ import deferred, {DeferredInterface} from "./utils/promise-deferred";
 
 export default class Stage {
     public static readonly rootContainerName: string = "root-container";
-    public parent: PageBuilderInterface;
+    public pageBuilder: PageBuilderInterface;
     public id: string;
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
@@ -50,12 +50,12 @@ export default class Stage {
     }, 500);
 
     /**
-     * @param {PageBuilderInterface} parent
+     * @param {PageBuilderInterface} pageBuilder
      * @param {ContentTypeCollectionInterface} rootContainer
      */
-    constructor(parent: PageBuilderInterface, rootContainer: ContentTypeCollectionInterface) {
-        this.parent = parent;
-        this.id = parent.id;
+    constructor(pageBuilder: PageBuilderInterface, rootContainer: ContentTypeCollectionInterface) {
+        this.pageBuilder = pageBuilder;
+        this.id = pageBuilder.id;
         this.rootContainer = rootContainer;
         generateAllowedParents();
 
@@ -66,7 +66,7 @@ export default class Stage {
 
         // Wait for the stage to be built alongside the stage being rendered
         Promise.all([
-            buildStage(this, this.parent.initialValue),
+            buildStage(this, this.pageBuilder.initialValue),
             this.afterRenderDeferred.promise,
         ]).then(this.ready.bind(this)).catch((error) => {
             console.error(error);
@@ -147,6 +147,6 @@ export default class Stage {
      * @param params
      */
     private onContentTypeRemoved(params: ContentTypeRemovedParamsInterface): void {
-        params.parent.removeChild(params.contentType);
+        params.parentContentType.removeChild(params.contentType);
     }
 }

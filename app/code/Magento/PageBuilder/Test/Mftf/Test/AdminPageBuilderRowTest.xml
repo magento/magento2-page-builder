@@ -227,8 +227,8 @@
         <waitForElementVisible selector="{{RowOnStage.empty('1')}}" stepKey="waitForEmptyRow"/>
         <see selector="{{RowOnStage.base('1')}}" userInput="Drag content types or columns here" stepKey="seeRowPlaceholder"/>
         <see selector="{{RowOnStage.displayLabel('1')}}" userInput="Row" stepKey="seeRowDisplayLabel"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -265,8 +265,8 @@
             <expectedResult type="string">320</expectedResult>
             <actualResult type="variable">getEmptyRowHeight</actualResult>
         </assertEquals>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -328,8 +328,8 @@
             <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
             <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -1181,8 +1181,8 @@
             <argument name="property" value="PageBuilderRowAppearance_Contained"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow1"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow1">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1329,8 +1329,8 @@
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsRow"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1399,8 +1399,8 @@
             <argument name="property" value="PageBuilderRowAppearance_FullWidth"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1473,8 +1473,8 @@
             <argument name="property" value="PageBuilderRowAppearance_FullBleed"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1704,8 +1704,8 @@
         </actionGroup>
         <!-- Add heading to row -->
         <comment userInput="Add heading to row" stepKey="commentAddHeading"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1742,8 +1742,8 @@
         </actionGroup>
         <!-- Verify we cannot drop content types into hidden containers -->
         <comment userInput="Verify we cannot drop content types into hidden containers" stepKey="commentDropIntoContainer"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup1">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToHiddenContainer" stepKey="dragHeaderToRow2">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -1807,8 +1807,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSection">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
@@ -2050,8 +2050,8 @@
         </actionGroup>
         <!-- Add 2nd row and set appearance to Full Bleed -->
         <comment userInput="Add 2nd row and set appearance to Full Width" stepKey="commentAdd2ndRow"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupRow">
-            <argument name="group" value="PageBuilderRowContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRow2IntoStage">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -2085,8 +2085,8 @@
         <seeElement selector="{{RowOnStage.appearanceContained(('2', PageBuilderRowAppearance_Contained.value)}}" stepKey="seeContainedAppearanceElement"/>
         <!-- Drag heading into 2nd row to make sure still works -->
         <comment userInput="Drag heading into 2nd row to make sure still works" stepKey="comment2ndRowRevertFunctional"/>
-        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroupHeading">
-            <argument name="group" value="PageBuilderHeadingContentType"/>
+        <actionGroup ref="expandPageBuilderPanelMenuSection" stepKey="expandPageBuilderPanelMenuSectionHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingToRow2Revert">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>

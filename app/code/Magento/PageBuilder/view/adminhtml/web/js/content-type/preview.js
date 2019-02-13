@@ -30,11 +30,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
      */
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, observableUpdater) {
+    function Preview(contentType, config, observableUpdater) {
       this.data = {};
       this.displayLabel = _knockout.observable();
       this.display = _knockout.observable(true);
@@ -44,9 +44,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.fieldsToIgnoreOnRemove = [];
       this.events = {};
       this.mouseover = false;
-      this.parent = parent;
+      this.contentType = contentType;
       this.config = config;
-      this.edit = new _edit(this.parent, this.parent.dataStore);
+      this.edit = new _edit(this.contentType, this.contentType.dataStore);
       this.optionsMenu = new _contentTypeMenu(this, this.retrieveOptions());
       this.observableUpdater = observableUpdater;
       this.displayLabel(this.config.label);
@@ -123,9 +123,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.updateData = function updateData(key, value) {
-      var data = this.parent.dataStore.getState();
+      var data = this.contentType.dataStore.getState();
       (0, _object.set)(data, key, value);
-      this.parent.dataStore.update(data);
+      this.contentType.dataStore.update(data);
     }
     /**
      * Update the data value of a part of our internal Knockout data store
@@ -224,15 +224,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
       _events.trigger("contentType:childrenRenderAfter", {
-        id: this.parent.id,
-        contentType: this.parent,
+        id: this.contentType.id,
+        contentType: this.contentType,
         element: element
       });
 
-      _events.trigger(this.parent.config.name + ":childrenRenderAfter", {
-        contentType: this.parent,
+      _events.trigger(this.contentType.config.name + ":childrenRenderAfter", {
+        contentType: this.contentType,
         element: element,
-        id: this.parent.id
+        id: this.contentType.id
       });
     }
     /**
@@ -252,15 +252,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         this.wrapperElement = element;
 
         _events.trigger("contentType:renderAfter", {
-          id: this.parent.id,
-          contentType: this.parent,
+          id: this.contentType.id,
+          contentType: this.contentType,
           element: element
         });
 
-        _events.trigger(this.parent.config.name + ":renderAfter", {
-          contentType: this.parent,
+        _events.trigger(this.contentType.config.name + ":renderAfter", {
+          contentType: this.contentType,
           element: element,
-          id: this.parent.id
+          id: this.contentType.id
         });
 
         this.disableImageUploadOnHide(element);
@@ -290,8 +290,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.onOptionVisibilityToggle = function onOptionVisibilityToggle() {
-      var display = this.parent.dataStore.get("display");
-      this.parent.dataStore.update(!display, "display");
+      var display = this.contentType.dataStore.get("display");
+      this.contentType.dataStore.update(!display, "display");
     }
     /**
      * Handle duplicate of items
@@ -299,7 +299,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.onOptionDuplicate = function onOptionDuplicate() {
-      this.clone(this.parent, true, true);
+      this.clone(this.contentType, true, true);
     }
     /**
      * Duplicate content type
@@ -323,11 +323,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       var contentTypeData = contentType.dataStore.getState();
-      var index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
+      var index = contentType.parentContentType.getChildren()().indexOf(contentType) + 1 || null;
       return new Promise(function (resolve) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parentContentType, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
           if (autoAppend) {
-            contentType.parent.addChild(duplicateContentType, index);
+            contentType.parentContentType.addChild(duplicateContentType, index);
           }
 
           _this3.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index, direct);
@@ -350,15 +350,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var removeContentType = function removeContentType() {
         var dispatchRemoveEvent = function dispatchRemoveEvent() {
           var params = {
-            contentType: _this4.parent,
-            index: _this4.parent.parent.getChildren().indexOf(_this4.parent),
-            parent: _this4.parent.parent,
-            stageId: _this4.parent.stageId
+            contentType: _this4.contentType,
+            index: _this4.contentType.parentContentType.getChildren().indexOf(_this4.contentType),
+            parentContentType: _this4.contentType.parentContentType,
+            stageId: _this4.contentType.stageId
           };
 
           _events.trigger("contentType:removeAfter", params);
 
-          _events.trigger(_this4.parent.config.name + ":removeAfter", params);
+          _events.trigger(_this4.contentType.config.name + ":removeAfter", params);
         };
 
         if (_this4.wrapperElement) {
@@ -502,7 +502,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.bindEvents = function bindEvents() {
       var _this5 = this;
 
-      this.parent.dataStore.subscribe(function (data) {
+      this.contentType.dataStore.subscribe(function (data) {
         _this5.updateObservables();
 
         _this5.updatePlaceholderVisibility(data); // Keep a reference to the display state in an observable for adding classes to the wrapper
@@ -511,8 +511,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this5.display(!!data.display);
       });
 
-      if (this.parent instanceof _contentTypeCollection) {
-        this.parent.children.subscribe(function (children) {
+      if (this.contentType instanceof _contentTypeCollection) {
+        this.contentType.children.subscribe(function (children) {
           _this5.isEmpty(!children.length);
         });
       }
@@ -543,7 +543,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       } // Subscribe to this content types data in the store
 
 
-      this.parent.dataStore.subscribe(function (data) {
+      this.contentType.dataStore.subscribe(function (data) {
         _underscore.forEach(data, function (value, key) {
           _this6.updateDataValue(key, value);
         });
@@ -559,10 +559,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.isConfigured = function isConfigured() {
       var _this7 = this;
 
-      var data = this.parent.dataStore.getState();
+      var data = this.contentType.dataStore.getState();
       var hasDataChanges = false;
 
-      _underscore.each(this.parent.config.fields, function (field, key) {
+      _underscore.each(this.contentType.config.fields, function (field, key) {
         if (_this7.fieldsToIgnoreOnRemove && _this7.fieldsToIgnoreOnRemove.includes(key)) {
           return;
         }
@@ -620,7 +620,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     ;
 
     _proto.updateObservables = function updateObservables() {
-      this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.getState()));
+      this.observableUpdater.update(this, _underscore.extend({}, this.contentType.dataStore.getState()));
       this.afterObservablesUpdated();
 
       _events.trigger("previewData:updateAfter", {
@@ -644,7 +644,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     };
 
     _createClass(Preview, [{
-      key: "previewTemplate",
+      key: "template",
       get: function get() {
         var appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
         return (0, _appearanceConfig)(this.config.name, appearance).preview_template;

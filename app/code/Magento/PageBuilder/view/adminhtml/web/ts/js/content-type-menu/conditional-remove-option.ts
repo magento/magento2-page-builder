@@ -15,7 +15,7 @@ export default class ConditionalRemoveOption extends Option implements OptionInt
     ) {
         super(config);
 
-        const parentContentType = this.preview.parent.parent;
+        const parentContentType = this.preview.contentType.parentContentType;
         if (parentContentType.children().length < 2) {
             this.isDisabled(true);
         }

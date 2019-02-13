@@ -50,8 +50,8 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
     ;
 
     _proto.getUploader = function getUploader() {
-      var initialImageValue = this.parent.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, "");
-      return new _uploader("imageuploader_" + this.parent.id, this.config.additional_data.uploaderConfig, this.parent.id, this.parent.dataStore, initialImageValue);
+      var initialImageValue = this.contentType.dataStore.get(this.config.additional_data.uploaderConfig.dataScope, "");
+      return new _uploader("imageuploader_" + this.contentType.id, this.config.additional_data.uploaderConfig, this.contentType.id, this.contentType.dataStore, initialImageValue);
     }
     /**
      * @inheritDoc
@@ -63,12 +63,12 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type-me
 
       _preview2.prototype.bindEvents.call(this);
 
-      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-        var files = _this.parent.dataStore.get(_this.config.additional_data.uploaderConfig.dataScope);
+      _events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+        var files = _this.contentType.dataStore.get(_this.config.additional_data.uploaderConfig.dataScope);
 
         var imageObject = files ? files[0] : {};
 
-        _events.trigger("image:" + _this.parent.id + ":assignAfter", imageObject);
+        _events.trigger("image:" + _this.contentType.id + ":assignAfter", imageObject);
       });
     };
 

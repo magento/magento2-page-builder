@@ -21,14 +21,14 @@ define(["knockout", "underscore"], function (_knockout, _underscore) {
     /**
      * Options constructor
      *
-     * @param parent
+     * @param preview
      * @param options
      */
-    function ContentTypeMenu(parent, options) {
+    function ContentTypeMenu(preview, options) {
       var _this = this;
 
       this.options = _knockout.observableArray([]);
-      this.parent = parent;
+      this.preview = preview;
 
       var codes = _underscore.keys(options);
 

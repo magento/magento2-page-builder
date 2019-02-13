@@ -31,7 +31,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/object", "Magent
 
     _proto.update = function update(viewModel, data) {
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
-      var appearanceConfiguration = (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
+      var appearanceConfiguration = (0, _appearanceConfig)(viewModel.contentType.config.name, appearance);
 
       if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.elements) {
         return;

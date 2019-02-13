@@ -18,7 +18,7 @@ define([
             el = document.createElement('div');
             el.setAttribute('data-display', true);
 
-            childEl.setAttribute('data-role', 'slide');
+            childEl.setAttribute('data-content-type', 'slide');
             childEl.setAttribute('data-display', true);
             el.appendChild(childEl);
         });

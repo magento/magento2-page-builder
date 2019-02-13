@@ -19,14 +19,14 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     _inheritsLoose(ContentTypeCollection, _contentType2);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} parentContentType
      * @param {ContentTypeConfigInterface} config
      * @param {string} stageId
      */
-    function ContentTypeCollection(parent, config, stageId) {
+    function ContentTypeCollection(parentContentType, config, stageId) {
       var _this;
 
-      _this = _contentType2.call(this, parent, config, stageId) || this;
+      _this = _contentType2.call(this, parentContentType, config, stageId) || this;
       _this.collection = new _collection();
 
       _this.collection.getChildren().subscribe(function () {
@@ -58,8 +58,8 @@ define(["Magento_PageBuilder/js/events", "underscore", "Magento_PageBuilder/js/c
     ;
 
     _proto.addChild = function addChild(child, index) {
-      child.parent = this;
-      this.collection.addChild(child, index); // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
+      child.parentContentType = this;
+      this.collection.addChild(child, index); // Trigger a mount event when a child is added into a container content type, meaning it'll be re-rendered
 
       _underscore.defer(function () {
         _events.trigger("contentType:mountAfter", {

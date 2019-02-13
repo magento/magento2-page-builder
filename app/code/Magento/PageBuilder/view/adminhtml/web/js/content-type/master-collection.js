@@ -23,7 +23,7 @@ define(["Magento_PageBuilder/js/content-type/master"], function (_master) {
     }
 
     _createClass(MasterCollection, [{
-      key: "renderChildTemplate",
+      key: "masterTemplate",
 
       /**
        * Retrieve the child template

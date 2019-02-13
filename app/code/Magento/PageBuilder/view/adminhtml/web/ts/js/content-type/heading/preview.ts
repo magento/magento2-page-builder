@@ -24,16 +24,16 @@ export default class Preview extends BasePreview implements ContentTypeToolbarPr
     private element: Element;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeInterface} contentType
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: ContentTypeInterface,
+        contentType: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
-        super(parent, config, observableUpdater);
+        super(contentType, config, observableUpdater);
         this.toolbar = new Toolbar(
             this,
             this.getToolbarOptions(),
@@ -74,7 +74,7 @@ export default class Preview extends BasePreview implements ContentTypeToolbarPr
 
         // When a heading is dropped for the first time show heading toolbar
         events.on("heading:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+            if (args.id === this.contentType.id) {
                 _.delay(() => {
                     $(this.element).focus();
                 }, 100); // 100 ms delay to allow for heading to render
