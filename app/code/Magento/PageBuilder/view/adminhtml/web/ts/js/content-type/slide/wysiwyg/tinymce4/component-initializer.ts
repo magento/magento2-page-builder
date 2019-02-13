@@ -94,6 +94,16 @@ export default class ComponentInitializer implements WysiwygComponentInitializer
         const sliderContent = this.$element.parents(this.sliderContentSelector)[0];
         const $notActiveSlides = $slider.find(this.slideSelector).not(this.activeSlideSelector);
 
+        // If there isn't enough room for a left-aligned toolbar, right align it
+        if ($(window).width() <
+            this.$element.offset().left + parseInt(this.config.adapter_config.minToolbarWidth, 10)
+        ) {
+            this.$element.addClass("_right-aligned-toolbar");
+        }
+        else {
+            this.$element.removeClass("_right-aligned-toolbar");
+        }
+
         delayUntil(
             () => {
                 $.each(this.config.adapter_config.parentSelectorsToUnderlay, (i, selector) => {

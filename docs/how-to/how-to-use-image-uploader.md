@@ -23,7 +23,7 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
             <item name="uploaderConfig" xsi:type="array">
                 <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
                 <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
-                <item name="maxFileSize" xsi:type="string">4194304</item>
+                <item name="maxFileSize" xsi:type="object">ImageMaxFileSizeDesktop</item>
                 <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png</item>
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/element/image-uploader</item>
                 <item name="componentType" xsi:type="string">imageUploader</item>

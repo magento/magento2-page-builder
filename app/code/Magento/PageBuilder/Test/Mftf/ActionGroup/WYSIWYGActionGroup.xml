@@ -22,6 +22,9 @@
         <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
+    <actionGroup name="replaceTextToTinyMCE" extends="addTextToTinyMCE">
+        <executeJS function="tinymce.activeEditor.setContent('{{property.value}}')" stepKey="addTextToWYSIWYG"/>
+    </actionGroup>
     <actionGroup name="addVariableToTinyMCE">
         <arguments>
             <argument name="variable" defaultValue=""/>
@@ -128,7 +131,7 @@
         <comment userInput="Validating Text In Tiny MCE" stepKey="commentValidateTextTinyMCE"/>
         <waitForElementVisible selector="#{{section.tinyMCEIFrame}}" stepKey="waitForIFrame"/>
         <switchToIFrame selector="{{section.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
+        <see selector="body" userInput="{{property.value}}" stepKey="seeText"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="insertLinkInWYSIWYG">
@@ -137,10 +140,11 @@
             <argument name="url" type="string"/>
             <argument name="textToDisplay" type="string"/>
             <argument name="title" type="string" defaultValue=""/>
+            <argument name="wysiwygArea" defaultValue="{{WYSIWYGOnPageBuilderInline.notCss}}" type="string"/>
         </arguments>
         <comment userInput="insertLinkInWYSIWYG" stepKey="comment"/>
-        <waitForElementVisible selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
-        <click selector="{{WYSIWYGOnPageBuilderInline.notCss}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
+        <waitForElementVisible selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="waitForInsertLinkButton"/>
+        <click selector="{{wysiwygArea}} {{section.InsertLink}}" stepKey="clickInsertLinkButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{WYSIWYGInsertLinkModal.modal}}" stepKey="waitForInsertLinkModal"/>
         <fillField selector="{{WYSIWYGInsertLinkModal.urlInput}}" userInput="{{url}}" stepKey="insertUrl"/>
